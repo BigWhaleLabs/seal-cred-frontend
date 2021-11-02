@@ -11,12 +11,9 @@ configure({
 })
 
 const App = () => {
-  const { userCount } = useApp()
-
   return (
     <Root>
       <IntlProvider>
-        <BodyText>User count: {userCount}</BodyText>
         <BodyText>
           <FormattedMessage id="title" />
         </BodyText>

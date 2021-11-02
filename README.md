@@ -1,6 +1,6 @@
-# Frontend code template in React
+# StreetCred frontend
 
-This template is to be used for frontend applications.
+SteetCred frontend code.
 
 ## Local launch
 
