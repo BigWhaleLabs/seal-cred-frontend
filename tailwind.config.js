@@ -4,19 +4,23 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        black: {
-          background: '#040404',
-          'background-purpose': '#12141D',
-          'perk-gradient-light': 'rgba(4, 6, 14, 0.9)',
-          'perk-gradient-dark': '#04060E',
-        },
-        gold: {
-          dark: '#FA6641',
-          light: '#EAE100',
-        },
+        primary: 'var(--primary)',
+        'primary-text-dimmed': 'var(--primary-text-dimmed)',
+        secondary: 'var(--secondary)',
+        accent: 'var(--accent)',
+        'accent-light': 'var(--accent-light)',
+        'accent-dimmed': 'var(--accent-dimmed)',
+        background: 'var(--background)',
+        transparent: 'var(--transparent)',
+        'semi-background': 'var(--semi-background)',
+        border: 'var(--border)',
+        error: 'var(--error)',
+        'error-light': 'var(--error-light)',
+        success: 'var(--success)',
       },
       borderRadius: {
         avatar: '6rem',
+        DEFAULT: '1rem',
       },
       width: {
         chart: '108px',

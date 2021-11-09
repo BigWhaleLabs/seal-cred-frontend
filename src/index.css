@@ -7,3 +7,43 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Main colors */
+.dark {
+  --background: #141416;
+  --semi-background: #23262f;
+  --border: #353945;
+  --primary: #f4f5f6;
+  --secondary: #ffffff;
+  --primary-text-dimmed: #777e90;
+
+  --accent: #3772ff;
+  --accent-light: rgba(55, 114, 255, 0.06);
+  --accent-dimmed: #2f65e4;
+
+  --gray-semi-transparent: rgba(31, 32, 34, 0.8);
+  --transparent: rgba(0, 0, 0, 0);
+
+  --success: #45b26b;
+  --error: #f2264b;
+  --error-light: rgba(242, 38, 75, 0.8);
+}
+.light {
+  --background: #ffffff;
+  --semi-background: #f4f5f6;
+  --border: #e6e8ec;
+  --primary: #23262f;
+  --secondary: #141416;
+  --primary-text-dimmed: #777e90;
+
+  --accent: #3772ff;
+  --accent-light: rgba(55, 114, 255, 0.06);
+  --accent-dimmed: #2f65e4;
+
+  --gray-semi-transparent: rgba(107, 114, 128, 0.5);
+  --transparent: rgba(0, 0, 0, 0);
+
+  --success: #45b26b;
+  --error: #f2264b;
+  --error-light: rgba(242, 38, 75, 0, 8);
+}
