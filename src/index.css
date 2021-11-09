@@ -11,6 +11,7 @@ body {
 /* Main colors */
 .dark {
   --background: #141416;
+  --semi-background: #23262f;
   --border: #353945;
   --primary: #f4f5f6;
   --secondary: #ffffff;
@@ -18,7 +19,7 @@ body {
 
   --accent: #3772ff;
   --accent-light: rgba(55, 114, 255, 0.06);
-  --accent-dimmed: rgb(47, 101, 228);
+  --accent-dimmed: #2f65e4;
 
   --gray-semi-transparent: rgba(31, 32, 34, 0.8);
   --transparent: rgba(0, 0, 0, 0);
@@ -29,6 +30,7 @@ body {
 }
 .light {
   --background: #ffffff;
+  --semi-background: #f4f5f6;
   --border: #e6e8ec;
   --primary: #23262f;
   --secondary: #141416;
@@ -36,7 +38,7 @@ body {
 
   --accent: #3772ff;
   --accent-light: rgba(55, 114, 255, 0.06);
-  --accent-dimmed: rgb(47, 101, 228);
+  --accent-dimmed: #2f65e4;
 
   --gray-semi-transparent: rgba(107, 114, 128, 0.5);
   --transparent: rgba(0, 0, 0, 0);
@@ -49,14 +51,6 @@ body {
 /* Typography */
 
 :root {
-  --white: #ffffff;
-  --black: #000000;
-
-  --dark: #141416;
-  --semi-dark: #23262f;
-  --semi-light: #777e90;
-  --light: #f4f5f6;
-
   --font-primary: Manrope;
   --font-bold: 700;
   --font-medium: 500;
