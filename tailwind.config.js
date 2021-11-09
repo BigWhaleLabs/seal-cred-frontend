@@ -27,11 +27,6 @@ module.exports = {
         time: '95px',
         glass: '107px',
       },
-      fontWeight: {
-        medium: 'var(--font-medium)',
-        bold: 'var(--font-bold)',
-        normal: 'var(--font-normal)',
-      },
     },
     container: {
       center: true,
