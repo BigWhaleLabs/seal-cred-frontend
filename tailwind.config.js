@@ -2,6 +2,10 @@
 module.exports = {
   purge: ['./public/index.html', './src/**/!(tailwind).{ts,tsx}'],
   theme: {
+    fontFamily: {
+      secondary: 'DM Sans',
+      primary: 'Poppins',
+    },
     extend: {
       colors: {
         primary: 'var(--primary)',
@@ -17,10 +21,18 @@ module.exports = {
         error: 'var(--error)',
         'error-light': 'var(--error-light)',
         success: 'var(--success)',
+        'private-key': 'var(--private-key)',
+      },
+      fontWeight: {
+        normal: 'var(--font-medium)',
       },
       borderRadius: {
         avatar: '6rem',
         DEFAULT: '1rem',
+        block: '1.5rem',
+      },
+      boxShadow: {
+        DEFAULT: '0px 64px 64px -48px var(--shadow)',
       },
       width: {
         chart: '108px',
