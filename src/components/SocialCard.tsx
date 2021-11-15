@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { SecondaryText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import { useState } from 'react'
@@ -10,7 +9,7 @@ const clickedIdentity = (name: string) => {
   console.log(`Clecked by ${name} identity`)
 }
 
-const SocialCard: FC = () => {
+const SocialCard = () => {
   const [searchValue, setSearchValue] = useState('')
 
   return (

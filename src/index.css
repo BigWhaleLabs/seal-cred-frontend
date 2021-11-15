@@ -55,8 +55,7 @@ body {
 
 :root {
   --logo-layer-gradient-from: #7ea4ff;
-  --logo-layer-gradient-to: ##1448c4;
-  --logo-icon: #fcfcfd;
+  --logo-layer-gradient-to: #1448c4;
   --key-input-bg: #131315;
 
   --font-primary: Poppins;

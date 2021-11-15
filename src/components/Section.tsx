@@ -6,7 +6,7 @@ export interface SectionProps {
   title?: string
 }
 
-const section = (vertical: boolean) =>
+const section = (vertical?: boolean) =>
   classnames(
     'flex',
     'justify-between',
@@ -17,7 +17,7 @@ const section = (vertical: boolean) =>
   )
 
 export const Section: FC<{ vertical?: boolean }> = ({ vertical, children }) => {
-  return <div className={section(vertical || false)}>{children}</div>
+  return <div className={section(vertical)}>{children}</div>
 }
 
 const group = classnames('mt-auto', 'pt-6', 'space-y-2')

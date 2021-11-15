@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 const logoContainer = classnames('relative')
 const colors = {
   layer: 'var(--accent)',
-  icon: 'var(--logo-icon)',
+  icon: 'var(--primary)',
   gradientFrom: 'var(--logo-layer-gradient-from)',
   gradientTo: 'var(--logo-layer-gradient-to)',
 }

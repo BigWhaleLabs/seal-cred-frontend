@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { SubheaderText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 
@@ -15,7 +14,7 @@ const privateKey = classnames(
 )
 const privateKeyCopy = classnames('transition-colors')
 
-const PrivateKey: FC = () => {
+const PrivateKey = () => {
   return (
     <div className={privateKey}>
       <SubheaderText>••••••••</SubheaderText>

@@ -1,6 +1,3 @@
-// import { Bell, Burger, Cross, Home, Plus, Profile, Settings } from 'icons'
-// import { Button } from 'components/Button'
-// import { NavLink } from 'react-router-dom'
 import { LogoText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import Logo from 'components/Logo'
