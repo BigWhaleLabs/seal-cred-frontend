@@ -6,6 +6,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
 }
 
 /* Main colors */
@@ -23,6 +24,8 @@ body {
 
   --gray-semi-transparent: rgba(31, 32, 34, 0.8);
   --transparent: rgba(0, 0, 0, 0);
+  --shadow: rgba(31, 47, 70, 0.12);
+  --private-key: #131315;
 
   --success: #45b26b;
   --error: #f2264b;
@@ -42,8 +45,20 @@ body {
 
   --gray-semi-transparent: rgba(107, 114, 128, 0.5);
   --transparent: rgba(0, 0, 0, 0);
+  --shadow: rgba(31, 47, 70, 0.12);
+  --private-key: #f4f5f6;
 
   --success: #45b26b;
   --error: #f2264b;
-  --error-light: rgba(242, 38, 75, 0, 8);
+  --error-light: rgba(242, 38, 75, 0.8);
+}
+
+:root {
+  --logo-layer-gradient-from: #7ea4ff;
+  --logo-layer-gradient-to: #1448c4;
+  --key-input-bg: #131315;
+
+  --font-primary: Poppins;
+  --font-secondary: DM Sans;
+  --font-medium: 500;
 }
