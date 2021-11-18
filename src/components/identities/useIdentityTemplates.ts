@@ -3,7 +3,7 @@ import { Identities } from 'components/Identity'
 import { useEffect, useMemo, useState } from 'react'
 import Template from 'models/Template'
 
-export default function useIdentityTemplates(identity: Identities) {
+export default function useIdentityTemplates(identity?: Identities) {
   const [templates, setTemplates] = useState([] as Template[])
 
   useEffect(() => {
@@ -14,5 +14,5 @@ export default function useIdentityTemplates(identity: Identities) {
     void fetchTemplates()
   }, [identity, setTemplates])
 
-  return useMemo(() => templates, [templates])
+  return useMemo(() => new Map(templates.map((t) => [t.type, t])), [templates])
 }

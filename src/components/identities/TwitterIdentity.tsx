@@ -6,12 +6,10 @@ import Token from 'models/Token'
 
 export default function TwitterIdentity({ tokens }: { tokens: Token[] }) {
   const identity = Identities.twitter
-  const self = tokens.filter((token) => token.template === identity)
-
   return (
     <CardBlock border title={identity}>
       <SecondarySubheaderText big>@uwxan</SecondarySubheaderText>
-      <IdentityBadges identity={identity} tokens={self} />
+      <IdentityBadges identity={identity} tokens={tokens} />
     </CardBlock>
   )
 }

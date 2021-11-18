@@ -9,11 +9,20 @@ Api.interceptors.request.use((request) => {
   return request
 })
 
+Api.interceptors.request.use((request) => {
+  request.headers = {
+    ethaddress: localStorage.getItem('eth') || '',
+    signaddress: localStorage.getItem('signaddress') || '',
+    ...request.headers,
+  }
+  return request
+})
+
 Api.interceptors.response.use(
   (response) => response,
   (error) => {
     console.error(error)
-    throw error
+    // throw error
   }
 )
 

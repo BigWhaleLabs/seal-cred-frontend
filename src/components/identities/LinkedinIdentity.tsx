@@ -6,12 +6,10 @@ import Token from 'models/Token'
 
 export default function LinkedinIdentity({ tokens }: { tokens: Token[] }) {
   const identity = Identities.linkedin
-  const identityTokens = tokens.filter((token) => token.template === identity)
-
   return (
     <CardBlock border title={identity}>
       <SecondarySubheaderText big>@uwxan</SecondarySubheaderText>
-      <IdentityBadges identity={identity} tokens={identityTokens} />
+      <IdentityBadges identity={identity} tokens={tokens} />
     </CardBlock>
   )
 }

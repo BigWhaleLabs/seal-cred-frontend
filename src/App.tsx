@@ -7,6 +7,7 @@ import EthereumBlock from 'components/EthereumBlock'
 import GridLayout from 'components/GridLayout'
 import IntlProvider from 'i18n/IntlProvider'
 import LinkedinIdentity from 'components/identities/LinkedinIdentity'
+import MetaMask from 'components/MetaMask'
 import Navbar from 'components/Navbar'
 import Root from 'components/Root'
 import SocialCard from 'components/SocialCard'
@@ -19,7 +20,7 @@ configure({
 })
 
 const App = () => {
-  const tokens = useTokens('0xdDd0bacA576a3a6710806245a834d719e458D614')
+  const tokens = useTokens()
   return (
     <ThemeProvider>
       <Root>
@@ -29,7 +30,10 @@ const App = () => {
             <CardBlock border shadow main>
               <HeaderText>One identity to rule them all</HeaderText>
               <EthereumBlock />
-              <BadgeList />
+              <BadgeList tokens={tokens} />
+              <div className={classnames('py-5')}>
+                <MetaMask />
+              </div>
             </CardBlock>
           </div>
           <div className={classnames('pt-5', 'md:pt-9')}>
