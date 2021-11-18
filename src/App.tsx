@@ -13,6 +13,7 @@ import CardBlock from 'components/CardBlock'
 import EthereumBlock from 'components/EthereumBlock'
 import GridLayout from 'components/GridLayout'
 import IntlProvider from 'i18n/IntlProvider'
+import MetaMask from 'components/MetaMask'
 import Navbar from 'components/Navbar'
 import Root from 'components/Root'
 import SocialCard from 'components/SocialCard'
@@ -33,6 +34,9 @@ const App = () => {
               <HeaderText>One identity to rule them all</HeaderText>
               <EthereumBlock />
               <BadgeList />
+              <div className={classnames('py-5')}>
+                <MetaMask />
+              </div>
             </CardBlock>
           </div>
           <div className={classnames('pt-5', 'md:pt-9')}>
