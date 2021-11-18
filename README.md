@@ -11,3 +11,12 @@ SteetCred frontend code.
 
 - `yarn start` — runs the app in the development mode
 - `yarn build` — builds the app for production to the `docs` folder
+
+## Environment variables
+
+| Name                | Description                |
+| ------------------- | -------------------------- |
+| `REACT_APP_BACKEND` | API root URL               |
+| `SIGNATURE_MESSAGE` | Signature message template |
+
+Also, please, consider looking at `.env.sample`.

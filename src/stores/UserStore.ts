@@ -24,7 +24,10 @@ class UserStore {
     })
     const [from] = await ethereum.request({ method: 'eth_accounts' })
     const { nonce } = await requestNonce(from)
-    const exampleMessage = `Hi there! Your special nonce: ${nonce}`
+    const exampleMessage = (process.env.SIGNATURE_MESSAGE || '').replace(
+      '${nonce}',
+      nonce
+    )
     const msg = `0x${Buffer.from(exampleMessage, 'utf8').toString('hex')}`
     const sign = await ethereum.request({
       method: 'personal_sign',
