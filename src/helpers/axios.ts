@@ -1,3 +1,4 @@
+import UserStore from 'stores/UserStore'
 import axios from 'axios'
 
 const baseURL = process.env.REACT_APP_BACKEND
@@ -11,8 +12,8 @@ Api.interceptors.request.use((request) => {
 
 Api.interceptors.request.use((request) => {
   request.headers = {
-    ethaddress: localStorage.getItem('eth') || '',
-    signaddress: localStorage.getItem('signaddress') || '',
+    ethaddress: UserStore.ethaddress,
+    signaddress: UserStore.signaddress,
     ...request.headers,
   }
   return request

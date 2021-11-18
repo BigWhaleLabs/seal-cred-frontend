@@ -6,12 +6,13 @@ export type Theme = 'dark' | 'light'
 class AppStore {
   language: Language = Language.en
   theme: Theme = 'dark'
+  ethaddress = ''
 
   constructor() {
     makeAutoObservable(this)
     void makePersistable(this, {
       name: 'AppStore',
-      properties: ['language', 'theme'],
+      properties: ['language', 'theme', 'ethaddress'],
       storage: window.localStorage,
     })
   }

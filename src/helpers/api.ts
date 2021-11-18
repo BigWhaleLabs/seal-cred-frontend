@@ -4,11 +4,11 @@ import Api from 'helpers/axios'
 import Template from 'models/Template'
 import Token from 'models/Token'
 
-export async function requestNonce() {
+export async function requestNonce(address: string) {
   const { data }: AxiosResponse<{ nonce: string }> = await Api.post(
     '/login/request',
     {
-      address: localStorage.getItem('eth') || '',
+      address,
     }
   )
   return data
