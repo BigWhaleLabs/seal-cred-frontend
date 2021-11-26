@@ -14,7 +14,7 @@ import UserStore from 'stores/UserStore'
 import useTokens from 'helpers/useTokens'
 
 const Home: FC = () => {
-  const address = UserStore.ethaddress
+  const address = UserStore.address
   const tokens = useTokens(address)
 
   return (

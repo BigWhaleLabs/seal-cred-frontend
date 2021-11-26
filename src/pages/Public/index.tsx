@@ -5,11 +5,6 @@ import { useParams } from 'react-router-dom'
 import BadgeList from 'components/BadgeList'
 import CardBlock from 'components/CardBlock'
 import EthereumBlock from 'components/EthereumBlock'
-import GridLayout from 'components/GridLayout'
-import LinkedinIdentity from 'components/identities/LinkedinIdentity'
-import MetaMask from 'components/MetaMask'
-import SocialCard from 'components/SocialCard'
-import TwitterIdentity from 'components/identities/TwitterIdentity'
 import useTokens from 'helpers/useTokens'
 
 const Public: FC = () => {

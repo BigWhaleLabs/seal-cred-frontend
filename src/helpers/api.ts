@@ -4,8 +4,8 @@ import Api from 'helpers/axios'
 import Template from 'models/Template'
 import Token from 'models/Token'
 
-export async function requestNonce(address: string) {
-  const { data }: AxiosResponse<{ nonce: string }> = await Api.post(
+export async function requestMessage(address: string) {
+  const { data }: AxiosResponse<{ message: string }> = await Api.post(
     '/login/request',
     {
       address,
@@ -14,11 +14,12 @@ export async function requestNonce(address: string) {
   return data
 }
 
-export async function verifyNonce(nonce: string) {
-  const { data }: AxiosResponse<{ nonce: string }> = await Api.post(
+export async function verifyNonce(message: string, signature: string) {
+  const { data }: AxiosResponse<{ token: string }> = await Api.post(
     '/login/verify',
     {
-      nonce,
+      message,
+      signature,
     }
   )
   return data

@@ -12,8 +12,7 @@ Api.interceptors.request.use((request) => {
 
 Api.interceptors.request.use((request) => {
   request.headers = {
-    ethaddress: UserStore.ethaddress,
-    signaddress: UserStore.signaddress,
+    token: UserStore.token,
     ...request.headers,
   }
   return request

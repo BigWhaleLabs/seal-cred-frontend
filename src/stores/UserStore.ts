@@ -1,18 +1,18 @@
 import { isHydrated, makePersistable } from 'mobx-persist-store'
 import { makeAutoObservable, runInAction } from 'mobx'
-import { requestNonce, verifyNonce } from 'helpers/api'
+import { requestMessage, verifyNonce } from 'helpers/api'
 
 const { ethereum } = window
 
 class UserStore {
-  ethaddress = ''
-  signaddress = ''
+  token = ''
+  address = ''
 
   constructor() {
     makeAutoObservable(this)
     void makePersistable(this, {
       name: 'UserStore',
-      properties: ['ethaddress', 'signaddress'],
+      properties: ['token', 'address'],
       storage: window.localStorage,
     })
   }
@@ -23,23 +23,21 @@ class UserStore {
       method: 'eth_requestAccounts',
     })
     const [from] = await ethereum.request({ method: 'eth_accounts' })
-    const { nonce } = await requestNonce(from)
-    const exampleMessage = (process.env.SIGNATURE_MESSAGE || '').replace(
-      '${nonce}',
-      nonce
-    )
-    const msg = `0x${Buffer.from(exampleMessage, 'utf8').toString('hex')}`
+    const { message } = await requestMessage(from)
+
+    const msg = `0x${Buffer.from(message, 'utf8').toString('hex')}`
     const sign = await ethereum.request({
       method: 'personal_sign',
       params: [msg, from, 'Example password'],
     })
 
-    runInAction(() => {
-      this.ethaddress = from
-      this.signaddress = sign
-    })
+    const { token } = await verifyNonce(message, sign)
 
-    await verifyNonce(nonce)
+    runInAction(() => {
+      if (!token || !from) return
+      this.token = token
+      this.address = from
+    })
   }
 
   get isHydrated() {
