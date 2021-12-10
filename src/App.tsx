@@ -1,3 +1,4 @@
+import { MetaMaskProvider } from 'metamask-react'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import { configure } from 'mobx'
 import Home from 'pages/Home'
@@ -14,17 +15,19 @@ configure({
 const App = () => {
   return (
     <ThemeProvider>
-      <Root>
-        <IntlProvider>
-          <Navbar />
-          <Router>
-            <Switch>
-              <Route path="/:address" component={Public} />
-              <Route path="/" component={Home} />
-            </Switch>
-          </Router>
-        </IntlProvider>
-      </Root>
+      <MetaMaskProvider>
+        <Root>
+          <IntlProvider>
+            <Navbar />
+            <Router>
+              <Switch>
+                <Route path="/:address" component={Public} />
+                <Route path="/" component={Home} />
+              </Switch>
+            </Router>
+          </IntlProvider>
+        </Root>
+      </MetaMaskProvider>
     </ThemeProvider>
   )
 }

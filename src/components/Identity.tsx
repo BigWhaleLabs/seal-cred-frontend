@@ -7,6 +7,7 @@ export enum Identities {
   linkedin = 'Linkedin',
   rarible = 'Rarible',
   eth = 'ETH',
+  dosu = 'Dosu',
 }
 
 export interface IdentityProps {
@@ -34,7 +35,7 @@ const Identity: FC<IdentityProps> = ({ name, emphasis, onClick }) => {
       className={identityBlock(emphasis || false, clickable)}
       onClick={onClick}
     >
-      <img src={`/img/${name.toLowerCase()}.svg`} alt="Twitter" />
+      <img src={`/img/${name.toLowerCase()}.svg`} alt={name} />
       <SecondarySubheaderText>{name}</SecondarySubheaderText>
     </button>
   )
