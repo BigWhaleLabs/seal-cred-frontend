@@ -32,6 +32,26 @@ export async function fetchTemplates(query: { identity?: Identities }) {
   return data
 }
 
+export async function fetchDosuTemplates(query: {
+  token: string
+  handle?: string
+}) {
+  const { data }: AxiosResponse<Template[]> = await Api.get('/template/dosu', {
+    params: query,
+  })
+  return data
+}
+
+export async function fetchEtheriumTemplates(query: { address: string }) {
+  const { data }: AxiosResponse<Template[]> = await Api.get(
+    '/template/etherium',
+    {
+      params: query,
+    }
+  )
+  return data
+}
+
 export async function fetchTokens(address: string) {
   const { data }: AxiosResponse<Token[]> = await Api.get(
     `/token/${address}`,
@@ -40,10 +60,26 @@ export async function fetchTokens(address: string) {
   return data
 }
 
-export async function createBadge(badge: string) {
+export async function createDosuBadge(
+  badge: string,
+  { token, handle }: { token: string; handle?: string }
+) {
   const { data }: AxiosResponse<Token> = await Api.post(
-    `/token/create/${badge}`,
-    {}
+    `/token/dosu/${badge}`,
+    {
+      token,
+      handle,
+    }
+  )
+  return data
+}
+
+export async function createEtheriumBadge(badge: string, address: string) {
+  const { data }: AxiosResponse<Token> = await Api.post(
+    `/token/etherium/${badge}`,
+    {
+      address,
+    }
   )
   return data
 }

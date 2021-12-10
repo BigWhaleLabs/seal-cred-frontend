@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { HeaderText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import { observer } from 'mobx-react-lite'
+import { useMetaMask } from 'metamask-react'
 import BadgeList from 'components/BadgeList'
 import CardBlock from 'components/CardBlock'
 import DosuIdentity from 'components/identities/DosuIdentity'
@@ -12,7 +13,8 @@ import SocialCard from 'components/identities/SocialCard'
 import useTokens from 'helpers/useTokens'
 
 const Home: FC = () => {
-  const address = '0x0000000000000000000000000000000000000000'
+  const { account } = useMetaMask()
+  const address = account || '0x0000000000000000000000000000000000000000'
   const tokens = useTokens(address)
 
   return (

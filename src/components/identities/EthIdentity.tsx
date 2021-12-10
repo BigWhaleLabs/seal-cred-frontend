@@ -1,53 +1,47 @@
-import * as ethers from 'ethers'
+import { Group } from 'components/Section'
 import { Identities } from 'components/Identity'
 import { SecondarySubheaderText } from 'components/Text'
-import { useEffect, useState } from 'react'
-import { useMetaMask } from 'metamask-react'
 import CardBlock from 'components/CardBlock'
-import IdentityBadges from 'components/identities/IndentityBadges'
+import CreateNFTBadge from './CreateNFTBadge'
+import NFTBadge from './NFTBadge'
 import Token from 'models/Token'
-import genericErc721Abi from 'components/identities/ERC721abi.json'
-
-function useDosuInviteToken() {
-  const [hasToken, setHasToken] = useState(false)
-  const { account } = useMetaMask()
-
-  useEffect(() => {
-    async function start() {
-      const tokenContractAddress = '0x0d0a4686dfb7a4f4fe87fb478fe08953b9ed216d'
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const contract = new ethers.Contract(
-        tokenContractAddress,
-        genericErc721Abi,
-        provider
-      )
-      const signer = await provider.getSigner()
-      const address = await signer.getAddress()
-      const balance = await contract.balanceOf(address)
-      setHasToken(balance.valueOf() > 0)
-    }
-
-    void start()
-  }, [account])
-
-  return { hasToken }
-}
+import useEtheriumIdentity from './useEtheriumIdentity'
 
 function shortAddress(address: string) {
   return address.slice(0, 5) + '...' + address.slice(-5)
 }
 
 export default function EthIdentity({ tokens }: { tokens: Token[] }) {
-  const { hasToken } = useDosuInviteToken()
-  const { account } = useMetaMask()
-  const identity = Identities.eth
-  if (!account) return null
+  const identity = useEtheriumIdentity()
+  if (!identity) return null
+  const { templates, onCreate, address } = identity
+  const ethTokens = tokens.filter(
+    (token) => token.details.identity === Identities.eth
+  )
+
   return (
-    <CardBlock border title={identity}>
+    <CardBlock border title={Identities.eth}>
       <SecondarySubheaderText big>
-        {shortAddress(account)}
+        {shortAddress(address)}
       </SecondarySubheaderText>
-      <IdentityBadges identity={identity} tokens={tokens} />
+      {ethTokens.length > 0 && (
+        <Group title="NFT badges you have">
+          {ethTokens.map((token) => (
+            <NFTBadge key={token.template} token={token} />
+          ))}
+        </Group>
+      )}
+      {templates.length > 0 && (
+        <Group title="NFT badges you can create">
+          {templates.map((template) => (
+            <CreateNFTBadge
+              key={template.type}
+              template={template}
+              onCreate={onCreate}
+            />
+          ))}
+        </Group>
+      )}
     </CardBlock>
   )
 }

@@ -4,4 +4,6 @@ export default interface Template {
   identity: Identities
   name: string
   type: string
+  isNFT?: boolean
+  contractAddress?: string
 }

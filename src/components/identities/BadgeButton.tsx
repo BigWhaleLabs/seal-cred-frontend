@@ -1,11 +1,6 @@
-import * as api from 'helpers/api'
 import Button, { ButtonType } from 'components/Button'
 
-export default function BadgeButton({ template }: { template: string }) {
-  function onClick() {
-    void api.createBadge(template)
-  }
-
+export default function BadgeButton({ onClick }: { onClick: () => void }) {
   return (
     <Button type={ButtonType.accent} onClick={onClick}>
       Create
