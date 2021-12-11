@@ -2,8 +2,11 @@ import * as api from 'helpers/api'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useMetaMask } from 'metamask-react'
 import Template from 'models/Template'
+import Token from 'models/Token'
 
-export default function useEtheriumIdentity() {
+export default function useEtheriumIdentity(
+  onAddToken: (token: Token) => void
+) {
   const { account: address } = useMetaMask()
   const [templates, setTemplates] = useState([] as Template[])
 
@@ -16,10 +19,13 @@ export default function useEtheriumIdentity() {
   }, [address, setTemplates])
 
   const onCreate = useCallback(
-    (type: string) => {
-      if (address) void api.createEtheriumBadge(type, address)
+    async (type: string) => {
+      if (address) {
+        const token = await api.createEtheriumBadge(type, address)
+        onAddToken(token)
+      }
     },
-    [address]
+    [address, onAddToken]
   )
 
   return useMemo(

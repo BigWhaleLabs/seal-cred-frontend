@@ -2,39 +2,47 @@ import * as api from 'helpers/api'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router'
 import Template from 'models/Template'
+import Token from 'models/Token'
 
-export default function useDosuIdentity() {
+export default function useDosuIdentity(onAddToken: (token: Token) => void) {
   const [templates, setTemplates] = useState([] as Template[])
   const { search } = useLocation<{ token?: string; handle?: string }>()
 
   const query = new URLSearchParams(search)
-  const token = query.get('token') || ''
+  const dosuAuthToken = query.get('token') || ''
   const handle = query.get('handle') || ''
 
   useEffect(() => {
     async function fetchTemplates() {
-      const fetched = await api.fetchDosuTemplates({ token, handle })
+      const fetched = await api.fetchDosuTemplates({
+        token: dosuAuthToken,
+        handle,
+      })
       setTemplates(fetched)
     }
-    if (token) void fetchTemplates()
-  }, [token, handle, setTemplates])
+    if (dosuAuthToken) void fetchTemplates()
+  }, [dosuAuthToken, handle, setTemplates])
 
   const onCreate = useCallback(
-    (type: string) => {
-      void api.createDosuBadge(type, { token, handle })
+    async (type: string) => {
+      const token = await api.createDosuBadge(type, {
+        token: dosuAuthToken,
+        handle,
+      })
+      onAddToken(token)
     },
-    [token, handle]
+    [dosuAuthToken, handle, onAddToken]
   )
 
   return useMemo(
     () =>
-      token
+      dosuAuthToken
         ? {
             onCreate,
             handle,
             templates,
           }
         : null,
-    [token, templates, handle, onCreate]
+    [dosuAuthToken, templates, handle, onCreate]
   )
 }

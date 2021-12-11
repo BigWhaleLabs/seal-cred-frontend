@@ -1,5 +1,5 @@
 import * as api from 'helpers/api'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Token from 'models/Token'
 
 export default function useTokens(address?: string) {
@@ -15,5 +15,19 @@ export default function useTokens(address?: string) {
     }
   }, [address, setTokens])
 
-  return useMemo(() => tokens, [tokens])
+  const addToken = useCallback(
+    (token) => {
+      setTokens([...tokens, token])
+    },
+    [tokens]
+  )
+
+  return useMemo(
+    () => ({
+      tokens,
+      addToken,
+      setTokens,
+    }),
+    [tokens, addToken]
+  )
 }

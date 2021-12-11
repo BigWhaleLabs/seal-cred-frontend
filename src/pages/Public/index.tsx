@@ -9,7 +9,7 @@ import useTokens from 'helpers/useTokens'
 
 const Public: FC = () => {
   const { address } = useParams<{ address: string }>()
-  const tokens = useTokens(address)
+  const { tokens } = useTokens(address)
 
   return (
     <>

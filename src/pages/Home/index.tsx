@@ -1,8 +1,7 @@
-import { FC } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { HeaderText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import { observer } from 'mobx-react-lite'
-import { useMetaMask } from 'metamask-react'
 import BadgeList from 'components/BadgeList'
 import CardBlock from 'components/CardBlock'
 import DosuIdentity from 'components/identities/DosuIdentity'
@@ -10,12 +9,31 @@ import EthIdentity from 'components/identities/EthIdentity'
 import EthereumBlock from 'components/EthereumBlock'
 import GridLayout from 'components/GridLayout'
 import SocialCard from 'components/identities/SocialCard'
+import UserStore from 'stores/UserStore'
 import useTokens from 'helpers/useTokens'
 
+function useGeneratedAddress() {
+  const [account, setAccount] = useState<string | undefined>()
+
+  useEffect(() => {
+    if (!UserStore.wallet) {
+      void UserStore.createWallet()
+    } else if (!account) {
+      setAccount(UserStore.wallet.address)
+      if (!UserStore.token) {
+        void UserStore.connect(UserStore.wallet)
+      }
+    }
+  }, [account])
+
+  return useMemo(() => account, [account])
+}
+
 const Home: FC = () => {
-  const { account } = useMetaMask()
-  const address = account || '0x0000000000000000000000000000000000000000'
-  const tokens = useTokens(address)
+  const address = useGeneratedAddress()
+  const { tokens, addToken } = useTokens(address)
+
+  if (!address) return null
 
   return (
     <>
@@ -29,8 +47,8 @@ const Home: FC = () => {
       <div className={classnames('pt-5', 'md:pt-9')}>
         <GridLayout>
           <SocialCard />
-          <DosuIdentity tokens={tokens} />
-          <EthIdentity tokens={tokens} />
+          <DosuIdentity tokens={tokens} onAddToken={addToken} />
+          <EthIdentity tokens={tokens} onAddToken={addToken} />
         </GridLayout>
       </div>
     </>

@@ -26,6 +26,7 @@ const badgeList = classnames(
 export type BadgeListProps = { tokens: Token[] }
 
 const BadgeList: FC<BadgeListProps> = ({ tokens }) => {
+  if (tokens.length === 0) return null
   return (
     <div className={badgeBlock}>
       <SubSecondaryText>NFT badges added:</SubSecondaryText>

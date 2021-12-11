@@ -1,42 +1,45 @@
+import { ethers } from 'ethers'
 import { isHydrated, makePersistable } from 'mobx-persist-store'
 import { makeAutoObservable, runInAction } from 'mobx'
 import { requestMessage, verifyNonce } from 'helpers/api'
 
-const { ethereum } = window
-
 class UserStore {
   token = ''
   address = ''
+  privateKey = ''
 
   constructor() {
     makeAutoObservable(this)
     void makePersistable(this, {
       name: 'UserStore',
-      properties: ['token', 'address'],
+      properties: ['token', 'privateKey', 'address'],
       storage: window.localStorage,
     })
   }
 
-  async connect() {
-    if (!ethereum) return
-    await ethereum.request({
-      method: 'eth_requestAccounts',
+  async createWallet() {
+    const wallet = await ethers.Wallet.createRandom()
+    await this.connect(wallet)
+    runInAction(() => {
+      this.privateKey = wallet.privateKey
+      this.address = wallet.address
     })
-    const [from] = await ethereum.request({ method: 'eth_accounts' })
-    const { message } = await requestMessage(from)
+  }
 
-    const msg = `0x${Buffer.from(message, 'utf8').toString('hex')}`
-    const sign = await ethereum.request({
-      method: 'personal_sign',
-      params: [msg, from, 'Example password'],
-    })
+  get wallet() {
+    if (!this.privateKey) return null
+    return new ethers.Wallet(this.privateKey)
+  }
 
+  async connect(wallet: ethers.Wallet) {
+    const address = wallet.address
+    const { message } = await requestMessage(address)
+    const sign = await wallet.signMessage(message)
     const { token } = await verifyNonce(message, sign)
 
     runInAction(() => {
-      if (!token || !from) return
+      if (!token || !address) return
       this.token = token
-      this.address = from
     })
   }
 
