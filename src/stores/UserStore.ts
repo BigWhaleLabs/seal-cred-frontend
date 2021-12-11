@@ -19,11 +19,11 @@ class UserStore {
 
   async createWallet() {
     const wallet = await ethers.Wallet.createRandom()
-    await this.connect(wallet)
     runInAction(() => {
       this.privateKey = wallet.privateKey
       this.address = wallet.address
     })
+    return wallet
   }
 
   get wallet() {

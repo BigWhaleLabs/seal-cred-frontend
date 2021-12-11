@@ -16,14 +16,17 @@ function useGeneratedAddress() {
   const [account, setAccount] = useState<string | undefined>()
 
   useEffect(() => {
-    if (!UserStore.wallet) {
-      void UserStore.createWallet()
-    } else if (!account) {
-      setAccount(UserStore.wallet.address)
-      if (!UserStore.token) {
-        void UserStore.connect(UserStore.wallet)
+    async function init() {
+      let wallet = UserStore.wallet
+      if (!wallet) {
+        wallet = await UserStore.createWallet()
       }
+      if (!UserStore.token) {
+        await UserStore.connect(wallet)
+      }
+      setAccount(wallet.address)
     }
+    void init()
   }, [account])
 
   return useMemo(() => account, [account])
