@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 import BadgeList from 'components/BadgeList'
 import CardBlock from 'components/CardBlock'
 import DosuIdentity from 'components/identities/DosuIdentity'
+import DosuLink from 'components/identities/DosuLink'
 import EthIdentity from 'components/identities/EthIdentity'
 import EthereumBlock from 'components/EthereumBlock'
 import GridLayout from 'components/GridLayout'
@@ -45,6 +46,7 @@ const Home: FC = () => {
           <HeaderText>One identity to rule them all</HeaderText>
           <EthereumBlock address={address} owner />
           <BadgeList tokens={tokens} />
+          <DosuLink tokens={tokens} />
         </CardBlock>
       </div>
       <div className={classnames('pt-5', 'md:pt-9')}>

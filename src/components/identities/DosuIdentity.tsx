@@ -25,7 +25,7 @@ export default function DosuIdentity({
   )
 
   return (
-    <CardBlock border title={Identities.dosu}>
+    <CardBlock border tiny title={Identities.dosu}>
       <SecondarySubheaderText big>@{handle}</SecondarySubheaderText>
       <CreatedBadgeList tokens={dosuTokens} />
       <CreateBadgeList templates={dosuTemplates} onCreate={onCreate} />

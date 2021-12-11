@@ -28,7 +28,7 @@ const cardContainer = (props: ICardBlock, theme: Theme) =>
     props.border ? (theme === 'light' ? cardBorder : undefined) : undefined,
     props.main ? cardPaddingMain : cardPaddingDefault
   )
-const cardTiny = classnames('w-full', 'md:w-5/6')
+const cardTiny = classnames('w-full', 'md:w-2/6')
 const cardShadow = classnames('shadow')
 const cardBorder = classnames('border-2')
 const cardPaddingMain = classnames('py-8', 'px-4', 'md:py-10', 'md:px-16')

@@ -29,7 +29,7 @@ export default function EthIdentity({
   )
 
   return (
-    <CardBlock border title={Identities.eth}>
+    <CardBlock border tiny title={Identities.eth}>
       <SecondarySubheaderText big>
         {shortAddress(address)}
       </SecondarySubheaderText>

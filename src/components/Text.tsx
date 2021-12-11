@@ -119,3 +119,13 @@ const accentText = classnames(
 export const AccentText: FC = ({ children }) => {
   return <h3 className={accentText}>{children}</h3>
 }
+
+const linkText = classnames('text-primary', 'transition-colors')
+export const LinkText: FC<{ href?: string | undefined }> = ({
+  children,
+  href,
+}) => (
+  <a className={linkText} href={href}>
+    {children}
+  </a>
+)
