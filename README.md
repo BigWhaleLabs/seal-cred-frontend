@@ -14,9 +14,8 @@ SteetCred frontend code.
 
 ## Environment variables
 
-| Name                | Description                |
-| ------------------- | -------------------------- |
-| `REACT_APP_BACKEND` | API root URL               |
-| `SIGNATURE_MESSAGE` | Signature message template |
+| Name                | Description  |
+| ------------------- | ------------ |
+| `REACT_APP_BACKEND` | API root URL |
 
 Also, please, consider looking at `.env.sample`.
