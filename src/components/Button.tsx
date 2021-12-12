@@ -13,6 +13,7 @@ export enum ButtonType {
 export interface ButtonProps {
   wide?: boolean
   type: ButtonType
+  disabled?: boolean
 }
 
 export interface ButtonPropsExtend extends ButtonProps {
@@ -52,12 +53,19 @@ const typeButton = (type: ButtonType, theme: Theme) =>
     type === 'primary' && theme === 'dark' ? 'text-semi-background' : null
   )
 
-const Button: FC<ButtonPropsExtend> = ({ wide, type, onClick, children }) => {
+const Button: FC<ButtonPropsExtend> = ({
+  wide,
+  type,
+  onClick,
+  children,
+  disabled,
+}) => {
   const theme = AppStore.theme
   return (
     <button
       className={button({ type, wide }, theme)}
       onClick={onClick || undefined}
+      disabled={disabled}
     >
       {children}
     </button>

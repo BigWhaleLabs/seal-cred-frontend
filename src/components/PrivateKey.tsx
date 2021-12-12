@@ -1,5 +1,7 @@
 import { SubheaderText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
+import UserStore from 'stores/UserStore'
+import copy from 'copy-to-clipboard'
 
 const privateKey = classnames(
   'flex',
@@ -10,13 +12,18 @@ const privateKey = classnames(
   'space-x-2',
   'rounded-3xl',
   'bg-private-key',
-  'transition-colors'
+  'transition-colors',
+  'cursor-pointer'
 )
 const privateKeyCopy = classnames('transition-colors')
 
 const PrivateKey = () => {
+  function onCopyClick() {
+    copy(UserStore.privateKey)
+  }
+
   return (
-    <div className={privateKey}>
+    <div className={privateKey} onClick={onCopyClick}>
       <SubheaderText>••••••••</SubheaderText>
       <svg
         width="24"

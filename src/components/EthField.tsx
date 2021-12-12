@@ -12,11 +12,10 @@ const ethFielt = classnames(
   'transition-colors'
 )
 
-const EthField: FC = () => {
-  const ethAddress = '0xdDd0bacA576a3a6710806245a834d719e458D614'
+const EthField: FC<{ address?: string }> = ({ address }) => {
   return (
     <div className={ethFielt}>
-      <AccentText>{ethAddress}</AccentText>
+      <AccentText>{address}</AccentText>
     </div>
   )
 }

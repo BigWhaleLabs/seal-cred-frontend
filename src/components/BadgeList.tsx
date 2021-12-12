@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { SubSecondaryText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import Badge from 'components/Badge'
+import Token from 'models/Token'
 
 const badgeBlock = classnames(
   'flex',
@@ -22,15 +23,17 @@ const badgeList = classnames(
   'md:space-x-2'
 )
 
-const BadgeList: FC = () => {
+export type BadgeListProps = { tokens: Token[] }
+
+const BadgeList: FC<BadgeListProps> = ({ tokens }) => {
+  if (tokens.length === 0) return null
   return (
     <div className={badgeBlock}>
       <SubSecondaryText>NFT badges added:</SubSecondaryText>
       <div className={badgeList}>
-        <Badge>100M YouTube followers</Badge>
-        <Badge>ETH address 10y old</Badge>
-        <Badge>10M followers on Twitter</Badge>
-        <Badge>10000 ETH on address</Badge>
+        {tokens.map((token) => (
+          <Badge key={token.template}>{token.details.name}</Badge>
+        ))}
       </div>
     </div>
   )
