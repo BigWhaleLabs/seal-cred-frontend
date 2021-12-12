@@ -1,29 +1,11 @@
-import { isHydrated, makePersistable } from 'mobx-persist-store'
-import { makeAutoObservable } from 'mobx'
+import { proxy } from 'valtio'
 import Language from 'models/Language'
+import PersistableStore from 'stores/persistence/PersistableStore'
+import Theme from 'models/Theme'
 
-export type Theme = 'dark' | 'light'
-class AppStore {
+class AppStore extends PersistableStore {
   language: Language = Language.en
   theme: Theme = 'dark'
-  ethaddress = ''
-
-  constructor() {
-    makeAutoObservable(this)
-    void makePersistable(this, {
-      name: 'AppStore',
-      properties: ['language', 'theme', 'ethaddress'],
-      storage: window.localStorage,
-    })
-  }
-
-  toggleTheme() {
-    this.theme = this.theme === 'dark' ? 'light' : 'dark'
-  }
-
-  get isHydrated() {
-    return isHydrated(this)
-  }
 }
 
-export default new AppStore()
+export default proxy(new AppStore()).makePersistent()

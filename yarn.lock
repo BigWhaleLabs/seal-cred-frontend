@@ -13632,6 +13632,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"proxy-compare@npm:2.0.2":
+  version: 2.0.2
+  resolution: "proxy-compare@npm:2.0.2"
+  checksum: f9d2805e88231101fe3b28d7031adef5fea883ec87a88670f6b1b252193caf66afc20f16e350daccc126e7699610262775185c6ab47d4f4776018fa888136984
+  languageName: node
+  linkType: hard
+
 "prr@npm:~1.0.1":
   version: 1.0.1
   resolution: "prr@npm:1.0.1"
@@ -15462,6 +15469,7 @@ __metadata:
     tailwindcss: "npm:@tailwindcss/postcss7-compat@^2"
     tailwindcss-classnames: ^2.2.6
     typescript: ^4.5.3
+    valtio: ^1.2.7
     vite: ^2.7.1
     vite-tsconfig-paths: ^3.3.17
   languageName: unknown
@@ -16651,6 +16659,29 @@ __metadata:
     spdx-correct: ^3.0.0
     spdx-expression-parse: ^3.0.0
   checksum: 35703ac889d419cf2aceef63daeadbe4e77227c39ab6287eeb6c1b36a746b364f50ba22e88591f5d017bc54685d8137bc2d328d0a896e4d3fd22093c0f32a9ad
+  languageName: node
+  linkType: hard
+
+"valtio@npm:^1.2.7":
+  version: 1.2.7
+  resolution: "valtio@npm:1.2.7"
+  dependencies:
+    proxy-compare: 2.0.2
+  peerDependencies:
+    "@babel/helper-module-imports": ">=7.12"
+    "@babel/types": ">=7.13"
+    babel-plugin-macros: ">=3.0"
+    react: ">=16.8"
+  peerDependenciesMeta:
+    "@babel/helper-module-imports":
+      optional: true
+    "@babel/types":
+      optional: true
+    babel-plugin-macros:
+      optional: true
+    react:
+      optional: true
+  checksum: 4398754805ced8562b20212808864fd1f074ea1ebc4c29bafaaf151969b044955d396bade68bba62287cfd91867cc2947cc4aefef52b164f3b1b1b003eba0f68
   languageName: node
   linkType: hard
 

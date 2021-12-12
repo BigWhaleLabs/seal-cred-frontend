@@ -1,4 +1,3 @@
-import UserStore from 'stores/UserStore'
 import axios from 'axios'
 
 const baseURL = process.env.REACT_APP_BACKEND
@@ -12,7 +11,7 @@ Api.interceptors.request.use((request) => {
 
 Api.interceptors.request.use((request) => {
   request.headers = {
-    token: UserStore.token,
+    // token: UserStore.token, // TODO: get this back? Do we need it at all?
     ...request.headers,
   }
   return request
@@ -22,7 +21,7 @@ Api.interceptors.response.use(
   (response) => response,
   (error) => {
     console.error(error)
-    // throw error
+    // TODO: throw error
   }
 )
 

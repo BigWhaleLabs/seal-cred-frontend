@@ -1,8 +1,9 @@
 import { FC } from 'react'
 import { classnames } from 'classnames/tailwind'
-import { observer } from 'mobx-react-lite'
-import AppStore, { Theme } from 'stores/AppStore'
+import { useSnapshot } from 'valtio'
+import AppStore from 'stores/AppStore'
 import Identity, { Identities } from 'components/Identity'
+import Theme from 'models/Theme'
 
 interface ICardBlock {
   title?: Identities
@@ -42,7 +43,7 @@ const CardBlock: FC<ICardBlock> = ({
   tiny,
   children,
 }) => {
-  const theme = AppStore.theme
+  const { theme } = useSnapshot(AppStore)
 
   return (
     <div className={cardContainer({ shadow, border, main, tiny }, theme)}>
@@ -52,4 +53,4 @@ const CardBlock: FC<ICardBlock> = ({
   )
 }
 
-export default observer(CardBlock)
+export default CardBlock

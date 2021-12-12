@@ -1,7 +1,8 @@
 import { FC } from 'react'
 import { classnames } from 'classnames/tailwind'
-import { observer } from 'mobx-react-lite'
-import AppStore, { Theme } from 'stores/AppStore'
+import { useSnapshot } from 'valtio'
+import AppStore from 'stores/AppStore'
+import Theme from 'models/Theme'
 
 export enum ButtonType {
   accent = 'accent',
@@ -60,7 +61,7 @@ const Button: FC<ButtonPropsExtend> = ({
   children,
   disabled,
 }) => {
-  const theme = AppStore.theme
+  const { theme } = useSnapshot(AppStore)
   return (
     <button
       className={button({ type, wide }, theme)}
@@ -72,4 +73,4 @@ const Button: FC<ButtonPropsExtend> = ({
   )
 }
 
-export default observer(Button)
+export default Button

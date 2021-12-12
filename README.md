@@ -1,6 +1,4 @@
-# StreetCred frontend
-
-SteetCred frontend code.
+# StreetCred frontend code
 
 ## Local launch
 
@@ -14,8 +12,12 @@ SteetCred frontend code.
 
 ## Environment variables
 
-| Name                | Description  |
-| ------------------- | ------------ |
-| `REACT_APP_BACKEND` | API root URL |
+| Name           | Description  |
+| -------------- | ------------ |
+| `VITE_BACKEND` | API root URL |
 
 Also, please, consider looking at `.env.sample`.
+
+## CD
+
+`main` branch gets deployed to [streetcred.one](https://streetcred.one) automatically.

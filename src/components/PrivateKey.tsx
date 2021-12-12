@@ -1,6 +1,7 @@
 import { SubheaderText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
-import UserStore from 'stores/UserStore'
+import { useSnapshot } from 'valtio'
+import PublicAccountStore from 'stores/PublicAccountStore'
 import copy from 'copy-to-clipboard'
 
 const privateKey = classnames(
@@ -18,8 +19,10 @@ const privateKey = classnames(
 const privateKeyCopy = classnames('transition-colors')
 
 const PrivateKey = () => {
+  const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
+
   function onCopyClick() {
-    copy(UserStore.privateKey)
+    copy(publicAccountStoreSnapshot.mainEthWallet.privateKey)
   }
 
   return (

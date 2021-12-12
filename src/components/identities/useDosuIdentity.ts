@@ -6,7 +6,7 @@ import Token from 'models/Token'
 
 export default function useDosuIdentity(onAddToken: (token: Token) => void) {
   const [templates, setTemplates] = useState([] as Template[])
-  const { search } = useLocation<{ token?: string; handle?: string }>()
+  const { search } = useLocation()
 
   const query = new URLSearchParams(search)
   const dosuAuthToken = query.get('token') || ''

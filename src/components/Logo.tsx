@@ -1,5 +1,4 @@
 import { classnames } from 'classnames/tailwind'
-import { observer } from 'mobx-react-lite'
 
 const logoContainer = classnames('relative')
 const colors = {
@@ -9,7 +8,7 @@ const colors = {
   gradientTo: 'var(--logo-layer-gradient-to)',
 }
 const shape = classnames('absolute', 'left-2', 'top-2.5')
-const Logo = observer(() => {
+const Logo = () => {
   return (
     <div className={logoContainer}>
       <svg
@@ -68,6 +67,6 @@ const Logo = observer(() => {
       </svg>
     </div>
   )
-})
+}
 
 export default Logo
