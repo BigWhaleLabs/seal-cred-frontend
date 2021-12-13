@@ -2,30 +2,39 @@ import { FC } from 'react'
 import { classnames } from 'classnames/tailwind'
 
 const grayText = classnames('text-gray-300', 'transition-colors')
-const primaryText = classnames('text-primary', 'transition-colors')
 
 const headerText = classnames(
-  primaryText,
-  'font-secondary',
-  'text-3xl',
-  'md:leading-10',
+  'transition-colors',
+  'text-primary',
+  'font-primary',
   'font-bold',
-  'text-center'
+  'text-2xl',
+  'text-center',
+  'mt-2',
+  'mb-6'
 )
 export const HeaderText: FC = ({ children }) => {
   return <h1 className={headerText}>{children}</h1>
 }
 
 const subheaderText = classnames(
-  primaryText,
-  'font-secondary',
-  'text-xl',
-  'md:text-2xl',
-  'font-bold',
-  'text-center'
+  'transition-colors',
+  'text-primary-dimmed',
+  'font-primary',
+  'mb-4'
 )
 export const SubheaderText: FC = ({ children }) => {
   return <h2 className={subheaderText}>{children}</h2>
+}
+
+const accentText = classnames(
+  'transition-colors',
+  'text-accent',
+  'font-primary',
+  'font-bold'
+)
+export const AccentText: FC = ({ children }) => {
+  return <span className={accentText}>{children}</span>
 }
 
 const bodyText = classnames(grayText, 'text-center')
@@ -37,7 +46,7 @@ const secondaryText = classnames(
   'font-primary',
   'font-normal',
   'text-sm',
-  'text-primary-text-dimmed',
+  'text-primary-dimmed',
   'transition-colors'
 )
 export const SecondaryText: FC = ({ children }) => (
@@ -49,7 +58,7 @@ const subSecondaryText = classnames(
   'font-normal',
   'text-base',
   'text-center',
-  'text-primary-text-dimmed',
+  'text-primary-dimmed',
   'transition-colors'
 )
 export const SubSecondaryText: FC = ({ children }) => (
@@ -58,7 +67,6 @@ export const SubSecondaryText: FC = ({ children }) => (
 
 const secondarySubheaderText = (big: boolean) =>
   classnames(
-    primaryText,
     'font-bold',
     'font-secondary',
     big ? 'leading-8' : 'leading-6',
@@ -94,7 +102,6 @@ export const LogoText: FC = ({ children }) => {
 }
 
 const badgeText = classnames(
-  primaryText,
   'font-normal',
   'font-primary',
   'leading-6',
@@ -105,19 +112,6 @@ const badgeText = classnames(
 )
 export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
-}
-
-const accentText = classnames(
-  'text-accent',
-  'font-bold',
-  'font-primary',
-  'leading-8',
-  'text-base',
-  'md:text-xl',
-  'transition-colors'
-)
-export const AccentText: FC = ({ children }) => {
-  return <h3 className={accentText}>{children}</h3>
 }
 
 const linkText = classnames('text-primary', 'transition-colors')

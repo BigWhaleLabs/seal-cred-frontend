@@ -1,10 +1,10 @@
 import { SecondaryText } from 'components/Text'
-import CardBlock from 'components/CardBlock'
+import CardBlock from 'components/Card'
 import ConnectMetamask from 'components/identities/ConnectMetamask'
 
 const SocialCard = () => {
   return (
-    <CardBlock border tiny>
+    <CardBlock border>
       <SecondaryText>Link identity</SecondaryText>
       <ConnectMetamask />
     </CardBlock>

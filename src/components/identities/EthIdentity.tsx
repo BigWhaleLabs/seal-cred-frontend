@@ -1,6 +1,6 @@
 import { Identities } from 'components/Identity'
 import { SecondarySubheaderText } from 'components/Text'
-import CardBlock from 'components/CardBlock'
+import CardBlock from 'components/Card'
 import CreateBadgeList from 'components/identities/CreateBadgeList'
 import CreatedBadgeList from 'components/identities/CreatedBadgeList'
 import Token from 'models/Token'
@@ -29,7 +29,7 @@ export default function EthIdentity({
   )
 
   return (
-    <CardBlock border tiny title={Identities.eth}>
+    <CardBlock border title={Identities.eth}>
       <SecondarySubheaderText big>
         {shortAddress(address)}
       </SecondarySubheaderText>

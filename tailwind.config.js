@@ -9,13 +9,12 @@ module.exports = {
     extend: {
       colors: {
         primary: 'var(--primary)',
-        'primary-text-dimmed': 'var(--primary-text-dimmed)',
+        'primary-dimmed': 'var(--primary-text-dimmed)',
         secondary: 'var(--secondary)',
         accent: 'var(--accent)',
         'accent-light': 'var(--accent-light)',
         'accent-dimmed': 'var(--accent-dimmed)',
         background: 'var(--background)',
-        transparent: 'var(--transparent)',
         'semi-background': 'var(--semi-background)',
         border: 'var(--border)',
         error: 'var(--error)',

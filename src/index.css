@@ -23,7 +23,6 @@ body {
   --accent-dimmed: #2f65e4;
 
   --gray-semi-transparent: rgba(31, 32, 34, 0.8);
-  --transparent: rgba(0, 0, 0, 0);
   --shadow: rgba(31, 47, 70, 0.12);
   --private-key: #131315;
 
@@ -44,7 +43,6 @@ body {
   --accent-dimmed: #2f65e4;
 
   --gray-semi-transparent: rgba(107, 114, 128, 0.5);
-  --transparent: rgba(0, 0, 0, 0);
   --shadow: rgba(31, 47, 70, 0.12);
   --private-key: #f4f5f6;
 

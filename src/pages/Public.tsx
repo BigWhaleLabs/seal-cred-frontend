@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { HeaderText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import { useParams } from 'react-router-dom'
-import CardBlock from 'components/CardBlock'
+import CardBlock from 'components/Card'
 import EthereumBlock from 'components/EthereumBlock'
 
 const Public: FC = () => {

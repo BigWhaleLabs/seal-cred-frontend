@@ -3,7 +3,6 @@ import { classnames } from 'classnames/tailwind'
 const logoContainer = classnames('relative')
 const colors = {
   layer: 'var(--accent)',
-  icon: 'var(--primary)',
   gradientFrom: 'var(--logo-layer-gradient-from)',
   gradientTo: 'var(--logo-layer-gradient-to)',
 }
@@ -61,7 +60,6 @@ const Logo = () => {
             gradientUnits="userSpaceOnUse"
           >
             <stop stopColor="white" />
-            <stop offset="1" stopColor={colors.icon} stopOpacity="0.75" />
           </linearGradient>
         </defs>
       </svg>
