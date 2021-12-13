@@ -37,21 +37,20 @@ export const AccentText: FC = ({ children }) => {
   return <span className={accentText}>{children}</span>
 }
 
-const bodyText = classnames(grayText, 'text-center')
-export const BodyText: FC = ({ children }) => {
-  return <p className={bodyText}>{children}</p>
-}
-
 const secondaryText = classnames(
+  'transition-colors',
   'font-primary',
   'font-normal',
-  'text-sm',
-  'text-primary-dimmed',
-  'transition-colors'
+  'text-primary-dimmed'
 )
 export const SecondaryText: FC = ({ children }) => (
   <div className={secondaryText}>{children}</div>
 )
+
+const bodyText = classnames(grayText, 'text-center')
+export const BodyText: FC = ({ children }) => {
+  return <p className={bodyText}>{children}</p>
+}
 
 const subSecondaryText = classnames(
   'font-primary',

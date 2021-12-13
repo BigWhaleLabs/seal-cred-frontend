@@ -14,7 +14,8 @@ const cardContainer = (shadow?: boolean) => {
     'rounded-block',
     theme === 'dark' ? 'bg-semi-background' : 'bg-background',
     shadow ? 'shadow' : undefined,
-    theme === 'light' ? 'border' : undefined
+    theme === 'light' ? 'border' : undefined,
+    'p-6'
   )
 }
 

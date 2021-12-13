@@ -1,18 +1,14 @@
-// import { classnames } from 'classnames/tailwind'
-// import GridLayout from 'components/GridLayout'
-import { useParams } from 'react-router-dom'
+import Identities from 'components/Identities'
 import PublicAddress from 'components/PublicAddress'
-// import SocialCard from 'components/identities/SocialCard'
+import useAddress from 'helpers/useAddress'
 
 export default function Main() {
+  const address = useAddress()
+
   return (
     <>
       <PublicAddress />
-      {/* <div className={classnames('pt-5', 'md:pt-9')}>
-        <GridLayout>
-          <SocialCard />
-        </GridLayout>
-      </div> */}
+      {!address && <Identities />}
     </>
   )
 }

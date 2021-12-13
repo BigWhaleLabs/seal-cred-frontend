@@ -11,6 +11,9 @@ export interface ButtonProps {
 
 const button = (type: ButtonType) =>
   classnames(
+    'flex',
+    'flex-row',
+    'space-x-2',
     'transition-colors',
     'font-bold',
     'text-white',
