@@ -1,7 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import Home from 'pages/Home'
+import Main from 'pages/Main'
 import Navbar from 'components/Navbar'
-// import Public from 'pages/Public'
 import Root from 'components/Root'
 
 export default function App() {
@@ -10,8 +9,8 @@ export default function App() {
       <Router>
         <Navbar />
         <Routes>
-          {/* <Route path="/:address" element={<Public />} /> */}
-          <Route path="/" element={<Home />} />
+          <Route path="/:address" element={<Main />} />
+          <Route path="/" element={<Main />} />
         </Routes>
       </Router>
     </Root>

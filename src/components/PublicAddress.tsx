@@ -1,5 +1,6 @@
 import { AccentText, HeaderText, SubheaderText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
+import { useParams } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Button from 'components/Button'
@@ -20,7 +21,7 @@ const addressContainer = classnames(
   'lg:space-x-2',
   'mt-10'
 )
-const address = classnames(
+const addressBackground = classnames(
   'transition-colors',
   'py-4',
   'px-6',
@@ -33,6 +34,7 @@ const address = classnames(
 export default function PublicAddress() {
   const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
   const [copied, setCopied] = useState(false)
+  const { address } = useParams<{ address: string }>()
 
   return (
     <div className={outerContainer}>
@@ -49,11 +51,12 @@ export default function PublicAddress() {
             be public until you link them to this public ETH address.
           </SubheaderText>
           <div className={addressContainer}>
-            <div className={address}>
+            <div className={addressBackground}>
               <AccentText>
-                {publicAccountStoreSnapshot.mainEthWallet.address}
+                {address || publicAccountStoreSnapshot.mainEthWallet.address}
               </AccentText>
             </div>
+            {/* {!address && ( */}
             <Button
               type="accent"
               onClick={() => {
@@ -63,6 +66,7 @@ export default function PublicAddress() {
             >
               {copied ? 'Copied to the clipboard!' : 'Copy private key'}
             </Button>
+            {/* )} */}
           </div>
         </div>
       </Card>
