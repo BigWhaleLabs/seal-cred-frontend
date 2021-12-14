@@ -1,5 +1,6 @@
 import { BodyText, LargerText } from 'components/Text'
 import { FC, useEffect } from 'react'
+import { classnames } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import Card from 'components/Card'
 import ConnectedIdentity from 'models/ConnectedIdentity'
@@ -14,6 +15,7 @@ export interface IdentityProps {
   connectedIdentity?: ConnectedIdentity
 }
 
+const breakWords = classnames('break-words')
 const IdentityComponent: FC<IdentityProps> = ({
   connectedIdentity,
   connectingIdentityType,
@@ -34,6 +36,9 @@ const IdentityComponent: FC<IdentityProps> = ({
       return
     }
     const verifyIdentity = async () => {
+      if (!identity.verify) {
+        return
+      }
       const { identifier } = await identity.verify({ secret: accessToken })
       if (
         !PublicAccountStore.connectedIdentities.find(
@@ -59,11 +64,12 @@ const IdentityComponent: FC<IdentityProps> = ({
       <BodyText>{identity.name}</BodyText>
       {!connectedIdentity && <FetchingData />}
       {connectedIdentity && (
-        <>
+        <div className={breakWords}>
           <LargerText>
-            {identity.identifierTransformator(connectedIdentity.identifier)}
+            {identity.identifierTransformator?.(connectedIdentity.identifier) ||
+              connectedIdentity.identifier}
           </LargerText>
-        </>
+        </div>
       )}
     </Card>
   )

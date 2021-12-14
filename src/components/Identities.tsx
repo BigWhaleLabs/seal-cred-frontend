@@ -26,9 +26,16 @@ export default function Identities() {
       {connectingIdentityType && (
         <Identity connectingIdentityType={connectingIdentityType} />
       )}
-      {ethStoreSnapshot.accounts.map((account) => (
-        <EthereumIdentityToVerify address={account} key={account} />
-      ))}
+      {ethStoreSnapshot.accounts
+        .filter(
+          (account) =>
+            !PublicAccountStore.connectedIdentities.find(
+              (identity) => identity.identifier === account
+            )
+        )
+        .map((account) => (
+          <EthereumIdentityToVerify address={account} key={account} />
+        ))}
       {publicAccountStoreSnapshot.connectedIdentities.map((identity) => (
         <Identity
           key={`${identity.type}-${identity.identifier}`}

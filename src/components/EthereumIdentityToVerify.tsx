@@ -1,8 +1,12 @@
 import { BodyText, LargerText } from 'components/Text'
+import { Buffer } from 'buffer'
 import { FC, useState } from 'react'
 import { classnames } from 'classnames/tailwind'
 import Button from 'components/Button'
 import Card from 'components/Card'
+import PublicAccountStore from 'stores/PublicAccountStore'
+import axios from 'axios'
+import identities from 'models/identities'
 
 interface EthereumIdentityToVerifyProps {
   address: string
@@ -24,11 +28,40 @@ const EthereumIdentityToVerify: FC<EthereumIdentityToVerifyProps> = ({
       <Button
         loading={loading}
         type="primary"
-        onClick={() => {
+        onClick={async () => {
           setLoading(true)
-          setTimeout(() => {
+          try {
+            const from = address
+            const msg = `0x${Buffer.from(address, 'utf8').toString('hex')}`
+            const signature = await window.ethereum.request({
+              method: 'personal_sign',
+              params: [msg, from],
+            })
+            const verificationResult = await axios.post<{
+              address: string
+              token: string
+            }>(`${import.meta.env.VITE_BACKEND}/eth/verify`, {
+              address,
+              signature,
+            })
+            if (
+              !PublicAccountStore.connectedIdentities.find(
+                (identity) =>
+                  identity.type === 'eth' && identity.identifier === address
+              )
+            ) {
+              PublicAccountStore.connectedIdentities.unshift({
+                type: 'eth',
+                name: identities.eth.name,
+                identifier: address,
+                secret: verificationResult.data.token,
+              })
+            }
+          } catch (error) {
+            console.error(error)
+          } finally {
             setLoading(false)
-          }, 1000)
+          }
         }}
       >
         Verify
