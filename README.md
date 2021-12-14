@@ -12,9 +12,10 @@
 
 ## Environment variables
 
-| Name           | Description  |
-| -------------- | ------------ |
-| `VITE_BACKEND` | API root URL |
+| Name                | Description       |
+| ------------------- | ----------------- |
+| `VITE_BACKEND`      | API root URL      |
+| `VITE_DOSU_BACKEND` | Dosu API root URL |
 
 Also, please, consider looking at `.env.sample`.
 

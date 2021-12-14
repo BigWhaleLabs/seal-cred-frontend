@@ -1,44 +1,71 @@
-import { FC } from 'react'
-import { SecondarySubheaderText } from 'components/Text'
-import { classnames } from 'classnames/tailwind'
-
-export enum Identities {
-  twitter = 'Twitter',
-  linkedin = 'Linkedin',
-  rarible = 'Rarible',
-  eth = 'ETH',
-  dosu = 'Dosu',
-}
+import { BodyText, LargerText } from 'components/Text'
+import { FC, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Card from 'components/Card'
+import ConnectedIdentity from 'models/ConnectedIdentity'
+import FetchingData from 'components/FetchingData'
+import IdentityType from 'models/IdentityType'
+import PublicAccountStore from 'stores/PublicAccountStore'
+import identities from 'models/identities'
+import useQuery from 'helpers/useQuery'
 
 export interface IdentityProps {
-  name: Identities
-  emphasis?: boolean
-  onClick?: () => void
+  connectingIdentityType?: IdentityType
+  connectedIdentity?: ConnectedIdentity
 }
 
-const identityBlock = (emphasis: boolean, clickable: boolean) =>
-  classnames(
-    'flex',
-    'items-center',
-    'space-x-2',
-    'focus:outline-none',
-    'transition-colors',
-    'w-full',
-    emphasis ? 'mb-2' : 'my-4',
-    clickable ? 'cursor-pointer' : 'cursor-default'
-  )
+const IdentityComponent: FC<IdentityProps> = ({
+  connectedIdentity,
+  connectingIdentityType,
+}) => {
+  const identityType = connectedIdentity?.type || connectingIdentityType
+  const query = useQuery()
+  const accessToken = query.get('access_token')
+  const navigate = useNavigate()
 
-const Identity: FC<IdentityProps> = ({ name, emphasis, onClick }) => {
-  const clickable = !!onClick
+  if (!identityType) {
+    return null
+  }
+
+  const identity = identities[identityType]
+
+  useEffect(() => {
+    if (!connectingIdentityType || !accessToken) {
+      return
+    }
+    const verifyIdentity = async () => {
+      const { identifier } = await identity.verify({ accessToken })
+      if (
+        !PublicAccountStore.connectedIdentities.find(
+          (identity) =>
+            identity.type === connectingIdentityType &&
+            identity.identifier === identifier
+        )
+      ) {
+        PublicAccountStore.connectedIdentities.unshift({
+          type: identityType,
+          name: identity.name,
+          identifier,
+        })
+      }
+      navigate('/')
+    }
+    void verifyIdentity()
+  }, [connectingIdentityType, accessToken, identity, identityType, navigate])
+
   return (
-    <button
-      className={identityBlock(emphasis || false, clickable)}
-      onClick={onClick}
-    >
-      <img src={`/img/${name.toLowerCase()}.svg`} alt={name} />
-      <SecondarySubheaderText>{name}</SecondarySubheaderText>
-    </button>
+    <Card>
+      <BodyText>{identity.name}</BodyText>
+      {!connectedIdentity && <FetchingData />}
+      {connectedIdentity && (
+        <>
+          <LargerText>
+            {identity.identifierTransformator(connectedIdentity.identifier)}
+          </LargerText>
+        </>
+      )}
+    </Card>
   )
 }
 
-export default Identity
+export default IdentityComponent

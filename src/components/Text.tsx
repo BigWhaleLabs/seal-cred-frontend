@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import { classnames } from 'classnames/tailwind'
 
-const grayText = classnames('text-gray-300', 'transition-colors')
-
 const headerText = classnames(
   'transition-colors',
   'text-primary',
@@ -37,55 +35,14 @@ export const AccentText: FC = ({ children }) => {
   return <span className={accentText}>{children}</span>
 }
 
-const secondaryText = classnames(
-  'transition-colors',
-  'font-primary',
-  'font-normal',
-  'text-primary-dimmed'
-)
-export const SecondaryText: FC = ({ children }) => (
-  <div className={secondaryText}>{children}</div>
-)
-
-const bodyText = classnames(grayText, 'text-center')
+const bodyText = classnames('transition-colors', 'text-primary', 'mb-2')
 export const BodyText: FC = ({ children }) => {
-  return <p className={bodyText}>{children}</p>
+  return <div className={bodyText}>{children}</div>
 }
 
-const subSecondaryText = classnames(
-  'font-primary',
-  'font-normal',
-  'text-base',
-  'text-center',
-  'text-primary-dimmed',
-  'transition-colors'
-)
-export const SubSecondaryText: FC = ({ children }) => (
-  <div className={subSecondaryText}>{children}</div>
-)
-
-const secondarySubheaderText = (big: boolean) =>
-  classnames(
-    'font-bold',
-    'font-secondary',
-    big ? 'leading-8' : 'leading-6',
-    big ? 'text-2xl' : 'text-lg'
-  )
-export const SecondarySubheaderText: FC<{ big?: boolean }> = ({
-  big,
-  children,
-}) => {
-  return <div className={secondarySubheaderText(big || false)}>{children}</div>
-}
-
-const regularText = classnames(
-  'text-secondary',
-  'transition-colors',
-  'text-base',
-  'font-normal'
-)
-export const RegularText: FC = ({ children }) => {
-  return <div className={regularText}>{children}</div>
+const largerText = classnames('transition-colors', 'text-primary', 'text-2xl')
+export const LargerText: FC = ({ children }) => {
+  return <div className={largerText}>{children}</div>
 }
 
 const logoText = classnames(
@@ -99,26 +56,3 @@ const logoText = classnames(
 export const LogoText: FC = ({ children }) => {
   return <span className={logoText}>{children}</span>
 }
-
-const badgeText = classnames(
-  'font-normal',
-  'font-primary',
-  'leading-6',
-  'text-sm',
-  'text-center',
-  'max-w-xs',
-  'truncate'
-)
-export const BadgeText: FC = ({ children }) => {
-  return <span className={badgeText}>{children}</span>
-}
-
-const linkText = classnames('text-primary', 'transition-colors')
-export const LinkText: FC<{ href?: string | undefined }> = ({
-  children,
-  href,
-}) => (
-  <a className={linkText} href={href}>
-    {children}
-  </a>
-)

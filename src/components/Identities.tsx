@@ -1,8 +1,9 @@
-import { SubheaderText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
-import { useMetaMask } from 'metamask-react'
-import Button from 'components/Button'
-import Card from 'components/Card'
+import { useSnapshot } from 'valtio'
+import AddIdentity from 'components/AddIdentity'
+import Identity from 'components/Identity'
+import PublicAccountStore from 'stores/PublicAccountStore'
+import useConnectingIdentityType from 'helpers/useConnectingIdentityType'
 
 const container = classnames(
   'grid',
@@ -13,17 +14,20 @@ const container = classnames(
 )
 
 export default function Identities() {
-  const { connect: connectMetamask } = useMetaMask()
-
+  const connectingIdentityType = useConnectingIdentityType()
+  const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
   return (
     <div className={container}>
-      <Card>
-        <SubheaderText>Link another identity</SubheaderText>
-        <Button type="primary" onClick={connectMetamask}>
-          <img src="/img/metamask.svg" alt="metamask" />
-          <span>Metamask</span>
-        </Button>
-      </Card>
+      <AddIdentity />
+      {connectingIdentityType && (
+        <Identity connectingIdentityType={connectingIdentityType} />
+      )}
+      {publicAccountStoreSnapshot.connectedIdentities.map((identity) => (
+        <Identity
+          key={`${identity.type}-${identity.identifier}`}
+          connectedIdentity={identity}
+        />
+      ))}
     </div>
   )
 }
