@@ -6,7 +6,7 @@ import Button from 'components/Button'
 import Card from 'components/Card'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import copy from 'copy-to-clipboard'
-import useAddress from 'helpers/useAddress'
+import useAddress from 'hooks/useAddress'
 
 const outerContainer = classnames('my-4')
 const addressContainer = classnames(

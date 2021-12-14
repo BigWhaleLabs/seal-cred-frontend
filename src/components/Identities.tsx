@@ -1,10 +1,10 @@
 import { classnames } from 'classnames/tailwind'
+import { useMetaMask } from 'metamask-react'
 import { useSnapshot } from 'valtio'
 import AddIdentity from 'components/AddIdentity'
 import Identity from 'components/Identity'
 import PublicAccountStore from 'stores/PublicAccountStore'
-import { useMetaMask } from 'metamask-react'
-import useConnectingIdentityType from 'helpers/useConnectingIdentityType'
+import useConnectingIdentityType from 'hooks/useConnectingIdentityType'
 
 const container = classnames(
   'grid',

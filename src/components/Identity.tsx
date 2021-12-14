@@ -7,7 +7,7 @@ import FetchingData from 'components/FetchingData'
 import IdentityType from 'models/IdentityType'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import identities from 'models/identities'
-import useQuery from 'helpers/useQuery'
+import useQuery from 'hooks/useQuery'
 
 export interface IdentityProps {
   connectingIdentityType?: IdentityType

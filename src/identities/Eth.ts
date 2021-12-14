@@ -10,7 +10,7 @@ export default {
       eth: string
     }>(
       `${import.meta.env.VITE_DOSU_BACKEND}/access-token/eth?accessToken=${
-        credentials.accessToken
+        credentials.secret
       }`
     )
     return {
