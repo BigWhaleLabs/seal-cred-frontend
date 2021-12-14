@@ -34,7 +34,7 @@ const IdentityComponent: FC<IdentityProps> = ({
       return
     }
     const verifyIdentity = async () => {
-      const { identifier } = await identity.verify({ accessToken })
+      const { identifier } = await identity.verify({ secret: accessToken })
       if (
         !PublicAccountStore.connectedIdentities.find(
           (identity) =>
