@@ -4,14 +4,18 @@ import Button from 'components/Button'
 import Card from 'components/Card'
 
 export default function AddIdentity() {
-  const { connect: connectMetamask } = useMetaMask()
+  const { connect: connectMetamask, status } = useMetaMask()
 
   return (
     <Card>
       <BodyText>Link another identity</BodyText>
-      <Button type="primary" onClick={connectMetamask}>
+      <Button
+        disabled={status === 'connecting'}
+        type="primary"
+        onClick={connectMetamask}
+      >
         <img src="/img/metamask.svg" alt="metamask" />
-        <span>Metamask</span>
+        <span>{status === 'connecting' ? 'Connecting' : 'Metamask'}</span>
       </Button>
     </Card>
   )

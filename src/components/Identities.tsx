@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio'
 import AddIdentity from 'components/AddIdentity'
 import Identity from 'components/Identity'
 import PublicAccountStore from 'stores/PublicAccountStore'
+import { useMetaMask } from 'metamask-react'
 import useConnectingIdentityType from 'helpers/useConnectingIdentityType'
 
 const container = classnames(
@@ -16,6 +17,8 @@ const container = classnames(
 export default function Identities() {
   const connectingIdentityType = useConnectingIdentityType()
   const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
+  const { status, account } = useMetaMask()
+
   return (
     <div className={container}>
       <AddIdentity />
@@ -28,6 +31,13 @@ export default function Identities() {
           connectedIdentity={identity}
         />
       ))}
+      <div style={{ background: 'var(--semi-background)' }}>
+        {status === 'connected' ? (
+          <h1 style={{ color: '#fff' }}>Connected: {account}</h1>
+        ) : (
+          <h1 style={{ color: '#fff' }}>Not connected</h1>
+        )}
+      </div>
     </div>
   )
 }
