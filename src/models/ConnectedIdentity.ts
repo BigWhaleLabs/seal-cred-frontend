@@ -4,4 +4,5 @@ export default interface ConnectedIdentity {
   type: IdentityType
   name: string
   identifier: string
+  secret: string
 }

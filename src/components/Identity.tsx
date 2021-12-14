@@ -46,6 +46,7 @@ const IdentityComponent: FC<IdentityProps> = ({
           type: identityType,
           name: identity.name,
           identifier,
+          secret: accessToken,
         })
       }
       navigate('/')
