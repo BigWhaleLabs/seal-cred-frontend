@@ -21,15 +21,15 @@ const logoContainer = classnames('inline-flex', 'items-center', 'space-x-2')
 
 export default function Navbar() {
   return (
-    <Link to="/">
-      <nav className={navbar}>
+    <nav className={navbar}>
+      <Link to="/">
         <div className={logoContainer}>
           <Logo />
           <LogoText>StreetCred</LogoText>
         </div>
+      </Link>
 
-        <ThemeToggle />
-      </nav>
-    </Link>
+      <ThemeToggle />
+    </nav>
   )
 }
