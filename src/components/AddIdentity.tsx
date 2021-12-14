@@ -11,7 +11,7 @@ export default function AddIdentity() {
       <BodyText>Link another identity</BodyText>
       <Button
         type="primary"
-        disabled={loading}
+        loading={loading}
         onClick={async () => {
           setLoading(true)
           try {

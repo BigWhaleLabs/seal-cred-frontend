@@ -40,7 +40,12 @@ export const BodyText: FC = ({ children }) => {
   return <div className={bodyText}>{children}</div>
 }
 
-const largerText = classnames('transition-colors', 'text-primary', 'text-2xl')
+const largerText = classnames(
+  'transition-colors',
+  'text-primary',
+  'text-2xl',
+  'mb-2'
+)
 export const LargerText: FC = ({ children }) => {
   return <div className={largerText}>{children}</div>
 }

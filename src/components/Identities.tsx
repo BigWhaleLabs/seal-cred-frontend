@@ -1,8 +1,8 @@
-import { BodyText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import AddIdentity from 'components/AddIdentity'
 import EthStore from 'stores/EthStore'
+import EthereumIdentityToVerify from 'components/EthereumIdentityToVerify'
 import Identity from 'components/Identity'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import useConnectingIdentityType from 'hooks/useConnectingIdentityType'
@@ -26,14 +26,14 @@ export default function Identities() {
       {connectingIdentityType && (
         <Identity connectingIdentityType={connectingIdentityType} />
       )}
+      {ethStoreSnapshot.accounts.map((account) => (
+        <EthereumIdentityToVerify address={account} key={account} />
+      ))}
       {publicAccountStoreSnapshot.connectedIdentities.map((identity) => (
         <Identity
           key={`${identity.type}-${identity.identifier}`}
           connectedIdentity={identity}
         />
-      ))}
-      {ethStoreSnapshot.accounts.map((account) => (
-        <BodyText key={account}>{account}</BodyText>
       ))}
     </div>
   )
