@@ -11171,13 +11171,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"metamask-react@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "metamask-react@npm:2.1.2"
-  checksum: 77118a3c2f6dff4e5e9d81c612fe53247922239dbe5906d8ea41913e7465cce191b99b819361140c323f39f326cfd2fbaadccf88119aa46755121d3704c98a3d
-  languageName: node
-  linkType: hard
-
 "methods@npm:~1.1.2":
   version: 1.1.2
   resolution: "methods@npm:1.1.2"
@@ -15459,7 +15452,6 @@ __metadata:
     eslint-plugin-sort-imports-es6-autofix: ^0.6.0
     eslint-plugin-valtio: ^0.4.1
     ethers: ^5.5.2
-    metamask-react: ^2.1.2
     postcss: ^7
     preact: ^10.6.4
     prettier: ^2.5.1
