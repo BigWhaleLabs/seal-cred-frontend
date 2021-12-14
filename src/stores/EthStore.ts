@@ -1,5 +1,10 @@
 import { proxy } from 'valtio'
 
+// TODO: handle no provider
+// TODO: handle no metamask
+// TODO: handle verification
+// TODO: add a way to re-connect the metamask?
+
 class EthStore {
   accounts: string[] = []
 

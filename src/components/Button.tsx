@@ -2,11 +2,13 @@ import { FC } from 'react'
 import { classnames } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
+import Loading from 'components/Loading'
 
 export type ButtonType = 'accent' | 'primary' | 'success' | 'error'
 
 export interface ButtonProps {
   type: ButtonType
+  loading?: boolean
 }
 
 const button = (type: ButtonType) =>
@@ -41,11 +43,13 @@ const typeButton = (type: ButtonType) => {
 const Button: FC<ButtonProps & React.HTMLProps<HTMLButtonElement>> = ({
   type,
   children,
+  loading,
   ...rest
 }) => {
   return (
-    <button className={button(type)} {...rest}>
-      {children}
+    <button className={button(type)} {...rest} disabled={loading}>
+      {loading && <Loading />}
+      {typeof children === 'string' ? <span>{children}</span> : children}
     </button>
   )
 }
