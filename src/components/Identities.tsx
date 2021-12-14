@@ -1,6 +1,8 @@
+import { BodyText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import AddIdentity from 'components/AddIdentity'
+import EthStore from 'stores/EthStore'
 import Identity from 'components/Identity'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import useConnectingIdentityType from 'hooks/useConnectingIdentityType'
@@ -16,6 +18,7 @@ const container = classnames(
 export default function Identities() {
   const connectingIdentityType = useConnectingIdentityType()
   const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
+  const ethStoreSnapshot = useSnapshot(EthStore)
 
   return (
     <div className={container}>
@@ -28,6 +31,9 @@ export default function Identities() {
           key={`${identity.type}-${identity.identifier}`}
           connectedIdentity={identity}
         />
+      ))}
+      {ethStoreSnapshot.accounts.map((account) => (
+        <BodyText key={account}>{account}</BodyText>
       ))}
     </div>
   )
