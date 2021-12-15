@@ -1,8 +1,8 @@
-import Token from 'models/Token'
-import TokenType from 'models/TokenType'
+import { BadgeText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import Button from 'components/Button'
-import { BadgeText } from 'components/Text'
+import Token from 'models/Token'
+import TokenType from 'models/TokenType'
 
 export enum TokenActionType {
   accent = 'mint',

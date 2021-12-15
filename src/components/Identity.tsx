@@ -1,5 +1,6 @@
 import { BodyText, LargerText, SubheaderText } from 'components/Text'
 import { FC, useEffect, useState } from 'react'
+import { TokenList } from 'components/TokenList'
 import { classnames } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import Card from 'components/Card'
@@ -12,7 +13,6 @@ import TokenType from 'models/TokenType'
 import getPrivateTokens, { mintDosu } from 'helpers/api'
 import identities from 'models/identities'
 import useQuery from 'hooks/useQuery'
-import { TokenList } from 'components/TokenList'
 
 interface TokensProps {
   connectedIdentity: ConnectedIdentity
