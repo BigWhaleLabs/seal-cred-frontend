@@ -61,3 +61,13 @@ const logoText = classnames(
 export const LogoText: FC = ({ children }) => {
   return <span className={logoText}>{children}</span>
 }
+
+const badgeText = classnames(
+  'font-secondary',
+  'text-primary',
+  'transition-colors',
+  'leading-8'
+)
+export const BadgeText: FC = ({ children }) => {
+  return <span className={badgeText}>{children}</span>
+}
