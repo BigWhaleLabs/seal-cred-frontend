@@ -7,15 +7,13 @@ export default async function getPrivateTokens(
   type: IdentityType,
   secret: string
 ) {
-  const { data } = await Api.get<{
+  const { data } = await Api.post<{
     unminted: TokenType[]
     minted: Token[]
     connected: Token[]
   }>('/tokens/private', {
-    params: {
-      type,
-      secret,
-    },
+    type,
+    secret,
   })
   return data
 }
