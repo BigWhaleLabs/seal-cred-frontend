@@ -1,5 +1,5 @@
 import { BodyText, LargerText } from 'components/Text'
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { classnames } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import Card from 'components/Card'
@@ -7,14 +7,52 @@ import ConnectedIdentity from 'models/ConnectedIdentity'
 import FetchingData from 'components/FetchingData'
 import IdentityType from 'models/IdentityType'
 import PublicAccountStore from 'stores/PublicAccountStore'
+import Token from 'models/Token'
+import TokenType from 'models/TokenType'
+import getPrivateTokens from 'helpers/api'
 import identities from 'models/identities'
 import useQuery from 'hooks/useQuery'
 
-export interface IdentityProps {
+interface TokensProps {
+  connectedIdentity: ConnectedIdentity
+}
+const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
+  const [loading, setLoading] = useState(true)
+  const [tokens, setTokens] = useState<{
+    unminted: TokenType[]
+    minted: Token[]
+    connected: Token[]
+  }>()
+
+  useEffect(() => {
+    const fetchTokens = async () => {
+      try {
+        setTokens(
+          await getPrivateTokens(
+            connectedIdentity.type,
+            connectedIdentity.secret
+          )
+        )
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    void fetchTokens()
+  }, [connectedIdentity])
+
+  return loading ? (
+    <FetchingData />
+  ) : (
+    <BodyText>{JSON.stringify(tokens)}</BodyText>
+  )
+}
+
+interface IdentityProps {
   connectingIdentityType?: IdentityType
   connectedIdentity?: ConnectedIdentity
 }
-
 const breakWords = classnames('break-words')
 const IdentityComponent: FC<IdentityProps> = ({
   connectedIdentity,
@@ -71,6 +109,7 @@ const IdentityComponent: FC<IdentityProps> = ({
           </LargerText>
         </div>
       )}
+      {connectedIdentity && <Tokens connectedIdentity={connectedIdentity} />}
     </Card>
   )
 }

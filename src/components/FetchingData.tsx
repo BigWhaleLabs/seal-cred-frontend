@@ -7,7 +7,7 @@ export default function FetchingData() {
   return (
     <div className={container}>
       <Loading />
-      <LargerText>Fetching data...</LargerText>
+      <LargerText>Fetching...</LargerText>
     </div>
   )
 }
