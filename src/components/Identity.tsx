@@ -52,23 +52,31 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
   ) : (
     <div className={identitiesBlock}>
       <div className={badges}>
-        {(!!tokens?.minted.length || !!tokens?.unminted.length) && (
+        {(!!tokens?.minted.length || !!tokens?.connected.length) && (
           <>
             <SubheaderText>NFT badges you have:</SubheaderText>
             {!!tokens?.minted.length &&
               TokenList({
                 tokens: tokens?.minted,
-                type: 'mint',
+                type: 'link',
                 connectedIdentity,
               })}
-            {!!tokens?.unminted.length &&
-              TokenList({ tokens: tokens?.unminted, type: 'link', connectedIdentity })}
+            {!!tokens?.connected.length &&
+              TokenList({
+                tokens: tokens?.connected,
+                type: 'unlink',
+                connectedIdentity,
+              })}
           </>
         )}
-        {!!tokens?.connected.length && (
+        {!!tokens?.unminted.length && (
           <>
             <SubheaderText>NFT badges you can create:</SubheaderText>
-            {TokenList({ tokens: tokens?.connected, type: 'unlink', connectedIdentity })}
+            {TokenList({
+              tokens: tokens?.unminted,
+              type: 'mint',
+              connectedIdentity,
+            })}
           </>
         )}
         {!tokens?.minted.length &&
