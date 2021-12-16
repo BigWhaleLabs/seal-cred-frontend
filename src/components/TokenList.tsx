@@ -1,20 +1,20 @@
 import { BadgeText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import { mintToken, linkToken, unlinkToken } from 'helpers/api'
-import Button from 'components/Button'
+import TokenButton from 'components/TokenButton'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
 
 export enum TokenActionType {
-  mint = 'accent',
-  unlink = 'error',
-  link = 'success',
+  minted = 'link',
+  unminted = 'create',
+  connected = 'unlink',
 }
 export interface TokenListProps {
   connectedIdentity: ConnectedIdentity
   tokens: (Token | TokenType)[]
-  type: 'mint' | 'unlink' | 'link'
+  type: 'minted' | 'unminted' | 'connected'
   action?: () => Promise<void>
 }
 
@@ -28,7 +28,7 @@ const defaultFunction = async (
   publicOwnerAddress?: string
 ) => {
   switch (type) {
-    case 'link':
+    case 'minted':
       await linkToken(
         connectedIdentity.type,
         TokenType.dosuHandle,
@@ -36,9 +36,9 @@ const defaultFunction = async (
         publicOwnerAddress || ''
       )
       break
-    case 'mint':
-    case 'unlink':
-      type === 'mint'
+    case 'unminted':
+    case 'connected':
+      type === 'unminted'
         ? await mintToken(
             connectedIdentity.type,
             TokenType.dosuHandle,
@@ -64,9 +64,8 @@ export const TokenList = ({
         <BadgeText>{typeof token === 'string' ? token : token.type}</BadgeText>
       </div>
       <div className={listTokenAction}>
-        <Button
-          type={TokenActionType[type]}
-          badge
+        <TokenButton
+          type={type}
           onClick={() => {
             action ||
               defaultFunction(
@@ -76,8 +75,8 @@ export const TokenList = ({
               )
           }}
         >
-          {type}
-        </Button>
+          {TokenActionType[type]}
+        </TokenButton>
       </div>
     </div>
   ))

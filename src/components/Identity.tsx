@@ -58,13 +58,13 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
             {!!tokens?.minted.length &&
               TokenList({
                 tokens: tokens?.minted,
-                type: 'link',
+                type: 'minted',
                 connectedIdentity,
               })}
             {!!tokens?.connected.length &&
               TokenList({
                 tokens: tokens?.connected,
-                type: 'unlink',
+                type: 'connected',
                 connectedIdentity,
               })}
           </>
@@ -74,7 +74,7 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
             <SubheaderText>NFT badges you can create:</SubheaderText>
             {TokenList({
               tokens: tokens?.unminted,
-              type: 'mint',
+              type: 'unminted',
               connectedIdentity,
             })}
           </>
