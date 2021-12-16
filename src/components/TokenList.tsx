@@ -1,9 +1,9 @@
 import { BadgeText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
-import { mintToken, linkToken, unlinkToken } from 'helpers/api'
-import TokenButton from 'components/TokenButton'
+import { linkToken, mintToken, unlinkToken } from 'helpers/api'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import Token from 'models/Token'
+import TokenButton from 'components/TokenButton'
 import TokenType from 'models/TokenType'
 
 export enum TokenActionType {
