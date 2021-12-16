@@ -10,7 +10,7 @@ import IdentityType from 'models/IdentityType'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
-import getPrivateTokens, { mintDosu } from 'helpers/api'
+import getPrivateTokens from 'helpers/api'
 import identities from 'models/identities'
 import useQuery from 'hooks/useQuery'
 
@@ -47,34 +47,34 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
     void fetchTokens()
   }, [connectedIdentity])
 
-  const mintToDosu = async () => {
-    await mintDosu(
-      connectedIdentity.type,
-      TokenType.dosuHandle,
-      connectedIdentity.secret
-    )
-  }
-
   return loading ? (
     <FetchingData />
   ) : (
     <div className={identitiesBlock}>
-      <SubheaderText>NFT badges you have:</SubheaderText>
       <div className={badges}>
-        {!!tokens?.minted.length &&
-          TokenList({
-            tokens: tokens?.minted,
-            type: 'accent',
-            action: mintToDosu,
-          })}
-        {!!tokens?.connected.length &&
-          TokenList({ tokens: tokens?.connected, type: 'error' })}
-        {!!tokens?.unminted.length &&
-          TokenList({ tokens: tokens?.unminted, type: 'success' })}
+        {(!!tokens?.minted.length || !!tokens?.unminted.length) && (
+          <>
+            <SubheaderText>NFT badges you have:</SubheaderText>
+            {!!tokens?.minted.length &&
+              TokenList({
+                tokens: tokens?.minted,
+                type: 'mint',
+                connectedIdentity,
+              })}
+            {!!tokens?.unminted.length &&
+              TokenList({ tokens: tokens?.unminted, type: 'link', connectedIdentity })}
+          </>
+        )}
+        {!!tokens?.connected.length && (
+          <>
+            <SubheaderText>NFT badges you can create:</SubheaderText>
+            {TokenList({ tokens: tokens?.connected, type: 'unlink', connectedIdentity })}
+          </>
+        )}
         {!tokens?.minted.length &&
           !tokens?.unminted.length &&
           !tokens?.connected.length && (
-            <SubheaderText>You do not have any NFT yet</SubheaderText>
+            <SubheaderText>You cannot mint any NFT badges yet</SubheaderText>
           )}
       </div>
     </div>
