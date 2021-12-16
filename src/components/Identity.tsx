@@ -1,5 +1,6 @@
-import { BodyText, LargerText } from 'components/Text'
+import { BodyText, LargerText, SubheaderText } from 'components/Text'
 import { FC, useEffect, useState } from 'react'
+import { TokenList } from 'components/TokenList'
 import { classnames } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import Card from 'components/Card'
@@ -16,6 +17,10 @@ import useQuery from 'hooks/useQuery'
 interface TokensProps {
   connectedIdentity: ConnectedIdentity
 }
+
+const badges = classnames('flex', 'flex-col')
+const identitiesBlock = classnames('mt-6')
+
 const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
   const [loading, setLoading] = useState(true)
   const [tokens, setTokens] = useState<{
@@ -45,7 +50,42 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
   return loading ? (
     <FetchingData />
   ) : (
-    <BodyText>{JSON.stringify(tokens)}</BodyText>
+    <div className={identitiesBlock}>
+      <div className={badges}>
+        {(!!tokens?.minted.length || !!tokens?.connected.length) && (
+          <>
+            <SubheaderText>NFT badges you have:</SubheaderText>
+            {!!tokens?.minted.length &&
+              TokenList({
+                tokens: tokens?.minted,
+                type: 'minted',
+                connectedIdentity,
+              })}
+            {!!tokens?.connected.length &&
+              TokenList({
+                tokens: tokens?.connected,
+                type: 'connected',
+                connectedIdentity,
+              })}
+          </>
+        )}
+        {!!tokens?.unminted.length && (
+          <>
+            <SubheaderText>NFT badges you can create:</SubheaderText>
+            {TokenList({
+              tokens: tokens?.unminted,
+              type: 'unminted',
+              connectedIdentity,
+            })}
+          </>
+        )}
+        {!tokens?.minted.length &&
+          !tokens?.unminted.length &&
+          !tokens?.connected.length && (
+            <SubheaderText>You cannot mint any NFT badges yet</SubheaderText>
+          )}
+      </div>
+    </div>
   )
 }
 

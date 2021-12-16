@@ -17,3 +17,44 @@ export default async function getPrivateTokens(
   })
   return data
 }
+
+export async function mintToken(
+  type: IdentityType,
+  tokenType: TokenType,
+  secret: string
+) {
+  const { data } = await Api.post('/tokens/mint', {
+    type,
+    tokenType,
+    secret,
+  })
+  return data.doc
+}
+
+export async function linkToken(
+  type: IdentityType,
+  tokenType: TokenType,
+  secret: string,
+  publicOwnerAddress: string
+) {
+  const { data } = await Api.post('/tokens/link', {
+    type,
+    tokenType,
+    secret,
+    publicOwnerAddress,
+  })
+  return data.doc
+}
+
+export async function unlinkToken(
+  type: IdentityType,
+  tokenType: TokenType,
+  secret: string
+) {
+  const { data } = await Api.post('/tokens/unlink', {
+    type,
+    tokenType,
+    secret,
+  })
+  return data.doc
+}
