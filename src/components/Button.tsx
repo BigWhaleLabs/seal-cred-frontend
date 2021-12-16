@@ -9,20 +9,18 @@ export type ButtonType = 'accent' | 'primary' | 'success' | 'error'
 export interface ButtonProps {
   type: ButtonType
   loading?: boolean
-  badge?: boolean
 }
 
-const button = (type: ButtonType, badge: boolean) =>
+const button = (type: ButtonType) =>
   classnames(
     'flex',
     'flex-row',
     'space-x-2',
     'transition-colors',
-    !badge ? 'font-bold' : null,
+    'font-bold',
     'text-white',
-    badge ? 'py-0' : 'py-4',
-    badge ? 'px-2' : 'px-6',
-    badge ? 'capitalize' : null,
+    'py-4',
+    'px-6',
     'rounded',
     'focus:outline-none',
     typeButton(type)
@@ -37,8 +35,15 @@ const typeButton = (type: ButtonType) => {
       ? 'bg-primary'
       : type === 'success'
       ? 'bg-success'
-      : 'bg-error-light',
-    type === 'primary' && theme === 'dark' ? 'text-semi-background' : null
+      : 'bg-error',
+    type === 'primary' && theme === 'dark' ? 'text-semi-background' : null,
+    type === 'accent'
+      ? 'hover:bg-accent-dimmed'
+      : type === 'primary'
+      ? 'hover:bg-secondary'
+      : type === 'success'
+      ? 'hover:opacity-90'
+      : 'hover:bg-error-light'
   )
 }
 
@@ -46,15 +51,10 @@ const Button: FC<ButtonProps & React.HTMLProps<HTMLButtonElement>> = ({
   type,
   children,
   loading,
-  badge,
   ...rest
 }) => {
   return (
-    <button
-      className={button(type, badge || false)}
-      {...rest}
-      disabled={loading}
-    >
+    <button className={button(type)} {...rest} disabled={loading}>
       {loading && <Loading />}
       {typeof children === 'string' ? <span>{children}</span> : children}
     </button>
