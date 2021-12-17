@@ -1,5 +1,5 @@
 import { BodyText, LargerText, SubheaderText } from 'components/Text'
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { TokenList } from 'components/TokenList'
 import { classnames } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
@@ -28,24 +28,22 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
     minted: Token[]
     connected: Token[]
   }>()
+  const fetchTokens = useCallback(async () => {
+    setLoading(true)
+    try {
+      setTokens(
+        await getPrivateTokens(connectedIdentity.type, connectedIdentity.secret)
+      )
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }, [connectedIdentity])
 
   useEffect(() => {
-    const fetchTokens = async () => {
-      try {
-        setTokens(
-          await getPrivateTokens(
-            connectedIdentity.type,
-            connectedIdentity.secret
-          )
-        )
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setLoading(false)
-      }
-    }
     void fetchTokens()
-  }, [connectedIdentity])
+  }, [connectedIdentity, fetchTokens])
 
   return loading ? (
     <FetchingData />
@@ -60,12 +58,14 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
                 tokens: tokens.minted,
                 type: 'minted',
                 connectedIdentity,
+                fetchTokens,
               })}
             {!!tokens?.connected.length &&
               TokenList({
                 tokens: tokens.connected,
                 type: 'linked',
                 connectedIdentity,
+                fetchTokens,
               })}
           </>
         )}
@@ -76,6 +76,7 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
               tokens: tokens.unminted,
               type: 'unminted',
               connectedIdentity,
+              fetchTokens,
             })}
           </>
         )}

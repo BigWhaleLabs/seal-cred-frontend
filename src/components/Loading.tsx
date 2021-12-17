@@ -2,12 +2,12 @@ import { FC } from 'react'
 import { classnames } from 'classnames/tailwind'
 
 const loader = classnames('animate-spin', 'text-accent')
-const icon = (big?: boolean) =>
-  classnames(loader, big ? 'w-7' : 'w-5', big ? 'h-7' : 'h-5')
+const icon = (small?: boolean) =>
+  classnames(loader, small ? 'w-3' : 'w-5', small ? 'h-3' : 'h-5')
 
-const Loading: FC<{ big?: boolean }> = ({ big }) => {
+const Loading: FC<{ small?: boolean }> = ({ small }) => {
   return (
-    <svg className={icon(big)} viewBox="0 0 24 24">
+    <svg className={icon(small)} viewBox="0 0 24 24">
       <path
         className={classnames('opacity-100')}
         fill="currentColor"

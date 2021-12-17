@@ -1,23 +1,26 @@
 import { BadgeText } from 'components/Text'
+import { FC, useState } from 'react'
 import { classnames } from 'classnames/tailwind'
 import { linkToken, mintToken, unlinkToken } from 'helpers/api'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
+import PublicAccountStore from 'stores/PublicAccountStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
 import titleForToken from 'helpers/titleForToken'
 
 type ButtonType = 'minted' | 'unminted' | 'linked'
 
-export enum TokenActionType {
+enum TokenActionType {
   minted = 'link',
   unminted = 'create',
   linked = 'unlink',
 }
-export interface TokenListProps {
+interface TokenListProps {
   connectedIdentity: ConnectedIdentity
   tokens: (Token | TokenType)[]
   type: ButtonType
+  fetchTokens: () => Promise<void>
 }
 
 const listWrapper = classnames('flex', 'justify-start', 'items-center', 'py-2')
@@ -46,7 +49,7 @@ const onClickHandler = (
         TokenType.dosuHandle,
         connectedIdentity.secret
       )
-    case 'connected':
+    case 'linked':
       return unlinkToken(
         connectedIdentity.type,
         TokenType.dosuHandle,
@@ -66,33 +69,56 @@ function colorForType(type: ButtonType) {
   }
 }
 
-export const TokenList = ({
-  tokens,
+const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
+  token,
   type,
   connectedIdentity,
-}: TokenListProps) => {
-  return tokens.map((token: Token | TokenType, index: number) => (
-    <div className={listWrapper} key={index}>
+  fetchTokens,
+}) => {
+  const [loading, setLoading] = useState(false)
+  return (
+    <>
       <div className={listTokenTitle}>
         <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
       </div>
       <div className={listTokenAction}>
         <Button
+          loading={loading}
           color={colorForType(type)}
           badge
-          onClick={() =>
-            onClickHandler(
-              type,
-              connectedIdentity,
-              typeof token === 'string' ? undefined : token.publicOwnerAddress
-            )
-          }
+          onClick={async () => {
+            setLoading(true)
+            try {
+              await onClickHandler(
+                type,
+                connectedIdentity,
+                PublicAccountStore.mainEthWallet.address
+              )
+            } catch (error) {
+              console.error(error)
+            } finally {
+              setLoading(false)
+            }
+            await fetchTokens()
+          }}
         >
           {TokenActionType[type]}
         </Button>
       </div>
-    </div>
-  ))
+    </>
+  )
+}
+
+export const TokenList: FC<TokenListProps> = ({ tokens, ...rest }) => {
+  return (
+    <>
+      {tokens.map((token: Token | TokenType, index: number) => (
+        <div className={listWrapper} key={index}>
+          <TokenComponent tokens={tokens} {...rest} token={token} />
+        </div>
+      ))}
+    </>
+  )
 }
 
 export default TokenList

@@ -12,19 +12,21 @@ export interface ButtonProps {
   badge?: boolean
 }
 
-const button = (color: ButtonColor, badge?: boolean) =>
+const button = (color: ButtonColor, loading?: boolean, badge?: boolean) =>
   classnames(
     'flex',
     'flex-row',
     'space-x-2',
     'transition-colors',
+    'items-center',
     badge ? undefined : 'font-bold',
     'text-white',
     badge ? undefined : 'py-4',
     badge ? 'px-2' : 'px-6',
     'rounded',
     'focus:outline-none',
-    buttonColor(color)
+    buttonColor(color),
+    loading ? 'cursor-not-allowed' : undefined
   )
 
 const buttonColor = (color: ButtonColor) => {
@@ -52,8 +54,12 @@ const Button: FC<
   ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({ color, children, loading, badge, ...rest }) => {
   return (
-    <button className={button(color, badge)} {...rest} disabled={loading}>
-      {loading && <Loading />}
+    <button
+      className={button(color, loading, badge)}
+      {...rest}
+      disabled={loading}
+    >
+      {loading && <Loading small={badge} />}
       {typeof children === 'string' ? <span>{children}</span> : children}
     </button>
   )
