@@ -99,7 +99,8 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
             } finally {
               setLoading(false)
             }
-            await fetchTokens()
+            void fetchTokens()
+            void PublicAccountStore.fetchPublicBadges()
           }}
         >
           {TokenActionType[type]}

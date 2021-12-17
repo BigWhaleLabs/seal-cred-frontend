@@ -1,5 +1,6 @@
 import Api from 'helpers/axios'
 import IdentityType from 'models/IdentityType'
+import PublicBadge from 'models/PublicBadge'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
 
@@ -57,4 +58,13 @@ export async function unlinkToken(
     secret,
   })
   return data.doc
+}
+
+export async function getPublicTokens(publicAddress: string) {
+  const { data } = await Api.get('/tokens', {
+    params: {
+      publicAddress,
+    },
+  })
+  return data as PublicBadge[]
 }

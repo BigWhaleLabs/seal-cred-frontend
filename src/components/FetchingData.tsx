@@ -1,4 +1,4 @@
-import { LargerText } from 'components/Text'
+import { BodyText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import Loading from 'components/Loading'
 
@@ -7,7 +7,7 @@ export default function FetchingData() {
   return (
     <div className={container}>
       <Loading />
-      <LargerText>Fetching...</LargerText>
+      <BodyText>Fetching...</BodyText>
     </div>
   )
 }

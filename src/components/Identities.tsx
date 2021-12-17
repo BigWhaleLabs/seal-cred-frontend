@@ -23,7 +23,7 @@ export default function Identities() {
   return (
     <div className={container}>
       <AddIdentity />
-      {connectingIdentityType && (
+      {connectingIdentityType === 'dosu' && (
         <Identity connectingIdentityType={connectingIdentityType} />
       )}
       {ethStoreSnapshot.accounts

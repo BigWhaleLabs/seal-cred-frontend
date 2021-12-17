@@ -32,7 +32,7 @@ export const AccentText: FC = ({ children }) => {
   return <span className={accentText}>{children}</span>
 }
 
-const bodyText = classnames('transition-colors', 'text-primary', 'mb-2')
+const bodyText = classnames('transition-colors', 'text-primary')
 export const BodyText: FC = ({ children }) => {
   return <div className={bodyText}>{children}</div>
 }
