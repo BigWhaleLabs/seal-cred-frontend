@@ -18,6 +18,8 @@ export default function titleForToken(
   } else {
     return token.type === TokenType.dosuHandle
       ? `Owner of @${token.extraPublicIdentifier} at Dosu`
+      : token.type === TokenType.dosu1wave
+      ? 'Dosu 1 wave invite holder'
       : token.type
   }
 }

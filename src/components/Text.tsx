@@ -61,3 +61,12 @@ const badgeText = classnames(
 export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
+
+const link = classnames('font-bold', 'underline', 'text-accent')
+export const Link: FC<{ url: string }> = ({ children, url }) => {
+  return (
+    <a className={link} href={url} rel="noopener noreferrer" target="_blank">
+      {children}
+    </a>
+  )
+}
