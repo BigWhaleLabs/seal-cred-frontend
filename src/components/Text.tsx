@@ -7,9 +7,7 @@ const headerText = classnames(
   'font-primary',
   'font-bold',
   'text-2xl',
-  'text-center',
-  'mt-2',
-  'mb-6'
+  'text-center'
 )
 export const HeaderText: FC = ({ children }) => {
   return <h1 className={headerText}>{children}</h1>
@@ -18,8 +16,7 @@ export const HeaderText: FC = ({ children }) => {
 const subheaderText = classnames(
   'transition-colors',
   'text-primary-dimmed',
-  'font-primary',
-  'mb-4'
+  'font-primary'
 )
 export const SubheaderText: FC = ({ children }) => {
   return <h2 className={subheaderText}>{children}</h2>
@@ -40,12 +37,7 @@ export const BodyText: FC = ({ children }) => {
   return <div className={bodyText}>{children}</div>
 }
 
-const largerText = classnames(
-  'transition-colors',
-  'text-primary',
-  'text-2xl',
-  'mb-2'
-)
+const largerText = classnames('transition-colors', 'text-primary', 'text-2xl')
 export const LargerText: FC = ({ children }) => {
   return <div className={largerText}>{children}</div>
 }
@@ -55,7 +47,6 @@ const logoText = classnames(
   'font-bold',
   'text-primary',
   'transition-colors',
-  'leading-8',
   'text-xl'
 )
 export const LogoText: FC = ({ children }) => {
@@ -65,8 +56,7 @@ export const LogoText: FC = ({ children }) => {
 const badgeText = classnames(
   'font-secondary',
   'text-primary',
-  'transition-colors',
-  'leading-8'
+  'transition-colors'
 )
 export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>

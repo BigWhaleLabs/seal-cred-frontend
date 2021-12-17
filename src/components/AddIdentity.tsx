@@ -10,7 +10,7 @@ export default function AddIdentity() {
     <Card>
       <BodyText>Link another identity</BodyText>
       <Button
-        type="primary"
+        color="primary"
         loading={loading}
         onClick={async () => {
           setLoading(true)

@@ -56,7 +56,7 @@ export default function PublicAddress() {
           </div>
           {!address && (
             <Button
-              type="accent"
+              color="accent"
               onClick={() => {
                 setCopied(true)
                 copy(PublicAccountStore.mainEthWallet.privateKey)

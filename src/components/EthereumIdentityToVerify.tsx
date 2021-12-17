@@ -27,7 +27,7 @@ const EthereumIdentityToVerify: FC<EthereumIdentityToVerifyProps> = ({
       </div>
       <Button
         loading={loading}
-        type="primary"
+        color="primary"
         onClick={async () => {
           setLoading(true)
           try {

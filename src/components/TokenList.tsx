@@ -1,82 +1,95 @@
 import { BadgeText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import { linkToken, mintToken, unlinkToken } from 'helpers/api'
+import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import Token from 'models/Token'
-import TokenButton from 'components/TokenButton'
 import TokenType from 'models/TokenType'
+import titleForToken from 'helpers/titleForToken'
+
+type ButtonType = 'minted' | 'unminted' | 'linked'
 
 export enum TokenActionType {
   minted = 'link',
   unminted = 'create',
-  connected = 'unlink',
+  linked = 'unlink',
 }
 export interface TokenListProps {
   connectedIdentity: ConnectedIdentity
   tokens: (Token | TokenType)[]
-  type: 'minted' | 'unminted' | 'connected'
-  action?: () => Promise<void>
+  type: ButtonType
 }
 
 const listWrapper = classnames('flex', 'justify-start', 'items-center', 'py-2')
 const listTokenTitle = classnames('w-full', 'text-white')
 const listTokenAction = classnames('justify-self-end')
 
-const defaultFunction = async (
+const onClickHandler = (
   type: string,
   connectedIdentity: ConnectedIdentity,
   publicOwnerAddress?: string
 ) => {
   switch (type) {
     case 'minted':
-      await linkToken(
+      if (!publicOwnerAddress) {
+        throw new Error('Public owner address not provided')
+      }
+      return linkToken(
         connectedIdentity.type,
         TokenType.dosuHandle,
         connectedIdentity.secret,
-        publicOwnerAddress || ''
+        publicOwnerAddress
       )
-      break
     case 'unminted':
+      return mintToken(
+        connectedIdentity.type,
+        TokenType.dosuHandle,
+        connectedIdentity.secret
+      )
     case 'connected':
-      type === 'unminted'
-        ? await mintToken(
-            connectedIdentity.type,
-            TokenType.dosuHandle,
-            connectedIdentity.secret
-          )
-        : await unlinkToken(
-            connectedIdentity.type,
-            TokenType.dosuHandle,
-            connectedIdentity.secret
-          )
+      return unlinkToken(
+        connectedIdentity.type,
+        TokenType.dosuHandle,
+        connectedIdentity.secret
+      )
+  }
+}
+
+function colorForType(type: ButtonType) {
+  switch (type) {
+    case 'minted':
+      return 'accent'
+    case 'unminted':
+      return 'success'
+    case 'linked':
+      return 'error'
   }
 }
 
 export const TokenList = ({
   tokens,
   type,
-  action,
   connectedIdentity,
 }: TokenListProps) => {
   return tokens.map((token: Token | TokenType, index: number) => (
     <div className={listWrapper} key={index}>
       <div className={listTokenTitle}>
-        <BadgeText>{typeof token === 'string' ? token : token.type}</BadgeText>
+        <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
       </div>
       <div className={listTokenAction}>
-        <TokenButton
-          type={type}
-          onClick={() => {
-            action ||
-              defaultFunction(
-                type,
-                connectedIdentity,
-                typeof token !== 'string' ? token.publicOwnerAddress : ''
-              )
-          }}
+        <Button
+          color={colorForType(type)}
+          badge
+          onClick={() =>
+            onClickHandler(
+              type,
+              connectedIdentity,
+              typeof token === 'string' ? undefined : token.publicOwnerAddress
+            )
+          }
         >
           {TokenActionType[type]}
-        </TokenButton>
+        </Button>
       </div>
     </div>
   ))

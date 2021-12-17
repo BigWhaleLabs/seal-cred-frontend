@@ -15,7 +15,8 @@ const cardContainer = (shadow?: boolean) => {
     theme === 'dark' ? 'bg-semi-background' : 'bg-background',
     shadow ? 'shadow' : undefined,
     theme === 'light' ? 'border' : undefined,
-    'p-6'
+    'p-6',
+    'space-y-4'
   )
 }
 
