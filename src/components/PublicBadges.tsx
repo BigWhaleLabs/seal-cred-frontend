@@ -52,8 +52,10 @@ export default function PublicBadges() {
           <SubheaderText>
             Congratulations! You've got a combo of Dosu invite NFT and Dosu
             handle ownership. You can now{' '}
-            <Link url="https://dosu.io">go back to Dosu</Link> and use it with
-            the full set of features!
+            <Link url={import.meta.env.VITE_DOSU_FRONTEND as string}>
+              go back to Dosu
+            </Link>{' '}
+            and use it with the full set of features!
           </SubheaderText>
         )}
     </div>
