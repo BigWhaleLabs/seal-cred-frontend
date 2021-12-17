@@ -32,27 +32,31 @@ const onClickHandler = (
   connectedIdentity: ConnectedIdentity,
   publicOwnerAddress?: string
 ) => {
+  const tokenType =
+    connectedIdentity.type === 'eth'
+      ? TokenType.dosu1wave
+      : TokenType.dosuHandle
   switch (type) {
+    case 'unminted':
+      return mintToken(
+        connectedIdentity.type,
+        tokenType,
+        connectedIdentity.secret
+      )
     case 'minted':
       if (!publicOwnerAddress) {
         throw new Error('Public owner address not provided')
       }
       return linkToken(
         connectedIdentity.type,
-        TokenType.dosuHandle,
+        tokenType,
         connectedIdentity.secret,
         publicOwnerAddress
-      )
-    case 'unminted':
-      return mintToken(
-        connectedIdentity.type,
-        TokenType.dosuHandle,
-        connectedIdentity.secret
       )
     case 'linked':
       return unlinkToken(
         connectedIdentity.type,
-        TokenType.dosuHandle,
+        tokenType,
         connectedIdentity.secret
       )
   }

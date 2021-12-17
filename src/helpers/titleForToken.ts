@@ -10,6 +10,8 @@ export default function titleForToken(
   if (typeof token === 'string') {
     if (token === TokenType.dosuHandle) {
       return `Owner of @${connectedIdentity?.identifier} at Dosu`
+    } else if (token === TokenType.dosu1wave) {
+      return 'Dosu 1 wave invite holder'
     } else {
       return token
     }
