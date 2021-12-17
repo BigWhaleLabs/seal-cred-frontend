@@ -1,6 +1,7 @@
 import { classnames } from 'classnames/tailwind'
-import { observer } from 'mobx-react-lite'
-import AppStore, { Theme } from 'stores/AppStore'
+import { useSnapshot } from 'valtio'
+import AppStore from 'stores/AppStore'
+import Theme from 'models/Theme'
 
 const toggleContainer = (theme: Theme) =>
   classnames(
@@ -32,7 +33,8 @@ const toggleLight = classnames('rotate-0', 'translate-x-0')
 const transition = classnames('transition-colors')
 
 const ThemeToggle = () => {
-  const theme = AppStore.theme
+  const appStoreSnapshot = useSnapshot(AppStore)
+  const theme = appStoreSnapshot.theme
   const colors = (theme: Theme) => ({
     path: `var(${
       theme === 'dark' ? '--accent' : '--logo-layer-gradient-from'
@@ -44,7 +46,7 @@ const ThemeToggle = () => {
     <button
       className={toggleContainer(theme)}
       onClick={() => {
-        AppStore.toggleTheme()
+        AppStore.theme = AppStore.theme === 'dark' ? 'light' : 'dark'
       }}
     >
       <svg
@@ -74,4 +76,4 @@ const ThemeToggle = () => {
   )
 }
 
-export default observer(ThemeToggle)
+export default ThemeToggle

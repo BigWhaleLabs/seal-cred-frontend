@@ -1,43 +1,158 @@
-import { FC } from 'react'
-import { SecondarySubheaderText } from 'components/Text'
+import { BodyText, LargerText, SubheaderText } from 'components/Text'
+import { FC, useCallback, useEffect, useState } from 'react'
+import { TokenList } from 'components/TokenList'
 import { classnames } from 'classnames/tailwind'
+import { useNavigate } from 'react-router-dom'
+import Card from 'components/Card'
+import ConnectedIdentity from 'models/ConnectedIdentity'
+import FetchingData from 'components/FetchingData'
+import IdentityType from 'models/IdentityType'
+import PublicAccountStore from 'stores/PublicAccountStore'
+import Token from 'models/Token'
+import TokenType from 'models/TokenType'
+import getPrivateTokens from 'helpers/api'
+import identities from 'models/identities'
+import useQuery from 'hooks/useQuery'
 
-export enum Identities {
-  twitter = 'Twitter',
-  linkedin = 'Linkedin',
-  rarible = 'Rarible',
-  eth = 'ETH',
+interface TokensProps {
+  connectedIdentity: ConnectedIdentity
 }
 
-export interface IdentityProps {
-  name: Identities
-  emphasis?: boolean
-  onClick?: () => void
-}
+const badges = classnames('flex', 'flex-col')
+const identitiesBlock = classnames('mt-6')
 
-const identityBlock = (emphasis: boolean, clickable: boolean) =>
-  classnames(
-    'flex',
-    'items-center',
-    'space-x-2',
-    'focus:outline-none',
-    'transition-colors',
-    'w-full',
-    emphasis ? 'mb-2' : 'my-4',
-    clickable ? 'cursor-pointer' : 'cursor-default'
+const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
+  const [loading, setLoading] = useState(true)
+  const [tokens, setTokens] = useState<{
+    unminted: TokenType[]
+    minted: Token[]
+    connected: Token[]
+  }>()
+  const fetchTokens = useCallback(async () => {
+    setLoading(true)
+    try {
+      setTokens(
+        await getPrivateTokens(connectedIdentity.type, connectedIdentity.secret)
+      )
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }, [connectedIdentity])
+
+  useEffect(() => {
+    void fetchTokens()
+  }, [connectedIdentity, fetchTokens])
+
+  return loading ? (
+    <FetchingData />
+  ) : (
+    <div className={identitiesBlock}>
+      <div className={badges}>
+        {(!!tokens?.minted.length || !!tokens?.connected.length) && (
+          <>
+            <SubheaderText>NFT badges you have:</SubheaderText>
+            {!!tokens?.minted.length &&
+              TokenList({
+                tokens: tokens.minted,
+                type: 'minted',
+                connectedIdentity,
+                fetchTokens,
+              })}
+            {!!tokens?.connected.length &&
+              TokenList({
+                tokens: tokens.connected,
+                type: 'linked',
+                connectedIdentity,
+                fetchTokens,
+              })}
+          </>
+        )}
+        {!!tokens?.unminted.length && (
+          <>
+            <SubheaderText>NFT badges you can create:</SubheaderText>
+            {TokenList({
+              tokens: tokens.unminted,
+              type: 'unminted',
+              connectedIdentity,
+              fetchTokens,
+            })}
+          </>
+        )}
+        {!tokens?.minted.length &&
+          !tokens?.unminted.length &&
+          !tokens?.connected.length && (
+            <SubheaderText>You cannot mint any NFT badges yet</SubheaderText>
+          )}
+      </div>
+    </div>
   )
+}
 
-const Identity: FC<IdentityProps> = ({ name, emphasis, onClick }) => {
-  const clickable = !!onClick
+interface IdentityProps {
+  connectingIdentityType?: IdentityType
+  connectedIdentity?: ConnectedIdentity
+}
+const breakWords = classnames('break-words')
+const IdentityComponent: FC<IdentityProps> = ({
+  connectedIdentity,
+  connectingIdentityType,
+}) => {
+  const identityType = connectedIdentity?.type || connectingIdentityType
+  const query = useQuery()
+  const accessToken = query.get('access_token')
+  const navigate = useNavigate()
+
+  if (!identityType) {
+    return null
+  }
+
+  const identity = identities[identityType]
+
+  useEffect(() => {
+    if (!connectingIdentityType || !accessToken) {
+      return
+    }
+    const verifyIdentity = async () => {
+      if (!identity.verify) {
+        return
+      }
+      const { identifier } = await identity.verify({ secret: accessToken })
+      if (
+        !PublicAccountStore.connectedIdentities.find(
+          (identity) =>
+            identity.type === connectingIdentityType &&
+            identity.identifier === identifier
+        )
+      ) {
+        PublicAccountStore.connectedIdentities.unshift({
+          type: identityType,
+          name: identity.name,
+          identifier,
+          secret: accessToken,
+        })
+      }
+      navigate('/')
+    }
+    void verifyIdentity()
+  }, [connectingIdentityType, accessToken, identity, identityType, navigate])
+
   return (
-    <button
-      className={identityBlock(emphasis || false, clickable)}
-      onClick={onClick}
-    >
-      <img src={`/img/${name.toLowerCase()}.svg`} alt="Twitter" />
-      <SecondarySubheaderText>{name}</SecondarySubheaderText>
-    </button>
+    <Card>
+      <BodyText>{identity.name}</BodyText>
+      {!connectedIdentity && <FetchingData />}
+      {connectedIdentity && (
+        <div className={breakWords}>
+          <LargerText>
+            {identity.identifierTransformator?.(connectedIdentity.identifier) ||
+              connectedIdentity.identifier}
+          </LargerText>
+        </div>
+      )}
+      {connectedIdentity && <Tokens connectedIdentity={connectedIdentity} />}
+    </Card>
   )
 }
 
-export default Identity
+export default IdentityComponent

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { LogoText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
 import Logo from 'components/Logo'
@@ -21,10 +22,12 @@ const logoContainer = classnames('inline-flex', 'items-center', 'space-x-2')
 export default function Navbar() {
   return (
     <nav className={navbar}>
-      <div className={logoContainer}>
-        <Logo />
-        <LogoText>StreetCred</LogoText>
-      </div>
+      <Link to="/">
+        <div className={logoContainer}>
+          <Logo />
+          <LogoText>StreetCred</LogoText>
+        </div>
+      </Link>
 
       <ThemeToggle />
     </nav>

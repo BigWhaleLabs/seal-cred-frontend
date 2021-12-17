@@ -1,67 +1,68 @@
 import { FC } from 'react'
 import { classnames } from 'classnames/tailwind'
-import { observer } from 'mobx-react-lite'
-import AppStore, { Theme } from 'stores/AppStore'
+import { useSnapshot } from 'valtio'
+import AppStore from 'stores/AppStore'
+import Loading from 'components/Loading'
 
-export enum ButtonType {
-  accent = 'accent',
-  primary = 'primary',
-  success = 'success',
-  error = 'error',
-}
+export type ButtonColor = 'accent' | 'primary' | 'success' | 'error'
 
 export interface ButtonProps {
-  wide?: boolean
-  type: ButtonType
+  color: ButtonColor
+  loading?: boolean
+  badge?: boolean
 }
 
-export interface ButtonPropsExtend extends ButtonProps {
-  onClick?: () => void
-}
-
-const button = (props: ButtonProps, theme: Theme) =>
+const button = (color: ButtonColor, loading?: boolean, badge?: boolean) =>
   classnames(
     'flex',
-    'justify-center',
-    'items-center',
-    'font-primary',
-    'font-normal',
-    'text-white',
-    'text-sm',
-    'leading-4',
-    'h-6',
-    'py-1',
-    'px-2',
-    'rounded',
-    'pointer-events-auto',
-    'focus:outline-none',
+    'flex-row',
+    'space-x-2',
     'transition-colors',
-    props.wide ? 'w-full' : null,
-    typeButton(props.type, theme)
+    'items-center',
+    badge ? undefined : 'font-bold',
+    'text-white',
+    badge ? undefined : 'py-4',
+    badge ? 'px-2' : 'px-6',
+    'rounded',
+    'focus:outline-none',
+    buttonColor(color),
+    loading ? 'cursor-not-allowed' : undefined
   )
 
-const typeButton = (type: ButtonType, theme: Theme) =>
-  classnames(
-    type === 'accent'
+const buttonColor = (color: ButtonColor) => {
+  const { theme } = useSnapshot(AppStore)
+  return classnames(
+    color === 'accent'
       ? 'bg-accent'
-      : type === 'primary'
+      : color === 'primary'
       ? 'bg-primary'
-      : type === 'success'
+      : color === 'success'
       ? 'bg-success'
-      : 'bg-error-light',
-    type === 'primary' && theme === 'dark' ? 'text-semi-background' : null
+      : 'bg-error',
+    color === 'primary' && theme === 'dark' ? 'text-semi-background' : null,
+    color === 'accent'
+      ? 'hover:bg-accent-dimmed'
+      : color === 'primary'
+      ? 'hover:bg-secondary'
+      : color === 'success'
+      ? 'hover:opacity-90'
+      : 'hover:bg-error-light'
   )
+}
 
-const Button: FC<ButtonPropsExtend> = ({ wide, type, onClick, children }) => {
-  const theme = AppStore.theme
+const Button: FC<
+  ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
+> = ({ color, children, loading, badge, ...rest }) => {
   return (
     <button
-      className={button({ type, wide }, theme)}
-      onClick={onClick || undefined}
+      className={button(color, loading, badge)}
+      {...rest}
+      disabled={loading}
     >
-      {children}
+      {loading && <Loading small={badge} />}
+      {typeof children === 'string' ? <span>{children}</span> : children}
     </button>
   )
 }
 
-export default observer(Button)
+export default Button

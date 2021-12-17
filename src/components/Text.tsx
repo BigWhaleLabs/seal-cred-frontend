@@ -1,15 +1,12 @@
 import { FC } from 'react'
 import { classnames } from 'classnames/tailwind'
 
-const grayText = classnames('text-gray-300', 'transition-colors')
-const primaryText = classnames('text-primary', 'transition-colors')
-
 const headerText = classnames(
-  primaryText,
-  'font-secondary',
-  'text-3xl',
-  'md:leading-10',
+  'transition-colors',
+  'text-primary',
+  'font-primary',
   'font-bold',
+  'text-2xl',
   'text-center'
 )
 export const HeaderText: FC = ({ children }) => {
@@ -17,68 +14,32 @@ export const HeaderText: FC = ({ children }) => {
 }
 
 const subheaderText = classnames(
-  primaryText,
-  'font-secondary',
-  'text-xl',
-  'md:text-2xl',
-  'font-bold',
-  'text-center'
+  'transition-colors',
+  'text-primary-dimmed',
+  'font-primary'
 )
 export const SubheaderText: FC = ({ children }) => {
   return <h2 className={subheaderText}>{children}</h2>
 }
 
-const bodyText = classnames(grayText, 'text-center')
-export const BodyText: FC = ({ children }) => {
-  return <p className={bodyText}>{children}</p>
-}
-
-const secondaryText = classnames(
-  'font-primary',
-  'font-normal',
-  'text-sm',
-  'text-primary-text-dimmed',
-  'transition-colors'
-)
-export const SecondaryText: FC = ({ children }) => (
-  <div className={secondaryText}>{children}</div>
-)
-
-const subSecondaryText = classnames(
-  'font-primary',
-  'font-normal',
-  'text-base',
-  'text-center',
-  'text-primary-text-dimmed',
-  'transition-colors'
-)
-export const SubSecondaryText: FC = ({ children }) => (
-  <div className={subSecondaryText}>{children}</div>
-)
-
-const secondarySubheaderText = (big: boolean) =>
-  classnames(
-    primaryText,
-    'font-bold',
-    'font-secondary',
-    big ? 'leading-8' : 'leading-6',
-    big ? 'text-2xl' : 'text-lg'
-  )
-export const SecondarySubheaderText: FC<{ big?: boolean }> = ({
-  big,
-  children,
-}) => {
-  return <div className={secondarySubheaderText(big || false)}>{children}</div>
-}
-
-const regularText = classnames(
-  'text-secondary',
+const accentText = classnames(
   'transition-colors',
-  'text-base',
-  'font-normal'
+  'text-accent',
+  'font-primary',
+  'font-bold'
 )
-export const RegularText: FC = ({ children }) => {
-  return <div className={regularText}>{children}</div>
+export const AccentText: FC = ({ children }) => {
+  return <span className={accentText}>{children}</span>
+}
+
+const bodyText = classnames('transition-colors', 'text-primary')
+export const BodyText: FC = ({ children }) => {
+  return <div className={bodyText}>{children}</div>
+}
+
+const largerText = classnames('transition-colors', 'text-primary', 'text-2xl')
+export const LargerText: FC = ({ children }) => {
+  return <div className={largerText}>{children}</div>
 }
 
 const logoText = classnames(
@@ -86,7 +47,6 @@ const logoText = classnames(
   'font-bold',
   'text-primary',
   'transition-colors',
-  'leading-8',
   'text-xl'
 )
 export const LogoText: FC = ({ children }) => {
@@ -94,28 +54,19 @@ export const LogoText: FC = ({ children }) => {
 }
 
 const badgeText = classnames(
-  primaryText,
-  'font-normal',
-  'font-primary',
-  'leading-6',
-  'text-sm',
-  'text-center',
-  'max-w-xs',
-  'truncate'
+  'font-secondary',
+  'text-primary',
+  'transition-colors'
 )
 export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
 
-const accentText = classnames(
-  'text-accent',
-  'font-bold',
-  'font-primary',
-  'leading-8',
-  'text-base',
-  'md:text-xl',
-  'transition-colors'
-)
-export const AccentText: FC = ({ children }) => {
-  return <h3 className={accentText}>{children}</h3>
+const link = classnames('font-bold', 'underline', 'text-accent')
+export const Link: FC<{ url: string }> = ({ children, url }) => {
+  return (
+    <a className={link} href={url} rel="noopener noreferrer" target="_blank">
+      {children}
+    </a>
+  )
 }
