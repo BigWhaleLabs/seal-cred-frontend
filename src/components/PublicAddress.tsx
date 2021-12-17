@@ -51,7 +51,7 @@ export default function PublicAddress() {
             <SubheaderText>
               This identity has been generated for you automatically. It will
               persist between reloads of this page. However, make sure to save
-              you private key somewhere safe. You don't want to loose it!
+              your private key somewhere safe. You don't want to lose it!
             </SubheaderText>
             <SubheaderText>
               Connect any identities you want below. The attestation badges
