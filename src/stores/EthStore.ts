@@ -4,15 +4,19 @@ class EthStore {
   accounts: string[] = []
 
   constructor() {
-    window.ethereum.on('accountsChanged', (accounts) => {
-      this.accounts = accounts as string[]
-    })
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', (accounts) => {
+        this.accounts = accounts as string[]
+      })
+    }
   }
 
   async fetchAccounts() {
-    this.accounts = (await window.ethereum.request({
-      method: 'eth_requestAccounts',
-    })) as string[]
+    if (window.ethereum) {
+      this.accounts = (await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      })) as string[]
+    }
   }
 }
 
