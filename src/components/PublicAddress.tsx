@@ -30,6 +30,7 @@ const addressBackground = classnames(
   'text-center',
   'break-all'
 )
+const textCenter = classnames('text-center')
 
 export default function PublicAddress() {
   const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
@@ -41,10 +42,12 @@ export default function PublicAddress() {
       <Card shadow>
         <HeaderText>One identity to rule them all</HeaderText>
         {!!address && (
-          <SubheaderText>
-            This is the public snapshot of this address. It contains all the
-            public NFT badges the owner decided to reveal.
-          </SubheaderText>
+          <div className={textCenter}>
+            <SubheaderText>
+              This is the public snapshot of this address. It contains all the
+              public NFT badges the owner decided to reveal.
+            </SubheaderText>
+          </div>
         )}
         {!address && (
           <>
