@@ -37,8 +37,8 @@ export default function AddIdentity() {
         }
         body={
           isSafari
-            ? 'Safari does not support MetaMask, please use other browser'
-            : 'To use Web3 technologies, please install MetaMask extension for your browser'
+            ? 'Safari does not support MetaMask, please use another browser'
+            : 'To use Web3 tech, please, install MetaMask extension for your browser'
         }
         confirmTitle="Okay, thanks"
       />
