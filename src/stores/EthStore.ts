@@ -18,6 +18,14 @@ class EthStore {
       })) as string[]
     }
   }
+
+  isMetaMaskInstalled() {
+    if (window.ethereum) {
+      return true
+    } else {
+      return false
+    }
+  }
 }
 
 export default proxy(new EthStore())
