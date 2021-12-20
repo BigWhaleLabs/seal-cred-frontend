@@ -1,4 +1,4 @@
-name: StreetCred fronted
+name: Compile and lint code
 
 on:
   pull_request:
