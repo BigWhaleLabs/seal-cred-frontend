@@ -1,5 +1,7 @@
 # StreetCred frontend code
 
+[![StreetCred](public/favicons/android-chrome-192x192.png)](https://streetcred.one/)
+
 ## Local launch
 
 1. Install dependencies with `yarn`
