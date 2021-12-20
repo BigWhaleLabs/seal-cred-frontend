@@ -70,3 +70,12 @@ export const Link: FC<{ url: string }> = ({ children, url }) => {
     </a>
   )
 }
+
+const popupBodyText = classnames(
+  'text-primary',
+  'transition-colors',
+  'text-center'
+)
+export const PopupBodyText: FC = ({ children }) => {
+  return <div className={popupBodyText}>{children}</div>
+}
