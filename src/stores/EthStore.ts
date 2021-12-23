@@ -20,11 +20,7 @@ class EthStore {
   }
 
   isMetaMaskInstalled() {
-    if (window.ethereum) {
-      return true
-    } else {
-      return false
-    }
+    return !!window.ethereum
   }
 }
 
