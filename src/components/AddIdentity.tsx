@@ -1,5 +1,5 @@
 import { BodyText } from 'components/Text'
-import { UserAgent, userAgent } from 'helpers/userAgent'
+import { UserAgent, mobileCheck, userAgent } from 'helpers/userAgent'
 import { useState } from 'react'
 import Button from 'components/Button'
 import Card from 'components/Card'
@@ -8,11 +8,13 @@ import Popup from 'components/Popup'
 
 export default function AddIdentity() {
   const [loading, setLoading] = useState(false)
+  const isMetaMaskInstalled = EthStore.isMetaMaskInstalled()
   const isSafari = userAgent() === UserAgent.Safari
+  const isNotSupportedMobile = mobileCheck() && !isMetaMaskInstalled
   return (
     <Card>
       <BodyText>Link another identity</BodyText>
-      {EthStore.isMetaMaskInstalled() ? (
+      {isMetaMaskInstalled ? (
         <Button
           color="primary"
           loading={loading}
@@ -39,12 +41,18 @@ export default function AddIdentity() {
             </Button>
           }
           title={
-            isSafari ? 'MetaMask is not supported' : 'MetaMask is not installed'
+            isNotSupportedMobile
+              ? 'Please use the MetaMask app'
+              : isSafari
+              ? 'MetaMask is not supported'
+              : 'MetaMask is not installed'
           }
           body={
-            isSafari
+            isNotSupportedMobile
+              ? 'To use Web3 technologies, please use the browser built into the MetaMask application'
+              : isSafari
               ? 'Safari does not support MetaMask, please use another browser'
-              : 'To use Web3 tech, please, install MetaMask extension for your browser'
+              : 'To use Web3 technologies, please, install MetaMask extension for your browser'
           }
           confirmTitle="Okay, thanks"
         />
