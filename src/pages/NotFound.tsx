@@ -1,5 +1,5 @@
-import { classnames } from 'classnames/tailwind'
 import { HeaderText, SubheaderText } from 'components/Text'
+import { classnames } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import Button from 'components/Button'
 import Card from 'components/Card'

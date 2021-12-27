@@ -39,7 +39,7 @@ export default function PublicAddress() {
   const [copied, setCopied] = useState(false)
   const address = useAddress()
   const navigate = useNavigate()
-  if (!!address) {
+  if (address) {
     const isValid =
       typeof address === 'string' && ethers.utils.isAddress(address)
     !isValid ? navigate('/404') : null
