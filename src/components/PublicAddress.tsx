@@ -1,5 +1,7 @@
 import { AccentText, HeaderText, SubheaderText } from 'components/Text'
 import { classnames } from 'classnames/tailwind'
+import { ethers } from 'ethers'
+import { useNavigate } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Button from 'components/Button'
@@ -36,6 +38,12 @@ export default function PublicAddress() {
   const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
   const [copied, setCopied] = useState(false)
   const address = useAddress()
+  const navigate = useNavigate()
+  if (!!address) {
+    const isValid =
+      typeof address === 'string' && ethers.utils.isAddress(address)
+    !isValid ? navigate('/404') : null
+  }
 
   return (
     <div className={outerContainer}>
