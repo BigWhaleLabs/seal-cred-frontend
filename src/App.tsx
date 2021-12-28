@@ -14,7 +14,6 @@ export default function App() {
           <Route path="/:connectingIdentityType" element={<Main />} />
           <Route path="/" element={<Main />} />
           <Route path="/404" element={<NotFound />} />
-          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </Root>

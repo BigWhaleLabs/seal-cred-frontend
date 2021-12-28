@@ -138,7 +138,7 @@ const IdentityComponent: FC<IdentityProps> = ({
           navigate('/')
         }
       } catch (error) {
-        console.error('Verify error: ', error)
+        console.error('Verify error:', error)
         setConnectedError(true)
       }
     }

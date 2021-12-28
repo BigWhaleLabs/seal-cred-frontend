@@ -22,12 +22,9 @@ export default function NotFound() {
       <Card shadow>
         <HeaderText>404</HeaderText>
         <div className={wrapperBody}>
-          <SubheaderText>
-            The entered address is invalid or not found. Please, make sure it is
-            the correct eth address.
-          </SubheaderText>
+          <SubheaderText>Not found</SubheaderText>
           <Button color="accent" onClick={() => navigate('/')}>
-            Back to main
+            Go to the main page
           </Button>
         </div>
       </Card>
