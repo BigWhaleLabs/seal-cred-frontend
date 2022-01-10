@@ -1,7 +1,13 @@
 import { BodyText, LargerText, SubheaderText } from 'components/Text'
 import { FC, useCallback, useEffect, useState } from 'react'
 import { TokenList } from 'components/TokenList'
-import { classnames } from 'classnames/tailwind'
+import {
+  classnames,
+  display,
+  flexDirection,
+  margin,
+  wordBreak,
+} from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import Button from 'components/Button'
 import Card from 'components/Card'
@@ -19,8 +25,8 @@ interface TokensProps {
   connectedIdentity: ConnectedIdentity
 }
 
-const badges = classnames('flex', 'flex-col')
-const identitiesBlock = classnames('mt-6')
+const badges = classnames(display('flex'), flexDirection('flex-col'))
+const identitiesBlock = classnames(margin('mt-6'))
 
 const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
   const [loading, setLoading] = useState(true)
@@ -95,7 +101,7 @@ interface IdentityProps {
   connectingIdentityType?: IdentityType
   connectedIdentity?: ConnectedIdentity
 }
-const breakWords = classnames('break-words')
+const breakWords = classnames(wordBreak('break-words'))
 const IdentityComponent: FC<IdentityProps> = ({
   connectedIdentity,
   connectingIdentityType,

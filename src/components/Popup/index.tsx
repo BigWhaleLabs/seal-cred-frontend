@@ -1,6 +1,21 @@
 import { FC, ReactNode } from 'react'
 import { HeaderText, PopupBodyText, SubheaderText } from 'components/Text'
-import { classnames } from 'classnames/tailwind'
+import {
+  alignItems,
+  backgroundColor,
+  borderRadius,
+  classnames,
+  display,
+  height,
+  inset,
+  justifyContent,
+  margin,
+  opacity,
+  padding,
+  position,
+  visibility,
+  zIndex,
+} from 'classnames/tailwind'
 import Button from 'components/Button'
 import usePopUp from 'components/Popup/usePopup'
 
@@ -17,42 +32,43 @@ interface PopupProps {
 
 const popupOverlay = (shown: boolean) =>
   classnames(
-    shown ? 'fixed' : 'invisible',
-    shown ? 'h-full' : 'h-0',
-    'mt-0',
-    'top-0',
-    'bottom-0',
-    'right-0',
-    'left-0',
-    'bg-primary',
-    'opacity-20',
-    'z-50'
+    position(shown ? 'fixed' : undefined),
+    visibility(shown ? undefined : 'invisible'),
+    height(shown ? 'h-full' : 'h-0'),
+    margin('mt-0'),
+    inset('inset-0'),
+    backgroundColor('bg-primary'),
+    opacity('opacity-20'),
+    zIndex('z-50')
   )
 const popupBlock = (shown: boolean) =>
   classnames(
-    shown ? 'fixed' : 'hidden',
-    'top-28',
-    'left-6',
-    'right-6',
-    'md:top-40',
-    'md:left-32',
-    'md:right-32',
-    'rounded-3xl',
-    'px-6',
-    'py-12',
-    'md:px-12',
-    'bg-background',
-    'z-50'
+    position(shown ? 'fixed' : undefined),
+    display(shown ? undefined : 'hidden'),
+    inset(
+      'top-28',
+      'left-6',
+      'right-6',
+      'md:top-40',
+      'md:left-32',
+      'md:right-32'
+    ),
+    borderRadius('rounded-3xl'),
+    padding('px-6', 'py-12', 'md:px-12'),
+    backgroundColor('bg-background'),
+    zIndex('z-50')
   )
 const popupFooter = (oneButton: boolean) =>
   classnames(
-    'flex',
-    'justify-center',
-    oneButton ? 'md:justify-center' : 'md:justify-end',
-    'items-center',
-    'mt-4'
+    display('flex'),
+    justifyContent(
+      'justify-center',
+      oneButton ? 'md:justify-center' : 'md:justify-end'
+    ),
+    alignItems('items-center'),
+    margin('mt-4')
   )
-const popupDefaultButtons = classnames('mx-2')
+const popupDefaultButtons = classnames(margin('mx-2'))
 
 const Popup: FC<PopupProps> = ({
   title = '',

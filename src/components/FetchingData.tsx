@@ -1,8 +1,19 @@
 import { BodyText } from 'components/Text'
-import { classnames } from 'classnames/tailwind'
+import {
+  alignItems,
+  classnames,
+  display,
+  flexDirection,
+  space,
+} from 'classnames/tailwind'
 import Loading from 'components/Loading'
 
-const container = classnames('flex', 'flex-row', 'space-x-2', 'items-center')
+const container = classnames(
+  display('flex'),
+  flexDirection('flex-row'),
+  space('space-x-2'),
+  alignItems('items-center')
+)
 export default function FetchingData() {
   return (
     <div className={container}>

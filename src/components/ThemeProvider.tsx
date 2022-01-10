@@ -1,14 +1,19 @@
 import { FC } from 'react'
-import { classnames } from 'classnames/tailwind'
+import {
+  backgroundColor,
+  classnames,
+  height,
+  transitionProperty,
+} from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
 
 const ThemeProvider: FC = ({ children }) => {
   const { theme } = useSnapshot(AppStore)
   const backgroundStyle = classnames(
-    'bg-background',
-    'h-screen',
-    'transition-colors'
+    backgroundColor('bg-background'),
+    height('h-screen'),
+    transitionProperty('transition-colors')
   )
   const root = window.document.documentElement
   root.classList.remove(theme === 'dark' ? 'light' : 'dark')

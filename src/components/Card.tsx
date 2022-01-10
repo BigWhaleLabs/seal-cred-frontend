@@ -1,5 +1,14 @@
 import { FC } from 'react'
-import { classnames } from 'classnames/tailwind'
+import {
+  backgroundColor,
+  borderRadius,
+  borderWidth,
+  boxShadow,
+  classnames,
+  padding,
+  space,
+  transitionProperty,
+} from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
 
@@ -10,13 +19,13 @@ interface CardProps {
 const cardContainer = (shadow?: boolean) => {
   const { theme } = useSnapshot(AppStore)
   return classnames(
-    'transition-colors',
-    'rounded-block',
-    theme === 'dark' ? 'bg-semi-background' : 'bg-background',
-    shadow ? 'shadow' : undefined,
-    theme === 'light' ? 'border' : undefined,
-    'p-6',
-    'space-y-4'
+    transitionProperty('transition-colors'),
+    borderRadius('rounded-block'),
+    backgroundColor(theme === 'dark' ? 'bg-semi-background' : 'bg-background'),
+    boxShadow(shadow ? 'shadow' : undefined),
+    borderWidth(theme === 'light' ? 'border' : undefined),
+    padding('p-6'),
+    space('space-y-4')
   )
 }
 

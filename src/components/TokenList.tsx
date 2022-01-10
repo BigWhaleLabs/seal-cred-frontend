@@ -1,6 +1,15 @@
 import { BadgeText } from 'components/Text'
 import { FC, useState } from 'react'
-import { classnames } from 'classnames/tailwind'
+import {
+  alignItems,
+  classnames,
+  display,
+  justifyContent,
+  justifySelf,
+  padding,
+  textColor,
+  width,
+} from 'classnames/tailwind'
 import { linkToken, mintToken, unlinkToken } from 'helpers/api'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
@@ -23,9 +32,14 @@ interface TokenListProps {
   fetchTokens: () => Promise<void>
 }
 
-const listWrapper = classnames('flex', 'justify-start', 'items-center', 'py-2')
-const listTokenTitle = classnames('w-full', 'text-white')
-const listTokenAction = classnames('justify-self-end')
+const listWrapper = classnames(
+  display('flex'),
+  justifyContent('justify-start'),
+  alignItems('items-center'),
+  padding('py-2')
+)
+const listTokenTitle = classnames(width('w-full'), textColor('text-white'))
+const listTokenAction = classnames(justifySelf('justify-self-end'))
 
 const onClickHandler = (
   type: string,
