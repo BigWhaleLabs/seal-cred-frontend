@@ -1,36 +1,55 @@
-import { classnames } from 'classnames/tailwind'
+import {
+  alignItems,
+  borderColor,
+  borderRadius,
+  borderWidth,
+  classnames,
+  display,
+  hardwareAcceleration,
+  height,
+  justifyContent,
+  outlineStyle,
+  padding,
+  rotate,
+  transformOrigin,
+  transitionDuration,
+  transitionProperty,
+  translate,
+  width,
+} from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
 import Theme from 'models/Theme'
 
 const toggleContainer = (theme: Theme) =>
   classnames(
-    'flex',
-    'justify-center',
-    'items-center',
-    'justify-between',
-    'py-0.5',
-    'px-2',
-    'border',
-    'rounded-3xl',
-    'transition-colors',
-    'w-20',
-    'h-10',
-    'focus:outline-none',
-    theme === 'dark' ? 'border-accent-dimmed' : 'border-accent'
+    display('flex'),
+    justifyContent('justify-between'),
+    alignItems('items-center'),
+    padding('py-0.5', 'px-2'),
+    borderWidth('border'),
+    borderRadius('rounded-3xl'),
+    transitionProperty('transition-colors'),
+    width('w-20'),
+    height('h-10'),
+    outlineStyle('focus:outline-none'),
+    borderColor(theme === 'dark' ? 'border-accent-dimmed' : 'border-accent')
   )
 const toggleButton = (theme: Theme) =>
   classnames(
-    'origin-center',
-    'duration-700',
-    'transition-transform',
-    'transform-gpu',
-    'focus:outline-none',
+    transformOrigin('origin-center'),
+    transitionDuration('duration-700'),
+    transitionProperty('transition-transform'),
+    hardwareAcceleration('transform-gpu'),
+    outlineStyle('focus:outline-none'),
     theme === 'dark' ? toggleDark : toggleLight
   )
-const toggleDark = classnames('rotate-180', 'translate-x-full')
-const toggleLight = classnames('rotate-0', 'translate-x-0')
-const transition = classnames('transition-colors')
+const toggleDark = classnames(
+  rotate('rotate-180'),
+  translate('translate-x-full')
+)
+const toggleLight = classnames(rotate('rotate-0'), translate('translate-x-0'))
+const transition = classnames(transitionProperty('transition-colors'))
 
 const ThemeToggle = () => {
   const appStoreSnapshot = useSnapshot(AppStore)

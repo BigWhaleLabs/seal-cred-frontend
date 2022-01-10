@@ -1,5 +1,13 @@
 import { Link, SubheaderText } from 'components/Text'
-import { classnames } from 'classnames/tailwind'
+import {
+  alignItems,
+  classnames,
+  display,
+  flexDirection,
+  flexWrap,
+  gap,
+  justifyContent,
+} from 'classnames/tailwind'
 import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 import FetchingData from 'components/FetchingData'
@@ -9,12 +17,12 @@ import TokenType from 'models/TokenType'
 import useAddress from 'hooks/useAddress'
 
 const container = classnames(
-  'flex',
-  'flex-row',
-  'flex-wrap',
-  'gap-4',
-  'justify-center',
-  'items-center'
+  display('flex'),
+  flexDirection('flex-row'),
+  flexWrap('flex-wrap'),
+  gap('gap-4'),
+  justifyContent('justify-center'),
+  alignItems('items-center')
 )
 export default function PublicBadges() {
   const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)

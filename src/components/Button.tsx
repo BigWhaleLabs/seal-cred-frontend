@@ -1,5 +1,20 @@
 import { FC } from 'react'
-import { classnames } from 'classnames/tailwind'
+import {
+  alignItems,
+  backgroundColor,
+  borderRadius,
+  classnames,
+  cursor,
+  display,
+  flexDirection,
+  fontWeight,
+  opacity,
+  outlineStyle,
+  padding,
+  space,
+  textColor,
+  transitionProperty,
+} from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
 import Loading from 'components/Loading'
@@ -14,39 +29,33 @@ export interface ButtonProps {
 
 const button = (color: ButtonColor, loading?: boolean, badge?: boolean) =>
   classnames(
-    'flex',
-    'flex-row',
-    'space-x-2',
-    'transition-colors',
-    'items-center',
-    badge ? undefined : 'font-bold',
-    'text-white',
-    badge ? undefined : 'py-4',
-    badge ? 'px-2' : 'px-6',
-    'rounded',
-    'focus:outline-none',
+    display('flex'),
+    flexDirection('flex-row'),
+    space('space-x-2'),
+    transitionProperty('transition-colors'),
+    alignItems('items-center'),
+    fontWeight(badge ? undefined : 'font-bold'),
+    textColor('text-white'),
+    padding(badge ? undefined : 'py-4', badge ? 'px-2' : 'px-6'),
+    borderRadius('rounded'),
+    outlineStyle('focus:outline-none'),
     buttonColor(color),
-    loading ? 'cursor-not-allowed' : undefined
+    cursor(loading ? 'cursor-not-allowed' : undefined)
   )
 
 const buttonColor = (color: ButtonColor) => {
   const { theme } = useSnapshot(AppStore)
   return classnames(
     color === 'accent'
-      ? 'bg-accent'
+      ? backgroundColor('bg-accent', 'hover:bg-accent-dimmed')
       : color === 'primary'
-      ? 'bg-primary'
+      ? backgroundColor('bg-primary', 'hover:bg-secondary')
       : color === 'success'
-      ? 'bg-success'
-      : 'bg-error',
-    color === 'primary' && theme === 'dark' ? 'text-semi-background' : null,
-    color === 'accent'
-      ? 'hover:bg-accent-dimmed'
-      : color === 'primary'
-      ? 'hover:bg-secondary'
-      : color === 'success'
-      ? 'hover:opacity-90'
-      : 'hover:bg-error-light'
+      ? classnames(backgroundColor('bg-success'), opacity('hover:opacity-90'))
+      : backgroundColor('bg-error', 'hover:bg-error-light'),
+    textColor(
+      color === 'primary' && theme === 'dark' ? 'text-semi-background' : null
+    )
   )
 }
 

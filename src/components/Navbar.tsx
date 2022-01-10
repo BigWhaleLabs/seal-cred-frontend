@@ -1,23 +1,40 @@
 import { Link } from 'react-router-dom'
 import { LogoText } from 'components/Text'
-import { classnames } from 'classnames/tailwind'
+import {
+  alignItems,
+  backgroundColor,
+  classnames,
+  display,
+  inset,
+  justifyContent,
+  margin,
+  padding,
+  position,
+  space,
+  transitionProperty,
+  zIndex,
+} from 'classnames/tailwind'
 import Logo from 'components/Logo'
 import ThemeToggle from 'components/ThemeToggle'
 
 const navbar = classnames(
-  'sticky',
-  'top-0',
-  'flex',
-  'items-center',
-  'justify-between',
-  'py-4',
-  'my-2',
-  'z-50',
-  'bg-background',
-  'transition-colors'
+  transitionProperty('transition-colors'),
+  position('sticky'),
+  inset('top-0'),
+  display('flex'),
+  alignItems('items-center'),
+  justifyContent('justify-between'),
+  padding('py-4'),
+  margin('my-2'),
+  zIndex('z-50'),
+  backgroundColor('bg-background')
 )
 
-const logoContainer = classnames('inline-flex', 'items-center', 'space-x-2')
+const logoContainer = classnames(
+  display('inline-flex'),
+  alignItems('items-center'),
+  space('space-x-2')
+)
 
 export default function Navbar() {
   return (

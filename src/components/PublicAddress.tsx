@@ -1,5 +1,19 @@
 import { AccentText, HeaderText, SubheaderText } from 'components/Text'
-import { classnames } from 'classnames/tailwind'
+import {
+  alignItems,
+  backgroundColor,
+  borderRadius,
+  classnames,
+  display,
+  flexDirection,
+  justifyContent,
+  margin,
+  padding,
+  space,
+  textAlign,
+  transitionProperty,
+  wordBreak,
+} from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Button from 'components/Button'
@@ -9,28 +23,24 @@ import PublicBadges from 'components/PublicBadges'
 import copy from 'copy-to-clipboard'
 import useAddress from 'hooks/useAddress'
 
-const outerContainer = classnames('my-4')
+const outerContainer = classnames(margin('my-4'))
 const addressContainer = classnames(
-  'flex',
-  'flex-col',
-  'lg:flex-row',
-  'items-center',
-  'justify-center',
-  'space-y-2',
-  'lg:space-y-0',
-  'lg:space-x-2',
-  'mt-10'
+  display('flex'),
+  flexDirection('flex-col', 'lg:flex-row'),
+  alignItems('items-center'),
+  justifyContent('justify-center'),
+  space('space-y-2', 'lg:space-y-0', 'lg:space-x-2'),
+  margin('mt-10')
 )
 const addressBackground = classnames(
-  'transition-colors',
-  'py-4',
-  'px-6',
-  'rounded-2xl',
-  'bg-accent-light',
-  'text-center',
-  'break-all'
+  transitionProperty('transition-colors'),
+  borderRadius('rounded-2xl'),
+  backgroundColor('bg-accent-light'),
+  textAlign('text-center'),
+  wordBreak('break-all'),
+  padding('py-4', 'px-6')
 )
-const textCenter = classnames('text-center')
+const textCenter = classnames(textAlign('text-center'))
 
 export default function PublicAddress() {
   const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)

@@ -1,7 +1,7 @@
 import { BodyText, LargerText } from 'components/Text'
 import { Buffer } from 'buffer'
 import { FC, useState } from 'react'
-import { classnames } from 'classnames/tailwind'
+import { classnames, wordBreak } from 'classnames/tailwind'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import PublicAccountStore from 'stores/PublicAccountStore'
@@ -12,7 +12,7 @@ interface EthereumIdentityToVerifyProps {
   address: string
 }
 
-const breakWords = classnames('break-words')
+const breakWords = classnames(wordBreak('break-words'))
 
 const EthereumIdentityToVerify: FC<EthereumIdentityToVerifyProps> = ({
   address,
