@@ -3,6 +3,7 @@ import { FC, useCallback, useEffect, useState } from 'react'
 import { TokenList } from 'components/TokenList'
 import { classnames } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
+import Button from 'components/Button'
 import Card from 'components/Card'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import FetchingData from 'components/FetchingData'
@@ -145,10 +146,24 @@ const IdentityComponent: FC<IdentityProps> = ({
     void verifyIdentity()
   }, [connectingIdentityType, accessToken, identity, identityType, navigate])
 
+  const FetchingHandlerScreen = () => {
+    return connectedError ? (
+      <>
+        <BodyText>
+          Your access token is invalid. Please, make sure it is correct
+        </BodyText>
+        <Button color="error" onClick={() => navigate('/')}>
+          Ok
+        </Button>
+      </>
+    ) : (
+      <FetchingData />
+    )
+  }
   return (
     <Card>
       <BodyText>{identity.name}</BodyText>
-      {!connectedIdentity && <FetchingData error={connectedError} />}
+      {!connectedIdentity && <FetchingHandlerScreen />}
       {connectedIdentity && (
         <div className={breakWords}>
           <LargerText>

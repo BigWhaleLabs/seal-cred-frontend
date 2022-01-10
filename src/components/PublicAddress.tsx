@@ -42,7 +42,9 @@ export default function PublicAddress() {
   if (address) {
     const isValid =
       typeof address === 'string' && ethers.utils.isAddress(address)
-    if (!isValid) navigate('/404')
+    if (!isValid) {
+      navigate('/404')
+    }
   }
 
   return (
