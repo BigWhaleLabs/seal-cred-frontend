@@ -1,6 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Main from 'pages/Main'
 import Navbar from 'components/Navbar'
+import NotFound from 'pages/NotFound'
 import Root from 'components/Root'
 
 export default function App() {
@@ -10,8 +11,9 @@ export default function App() {
         <Navbar />
         <Routes>
           <Route path="/public/:address" element={<Main />} />
-          <Route path="/:connectingIdentityType" element={<Main />} />
+          <Route path="/identity/:connectingIdentityType" element={<Main />} />
           <Route path="/" element={<Main />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </Root>

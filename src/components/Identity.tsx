@@ -9,6 +9,7 @@ import {
   wordBreak,
 } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
+import Button from 'components/Button'
 import Card from 'components/Card'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import FetchingData from 'components/FetchingData'
@@ -109,6 +110,7 @@ const IdentityComponent: FC<IdentityProps> = ({
   const query = useQuery()
   const accessToken = query.get('access_token')
   const navigate = useNavigate()
+  const [connectedError, setConnectedError] = useState(false)
 
   if (!identityType) {
     return null
@@ -124,30 +126,50 @@ const IdentityComponent: FC<IdentityProps> = ({
       if (!identity.verify) {
         return
       }
-      const { identifier } = await identity.verify({ secret: accessToken })
-      if (
-        !PublicAccountStore.connectedIdentities.find(
-          (identity) =>
-            identity.type === connectingIdentityType &&
-            identity.identifier === identifier
-        )
-      ) {
-        PublicAccountStore.connectedIdentities.unshift({
-          type: identityType,
-          name: identity.name,
-          identifier,
-          secret: accessToken,
-        })
+      setConnectedError(false)
+      try {
+        const { identifier } = await identity.verify({ secret: accessToken })
+        if (
+          !PublicAccountStore.connectedIdentities.find(
+            (identity) =>
+              identity.type === connectingIdentityType &&
+              identity.identifier === identifier
+          )
+        ) {
+          PublicAccountStore.connectedIdentities.unshift({
+            type: identityType,
+            name: identity.name,
+            identifier,
+            secret: accessToken,
+          })
+          navigate('/')
+        }
+      } catch (error) {
+        console.error('Verify error:', error)
+        setConnectedError(true)
       }
-      navigate('/')
     }
     void verifyIdentity()
   }, [connectingIdentityType, accessToken, identity, identityType, navigate])
 
+  const FetchingHandlerScreen = () => {
+    return connectedError ? (
+      <>
+        <BodyText>
+          Your access token is invalid. Please, make sure it is correct
+        </BodyText>
+        <Button color="error" onClick={() => navigate('/')}>
+          Ok
+        </Button>
+      </>
+    ) : (
+      <FetchingData />
+    )
+  }
   return (
     <Card>
       <BodyText>{identity.name}</BodyText>
-      {!connectedIdentity && <FetchingData />}
+      {!connectedIdentity && <FetchingHandlerScreen />}
       {connectedIdentity && (
         <div className={breakWords}>
           <LargerText>
