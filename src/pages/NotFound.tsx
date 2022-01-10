@@ -1,18 +1,33 @@
 import { HeaderText, SubheaderText } from 'components/Text'
-import { classnames } from 'classnames/tailwind'
+import {
+  alignItems,
+  classnames,
+  display,
+  flexDirection,
+  height,
+  justifyContent,
+  margin,
+  space,
+  textAlign,
+} from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import Button from 'components/Button'
 import Card from 'components/Card'
 
-const container = classnames('flex', 'flex-col', 'h-full', 'my-4')
+const container = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  height('h-full'),
+  margin('my-4')
+)
 const wrapperBody = classnames(
-  'flex',
-  'flex-col',
-  'items-center',
-  'justify-center',
-  'space-y-4',
-  'text-center',
-  'mt-10'
+  display('flex'),
+  flexDirection('flex-col'),
+  alignItems('items-center'),
+  justifyContent('justify-center'),
+  space('space-y-4'),
+  textAlign('text-center'),
+  margin('mt-10')
 )
 
 export default function NotFound() {
