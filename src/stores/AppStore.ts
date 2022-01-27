@@ -5,7 +5,6 @@ import Theme from 'models/Theme'
 type LinkedTokenObject = {
   identityType: string
   type: string
-  updatedAt?: number
 }
 interface LinkedToken extends LinkedTokenObject {
   identifier: string
@@ -20,7 +19,7 @@ class AppStore extends PersistableStore {
   linked: LinkedTokenMap = {}
 
   addLinkedToken({ identifier, identityType, type }: LinkedToken) {
-    this.linked[identifier] = { updatedAt: Date.now(), identityType, type }
+    this.linked[identifier] = { identityType, type }
   }
 
   removeLinkedToken(identifier: string) {

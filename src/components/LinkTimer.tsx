@@ -1,5 +1,5 @@
-import { classnames, display, flexDirection, space } from 'classnames/tailwind'
 import { FC, useEffect, useState } from 'react'
+import { classnames, display, flexDirection, space } from 'classnames/tailwind'
 import AppStore from 'stores/AppStore'
 import Countdown from 'react-countdown'
 
@@ -29,7 +29,7 @@ const LinkTimer: FC<{ token: string }> = ({ token }) => {
         AppStore.removeLinkedToken(token)
       }, 2500)
     }
-  }, [finished])
+  }, [finished, token])
 
   const renderer = ({ minutes, seconds, completed }: CountdownRerender) => {
     if (completed) {
