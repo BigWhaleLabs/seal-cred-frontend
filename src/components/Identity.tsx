@@ -5,13 +5,17 @@ import {
   classnames,
   display,
   flexDirection,
+  justifyContent,
   margin,
   wordBreak,
 } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
+import { useSnapshot } from 'valtio'
+import AppStore from 'stores/AppStore'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import ConnectedIdentity from 'models/ConnectedIdentity'
+import LinkTimer from 'components/LinkTimer'
 import FetchingData from 'components/FetchingData'
 import IdentityType from 'models/IdentityType'
 import PublicAccountStore from 'stores/PublicAccountStore'
@@ -26,6 +30,11 @@ interface TokensProps {
 }
 
 const badges = classnames(display('flex'), flexDirection('flex-col'))
+const headerBlock = classnames(
+  display('flex'),
+  flexDirection('flex-row'),
+  justifyContent('justify-between')
+)
 const identitiesBlock = classnames(margin('mt-6'))
 
 const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
@@ -106,6 +115,7 @@ const IdentityComponent: FC<IdentityProps> = ({
   connectedIdentity,
   connectingIdentityType,
 }) => {
+  const { linked } = useSnapshot(AppStore)
   const identityType = connectedIdentity?.type || connectingIdentityType
   const query = useQuery()
   const accessToken = query.get('access_token')
@@ -168,7 +178,15 @@ const IdentityComponent: FC<IdentityProps> = ({
   }
   return (
     <Card>
-      <BodyText>{identity.name}</BodyText>
+      <BodyText>
+        <div className={headerBlock}>
+          <div>{identity.name}</div>
+          {connectedIdentity?.identifier ===
+            Object.keys(linked).find(
+              (identity) => identity === connectedIdentity?.identifier
+            ) && <LinkTimer token={connectedIdentity?.identifier || ''} />}
+        </div>
+      </BodyText>
       {!connectedIdentity && <FetchingHandlerScreen />}
       {connectedIdentity && (
         <div className={breakWords}>
