@@ -14,11 +14,12 @@
 
 ## Environment variables
 
-| Name                 | Description       |
-| -------------------- | ----------------- |
-| `VITE_BACKEND`       | API root URL      |
-| `VITE_DOSU_BACKEND`  | Dosu API root URL |
-| `VITE_DOSU_FRONTEND` | Dosu frontend URL |
+| Name                 | Description                         |
+| -------------------- | ----------------------------------- |
+| `VITE_BACKEND`       | API root URL                        |
+| `VITE_DOSU_BACKEND`  | Dosu API root URL                   |
+| `VITE_DOSU_FRONTEND` | Dosu frontend URL                   |
+| `ENCRYPT_KEY`        | Secret key to encrypt local storage |
 
 Also, please, consider looking at `.env.sample`.
 
