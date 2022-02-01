@@ -17,7 +17,7 @@ export default class PersistableStore {
       : localStorage.setItem(this.constructor.name, json)
   }
 
-  makePersistent(encrypt: boolean = false) {
+  makePersistent(encrypt = false) {
     // Start persisting
     subscribe(this, () => {
       this.persist(encrypt)
