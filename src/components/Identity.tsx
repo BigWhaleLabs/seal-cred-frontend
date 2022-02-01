@@ -11,7 +11,6 @@ import {
 } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
-import AppStore from 'stores/AppStore'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import ConnectedIdentity from 'models/ConnectedIdentity'
@@ -115,7 +114,7 @@ const IdentityComponent: FC<IdentityProps> = ({
   connectedIdentity,
   connectingIdentityType,
 }) => {
-  const { linked } = useSnapshot(AppStore)
+  const { linked } = useSnapshot(PublicAccountStore)
   const identityType = connectedIdentity?.type || connectingIdentityType
   const query = useQuery()
   const accessToken = query.get('access_token')

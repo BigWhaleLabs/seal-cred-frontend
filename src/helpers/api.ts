@@ -1,6 +1,6 @@
 import Api from 'helpers/axios'
-import AppStore from 'stores/AppStore'
 import IdentityType from 'models/IdentityType'
+import PublicAccountStore from 'stores/PublicAccountStore'
 import PublicBadge from 'models/PublicBadge'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
@@ -45,7 +45,7 @@ export async function linkToken(
     secret,
     publicOwnerAddress,
   })
-  AppStore.addLinkedToken({
+  PublicAccountStore.addLinkedToken({
     identifier: data.privateOwnerIdentifier,
     identityType: data.identityType,
     type: data.type,
@@ -63,7 +63,7 @@ export async function unlinkToken(
     tokenType,
     secret,
   })
-  AppStore.removeLinkedToken(data.privateOwnerIdentifier)
+  PublicAccountStore.removeLinkedToken(data.privateOwnerIdentifier)
   return data.doc
 }
 

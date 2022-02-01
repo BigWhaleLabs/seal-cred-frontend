@@ -5,11 +5,24 @@ import ConnectedIdentity from 'models/ConnectedIdentity'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import PublicBadge from 'models/PublicBadge'
 
+type LinkedTokenObject = {
+  identityType: string
+  type: string
+}
+interface LinkedToken extends LinkedTokenObject {
+  identifier: string
+}
+
+type LinkedTokenMap = {
+  [identifier: string]: LinkedTokenObject
+}
+
 class PublicAccountStore extends PersistableStore {
   mainEthWallet: Wallet = ethers.Wallet.createRandom()
   connectedIdentities: ConnectedIdentity[] = []
   loading = false
   publicBadges: PublicBadge[] = []
+  linked: LinkedTokenMap = {}
 
   reviver = (key: string, value: unknown) => {
     switch (key) {
@@ -61,6 +74,14 @@ class PublicAccountStore extends PersistableStore {
     } finally {
       this.loading = false
     }
+  }
+
+  addLinkedToken({ identifier, identityType, type }: LinkedToken) {
+    this.linked[identifier] = { identityType, type }
+  }
+
+  removeLinkedToken(identifier: string) {
+    delete this.linked[identifier]
   }
 }
 

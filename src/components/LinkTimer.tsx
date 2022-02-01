@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { classnames, display, flexDirection, space } from 'classnames/tailwind'
-import AppStore from 'stores/AppStore'
 import Countdown from 'react-countdown'
+import PublicAccountStore from 'stores/PublicAccountStore'
 
 type CountdownRerender = {
   minutes: number
@@ -26,7 +26,7 @@ const LinkTimer: FC<{ token: string }> = ({ token }) => {
   useEffect(() => {
     if (finished) {
       setTimeout(() => {
-        AppStore.removeLinkedToken(token)
+        PublicAccountStore.removeLinkedToken(token)
       }, 2500)
     }
   }, [finished, token])
