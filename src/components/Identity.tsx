@@ -106,6 +106,7 @@ const IdentityComponent: FC<IdentityProps> = ({
   connectedIdentity,
   connectingIdentityType,
 }) => {
+  const [isConnected, setConnected] = useState(false)
   const identityType = connectedIdentity?.type || connectingIdentityType
   const query = useQuery()
   const accessToken = query.get('access_token')
@@ -143,6 +144,8 @@ const IdentityComponent: FC<IdentityProps> = ({
             secret: accessToken,
           })
           navigate('/')
+        } else {
+          setConnected(true)
         }
       } catch (error) {
         console.error('Verify error:', error)
@@ -166,6 +169,9 @@ const IdentityComponent: FC<IdentityProps> = ({
       <FetchingData />
     )
   }
+
+  if (isConnected) return null
+
   return (
     <Card>
       <BodyText>{identity.name}</BodyText>
