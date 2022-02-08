@@ -4,7 +4,7 @@ import SequreLS from 'secure-ls'
 const ls = new SequreLS({
   encodingType: 'des',
   isCompression: false,
-  encryptionSecret: `${import.meta.env.ENCRYPT_KEY}`,
+  encryptionSecret: `${import.meta.env.VITE_ENCRYPT_KEY}`,
 })
 export default class PersistableStore {
   reviver = (_: string, value: unknown) => value
