@@ -6211,6 +6211,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"crypto-js@npm:^3.1.6":
+  version: 3.3.0
+  resolution: "crypto-js@npm:3.3.0"
+  checksum: 193923143a4784b2f974366068d96fe8280168fd3fef2bfea9551a5c3e32096f5a8fa49ff4eeb5bd0b9716d325618d38cfbe6125e359a4ef488fbca93e600824
+  languageName: node
+  linkType: hard
+
 "crypto-random-string@npm:^2.0.0":
   version: 2.0.0
   resolution: "crypto-random-string@npm:2.0.0"
@@ -10522,6 +10529,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lz-string@npm:^1.4.4":
+  version: 1.4.4
+  resolution: "lz-string@npm:1.4.4"
+  bin:
+    lz-string: bin/bin.js
+  checksum: 54e31238a61a84d8f664d9860a9fba7310c5b97a52c444f80543069bc084815eff40b8d4474ae1d93992fdf6c252dca37cf27f6adbeb4dbc3df2f3ac773d0e61
+  languageName: node
+  linkType: hard
+
 "magic-string@npm:^0.25.0, magic-string@npm:^0.25.7":
   version: 0.25.7
   resolution: "magic-string@npm:0.25.7"
@@ -13367,6 +13383,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"secure-ls@npm:^1.2.6":
+  version: 1.2.6
+  resolution: "secure-ls@npm:1.2.6"
+  dependencies:
+    crypto-js: ^3.1.6
+    lz-string: ^1.4.4
+  checksum: a931fd5e80024fa5f8eb2224f6f98b057f696645587d9a6592502a59e5eb1ca9864375e612739b82cb7f48132e1a5236641dcebf3dad2632922e6a54df5cead6
+  languageName: node
+  linkType: hard
+
 "select-hose@npm:^2.0.0":
   version: 2.0.0
   resolution: "select-hose@npm:2.0.0"
@@ -13813,6 +13839,7 @@ __metadata:
     react-router-dom: ^6.2.1
     react-scripts: ^5.0.0
     rollup-plugin-visualizer: ^5.5.2
+    secure-ls: ^1.2.6
     tailwindcss: ^3.0.12
     tailwindcss-classnames: ^3.0.1
     typescript: ^4.5.4

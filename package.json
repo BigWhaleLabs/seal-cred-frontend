@@ -33,6 +33,7 @@
     "ethers": "^5.5.3",
     "preact": "^10.6.4",
     "react-router-dom": "^6.2.1",
+    "secure-ls": "^1.2.6",
     "valtio": "^1.2.7"
   },
   "devDependencies": {
