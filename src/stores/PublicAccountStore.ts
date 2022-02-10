@@ -64,4 +64,4 @@ class PublicAccountStore extends PersistableStore {
   }
 }
 
-export default proxy(new PublicAccountStore()).makePersistent()
+export default proxy(new PublicAccountStore()).makePersistent(true)
