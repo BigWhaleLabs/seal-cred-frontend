@@ -183,7 +183,9 @@ const IdentityComponent: FC<IdentityProps> = ({
           {connectedIdentity?.identifier ===
             Object.keys(linked).find(
               (identity) => identity === connectedIdentity?.identifier
-            ) && <LinkTimer token={connectedIdentity?.identifier || ''} />}
+            ) && (
+            <LinkTimer token={linked[connectedIdentity?.identifier || '']} />
+          )}
         </div>
       </BodyText>
       {!connectedIdentity && <FetchingHandlerScreen />}

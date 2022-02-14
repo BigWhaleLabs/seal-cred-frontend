@@ -45,10 +45,11 @@ export async function linkToken(
     secret,
     publicOwnerAddress,
   })
-  PublicAccountStore.addLinkedToken({
+  await PublicAccountStore.addLinkedToken({
     identifier: data.privateOwnerIdentifier,
     identityType: data.identityType,
     type: data.type,
+    updatedAt: Date.now(),
   })
   return data.doc
 }

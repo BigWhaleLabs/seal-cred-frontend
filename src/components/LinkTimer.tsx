@@ -14,28 +14,33 @@ const timer = classnames(
   space('!space-x-1')
 )
 
-const LinkTimer: FC<{ token: string }> = ({ token }) => {
+const LinkTimer: FC<{
+  token: {
+    identityType: string
+    updatedAt: number
+  }
+}> = ({ token }) => {
   const [finished, setFinished] = useState(false)
-  const deadlines = [0, 900000, 1800000, 2700000] // 0/15/30/45 minutes
-  const date = new Date()
+  const date = new Date(token.updatedAt)
   const currentMinutes = date.getMinutes() * 60
   const currentSeconds = date.getSeconds() + currentMinutes
   const currentMilliseconds = currentSeconds * 1000 + date.getMilliseconds()
   const matchDeadline =
-    deadlines.find((s: number) => s - currentMilliseconds > 0) || 3600000 // if no matches than 60 minutes is a deadline
+    [0, 900_000, 1_800_000, 2_700_000].find(
+      (s: number) => s - currentMilliseconds > 0
+    ) || 3600000 // 0/15/30/45/60 minutes
 
   useEffect(() => {
     if (finished) {
       setTimeout(() => {
-        PublicAccountStore.removeLinkedToken(token)
+        PublicAccountStore.removeLinkedToken(token.identityType)
       }, 2500)
     }
   }, [finished, token])
 
   const renderer = ({ total, completed }: CountdownRerender) => {
-    const h = Math.floor(total / 1000 / 60 / 60)
-    const m = Math.floor((total / 1000 / 60 / 60 - h) * 60)
-    const s = Math.floor(((total / 1000 / 60 / 60 - h) * 60 - m) * 60)
+    const m = Math.floor((total % (1000 * 60 * 60)) / (1000 * 60))
+    const s = Math.floor((total % (1000 * 60)) / 1000)
 
     if (completed) {
       setFinished(true)
@@ -47,13 +52,13 @@ const LinkTimer: FC<{ token: string }> = ({ token }) => {
     )
   }
 
-  return token.length ? (
+  return token ? (
     <div className={timer}>
       {!finished && (
         <>
           <Countdown
-            date={Date.now() + matchDeadline - currentMilliseconds}
-            intervalDelay={0}
+            key={token.identityType}
+            date={token.updatedAt + matchDeadline - currentMilliseconds}
             renderer={renderer}
           />
           <div>before update</div>
