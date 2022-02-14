@@ -33,10 +33,9 @@ const LinkTimer: FC<{ token: string }> = ({ token }) => {
   }, [finished, token])
 
   const renderer = ({ total, completed }: CountdownRerender) => {
-    let h, m, s
-    h = Math.floor(total / 1000 / 60 / 60)
-    m = Math.floor((total / 1000 / 60 / 60 - h) * 60)
-    s = Math.floor(((total / 1000 / 60 / 60 - h) * 60 - m) * 60)
+    const h = Math.floor(total / 1000 / 60 / 60)
+    const m = Math.floor((total / 1000 / 60 / 60 - h) * 60)
+    const s = Math.floor(((total / 1000 / 60 / 60 - h) * 60 - m) * 60)
 
     if (completed) {
       setFinished(true)
