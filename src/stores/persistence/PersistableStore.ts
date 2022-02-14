@@ -1,10 +1,14 @@
 import { subscribe } from 'valtio'
 import SequreLS from 'secure-ls'
 
+if (!import.meta.env.VITE_ENCRYPT_KEY) {
+  throw 'Missing env variable for "VITE_ENCRYPT_KEY"'
+}
+
 const ls = new SequreLS({
   encodingType: 'des',
   isCompression: false,
-  encryptionSecret: `${import.meta.env.VITE_ENCRYPT_KEY}`,
+  encryptionSecret: import.meta.env.VITE_ENCRYPT_KEY as string,
 })
 export default class PersistableStore {
   reviver = (_: string, value: unknown) => value
@@ -39,7 +43,7 @@ export default class PersistableStore {
     return this
   }
 
-  checkIfJsonFormat(name: string): boolean {
+  checkIfJsonFormat(name: string) {
     const savedString = localStorage.getItem(name)
     if (savedString === null) return false
     try {
