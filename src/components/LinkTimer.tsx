@@ -4,8 +4,7 @@ import Countdown from 'react-countdown'
 import PublicAccountStore from 'stores/PublicAccountStore'
 
 type CountdownRerender = {
-  minutes: number
-  seconds: number
+  total: number
   completed: boolean
 }
 
@@ -17,11 +16,13 @@ const timer = classnames(
 
 const LinkTimer: FC<{ token: string }> = ({ token }) => {
   const [finished, setFinished] = useState(false)
-  const deadlines = [0, 900, 1800, 2700]
-  const currentMinutes = new Date().getMinutes() * 60
-  const currentSeconds = new Date().getSeconds() + currentMinutes
+  const deadlines = [0, 900000, 1800000, 2700000] // 0/15/30/45 minutes
+  const date = new Date()
+  const currentMinutes = date.getMinutes() * 60
+  const currentSeconds = date.getSeconds() + currentMinutes
+  const currentMilliseconds = currentSeconds * 1000 + date.getMilliseconds()
   const matchDeadline =
-    deadlines.find((s: number) => s - currentSeconds > 0) || 3600
+    deadlines.find((s: number) => s - currentMilliseconds > 0) || 3600000 // if no matches than 60 minutes is a deadline
 
   useEffect(() => {
     if (finished) {
@@ -31,14 +32,18 @@ const LinkTimer: FC<{ token: string }> = ({ token }) => {
     }
   }, [finished, token])
 
-  const renderer = ({ minutes, seconds, completed }: CountdownRerender) => {
+  const renderer = ({ total, completed }: CountdownRerender) => {
+    let h, m, s
+    h = Math.floor(total / 1000 / 60 / 60)
+    m = Math.floor((total / 1000 / 60 / 60 - h) * 60)
+    s = Math.floor(((total / 1000 / 60 / 60 - h) * 60 - m) * 60)
+
     if (completed) {
       setFinished(true)
     }
     return (
       <div>
-        {minutes < 10 ? `0${minutes}` : minutes}:
-        {seconds < 10 ? `0${seconds}` : seconds}
+        {m < 10 ? `0${m}` : m}:{s < 10 ? `0${s}` : s}
       </div>
     )
   }
@@ -48,7 +53,8 @@ const LinkTimer: FC<{ token: string }> = ({ token }) => {
       {!finished && (
         <>
           <Countdown
-            date={Date.now() + (matchDeadline - currentSeconds) * 1000}
+            date={Date.now() + matchDeadline - currentMilliseconds}
+            intervalDelay={0}
             renderer={renderer}
           />
           <div>before update</div>
