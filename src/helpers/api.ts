@@ -2,6 +2,7 @@ import Api from 'helpers/axios'
 import IdentityType from 'models/IdentityType'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import PublicBadge from 'models/PublicBadge'
+import TimerStore from 'stores/TimerStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
 
@@ -49,8 +50,11 @@ export async function linkToken(
     identifier: data.privateOwnerIdentifier,
     identityType: data.identityType,
     type: data.type,
-    updatedAt: Date.now(),
   })
+  if (!TimerStore.timerStarted) {
+    TimerStore.setTimer()
+  }
+
   return data.doc
 }
 
@@ -65,6 +69,9 @@ export async function unlinkToken(
     secret,
   })
   PublicAccountStore.removeLinkedToken(data.privateOwnerIdentifier)
+  if (!Object.entries(PublicAccountStore.linked).length) {
+    TimerStore.removeTimer()
+  }
   return data.doc
 }
 

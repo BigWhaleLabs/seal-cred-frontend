@@ -6507,6 +6507,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:^1.10.7":
+  version: 1.10.7
+  resolution: "dayjs@npm:1.10.7"
+  checksum: a0a4ca95abaa03d0702161dc2c35d16121188e342f5052b9c61cdf784dab68af766f477c04f87f71c6af666fd4d13db9b9853b87265850d6093b7b04e1bb1cd7
+  languageName: node
+  linkType: hard
+
 "debug@npm:2.6.9, debug@npm:^2.6.0, debug@npm:^2.6.9":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
@@ -12638,18 +12645,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-countdown@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "react-countdown@npm:2.3.2"
-  dependencies:
-    prop-types: ^15.7.2
-  peerDependencies:
-    react: ">= 15"
-    react-dom: ">= 15"
-  checksum: 670d7f6f355cd2c862fde2039e3fbaf39dae2925d2dea78c0406c04a9a5c35cca61bbd137de04a965ebdbbbaee5d435a06f06c0786a86d7bfc175b4fd9789e19
-  languageName: node
-  linkType: hard
-
 "react-dev-utils@npm:^12.0.0":
   version: 12.0.0
   resolution: "react-dev-utils@npm:12.0.0"
@@ -13809,6 +13804,7 @@ __metadata:
     buffer: ^6.0.3
     copy-to-clipboard: ^3.3.1
     cross-env: ^7.0.3
+    dayjs: ^1.10.7
     eslint: ^8.6.0
     eslint-config-prettier: ^8.3.0
     eslint-plugin-import: ^2.25.4
@@ -13822,7 +13818,6 @@ __metadata:
     postcss: ^8.4.5
     preact: ^10.6.4
     prettier: ^2.5.1
-    react-countdown: ^2.3.2
     react-router-dom: ^6.2.1
     react-scripts: ^5.0.0
     rollup-plugin-visualizer: ^5.5.2

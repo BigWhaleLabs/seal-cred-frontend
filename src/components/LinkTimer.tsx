@@ -1,12 +1,10 @@
+import { BodyText } from 'components/Text'
 import { FC, useEffect, useState } from 'react'
 import { classnames, display, flexDirection, space } from 'classnames/tailwind'
-import Countdown from 'react-countdown'
+import { useSnapshot } from 'valtio'
 import PublicAccountStore from 'stores/PublicAccountStore'
-
-type CountdownRerender = {
-  total: number
-  completed: boolean
-}
+import TimerStore from 'stores/TimerStore'
+import dayjs from 'dayjs'
 
 const timer = classnames(
   display('flex'),
@@ -15,56 +13,32 @@ const timer = classnames(
 )
 
 const LinkTimer: FC<{
-  token: {
-    identityType: string
-    updatedAt: number
-  }
+  token: string
 }> = ({ token }) => {
+  const { timerLeft } = useSnapshot(TimerStore, { sync: true })
   const [finished, setFinished] = useState(false)
-  const date = new Date(token.updatedAt)
-  const currentMinutes = date.getMinutes() * 60
-  const currentSeconds = date.getSeconds() + currentMinutes
-  const currentMilliseconds = currentSeconds * 1000 + date.getMilliseconds()
-  const matchDeadline =
-    [0, 900_000, 1_800_000, 2_700_000].find(
-      (s: number) => s - currentMilliseconds > 0
-    ) || 3600000 // 0/15/30/45/60 minutes
+
+  useEffect(() => {
+    if (!timerLeft) {
+      setFinished(true)
+    }
+  }, [timerLeft])
 
   useEffect(() => {
     if (finished) {
       setTimeout(() => {
-        PublicAccountStore.removeLinkedToken(token.identityType)
+        setFinished(false)
+        PublicAccountStore.removeLinkedToken(token)
       }, 2500)
     }
   }, [finished, token])
 
-  const renderer = ({ total, completed }: CountdownRerender) => {
-    const m = Math.floor((total % (1000 * 60 * 60)) / (1000 * 60))
-    const s = Math.floor((total % (1000 * 60)) / 1000)
-
-    if (completed) {
-      setFinished(true)
-    }
-    return (
-      <div>
-        {m < 10 ? `0${m}` : m}:{s < 10 ? `0${s}` : s}
-      </div>
-    )
-  }
-
-  return token ? (
+  return token.length ? (
     <div className={timer}>
-      {!finished && (
-        <>
-          <Countdown
-            key={token.identityType}
-            date={token.updatedAt + matchDeadline - currentMilliseconds}
-            renderer={renderer}
-          />
-          <div>before update</div>
-        </>
+      {timerLeft && (
+        <BodyText>{dayjs(timerLeft).format('mm:ss')} before update</BodyText>
       )}
-      {finished && <div>The contract was updated!</div>}
+      {!timerLeft && <BodyText>The contract was updated!</BodyText>}
     </div>
   ) : null
 }

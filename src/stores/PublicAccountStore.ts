@@ -8,7 +8,6 @@ import PublicBadge from 'models/PublicBadge'
 type LinkedTokenObject = {
   identityType: string
   type: string
-  updatedAt: number
 }
 interface LinkedToken extends LinkedTokenObject {
   identifier: string
@@ -77,10 +76,8 @@ class PublicAccountStore extends PersistableStore {
     }
   }
 
-  addLinkedToken({ identifier, identityType, type, updatedAt }: LinkedToken) {
-    const linkedArray = Object.entries(this.linked)
-    const time = linkedArray[0][1].updatedAt || updatedAt
-    this.linked[identifier] = { identityType, type, updatedAt: time }
+  addLinkedToken({ identifier, identityType, type }: LinkedToken) {
+    this.linked[identifier] = { identityType, type }
   }
 
   removeLinkedToken(identifier: string) {
