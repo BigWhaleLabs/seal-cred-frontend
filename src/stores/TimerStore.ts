@@ -19,9 +19,8 @@ class TimerStore extends PersistableStore {
 
     const curMS = now.minute() * 60000 + now.second() * 1000 + now.millisecond()
     const match =
-      [0, 2_100_000, 900_000, 1_800_000, 2_700_000].find(
-        (s: number) => s - curMS > 0
-      ) || 3_600_000 // 0/15/30/45/60 minutes
+      [0, 900_000, 1_800_000, 2_700_000].find((s: number) => s - curMS > 0) ||
+      3_600_000 // 0/15/30/45/60 minutes
 
     this.timerStarted = now
     this.timerFinished = now

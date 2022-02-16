@@ -15,11 +15,11 @@ const timer = classnames(
 const LinkTimer: FC<{
   token: string
 }> = ({ token }) => {
-  const { timerLeft } = useSnapshot(TimerStore, { sync: true })
+  const { timerLeft } = useSnapshot(TimerStore)
   const [finished, setFinished] = useState(false)
 
   useEffect(() => {
-    if (!timerLeft) {
+    if (!TimerStore.timerLeft) {
       setFinished(true)
     }
   }, [timerLeft])
