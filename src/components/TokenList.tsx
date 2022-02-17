@@ -7,6 +7,7 @@ import {
   justifyContent,
   justifySelf,
   padding,
+  space,
   textColor,
   width,
 } from 'classnames/tailwind'
@@ -36,7 +37,8 @@ const listWrapper = classnames(
   display('flex'),
   justifyContent('justify-start'),
   alignItems('items-center'),
-  padding('py-2')
+  padding('py-2'),
+  space('space-x-1')
 )
 const listTokenTitle = classnames(width('w-full'), textColor('text-white'))
 const listTokenAction = classnames(justifySelf('justify-self-end'))
