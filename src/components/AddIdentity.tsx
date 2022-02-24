@@ -1,63 +1,35 @@
 import { BodyText } from 'components/Text'
-import { UserAgent, mobileCheck, userAgent } from 'helpers/userAgent'
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import CryptoWallet from 'components/CryptoWallet'
 import EthStore from 'stores/EthStore'
-import Popup from 'components/Popup'
+import configuredModal from 'helpers/configuredModal'
 
 export default function AddIdentity() {
-  const [loading, setLoading] = useState(false)
-  const isMetaMaskInstalled = EthStore.isMetaMaskInstalled()
-  const isSafari = userAgent() === UserAgent.Safari
-  const isNotSupportedMobile = mobileCheck() && !isMetaMaskInstalled
+  const { ethLoading } = useSnapshot(EthStore)
+
+  useEffect(() => {
+    if (configuredModal.cachedProvider) {
+      void EthStore.onConnect()
+    }
+  }, [])
+
   return (
     <Card>
       <BodyText>Link another identity</BodyText>
-      {isMetaMaskInstalled ? (
-        <Button
-          color="primary"
-          loading={loading}
-          onClick={async () => {
-            setLoading(true)
-            try {
-              await EthStore.fetchAccounts()
-            } catch (error) {
-              console.error(error)
-            } finally {
-              setLoading(false)
-            }
-          }}
-        >
-          <CryptoWallet />
-          <span>Web3 Wallet</span>
-        </Button>
-      ) : (
-        <Popup
-          activator={
-            <Button color="primary" loading={loading}>
-              <img src="/img/metamask.svg" alt="metamask" />
-              <span>Metamask</span>
-            </Button>
-          }
-          title={
-            isNotSupportedMobile
-              ? 'Please use the MetaMask app'
-              : isSafari
-              ? 'MetaMask is not supported'
-              : 'MetaMask is not installed'
-          }
-          body={
-            isNotSupportedMobile
-              ? 'To use Web3 technologies, please use the browser built into the MetaMask application'
-              : isSafari
-              ? 'Safari does not support MetaMask, please use another browser'
-              : 'To use Web3 technologies, please, install MetaMask extension for your browser'
-          }
-          confirmTitle="Okay, thanks"
-        />
-      )}
+      <Button
+        color="primary"
+        loading={ethLoading}
+        onClick={async () => {
+          configuredModal.clearCachedProvider()
+          await EthStore.onConnect()
+        }}
+      >
+        <CryptoWallet />
+        <span>Crypto Wallet</span>
+      </Button>
     </Card>
   )
 }

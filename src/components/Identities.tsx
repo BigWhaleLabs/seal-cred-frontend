@@ -29,16 +29,17 @@ export default function Identities() {
       {connectingIdentityType === 'dosu' && (
         <Identity connectingIdentityType={connectingIdentityType} />
       )}
-      {ethStoreSnapshot.accounts
-        .filter(
-          (account) =>
-            !PublicAccountStore.connectedIdentities.find(
-              (identity) => identity.identifier === account
-            )
-        )
-        .map((account) => (
-          <EthereumIdentityToVerify address={account} key={account} />
-        ))}
+      {ethStoreSnapshot.accounts &&
+        ethStoreSnapshot.accounts
+          .filter(
+            (account) =>
+              !PublicAccountStore.connectedIdentities.find(
+                (identity) => identity.identifier === account
+              )
+          )
+          .map((account) => (
+            <EthereumIdentityToVerify address={account} key={account} />
+          ))}
       {publicAccountStoreSnapshot.connectedIdentities.map((identity) => (
         <Identity
           key={`${identity.type}-${identity.identifier}`}

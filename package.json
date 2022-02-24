@@ -27,14 +27,22 @@
     "@metamask/eth-sig-util": "^4.0.0",
     "@metamask/providers": "^8.1.1",
     "@vitejs/plugin-react": "^1.1.4",
+    "@walletconnect/web3-provider": "^1.7.1",
     "axios": "^0.24.0",
+    "bitski": "^0.13.1",
     "buffer": "^6.0.3",
     "copy-to-clipboard": "^3.3.1",
     "ethers": "^5.5.3",
+    "events": "^3.3.0",
+    "fortmatic": "^2.2.1",
     "preact": "^10.6.4",
+    "process": "^0.11.10",
     "react-router-dom": "^6.2.1",
     "secure-ls": "^1.2.6",
-    "valtio": "^1.2.7"
+    "util": "^0.12.4",
+    "valtio": "^1.2.7",
+    "walletlink": "^2.5.0",
+    "web3modal": "^1.9.5"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.1.7",

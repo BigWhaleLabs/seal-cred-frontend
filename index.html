@@ -46,6 +46,17 @@
   <body>
     <noscript>Please, turn on JavaScript to see this page.</noscript>
     <div id="root"></div>
+    <!-- Define to use some web3 libs -->
+    <script type="module">
+      import process from 'process'
+      import { Buffer } from 'buffer'
+      import EventEmitter from 'events'
+
+      window.global = window
+      window.Buffer = Buffer
+      window.process = process
+      window.EventEmitter = EventEmitter
+    </script>
     <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

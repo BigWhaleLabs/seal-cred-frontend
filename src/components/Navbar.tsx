@@ -26,7 +26,7 @@ const navbar = classnames(
   justifyContent('justify-between'),
   padding('py-4'),
   margin('my-2'),
-  zIndex('z-50'),
+  zIndex('z-10'),
   backgroundColor('bg-background')
 )
 
