@@ -3,6 +3,7 @@ import { UserAgent, mobileCheck, userAgent } from 'helpers/userAgent'
 import { useState } from 'react'
 import Button from 'components/Button'
 import Card from 'components/Card'
+import CryptoWallet from 'components/CryptoWallet'
 import EthStore from 'stores/EthStore'
 import Popup from 'components/Popup'
 
@@ -29,8 +30,8 @@ export default function AddIdentity() {
             }
           }}
         >
-          <img src="/img/metamask.svg" alt="metamask" />
-          <span>Metamask</span>
+          <CryptoWallet />
+          <span>Web3 Wallet</span>
         </Button>
       ) : (
         <Popup
