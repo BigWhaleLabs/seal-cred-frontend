@@ -24,14 +24,15 @@ class EthStore extends PersistableStore {
     }
   }
 
-  async getCachedProvider() {
+  async getProvider() {
     return new Web3Provider(await configuredModal.connect())
   }
 
-  async signMessage(message: string) {
+  async signMessage() {
     this.ethLoading = true
-    const provider = await this.getCachedProvider()
-    const signature = await provider.getSigner().signMessage(message)
+    const provider = await this.getProvider()
+    const signer = provider.getSigner()
+    const signature = await signer.signMessage(await signer.getAddress())
     this.ethLoading = false
     return signature
   }

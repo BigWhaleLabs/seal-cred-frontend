@@ -1,5 +1,4 @@
 import { BodyText, LargerText } from 'components/Text'
-import { Buffer } from 'buffer'
 import { FC, useState } from 'react'
 import { classnames, wordBreak } from 'classnames/tailwind'
 import Button from 'components/Button'
@@ -32,8 +31,7 @@ const EthereumIdentityToVerify: FC<EthereumIdentityToVerifyProps> = ({
         onClick={async () => {
           setLoading(true)
           try {
-            const msg = `0x${Buffer.from(address, 'utf8').toString('hex')}`
-            const signature = await EthStore.signMessage(msg)
+            const signature = await EthStore.signMessage()
             if (!signature) return
             const verificationResult = await axios.post<{
               address: string
