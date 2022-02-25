@@ -3,8 +3,6 @@ import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import configuredModal from 'helpers/configuredModal'
 
-let provider: Web3Provider
-
 class EthStore extends PersistableStore {
   accounts: string[] | undefined = undefined
   ethLoading = false
@@ -26,10 +24,13 @@ class EthStore extends PersistableStore {
     }
   }
 
-  async signMessage(message: string) {
-    if (!provider) return
+  async getCachedProvider() {
+    return new Web3Provider(await configuredModal.connect())
+  }
 
+  async signMessage(message: string) {
     this.ethLoading = true
+    const provider = await this.getCachedProvider()
     const signature = await provider.getSigner().signMessage(message)
     this.ethLoading = false
     return signature
