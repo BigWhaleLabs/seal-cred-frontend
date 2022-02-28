@@ -19,8 +19,9 @@ export default defineConfig({
     alias: {
       process: 'process/browser',
       stream: 'stream-browserify',
-      zlib: 'browserify-zlib',
       util: 'util',
+      https: 'agent-base',
+      zlib: 'browserify-zlib',
     },
   },
 })

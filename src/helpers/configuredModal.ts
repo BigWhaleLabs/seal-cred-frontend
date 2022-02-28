@@ -1,5 +1,6 @@
 import { Bitski } from 'bitski'
 import Fortmatic from 'fortmatic'
+import Torus from '@toruslabs/torus-embed'
 import WalletConnect from '@walletconnect/web3-provider'
 import WalletLink from 'walletlink'
 import Web3Modal from 'web3modal'
@@ -22,6 +23,9 @@ const configuredModal = new Web3Modal({
         key: import.meta.env.VITE_FORTMATIC_KEY as string,
         network: fortmaticNetwork, // defaults to localhost:8454
       },
+    },
+    torus: {
+      package: Torus,
     },
     walletconnect: {
       package: WalletConnect,
