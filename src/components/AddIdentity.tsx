@@ -28,7 +28,7 @@ export default function AddIdentity() {
         }}
       >
         <CryptoWallet />
-        <span>Crypto Wallet</span>
+        <span>Eth wallet</span>
       </Button>
     </Card>
   )

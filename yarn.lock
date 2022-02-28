@@ -16022,7 +16022,6 @@ __metadata:
     postcss: ^8.4.5
     preact: ^10.6.4
     prettier: ^2.5.1
-    process: ^0.11.10
     react-router-dom: ^6.2.1
     react-scripts: ^5.0.0
     rollup-plugin-visualizer: ^5.5.2
@@ -16030,7 +16029,6 @@ __metadata:
     tailwindcss: ^3.0.12
     tailwindcss-classnames: ^3.0.1
     typescript: ^4.5.4
-    util: ^0.12.4
     valtio: ^1.2.7
     vite: ^2.7.10
     vite-tsconfig-paths: ^3.3.17
@@ -17016,7 +17014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"util@npm:^0.12.0, util@npm:^0.12.4":
+"util@npm:^0.12.0":
   version: 0.12.4
   resolution: "util@npm:0.12.4"
   dependencies:

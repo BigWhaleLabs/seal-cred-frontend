@@ -7,7 +7,7 @@ import Web3Modal from 'web3modal'
 
 const infuraId = import.meta.env.VITE_INFURA_ID as string
 const fortmaticNetwork = {
-  rpcUrl: 'https://rpc-mainnet.maticvigil.com',
+  rpcUrl: import.meta.env.VITE_FORMATIC_RPC as string,
   chainId: 137,
 }
 
@@ -21,7 +21,7 @@ const configuredModal = new Web3Modal({
       package: Fortmatic,
       options: {
         key: import.meta.env.VITE_FORTMATIC_KEY as string,
-        network: fortmaticNetwork, // defaults to localhost:8454
+        network: fortmaticNetwork,
       },
     },
     torus: {
