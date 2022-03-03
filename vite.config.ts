@@ -15,4 +15,10 @@ export default defineConfig({
       ],
     },
   },
+  resolve: {
+    alias: {
+      stream: 'stream-browserify',
+      https: 'agent-base',
+    },
+  },
 })

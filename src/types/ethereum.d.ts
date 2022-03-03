@@ -1,7 +1,6 @@
-import { MetaMaskInpageProvider } from '@metamask/providers'
-
+import { WalletLinkProvider } from 'walletlink'
 declare global {
   interface Window {
-    ethereum: MetaMaskInpageProvider
+    ethereum: WalletLinkProvider
   }
 }

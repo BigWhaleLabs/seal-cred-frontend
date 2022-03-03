@@ -1,9 +1,9 @@
 import { BodyText, LargerText } from 'components/Text'
-import { Buffer } from 'buffer'
 import { FC, useState } from 'react'
 import { classnames, wordBreak } from 'classnames/tailwind'
 import Button from 'components/Button'
 import Card from 'components/Card'
+import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import axios from 'axios'
 import identities from 'models/identities'
@@ -31,12 +31,8 @@ const EthereumIdentityToVerify: FC<EthereumIdentityToVerifyProps> = ({
         onClick={async () => {
           setLoading(true)
           try {
-            const from = address
-            const msg = `0x${Buffer.from(address, 'utf8').toString('hex')}`
-            const signature = await window.ethereum.request({
-              method: 'personal_sign',
-              params: [msg, from],
-            })
+            const signature = await EthStore.signMessage()
+            if (!signature) return
             const verificationResult = await axios.post<{
               address: string
               token: string

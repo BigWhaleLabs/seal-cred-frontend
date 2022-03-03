@@ -60,3 +60,7 @@ body {
   --font-secondary: DM Sans;
   --font-medium: 500;
 }
+
+.web3modal-modal-lightbox {
+  z-index: 100 !important;
+}

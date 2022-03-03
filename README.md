@@ -14,12 +14,17 @@
 
 ## Environment variables
 
-| Name                 | Description                         |
-| -------------------- | ----------------------------------- |
-| `VITE_BACKEND`       | API root URL                        |
-| `VITE_DOSU_BACKEND`  | Dosu API root URL                   |
-| `VITE_DOSU_FRONTEND` | Dosu frontend URL                   |
-| `VITE_ENCRYPT_KEY`   | Secret key to encrypt local storage |
+| Name                    | Description                                                                                                                                                                                                                |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `VITE_BACKEND`          | API root URL                                                                                                                                                                                                               |
+| `VITE_DOSU_BACKEND`     | Dosu API root URL                                                                                                                                                                                                          |
+| `VITE_DOSU_FRONTEND`    | Dosu frontend URL                                                                                                                                                                                                          |
+| `VITE_ENCRYPT_KEY`      | Secret key to encrypt local storage                                                                                                                                                                                        |
+| `VITE_FORTMATIC_KEY`    | Create a project and get one [here](https://dashboard.fortmatic.com/)                                                                                                                                                      |
+| `VITE_FORMATIC_RPC`     | A URL to the Formatic network                                                                                                                                                                                              |
+| `VITE_ETH_NETWORK`      | Eth network for your providers and contract                                                                                                                                                                                |
+| `VITE_INFURA_ID`        | Create an app and get one [here](https://infura.io/dashboard)                                                                                                                                                              |
+| `VITE_BITSKI_CLIENT_ID` | [Register a wallet](https://wallet.bitski.com/), confirm your email and [create a project](https://developer.bitski.com/). Use `localhost` as homepage in your app + redirect to `localhost/callback.html` in auth section |
 
 Also, please, consider looking at `.env.sample`.
 
