@@ -5,6 +5,7 @@
   "scripts": {
     "start": "vite",
     "build": "cross-env NODE_ENV=production tsc && vite build",
+    "preview": "vite preview",
     "pretty": "prettier --check src",
     "lint": "yarn pretty && eslint --max-warnings 0 --ext ts,tsx,json src",
     "generate-css-types": "tailwindcss-classnames -o src/classnames/tailwind.ts && prettier --write src/classnames/tailwind.ts",
@@ -43,6 +44,8 @@
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@preact/preset-vite": "^2.1.7",
     "@types/node": "^17.0.21",
     "@types/react": "^17.0.39",
