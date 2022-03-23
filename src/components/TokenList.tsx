@@ -11,6 +11,7 @@ import {
   width,
 } from 'classnames/tailwind'
 import { linkToken, mintToken, unlinkToken } from 'helpers/api'
+import BadgesStore from 'stores/BadgesStore'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import PublicAccountStore from 'stores/PublicAccountStore'
@@ -27,7 +28,7 @@ enum TokenActionType {
 }
 interface TokenListProps {
   connectedIdentity: ConnectedIdentity
-  tokens: (Token | TokenType)[]
+  tokens: readonly (Token | TokenType)[]
   type: ButtonType
   fetchTokens: () => Promise<void>
 }
@@ -118,7 +119,7 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
               setLoading(false)
             }
             void fetchTokens()
-            void PublicAccountStore.fetchPublicBadges()
+            void BadgesStore.fetchPublicBadges()
           }}
         >
           {TokenActionType[type]}
