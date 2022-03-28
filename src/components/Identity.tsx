@@ -1,13 +1,6 @@
-import { BodyText, LargerText, SubheaderText } from 'components/Text'
-import { FC, useCallback, useEffect, useState } from 'react'
-import { TokenList } from 'components/TokenList'
-import {
-  classnames,
-  display,
-  flexDirection,
-  margin,
-  wordBreak,
-} from 'classnames/tailwind'
+import { BodyText, LargerText } from 'components/Text'
+import { FC, Suspense, useEffect, useState } from 'react'
+import { classnames, wordBreak } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import Button from 'components/Button'
 import Card from 'components/Card'
@@ -15,87 +8,10 @@ import ConnectedIdentity from 'models/ConnectedIdentity'
 import FetchingData from 'components/FetchingData'
 import IdentityType from 'models/IdentityType'
 import PublicAccountStore from 'stores/PublicAccountStore'
-import Token from 'models/Token'
-import TokenType from 'models/TokenType'
-import getPrivateTokens from 'helpers/api'
+import Tokens from 'components/Tokens'
+import TokensStore from 'stores/TokensStore'
 import identities from 'models/identities'
 import useQuery from 'hooks/useQuery'
-
-interface TokensProps {
-  connectedIdentity: ConnectedIdentity
-}
-
-const badges = classnames(display('flex'), flexDirection('flex-col'))
-const identitiesBlock = classnames(margin('mt-6'))
-
-const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
-  const [loading, setLoading] = useState(true)
-  const [tokens, setTokens] = useState<{
-    unminted: TokenType[]
-    minted: Token[]
-    connected: Token[]
-  }>()
-  const fetchTokens = useCallback(async () => {
-    setLoading(true)
-    try {
-      setTokens(
-        await getPrivateTokens(connectedIdentity.type, connectedIdentity.secret)
-      )
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }, [connectedIdentity])
-
-  useEffect(() => {
-    void fetchTokens()
-  }, [connectedIdentity, fetchTokens])
-
-  return loading ? (
-    <FetchingData />
-  ) : (
-    <div className={identitiesBlock}>
-      <div className={badges}>
-        {(!!tokens?.minted.length || !!tokens?.connected.length) && (
-          <>
-            <SubheaderText>NFT badges you have:</SubheaderText>
-            {!!tokens?.minted.length &&
-              TokenList({
-                tokens: tokens.minted,
-                type: 'minted',
-                connectedIdentity,
-                fetchTokens,
-              })}
-            {!!tokens?.connected.length &&
-              TokenList({
-                tokens: tokens.connected,
-                type: 'linked',
-                connectedIdentity,
-                fetchTokens,
-              })}
-          </>
-        )}
-        {!!tokens?.unminted.length && (
-          <>
-            <SubheaderText>NFT badges you can create:</SubheaderText>
-            {TokenList({
-              tokens: tokens.unminted,
-              type: 'unminted',
-              connectedIdentity,
-              fetchTokens,
-            })}
-          </>
-        )}
-        {!tokens?.minted.length &&
-          !tokens?.unminted.length &&
-          !tokens?.connected.length && (
-            <SubheaderText>You cannot mint any NFT badges yet</SubheaderText>
-          )}
-      </div>
-    </div>
-  )
-}
 
 interface IdentityProps {
   connectingIdentityType?: IdentityType
@@ -116,6 +32,12 @@ const IdentityComponent: FC<IdentityProps> = ({
   if (!identityType) {
     return null
   }
+
+  useEffect(() => {
+    if (connectedIdentity) {
+      TokensStore.updateToken(connectedIdentity.type, connectedIdentity.secret)
+    }
+  }, [])
 
   const identity = identities[identityType]
 
@@ -184,7 +106,11 @@ const IdentityComponent: FC<IdentityProps> = ({
           </LargerText>
         </div>
       )}
-      {connectedIdentity && <Tokens connectedIdentity={connectedIdentity} />}
+      {connectedIdentity && (
+        <Suspense fallback={<FetchingData text={'Fetching Token ...'} />}>
+          <Tokens connectedIdentity={connectedIdentity} />
+        </Suspense>
+      )}
     </Card>
   )
 }

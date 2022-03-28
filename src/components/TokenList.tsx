@@ -30,7 +30,7 @@ interface TokenListProps {
   connectedIdentity: ConnectedIdentity
   tokens: readonly (Token | TokenType)[]
   type: ButtonType
-  fetchTokens: () => Promise<void>
+  fetchTokens: () => void
 }
 
 const listWrapper = classnames(
@@ -118,8 +118,8 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
             } finally {
               setLoading(false)
             }
-            void fetchTokens()
-            void BadgesStore.fetchPublicBadges()
+            await fetchTokens()
+            await BadgesStore.fetchPublicBadges()
           }}
         >
           {TokenActionType[type]}
