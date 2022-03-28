@@ -37,7 +37,7 @@ const IdentityComponent: FC<IdentityProps> = ({
     if (connectedIdentity) {
       TokensStore.updateToken(connectedIdentity.type, connectedIdentity.secret)
     }
-  }, [])
+  })
 
   const identity = identities[identityType]
 
