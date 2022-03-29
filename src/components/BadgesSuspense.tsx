@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { Suspense, lazy } from 'react'
 import {
   alignItems,
   classnames,
@@ -10,8 +10,9 @@ import {
 } from 'classnames/tailwind'
 import BadgesStore from 'stores/BadgesStore'
 import FetchingData from 'components/FetchingData'
-import PublicBadges from 'components/PublicBadges'
 import useAddress from 'hooks/useAddress'
+
+const PublicBadges = lazy(() => import('components/PublicBadges'))
 
 const container = classnames(
   display('flex'),

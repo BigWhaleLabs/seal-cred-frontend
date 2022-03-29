@@ -1,5 +1,5 @@
 import { BodyText, LargerText } from 'components/Text'
-import { FC, Suspense, useEffect, useState } from 'react'
+import { FC, Suspense, lazy, useEffect, useState } from 'react'
 import { classnames, wordBreak } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import Button from 'components/Button'
@@ -8,10 +8,11 @@ import ConnectedIdentity from 'models/ConnectedIdentity'
 import FetchingData from 'components/FetchingData'
 import IdentityType from 'models/IdentityType'
 import PublicAccountStore from 'stores/PublicAccountStore'
-import Tokens from 'components/Tokens'
 import TokensStore from 'stores/TokensStore'
 import identities from 'models/identities'
 import useQuery from 'hooks/useQuery'
+
+const Tokens = lazy(() => import('components/Tokens'))
 
 interface IdentityProps {
   connectingIdentityType?: IdentityType

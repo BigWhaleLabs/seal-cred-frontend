@@ -18,7 +18,9 @@ interface TokensState {
 const TokensStore = proxy<TokensState>({
   tokens: {},
   updateToken: (type: IdentityType, secret: string) => {
-    TokensStore.tokens[secret] = getPrivateTokens(type, secret)
+    setTimeout(() => {
+      TokensStore.tokens[secret] = getPrivateTokens(type, secret)
+    }, 110)
   },
 })
 

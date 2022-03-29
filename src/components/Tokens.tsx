@@ -15,7 +15,7 @@ const identitiesBlock = classnames(margin('mt-6'))
 
 const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
   const { tokens } = useSnapshot(TokensStore)
-  const secret = connectedIdentity.secret
+  const tokenSnap = tokens[connectedIdentity.secret]
   const fetchTokens = () => {
     TokensStore.updateToken(connectedIdentity.type, connectedIdentity.secret)
   }
@@ -23,40 +23,39 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
   return (
     <div className={identitiesBlock}>
       <div className={badges}>
-        {(!!tokens[secret]?.minted.length ||
-          !!tokens[secret]?.connected.length) && (
+        {(!!tokenSnap?.minted.length || !!tokenSnap?.connected.length) && (
           <>
             <SubheaderText>NFT badges you have:</SubheaderText>
-            {!!tokens[secret]?.minted.length &&
+            {!!tokenSnap?.minted.length &&
               TokenList({
-                tokens: tokens[secret].minted,
+                tokens: tokenSnap.minted,
                 type: 'minted',
                 connectedIdentity,
                 fetchTokens: fetchTokens,
               })}
-            {!!tokens[secret]?.connected.length &&
+            {!!tokenSnap?.connected.length &&
               TokenList({
-                tokens: tokens[secret].connected,
+                tokens: tokenSnap.connected,
                 type: 'linked',
                 connectedIdentity,
                 fetchTokens: fetchTokens,
               })}
           </>
         )}
-        {!!tokens[secret]?.unminted.length && (
+        {!!tokenSnap?.unminted.length && (
           <>
             <SubheaderText>NFT badges you can create:</SubheaderText>
             {TokenList({
-              tokens: tokens[secret].unminted,
+              tokens: tokenSnap.unminted,
               type: 'unminted',
               connectedIdentity,
               fetchTokens: fetchTokens,
             })}
           </>
         )}
-        {!tokens[secret]?.minted.length &&
-          !tokens[secret]?.unminted.length &&
-          !tokens[secret]?.connected.length && (
+        {!tokenSnap?.minted.length &&
+          !tokenSnap?.unminted.length &&
+          !tokenSnap?.connected.length && (
             <SubheaderText>You cannot mint any NFT badges yet</SubheaderText>
           )}
       </div>
