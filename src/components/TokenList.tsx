@@ -135,7 +135,9 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
         <Button
           color={colorForType(type)}
           loading={EthStore.ethLoading}
-          onClick={() => EthStore.signMessage()}
+          onClick={() =>
+            EthStore.signMessage(PublicAccountStore.mainEthWallet.address)
+          }
           badge
         >
           Mint
