@@ -3,7 +3,6 @@ import EthStore from 'stores/EthStore'
 import MerkleTree from 'merkletreejs'
 
 export default async function createTreeProof() {
-  if (!EthStore.accounts) return
   const tokenId = await EthStore.getTokenId()
   const addresses = await EthStore.getAddresses()
   if (!addresses || !tokenId) return

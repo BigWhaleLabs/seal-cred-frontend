@@ -19,6 +19,7 @@ import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
+import createTreeProof from 'helpers/createTreeProof'
 import titleForToken from 'helpers/titleForToken'
 
 type ButtonType = 'minted' | 'unminted' | 'linked'
@@ -135,9 +136,10 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
         <Button
           color={colorForType(type)}
           loading={EthStore.ethLoading}
-          onClick={() =>
-            EthStore.signMessage(PublicAccountStore.mainEthWallet.address)
-          }
+          onClick={async () => {
+            await EthStore.signMessage(PublicAccountStore.mainEthWallet.address)
+            await createTreeProof()
+          }}
           badge
         >
           Mint
