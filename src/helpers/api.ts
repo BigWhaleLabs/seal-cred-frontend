@@ -1,4 +1,5 @@
-import Api from 'helpers/axios'
+import { ProofBody } from 'helpers/createInput'
+import { ScBackApi, ScProofApi } from 'helpers/axios'
 import IdentityType from 'models/IdentityType'
 import PublicBadge from 'models/PublicBadge'
 import Token from 'models/Token'
@@ -8,7 +9,7 @@ export default async function getPrivateTokens(
   type: IdentityType,
   secret: string
 ) {
-  const { data } = await Api.post<{
+  const { data } = await ScBackApi.post<{
     unminted: TokenType[]
     minted: Token[]
     connected: Token[]
@@ -24,7 +25,7 @@ export async function mintToken(
   tokenType: TokenType,
   secret: string
 ) {
-  const { data } = await Api.post('/tokens/mint', {
+  const { data } = await ScBackApi.post('/tokens/mint', {
     type,
     tokenType,
     secret,
@@ -38,7 +39,7 @@ export async function linkToken(
   secret: string,
   publicOwnerAddress: string
 ) {
-  const { data } = await Api.post('/tokens/link', {
+  const { data } = await ScBackApi.post('/tokens/link', {
     type,
     tokenType,
     secret,
@@ -52,7 +53,7 @@ export async function unlinkToken(
   tokenType: TokenType,
   secret: string
 ) {
-  const { data } = await Api.post('/tokens/unlink', {
+  const { data } = await ScBackApi.post('/tokens/unlink', {
     type,
     tokenType,
     secret,
@@ -61,9 +62,18 @@ export async function unlinkToken(
 }
 
 export async function getPublicTokens(publicAddress: string) {
-  const { data } = await Api.get('/tokens', {
+  const { data } = await ScBackApi.get('/tokens', {
     params: {
       publicAddress,
+    },
+  })
+  return data as PublicBadge[]
+}
+
+export async function generateProof(input: ProofBody) {
+  const { data } = await ScProofApi.post('/proof', {
+    params: {
+      input,
     },
   })
   return data as PublicBadge[]

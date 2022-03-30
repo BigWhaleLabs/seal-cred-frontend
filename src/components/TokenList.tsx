@@ -13,6 +13,7 @@ import {
 import { linkToken, mintToken, unlinkToken } from 'helpers/api'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
+import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
@@ -94,6 +95,29 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   fetchTokens,
 }) => {
   const [loading, setLoading] = useState(false)
+
+  async function proofAndMint() {
+    if (!EthStore.accounts) return
+    setLoading(true)
+    try {
+      await EthStore.generateProof()
+
+      await onClickHandler(
+        type,
+        connectedIdentity,
+        PublicAccountStore.mainEthWallet.address
+      )
+
+      await EthStore.mint()
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+    void fetchTokens()
+    void PublicAccountStore.fetchPublicBadges()
+  }
+
   return (
     <>
       <div className={listTokenTitle}>
@@ -104,22 +128,7 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
           loading={loading}
           color={colorForType(type)}
           badge
-          onClick={async () => {
-            setLoading(true)
-            try {
-              await onClickHandler(
-                type,
-                connectedIdentity,
-                PublicAccountStore.mainEthWallet.address
-              )
-            } catch (error) {
-              console.error(error)
-            } finally {
-              setLoading(false)
-            }
-            void fetchTokens()
-            void PublicAccountStore.fetchPublicBadges()
-          }}
+          onClick={async () => await proofAndMint()}
         >
           {TokenActionType[type]}
         </Button>
