@@ -1,24 +1,30 @@
+import { IncrementalMerkleTree } from '@zk-kit/incremental-merkle-tree'
 import { poseidon } from 'circomlibjs'
 import EthStore from 'stores/EthStore'
-import MerkleTree from 'merkletreejs'
 
 export default async function createTreeProof() {
   const tokenId = await EthStore.getTokenId()
   const addresses = await EthStore.getAddresses()
   if (!addresses || !tokenId) return
 
-  const leafNodes = Object.values(addresses).map((address: string) =>
-    poseidon(address)
+  const tree = new IncrementalMerkleTree(poseidon, 20, BigInt(0), 2)
+  addresses.push(tokenId.toString())
+
+  for (const address of addresses) {
+    tree.insert(BigInt(address))
+  }
+
+  const indexToProve = addresses.findIndex(
+    (element) => element === tokenId.toString()
   )
-  const merkleTree = new MerkleTree(leafNodes, poseidon, {
-    sortLeaves: true,
-    sortPairs: true,
-  })
-  const rootHash = merkleTree.getRoot()
-  const claimingAddress = leafNodes[tokenId]
-  const hexProof = merkleTree.getHexProof(claimingAddress)
+  const siblingIndex =
+    indexToProve % 2 === 0 ? indexToProve + 1 : indexToProve - 1
 
-  console.log(merkleTree.verify(hexProof, claimingAddress, rootHash))
+  const proof = tree.createProof(indexToProve)
+  proof.leaf = addresses[indexToProve]
+  proof.siblings = proof.siblings.map((s) => [s.toString()])
+  proof.siblings[0] = [siblingIndex]
+  proof.root = proof.root.toString()
 
-  return merkleTree.verify(hexProof, claimingAddress, rootHash)
+  console.log(proof)
 }
