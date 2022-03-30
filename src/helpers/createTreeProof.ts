@@ -8,15 +8,12 @@ export default async function createTreeProof() {
   if (!addresses || !tokenId) return
 
   const tree = new IncrementalMerkleTree(poseidon, 20, BigInt(0), 2)
-  addresses.push(tokenId.toString())
 
   for (const address of addresses) {
     tree.insert(BigInt(address))
   }
 
-  const indexToProve = addresses.findIndex(
-    (element) => element === tokenId.toString()
-  )
+  const indexToProve = tokenId
   const siblingIndex =
     indexToProve % 2 === 0 ? indexToProve + 1 : indexToProve - 1
 
