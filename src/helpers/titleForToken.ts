@@ -11,7 +11,7 @@ export default function titleForToken(
     if (token === TokenType.dosuHandle) {
       return `Owner of @${connectedIdentity?.identifier} at Dosu`
     } else if (token === TokenType.dosu1wave) {
-      return 'Dosu 1 wave invite holder'
+      return 'Dosu Invites 1-wave holder'
     } else {
       return token
     }
@@ -19,7 +19,7 @@ export default function titleForToken(
     return token.type === TokenType.dosuHandle
       ? `Owner of @${token.extraPublicIdentifier} at Dosu`
       : token.type === TokenType.dosu1wave
-      ? 'Dosu 1 wave invite holder'
+      ? 'Dosu Invites 1-wave holder'
       : token.type
   }
 }

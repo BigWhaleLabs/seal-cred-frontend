@@ -22,7 +22,7 @@ type ButtonType = 'minted' | 'unminted' | 'linked'
 
 enum TokenActionType {
   minted = 'link',
-  unminted = 'create',
+  unminted = 'mint',
   linked = 'unlink',
 }
 interface TokenListProps {
