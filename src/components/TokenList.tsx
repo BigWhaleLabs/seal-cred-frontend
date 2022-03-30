@@ -4,15 +4,18 @@ import {
   alignItems,
   classnames,
   display,
+  flexDirection,
   justifyContent,
   justifySelf,
   padding,
+  space,
   textColor,
   width,
 } from 'classnames/tailwind'
 import { linkToken, mintToken, unlinkToken } from 'helpers/api'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
+import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
@@ -39,7 +42,13 @@ const listWrapper = classnames(
   padding('py-2')
 )
 const listTokenTitle = classnames(width('w-full'), textColor('text-white'))
-const listTokenAction = classnames(justifySelf('justify-self-end'))
+const listTokenAction = classnames(
+  justifySelf('justify-self-end'),
+  display('flex'),
+  alignItems('items-center'),
+  flexDirection('flex-row'),
+  space('space-x-2')
+)
 
 const onClickHandler = (
   type: string,
@@ -122,6 +131,16 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
           }}
         >
           {TokenActionType[type]}
+        </Button>
+        <Button
+          color={colorForType(type)}
+          loading={EthStore.ethLoading}
+          onClick={() =>
+            EthStore.signMessage(PublicAccountStore.mainEthWallet.address)
+          }
+          badge
+        >
+          Mint
         </Button>
       </div>
     </>
