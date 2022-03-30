@@ -29,6 +29,7 @@ export default function AddIdentity() {
       >
         <CryptoWallet />
         <span>Connect wallet</span>
+        <BodyText>Merkle Verified: {merkleVerified ? '✔️' : '❌'}</BodyText>
       </Button>
     </Card>
   )

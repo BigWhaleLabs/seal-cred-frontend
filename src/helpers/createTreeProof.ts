@@ -19,5 +19,7 @@ export default async function createTreeProof() {
   const claimingAddress = leafNodes[tokenId]
   const hexProof = merkleTree.getHexProof(claimingAddress)
 
+  console.log(merkleTree.verify(hexProof, claimingAddress, rootHash))
+
   return merkleTree.verify(hexProof, claimingAddress, rootHash)
 }
