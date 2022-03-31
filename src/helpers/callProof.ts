@@ -1,0 +1,53 @@
+import { EcdsaInput } from 'types/ecdsainput'
+import { MerkleProof } from '@zk-kit/incremental-merkle-tree'
+import { ProofBody } from 'types/proofbody'
+import axios from 'axios'
+
+type ProofResponse = {
+  pi_a: string[] | undefined
+  pi_b: string[][] | undefined
+  pi_c: string[] | undefined
+  protocol: string | undefined
+  curve: string | undefined
+}
+
+export default async function callProof(
+  proof: MerkleProof | undefined,
+  ecdsaInput: EcdsaInput | undefined
+) {
+  const req: ProofBody = {
+    root: proof?.root,
+    leaf: proof?.leaf,
+    siblings: proof?.siblings,
+    pathIndices: proof?.pathIndices,
+    r: ecdsaInput?.r,
+    s: ecdsaInput?.s,
+    msghash: ecdsaInput?.msghash,
+    pubkey: ecdsaInput?.pubkey,
+  }
+
+  try {
+    const { data } = await axios.post<ProofResponse>(
+      'https://verify.streetcred.one/proof',
+      req,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      }
+    )
+
+    console.log(JSON.stringify(data, null, 4))
+
+    return data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log('error message: ', error.message)
+      return error.message
+    } else {
+      console.log('unexpected error: ', error)
+      return 'An unexpected error occurred'
+    }
+  }
+}
