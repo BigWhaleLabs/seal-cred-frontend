@@ -43,8 +43,6 @@ class EthStore extends PersistableStore {
         forAddress ? forAddress : await signer.getAddress()
       )
       return signature
-    } catch (e) {
-      throw e
     } finally {
       this.ethLoading = false
     }

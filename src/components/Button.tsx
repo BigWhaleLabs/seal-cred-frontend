@@ -60,18 +60,19 @@ const buttonColor = (color: ButtonColor) => {
   )
 }
 
-const Button: FC<ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>> =
-  ({ color, children, loading, badge, ...rest }) => {
-    return (
-      <button
-        className={button(color, loading, badge)}
-        {...rest}
-        disabled={loading}
-      >
-        {loading && <Loading small={badge} />}
-        {typeof children === 'string' ? <span>{children}</span> : children}
-      </button>
-    )
-  }
+const Button: FC<
+  ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
+> = ({ color, children, loading, badge, ...rest }) => {
+  return (
+    <button
+      className={button(color, loading, badge)}
+      {...rest}
+      disabled={loading}
+    >
+      {loading && <Loading small={badge} />}
+      {typeof children === 'string' ? <span>{children}</span> : children}
+    </button>
+  )
+}
 
 export default Button
