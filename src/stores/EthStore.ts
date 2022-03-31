@@ -101,16 +101,16 @@ class EthStore extends PersistableStore {
 
     provider.on('accountsChanged', () => {
       if (this.ethError) return
-      this.handleAccountChanged()
+      void this.handleAccountChanged()
     })
     provider.on('disconnect', () => {
       if (this.ethError) return
-      this.handleAccountChanged()
+      void this.handleAccountChanged()
     })
 
     provider.on('stop', () => {
       if (this.ethError) return
-      this.handleAccountChanged()
+      void this.handleAccountChanged()
     })
     provider.on('networkChanged', async () => {
       this.clearData()
