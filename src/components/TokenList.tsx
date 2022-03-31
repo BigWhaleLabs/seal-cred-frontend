@@ -19,6 +19,7 @@ import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
+import createTreeProof from 'helpers/createTreeProof'
 import titleForToken from 'helpers/titleForToken'
 
 type ButtonType = 'minted' | 'unminted' | 'linked'
@@ -132,15 +133,14 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
             setLoadingMint(true)
             try {
               setLoadingStage(LoadingStage.sign)
-              await EthStore.signMessage(
+              const signature = await EthStore.signMessage(
                 PublicAccountStore.mainEthWallet.address
               )
-              setLoadingStage(LoadingStage.input)
-              await EthStore.generateInput()
+              console.log(signature)
+
               setLoadingStage(LoadingStage.proof)
-              await EthStore.checkProof()
-              setLoadingStage(LoadingStage.mint)
-              await EthStore.mintingDerivative()
+              const proof = await createTreeProof()
+              console.log(proof)
             } catch (e) {
               console.error('Get error: ', e)
             } finally {

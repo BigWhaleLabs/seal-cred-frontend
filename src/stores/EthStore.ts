@@ -1,19 +1,12 @@
+import { InvitesAbi } from 'helpers/abiTypes'
+import { InvitesAbi__factory } from 'helpers/abiTypes'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import configuredModal from 'helpers/configuredModal'
 
 let provider: Web3Provider
-
-const wait = (log: string, ms: number) => {
-  console.log(`Function requst ${log}!`)
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log(`${log} succesfully`)
-      resolve(true)
-    }, ms)
-  })
-}
+let contract: InvitesAbi
 
 class EthStore extends PersistableStore {
   accounts: string[] | undefined = undefined
@@ -26,6 +19,11 @@ class EthStore extends PersistableStore {
       const instance = await configuredModal.connect()
       provider = new Web3Provider(instance)
 
+      contract = InvitesAbi__factory.connect(
+        import.meta.env.VITE_INVITES_CONTRACT_ADDRESS as string,
+        provider.getSigner(0)
+      )
+
       await this.handleAccountChanged()
       this.subscribeProvider(instance)
     } catch (error) {
@@ -33,16 +31,6 @@ class EthStore extends PersistableStore {
     } finally {
       this.ethLoading = false
     }
-  }
-
-  async generateInput() {
-    await wait('Generate the input', 2000)
-  }
-  async checkProof() {
-    await wait('Check the proof', 8000)
-  }
-  async mintingDerivative() {
-    await wait('Mint the NFT', 5000)
   }
 
   async signMessage(forAddress?: string) {
@@ -60,6 +48,21 @@ class EthStore extends PersistableStore {
     } finally {
       this.ethLoading = false
     }
+  }
+
+  async getAddresses() {
+    if (!contract) return
+
+    const rawInvites = await contract.getMintedInvites()
+
+    return Object.values(rawInvites).map((output) => output.ethAddress)
+  }
+
+  async getTokenId() {
+    if (!contract || !this.accounts) return
+
+    // It's a low-digits integer (0x001), so we can lose precision here
+    return Number(await contract.checkTokenId(this.accounts[0]))
   }
 
   private async handleAccountChanged() {
