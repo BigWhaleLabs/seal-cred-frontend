@@ -23,5 +23,5 @@ export default async function createTreeProof() {
   proof.siblings[0] = [siblingIndex]
   proof.root = proof.root.toString()
 
-  console.log(proof)
+  return proof
 }
