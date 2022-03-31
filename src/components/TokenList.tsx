@@ -1,4 +1,4 @@
-import { BadgeText } from 'components/Text'
+import { BadgeText, SubBadgeText } from 'components/Text'
 import { FC, useState } from 'react'
 import {
   alignItems,
@@ -41,7 +41,12 @@ const listWrapper = classnames(
   alignItems('items-center'),
   padding('py-2')
 )
-const listTokenTitle = classnames(width('w-full'), textColor('text-white'))
+const listTokenTitle = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  width('w-full'),
+  textColor('text-white')
+)
 const listTokenAction = classnames(
   justifySelf('justify-self-end'),
   display('flex'),
@@ -110,43 +115,16 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   connectedIdentity,
   fetchTokens,
 }) => {
-  const [loading, setLoading] = useState(false)
   const [loadingMint, setLoadingMint] = useState(false)
   const [loadingStage, setLoadingStage] = useState<LoadingStage | null>(null)
 
   return (
     <>
       <div className={listTokenTitle}>
-        <BadgeText>
-          {loadingStage
-            ? loadingStage
-            : titleForToken(token, connectedIdentity)}
-        </BadgeText>
+        <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
+        {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
       </div>
       <div className={listTokenAction}>
-        <Button
-          loading={loading}
-          color={colorForType(type)}
-          badge
-          onClick={async () => {
-            setLoading(true)
-            try {
-              await onClickHandler(
-                type,
-                connectedIdentity,
-                PublicAccountStore.mainEthWallet.address
-              )
-            } catch (error) {
-              console.error(error)
-            } finally {
-              setLoading(false)
-            }
-            void fetchTokens()
-            void PublicAccountStore.fetchPublicBadges()
-          }}
-        >
-          {TokenActionType[type]}
-        </Button>
         <Button
           color={colorForType(type)}
           loading={loadingMint}
