@@ -40,7 +40,8 @@ const button = (color: ButtonColor, loading?: boolean, badge?: boolean) =>
     borderRadius('rounded'),
     outlineStyle('focus:outline-none'),
     buttonColor(color),
-    cursor(loading ? 'cursor-not-allowed' : undefined)
+    cursor(loading ? 'cursor-not-allowed' : undefined),
+    opacity(loading ? 'opacity-75' : undefined)
   )
 
 const buttonColor = (color: ButtonColor) => {

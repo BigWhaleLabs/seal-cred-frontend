@@ -1,31 +1,28 @@
-import { BadgeText } from 'components/Text'
+import { BadgeText, SubBadgeText } from 'components/Text'
 import { FC, useState } from 'react'
 import {
   alignItems,
   classnames,
   display,
+  flexDirection,
   justifyContent,
   justifySelf,
   padding,
+  space,
   textColor,
   width,
 } from 'classnames/tailwind'
-import { linkToken, mintToken, unlinkToken } from 'helpers/api'
-import BadgesStore from 'stores/BadgesStore'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
+import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
+import createTreeProof from 'helpers/createTreeProof'
 import titleForToken from 'helpers/titleForToken'
 
 type ButtonType = 'minted' | 'unminted' | 'linked'
 
-enum TokenActionType {
-  minted = 'link',
-  unminted = 'create',
-  linked = 'unlink',
-}
 interface TokenListProps {
   connectedIdentity: ConnectedIdentity
   tokens: readonly (Token | TokenType)[]
@@ -39,42 +36,26 @@ const listWrapper = classnames(
   alignItems('items-center'),
   padding('py-2')
 )
-const listTokenTitle = classnames(width('w-full'), textColor('text-white'))
-const listTokenAction = classnames(justifySelf('justify-self-end'))
+const listTokenTitle = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  width('w-full'),
+  textColor('text-white')
+)
+const listTokenAction = classnames(
+  justifySelf('justify-self-end'),
+  display('flex'),
+  alignItems('items-center'),
+  flexDirection('flex-row'),
+  space('space-x-2')
+)
 
-const onClickHandler = (
-  type: string,
-  connectedIdentity: ConnectedIdentity,
-  publicOwnerAddress?: string
-) => {
-  const tokenType =
-    connectedIdentity.type === 'eth'
-      ? TokenType.dosu1wave
-      : TokenType.dosuHandle
-  switch (type) {
-    case 'unminted':
-      return mintToken(
-        connectedIdentity.type,
-        tokenType,
-        connectedIdentity.secret
-      )
-    case 'minted':
-      if (!publicOwnerAddress) {
-        throw new Error('Public owner address not provided')
-      }
-      return linkToken(
-        connectedIdentity.type,
-        tokenType,
-        connectedIdentity.secret,
-        publicOwnerAddress
-      )
-    case 'linked':
-      return unlinkToken(
-        connectedIdentity.type,
-        tokenType,
-        connectedIdentity.secret
-      )
-  }
+enum LoadingStage {
+  sign = 'Signing message',
+  input = 'Generating the inputs',
+  proof = 'Generating the proof',
+  mint = 'Minting the nft',
+  clear = '',
 }
 
 function colorForType(type: ButtonType) {
@@ -94,35 +75,45 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   connectedIdentity,
   fetchTokens,
 }) => {
-  const [loading, setLoading] = useState(false)
+  const [loadingMint, setLoadingMint] = useState(false)
+  const [loadingStage, setLoadingStage] = useState<LoadingStage>(
+    LoadingStage.clear
+  )
+
   return (
     <>
       <div className={listTokenTitle}>
         <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
+        {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
       </div>
       <div className={listTokenAction}>
         <Button
-          loading={loading}
           color={colorForType(type)}
-          badge
+          loading={loadingMint}
           onClick={async () => {
-            setLoading(true)
+            setLoadingMint(true)
             try {
-              await onClickHandler(
-                type,
-                connectedIdentity,
+              setLoadingStage(LoadingStage.sign)
+              const signature = await EthStore.signMessage(
                 PublicAccountStore.mainEthWallet.address
               )
-            } catch (error) {
-              console.error(error)
+              console.log(signature)
+
+              setLoadingStage(LoadingStage.proof)
+              const proof = await createTreeProof()
+              console.log('Proof: ', proof)
+              setLoadingStage(LoadingStage.mint)
+              fetchTokens()
+            } catch (e) {
+              console.error('Get error: ', e)
             } finally {
-              setLoading(false)
+              setLoadingStage(LoadingStage.clear)
+              setLoadingMint(false)
             }
-            await fetchTokens()
-            await BadgesStore.fetchPublicBadges()
           }}
+          badge
         >
-          {TokenActionType[type]}
+          Mint
         </Button>
       </div>
     </>

@@ -3357,7 +3357,7 @@ export type TRingWidth =
   | 'ring-4'
   | 'ring-8'
   | 'ring'
-  | 'inset'
+  | 'ring-inset'
 
 export type TRingOpacity =
   | 'ring-opacity-0'

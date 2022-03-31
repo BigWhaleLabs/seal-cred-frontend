@@ -99,3 +99,12 @@ const popupBodyText = classnames(
 export const PopupBodyText: FC = ({ children }) => {
   return <div className={popupBodyText}>{children}</div>
 }
+
+const subBadgeText = classnames(
+  transitionProperty('transition-colors'),
+  textColor('text-primary'),
+  fontSize('text-sm')
+)
+export const SubBadgeText: FC = ({ children }) => {
+  return <span className={subBadgeText}>{children}</span>
+}
