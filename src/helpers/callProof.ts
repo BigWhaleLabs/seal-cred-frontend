@@ -1,15 +1,8 @@
-import { EcdsaInput } from 'types/ecdsainput'
 import { MerkleProof } from '@zk-kit/incremental-merkle-tree'
-import { ProofBody } from 'types/proofbody'
+import EcdsaInput from 'models/EcdsaInput'
+import ProofBody from 'models/ProofBody'
+import ProofResponse from 'models/ProofResponse'
 import axios from 'axios'
-
-type ProofResponse = {
-  pi_a: string[] | undefined
-  pi_b: string[][] | undefined
-  pi_c: string[] | undefined
-  protocol: string | undefined
-  curve: string | undefined
-}
 
 export default async function callProof(
   proof: MerkleProof | undefined,

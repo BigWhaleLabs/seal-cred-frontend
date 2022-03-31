@@ -1,4 +1,4 @@
-export type ProofBody = {
+export default interface ProofBody {
   root: string | undefined
   leaf: string | undefined
   siblings: string[][] | undefined
