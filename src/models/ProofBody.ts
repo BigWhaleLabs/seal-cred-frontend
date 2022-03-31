@@ -3,8 +3,8 @@ export default interface ProofBody {
   leaf: string | undefined
   siblings: string[][] | undefined
   pathIndices: number[] | undefined
-  r: string[] | undefined
-  s: string[] | undefined
-  msghash: string[] | undefined
-  pubkey: string[][] | undefined
+  r: string[]
+  s: string[]
+  msghash: string[]
+  pubkey: string[][]
 }
