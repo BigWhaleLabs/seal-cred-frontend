@@ -37,12 +37,15 @@ class EthStore extends PersistableStore {
     if (!provider) return
 
     this.ethLoading = true
-    const signer = provider.getSigner()
-    const signature = await signer.signMessage(
-      forAddress ? forAddress : await signer.getAddress()
-    )
-    this.ethLoading = false
-    return signature
+    try {
+      const signer = provider.getSigner()
+      const signature = await signer.signMessage(
+        forAddress ? forAddress : await signer.getAddress()
+      )
+      return signature
+    } finally {
+      this.ethLoading = false
+    }
   }
 
   async getAddresses() {
