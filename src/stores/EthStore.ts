@@ -1,9 +1,12 @@
+import { InvitesAbi } from 'helpers/abiTypes'
+import { InvitesAbi__factory } from 'helpers/abiTypes'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import configuredModal from 'helpers/configuredModal'
 
 let provider: Web3Provider
+let contract: InvitesAbi
 
 class EthStore extends PersistableStore {
   accounts: string[] | undefined = undefined
@@ -15,6 +18,11 @@ class EthStore extends PersistableStore {
 
       const instance = await configuredModal.connect()
       provider = new Web3Provider(instance)
+
+      contract = InvitesAbi__factory.connect(
+        import.meta.env.VITE_INVITES_CONTRACT_ADDRESS as string,
+        provider.getSigner(0)
+      )
 
       await this.handleAccountChanged()
       this.subscribeProvider(instance)
@@ -35,6 +43,21 @@ class EthStore extends PersistableStore {
     )
     this.ethLoading = false
     return signature
+  }
+
+  async getAddresses() {
+    if (!contract) return
+
+    const rawInvites = await contract.getMintedInvites()
+
+    return Object.values(rawInvites).map((output) => output.ethAddress)
+  }
+
+  async getTokenId() {
+    if (!contract || !this.accounts) return
+
+    // It's a low-digits integer (0x001), so we can lose precision here
+    return Number(await contract.checkTokenId(this.accounts[0]))
   }
 
   private async handleAccountChanged() {
