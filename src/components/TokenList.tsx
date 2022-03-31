@@ -12,7 +12,6 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
-import { linkToken, mintToken, unlinkToken } from 'helpers/api'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import EthStore from 'stores/EthStore'
@@ -24,11 +23,6 @@ import titleForToken from 'helpers/titleForToken'
 
 type ButtonType = 'minted' | 'unminted' | 'linked'
 
-enum TokenActionType {
-  minted = 'link',
-  unminted = 'create',
-  linked = 'unlink',
-}
 interface TokenListProps {
   connectedIdentity: ConnectedIdentity
   tokens: (Token | TokenType)[]
@@ -64,41 +58,6 @@ enum LoadingStage {
   clear = '',
 }
 
-const onClickHandler = (
-  type: string,
-  connectedIdentity: ConnectedIdentity,
-  publicOwnerAddress?: string
-) => {
-  const tokenType =
-    connectedIdentity.type === 'eth'
-      ? TokenType.dosu1wave
-      : TokenType.dosuHandle
-  switch (type) {
-    case 'unminted':
-      return mintToken(
-        connectedIdentity.type,
-        tokenType,
-        connectedIdentity.secret
-      )
-    case 'minted':
-      if (!publicOwnerAddress) {
-        throw new Error('Public owner address not provided')
-      }
-      return linkToken(
-        connectedIdentity.type,
-        tokenType,
-        connectedIdentity.secret,
-        publicOwnerAddress
-      )
-    case 'linked':
-      return unlinkToken(
-        connectedIdentity.type,
-        tokenType,
-        connectedIdentity.secret
-      )
-  }
-}
-
 function colorForType(type: ButtonType) {
   switch (type) {
     case 'minted':
@@ -114,10 +73,11 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   token,
   type,
   connectedIdentity,
-  fetchTokens,
 }) => {
   const [loadingMint, setLoadingMint] = useState(false)
-  const [loadingStage, setLoadingStage] = useState<LoadingStage | null>(null)
+  const [loadingStage, setLoadingStage] = useState<LoadingStage>(
+    LoadingStage.clear
+  )
 
   return (
     <>
