@@ -35,7 +35,6 @@
     "copy-to-clipboard": "^3.3.1",
     "ethers": "^5.5.4",
     "fortmatic": "^2.2.1",
-    "merkletreejs": "^0.2.31",
     "preact": "^10.6.6",
     "react-router-dom": "^6.2.2",
     "secure-ls": "^1.2.6",
