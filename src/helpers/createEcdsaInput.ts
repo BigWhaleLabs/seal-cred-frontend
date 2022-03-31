@@ -1,7 +1,3 @@
-import 'module-alias/register'
-import 'source-map-support/register'
-
-import * as keccak256 from 'keccak256'
 import { Point, sign } from '@noble/secp256k1'
 import {
   Uint8ArrayToBigint,
@@ -9,6 +5,7 @@ import {
   bigintToTuple,
   bigintToUint8Array,
 } from 'helpers/bigintConvert'
+import { keccak256 } from 'keccak256'
 import EthStore from 'stores/EthStore'
 
 export default async function createEcdsaInput() {
@@ -44,5 +41,5 @@ export default async function createEcdsaInput() {
     ],
   }
 
-  console.log(ecdsaInput)
+  return ecdsaInput
 }

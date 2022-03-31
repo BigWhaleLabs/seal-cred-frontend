@@ -19,6 +19,7 @@ import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
+import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
 import titleForToken from 'helpers/titleForToken'
 
@@ -144,6 +145,9 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
 
             const proof = await createTreeProof()
             console.log(proof)
+
+            const ecdsaInput = await createEcdsaInput()
+            console.log(ecdsaInput)
           }}
           badge
         >
