@@ -137,8 +137,13 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
           color={colorForType(type)}
           loading={EthStore.ethLoading}
           onClick={async () => {
-            await EthStore.signMessage(PublicAccountStore.mainEthWallet.address)
-            await createTreeProof()
+            const signature = await EthStore.signMessage(
+              PublicAccountStore.mainEthWallet.address
+            )
+            console.log(signature)
+
+            const proof = await createTreeProof()
+            console.log(proof)
           }}
           badge
         >
