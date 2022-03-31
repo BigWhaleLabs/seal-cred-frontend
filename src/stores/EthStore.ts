@@ -56,7 +56,8 @@ class EthStore extends PersistableStore {
   async getTokenId() {
     if (!contract || !this.accounts) return
 
-    return +(await contract.checkTokenId(this.accounts[0]))
+    // It's a low-digits integer (0x001), so we can lose precision here
+    return Number(await contract.checkTokenId(this.accounts[0]))
   }
 
   private async handleAccountChanged() {

@@ -31,7 +31,7 @@
     "@zk-kit/incremental-merkle-tree": "^0.4.3",
     "axios": "^0.26.0",
     "bitski": "^0.13.1",
-    "circomlibjs": "^0.1.2",
+    "circomlibjs": "^0.0.8",
     "copy-to-clipboard": "^3.3.1",
     "ethers": "^5.5.4",
     "fortmatic": "^2.2.1",
