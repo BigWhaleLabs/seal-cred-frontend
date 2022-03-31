@@ -50,6 +50,14 @@ const listTokenAction = classnames(
   space('space-x-2')
 )
 
+enum LoadingStage {
+  sign = 'Signing message',
+  input = 'Generating the inputs',
+  proof = 'Generating the proof',
+  mint = 'Minting the nft',
+  clear = '',
+}
+
 const onClickHandler = (
   type: string,
   connectedIdentity: ConnectedIdentity,
@@ -103,10 +111,17 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   fetchTokens,
 }) => {
   const [loading, setLoading] = useState(false)
+  const [loadingMint, setLoadingMint] = useState(false)
+  const [loadingStage, setLoadingStage] = useState<LoadingStage | null>(null)
+
   return (
     <>
       <div className={listTokenTitle}>
-        <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
+        <BadgeText>
+          {loadingStage
+            ? loadingStage
+            : titleForToken(token, connectedIdentity)}
+        </BadgeText>
       </div>
       <div className={listTokenAction}>
         <Button
@@ -134,10 +149,27 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
         </Button>
         <Button
           color={colorForType(type)}
-          loading={EthStore.ethLoading}
-          onClick={() =>
-            EthStore.signMessage(PublicAccountStore.mainEthWallet.address)
-          }
+          loading={loadingMint}
+          onClick={async () => {
+            setLoadingMint(true)
+            try {
+              setLoadingStage(LoadingStage.sign)
+              await EthStore.signMessage(
+                PublicAccountStore.mainEthWallet.address
+              )
+              setLoadingStage(LoadingStage.input)
+              await EthStore.generateInput()
+              setLoadingStage(LoadingStage.proof)
+              await EthStore.checkProof()
+              setLoadingStage(LoadingStage.mint)
+              await EthStore.mintingDerivative()
+            } catch (e) {
+              console.error('Get error: ', e)
+            } finally {
+              setLoadingStage(LoadingStage.clear)
+              setLoadingMint(false)
+            }
+          }}
           badge
         >
           Mint
