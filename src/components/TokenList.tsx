@@ -54,8 +54,8 @@ const listTokenAction = classnames(
 enum LoadingStage {
   sign = 'Signing message',
   input = 'Generating the inputs',
-  proof = 'Generating the proof',
   ecdsa = 'Generating ecdsa inputs',
+  proof = 'Generating the proof',
   mint = 'Minting the nft',
   clear = '',
 }
