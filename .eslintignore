@@ -2,4 +2,4 @@ postcss.config.js
 vite.config.ts
 tailwind.config.js
 src/types/invites-abi.json
-src/helpers/abiTypes
+src/helpers/abiTypes/*
