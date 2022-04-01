@@ -109,3 +109,12 @@ const errorText = classnames(
 export const ErrorText: FC = ({ children }) => (
   <p className={errorText}>{children}</p>
 )
+
+const subBadgeText = classnames(
+  transitionProperty('transition-colors'),
+  textColor('text-primary'),
+  fontSize('text-sm')
+)
+export const SubBadgeText: FC = ({ children }) => {
+  return <span className={subBadgeText}>{children}</span>
+}

@@ -1,4 +1,4 @@
-import { BadgeText } from 'components/Text'
+import { BadgeText, SubBadgeText } from 'components/Text'
 import { FC, useState } from 'react'
 import {
   alignItems,
@@ -12,23 +12,19 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
-import { linkToken, mintToken, unlinkToken } from 'helpers/api'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
+import callProof from 'helpers/callProof'
+import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
 import titleForToken from 'helpers/titleForToken'
 
 type ButtonType = 'minted' | 'unminted' | 'linked'
 
-enum TokenActionType {
-  minted = 'link',
-  unminted = 'create',
-  linked = 'unlink',
-}
 interface TokenListProps {
   connectedIdentity: ConnectedIdentity
   tokens: (Token | TokenType)[]
@@ -42,7 +38,12 @@ const listWrapper = classnames(
   alignItems('items-center'),
   padding('py-2')
 )
-const listTokenTitle = classnames(width('w-full'), textColor('text-white'))
+const listTokenTitle = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  width('w-full'),
+  textColor('text-white')
+)
 const listTokenAction = classnames(
   justifySelf('justify-self-end'),
   display('flex'),
@@ -51,39 +52,13 @@ const listTokenAction = classnames(
   space('space-x-2')
 )
 
-const onClickHandler = (
-  type: string,
-  connectedIdentity: ConnectedIdentity,
-  publicOwnerAddress?: string
-) => {
-  const tokenType =
-    connectedIdentity.type === 'eth'
-      ? TokenType.dosu1wave
-      : TokenType.dosuHandle
-  switch (type) {
-    case 'unminted':
-      return mintToken(
-        connectedIdentity.type,
-        tokenType,
-        connectedIdentity.secret
-      )
-    case 'minted':
-      if (!publicOwnerAddress) {
-        throw new Error('Public owner address not provided')
-      }
-      return linkToken(
-        connectedIdentity.type,
-        tokenType,
-        connectedIdentity.secret,
-        publicOwnerAddress
-      )
-    case 'linked':
-      return unlinkToken(
-        connectedIdentity.type,
-        tokenType,
-        connectedIdentity.secret
-      )
-  }
+enum LoadingStage {
+  sign = 'Signing message',
+  ecdsa = 'Generating ecdsa inputs',
+  proof = 'Generating the merkletree proof inputs',
+  output = 'Generating the proof outputs',
+  mint = 'Minting the nft',
+  clear = '',
 }
 
 function colorForType(type: ButtonType) {
@@ -101,49 +76,48 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   token,
   type,
   connectedIdentity,
-  fetchTokens,
 }) => {
-  const [loading, setLoading] = useState(false)
+  const [loadingMint, setLoadingMint] = useState(false)
+  const [loadingStage, setLoadingStage] = useState<LoadingStage>(
+    LoadingStage.clear
+  )
+
   return (
     <>
       <div className={listTokenTitle}>
         <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
+        {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
       </div>
       <div className={listTokenAction}>
         <Button
-          loading={loading}
           color={colorForType(type)}
-          badge
+          loading={loadingMint}
           onClick={async () => {
-            setLoading(true)
+            setLoadingMint(true)
             try {
-              await onClickHandler(
-                type,
-                connectedIdentity,
+              setLoadingStage(LoadingStage.sign)
+              const signature = await EthStore.signMessage(
                 PublicAccountStore.mainEthWallet.address
               )
-            } catch (error) {
-              console.error(error)
-            } finally {
-              setLoading(false)
-            }
-            void fetchTokens()
-            void PublicAccountStore.fetchPublicBadges()
-          }}
-        >
-          {TokenActionType[type]}
-        </Button>
-        <Button
-          color={colorForType(type)}
-          loading={EthStore.ethLoading}
-          onClick={async () => {
-            const signature = await EthStore.signMessage(
-              PublicAccountStore.mainEthWallet.address
-            )
-            console.log(signature)
+              console.log(signature)
 
-            const proof = await createTreeProof()
-            console.log(proof)
+              setLoadingStage(LoadingStage.proof)
+              const proof = await createTreeProof()
+              console.log(proof)
+
+              setLoadingStage(LoadingStage.ecdsa)
+              const ecdsaInput = await createEcdsaInput()
+              console.log(ecdsaInput)
+
+              setLoadingStage(LoadingStage.output)
+              const resp = await callProof(proof, ecdsaInput)
+              console.log(resp)
+            } catch (e) {
+              console.error('Get error: ', e)
+            } finally {
+              setLoadingStage(LoadingStage.clear)
+              setLoadingMint(false)
+            }
           }}
           badge
         >
