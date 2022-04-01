@@ -36,7 +36,7 @@ class EthStore extends PersistableStore {
       await this.handleAccountChanged()
       this.subscribeProvider(instance)
     } catch (error) {
-      if ((error as string) === 'Modal closed by user') return
+      if (typeof error === 'string') return
       console.error(error)
       this.clearData()
     } finally {
