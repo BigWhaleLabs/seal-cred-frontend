@@ -126,6 +126,7 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
                 setLoadingMint(false)
               }
             }}
+            disabled={EthStore.ethError}
             badge
           >
             Mint
