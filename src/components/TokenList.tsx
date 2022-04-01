@@ -1,5 +1,5 @@
 import { BadgeText, SubBadgeText } from 'components/Text'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import {
   alignItems,
   classnames,
@@ -12,7 +12,6 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
-import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import EthStore from 'stores/EthStore'
@@ -78,12 +77,23 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   type,
   connectedIdentity,
 }) => {
-  const derivativeMinted = useSnapshot(EthStore)
-
   const [loadingMint, setLoadingMint] = useState(false)
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
   )
+  const [minted, setMinted] = useState(false)
+
+  useEffect(() => {
+    async function checkMinted() {
+      const result = await EthStore.checkAddressForMint(
+        connectedIdentity.identifier
+      )
+      setMinted(result ? result : false)
+    }
+
+    void checkMinted()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -91,7 +101,7 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
         <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
         {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
       </div>
-      {derivativeMinted ? undefined : (
+      {minted ? undefined : (
         <div className={listTokenAction}>
           <Button
             color={colorForType(type)}
@@ -118,7 +128,10 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
                 console.log(resp)
 
                 setLoadingStage(LoadingStage.mint)
-                await EthStore.mintDerivative()
+                const txResult = await EthStore.mintDerivative()
+                console.log(txResult)
+
+                setMinted(true)
               } catch (e) {
                 console.error('Get error: ', e)
               } finally {

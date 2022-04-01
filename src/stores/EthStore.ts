@@ -14,7 +14,6 @@ const ethNetwork = import.meta.env.VITE_ETH_NETWORK
 class EthStore extends PersistableStore {
   accounts: string[] | undefined = undefined
   ethLoading = false
-  derivativeMinted = false
   ethError = ''
 
   async onConnect() {
@@ -82,27 +81,26 @@ class EthStore extends PersistableStore {
   }
 
   async mintDerivative() {
-    if (!this.accounts || this.ethError) return
+    if (this.ethError) return
 
     this.ethLoading = true
     try {
-      const zeroBalance = (
-        await derivativeContract.balanceOf(this.accounts[0])
-      ).isZero()
-
-      if (!zeroBalance) {
-        this.derivativeMinted = true
-        return
-      }
-
       const transaction = await derivativeContract.mint()
-      await transaction.wait()
-      this.derivativeMinted = true
+      return await transaction.wait()
     } catch (error) {
       console.error(error)
     } finally {
       this.ethLoading = false
     }
+  }
+
+  async checkAddressForMint(ethAddress?: string) {
+    if (!this.accounts || !ethAddress) return
+
+    const toCheck = ethAddress || this.accounts[0]
+
+    const zeroBalance = (await derivativeContract.balanceOf(toCheck)).isZero()
+    return !zeroBalance
   }
 
   private clearData() {
@@ -146,7 +144,7 @@ class EthStore extends PersistableStore {
       if (this.ethError) return
       void this.handleAccountChanged()
     })
-    provider.on('networkChanged', async () => {
+    provider.on('chainChanged', async () => {
       this.clearData()
       await this.onConnect()
     })
