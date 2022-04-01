@@ -12,6 +12,7 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
+import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import EthStore from 'stores/EthStore'
@@ -77,6 +78,8 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   type,
   connectedIdentity,
 }) => {
+  const derivativeMinted = useSnapshot(EthStore)
+
   const [loadingMint, setLoadingMint] = useState(false)
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
@@ -88,42 +91,47 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
         <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
         {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
       </div>
-      <div className={listTokenAction}>
-        <Button
-          color={colorForType(type)}
-          loading={loadingMint}
-          onClick={async () => {
-            setLoadingMint(true)
-            try {
-              setLoadingStage(LoadingStage.sign)
-              const signature = await EthStore.signMessage(
-                PublicAccountStore.mainEthWallet.address
-              )
-              console.log(signature)
+      {derivativeMinted ? undefined : (
+        <div className={listTokenAction}>
+          <Button
+            color={colorForType(type)}
+            loading={loadingMint}
+            onClick={async () => {
+              setLoadingMint(true)
+              try {
+                setLoadingStage(LoadingStage.sign)
+                const signature = await EthStore.signMessage(
+                  PublicAccountStore.mainEthWallet.address
+                )
+                console.log(signature)
 
-              setLoadingStage(LoadingStage.proof)
-              const proof = await createTreeProof()
-              console.log(proof)
+                setLoadingStage(LoadingStage.proof)
+                const proof = await createTreeProof()
+                console.log(proof)
 
-              setLoadingStage(LoadingStage.ecdsa)
-              const ecdsaInput = await createEcdsaInput()
-              console.log(ecdsaInput)
+                setLoadingStage(LoadingStage.ecdsa)
+                const ecdsaInput = await createEcdsaInput()
+                console.log(ecdsaInput)
 
-              setLoadingStage(LoadingStage.output)
-              const resp = await callProof(proof, ecdsaInput)
-              console.log(resp)
-            } catch (e) {
-              console.error('Get error: ', e)
-            } finally {
-              setLoadingStage(LoadingStage.clear)
-              setLoadingMint(false)
-            }
-          }}
-          badge
-        >
-          Mint
-        </Button>
-      </div>
+                setLoadingStage(LoadingStage.output)
+                const resp = await callProof(proof, ecdsaInput)
+                console.log(resp)
+
+                setLoadingStage(LoadingStage.mint)
+                await EthStore.mintDerivative()
+              } catch (e) {
+                console.error('Get error: ', e)
+              } finally {
+                setLoadingStage(LoadingStage.clear)
+                setLoadingMint(false)
+              }
+            }}
+            badge
+          >
+            Mint
+          </Button>
+        </div>
+      )}
     </>
   )
 }
