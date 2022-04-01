@@ -18,10 +18,10 @@ import { ethers } from 'ethers'
 import { useNavigate } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
+import Badges from 'components/BadgesSuspense'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import PublicAccountStore from 'stores/PublicAccountStore'
-import PublicBadges from 'components/PublicBadges'
 import copy from 'copy-to-clipboard'
 import useAddress from 'hooks/useAddress'
 
@@ -100,7 +100,7 @@ export default function PublicAddress() {
             </Button>
           )}
         </div>
-        <PublicBadges />
+        <Badges />
       </Card>
     </div>
   )

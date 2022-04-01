@@ -1,5 +1,4 @@
 import { Wallet, ethers } from 'ethers'
-import { getPublicTokens } from 'helpers/api'
 import { proxy } from 'valtio'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import PersistableStore from 'stores/persistence/PersistableStore'
@@ -47,19 +46,6 @@ class PublicAccountStore extends PersistableStore {
         return []
       default:
         return value
-    }
-  }
-
-  async fetchPublicBadges(address?: string) {
-    this.loading = true
-    try {
-      this.publicBadges = await getPublicTokens(
-        address || this.mainEthWallet.address
-      )
-    } catch (error) {
-      console.error(error)
-    } finally {
-      this.loading = false
     }
   }
 }

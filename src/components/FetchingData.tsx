@@ -16,11 +16,11 @@ const container = classnames(
   alignItems('items-center'),
   textColor('text-primary')
 )
-export default function FetchingData() {
+export default function FetchingData({ text }: { text?: string }) {
   return (
     <div className={container}>
       <Loading />
-      <BodyText>Fetching...</BodyText>
+      <BodyText>{text || 'Fetching...'}</BodyText>
     </div>
   )
 }
