@@ -12,6 +12,7 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
+import BadgesStore from 'stores/BadgesStore'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import EthStore from 'stores/EthStore'
@@ -69,11 +70,11 @@ function colorForType(type: ButtonType) {
   }
 }
 
-const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
-  token,
+export const TokenList: FC<TokenListProps> = ({
   type,
-  connectedIdentity,
+  tokens,
   fetchTokens,
+  connectedIdentity,
 }) => {
   const [loadingMint, setLoadingMint] = useState(false)
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
@@ -82,50 +83,43 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
 
   return (
     <>
-      <div className={listTokenTitle}>
-        <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
-        {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
-      </div>
-      <div className={listTokenAction}>
-        <Button
-          color={colorForType(type)}
-          loading={loadingMint}
-          onClick={async () => {
-            setLoadingMint(true)
-            try {
-              setLoadingStage(LoadingStage.sign)
-              const signature = await EthStore.signMessage(
-                PublicAccountStore.mainEthWallet.address
-              )
-              console.log(signature)
-
-              setLoadingStage(LoadingStage.proof)
-              const proof = await createTreeProof()
-              console.log('Proof: ', proof)
-              setLoadingStage(LoadingStage.mint)
-              fetchTokens()
-            } catch (e) {
-              console.error('Get error: ', e)
-            } finally {
-              setLoadingStage(LoadingStage.clear)
-              setLoadingMint(false)
-            }
-          }}
-          badge
-        >
-          Mint
-        </Button>
-      </div>
-    </>
-  )
-}
-
-export const TokenList: FC<TokenListProps> = ({ tokens, ...rest }) => {
-  return (
-    <>
       {tokens.map((token: Token | TokenType, index: number) => (
         <div className={listWrapper} key={index}>
-          <TokenComponent tokens={tokens} {...rest} token={token} />
+          <div className={listTokenTitle}>
+            <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
+            {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
+          </div>
+
+          <div className={listTokenAction}>
+            <Button
+              color={colorForType(type)}
+              loading={loadingMint}
+              onClick={async () => {
+                setLoadingMint(true)
+                try {
+                  setLoadingStage(LoadingStage.sign)
+                  const signature = await EthStore.signMessage(
+                    PublicAccountStore.mainEthWallet.address
+                  )
+                  console.log(signature)
+                  setLoadingStage(LoadingStage.proof)
+                  const proof = await createTreeProof()
+                  console.log('Proof: ', proof)
+                  setLoadingStage(LoadingStage.mint)
+                  fetchTokens()
+                  BadgesStore.fetchPublicBadges()
+                } catch (e) {
+                  console.error('Get error: ', e)
+                } finally {
+                  setLoadingStage(LoadingStage.clear)
+                  setLoadingMint(false)
+                }
+              }}
+              badge
+            >
+              Mint
+            </Button>
+          </div>
         </div>
       ))}
     </>

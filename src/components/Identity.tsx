@@ -36,9 +36,12 @@ const IdentityComponent: FC<IdentityProps> = ({
 
   useEffect(() => {
     if (connectedIdentity) {
-      TokensStore.updateToken(connectedIdentity.type, connectedIdentity.secret)
+      void TokensStore.updateToken(
+        connectedIdentity.type,
+        connectedIdentity.secret
+      )
     }
-  })
+  }, [connectedIdentity])
 
   const identity = identities[identityType]
 

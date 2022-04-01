@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import { SubheaderText } from 'components/Text'
 import { TokenList } from 'components/TokenList'
 import { classnames, display, flexDirection, margin } from 'classnames/tailwind'
@@ -16,9 +16,12 @@ const identitiesBlock = classnames(margin('mt-6'))
 const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
   const { tokens } = useSnapshot(TokensStore)
   const tokenSnap = tokens[connectedIdentity.secret]
-  const fetchTokens = () => {
-    TokensStore.updateToken(connectedIdentity.type, connectedIdentity.secret)
-  }
+  const fetchTokens = useCallback(() => {
+    void TokensStore.updateToken(
+      connectedIdentity.type,
+      connectedIdentity.secret
+    )
+  }, [connectedIdentity])
 
   return (
     <div className={identitiesBlock}>

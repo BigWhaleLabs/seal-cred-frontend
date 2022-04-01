@@ -4,23 +4,18 @@ import Token from 'models/Token'
 import TokenType from 'models/TokenType'
 import getPrivateTokens from 'helpers/api'
 
-export interface Tokens {
-  unminted: TokenType[]
-  minted: Token[]
-  connected: Token[]
+export interface TokensProp {
+  readonly unminted: readonly TokenType[]
+  readonly minted: readonly Token[]
+  readonly connected: readonly Token[]
 }
 
-interface TokensState {
-  tokens: { [index: string]: Promise<Tokens> }
-  updateToken: (type: IdentityType, secret: string) => void
-}
+type TokensType = { [index: string]: Promise<TokensProp> }
 
-const TokensStore = proxy<TokensState>({
-  tokens: {},
+const TokensStore = proxy({
+  tokens: {} as TokensType,
   updateToken: (type: IdentityType, secret: string) => {
-    setTimeout(() => {
-      TokensStore.tokens[secret] = getPrivateTokens(type, secret)
-    }, 110)
+    TokensStore.tokens[secret] = getPrivateTokens(type, secret)
   },
 })
 
