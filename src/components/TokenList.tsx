@@ -136,8 +136,8 @@ export const TokenList: FC<TokenListProps> = ({
                     const txResult = await EthStore.mintDerivative()
                     console.log(txResult)
 
-                    await fetchTokens()
-                    await BadgesStore.fetchPublicBadges()
+                    fetchTokens()
+                    BadgesStore.fetchPublicBadges()
                     setMinted(true)
                   } catch (e) {
                     console.error('Get error: ', e)
