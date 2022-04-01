@@ -12,6 +12,7 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
+import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import ConnectedIdentity from 'models/ConnectedIdentity'
 import EthStore from 'stores/EthStore'
@@ -22,7 +23,6 @@ import callProof from 'helpers/callProof'
 import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
 import titleForToken from 'helpers/titleForToken'
-import { useSnapshot } from 'valtio'
 
 type ButtonType = 'minted' | 'unminted' | 'linked'
 
