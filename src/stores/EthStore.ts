@@ -1,33 +1,50 @@
-import { InvitesAbi } from 'helpers/abiTypes'
-import { InvitesAbi__factory } from 'helpers/abiTypes'
+import { DerivativeAbi, DerivativeAbi__factory } from 'helpers/derivativeAbi'
+import { InvitesAbi, InvitesAbi__factory } from 'helpers/invitesAbi'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import configuredModal from 'helpers/configuredModal'
 
 let provider: Web3Provider
-let contract: InvitesAbi
+let invitesContract: InvitesAbi
+let derivativeContract: DerivativeAbi
+
+const ethNetwork = import.meta.env.VITE_ETH_NETWORK
 
 class EthStore extends PersistableStore {
   accounts: string[] | undefined = undefined
   ethLoading = false
+  ethError = ''
 
   async onConnect() {
     try {
       this.ethLoading = true
+      this.ethError = ''
 
       const instance = await configuredModal.connect()
       provider = new Web3Provider(instance)
+      const userNetwork = (await provider.getNetwork()).name
+      if (userNetwork !== ethNetwork) {
+        this.ethError = `Looks like you're using ${userNetwork} network, try switching to ${ethNetwork} and connect again`
+        return
+      }
 
-      contract = InvitesAbi__factory.connect(
+      invitesContract = InvitesAbi__factory.connect(
         import.meta.env.VITE_INVITES_CONTRACT_ADDRESS as string,
+        provider.getSigner(0)
+      )
+
+      derivativeContract = DerivativeAbi__factory.connect(
+        import.meta.env.VITE_SC_DERIVATIVE_ADDRESS as string,
         provider.getSigner(0)
       )
 
       await this.handleAccountChanged()
       this.subscribeProvider(instance)
     } catch (error) {
+      if (typeof error === 'string') return
       console.error(error)
+      this.clearData()
     } finally {
       this.ethLoading = false
     }
@@ -49,18 +66,46 @@ class EthStore extends PersistableStore {
   }
 
   async getAddresses() {
-    if (!contract) return
+    if (!invitesContract) return
 
-    const rawInvites = await contract.getMintedInvites()
+    const rawInvites = await invitesContract.getMintedInvites()
 
     return Object.values(rawInvites).map((output) => output.ethAddress)
   }
 
   async getTokenId() {
-    if (!contract || !this.accounts) return
+    if (!invitesContract || !this.accounts) return
 
     // It's a low-digits integer (0x001), so we can lose precision here
-    return Number(await contract.checkTokenId(this.accounts[0]))
+    return Number(await invitesContract.checkTokenId(this.accounts[0]))
+  }
+
+  async mintDerivative() {
+    if (this.ethError) return
+
+    this.ethLoading = true
+    try {
+      const transaction = await derivativeContract.mint()
+      return await transaction.wait()
+    } catch (error) {
+      console.error(error)
+    } finally {
+      this.ethLoading = false
+    }
+  }
+
+  async checkAddressForMint(ethAddress?: string) {
+    if (!this.accounts || !ethAddress) return
+
+    const toCheck = ethAddress || this.accounts[0]
+
+    const zeroBalance = (await derivativeContract.balanceOf(toCheck)).isZero()
+    return !zeroBalance
+  }
+
+  private clearData() {
+    configuredModal.clearCachedProvider()
+    this.accounts = []
   }
 
   private async handleAccountChanged() {
@@ -79,14 +124,30 @@ class EthStore extends PersistableStore {
   }
 
   private subscribeProvider(provider: Web3Provider) {
-    if (!provider || !provider.on) return
+    if (!provider.on) return
 
     provider.on('error', (error: Error) => {
       console.error(error)
+      this.ethError = error.message
     })
-    provider.on('accountsChanged', () => this.handleAccountChanged())
-    provider.on('disconnect', () => this.handleAccountChanged())
-    provider.on('stop', () => this.handleAccountChanged())
+
+    provider.on('accountsChanged', () => {
+      if (this.ethError) return
+      void this.handleAccountChanged()
+    })
+    provider.on('disconnect', () => {
+      if (this.ethError) return
+      void this.handleAccountChanged()
+    })
+
+    provider.on('stop', () => {
+      if (this.ethError) return
+      void this.handleAccountChanged()
+    })
+    provider.on('chainChanged', async () => {
+      this.clearData()
+      await this.onConnect()
+    })
   }
 }
 

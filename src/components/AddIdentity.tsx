@@ -1,4 +1,4 @@
-import { BodyText } from 'components/Text'
+import { BodyText, ErrorText } from 'components/Text'
 import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
@@ -8,7 +8,7 @@ import EthStore from 'stores/EthStore'
 import configuredModal from 'helpers/configuredModal'
 
 export default function AddIdentity() {
-  const { ethLoading } = useSnapshot(EthStore)
+  const { ethLoading, ethError } = useSnapshot(EthStore)
 
   useEffect(() => {
     if (configuredModal.cachedProvider) {
@@ -30,6 +30,7 @@ export default function AddIdentity() {
         <CryptoWallet />
         <span>Connect wallet</span>
       </Button>
+      {ethError ? <ErrorText>{ethError}</ErrorText> : undefined}
     </Card>
   )
 }

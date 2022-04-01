@@ -5,7 +5,7 @@ import EthStore from 'stores/EthStore'
 export default async function createTreeProof() {
   const tokenId = await EthStore.getTokenId()
   const addresses = await EthStore.getAddresses()
-  if (!addresses || !tokenId) return
+  if (!addresses || tokenId === undefined) return
 
   const tree = new IncrementalMerkleTree(poseidon, 20, BigInt(0), 2)
 
