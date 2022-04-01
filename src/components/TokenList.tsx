@@ -18,6 +18,7 @@ import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import Token from 'models/Token'
 import TokenType from 'models/TokenType'
+import callProof from 'helpers/callProof'
 import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
 import titleForToken from 'helpers/titleForToken'
@@ -53,9 +54,9 @@ const listTokenAction = classnames(
 
 enum LoadingStage {
   sign = 'Signing message',
-  input = 'Generating the inputs',
   ecdsa = 'Generating ecdsa inputs',
-  proof = 'Generating the proof',
+  proof = 'Generating the merkletree proof inputs',
+  output = 'Generating the proof outputs',
   mint = 'Minting the nft',
   clear = '',
 }
@@ -107,6 +108,10 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
               setLoadingStage(LoadingStage.ecdsa)
               const ecdsaInput = await createEcdsaInput()
               console.log(ecdsaInput)
+
+              setLoadingStage(LoadingStage.output)
+              const resp = await callProof(proof, ecdsaInput)
+              console.log(resp)
             } catch (e) {
               console.error('Get error: ', e)
             } finally {

@@ -6,6 +6,7 @@ import {
   bigintToUint8Array,
 } from 'helpers/bigintConvert'
 import { keccak256 } from 'keccak256'
+import EcdsaInput from 'models/EcdsaInput'
 import EthStore from 'stores/EthStore'
 
 export default async function createEcdsaInput() {
@@ -31,7 +32,7 @@ export default async function createEcdsaInput() {
   const s_array = bigintToArray(86, 3, s_bigint)
   const msghash_array = bigintToArray(86, 3, msghash_bigint)
 
-  const ecdsaInput = {
+  const ecdsaInput: EcdsaInput = {
     r: r_array.map((x) => x.toString()),
     s: s_array.map((x) => x.toString()),
     msghash: msghash_array.map((x) => x.toString()),
