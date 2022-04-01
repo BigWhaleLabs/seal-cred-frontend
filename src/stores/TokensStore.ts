@@ -5,9 +5,9 @@ import TokenType from 'models/TokenType'
 import getPrivateTokens from 'helpers/api'
 
 export interface TokensProp {
-  readonly unminted: readonly TokenType[]
-  readonly minted: readonly Token[]
-  readonly connected: readonly Token[]
+  unminted: readonly TokenType[]
+  minted: readonly Token[]
+  connected: readonly Token[]
 }
 
 type TokensType = { [index: string]: Promise<TokensProp> }

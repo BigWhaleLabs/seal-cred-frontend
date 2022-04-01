@@ -111,7 +111,7 @@ const IdentityComponent: FC<IdentityProps> = ({
         </div>
       )}
       {connectedIdentity && (
-        <Suspense fallback={<FetchingData text={'Fetching Token ...'} />}>
+        <Suspense fallback={<FetchingData text="Fetching Token..." />}>
           <Tokens connectedIdentity={connectedIdentity} />
         </Suspense>
       )}

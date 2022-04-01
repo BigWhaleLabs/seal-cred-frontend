@@ -31,7 +31,7 @@ function Badges() {
     <Suspense
       fallback={
         <div className={container}>
-          <FetchingData text={'Fetching Badges ...'} />
+          <FetchingData text="Fetching Badges..." />
         </div>
       }
     >
