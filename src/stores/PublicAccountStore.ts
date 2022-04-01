@@ -10,6 +10,7 @@ class PublicAccountStore extends PersistableStore {
   connectedIdentities: ConnectedIdentity[] = []
   loading = false
   publicBadges: PublicBadge[] = []
+  badges: { [index: string]: PublicBadge[] } = {}
 
   reviver = (key: string, value: unknown) => {
     switch (key) {
@@ -48,6 +49,13 @@ class PublicAccountStore extends PersistableStore {
       default:
         return value
     }
+  }
+
+  setBadges({ type, identityType, extraPublicIdentifier }: PublicBadge) {
+    this.publicBadges = [
+      ...this.publicBadges,
+      { type, identityType, extraPublicIdentifier },
+    ]
   }
 
   async fetchPublicBadges(address?: string) {

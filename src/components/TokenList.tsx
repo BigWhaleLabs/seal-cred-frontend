@@ -22,6 +22,7 @@ import callProof from 'helpers/callProof'
 import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
 import titleForToken from 'helpers/titleForToken'
+import { useSnapshot } from 'valtio'
 
 type ButtonType = 'minted' | 'unminted' | 'linked'
 
@@ -77,6 +78,7 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   type,
   connectedIdentity,
 }) => {
+  const { publicBadges } = useSnapshot(PublicAccountStore)
   const [loadingMint, setLoadingMint] = useState(false)
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
@@ -88,7 +90,23 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
       const result = await EthStore.checkAddressForMint(
         connectedIdentity.identifier
       )
-      setMinted(result ? result : false)
+      setMinted(result || false)
+      if (result) {
+        const type =
+          connectedIdentity.type === 'dosu'
+            ? TokenType.dosuHandle
+            : TokenType.dosu1wave
+        const badge = publicBadges.find(
+          (i) => i.extraPublicIdentifier === connectedIdentity.identifier
+        )
+        if (!badge) {
+          PublicAccountStore.setBadges({
+            type,
+            identityType: connectedIdentity.type,
+            extraPublicIdentifier: connectedIdentity.identifier,
+          })
+        }
+      }
     }
 
     void checkMinted()
@@ -101,7 +119,7 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
         <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
         {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
       </div>
-      {minted ? undefined : (
+      {!minted ? (
         <div className={listTokenAction}>
           <Button
             color={colorForType(type)}
@@ -145,7 +163,7 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
             Mint
           </Button>
         </div>
-      )}
+      ) : null}
     </>
   )
 }
