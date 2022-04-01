@@ -3,6 +3,7 @@ import { InvitesAbi, InvitesAbi__factory } from 'helpers/invitesAbi'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
+import PublicAccountStore from 'stores/PublicAccountStore'
 import configuredModal from 'helpers/configuredModal'
 
 let provider: Web3Provider
@@ -97,9 +98,11 @@ class EthStore extends PersistableStore {
   async checkAddressForMint(ethAddress?: string) {
     if (!this.accounts || !ethAddress) return
 
+    PublicAccountStore.loading = true
     const toCheck = ethAddress || this.accounts[0]
 
     const zeroBalance = (await derivativeContract.balanceOf(toCheck)).isZero()
+    PublicAccountStore.loading = false
     return !zeroBalance
   }
 

@@ -9,6 +9,7 @@ import {
   wordBreak,
 } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
+import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import ConnectedIdentity from 'models/ConnectedIdentity'
@@ -29,6 +30,7 @@ const badges = classnames(display('flex'), flexDirection('flex-col'))
 const identitiesBlock = classnames(margin('mt-6'))
 
 const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
+  const { publicBadges } = useSnapshot(PublicAccountStore)
   const [loading, setLoading] = useState(true)
   const [tokens, setTokens] = useState<{
     unminted: TokenType[]
@@ -57,9 +59,17 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
   ) : (
     <div className={identitiesBlock}>
       <div className={badges}>
+        {!!tokens?.unminted.length && (
+          <SubheaderText>
+            {publicBadges.find(
+              (i) => i.extraPublicIdentifier === connectedIdentity.identifier
+            )
+              ? 'NFT badges you have:'
+              : 'NFT badges you can create:'}
+          </SubheaderText>
+        )}
         {(!!tokens?.minted.length || !!tokens?.connected.length) && (
           <>
-            <SubheaderText>NFT badges you have:</SubheaderText>
             {!!tokens?.minted.length &&
               TokenList({
                 tokens: tokens.minted,
@@ -78,7 +88,6 @@ const Tokens: FC<TokensProps> = ({ connectedIdentity }) => {
         )}
         {!!tokens?.unminted.length && (
           <>
-            <SubheaderText>NFT badges you can create:</SubheaderText>
             {TokenList({
               tokens: tokens.unminted,
               type: 'unminted',

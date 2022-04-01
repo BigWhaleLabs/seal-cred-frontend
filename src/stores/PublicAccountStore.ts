@@ -10,7 +10,6 @@ class PublicAccountStore extends PersistableStore {
   connectedIdentities: ConnectedIdentity[] = []
   loading = false
   publicBadges: PublicBadge[] = []
-  badges: { [index: string]: PublicBadge[] } = {}
 
   reviver = (key: string, value: unknown) => {
     switch (key) {
