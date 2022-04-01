@@ -85,7 +85,7 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
 
   useEffect(() => {
     async function checkMinted() {
-      const result = await EthStore.checkAddressForMint(
+      const result = await PublicAccountStore.checkAddressForMint(
         connectedIdentity.identifier
       )
       setMinted(result ? result : false)
@@ -128,12 +128,13 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
                 console.log(resp)
 
                 setLoadingStage(LoadingStage.mint)
-                const txResult = await EthStore.mintDerivative()
+                const txResult = await PublicAccountStore.mintDerivative()
                 console.log(txResult)
 
                 setMinted(true)
               } catch (e) {
                 console.error('Get error: ', e)
+                setMinted(false)
               } finally {
                 setLoadingStage(LoadingStage.clear)
                 setLoadingMint(false)
