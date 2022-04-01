@@ -1,5 +1,8 @@
 postcss.config.js
 vite.config.ts
 tailwind.config.js
-src/types/invites-abi.json
-src/helpers/abiTypes/*
+
+# Contract types
+src/types/*.json
+src/helpers/invitesAbi/*
+src/helpers/derivativeAbi/*

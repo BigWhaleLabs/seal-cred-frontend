@@ -9,8 +9,8 @@ node_modules
 stats.html
 
 # Contract types
-src/helpers/abiTypes
-
+src/helpers/invitesAbi
+src/helpers/derivativeAbi
 
 # Log files
 npm-debug.log*

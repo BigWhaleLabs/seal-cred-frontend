@@ -1,5 +1,5 @@
 import { BadgeText, SubBadgeText } from 'components/Text'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import {
   alignItems,
   classnames,
@@ -81,6 +81,19 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
   )
+  const [minted, setMinted] = useState(false)
+
+  useEffect(() => {
+    async function checkMinted() {
+      const result = await EthStore.checkAddressForMint(
+        connectedIdentity.identifier
+      )
+      setMinted(result ? result : false)
+    }
+
+    void checkMinted()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -88,42 +101,51 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
         <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
         {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
       </div>
-      <div className={listTokenAction}>
-        <Button
-          color={colorForType(type)}
-          loading={loadingMint}
-          onClick={async () => {
-            setLoadingMint(true)
-            try {
-              setLoadingStage(LoadingStage.sign)
-              const signature = await EthStore.signMessage(
-                PublicAccountStore.mainEthWallet.address
-              )
-              console.log(signature)
+      {minted ? undefined : (
+        <div className={listTokenAction}>
+          <Button
+            color={colorForType(type)}
+            loading={loadingMint}
+            onClick={async () => {
+              setLoadingMint(true)
+              try {
+                setLoadingStage(LoadingStage.sign)
+                const signature = await EthStore.signMessage(
+                  PublicAccountStore.mainEthWallet.address
+                )
+                console.log(signature)
 
-              setLoadingStage(LoadingStage.proof)
-              const proof = await createTreeProof()
-              console.log(proof)
+                setLoadingStage(LoadingStage.proof)
+                const proof = await createTreeProof()
+                console.log(proof)
 
-              setLoadingStage(LoadingStage.ecdsa)
-              const ecdsaInput = await createEcdsaInput()
-              console.log(ecdsaInput)
+                setLoadingStage(LoadingStage.ecdsa)
+                const ecdsaInput = await createEcdsaInput()
+                console.log(ecdsaInput)
 
-              setLoadingStage(LoadingStage.output)
-              const resp = await callProof(proof, ecdsaInput)
-              console.log(resp)
-            } catch (e) {
-              console.error('Get error: ', e)
-            } finally {
-              setLoadingStage(LoadingStage.clear)
-              setLoadingMint(false)
-            }
-          }}
-          badge
-        >
-          Mint
-        </Button>
-      </div>
+                setLoadingStage(LoadingStage.output)
+                const resp = await callProof(proof, ecdsaInput)
+                console.log(resp)
+
+                setLoadingStage(LoadingStage.mint)
+                const txResult = await EthStore.mintDerivative()
+                console.log(txResult)
+
+                setMinted(true)
+              } catch (e) {
+                console.error('Get error: ', e)
+              } finally {
+                setLoadingStage(LoadingStage.clear)
+                setLoadingMint(false)
+              }
+            }}
+            disabled={!!EthStore.ethError}
+            badge
+          >
+            Mint
+          </Button>
+        </div>
+      )}
     </>
   )
 }

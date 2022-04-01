@@ -5,14 +5,14 @@ import {
   bigintToTuple,
   bigintToUint8Array,
 } from 'helpers/bigintConvert'
-import { keccak256 } from 'keccak256'
 import EcdsaInput from 'models/EcdsaInput'
 import EthStore from 'stores/EthStore'
+import keccak256 from 'keccak256'
 
 export default async function createEcdsaInput() {
   const tokenId = await EthStore.getTokenId()
   const addresses = await EthStore.getAddresses()
-  if (!addresses || !tokenId) return
+  if (!addresses || tokenId === undefined) return
 
   const proverPrivkey = BigInt(addresses[tokenId])
 
