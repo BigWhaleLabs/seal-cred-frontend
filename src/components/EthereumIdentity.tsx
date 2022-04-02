@@ -7,13 +7,13 @@ import TokenList from 'components/TokenList'
 
 const breakWords = classnames(wordBreak('break-words'))
 const EthereumIdentity = () => {
-  const ethStoreSnapshot = useSnapshot(EthStore)
+  const { accounts } = useSnapshot(EthStore)
 
   return (
     <Card>
       <BodyText>Ethereum</BodyText>
       <div className={breakWords}>
-        <BodyText>{ethStoreSnapshot.accounts[0]}</BodyText>
+        <BodyText>{accounts[0]}</BodyText>
       </div>
       <TokenList />
     </Card>

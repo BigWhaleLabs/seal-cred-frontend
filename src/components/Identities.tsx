@@ -16,12 +16,12 @@ const container = classnames(
 )
 
 export default function Identities() {
-  const ethStoreSnapshot = useSnapshot(EthStore)
+  const { accounts } = useSnapshot(EthStore)
 
   return (
     <div className={container}>
       <AddIdentity />
-      {ethStoreSnapshot.accounts.length && <EthereumIdentity />}
+      {accounts.length && <EthereumIdentity />}
     </div>
   )
 }

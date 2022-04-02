@@ -1,9 +1,29 @@
-import { Wallet, ethers } from 'ethers'
+import { DerivativeAbi__factory } from 'helpers/derivativeAbi'
+import { Wallet, providers } from 'ethers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 
+const network = import.meta.env.VITE_ETH_NETWORK as string
+
 class PublicAccountStore extends PersistableStore {
-  mainEthWallet: Wallet = ethers.Wallet.createRandom()
+  mainEthWallet: Wallet = Wallet.createRandom()
+
+  private getContract() {
+    const provider = new providers.InfuraProvider(
+      network,
+      import.meta.env.VITE_INFURA_ID as string
+    )
+
+    const walletWithProvider = new Wallet(
+      this.mainEthWallet.privateKey,
+      provider
+    )
+
+    return DerivativeAbi__factory.connect(
+      import.meta.env.VITE_SC_DERIVATIVE_ADDRESS as string,
+      walletWithProvider
+    )
+  }
 
   reviver = (key: string, value: unknown) => {
     switch (key) {
@@ -12,7 +32,7 @@ class PublicAccountStore extends PersistableStore {
           address: string
           privateKey: string
         }
-        return new ethers.Wallet(mainEthWalletValue.privateKey)
+        return new Wallet(mainEthWalletValue.privateKey)
       }
       default:
         return value
@@ -33,6 +53,26 @@ class PublicAccountStore extends PersistableStore {
       }
       default:
         return value
+    }
+  }
+
+  async mintDerivative() {
+    const derivativeContract = this.getContract()
+
+    const transaction = await derivativeContract.mint()
+    return await transaction.wait()
+  }
+
+  async checkAddressForMint(ethAddress: string) {
+    try {
+      const derivativeContract = this.getContract()
+
+      const zeroBalance = (
+        await derivativeContract.balanceOf(ethAddress)
+      ).isZero()
+      return !zeroBalance
+    } catch (error) {
+      console.error(error)
     }
   }
 }

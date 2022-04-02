@@ -1,4 +1,4 @@
-import { BadgeText, SubBadgeText } from 'components/Text'
+import { BadgeText, ErrorText, SubBadgeText } from 'components/Text'
 import {
   alignItems,
   classnames,
@@ -11,7 +11,8 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
@@ -48,59 +49,89 @@ enum LoadingStage {
   clear = '',
 }
 
+enum Errors {
+  insufficientFunds = "You don't have enough money on your public address",
+  clear = '',
+}
+
 export const TokenList = () => {
+  const { accounts } = useSnapshot(EthStore)
+
   const [loadingMint, setLoadingMint] = useState(false)
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
   )
+  const [error, setError] = useState<Errors>(Errors.clear)
+  const [minted, setMinted] = useState(false)
+
+  useEffect(() => {
+    async function checkMinted() {
+      const result = await PublicAccountStore.checkAddressForMint(accounts[0])
+      setMinted(result ? result : false)
+    }
+
+    void checkMinted()
+  }, [accounts])
 
   return (
     <div className={listWrapper}>
       <div className={listTokenTitle}>
         <BadgeText>Dosu 1 wave invite holder</BadgeText>
-        {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
+        {error ? (
+          <ErrorText>{error}</ErrorText>
+        ) : (
+          <SubBadgeText>{loadingStage}</SubBadgeText>
+        )}
       </div>
 
       <div className={listTokenAction}>
-        <Button
-          color="success"
-          loading={loadingMint}
-          onClick={async () => {
-            setLoadingMint(true)
-            try {
-              setLoadingStage(LoadingStage.sign)
-              const signature = await EthStore.signMessage(
-                PublicAccountStore.mainEthWallet.address
-              )
-              console.log(signature)
+        {minted ? undefined : (
+          <Button
+            color="success"
+            loading={loadingMint}
+            onClick={async () => {
+              setLoadingMint(true)
+              try {
+                setLoadingStage(LoadingStage.sign)
+                const signature = await EthStore.signMessage(
+                  PublicAccountStore.mainEthWallet.address
+                )
+                console.log(signature)
 
-              setLoadingStage(LoadingStage.proof)
-              const treeProof = await createTreeProof()
-              console.log('tree proof', treeProof)
+                setLoadingStage(LoadingStage.proof)
+                const treeProof = await createTreeProof()
+                console.log('tree proof', treeProof)
 
-              setLoadingStage(LoadingStage.ecdsa)
-              const ecdsaInput = await createEcdsaInput()
-              console.log('ecdsa signature', ecdsaInput)
+                setLoadingStage(LoadingStage.ecdsa)
+                const ecdsaInput = await createEcdsaInput()
+                console.log(ecdsaInput)
 
-              setLoadingStage(LoadingStage.output)
-              const proof = await callProof(treeProof, ecdsaInput)
-              console.log(proof)
+                setLoadingStage(LoadingStage.output)
+                const resp = await callProof(treeProof, ecdsaInput)
+                console.log(resp)
 
-              // setLoadingStage(LoadingStage.mint)
-              // const txResult = await EthStore.mintDerivative()
-              // console.log(txResult)
-            } catch (e) {
-              console.error('Get error: ', e)
-            } finally {
-              setLoadingStage(LoadingStage.clear)
-              setLoadingMint(false)
-            }
-          }}
-          disabled={!!EthStore.ethError}
-          badge
-        >
-          Mint
-        </Button>
+                try {
+                  setLoadingStage(LoadingStage.mint)
+                  const txResult = await PublicAccountStore.mintDerivative()
+                  console.log(txResult)
+                  setMinted(true)
+                } catch (e) {
+                  setError(Errors.insufficientFunds)
+                }
+              } catch (e) {
+                console.error('Get error: ', e)
+                setMinted(false)
+              } finally {
+                setLoadingStage(LoadingStage.clear)
+                setLoadingMint(false)
+              }
+            }}
+            disabled={!!EthStore.ethError}
+            badge
+          >
+            Mint
+          </Button>
+        )}
       </div>
     </div>
   )
