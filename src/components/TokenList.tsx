@@ -76,11 +76,11 @@ export const TokenList = () => {
 
               setLoadingStage(LoadingStage.proof)
               const treeProof = await createTreeProof()
-              console.log(treeProof)
+              console.log('tree proof', treeProof)
 
               setLoadingStage(LoadingStage.ecdsa)
               const ecdsaInput = await createEcdsaInput()
-              console.log(ecdsaInput)
+              console.log('ecdsa signature', ecdsaInput)
 
               setLoadingStage(LoadingStage.output)
               const proof = await callProof(treeProof, ecdsaInput)

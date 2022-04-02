@@ -20,7 +20,7 @@ export default async function createTreeProof() {
   const proof = tree.createProof(indexToProve)
   proof.leaf = addresses[indexToProve]
   proof.siblings = proof.siblings.map((s) => [s.toString()])
-  proof.siblings[0] = [siblingIndex]
+  proof.siblings[0] = addresses[siblingIndex]
   proof.root = proof.root.toString()
 
   return proof
