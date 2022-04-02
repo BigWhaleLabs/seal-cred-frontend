@@ -1,4 +1,4 @@
-import { BadgeText, SubBadgeText } from 'components/Text'
+import { BadgeText, ErrorText, SubBadgeText } from 'components/Text'
 import { FC, useEffect, useState } from 'react'
 import {
   alignItems,
@@ -61,6 +61,11 @@ enum LoadingStage {
   clear = '',
 }
 
+enum Errors {
+  insufficientFunds = "You don't have enough money on your public address",
+  clear = '',
+}
+
 function colorForType(type: ButtonType) {
   switch (type) {
     case 'minted':
@@ -81,6 +86,7 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
   )
+  const [error, setError] = useState<Errors>(Errors.clear)
   const [minted, setMinted] = useState(false)
 
   useEffect(() => {
@@ -99,7 +105,11 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
     <>
       <div className={listTokenTitle}>
         <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
-        {loadingStage && <SubBadgeText>{loadingStage}</SubBadgeText>}
+        {error ? (
+          <ErrorText>{error}</ErrorText>
+        ) : (
+          <SubBadgeText>{loadingStage}</SubBadgeText>
+        )}
       </div>
       {minted ? undefined : (
         <div className={listTokenAction}>
@@ -127,9 +137,13 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
                 const resp = await callProof(proof, ecdsaInput)
                 console.log(resp)
 
-                setLoadingStage(LoadingStage.mint)
-                const txResult = await PublicAccountStore.mintDerivative()
-                console.log(txResult)
+                try {
+                  setLoadingStage(LoadingStage.mint)
+                  const txResult = await PublicAccountStore.mintDerivative()
+                  console.log(txResult)
+                } catch (e) {
+                  setError(Errors.insufficientFunds)
+                }
 
                 setMinted(true)
               } catch (e) {

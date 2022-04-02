@@ -1,5 +1,5 @@
 import { DerivativeAbi__factory } from 'helpers/derivativeAbi'
-import { Wallet } from 'ethers'
+import { Wallet, providers } from 'ethers'
 import { getPublicTokens } from 'helpers/api'
 import { proxy } from 'valtio'
 import ConnectedIdentity from 'models/ConnectedIdentity'
@@ -15,10 +15,19 @@ class PublicAccountStore extends PersistableStore {
   publicBadges: PublicBadge[] = []
 
   private getContract() {
+    const provider = new providers.InfuraProvider(
+      network,
+      import.meta.env.VITE_INFURA_PROJECT_ID as string
+    )
+
+    const walletWithProvider = new Wallet(
+      this.mainEthWallet.privateKey,
+      provider
+    )
+
     return DerivativeAbi__factory.connect(
       import.meta.env.VITE_SC_DERIVATIVE_ADDRESS as string,
-      // TODO: add a provider inside, maybe use Ganachi
-      this.mainEthWallet
+      walletWithProvider
     )
   }
 
@@ -81,8 +90,6 @@ class PublicAccountStore extends PersistableStore {
 
       const transaction = await derivativeContract.mint()
       return await transaction.wait()
-    } catch (error) {
-      console.error(error)
     } finally {
       this.loading = false
     }
