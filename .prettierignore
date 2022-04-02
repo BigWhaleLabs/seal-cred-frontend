@@ -1,4 +1,5 @@
 # Contract types
 src/types/*.json
 src/helpers/invitesAbi/*
+src/helpers/abiTypes/*
 src/helpers/derivativeAbi/*

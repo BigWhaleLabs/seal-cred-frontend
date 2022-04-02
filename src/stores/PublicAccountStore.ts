@@ -1,18 +1,12 @@
 import { DerivativeAbi__factory } from 'helpers/derivativeAbi'
 import { Wallet, providers } from 'ethers'
-import { getPublicTokens } from 'helpers/api'
 import { proxy } from 'valtio'
-import ConnectedIdentity from 'models/ConnectedIdentity'
 import PersistableStore from 'stores/persistence/PersistableStore'
-import PublicBadge from 'models/PublicBadge'
 
 const network = import.meta.env.VITE_ETH_NETWORK as string
 
 class PublicAccountStore extends PersistableStore {
-  mainEthWallet: Wallet = Wallet.createRandom({ network })
-  connectedIdentities: ConnectedIdentity[] = []
-  loading = false
-  publicBadges: PublicBadge[] = []
+  mainEthWallet: Wallet = Wallet.createRandom()
 
   private getContract() {
     const provider = new providers.InfuraProvider(
@@ -40,10 +34,6 @@ class PublicAccountStore extends PersistableStore {
         }
         return new Wallet(mainEthWalletValue.privateKey)
       }
-      case 'loading':
-        return undefined
-      case 'publicBadges':
-        return undefined
       default:
         return value
     }
@@ -61,43 +51,19 @@ class PublicAccountStore extends PersistableStore {
           privateKey: mainEthWalletValue.privateKey,
         }
       }
-      case 'loading':
-        return false
-      case 'publicBadges':
-        return []
       default:
         return value
     }
   }
 
-  async fetchPublicBadges(address?: string) {
-    this.loading = true
-    try {
-      this.publicBadges = await getPublicTokens(
-        address || this.mainEthWallet.address
-      )
-    } catch (error) {
-      console.error(error)
-    } finally {
-      this.loading = false
-    }
-  }
-
   async mintDerivative() {
-    this.loading = true
-    try {
-      const derivativeContract = this.getContract()
+    const derivativeContract = this.getContract()
 
-      const transaction = await derivativeContract.mint()
-      return await transaction.wait()
-    } finally {
-      this.loading = false
-    }
+    const transaction = await derivativeContract.mint()
+    return await transaction.wait()
   }
 
   async checkAddressForMint(ethAddress: string) {
-    this.loading = true
-
     try {
       const derivativeContract = this.getContract()
 
@@ -107,8 +73,6 @@ class PublicAccountStore extends PersistableStore {
       return !zeroBalance
     } catch (error) {
       console.error(error)
-    } finally {
-      this.loading = false
     }
   }
 }

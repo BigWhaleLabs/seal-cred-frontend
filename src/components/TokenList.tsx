@@ -1,5 +1,4 @@
 import { BadgeText, ErrorText, SubBadgeText } from 'components/Text'
-import { FC, useEffect, useState } from 'react'
 import {
   alignItems,
   classnames,
@@ -12,25 +11,14 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
+import { useEffect, useState } from 'react'
+import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
-import ConnectedIdentity from 'models/ConnectedIdentity'
 import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
-import Token from 'models/Token'
-import TokenType from 'models/TokenType'
 import callProof from 'helpers/callProof'
 import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
-import titleForToken from 'helpers/titleForToken'
-
-type ButtonType = 'minted' | 'unminted' | 'linked'
-
-interface TokenListProps {
-  connectedIdentity: ConnectedIdentity
-  tokens: (Token | TokenType)[]
-  type: ButtonType
-  fetchTokens: () => Promise<void>
-}
 
 const listWrapper = classnames(
   display('flex'),
@@ -66,22 +54,9 @@ enum Errors {
   clear = '',
 }
 
-function colorForType(type: ButtonType) {
-  switch (type) {
-    case 'minted':
-      return 'accent'
-    case 'unminted':
-      return 'success'
-    case 'linked':
-      return 'error'
-  }
-}
+export const TokenList = () => {
+  const { accounts } = useSnapshot(EthStore)
 
-const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
-  token,
-  type,
-  connectedIdentity,
-}) => {
   const [loadingMint, setLoadingMint] = useState(false)
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
@@ -91,30 +66,28 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
 
   useEffect(() => {
     async function checkMinted() {
-      const result = await PublicAccountStore.checkAddressForMint(
-        connectedIdentity.identifier
-      )
+      const result = await PublicAccountStore.checkAddressForMint(accounts[0])
       setMinted(result ? result : false)
     }
 
     void checkMinted()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [accounts])
 
   return (
-    <>
+    <div className={listWrapper}>
       <div className={listTokenTitle}>
-        <BadgeText>{titleForToken(token, connectedIdentity)}</BadgeText>
+        <BadgeText>Dosu 1 wave invite holder</BadgeText>
         {error ? (
           <ErrorText>{error}</ErrorText>
         ) : (
           <SubBadgeText>{loadingStage}</SubBadgeText>
         )}
       </div>
-      {minted ? undefined : (
-        <div className={listTokenAction}>
+
+      <div className={listTokenAction}>
+        {minted ? undefined : (
           <Button
-            color={colorForType(type)}
+            color="success"
             loading={loadingMint}
             onClick={async () => {
               setLoadingMint(true)
@@ -125,27 +98,26 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
                 )
                 console.log(signature)
 
-                setLoadingStage(LoadingStage.proof)
-                const proof = await createTreeProof()
-                console.log(proof)
+                // setLoadingStage(LoadingStage.proof)
+                // const treeProof = await createTreeProof()
+                // console.log('tree proof', treeProof)
 
-                setLoadingStage(LoadingStage.ecdsa)
-                const ecdsaInput = await createEcdsaInput()
-                console.log(ecdsaInput)
+                // setLoadingStage(LoadingStage.ecdsa)
+                // const ecdsaInput = await createEcdsaInput()
+                // console.log(ecdsaInput)
 
-                setLoadingStage(LoadingStage.output)
-                const resp = await callProof(proof, ecdsaInput)
-                console.log(resp)
+                // setLoadingStage(LoadingStage.output)
+                // const resp = await callProof(treeProof, ecdsaInput)
+                // console.log(resp)
 
                 try {
                   setLoadingStage(LoadingStage.mint)
                   const txResult = await PublicAccountStore.mintDerivative()
                   console.log(txResult)
+                  setMinted(true)
                 } catch (e) {
                   setError(Errors.insufficientFunds)
                 }
-
-                setMinted(true)
               } catch (e) {
                 console.error('Get error: ', e)
                 setMinted(false)
@@ -159,21 +131,9 @@ const TokenComponent: FC<TokenListProps & { token: Token | TokenType }> = ({
           >
             Mint
           </Button>
-        </div>
-      )}
-    </>
-  )
-}
-
-export const TokenList: FC<TokenListProps> = ({ tokens, ...rest }) => {
-  return (
-    <>
-      {tokens.map((token: Token | TokenType, index: number) => (
-        <div className={listWrapper} key={index}>
-          <TokenComponent tokens={tokens} {...rest} token={token} />
-        </div>
-      ))}
-    </>
+        )}
+      </div>
+    </div>
   )
 }
 

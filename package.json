@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn prepare && vite",
-    "build": "cross-env NODE_ENV=production tsc && vite build",
+    "build": "yarn prepare && cross-env NODE_ENV=production tsc && vite build",
     "pretty": "prettier --check src",
     "lint": "yarn pretty && eslint --max-warnings 0 --ext ts,tsx,json src",
     "postinstall": "yarn prepare",

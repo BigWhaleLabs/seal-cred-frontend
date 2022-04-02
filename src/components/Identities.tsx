@@ -7,10 +7,7 @@ import {
 import { useSnapshot } from 'valtio'
 import AddIdentity from 'components/AddIdentity'
 import EthStore from 'stores/EthStore'
-import EthereumIdentityToVerify from 'components/EthereumIdentityToVerify'
-import Identity from 'components/Identity'
-import PublicAccountStore from 'stores/PublicAccountStore'
-import useConnectingIdentityType from 'hooks/useConnectingIdentityType'
+import EthereumIdentity from 'components/EthereumIdentity'
 
 const container = classnames(
   display('grid'),
@@ -19,33 +16,12 @@ const container = classnames(
 )
 
 export default function Identities() {
-  const connectingIdentityType = useConnectingIdentityType()
-  const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
-  const ethStoreSnapshot = useSnapshot(EthStore)
+  const { accounts } = useSnapshot(EthStore)
 
   return (
     <div className={container}>
       <AddIdentity />
-      {connectingIdentityType === 'dosu' && (
-        <Identity connectingIdentityType={connectingIdentityType} />
-      )}
-      {ethStoreSnapshot.accounts &&
-        ethStoreSnapshot.accounts
-          .filter(
-            (account) =>
-              !PublicAccountStore.connectedIdentities.find(
-                (identity) => identity.identifier === account
-              )
-          )
-          .map((account) => (
-            <EthereumIdentityToVerify address={account} key={account} />
-          ))}
-      {publicAccountStoreSnapshot.connectedIdentities.map((identity) => (
-        <Identity
-          key={`${identity.type}-${identity.identifier}`}
-          connectedIdentity={identity}
-        />
-      ))}
+      {accounts.length && <EthereumIdentity />}
     </div>
   )
 }
