@@ -11,7 +11,7 @@ class PublicAccountStore extends PersistableStore {
   private getContract() {
     const provider = new providers.InfuraProvider(
       network,
-      import.meta.env.VITE_INFURA_PROJECT_ID as string
+      import.meta.env.VITE_INFURA_ID as string
     )
 
     const walletWithProvider = new Wallet(

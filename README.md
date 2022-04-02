@@ -24,7 +24,6 @@
 | `VITE_BITSKI_CLIENT_ID`         | [Register a wallet](https://wallet.bitski.com/), confirm your email and [create a project](https://developer.bitski.com/). Use `localhost` as homepage in your app + redirect to `localhost/callback.html` in auth section |
 | `VITE_INVITES_CONTRACT_ADDRESS` | https://invites.dosu.io/ contract address                                                                                                                                                                                  |
 | `VITE_SC_DERIVATIVE_ADDRESS`    | https://streetcred.one/ derivative contract address                                                                                                                                                                        |
-| `VITE_INFURA_PROJECT_ID`        | Your [infura](https://infura.io/dashboard) project id                                                                                                                                                                      |
 
 Also, please, consider looking at `.env.sample`.
 
