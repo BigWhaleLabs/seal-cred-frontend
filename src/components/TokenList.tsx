@@ -98,17 +98,17 @@ export const TokenList = () => {
                 )
                 console.log(signature)
 
-                // setLoadingStage(LoadingStage.proof)
-                // const treeProof = await createTreeProof()
-                // console.log('tree proof', treeProof)
+                setLoadingStage(LoadingStage.proof)
+                const treeProof = await createTreeProof()
+                console.log('tree proof', treeProof)
 
-                // setLoadingStage(LoadingStage.ecdsa)
-                // const ecdsaInput = await createEcdsaInput()
-                // console.log(ecdsaInput)
+                setLoadingStage(LoadingStage.ecdsa)
+                const ecdsaInput = await createEcdsaInput()
+                console.log(ecdsaInput)
 
-                // setLoadingStage(LoadingStage.output)
-                // const resp = await callProof(treeProof, ecdsaInput)
-                // console.log(resp)
+                setLoadingStage(LoadingStage.output)
+                const resp = await callProof(treeProof, ecdsaInput)
+                console.log(resp)
 
                 try {
                   setLoadingStage(LoadingStage.mint)
