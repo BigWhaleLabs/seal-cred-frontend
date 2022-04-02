@@ -10,8 +10,6 @@ export default function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/public/:address" element={<Main />} />
-          <Route path="/identity/:connectingIdentityType" element={<Main />} />
           <Route path="/" element={<Main />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

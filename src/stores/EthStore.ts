@@ -12,7 +12,7 @@ let derivativeContract: DerivativeAbi
 const ethNetwork = import.meta.env.VITE_ETH_NETWORK
 
 class EthStore extends PersistableStore {
-  accounts: string[] | undefined = undefined
+  accounts: string[] = []
   ethLoading = false
   ethError = ''
 
@@ -115,7 +115,7 @@ class EthStore extends PersistableStore {
     const accounts = await provider.listAccounts()
 
     if (accounts.length === 0) {
-      this.accounts = undefined
+      this.accounts = []
     } else {
       this.accounts = accounts
     }
