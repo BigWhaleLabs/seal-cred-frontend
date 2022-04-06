@@ -16,6 +16,7 @@ import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
+import TokensStore from 'stores/TokensStore'
 import callProof from 'helpers/callProof'
 import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
@@ -66,7 +67,7 @@ export const TokenList = () => {
 
   useEffect(() => {
     async function checkMinted() {
-      const result = await PublicAccountStore.checkInviteToken(accounts[0])
+      const result = await TokensStore.checkInviteToken(accounts[0])
       setMinted(!!result.dosu1wave)
     }
 
@@ -114,6 +115,7 @@ export const TokenList = () => {
                   setLoadingStage(LoadingStage.mint)
                   const txResult = await PublicAccountStore.mintDerivative()
                   console.log(txResult)
+                  await TokensStore.requestTokens(accounts[0])
                   setMinted(true)
                 } catch (e) {
                   setError(Errors.insufficientFunds)

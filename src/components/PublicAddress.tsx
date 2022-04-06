@@ -19,6 +19,7 @@ import { useState } from 'react'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import PublicAccountStore from 'stores/PublicAccountStore'
+import PublicTokens from 'components/PublicTokens'
 import copy from 'copy-to-clipboard'
 
 const outerContainer = classnames(margin('my-4'))
@@ -74,6 +75,7 @@ export default function PublicAddress() {
             {copied ? 'Copied to the clipboard!' : 'Copy private key'}
           </Button>
         </div>
+        <PublicTokens />
       </Card>
     </div>
   )
