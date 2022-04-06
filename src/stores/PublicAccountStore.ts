@@ -88,7 +88,7 @@ class PublicAccountStore extends PersistableStore {
       'event Transfer(address indexed from, address indexed to, uint indexed tokenId)',
     ])
     const sig = 'Transfer(address,address,uint256)'
-    const sigHash = utils.keccak256(utils.toUtf8Bytes(sig)) // ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+    const sigHash = utils.keccak256(utils.toUtf8Bytes(sig))
 
     return (
       await provider.getLogs({
