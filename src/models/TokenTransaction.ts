@@ -1,4 +1,4 @@
-export default interface OwnerToken {
+export default interface TokenTransaction {
   to: string
   from: string
   contract: string

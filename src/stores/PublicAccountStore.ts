@@ -1,9 +1,10 @@
 import { DerivativeAbi__factory } from 'helpers/derivativeAbi'
-import { Wallet, providers, utils } from 'ethers'
+import { Wallet, providers } from 'ethers'
 import { proxy } from 'valtio'
-import OwnerToken from 'models/OwnerToken'
 import PersistableStore from 'stores/persistence/PersistableStore'
-import addressEquel from 'helpers/addressEquel'
+import TokenTransaction from 'models/TokenTransaction'
+import addressEqual from 'helpers/addressEqual'
+import listOwnerTokens from 'helpers/listOwnerTokens'
 
 const network = import.meta.env.VITE_ETH_NETWORK as string
 const derivativeContractAddress = import.meta.env
@@ -79,44 +80,10 @@ class PublicAccountStore extends PersistableStore {
     }
   }
 
-  async listTokensOfOwner(ethAddress: string) {
-    const provider = new providers.InfuraProvider(
-      network,
-      import.meta.env.VITE_INFURA_ID as string
-    )
-    const iface = new utils.Interface([
-      'event Transfer(address indexed from, address indexed to, uint indexed tokenId)',
-    ])
-    const sig = 'Transfer(address,address,uint256)'
-    const sigHash = utils.keccak256(utils.toUtf8Bytes(sig))
-
-    return (
-      await provider.getLogs({
-        fromBlock: 0,
-        toBlock: 'latest',
-        topics: [utils.id(sig), null, utils.hexZeroPad(ethAddress, 32)],
-      })
-    )
-      .map((log) => {
-        if (log.topics[0] !== sigHash) return null
-        const data = log.data
-        const topics = log.topics
-        const result = iface.parseLog({ data, topics })
-        return {
-          contract: log.address,
-          transaction: log.transactionHash,
-          to: result.args.to,
-          from: result.args.from,
-          tokenId: result.args.tokenId.toString(),
-        }
-      })
-      .filter((o) => o !== null) as OwnerToken[]
-  }
-
   async checkInviteToken(ethAddress: string) {
     const contractsForCheck = [derivativeContractAddress]
-    const tokens: OwnerToken[] = (
-      await this.listTokensOfOwner(ethAddress)
+    const tokens: TokenTransaction[] = (
+      await listOwnerTokens(ethAddress)
     ).filter((token) => contractsForCheck.includes(token.contract))
 
     const owned: { [index: string]: string } = {}
@@ -126,7 +93,7 @@ class PublicAccountStore extends PersistableStore {
         case derivativeContractAddress: {
           const derivativeContract = this.getContract()
           const owner = await derivativeContract.ownerOf(token.tokenId)
-          if (addressEquel(owner, ethAddress)) {
+          if (addressEqual(owner, ethAddress)) {
             owned['dosu1wave'] = token.tokenId
           }
           break
