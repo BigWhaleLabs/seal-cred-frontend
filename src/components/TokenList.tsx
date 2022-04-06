@@ -66,8 +66,8 @@ export const TokenList = () => {
 
   useEffect(() => {
     async function checkMinted() {
-      const result = await PublicAccountStore.checkAddressForMint(accounts[0])
-      setMinted(result ? result : false)
+      const result = await PublicAccountStore.checkInviteToken(accounts[0])
+      setMinted(!!result.dosu1wave)
     }
 
     void checkMinted()
