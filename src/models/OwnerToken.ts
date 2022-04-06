@@ -3,5 +3,5 @@ export default interface OwnerToken {
   from: string
   contract: string
   transaction: string
-  transactionId: number
+  tokenId: string
 }

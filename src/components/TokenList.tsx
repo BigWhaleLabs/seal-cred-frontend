@@ -64,14 +64,13 @@ export const TokenList = () => {
   const [error, setError] = useState<Errors>(Errors.clear)
   const [minted, setMinted] = useState(false)
 
-  // @ToDo: Uncomment and set func to check tokens
-  // useEffect(() => {
-  //   async function checkMinted() {
-  //     const result = await PublicAccountStore.listTokensOfOwner(accounts[0])
-  //     setMinted(!!result.length || false)
-  //   }
-  //   void checkMinted()
-  // }, [accounts])
+  useEffect(() => {
+    async function checkMinted() {
+      const result = await PublicAccountStore.checkInviteToken(accounts[0])
+      setMinted(!!result['dosu1wave'])
+    }
+    void checkMinted()
+  }, [accounts])
 
   return (
     <div className={listWrapper}>
@@ -92,38 +91,35 @@ export const TokenList = () => {
             onClick={async () => {
               setLoadingMint(true)
               try {
-                // @Todo: uncomment and implement check owner tokens func
-                const c = await PublicAccountStore.checkInviteToken(accounts[0])
-                console.log('Tokens: ', c)
-                // setLoadingStage(LoadingStage.sign)
-                // const signature = await EthStore.signMessage(
-                //   PublicAccountStore.mainEthWallet.address
-                // )
-                // console.log(signature)
+                setLoadingStage(LoadingStage.sign)
+                const signature = await EthStore.signMessage(
+                  PublicAccountStore.mainEthWallet.address
+                )
+                console.log(signature)
 
-                // setLoadingStage(LoadingStage.proof)
-                // const treeProof = await createTreeProof()
-                // console.log('tree proof', treeProof)
+                setLoadingStage(LoadingStage.proof)
+                const treeProof = await createTreeProof()
+                console.log('tree proof', treeProof)
 
-                // setLoadingStage(LoadingStage.ecdsa)
-                // const ecdsaInput = await createEcdsaInput()
-                // console.log(ecdsaInput)
+                setLoadingStage(LoadingStage.ecdsa)
+                const ecdsaInput = await createEcdsaInput()
+                console.log(ecdsaInput)
 
-                // setLoadingStage(LoadingStage.output)
-                // const resp = await callProof(treeProof, ecdsaInput)
-                // console.log(resp)
+                setLoadingStage(LoadingStage.output)
+                const resp = await callProof(treeProof, ecdsaInput)
+                console.log(resp)
 
-                // try {
-                //   setLoadingStage(LoadingStage.mint)
-                //   const txResult = await PublicAccountStore.mintDerivative()
-                //   console.log(txResult)
-                //   setMinted(true)
-                // } catch (e) {
-                //   setError(Errors.insufficientFunds)
-                // }
+                try {
+                  setLoadingStage(LoadingStage.mint)
+                  const txResult = await PublicAccountStore.mintDerivative()
+                  console.log(txResult)
+                  setMinted(true)
+                } catch (e) {
+                  setError(Errors.insufficientFunds)
+                }
               } catch (e) {
                 console.error('Get error: ', e)
-                // setMinted(false)
+                setMinted(false)
               } finally {
                 setLoadingStage(LoadingStage.clear)
                 setLoadingMint(false)

@@ -1,13 +1,13 @@
 import { DerivativeAbi__factory } from 'helpers/derivativeAbi'
 import { Wallet, providers, utils } from 'ethers'
 import { proxy } from 'valtio'
-import EthStore from 'stores/EthStore'
 import OwnerToken from 'models/OwnerToken'
 import PersistableStore from 'stores/persistence/PersistableStore'
+import addressEquel from 'helpers/addressEquel'
 
-// @Todo: set invites contract to `VITE_INVITES_CONTRACT_ADDRESS`
 const network = import.meta.env.VITE_ETH_NETWORK as string
-const invitesContract = import.meta.env.VITE_DOSU_INVITE_CONTRACT as string
+const derivativeContractAddress = import.meta.env
+  .VITE_SC_DERIVATIVE_ADDRESS as string
 class PublicAccountStore extends PersistableStore {
   mainEthWallet: Wallet = Wallet.createRandom()
 
@@ -84,46 +84,50 @@ class PublicAccountStore extends PersistableStore {
       network,
       import.meta.env.VITE_INFURA_ID as string
     )
-    const decoder = new utils.AbiCoder()
+    const iface = new utils.Interface([
+      'event Transfer(address indexed from, address indexed to, uint indexed tokenId)',
+    ])
+    const sig = 'Transfer(address,address,uint256)'
+    const sigHash = utils.keccak256(utils.toUtf8Bytes(sig)) // ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
 
-    const tokens: OwnerToken[] = (
+    return (
       await provider.getLogs({
         fromBlock: 0,
         toBlock: 'latest',
-        topics: [
-          utils.id('Transfer(address,address,uint256)'),
-          null,
-          utils.hexZeroPad(ethAddress, 32),
-        ],
+        topics: [utils.id(sig), null, utils.hexZeroPad(ethAddress, 32)],
       })
-    ).map((log) => {
-      const {
-        address: contract,
-        transactionHash: transaction,
-        transactionIndex: transactionId,
-      } = log
-      const from = decoder.decode(['address'], log.topics[1]).toString()
-      const to = decoder.decode(['address'], log.topics[2]).toString()
-      return { contract: contract, from, to, transaction, transactionId }
-    })
-
-    return tokens
+    )
+      .map((log) => {
+        if (log.topics[0] !== sigHash) return null
+        const data = log.data
+        const topics = log.topics
+        const result = iface.parseLog({ data, topics })
+        return {
+          contract: log.address,
+          transaction: log.transactionHash,
+          to: result.args.to,
+          from: result.args.from,
+          tokenId: result.args.tokenId.toString(),
+        }
+      })
+      .filter((o) => o !== null) as OwnerToken[]
   }
 
   async checkInviteToken(ethAddress: string) {
-    const contractsForCheck = [invitesContract]
-    const tokens = (await this.listTokensOfOwner(ethAddress)).filter((token) =>
-      contractsForCheck.includes(token.contract)
-    )
+    const contractsForCheck = [derivativeContractAddress]
+    const tokens: OwnerToken[] = (
+      await this.listTokensOfOwner(ethAddress)
+    ).filter((token) => contractsForCheck.includes(token.contract))
 
-    const owned: { [index: string]: number } = {}
+    const owned: { [index: string]: string } = {}
 
     for (const token of tokens) {
       switch (token.contract) {
-        case invitesContract: {
-          const tokenId = await EthStore.getTokenId()
-          if (tokenId && tokenId > 0) {
-            owned['dosu1wave'] = tokenId
+        case derivativeContractAddress: {
+          const derivativeContract = this.getContract()
+          const owner = await derivativeContract.ownerOf(token.tokenId)
+          if (addressEquel(owner, ethAddress)) {
+            owned['dosu1wave'] = token.tokenId
           }
           break
         }

@@ -27,9 +27,8 @@ class EthStore extends PersistableStore {
         return
       }
 
-      // @Todo: change back to `VITE_INVITES_CONTRACT_ADDRESS`
       invitesContract = InvitesAbi__factory.connect(
-        import.meta.env.VITE_DOSU_INVITE_CONTRACT as string,
+        import.meta.env.VITE_INVITES_CONTRACT_ADDRESS as string,
         provider.getSigner(0)
       )
 
