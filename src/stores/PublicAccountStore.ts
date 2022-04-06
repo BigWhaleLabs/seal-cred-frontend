@@ -1,12 +1,95 @@
 import { DerivativeAbi__factory } from 'helpers/derivativeAbi'
 import { Wallet, providers } from 'ethers'
+import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
+import configuredModal from 'helpers/configuredModal'
+
+let provider: Web3Provider
 
 const network = import.meta.env.VITE_ETH_NETWORK as string
 
 class PublicAccountStore extends PersistableStore {
-  mainEthWallet: Wallet = Wallet.createRandom()
+  defaultAccount: Wallet = Wallet.createRandom()
+  currentAccount = this.defaultAccount.address
+  accounts: string[] = []
+  ethLoading = false
+  ethError = ''
+
+  get account() {
+    return this.currentAccount
+  }
+
+  async onConnect() {
+    try {
+      this.ethLoading = true
+      this.ethError = ''
+
+      const instance = await configuredModal.connect()
+      provider = new Web3Provider(instance)
+      const userNetwork = (await provider.getNetwork()).name
+      if (userNetwork !== network) {
+        this.ethError = `Looks like you're using ${userNetwork} network, try switching to ${network} and connect again`
+        return
+      }
+
+      await this.handleAccountChanged()
+      this.subscribeProvider(instance)
+    } catch (error) {
+      if (typeof error === 'string') return
+      console.error(error)
+      this.clearData()
+    } finally {
+      this.ethLoading = false
+    }
+  }
+
+  private async handleAccountChanged() {
+    if (!provider) return
+
+    this.ethLoading = true
+    const accounts = await provider.listAccounts()
+
+    if (accounts.length === 0) {
+      this.accounts = []
+    } else {
+      this.accounts = accounts
+    }
+
+    this.ethLoading = false
+  }
+
+  private subscribeProvider(provider: Web3Provider) {
+    if (!provider.on) return
+
+    provider.on('error', (error: Error) => {
+      console.error(error)
+      this.ethError = error.message
+    })
+
+    provider.on('accountsChanged', () => {
+      if (this.ethError) return
+      void this.handleAccountChanged()
+    })
+    provider.on('disconnect', () => {
+      if (this.ethError) return
+      void this.handleAccountChanged()
+    })
+
+    provider.on('stop', () => {
+      if (this.ethError) return
+      void this.handleAccountChanged()
+    })
+    provider.on('chainChanged', async () => {
+      this.clearData()
+      await this.onConnect()
+    })
+  }
+
+  private clearData() {
+    configuredModal.clearCachedProvider()
+    this.accounts = []
+  }
 
   private getContract() {
     const provider = new providers.InfuraProvider(
@@ -15,7 +98,7 @@ class PublicAccountStore extends PersistableStore {
     )
 
     const walletWithProvider = new Wallet(
-      this.mainEthWallet.privateKey,
+      this.defaultAccount.privateKey,
       provider
     )
 
@@ -27,12 +110,12 @@ class PublicAccountStore extends PersistableStore {
 
   reviver = (key: string, value: unknown) => {
     switch (key) {
-      case 'mainEthWallet': {
-        const mainEthWalletValue = value as {
+      case 'defaultAccount': {
+        const defaultAccountValue = value as {
           address: string
           privateKey: string
         }
-        return new Wallet(mainEthWalletValue.privateKey)
+        return new Wallet(defaultAccountValue.privateKey)
       }
       default:
         return value
@@ -41,14 +124,14 @@ class PublicAccountStore extends PersistableStore {
 
   replacer = (key: string, value: unknown) => {
     switch (key) {
-      case 'mainEthWallet': {
-        const mainEthWalletValue = value as {
+      case 'defaultAccount': {
+        const defaultAccountValue = value as {
           address: string
           privateKey: string
         }
         return {
-          address: mainEthWalletValue.address,
-          privateKey: mainEthWalletValue.privateKey,
+          address: defaultAccountValue.address,
+          privateKey: defaultAccountValue.privateKey,
         }
       }
       default:

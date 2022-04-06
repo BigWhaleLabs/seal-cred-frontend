@@ -2143,6 +2143,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@headlessui/react@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@headlessui/react@npm:1.5.0"
+  peerDependencies:
+    react: ^16 || ^17 || ^18
+    react-dom: ^16 || ^17 || ^18
+  checksum: e3373dfb73936950d659a87718fb9fdedc599b344b30cb0d8b1ef0a2ec13d6f405c653fa51284236788658840ece82c6a8538a5a5931e595274e9590b2020079
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.9.2":
   version: 0.9.5
   resolution: "@humanwhocodes/config-array@npm:0.9.5"
@@ -15430,6 +15440,7 @@ __metadata:
   resolution: "street-cred-frontend@workspace:."
   dependencies:
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
+    "@headlessui/react": ^1.5.0
     "@noble/secp256k1": ^1.5.5
     "@originjs/vite-plugin-commonjs": ^1.0.3
     "@preact/preset-vite": ^2.1.7

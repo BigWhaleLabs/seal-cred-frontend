@@ -15,16 +15,14 @@ import {
   wordBreak,
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import { useState } from 'react'
-import Button from 'components/Button'
+import AddressPanel from 'components/AddressPanel'
 import Card from 'components/Card'
 import PublicAccountStore from 'stores/PublicAccountStore'
-import copy from 'copy-to-clipboard'
 
 const outerContainer = classnames(margin('my-4'))
 const addressContainer = classnames(
   display('flex'),
-  flexDirection('flex-col', 'lg:flex-row'),
+  flexDirection('flex-row'),
   alignItems('items-center'),
   justifyContent('justify-center'),
   space('space-y-2', 'lg:space-y-0', 'lg:space-x-2'),
@@ -41,7 +39,6 @@ const addressBackground = classnames(
 
 export default function PublicAddress() {
   const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
-  const [copied, setCopied] = useState(false)
 
   return (
     <div className={outerContainer}>
@@ -60,19 +57,9 @@ export default function PublicAddress() {
         </>
         <div className={addressContainer}>
           <div className={addressBackground}>
-            <AccentText>
-              {publicAccountStoreSnapshot.mainEthWallet.address}
-            </AccentText>
+            <AccentText>{publicAccountStoreSnapshot.account}</AccentText>
           </div>
-          <Button
-            color="accent"
-            onClick={() => {
-              setCopied(true)
-              copy(PublicAccountStore.mainEthWallet.privateKey)
-            }}
-          >
-            {copied ? 'Copied to the clipboard!' : 'Copy private key'}
-          </Button>
+          <AddressPanel />
         </div>
       </Card>
     </div>
