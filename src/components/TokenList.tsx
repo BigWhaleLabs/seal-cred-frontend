@@ -52,7 +52,8 @@ enum LoadingStage {
 enum Errors {
   insufficientFunds = "You don't have enough money on your public address",
   noSignature = "Error getting user's signature",
-  invalidProof = 'Proof from the backend is not valid',
+  invalidProof = 'Merkle Tree Proof is not valid',
+  mintError = 'An error occurred while minting your Badge',
   clear = '',
 }
 
@@ -63,7 +64,7 @@ export const TokenList = () => {
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
   )
-  const [error, setError] = useState<string | Errors>(Errors.clear)
+  const [error, setError] = useState<Errors>(Errors.clear)
   const [minted, setMinted] = useState(false)
 
   useEffect(() => {
@@ -74,11 +75,6 @@ export const TokenList = () => {
 
     void checkMinted()
   }, [accounts])
-
-  function handleError(err: Errors, e: unknown) {
-    console.error('Get error: ', e)
-    setError(err)
-  }
 
   return (
     <div className={listWrapper}>
@@ -100,42 +96,45 @@ export const TokenList = () => {
               setLoadingMint(true)
               setError(Errors.clear)
               try {
-                try {
-                  setLoadingStage(LoadingStage.sign)
-                  const signature = await EthStore.signMessage(
-                    PublicAccountStore.mainEthWallet.address
-                  )
-                  console.log(signature)
-                } catch (e) {
-                  handleError(Errors.noSignature, e)
-                  return
-                }
+                setLoadingStage(LoadingStage.sign)
+                const signature = await EthStore.signMessage(
+                  PublicAccountStore.mainEthWallet.address
+                )
+                console.log(signature)
 
-                try {
-                  setLoadingStage(LoadingStage.proof)
-                  const treeProof = await createTreeProof()
-                  console.log('tree proof', treeProof)
+                setLoadingStage(LoadingStage.proof)
+                const treeProof = await createTreeProof()
+                console.log('tree proof', treeProof)
 
-                  setLoadingStage(LoadingStage.ecdsa)
-                  const ecdsaInput = await createEcdsaInput()
-                  console.log(ecdsaInput)
+                setLoadingStage(LoadingStage.ecdsa)
+                const ecdsaInput = await createEcdsaInput()
+                console.log(ecdsaInput)
 
-                  setLoadingStage(LoadingStage.output)
-                  const resp = await callProof(treeProof, ecdsaInput)
-                  console.log(resp)
-                } catch (e) {
-                  handleError(Errors.invalidProof, e)
-                  return
-                }
+                setLoadingStage(LoadingStage.output)
+                const resp = await callProof(treeProof, ecdsaInput)
+                if (!resp) throw new Error(Errors.invalidProof)
+                console.log(resp)
 
-                try {
-                  setLoadingStage(LoadingStage.mint)
-                  const txResult = await PublicAccountStore.mintDerivative()
-                  console.log(txResult)
-                  setMinted(true)
-                } catch (e) {
-                  handleError(Errors.insufficientFunds, e)
-                  return
+                setLoadingStage(LoadingStage.mint)
+                const txResult = await PublicAccountStore.mintDerivative()
+                console.log(txResult)
+                setMinted(true)
+              } catch (error) {
+                console.error(error)
+                const message = (error as Error).message
+                switch (true) {
+                  case /User denied message signature/.test(message):
+                    setError(Errors.noSignature)
+                    break
+                  case /cannot estimate gas/.test(message):
+                    setError(Errors.insufficientFunds)
+                    break
+                  case /eth_getBlockByNumber/.test(message):
+                    setError(Errors.mintError)
+                    break
+                  default: // Any other error is related to the proof creation
+                    setError(Errors.invalidProof)
+                    break
                 }
               } finally {
                 setLoadingStage(LoadingStage.clear)

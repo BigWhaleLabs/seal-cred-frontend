@@ -30,7 +30,5 @@ export default async function callProof(
     }
   )
 
-  console.log(JSON.stringify(data, null, 4))
-
   return data
 }
