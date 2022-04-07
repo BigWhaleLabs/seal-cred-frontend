@@ -52,22 +52,24 @@ const SafariAttention = () => {
   const { theme, warningAccepted } = useSnapshot(AppStore)
 
   return (
-    !warningAccepted && (
-      <div className={wrapper(theme)}>
-        <BodyText center>
-          🍺 Safari and web3 don't mix well. Please, use a different browser.
-        </BodyText>
-        <Button
-          badge
-          color="primary"
-          onClick={() => {
-            AppStore.warningAccepted = true
-          }}
-        >
-          <div className={wide}>Close</div>
-        </Button>
-      </div>
-    )
+    <>
+      {!warningAccepted && (
+        <div className={wrapper(theme)}>
+          <BodyText center>
+            🍺 Safari and web3 don't mix well. Please, use a different browser.
+          </BodyText>
+          <Button
+            badge
+            color="primary"
+            onClick={() => {
+              AppStore.warningAccepted = true
+            }}
+          >
+            <div className={wide}>Close</div>
+          </Button>
+        </div>
+      )}
+    </>
   )
 }
 
