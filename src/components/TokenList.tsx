@@ -51,6 +51,10 @@ enum LoadingStage {
 
 enum Errors {
   insufficientFunds = "You don't have enough money on your public address",
+  noSignature = "Error getting user's signature",
+  noTree = 'Error generating a tree for proof',
+  ecdsaError = 'Error creating ECDSA input',
+  invalidProof = 'Proof from the backend is not valid',
   clear = '',
 }
 
