@@ -17,6 +17,7 @@ import {
 import { useSnapshot } from 'valtio'
 import AddressPanel from 'components/AddressPanel'
 import Card from 'components/Card'
+import CopyPrivateKey from 'components/CopyPrivateKey'
 import PublicAccountStore from 'stores/PublicAccountStore'
 
 const outerContainer = classnames(margin('my-4'))
@@ -59,6 +60,7 @@ export default function PublicAddress() {
           <div className={addressBackground}>
             <AccentText>{publicAccountStoreSnapshot.account}</AccentText>
           </div>
+          <CopyPrivateKey />
           <AddressPanel />
         </div>
       </Card>

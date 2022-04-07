@@ -11,10 +11,20 @@ const network = import.meta.env.VITE_ETH_NETWORK as string
 
 class PublicAccountStore extends PersistableStore {
   defaultAccount: Wallet = Wallet.createRandom()
-  currentAccount = this.defaultAccount.address
-  accounts: string[] = []
+  currentAccount: string = this.defaultAccount.address
+  connectedAccounts: Set<string> = new Set()
   ethLoading = false
   ethError = ''
+
+  get accounts() {
+    return [this.defaultAccount.address, ...this.connectedAccounts]
+  }
+
+  get privateKey() {
+    return this.currentAccount === this.defaultAccount.address
+      ? this.defaultAccount.privateKey
+      : null
+  }
 
   get account() {
     return this.currentAccount
@@ -50,10 +60,8 @@ class PublicAccountStore extends PersistableStore {
     this.ethLoading = true
     const accounts = await provider.listAccounts()
 
-    if (accounts.length === 0) {
-      this.accounts = []
-    } else {
-      this.accounts = accounts
+    for (const account of accounts) {
+      this.connectedAccounts.add(account)
     }
 
     this.ethLoading = false
@@ -88,7 +96,7 @@ class PublicAccountStore extends PersistableStore {
 
   private clearData() {
     configuredModal.clearCachedProvider()
-    this.accounts = []
+    this.connectedAccounts = new Set()
   }
 
   private getContract() {
@@ -117,6 +125,9 @@ class PublicAccountStore extends PersistableStore {
         }
         return new Wallet(defaultAccountValue.privateKey)
       }
+      case 'connectedAccounts': {
+        return new Set(value as string[])
+      }
       default:
         return value
     }
@@ -133,6 +144,9 @@ class PublicAccountStore extends PersistableStore {
           address: defaultAccountValue.address,
           privateKey: defaultAccountValue.privateKey,
         }
+      }
+      case 'connectedAccounts': {
+        return [...(value as Set<string>)]
       }
       default:
         return value

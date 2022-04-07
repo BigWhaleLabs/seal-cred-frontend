@@ -16,7 +16,7 @@ export default function ConnectPublicAccount() {
   }, [])
 
   return (
-    <div className="p-4 bg-gray-50">
+    <div className="p-2 bg-gray-50">
       <span className="flow-root px-2 py-2 transition duration-150 ease-in-out rounded-md hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
         <span
           onClick={async () => {

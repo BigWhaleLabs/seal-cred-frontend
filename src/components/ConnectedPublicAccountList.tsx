@@ -1,6 +1,5 @@
 import { useSnapshot } from 'valtio'
 import ConnectedPublicAccount from 'components/ConnectedPublicAccount'
-import CopyPrivateKey from 'components/CopyPrivateKey'
 import PublicAccountStore from 'stores/PublicAccountStore'
 
 export default function ConnectedPublicAccountList() {
@@ -8,7 +7,6 @@ export default function ConnectedPublicAccountList() {
 
   return (
     <>
-      <CopyPrivateKey />
       {accounts.map((account) => (
         <ConnectedPublicAccount
           account={account}

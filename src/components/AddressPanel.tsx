@@ -84,7 +84,6 @@ export default function AddressPanel() {
               <OptionsIcon />
             </span>
           </Popover.Button>
-
           <Popover.Panel
             className={`${panelContainer} -translate-x-1/2 left-1/2`}
           >
