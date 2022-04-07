@@ -10,6 +10,7 @@ const derivativeContractAddress = import.meta.env
 const TokensStore = proxy({
   badges: Promise.resolve({}),
   requestTokens: (address: string) => {
+    if (!address) return
     TokensStore.badges = TokensStore.checkInviteToken(address)
   },
   async checkInviteToken(ethAddress: string) {
