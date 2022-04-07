@@ -52,7 +52,7 @@ const Tokens = () => {
 
   return (
     <>
-      {badgesList.length &&
+      {badgesList.length > 0 &&
         badgesList.map((badge, index) => (
           <Badge token={badge} key={`${index}-${badge}`} />
         ))}
@@ -63,7 +63,9 @@ const Tokens = () => {
 const PublicTokens = () => {
   const { accounts } = useSnapshot(EthStore)
   useEffect(() => {
-    void TokensStore.requestTokens(accounts[0])
+    if (accounts[0]) {
+      void TokensStore.requestTokens(accounts[0])
+    }
   }, [accounts])
 
   return (
