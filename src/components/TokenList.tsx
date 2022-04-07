@@ -52,8 +52,6 @@ enum LoadingStage {
 enum Errors {
   insufficientFunds = "You don't have enough money on your public address",
   noSignature = "Error getting user's signature",
-  noTree = 'Error generating a tree for proof',
-  ecdsaError = 'Error creating ECDSA input',
   invalidProof = 'Proof from the backend is not valid',
   clear = '',
 }
@@ -65,7 +63,7 @@ export const TokenList = () => {
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
   )
-  const [error, setError] = useState<Errors>(Errors.clear)
+  const [error, setError] = useState<string | Errors>(Errors.clear)
   const [minted, setMinted] = useState(false)
 
   useEffect(() => {
@@ -76,6 +74,11 @@ export const TokenList = () => {
 
     void checkMinted()
   }, [accounts])
+
+  function handleError(err: Errors, e: unknown) {
+    console.error('Get error: ', e)
+    setError(err)
+  }
 
   return (
     <div className={listWrapper}>
@@ -95,24 +98,35 @@ export const TokenList = () => {
             loading={loadingMint}
             onClick={async () => {
               setLoadingMint(true)
+              setError(Errors.clear)
               try {
-                setLoadingStage(LoadingStage.sign)
-                const signature = await EthStore.signMessage(
-                  PublicAccountStore.mainEthWallet.address
-                )
-                console.log(signature)
+                try {
+                  setLoadingStage(LoadingStage.sign)
+                  const signature = await EthStore.signMessage(
+                    PublicAccountStore.mainEthWallet.address
+                  )
+                  console.log(signature)
+                } catch (e) {
+                  handleError(Errors.noSignature, e)
+                  return
+                }
 
-                setLoadingStage(LoadingStage.proof)
-                const treeProof = await createTreeProof()
-                console.log('tree proof', treeProof)
+                try {
+                  setLoadingStage(LoadingStage.proof)
+                  const treeProof = await createTreeProof()
+                  console.log('tree proof', treeProof)
 
-                setLoadingStage(LoadingStage.ecdsa)
-                const ecdsaInput = await createEcdsaInput()
-                console.log(ecdsaInput)
+                  setLoadingStage(LoadingStage.ecdsa)
+                  const ecdsaInput = await createEcdsaInput()
+                  console.log(ecdsaInput)
 
-                setLoadingStage(LoadingStage.output)
-                const resp = await callProof(treeProof, ecdsaInput)
-                console.log(resp)
+                  setLoadingStage(LoadingStage.output)
+                  const resp = await callProof(treeProof, ecdsaInput)
+                  console.log(resp)
+                } catch (e) {
+                  handleError(Errors.invalidProof, e)
+                  return
+                }
 
                 try {
                   setLoadingStage(LoadingStage.mint)
@@ -120,11 +134,9 @@ export const TokenList = () => {
                   console.log(txResult)
                   setMinted(true)
                 } catch (e) {
-                  setError(Errors.insufficientFunds)
+                  handleError(Errors.insufficientFunds, e)
+                  return
                 }
-              } catch (e) {
-                console.error('Get error: ', e)
-                setMinted(false)
               } finally {
                 setLoadingStage(LoadingStage.clear)
                 setLoadingMint(false)
