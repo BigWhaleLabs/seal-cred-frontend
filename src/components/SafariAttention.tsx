@@ -1,8 +1,7 @@
-import { BodyText, Link } from 'components/Text'
+import { BodyText } from 'components/Text'
 import {
   alignItems,
   backgroundColor,
-  borderColor,
   borderRadius,
   borderWidth,
   classnames,
@@ -21,44 +20,55 @@ import {
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
+import Button from 'components/Button'
+import Theme from 'models/Theme'
 
-const wrapper = classnames(
-  position('sticky'),
-  display('flex'),
-  flexDirection('flex-col', 'md:flex-row'),
-  alignItems('items-center'),
-  justifyContent('justify-between'),
-  container('container'),
+const wrapper = (theme: Theme) =>
+  classnames(
+    position('sticky'),
+    display('flex'),
+    flexDirection('flex-col', 'md:flex-row'),
+    alignItems('items-center'),
+    justifyContent('justify-between'),
+    container('container'),
 
-  maxWidth('max-w-4xl'),
-  margin('mx-auto'),
-  inset('sm:bottom-2', 'bottom-1'),
-  padding('py-2', 'px-4'),
+    maxWidth('max-w-4xl'),
+    margin('mx-auto'),
+    inset('sm:bottom-2', 'bottom-1'),
+    padding('py-3', 'px-4'),
 
-  borderWidth('border'),
-  borderRadius('rounded-2xl'),
-  borderColor('border-primary-dimmed'),
-  backgroundColor('bg-semi-background'),
+    borderWidth(theme === 'dark' ? 'border-0' : 'border'),
+    borderRadius('rounded-2xl'),
+    backgroundColor(theme === 'dark' ? 'bg-border' : 'bg-semi-background'),
 
-  transitionProperty('transition-colors'),
-  space('space-y-2', 'md:space-y-0'),
-  zIndex('z-10')
-)
+    transitionProperty('transition-colors'),
+    space('space-y-2', 'md:space-y-0'),
+    zIndex('z-10')
+  )
+
+const wide = classnames(padding('py-1', 'px-1'))
 
 const SafariAttention = () => {
-  const { warningAccepted } = useSnapshot(AppStore)
+  const { theme, warningAccepted } = useSnapshot(AppStore)
 
-  return !warningAccepted ? (
-    <div className={wrapper}>
-      <BodyText center>
-        🧭 Safari may work unstable. We recommend using the Chromium browser
-        instead.
-      </BodyText>
-      <Link url="#" onClick={() => (AppStore.warningAccepted = true)}>
-        Close
-      </Link>
-    </div>
-  ) : null
+  return (
+    !warningAccepted && (
+      <div className={wrapper(theme)}>
+        <BodyText center>
+          🍺 Safari and web3 don't mix well. Please, use a different browser.
+        </BodyText>
+        <Button
+          badge
+          color="primary"
+          onClick={() => {
+            AppStore.warningAccepted = true
+          }}
+        >
+          <div className={wide}>Close</div>
+        </Button>
+      </div>
+    )
+  )
 }
 
 export default SafariAttention

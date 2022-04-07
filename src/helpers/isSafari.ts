@@ -1,5 +1,5 @@
 export default navigator.vendor &&
-  navigator.vendor.indexOf('Apple') > -1 &&
+  navigator.vendor.includes('Apple') &&
   navigator.userAgent &&
-  navigator.userAgent.indexOf('CriOS') == -1 &&
-  navigator.userAgent.indexOf('FxiOS') == -1
+  !navigator.userAgent.includes('CriOS') &&
+  !navigator.userAgent.includes('FxiOS')
