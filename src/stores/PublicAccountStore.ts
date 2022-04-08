@@ -43,7 +43,7 @@ class PublicAccountStore extends PersistableStore {
         return
       }
 
-      await this.handleAccountChanged()
+      await this.handleConnectAccount()
       this.subscribeProvider(instance)
     } catch (error) {
       if (typeof error === 'string') return
@@ -67,6 +67,8 @@ class PublicAccountStore extends PersistableStore {
 
     this.ethLoading = true
     const accounts = await provider.listAccounts()
+
+    console.log('handleAccountChanged')
 
     for (const account of accounts) {
       this.connectedAccounts.add(account)

@@ -20,7 +20,7 @@ export default function AddIdentity() {
     <Card>
       <BodyText>Link another identity</BodyText>
       <Button
-        color="primary"
+        color="accent"
         loading={ethLoading}
         onClick={async () => {
           configuredModal.clearCachedProvider()
