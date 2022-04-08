@@ -13884,7 +13884,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:^10.6.6":
+"preact@npm:^10.7.1":
   version: 10.7.1
   resolution: "preact@npm:10.7.1"
   checksum: e99d08bd38372e78ce1c84e68685cad66adf076bd95069bc8bcd32c9903a4df09c01d5b04aad849527362b67cc2c09446b647f72de4e67d0578fdea0f904f28f
@@ -13935,21 +13935,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.6.2":
-  version: 2.6.2
-  resolution: "prettier@npm:2.6.2"
-  bin:
-    prettier: bin-prettier.js
-  checksum: 48d08dde8e9fb1f5bccdd205baa7f192e9fc8bc98f86e1b97d919de804e28c806b0e6cc685e4a88211aa7987fa9668f30baae19580d87ced3ed0f2ec6572106f
-  languageName: node
-  linkType: hard
-
 "prettier@npm:^2.3.1":
   version: 2.6.1
   resolution: "prettier@npm:2.6.1"
   bin:
     prettier: bin-prettier.js
   checksum: 78be1f8a3ddfad7c3d8a854b6c8941a3bb1ddfca4225c38d778e0fe1029a55368f71b3bbefff82c689015fbb4d391ec44add957f01308ad2725e01a7c1f37cb6
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "prettier@npm:2.6.2"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 48d08dde8e9fb1f5bccdd205baa7f192e9fc8bc98f86e1b97d919de804e28c806b0e6cc685e4a88211aa7987fa9668f30baae19580d87ced3ed0f2ec6572106f
   languageName: node
   linkType: hard
 
@@ -14351,7 +14351,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.2.2":
+"react-router-dom@npm:^6.3.0":
   version: 6.3.0
   resolution: "react-router-dom@npm:6.3.0"
   dependencies:
@@ -15709,9 +15709,9 @@ __metadata:
     ethers: ^5.6.2
     fortmatic: ^2.2.1
     postcss: ^8.4.12
-    preact: ^10.6.6
-    prettier: 2.6.2
-    react-router-dom: ^6.2.2
+    preact: ^10.7.1
+    prettier: ^2.6.2
+    react-router-dom: ^6.3.0
     react-scripts: ^5.0.0
     rollup-plugin-node-polyfills: ^0.2.1
     rollup-plugin-visualizer: ^5.6.0
