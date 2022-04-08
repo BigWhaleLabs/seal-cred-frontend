@@ -68,8 +68,6 @@ class PublicAccountStore extends PersistableStore {
     this.ethLoading = true
     const accounts = await provider.listAccounts()
 
-    console.log('handleAccountChanged')
-
     for (const account of accounts) {
       this.connectedAccounts.add(account)
     }
@@ -160,7 +158,7 @@ class PublicAccountStore extends PersistableStore {
         }
       }
       case 'connectedAccounts': {
-        return [...(value as Set<string>)]
+        return value instanceof Set ? [...value] : []
       }
       default:
         return value
