@@ -2,7 +2,7 @@ import { ScledgerAbi__factory } from 'helpers/abiTypes/scLedgerAbi'
 import { Wallet, providers } from 'ethers'
 import PublicAccountStore from 'stores/PublicAccountStore'
 
-const listAvaliableContracts = async (): Promise<string[]> => {
+const listAvailableContracts = async (): Promise<string[]> => {
   const provider = new providers.InfuraProvider(
     import.meta.env.VITE_ETH_NETWORK as string,
     import.meta.env.VITE_INFURA_ID as string
@@ -26,4 +26,4 @@ const listAvaliableContracts = async (): Promise<string[]> => {
   return await contract.getAvailableContracts()
 }
 
-export default listAvaliableContracts
+export default listAvailableContracts
