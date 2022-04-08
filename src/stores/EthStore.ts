@@ -110,7 +110,7 @@ class EthStore extends PersistableStore {
       void this.handleAccountChanged()
     })
     provider.on('chainChanged', async () => {
-      this.clearData()
+      this.accounts = []
       await this.onConnect()
     })
   }

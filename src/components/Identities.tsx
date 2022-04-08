@@ -21,7 +21,7 @@ export default function Identities() {
   return (
     <div className={container}>
       <AddIdentity />
-      {accounts.length && <EthereumIdentity />}
+      {accounts.length > 0 && <EthereumIdentity />}
     </div>
   )
 }
