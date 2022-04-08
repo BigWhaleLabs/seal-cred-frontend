@@ -17,6 +17,7 @@ import {
 import { useSnapshot } from 'valtio'
 import EthStore from 'stores/EthStore'
 import FetchingData from 'components/FetchingData'
+import PublicAccountStore from 'stores/PublicAccountStore'
 import TokensStore from 'stores/TokensStore'
 
 const badgesWrapper = classnames(
@@ -61,12 +62,11 @@ const Tokens = () => {
 }
 
 const PublicTokens = () => {
-  const { accounts } = useSnapshot(EthStore)
+  const { account } = useSnapshot(PublicAccountStore)
+
   useEffect(() => {
-    if (accounts[0]) {
-      void TokensStore.requestTokens(accounts[0])
-    }
-  }, [accounts])
+    void TokensStore.requestTokens(account)
+  }, [account])
 
   return (
     <div className={badgesWrapper}>
