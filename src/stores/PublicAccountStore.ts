@@ -64,6 +64,10 @@ class PublicAccountStore extends PersistableStore {
       this.connectedAccounts.add(account)
     }
 
+    if (accounts.length > 0) {
+      this.currentAccount = accounts[0]
+    }
+
     this.ethLoading = false
   }
 
