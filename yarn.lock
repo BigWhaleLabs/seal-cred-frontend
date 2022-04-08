@@ -3257,15 +3257,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/keccak@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@types/keccak@npm:3.0.1"
-  dependencies:
-    "@types/node": "*"
-  checksum: 55551902b31edafda6b9a65252a09669d654b1afd31770129955198ac79c815b7fdf59e6fc586d824414a8d11ede846a8beee4bb308bd21e2c4289c47db09535
-  languageName: node
-  linkType: hard
-
 "@types/keyv@npm:^3.1.1":
   version: 3.1.4
   resolution: "@types/keyv@npm:3.1.4"
@@ -11350,17 +11341,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"keccak256@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "keccak256@npm:1.0.6"
-  dependencies:
-    bn.js: ^5.2.0
-    buffer: ^6.0.3
-    keccak: ^3.0.2
-  checksum: decafb4b37adcfa6d06b6a5d28546d0d7a9f01ccf4b8cc8963cf8188fcc79a230d7e22988e860813623c602d764259734423e38fd7b9aadfeb409d6928a1d4cf
-  languageName: node
-  linkType: hard
-
 "keccak@npm:^3.0.0, keccak@npm:^3.0.1, keccak@npm:^3.0.2":
   version: 3.0.2
   resolution: "keccak@npm:3.0.2"
@@ -15702,7 +15682,6 @@ __metadata:
     "@rollup/plugin-inject": ^4.0.4
     "@toruslabs/torus-embed": ^1.21.0
     "@typechain/ethers-v5": ^10.0.0
-    "@types/keccak": ^3.0.1
     "@types/node": ^17.0.23
     "@types/react": ^17.0.43
     "@typescript-eslint/eslint-plugin": ^5.18.0
@@ -15729,8 +15708,6 @@ __metadata:
     eslint-plugin-valtio: ^0.4.2
     ethers: ^5.6.2
     fortmatic: ^2.2.1
-    keccak: ^3.0.2
-    keccak256: ^1.0.6
     postcss: ^8.4.12
     preact: ^10.6.6
     prettier: 2.6.2
