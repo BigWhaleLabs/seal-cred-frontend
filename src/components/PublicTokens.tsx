@@ -15,7 +15,6 @@ import {
   padding,
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import EthStore from 'stores/EthStore'
 import FetchingData from 'components/FetchingData'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import TokensStore from 'stores/TokensStore'
