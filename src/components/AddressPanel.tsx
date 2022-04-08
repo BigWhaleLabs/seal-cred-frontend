@@ -4,20 +4,27 @@ import {
   alignItems,
   backgroundColor,
   borderRadius,
+  boxShadow,
   classnames,
   cursor,
   display,
   flexDirection,
   fontWeight,
+  inset,
   margin,
   maxWidth,
   opacity,
   outlineStyle,
+  overflow,
   padding,
   position,
+  ringColor,
+  ringOpacity,
+  ringWidth,
   space,
   textColor,
   transitionProperty,
+  translate,
   width,
   zIndex,
 } from 'classnames/tailwind'
@@ -60,7 +67,19 @@ const button = (color: ButtonColor, loading?: boolean, badge?: boolean) =>
     opacity(loading ? 'opacity-75' : undefined)
   )
 
+const panelContentContainer = classnames(
+  overflow('overflow-hidden'),
+  borderRadius('rounded-lg'),
+  boxShadow('shadow-lg'),
+  ringWidth('ring-1'),
+  ringColor('ring-black'),
+  ringOpacity('ring-opacity-5'),
+  translate('translate-x-1/2'),
+  inset('right-1/2')
+)
+
 const panelContainer = classnames(
+  panelContentContainer,
   position('absolute'),
   zIndex('z-10'),
   width('w-auto'),
@@ -70,30 +89,18 @@ const panelContainer = classnames(
   margin('mt-3')
 )
 
+const popoverConteiner = classnames(position('relative'))
+
 export default function AddressPanel() {
   return (
-    <Popover className="relative">
-      {({ open }) => (
-        <>
-          <Popover.Button
-            className={`
-                ${open ? '' : 'text-opacity-90'}
-                ${button('accent', false, false)}`}
-          >
-            <span>
-              <OptionsIcon />
-            </span>
-          </Popover.Button>
-          <Popover.Panel
-            className={`${panelContainer} -translate-x-1/2 left-1/2`}
-          >
-            <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-              <ConnectedPublicAccountList />
-              <ConnectPublicAccount />
-            </div>
-          </Popover.Panel>
-        </>
-      )}
+    <Popover className={popoverConteiner}>
+      <Popover.Button className={button('accent', false, false)}>
+        <OptionsIcon />
+      </Popover.Button>
+      <Popover.Panel className={panelContainer}>
+        <ConnectedPublicAccountList />
+        <ConnectPublicAccount />
+      </Popover.Panel>
     </Popover>
   )
 }

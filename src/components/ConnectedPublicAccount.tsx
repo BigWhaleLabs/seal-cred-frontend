@@ -29,13 +29,12 @@ const accountText = (isActive: boolean) =>
 
 export default function ConnectedPublicAccount({
   account,
-  isActive = false,
   children,
 }: {
   account: string
-  isActive: boolean
   children?: React.ReactNode
 }) {
+  const isActive = PublicAccountStore.currentAccount === account
   function onClick() {
     if (!isActive) {
       PublicAccountStore.currentAccount = account

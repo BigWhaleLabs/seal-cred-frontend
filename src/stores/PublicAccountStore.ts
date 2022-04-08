@@ -54,8 +54,16 @@ class PublicAccountStore extends PersistableStore {
     }
   }
 
+  private async handleConnectAccount() {
+    const accounts = await this.handleAccountChanged()
+
+    if (accounts.length > 0) {
+      this.currentAccount = accounts[0]
+    }
+  }
+
   private async handleAccountChanged() {
-    if (!provider) return
+    if (!provider) return []
 
     this.ethLoading = true
     const accounts = await provider.listAccounts()
@@ -64,11 +72,9 @@ class PublicAccountStore extends PersistableStore {
       this.connectedAccounts.add(account)
     }
 
-    if (accounts.length > 0) {
-      this.currentAccount = accounts[0]
-    }
-
     this.ethLoading = false
+
+    return accounts
   }
 
   private subscribeProvider(provider: Web3Provider) {
@@ -81,8 +87,9 @@ class PublicAccountStore extends PersistableStore {
 
     provider.on('accountsChanged', () => {
       if (this.ethError) return
-      void this.handleAccountChanged()
+      void this.handleConnectAccount()
     })
+
     provider.on('disconnect', () => {
       if (this.ethError) return
       void this.handleAccountChanged()
@@ -92,6 +99,7 @@ class PublicAccountStore extends PersistableStore {
       if (this.ethError) return
       void this.handleAccountChanged()
     })
+
     provider.on('chainChanged', async () => {
       this.clearData()
       await this.onConnect()
