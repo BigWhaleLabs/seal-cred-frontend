@@ -1,4 +1,4 @@
-import { InvitesAbi, InvitesAbi__factory } from 'helpers/invitesAbi'
+import { InvitesAbi, InvitesAbi__factory } from 'helpers/abiTypes/invitesAbi'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'

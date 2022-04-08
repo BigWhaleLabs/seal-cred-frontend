@@ -4,5 +4,4 @@ tailwind.config.js
 
 # Contract types
 src/types/*.json
-src/helpers/invitesAbi/*
-src/helpers/derivativeAbi/*
+src/helpers/abiTypes/*

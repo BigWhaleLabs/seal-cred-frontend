@@ -2,6 +2,7 @@ import { BadgeByContract } from 'models/BadgeToken'
 import { proxy } from 'valtio'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import TokenTransaction from 'models/TokenTransaction'
+import listAvaliableContract from 'helpers/listAvaliableContracts'
 import listOwnerTokens from 'helpers/listOwnerTokens'
 
 const derivativeContractAddress = import.meta.env
@@ -14,10 +15,10 @@ const TokensStore = proxy({
     TokensStore.badges = TokensStore.checkInviteToken(address)
   },
   async checkInviteToken(ethAddress: string) {
-    const contractsForCheck = [derivativeContractAddress]
+    const avaliableContract = await listAvaliableContract()
     const tokens: TokenTransaction[] = (
       await listOwnerTokens(ethAddress)
-    ).filter((token) => contractsForCheck.includes(token.contract))
+    ).filter((token) => avaliableContract.includes(token.contract))
 
     const owned: { [index: string]: string } = {}
 
