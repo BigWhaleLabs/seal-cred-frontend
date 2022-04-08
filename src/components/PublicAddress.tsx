@@ -19,6 +19,7 @@ import AddressPanel from 'components/AddressPanel'
 import Card from 'components/Card'
 import CopyPrivateKey from 'components/CopyPrivateKey'
 import PublicAccountStore from 'stores/PublicAccountStore'
+import PublicTokens from 'components/PublicTokens'
 
 const outerContainer = classnames(margin('my-4'))
 const addressContainer = classnames(
@@ -63,6 +64,7 @@ export default function PublicAddress() {
           <CopyPrivateKey />
           <AddressPanel />
         </div>
+        <PublicTokens />
       </Card>
     </div>
   )

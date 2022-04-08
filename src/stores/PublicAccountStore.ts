@@ -3,12 +3,12 @@ import { Wallet, providers } from 'ethers'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
+import addressEqual from 'helpers/addressEqual'
 import configuredModal from 'helpers/configuredModal'
 
 let provider: Web3Provider
 
 const network = import.meta.env.VITE_ETH_NETWORK as string
-
 class PublicAccountStore extends PersistableStore {
   defaultAccount: Wallet = Wallet.createRandom()
   currentAccount: string = this.defaultAccount.address
@@ -171,6 +171,12 @@ class PublicAccountStore extends PersistableStore {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  async checkAddresIsOwner(tokenId: string, ethAddress: string) {
+    const derivativeContract = this.getContract()
+    const owner = await derivativeContract.ownerOf(tokenId)
+    return addressEqual(owner, ethAddress)
   }
 }
 

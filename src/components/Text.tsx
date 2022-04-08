@@ -41,12 +41,14 @@ export const AccentText: FC = ({ children }) => {
   return <span className={accentText}>{children}</span>
 }
 
-const bodyText = classnames(
-  transitionProperty('transition-colors'),
-  textColor('text-primary')
-)
-export const BodyText: FC = ({ children }) => {
-  return <div className={bodyText}>{children}</div>
+const bodyText = (center: boolean) =>
+  classnames(
+    transitionProperty('transition-colors'),
+    textColor('text-primary'),
+    center ? textAlign('text-center') : null
+  )
+export const BodyText: FC<{ center?: boolean }> = ({ center, children }) => {
+  return <div className={bodyText(center || false)}>{children}</div>
 }
 
 const largerText = classnames(
@@ -80,12 +82,22 @@ export const BadgeText: FC = ({ children }) => {
 
 const link = classnames(
   textDecoration('underline'),
-  textColor('text-accent'),
+  textColor('text-accent', 'hover:text-primary'),
   fontWeight('font-bold')
 )
-export const Link: FC<{ url: string }> = ({ children, url }) => {
+export const Link: FC<{ url: string; onClick?: () => void }> = ({
+  children,
+  url,
+  onClick,
+}) => {
   return (
-    <a className={link} href={url} rel="noopener noreferrer" target="_blank">
+    <a
+      className={link}
+      href={url}
+      rel="noopener noreferrer"
+      target={onClick ? '' : '_blank'}
+      onClick={onClick}
+    >
       {children}
     </a>
   )
