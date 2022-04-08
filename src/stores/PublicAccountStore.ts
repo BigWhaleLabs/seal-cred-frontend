@@ -1,4 +1,4 @@
-import { DerivativeAbi__factory } from 'helpers/derivativeAbi'
+import { DerivativeAbi__factory } from 'helpers/abiTypes/derivativeAbi'
 import { Wallet, providers } from 'ethers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
