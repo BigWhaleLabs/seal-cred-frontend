@@ -2,9 +2,9 @@ import { DerivativeAbi__factory } from 'helpers/derivativeAbi'
 import { Wallet, providers } from 'ethers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
+import addressEqual from 'helpers/addressEqual'
 
 const network = import.meta.env.VITE_ETH_NETWORK as string
-
 class PublicAccountStore extends PersistableStore {
   mainEthWallet: Wallet = Wallet.createRandom()
 
@@ -74,6 +74,12 @@ class PublicAccountStore extends PersistableStore {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  async checkAddresIsOwner(tokenId: string, ethAddress: string) {
+    const derivativeContract = this.getContract()
+    const owner = await derivativeContract.ownerOf(tokenId)
+    return addressEqual(owner, ethAddress)
   }
 }
 

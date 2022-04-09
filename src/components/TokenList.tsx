@@ -17,6 +17,7 @@ import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import EthStore from 'stores/EthStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
+import TokensStore from 'stores/TokensStore'
 import callProof from 'helpers/callProof'
 import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
@@ -71,8 +72,8 @@ export const TokenList = () => {
 
   useEffect(() => {
     async function checkMinted() {
-      const result = await PublicAccountStore.checkAddressForMint(accounts[0])
-      setMinted(result ? result : false)
+      const result = await TokensStore.checkInviteToken(accounts[0])
+      setMinted(!!result.dosu1wave)
     }
 
     void checkMinted()
