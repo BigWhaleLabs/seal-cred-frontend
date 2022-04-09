@@ -50,13 +50,13 @@ enum LoadingStage {
   clear = '',
 }
 
-enum Errors {
-  insufficientFunds = "You don't have enough money on your public address",
-  noSignature = "Error getting user's signature",
-  invalidProof = 'Merkle Tree Proof is not valid',
-  mintError = 'An error occurred while minting your Badge',
-  unknown = 'An unknown error occurred, please contact us',
-  clear = '',
+const Errors = {
+  insufficientFunds: "You don't have enough money on your public address",
+  noSignature: "Error getting user's signature",
+  invalidProof: 'Merkle Tree Proof is not valid',
+  mintError: 'An error occurred while minting your Badge',
+  unknown: 'An unknown error occurred, please contact us',
+  clear: '',
 }
 
 export const TokenList = () => {
@@ -66,7 +66,7 @@ export const TokenList = () => {
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
   )
-  const [error, setError] = useState<Errors>(Errors.clear)
+  const [error, setError] = useState<string>(Errors.clear)
   const [minted, setMinted] = useState(false)
 
   useEffect(() => {
@@ -124,8 +124,7 @@ export const TokenList = () => {
               } catch (error) {
                 console.error(error)
 
-                if (Object.values(Errors).includes(error as Errors))
-                  return setError(error as Errors)
+                if (typeof error === 'string') return setError(error)
 
                 const message = serializeError(error).message
                 if (/User denied message signature/.test(message))
