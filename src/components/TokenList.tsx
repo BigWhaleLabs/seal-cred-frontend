@@ -11,6 +11,7 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
+import { serializeError } from 'eth-rpc-errors'
 import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
@@ -54,6 +55,7 @@ enum Errors {
   noSignature = "Error getting user's signature",
   invalidProof = 'Merkle Tree Proof is not valid',
   mintError = 'An error occurred while minting your Badge',
+  unknown = 'An unknown error occurred, please contact us',
   clear = '',
 }
 
@@ -88,7 +90,7 @@ export const TokenList = () => {
       </div>
 
       <div className={listTokenAction}>
-        {minted ? undefined : (
+        {!minted && (
           <Button
             color="success"
             loading={loadingMint}
@@ -112,7 +114,7 @@ export const TokenList = () => {
 
                 setLoadingStage(LoadingStage.output)
                 const resp = await callProof(treeProof, ecdsaInput)
-                if (!resp) throw new Error(Errors.invalidProof)
+                if (!resp) throw Errors.invalidProof
                 console.log(resp)
 
                 setLoadingStage(LoadingStage.mint)
@@ -121,21 +123,19 @@ export const TokenList = () => {
                 setMinted(true)
               } catch (error) {
                 console.error(error)
-                const message = (error as Error).message
-                switch (true) {
-                  case /User denied message signature/.test(message):
-                    setError(Errors.noSignature)
-                    break
-                  case /cannot estimate gas/.test(message):
-                    setError(Errors.insufficientFunds)
-                    break
-                  case /eth_getBlockByNumber/.test(message):
-                    setError(Errors.mintError)
-                    break
-                  default: // Any other error is related to the proof creation
-                    setError(Errors.invalidProof)
-                    break
-                }
+
+                if (Object.values(Errors).includes(error as Errors))
+                  return setError(error as Errors)
+
+                const message = serializeError(error).message
+                if (/User denied message signature/.test(message))
+                  return setError(Errors.noSignature)
+                if (/cannot estimate gas/.test(message))
+                  return setError(Errors.insufficientFunds)
+                if (/eth_getBlockByNumber/.test(message))
+                  return setError(Errors.mintError)
+
+                setError(Errors.unknown)
               } finally {
                 setLoadingStage(LoadingStage.clear)
                 setLoadingMint(false)
