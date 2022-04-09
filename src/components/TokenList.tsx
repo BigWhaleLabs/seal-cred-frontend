@@ -11,6 +11,7 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
+import { serializeError } from 'eth-rpc-errors'
 import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
@@ -50,9 +51,13 @@ enum LoadingStage {
   clear = '',
 }
 
-enum Errors {
-  insufficientFunds = "You don't have enough money on your public address",
-  clear = '',
+const Errors = {
+  insufficientFunds: "You don't have enough money on your public address",
+  noSignature: "Error getting user's signature",
+  invalidProof: 'Merkle Tree Proof is not valid',
+  mintError: 'An error occurred while minting your Badge',
+  unknown: 'An unknown error occurred, please contact us',
+  clear: '',
 }
 
 export const TokenList = () => {
@@ -62,7 +67,7 @@ export const TokenList = () => {
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
   )
-  const [error, setError] = useState<Errors>(Errors.clear)
+  const [error, setError] = useState<string>(Errors.clear)
   const [minted, setMinted] = useState(false)
 
   useEffect(() => {
@@ -86,12 +91,13 @@ export const TokenList = () => {
       </div>
 
       <div className={listTokenAction}>
-        {minted ? undefined : (
+        {!minted && (
           <Button
             color="success"
             loading={loadingMint}
             onClick={async () => {
               setLoadingMint(true)
+              setError(Errors.clear)
               try {
                 setLoadingStage(LoadingStage.sign)
                 const signature = await EthStore.signMessage(
@@ -109,20 +115,27 @@ export const TokenList = () => {
 
                 setLoadingStage(LoadingStage.output)
                 const resp = await callProof(treeProof, ecdsaInput)
+                if (!resp) throw Errors.invalidProof
                 console.log(resp)
 
-                try {
-                  setLoadingStage(LoadingStage.mint)
-                  const txResult = await PublicAccountStore.mintDerivative()
-                  console.log(txResult)
-                  await TokensStore.requestTokens(accounts[0])
-                  setMinted(true)
-                } catch (e) {
-                  setError(Errors.insufficientFunds)
-                }
-              } catch (e) {
-                console.error('Get error: ', e)
-                setMinted(false)
+                setLoadingStage(LoadingStage.mint)
+                const txResult = await PublicAccountStore.mintDerivative()
+                console.log(txResult)
+                setMinted(true)
+              } catch (error) {
+                console.error(error)
+
+                if (typeof error === 'string') return setError(error)
+
+                const message = serializeError(error).message
+                if (/User denied message signature/.test(message))
+                  return setError(Errors.noSignature)
+                if (/cannot estimate gas/.test(message))
+                  return setError(Errors.insufficientFunds)
+                if (/eth_getBlockByNumber/.test(message))
+                  return setError(Errors.mintError)
+
+                setError(Errors.unknown)
               } finally {
                 setLoadingStage(LoadingStage.clear)
                 setLoadingMint(false)

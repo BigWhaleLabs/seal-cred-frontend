@@ -47,7 +47,7 @@ export default defineConfig({
     alias: {
       stream: 'stream-browserify',
       https: 'agent-base',
-      assert: 'assert',
+      assert: 'assert-browserify',
     },
   },
 })
