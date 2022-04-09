@@ -9,10 +9,11 @@
     "pretty": "prettier --check src",
     "lint": "yarn pretty && eslint --max-warnings 0 --ext ts,tsx,json src",
     "postinstall": "yarn prepare",
-    "prepare": "yarn generate-invites-types & yarn generate-derivative-types & yarn generate-css-types",
+    "prepare": "yarn generate-invites-types & yarn generate-derivative-types & yarn generate-scledger-types & yarn generate-css-types",
     "generate-css-types": "tailwindcss-classnames -o src/classnames/tailwind.ts && prettier --write src/classnames/tailwind.ts",
-    "generate-invites-types": "typechain --target=ethers-v5 'src/types/invites-abi.json' --out-dir 'src/helpers/invitesAbi'",
-    "generate-derivative-types": "typechain --target=ethers-v5 'src/types/derivative-abi.json' --out-dir 'src/helpers/derivativeAbi'"
+    "generate-invites-types": "typechain --target=ethers-v5 'src/types/invites-abi.json' --out-dir 'src/helpers/abiTypes/invitesAbi'",
+    "generate-derivative-types": "typechain --target=ethers-v5 'src/types/derivative-abi.json' --out-dir 'src/helpers/abiTypes/derivativeAbi'",
+    "generate-scledger-types": "typechain --target=ethers-v5 'src/types/scledger-abi.json' --out-dir 'src/helpers/abiTypes/scLedgerAbi'"
   },
   "browserslist": {
     "production": [
@@ -39,9 +40,9 @@
     "eth-rpc-errors": "^4.0.3",
     "ethers": "^5.6.2",
     "fortmatic": "^2.2.1",
-    "keccak256": "^1.0.6",
     "preact": "^10.7.1",
     "react-router-dom": "^6.3.0",
+    "rollup-plugin-node-polyfills": "^0.2.1",
     "secure-ls": "^1.2.6",
     "valtio": "^1.5.2",
     "walletlink": "^2.5.0",
