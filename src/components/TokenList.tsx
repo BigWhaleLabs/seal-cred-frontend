@@ -27,7 +27,8 @@ const listWrapper = classnames(
   display('flex'),
   justifyContent('justify-start'),
   alignItems('items-center'),
-  padding('py-2')
+  padding('py-2'),
+  space('space-x-2')
 )
 const listTokenTitle = classnames(
   display('flex'),
