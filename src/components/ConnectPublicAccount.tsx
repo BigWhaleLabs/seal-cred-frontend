@@ -8,6 +8,7 @@ import classnames, {
   backgroundColor,
   cursor,
   display,
+  flexDirection,
   padding,
   whitespace,
 } from 'classnames/tailwind'
@@ -17,10 +18,15 @@ const accountConnectContainer = classnames(
   padding('p-4'),
   backgroundColor('bg-gray-50'),
   display('flex'),
+  flexDirection('flex-col'),
   cursor('cursor-pointer')
 )
 
 const accountText = classnames(padding('px-4'), whitespace('whitespace-nowrap'))
+
+const connectText = classnames(display('flex'))
+
+const errorTextContainer = classnames(padding('pt-4'), display('flex'))
 
 export default function ConnectPublicAccount() {
   const { ethLoading, ethError } = useSnapshot(PublicAccountStore)
@@ -39,9 +45,15 @@ export default function ConnectPublicAccount() {
   return (
     <div className={accountConnectContainer} onClick={onConnect}>
       {ethLoading && <Loading />}
-      <CryptoWallet />
-      <span className={accountText}>Connect wallet</span>
-      {ethError && <ErrorText>{ethError}</ErrorText>}
+      <span className={connectText}>
+        <CryptoWallet />
+        <span className={accountText}>Connect wallet</span>
+      </span>
+      {ethError && (
+        <span className={errorTextContainer}>
+          <ErrorText>{ethError}</ErrorText>
+        </span>
+      )}
     </div>
   )
 }
