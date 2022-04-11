@@ -2,6 +2,7 @@ import { DerivativeAbi__factory } from 'helpers/abiTypes/derivativeAbi'
 import { Wallet, providers } from 'ethers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
+import ProofResponse from 'models/ProofResponse'
 import addressEqual from 'helpers/addressEqual'
 
 const network = import.meta.env.VITE_ETH_NETWORK as string
@@ -56,11 +57,16 @@ class PublicAccountStore extends PersistableStore {
     }
   }
 
-  async mintDerivative() {
+  async mintDerivative(proof: ProofResponse) {
     const derivativeContract = this.getContract()
 
-    const transaction = await derivativeContract.mint()
-    return await transaction.wait()
+    const transaction = await derivativeContract.mint(
+      proof.proof.pi_a,
+      proof.proof.pi_b,
+      proof.proof.pi_c,
+      proof.publicSignals
+    )
+    return transaction.wait()
   }
 
   async checkAddressForMint(ethAddress: string) {
