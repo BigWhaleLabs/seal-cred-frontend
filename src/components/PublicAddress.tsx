@@ -43,6 +43,13 @@ const addressBackground = classnames(
 export default function PublicAddress() {
   const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
   const [copied, setCopied] = useState(false)
+  const [balance, setBalance] = useState('...')
+
+  const publicAddress = publicAccountStoreSnapshot.mainEthWallet.address
+
+  setInterval(async () => {
+    setBalance(await PublicAccountStore.getBalance())
+  }, 3000)
 
   return (
     <div className={outerContainer}>
@@ -60,10 +67,9 @@ export default function PublicAddress() {
           </SubheaderText>
         </>
         <div className={addressContainer}>
+          <Button color="accent">{balance} ETH</Button>
           <div className={addressBackground}>
-            <AccentText>
-              {publicAccountStoreSnapshot.mainEthWallet.address}
-            </AccentText>
+            <AccentText>{publicAddress}</AccentText>
           </div>
           <Button
             color="accent"

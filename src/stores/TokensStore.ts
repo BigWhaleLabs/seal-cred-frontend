@@ -25,7 +25,7 @@ const TokensStore = proxy({
     for (const token of tokens) {
       switch (token.contract) {
         case derivativeContractAddress: {
-          const isOwner = await PublicAccountStore.checkAddresIsOwner(
+          const isOwner = await PublicAccountStore.checkAddressIsOwner(
             token.tokenId,
             ethAddress
           )
