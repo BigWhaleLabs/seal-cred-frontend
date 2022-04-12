@@ -1529,6 +1529,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@coinbase/wallet-sdk@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@coinbase/wallet-sdk@npm:3.0.6"
+  dependencies:
+    "@metamask/safe-event-emitter": 2.0.0
+    bind-decorator: ^1.0.11
+    bn.js: ^5.1.1
+    clsx: ^1.1.0
+    eth-block-tracker: 4.4.3
+    eth-json-rpc-filters: 4.2.2
+    eth-rpc-errors: 4.0.2
+    js-sha256: 0.9.0
+    json-rpc-engine: 6.1.0
+    keccak: ^3.0.1
+    preact: ^10.5.9
+    rxjs: ^6.6.3
+    stream-browserify: ^3.0.0
+  checksum: ac40de6d32b318676a98c336bdb2963f4badc7660371dcda9f1437a9af5236da26e7406f7a332b5d07aedf169927a4e6e4ffde584cd13cbcbb8ebb104a025d5b
+  languageName: node
+  linkType: hard
+
 "@csstools/normalize.css@npm:*":
   version: 12.0.0
   resolution: "@csstools/normalize.css@npm:12.0.0"
@@ -15440,6 +15461,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "street-cred-frontend@workspace:."
   dependencies:
+    "@coinbase/wallet-sdk": ^3.0.6
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@noble/secp256k1": ^1.5.5
     "@originjs/vite-plugin-commonjs": ^1.0.3
@@ -15489,7 +15511,6 @@ __metadata:
     valtio: ^1.5.2
     vite: ^2.9.1
     vite-tsconfig-paths: ^3.4.1
-    walletlink: ^2.5.0
     web3modal: ^1.9.6
   languageName: unknown
   linkType: soft
@@ -16804,27 +16825,6 @@ __metadata:
   dependencies:
     makeerror: 1.0.12
   checksum: ad7a257ea1e662e57ef2e018f97b3c02a7240ad5093c392186ce0bcf1f1a60bbadd520d073b9beb921ed99f64f065efb63dfc8eec689a80e569f93c1c5d5e16c
-  languageName: node
-  linkType: hard
-
-"walletlink@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "walletlink@npm:2.5.0"
-  dependencies:
-    "@metamask/safe-event-emitter": 2.0.0
-    bind-decorator: ^1.0.11
-    bn.js: ^5.1.1
-    clsx: ^1.1.0
-    eth-block-tracker: 4.4.3
-    eth-json-rpc-filters: 4.2.2
-    eth-rpc-errors: 4.0.2
-    js-sha256: 0.9.0
-    json-rpc-engine: 6.1.0
-    keccak: ^3.0.1
-    preact: ^10.5.9
-    rxjs: ^6.6.3
-    stream-browserify: ^3.0.0
-  checksum: 6c730674533e071ded3f782ace3a21b835dbc71050c5e08ffb4f7e2eb0c90c395d1821ff845b2d56820aa576533802325af16c45aff430b9ce03f22b148c265e
   languageName: node
   linkType: hard
 
