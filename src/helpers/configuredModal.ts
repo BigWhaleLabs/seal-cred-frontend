@@ -1,4 +1,6 @@
 import { Bitski } from 'bitski'
+import { useSnapshot } from 'valtio'
+import AppStore from 'stores/AppStore'
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk'
 import Fortmatic from 'fortmatic'
 import Torus from '@toruslabs/torus-embed'
@@ -9,9 +11,11 @@ const infuraId = import.meta.env.VITE_INFURA_ID as string
 const network = import.meta.env.VITE_ETH_NETWORK as string
 const appName = import.meta.env.VITE_APP_NAME as string
 
+const { theme } = useSnapshot(AppStore)
+
 const configuredModal = new Web3Modal({
   cacheProvider: true,
-  theme: 'dark',
+  theme,
   disableInjectedProvider: false,
   network,
   providerOptions: {
@@ -36,7 +40,7 @@ const configuredModal = new Web3Modal({
       options: {
         appName,
         infuraId,
-        darkMode: true,
+        darkMode: theme === 'dark' ? true : false,
       },
     },
     bitski: {
