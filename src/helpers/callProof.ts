@@ -1,6 +1,7 @@
 import { MerkleProof } from '@zk-kit/incremental-merkle-tree'
 import EcdsaInput from 'models/EcdsaInput'
 import ProofBody from 'models/ProofBody'
+import ProofResponse from 'models/ProofResponse'
 import axios from 'axios'
 
 const baseURL = 'https://verify.streetcred.one'
@@ -17,18 +18,10 @@ export interface JobResponse {
     msghash: Array<string>
     pubkey: Array<Array<string>>
   }
-  proof?: {
-    foo: string
-    bar: string
-  }
-}
-
-export interface ProofJob {
-  id: string
-  status: string
+  proof?: ProofResponse
 }
 export interface ProofCheck {
-  job: ProofJob
+  job: JobResponse
   position?: number
 }
 
