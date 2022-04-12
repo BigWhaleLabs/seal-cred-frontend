@@ -13,6 +13,7 @@ class EthStore extends PersistableStore {
   accounts: string[] = []
   ethLoading = false
   ethError = ''
+  chainId = ''
 
   async onConnect() {
     try {
@@ -100,7 +101,9 @@ class EthStore extends PersistableStore {
       if (this.ethError) return
       void this.handleAccountChanged()
     })
+
     provider.on('disconnect', () => {
+      console.log('disconnect')
       if (this.ethError) return
       void this.handleAccountChanged()
     })
@@ -109,9 +112,13 @@ class EthStore extends PersistableStore {
       if (this.ethError) return
       void this.handleAccountChanged()
     })
-    provider.on('chainChanged', async () => {
-      this.accounts = []
-      await this.onConnect()
+
+    provider.on('chainChanged', async (chainId: string) => {
+      if (this.chainId !== chainId) {
+        this.chainId = chainId
+        this.accounts = []
+        await this.onConnect()
+      }
     })
   }
 

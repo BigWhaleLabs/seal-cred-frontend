@@ -95,7 +95,7 @@ export const TokenList = () => {
               try {
                 setLoadingStage(LoadingStage.sign)
                 const signature = await EthStore.signMessage(
-                  PublicAccountStore.account
+                  PublicAccountStore.account.address
                 )
                 console.log(signature)
 

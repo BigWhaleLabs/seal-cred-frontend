@@ -1,4 +1,5 @@
 import { Bitski } from 'bitski'
+import CoinbaseWalletSDK from '@coinbase/wallet-sdk'
 import Fortmatic from 'fortmatic'
 import Torus from '@toruslabs/torus-embed'
 import WalletConnect from '@walletconnect/web3-provider'
@@ -6,10 +7,6 @@ import WalletLink from 'walletlink'
 import Web3Modal from 'web3modal'
 
 const infuraId = import.meta.env.VITE_INFURA_ID as string
-const fortmaticNetwork = {
-  rpcUrl: import.meta.env.VITE_FORMATIC_RPC as string,
-  chainId: 137,
-}
 
 const configuredModal = new Web3Modal({
   cacheProvider: true,
@@ -17,11 +14,19 @@ const configuredModal = new Web3Modal({
   disableInjectedProvider: false,
   network: import.meta.env.VITE_ETH_NETWORK as string,
   providerOptions: {
+    // coinbasewallet: {
+    //   package: CoinbaseWalletSDK,
+    //   options: {
+    //     appName: 'Dosu-Invites',
+    //     infuraId,
+    //     darkMode: true,
+    //   },
+    // },
     fortmatic: {
       package: Fortmatic,
       options: {
         key: import.meta.env.VITE_FORTMATIC_KEY as string,
-        network: fortmaticNetwork,
+        network: import.meta.env.VITE_ETH_NETWORK as string,
       },
     },
     torus: {

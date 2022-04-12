@@ -59,7 +59,9 @@ export default function PublicAddress() {
         </>
         <div className={addressContainer}>
           <div className={addressBackground}>
-            <AccentText>{publicAccountStoreSnapshot.account}</AccentText>
+            <AccentText>
+              {publicAccountStoreSnapshot.account.address}
+            </AccentText>
           </div>
           <CopyPrivateKey />
           <AddressPanel />

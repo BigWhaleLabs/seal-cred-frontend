@@ -64,7 +64,7 @@ const PublicTokens = () => {
   const { account } = useSnapshot(PublicAccountStore)
 
   useEffect(() => {
-    void TokensStore.requestTokens(account)
+    void TokensStore.requestTokens(account.address)
   }, [account])
 
   return (

@@ -38,15 +38,15 @@ export default function ConnectPublicAccount() {
   }, [])
 
   function onConnect() {
+    if (ethLoading) return
     configuredModal.clearCachedProvider()
     void PublicAccountStore.onConnect()
   }
 
   return (
     <div className={accountConnectContainer} onClick={onConnect}>
-      {ethLoading && <Loading />}
       <span className={connectText}>
-        <CryptoWallet />
+        {ethLoading ? <Loading /> : <CryptoWallet />}
         <span className={accountText}>Connect wallet</span>
       </span>
       {ethError && (
