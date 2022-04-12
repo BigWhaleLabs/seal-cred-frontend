@@ -60,6 +60,7 @@ const Errors = {
   invalidProof: 'Merkle Tree Proof is not valid',
   mintError: 'An error occurred while minting your Badge',
   unknown: 'An unknown error occurred, please contact us',
+  proofFailed: 'Proof failed for some reason. Try again later',
   proofCanceled: 'Server temporary error. The job was canceled',
   clear: '',
 }
@@ -77,13 +78,11 @@ export const TokenList = () => {
 
   const checkingProof = async (address: string) => {
     try {
-      const data = await ProofStore.checkJobStatus(jobs[address].job.id)
+      const data = await ProofStore.checkJobStatus(jobs[address].job._id)
+      const { status, _id, proof, input } = data.job
       return {
         position: data.position,
-        job: {
-          id: data.job.id,
-          status: data.job.status,
-        },
+        job: { _id, status, proof, input },
       }
     } catch (error) {
       setLoadingStage(LoadingStage.clear)
@@ -126,11 +125,13 @@ export const TokenList = () => {
         const result = await checkingProof(job)
         if (result) {
           ProofStore.jobs[job] = result
-          if (result?.job.status === 'success') {
+          if (result?.job.status === 'success' && result.job.proof) {
             ProofStore.removeJob(job)
             setLoadingStage(LoadingStage.mint)
-            const txResult = await PublicAccountStore.mintDerivative()
-            console.log(txResult)
+            const txResult = await PublicAccountStore.mintDerivative(
+              result.job.proof
+            )
+            console.log('Tx result', txResult)
             setMinted(true)
           }
         }
@@ -173,23 +174,22 @@ export const TokenList = () => {
                 const signature = await EthStore.signMessage(
                   PublicAccountStore.mainEthWallet.address
                 )
-                console.log(signature)
+                console.log('Signature', signature)
 
                 setLoadingStage(LoadingStage.proof)
                 const treeProof = await createTreeProof()
-                console.log('tree proof', treeProof)
+                console.log('Merkle proof', treeProof)
 
                 setLoadingStage(LoadingStage.ecdsa)
                 const ecdsaInput = await createEcdsaInput()
-                console.log(ecdsaInput)
+                console.log('ECDSA input', ecdsaInput)
 
                 setLoadingStage(LoadingStage.output)
-                const resp = await callProof(treeProof, ecdsaInput)
-                if (!resp) throw Errors.invalidProof
-                console.log(resp)
+                const proof = await callProof(treeProof, ecdsaInput)
+                console.log('Proof', proof)
 
                 setLoadingStage(LoadingStage.waiting)
-                const job = { id: resp._id, status: resp.status }
+                const job = { _id: proof._id, status: proof.status }
                 ProofStore.addNewJob(EthStore.accounts[0], { job })
               } catch (error) {
                 console.error('Token list error: ', error)
