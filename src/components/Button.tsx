@@ -27,7 +27,15 @@ export interface ButtonProps {
   badge?: boolean
 }
 
-const button = (color: ButtonColor, loading?: boolean, badge?: boolean) =>
+type ButtonProperties = ButtonProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+
+const button = (
+  color: ButtonColor,
+  loading?: boolean,
+  disabled?: boolean,
+  badge?: boolean
+) =>
   classnames(
     display('flex'),
     flexDirection('flex-row'),
@@ -39,12 +47,12 @@ const button = (color: ButtonColor, loading?: boolean, badge?: boolean) =>
     padding(badge ? undefined : 'py-4', badge ? 'px-2' : 'px-6'),
     borderRadius('rounded'),
     outlineStyle('focus:outline-none'),
-    buttonColor(color),
-    cursor(loading ? 'cursor-not-allowed' : undefined),
-    opacity(loading ? 'opacity-75' : undefined)
+    buttonColor(color, disabled),
+    cursor(loading || disabled ? 'cursor-not-allowed' : undefined),
+    opacity(loading || disabled ? 'opacity-75' : undefined)
   )
 
-const buttonColor = (color: ButtonColor) => {
+const buttonColor = (color: ButtonColor, disabled?: boolean) => {
   const { theme } = useSnapshot(AppStore)
   return classnames(
     color === 'accent'
@@ -52,7 +60,10 @@ const buttonColor = (color: ButtonColor) => {
       : color === 'primary'
       ? backgroundColor('bg-primary', 'hover:bg-secondary')
       : color === 'success'
-      ? classnames(backgroundColor('bg-success'), opacity('hover:opacity-90'))
+      ? classnames(
+          backgroundColor('bg-success'),
+          opacity(disabled ? 'hover:opacity-75' : 'hover:opacity-90')
+        )
       : backgroundColor('bg-error', 'hover:bg-error-light'),
     textColor(
       color === 'primary' && theme === 'dark' ? 'text-semi-background' : null
@@ -60,14 +71,19 @@ const buttonColor = (color: ButtonColor) => {
   )
 }
 
-const Button: FC<
-  ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
-> = ({ color, children, loading, badge, ...rest }) => {
+const Button: FC<ButtonProperties> = ({
+  color,
+  children,
+  loading,
+  disabled,
+  badge,
+  ...rest
+}) => {
   return (
     <button
-      className={button(color, loading, badge)}
+      className={button(color, loading, disabled, badge)}
       {...rest}
-      disabled={loading}
+      disabled={loading || disabled}
     >
       {loading && <Loading small={badge} />}
       {typeof children === 'string' ? <span>{children}</span> : children}
