@@ -16,7 +16,6 @@ import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import EthStore from 'stores/EthStore'
-import ProofResponse from 'models/ProofResponse'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import TokensStore from 'stores/TokensStore'
 import callProof from 'helpers/callProof'
@@ -117,7 +116,7 @@ export const TokenList = () => {
 
                 setLoadingStage(LoadingStage.output)
                 const proof = await callProof(treeProof, ecdsaInput)
-                if (!proof.proof) throw Errors.invalidProof
+                if (!proof) throw Errors.invalidProof
                 console.log('Proof', proof)
 
                 setLoadingStage(LoadingStage.mint)
