@@ -1,5 +1,4 @@
 import { Bitski } from 'bitski'
-import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk'
 import Fortmatic from 'fortmatic'
@@ -10,8 +9,7 @@ import Web3Modal from 'web3modal'
 const infuraId = import.meta.env.VITE_INFURA_ID as string
 const network = import.meta.env.VITE_ETH_NETWORK as string
 const appName = import.meta.env.VITE_APP_NAME as string
-
-const { theme } = useSnapshot(AppStore)
+const theme = AppStore.theme
 
 const configuredModal = new Web3Modal({
   cacheProvider: true,
