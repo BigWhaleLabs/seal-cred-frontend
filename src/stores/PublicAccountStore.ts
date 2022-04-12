@@ -1,6 +1,6 @@
 import { DerivativeAbi__factory } from 'helpers/abiTypes/derivativeAbi'
 import { Wallet, providers } from 'ethers'
-import { formatEther } from 'ethers/lib/utils'
+import { formatEther, hexZeroPad, id } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import addressEqual from 'helpers/addressEqual'
@@ -19,6 +19,16 @@ class PublicAccountStore extends PersistableStore {
 
   private getContract() {
     const walletWithProvider = this.getWalletWithProvider()
+
+    const filter = {
+      address: walletWithProvider.address,
+      topics: [
+        id('Transfer(address,address,uint256)'),
+        null,
+        hexZeroPad(walletWithProvider.address, 32),
+      ],
+    }
+    provider.on(filter, () => this.getBalance())
 
     return DerivativeAbi__factory.connect(
       import.meta.env.VITE_SC_DERIVATIVE_ADDRESS as string,
@@ -85,6 +95,9 @@ class PublicAccountStore extends PersistableStore {
 
   async getBalance() {
     const walletWithProvider = this.getWalletWithProvider()
+
+    const money = formatEther(await walletWithProvider.getBalance())
+    console.log(money)
 
     return formatEther(await walletWithProvider.getBalance())
   }
