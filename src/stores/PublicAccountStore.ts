@@ -1,17 +1,25 @@
-import { DerivativeAbi__factory } from 'helpers/derivativeAbi'
+import { DerivativeAbi__factory } from 'helpers/abiTypes/derivativeAbi'
+import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers'
 import { Wallet, providers } from 'ethers'
-import { Web3Provider } from '@ethersproject/providers'
+import { formatEther } from 'ethers/lib/utils'
 import { getProviderInfo } from 'web3modal'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
+import ProofResponse from 'models/ProofResponse'
 import addressEqual from 'helpers/addressEqual'
 import configuredModal from 'helpers/configuredModal'
 
-const connectedProviders: Map<string, Web3Provider> = new Map()
+const network = import.meta.env.VITE_ETH_NETWORK as string
+const generatedProvider = new providers.InfuraProvider(
+  network,
+  import.meta.env.VITE_INFURA_ID as string
+)
+
+const connectedProviders: Map<string, JsonRpcProvider> = new Map()
+connectedProviders.set('Generated', generatedProvider)
 
 export type Account = { provider: string; address: string }
 
-const network = import.meta.env.VITE_ETH_NETWORK as string
 class PublicAccountStore extends PersistableStore {
   defaultAccount: Wallet = Wallet.createRandom()
   currentAccount: Account = this.generated
@@ -20,6 +28,15 @@ class PublicAccountStore extends PersistableStore {
   ethLoading = false
   ethError = ''
   chainId = ''
+  blockId = ''
+
+  constructor() {
+    super()
+    generatedProvider.on('block', () => {
+      const currentBlock = generatedProvider.getBlockNumber().toString()
+      if (currentBlock !== this.blockId) this.blockId = currentBlock
+    })
+  }
 
   get generated() {
     return {
@@ -126,7 +143,7 @@ class PublicAccountStore extends PersistableStore {
     return accounts
   }
 
-  private subscribeProvider(provider: Web3Provider) {
+  private subscribeProvider(provider: JsonRpcProvider) {
     if (!provider.on) return
 
     const providerInfo = getProviderInfo(provider)
@@ -167,16 +184,14 @@ class PublicAccountStore extends PersistableStore {
     this.connectedAccounts = new Map()
   }
 
-  private getContract() {
-    const provider = new providers.InfuraProvider(
-      network,
-      import.meta.env.VITE_INFURA_ID as string
-    )
+  getWalletWithProvider(account: Account) {
+    return connectedProviders.get(account.provider)
+  }
 
-    const walletWithProvider = new Wallet(
-      this.defaultAccount.privateKey,
-      provider
-    )
+  private getContract(account: Account) {
+    const walletWithProvider = this.getWalletWithProvider(account)
+
+    if (!walletWithProvider) return null
 
     return DerivativeAbi__factory.connect(
       import.meta.env.VITE_SC_DERIVATIVE_ADDRESS as string,
@@ -237,16 +252,25 @@ class PublicAccountStore extends PersistableStore {
     }
   }
 
-  async mintDerivative() {
-    const derivativeContract = this.getContract()
+  async mintDerivative(proof: ProofResponse) {
+    const derivativeContract = this.getContract(this.currentAccount)
 
-    const transaction = await derivativeContract.mint()
-    return await transaction.wait()
+    if (!derivativeContract) return
+
+    const transaction = await derivativeContract.mint(
+      proof.proof.pi_a,
+      proof.proof.pi_b,
+      proof.proof.pi_c,
+      proof.publicSignals
+    )
+    return transaction.wait()
   }
 
   async checkAddressForMint(ethAddress: string) {
     try {
-      const derivativeContract = this.getContract()
+      const derivativeContract = this.getContract(this.currentAccount)
+
+      if (!derivativeContract) return
 
       const zeroBalance = (
         await derivativeContract.balanceOf(ethAddress)
@@ -257,11 +281,24 @@ class PublicAccountStore extends PersistableStore {
     }
   }
 
-  async checkAddresIsOwner(tokenId: string, ethAddress: string) {
-    const derivativeContract = this.getContract()
+  async checkAddressIsOwner(tokenId: string, ethAddress: string) {
+    const derivativeContract = this.getContract(this.currentAccount)
+
+    if (!derivativeContract) return
+
     const owner = await derivativeContract.ownerOf(tokenId)
     return addressEqual(owner, ethAddress)
   }
+
+  async getBalance(account: Account) {
+    const walletWithProvider = connectedProviders.get(account.provider)
+
+    if (!walletWithProvider) return
+
+    return formatEther(await walletWithProvider.getBalance(account.address))
+  }
 }
 
-export default proxy(new PublicAccountStore()).makePersistent(true)
+const exportedStore = proxy(new PublicAccountStore()).makePersistent(true)
+
+export default exportedStore

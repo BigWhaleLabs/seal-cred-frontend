@@ -1,5 +1,4 @@
 import { ErrorText } from 'components/Text'
-import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 import CryptoWallet from 'components/CryptoWallet'
 import Loading from 'components/Loading'
@@ -30,12 +29,6 @@ const errorTextContainer = classnames(padding('pt-4'), display('flex'))
 
 export default function ConnectPublicAccount() {
   const { ethLoading, ethError } = useSnapshot(PublicAccountStore)
-
-  useEffect(() => {
-    if (configuredModal.cachedProvider) {
-      void PublicAccountStore.onConnect()
-    }
-  }, [])
 
   function onConnect() {
     if (ethLoading) return

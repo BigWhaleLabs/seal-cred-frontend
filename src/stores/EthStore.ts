@@ -1,4 +1,4 @@
-import { InvitesAbi, InvitesAbi__factory } from 'helpers/invitesAbi'
+import { InvitesAbi, InvitesAbi__factory } from 'helpers/abiTypes/invitesAbi'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
@@ -39,6 +39,7 @@ class EthStore extends PersistableStore {
       if (typeof error === 'string') return
       console.error(error)
       this.clearData()
+      console.log('clear')
     } finally {
       this.ethLoading = false
     }

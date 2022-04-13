@@ -1,4 +1,9 @@
-import { AccentText, HeaderText, SubheaderText } from 'components/Text'
+import {
+  AccentText,
+  ErrorText,
+  HeaderText,
+  SubheaderText,
+} from 'components/Text'
 import {
   alignItems,
   backgroundColor,
@@ -14,12 +19,15 @@ import {
   transitionProperty,
   wordBreak,
 } from 'classnames/tailwind'
+import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 import AddressPanel from 'components/AddressPanel'
+import Balance from 'components/Balance'
 import Card from 'components/Card'
 import CopyPrivateKey from 'components/CopyPrivateKey'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import PublicTokens from 'components/PublicTokens'
+import configuredModal from 'helpers/configuredModal'
 
 const outerContainer = classnames(margin('my-4'))
 const addressContainer = classnames(
@@ -39,8 +47,21 @@ const addressBackground = classnames(
   padding('py-4', 'px-6')
 )
 
+const inactiveAccount = classnames(
+  display('flex'),
+  justifyContent('justify-center')
+)
+
 export default function PublicAddress() {
-  const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
+  const { account } = useSnapshot(PublicAccountStore)
+
+  const isActive = PublicAccountStore.isActive(account)
+
+  useEffect(() => {
+    if (configuredModal.cachedProvider) {
+      void PublicAccountStore.onConnect()
+    }
+  }, [])
 
   return (
     <div className={outerContainer}>
@@ -60,12 +81,20 @@ export default function PublicAddress() {
         <div className={addressContainer}>
           <div className={addressBackground}>
             <AccentText>
-              {publicAccountStoreSnapshot.account.address}
+              {account.address} <Balance account={account} />
             </AccentText>
           </div>
           <CopyPrivateKey />
           <AddressPanel />
         </div>
+        {!isActive && (
+          <div className={inactiveAccount}>
+            <ErrorText>
+              It looks like some other address is selected in your wallet, try
+              changing it to the selected
+            </ErrorText>
+          </div>
+        )}
         <PublicTokens />
       </Card>
     </div>

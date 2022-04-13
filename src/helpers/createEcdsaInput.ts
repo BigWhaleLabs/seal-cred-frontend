@@ -5,9 +5,9 @@ import {
   bigintToTuple,
   bigintToUint8Array,
 } from 'helpers/bigintConvert'
+import { utils } from 'ethers'
 import EcdsaInput from 'models/EcdsaInput'
 import EthStore from 'stores/EthStore'
-import keccak256 from 'keccak256'
 
 export default async function createEcdsaInput() {
   const tokenId = await EthStore.getTokenId()
@@ -18,7 +18,8 @@ export default async function createEcdsaInput() {
 
   const proverPubkey = Point.fromPrivateKey(proverPrivkey)
   const msg = 'zk-airdrop'
-  const msghash_bigint = Uint8ArrayToBigint(keccak256(msg))
+
+  const msghash_bigint = BigInt(utils.keccak256(utils.toUtf8Bytes(msg)))
   const msghash = bigintToUint8Array(msghash_bigint)
   const sig = await sign(msghash, bigintToUint8Array(proverPrivkey), {
     canonical: true,

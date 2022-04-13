@@ -18,6 +18,7 @@ import { useSnapshot } from 'valtio'
 import FetchingData from 'components/FetchingData'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import TokensStore from 'stores/TokensStore'
+import configuredModal from 'helpers/configuredModal'
 
 const badgesWrapper = classnames(
   display('flex'),
@@ -54,7 +55,11 @@ const Tokens = () => {
     <>
       {badgesList.length > 0 &&
         badgesList.map((badge, index) => (
-          <Badge token={badge} key={`${index}-${badge}`} />
+          <>
+            {BadgeDescription[badge] && (
+              <Badge token={badge} key={`${index}-${badge}`} />
+            )}
+          </>
         ))}
     </>
   )
@@ -64,7 +69,13 @@ const PublicTokens = () => {
   const { account } = useSnapshot(PublicAccountStore)
 
   useEffect(() => {
-    void TokensStore.requestTokens(account.address)
+    if (configuredModal.cachedProvider) {
+      void PublicAccountStore.onConnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    void TokensStore.requestTokens(account)
   }, [account])
 
   return (

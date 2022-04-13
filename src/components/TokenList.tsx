@@ -11,6 +11,7 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
+import { serializeError } from 'eth-rpc-errors'
 import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
@@ -25,7 +26,8 @@ const listWrapper = classnames(
   display('flex'),
   justifyContent('justify-start'),
   alignItems('items-center'),
-  padding('py-2')
+  padding('py-2'),
+  space('space-x-2')
 )
 const listTokenTitle = classnames(
   display('flex'),
@@ -50,29 +52,33 @@ enum LoadingStage {
   clear = '',
 }
 
-enum Errors {
-  insufficientFunds = "You don't have enough money on your public address",
-  clear = '',
+const Errors = {
+  insufficientFunds: "You don't have enough money on your public address",
+  noSignature: "Error getting user's signature",
+  invalidProof: 'Merkle Tree Proof is not valid',
+  mintError: 'An error occurred while minting your Badge',
+  unknown: 'An unknown error occurred, please contact us',
+  clear: '',
 }
 
 export const TokenList = () => {
-  const { accounts } = useSnapshot(EthStore)
+  const { account } = useSnapshot(PublicAccountStore)
 
   const [loadingMint, setLoadingMint] = useState(false)
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
   )
-  const [error, setError] = useState<Errors>(Errors.clear)
+  const [error, setError] = useState<string>(Errors.clear)
   const [minted, setMinted] = useState(false)
 
   useEffect(() => {
     async function checkMinted() {
-      const result = await TokensStore.checkInviteToken(accounts[0])
+      const result = await TokensStore.checkInviteToken(account)
       setMinted(!!result.dosu1wave)
     }
 
     void checkMinted()
-  }, [accounts])
+  }, [account])
 
   return (
     <div className={listWrapper}>
@@ -86,54 +92,60 @@ export const TokenList = () => {
       </div>
 
       <div className={listTokenAction}>
-        {minted ? undefined : (
-          <Button
-            color="success"
-            loading={loadingMint}
-            onClick={async () => {
-              setLoadingMint(true)
-              try {
-                setLoadingStage(LoadingStage.sign)
-                const signature = await EthStore.signMessage(
-                  PublicAccountStore.account.address
-                )
-                console.log(signature)
+        <Button
+          color="success"
+          loading={loadingMint}
+          onClick={async () => {
+            setLoadingMint(true)
+            setError(Errors.clear)
+            try {
+              setLoadingStage(LoadingStage.sign)
+              const signature = await EthStore.signMessage(
+                PublicAccountStore.currentAccount.address
+              )
+              console.log('Signature', signature)
 
-                setLoadingStage(LoadingStage.proof)
-                const treeProof = await createTreeProof()
-                console.log('tree proof', treeProof)
+              setLoadingStage(LoadingStage.proof)
+              const treeProof = await createTreeProof()
+              console.log('Merkle proof', treeProof)
 
-                setLoadingStage(LoadingStage.ecdsa)
-                const ecdsaInput = await createEcdsaInput()
-                console.log(ecdsaInput)
+              setLoadingStage(LoadingStage.ecdsa)
+              const ecdsaInput = await createEcdsaInput()
+              console.log('ECDSA input', ecdsaInput)
 
-                setLoadingStage(LoadingStage.output)
-                const resp = await callProof(treeProof, ecdsaInput)
-                console.log(resp)
+              setLoadingStage(LoadingStage.output)
+              const proof = await callProof(treeProof, ecdsaInput)
+              if (!proof) throw Errors.invalidProof
+              console.log('Proof', proof)
 
-                try {
-                  setLoadingStage(LoadingStage.mint)
-                  const txResult = await PublicAccountStore.mintDerivative()
-                  console.log(txResult)
-                  await TokensStore.requestTokens(accounts[0])
-                  setMinted(true)
-                } catch (e) {
-                  setError(Errors.insufficientFunds)
-                }
-              } catch (e) {
-                console.error('Get error: ', e)
-                setMinted(false)
-              } finally {
-                setLoadingStage(LoadingStage.clear)
-                setLoadingMint(false)
-              }
-            }}
-            disabled={!!EthStore.ethError}
-            badge
-          >
-            Mint
-          </Button>
-        )}
+              setLoadingStage(LoadingStage.mint)
+              const txResult = await PublicAccountStore.mintDerivative(proof)
+              console.log('Tx result', txResult)
+              setMinted(true)
+            } catch (error) {
+              console.error(error)
+
+              if (typeof error === 'string') return setError(error)
+
+              const message = serializeError(error).message
+              if (/User denied message signature/.test(message))
+                return setError(Errors.noSignature)
+              if (/cannot estimate gas/.test(message))
+                return setError(Errors.insufficientFunds)
+              if (/eth_getBlockByNumber/.test(message))
+                return setError(Errors.mintError)
+
+              setError(Errors.unknown)
+            } finally {
+              setLoadingStage(LoadingStage.clear)
+              setLoadingMint(false)
+            }
+          }}
+          disabled={!!EthStore.ethError || minted}
+          badge
+        >
+          {minted ? 'Minted' : 'Mint'}
+        </Button>
       </div>
     </div>
   )

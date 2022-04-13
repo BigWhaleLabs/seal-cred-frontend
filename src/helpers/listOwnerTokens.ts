@@ -1,7 +1,8 @@
+import { Account } from 'stores/PublicAccountStore'
 import { providers, utils } from 'ethers'
 import TokenTransaction from 'models/TokenTransaction'
 
-const listOwnerTokens = async (ethAddress: string) => {
+const listOwnerTokens = async (account: Account) => {
   const provider = new providers.InfuraProvider(
     import.meta.env.VITE_ETH_NETWORK as string,
     import.meta.env.VITE_INFURA_ID as string
@@ -16,7 +17,7 @@ const listOwnerTokens = async (ethAddress: string) => {
     await provider.getLogs({
       fromBlock: 0,
       toBlock: 'latest',
-      topics: [utils.id(sig), null, utils.hexZeroPad(ethAddress, 32)],
+      topics: [utils.id(sig), null, utils.hexZeroPad(account.address, 32)],
     })
   )
     .map((log) => {
