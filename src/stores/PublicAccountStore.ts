@@ -1,24 +1,32 @@
 import { DerivativeAbi__factory } from 'helpers/abiTypes/derivativeAbi'
 import { Wallet, providers } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResponse from 'models/ProofResponse'
 import addressEqual from 'helpers/addressEqual'
 
 const network = import.meta.env.VITE_ETH_NETWORK as string
+const provider = new providers.InfuraProvider(
+  network,
+  import.meta.env.VITE_INFURA_ID as string
+)
+
 class PublicAccountStore extends PersistableStore {
   mainEthWallet: Wallet = Wallet.createRandom()
+  balance: string | undefined
+
+  constructor() {
+    super()
+    void this.getBalance()
+  }
+
+  private getWalletWithProvider() {
+    return new Wallet(this.mainEthWallet.privateKey, provider)
+  }
 
   private getContract() {
-    const provider = new providers.InfuraProvider(
-      network,
-      import.meta.env.VITE_INFURA_ID as string
-    )
-
-    const walletWithProvider = new Wallet(
-      this.mainEthWallet.privateKey,
-      provider
-    )
+    const walletWithProvider = this.getWalletWithProvider()
 
     return DerivativeAbi__factory.connect(
       import.meta.env.VITE_SC_DERIVATIVE_ADDRESS as string,
@@ -82,11 +90,21 @@ class PublicAccountStore extends PersistableStore {
     }
   }
 
-  async checkAddresIsOwner(tokenId: string, ethAddress: string) {
+  async checkAddressIsOwner(tokenId: string, ethAddress: string) {
     const derivativeContract = this.getContract()
     const owner = await derivativeContract.ownerOf(tokenId)
     return addressEqual(owner, ethAddress)
   }
+
+  async getBalance() {
+    const walletWithProvider = this.getWalletWithProvider()
+    const newBalance = formatEther(await walletWithProvider.getBalance())
+    this.balance = newBalance
+    return newBalance
+  }
 }
 
-export default proxy(new PublicAccountStore()).makePersistent(true)
+const exportedStore = proxy(new PublicAccountStore()).makePersistent(true)
+provider.on('block', () => exportedStore.getBalance())
+
+export default exportedStore

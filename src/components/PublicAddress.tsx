@@ -18,6 +18,7 @@ import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Button from 'components/Button'
 import Card from 'components/Card'
+import Loading from 'components/Loading'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import PublicTokens from 'components/PublicTokens'
 import copy from 'copy-to-clipboard'
@@ -41,7 +42,7 @@ const addressBackground = classnames(
 )
 
 export default function PublicAddress() {
-  const publicAccountStoreSnapshot = useSnapshot(PublicAccountStore)
+  const { mainEthWallet, balance } = useSnapshot(PublicAccountStore)
   const [copied, setCopied] = useState(false)
 
   return (
@@ -62,7 +63,8 @@ export default function PublicAddress() {
         <div className={addressContainer}>
           <div className={addressBackground}>
             <AccentText>
-              {publicAccountStoreSnapshot.mainEthWallet.address}
+              {mainEthWallet.address}
+              {balance ? ` · ${balance} ETH` : <Loading small />}
             </AccentText>
           </div>
           <Button
