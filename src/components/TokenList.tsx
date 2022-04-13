@@ -92,62 +92,60 @@ export const TokenList = () => {
       </div>
 
       <div className={listTokenAction}>
-        {!minted && (
-          <Button
-            color="success"
-            loading={loadingMint}
-            onClick={async () => {
-              setLoadingMint(true)
-              setError(Errors.clear)
-              try {
-                setLoadingStage(LoadingStage.sign)
-                const signature = await EthStore.signMessage(
-                  PublicAccountStore.mainEthWallet.address
-                )
-                console.log(signature)
+        <Button
+          color="success"
+          loading={loadingMint}
+          onClick={async () => {
+            setLoadingMint(true)
+            setError(Errors.clear)
+            try {
+              setLoadingStage(LoadingStage.sign)
+              const signature = await EthStore.signMessage(
+                PublicAccountStore.mainEthWallet.address
+              )
+              console.log('Signature', signature)
 
-                setLoadingStage(LoadingStage.proof)
-                const treeProof = await createTreeProof()
-                console.log('tree proof', treeProof)
+              setLoadingStage(LoadingStage.proof)
+              const treeProof = await createTreeProof()
+              console.log('Merkle proof', treeProof)
 
-                setLoadingStage(LoadingStage.ecdsa)
-                const ecdsaInput = await createEcdsaInput()
-                console.log(ecdsaInput)
+              setLoadingStage(LoadingStage.ecdsa)
+              const ecdsaInput = await createEcdsaInput()
+              console.log('ECDSA input', ecdsaInput)
 
-                setLoadingStage(LoadingStage.output)
-                const resp = await callProof(treeProof, ecdsaInput)
-                if (!resp) throw Errors.invalidProof
-                console.log(resp)
+              setLoadingStage(LoadingStage.output)
+              const proof = await callProof(treeProof, ecdsaInput)
+              if (!proof) throw Errors.invalidProof
+              console.log('Proof', proof)
 
-                setLoadingStage(LoadingStage.mint)
-                const txResult = await PublicAccountStore.mintDerivative()
-                console.log(txResult)
-                setMinted(true)
-              } catch (error) {
-                console.error(error)
+              setLoadingStage(LoadingStage.mint)
+              const txResult = await PublicAccountStore.mintDerivative(proof)
+              console.log('Tx result', txResult)
+              setMinted(true)
+            } catch (error) {
+              console.error(error)
 
-                if (typeof error === 'string') return setError(error)
+              if (typeof error === 'string') return setError(error)
 
-                const message = serializeError(error).message
-                if (/User denied message signature/.test(message))
-                  return setError(Errors.noSignature)
-                if (/cannot estimate gas/.test(message))
-                  return setError(Errors.insufficientFunds)
-                if (/eth_getBlockByNumber/.test(message))
-                  return setError(Errors.mintError)
+              const message = serializeError(error).message
+              if (/User denied message signature/.test(message))
+                return setError(Errors.noSignature)
+              if (/cannot estimate gas/.test(message))
+                return setError(Errors.insufficientFunds)
+              if (/eth_getBlockByNumber/.test(message))
+                return setError(Errors.mintError)
 
-                setError(Errors.unknown)
-              } finally {
-                setLoadingStage(LoadingStage.clear)
-                setLoadingMint(false)
-              }
-            }}
-            disabled={!!EthStore.ethError}
-            badge
-          >
-            Mint
-          </Button>
-        )}
+              setError(Errors.unknown)
+            } finally {
+              setLoadingStage(LoadingStage.clear)
+              setLoadingMint(false)
+            }
+          }}
+          disabled={!!EthStore.ethError || minted}
+          badge
+        >
+          {minted ? 'Minted' : 'Mint'}
+        </Button>
       </div>
     </div>
   )

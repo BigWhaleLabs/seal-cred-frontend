@@ -54,7 +54,11 @@ const Tokens = () => {
     <>
       {badgesList.length > 0 &&
         badgesList.map((badge, index) => (
-          <Badge token={badge} key={`${index}-${badge}`} />
+          <>
+            {BadgeDescription[badge] && (
+              <Badge token={badge} key={`${index}-${badge}`} />
+            )}
+          </>
         ))}
     </>
   )
