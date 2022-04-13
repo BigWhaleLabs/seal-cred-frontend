@@ -1,6 +1,6 @@
 import { DerivativeAbi__factory } from 'helpers/abiTypes/derivativeAbi'
 import { Wallet, providers } from 'ethers'
-import { formatEther, hexZeroPad, id } from 'ethers/lib/utils'
+import { formatEther } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import addressEqual from 'helpers/addressEqual'
@@ -10,8 +10,10 @@ const provider = new providers.InfuraProvider(
   network,
   import.meta.env.VITE_INFURA_ID as string
 )
+
 class PublicAccountStore extends PersistableStore {
   mainEthWallet: Wallet = Wallet.createRandom()
+  balance = '0.0'
 
   private getWalletWithProvider() {
     return new Wallet(this.mainEthWallet.privateKey, provider)
@@ -19,16 +21,6 @@ class PublicAccountStore extends PersistableStore {
 
   private getContract() {
     const walletWithProvider = this.getWalletWithProvider()
-
-    const filter = {
-      address: walletWithProvider.address,
-      topics: [
-        id('Transfer(address,address,uint256)'),
-        null,
-        hexZeroPad(walletWithProvider.address, 32),
-      ],
-    }
-    provider.on(filter, () => this.getBalance())
 
     return DerivativeAbi__factory.connect(
       import.meta.env.VITE_SC_DERIVATIVE_ADDRESS as string,
@@ -95,12 +87,12 @@ class PublicAccountStore extends PersistableStore {
 
   async getBalance() {
     const walletWithProvider = this.getWalletWithProvider()
-
-    const money = formatEther(await walletWithProvider.getBalance())
-    console.log(money)
-
-    return formatEther(await walletWithProvider.getBalance())
+    this.balance = formatEther(await walletWithProvider.getBalance())
+    return this.balance
   }
 }
+
+const exportedStore = proxy(new PublicAccountStore()).makePersistent(true)
+provider.on('block', () => exportedStore.getBalance())
 
 export default proxy(new PublicAccountStore()).makePersistent(true)
