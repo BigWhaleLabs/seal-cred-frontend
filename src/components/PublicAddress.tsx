@@ -14,8 +14,8 @@ import {
   transitionProperty,
   wordBreak,
 } from 'classnames/tailwind'
-import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
+import { useState } from 'react'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import Loading from 'components/Loading'
@@ -42,12 +42,8 @@ const addressBackground = classnames(
 )
 
 export default function PublicAddress() {
-  const { mainEthWallet, balance, getBalance } = useSnapshot(PublicAccountStore)
+  const { mainEthWallet, balance } = useSnapshot(PublicAccountStore)
   const [copied, setCopied] = useState(false)
-
-  useEffect(() => {
-    void getBalance() // Set balance on initialization
-  })
 
   return (
     <div className={outerContainer}>
@@ -67,8 +63,8 @@ export default function PublicAddress() {
         <div className={addressContainer}>
           <div className={addressBackground}>
             <AccentText>
-              {mainEthWallet.address}{' '}
-              {balance ? `· ${balance} ETH` : <Loading small />}
+              {mainEthWallet.address}
+              {balance ? ` · ${balance} ETH` : <Loading small />}
             </AccentText>
           </div>
           <Button

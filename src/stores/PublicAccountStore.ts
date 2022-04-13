@@ -16,6 +16,11 @@ class PublicAccountStore extends PersistableStore {
   mainEthWallet: Wallet = Wallet.createRandom()
   balance: string | undefined
 
+  constructor() {
+    super()
+    void this.getBalance()
+  }
+
   private getWalletWithProvider() {
     return new Wallet(this.mainEthWallet.privateKey, provider)
   }
