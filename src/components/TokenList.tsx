@@ -11,7 +11,7 @@ import {
   textColor,
   width,
 } from 'classnames/tailwind'
-import { callProof } from 'helpers/callProof'
+import { scheduleProofGeneration } from 'helpers/callProof'
 import { serializeError } from 'eth-rpc-errors'
 import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
@@ -49,7 +49,7 @@ enum LoadingStage {
   ecdsa = 'Generating ecdsa inputs',
   proof = 'Generating the merkletree proof inputs',
   output = 'Generating the proof outputs',
-  waiting = 'Waiting the proof to be verified',
+  waiting = 'The proof is being generated, your position in the queue is #',
   mint = 'Minting the nft',
   clear = '',
 }
@@ -60,8 +60,9 @@ const Errors = {
   invalidProof: 'Merkle Tree Proof is not valid',
   mintError: 'An error occurred while minting your Badge',
   unknown: 'An unknown error occurred, please contact us',
-  proofFailed: 'Proof failed for some reason. Try again later',
-  proofCanceled: 'Server temporary error. The job was canceled',
+  proofFailed: 'Proof generation failed, please, try again later',
+  proofCanceled:
+    'Server has reloaded while the proof was being generated, please, try again later',
   clear: '',
 }
 
@@ -76,28 +77,28 @@ export const TokenList = () => {
   const [error, setError] = useState<string>(Errors.clear)
   const [minted, setMinted] = useState(false)
 
-  const checkingProof = async (address: string) => {
+  const checkProofStatus = async (address: string) => {
     try {
       const data = await ProofStore.checkJobStatus(jobs[address].job._id)
-      const { status, _id, proof, input } = data.job
+      const { status, _id, proof } = data.job
       return {
         position: data.position,
-        job: { _id, status, proof, input },
+        job: { _id, status, proof },
       }
     } catch (error) {
       setLoadingStage(LoadingStage.clear)
       setLoadingMint(false)
-      ProofStore.removeJob(address)
+      delete ProofStore.jobs[address]
       switch (error) {
         case 'failed':
           setError(Errors.invalidProof)
-          return null
+          return undefined
         case 'cancelled':
           setError(Errors.proofCanceled)
-          return null
+          return undefined
         default:
           setError(Errors.unknown)
-          return null
+          return undefined
       }
     }
   }
@@ -122,11 +123,12 @@ export const TokenList = () => {
       setError(Errors.clear)
 
       const interval = setInterval(async () => {
-        const result = await checkingProof(job)
+        const result = await checkProofStatus(job)
+        if (!result) clearInterval(interval)
         if (result) {
           ProofStore.jobs[job] = result
           if (result?.job.status === 'success' && result.job.proof) {
-            ProofStore.removeJob(job)
+            delete ProofStore.jobs[job]
             setLoadingStage(LoadingStage.mint)
             const txResult = await PublicAccountStore.mintDerivative(
               result.job.proof
@@ -135,7 +137,6 @@ export const TokenList = () => {
             setMinted(true)
           }
         }
-        if (!result || result.job.status === 'success') clearInterval(interval)
       }, 5000)
       if (Object.keys(jobs).length === 0) clearInterval(interval)
     }
@@ -153,9 +154,7 @@ export const TokenList = () => {
         ) : (
           <SubBadgeText>
             {loadingStage === LoadingStage.waiting
-              ? `${loadingStage} (You're ${
-                  jobs[accounts[0]]?.position || ''
-                } in queue)`
+              ? `${loadingStage} ${jobs[accounts[0]]?.position || ''}`
               : loadingStage}
           </SubBadgeText>
         )}
@@ -185,12 +184,15 @@ export const TokenList = () => {
                 console.log('ECDSA input', ecdsaInput)
 
                 setLoadingStage(LoadingStage.output)
-                const proof = await callProof(treeProof, ecdsaInput)
+                const proof = await scheduleProofGeneration(
+                  treeProof,
+                  ecdsaInput
+                )
                 console.log('Proof', proof)
 
                 setLoadingStage(LoadingStage.waiting)
                 const job = { _id: proof._id, status: proof.status }
-                ProofStore.addNewJob(EthStore.accounts[0], { job })
+                ProofStore.jobs[EthStore.accounts[0]] = { job }
               } catch (error) {
                 console.error('Token list error: ', error)
 

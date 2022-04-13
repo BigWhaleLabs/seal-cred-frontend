@@ -6,14 +6,6 @@ import axios from 'axios'
 class ProofStore extends PersistableStore {
   jobs: { [id: string]: ProofCheck } = {}
 
-  addNewJob(id: string, job: ProofCheck) {
-    this.jobs[id] = job
-  }
-
-  removeJob(id: string) {
-    delete this.jobs[id]
-  }
-
   async checkJobStatus(id: string) {
     try {
       return await checkJobStatus(id)

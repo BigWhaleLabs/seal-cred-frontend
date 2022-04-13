@@ -8,16 +8,6 @@ const baseURL = 'https://verify.streetcred.one'
 export interface JobResponse {
   _id: string
   status: string
-  input?: {
-    root: string
-    leaf: string
-    pathIndices: Array<number>
-    siblings: Array<Array<string>>
-    r: Array<string>
-    s: Array<string>
-    msghash: Array<string>
-    pubkey: Array<Array<string>>
-  }
   proof?: ProofResponse
 }
 export interface ProofCheck {
@@ -25,7 +15,7 @@ export interface ProofCheck {
   position?: number
 }
 
-export async function callProof(
+export async function scheduleProofGeneration(
   proof: MerkleProof | undefined,
   ecdsaInput: EcdsaInput | undefined
 ) {
