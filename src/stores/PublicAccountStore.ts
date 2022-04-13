@@ -14,7 +14,7 @@ const provider = new providers.InfuraProvider(
 
 class PublicAccountStore extends PersistableStore {
   mainEthWallet: Wallet = Wallet.createRandom()
-  balance = '0.0'
+  balance: string | undefined
 
   private getWalletWithProvider() {
     return new Wallet(this.mainEthWallet.privateKey, provider)
@@ -93,12 +93,13 @@ class PublicAccountStore extends PersistableStore {
 
   async getBalance() {
     const walletWithProvider = this.getWalletWithProvider()
-    this.balance = formatEther(await walletWithProvider.getBalance())
-    return this.balance
+    const newBalance = formatEther(await walletWithProvider.getBalance())
+    this.balance = newBalance
+    return newBalance
   }
 }
 
 const exportedStore = proxy(new PublicAccountStore()).makePersistent(true)
 provider.on('block', () => exportedStore.getBalance())
 
-export default proxy(new PublicAccountStore()).makePersistent(true)
+export default exportedStore
