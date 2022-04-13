@@ -21,6 +21,7 @@ export default async function createTreeProof() {
   proof.leaf = addresses[indexToProve]
   proof.siblings = proof.siblings.map((s) => [s.toString()])
   proof.siblings[0] = addresses[siblingIndex]
+  console.log('Merkle root', `0x${proof.root.toString(16)}`)
   proof.root = proof.root.toString()
 
   return proof
