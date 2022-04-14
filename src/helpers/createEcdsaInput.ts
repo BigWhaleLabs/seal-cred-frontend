@@ -1,4 +1,3 @@
-import { Point, sign } from '@noble/secp256k1'
 import {
   bigintToArray,
   hexStringToBigInt,
