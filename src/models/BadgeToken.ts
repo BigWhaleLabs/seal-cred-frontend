@@ -9,3 +9,7 @@ export enum BadgeByContract {
   'SCD' = 'dosu1wave',
   'DOSU' = 'dosuInvites',
 }
+
+export enum BadgesEnum {
+  'DOSU',
+}

@@ -42,9 +42,6 @@ export async function scheduleProofGeneration(
 
 export async function checkJobStatus(id: string) {
   const { data } = await axios.get<ProofCheck>(`${baseURL}/proof/${id}`)
-  if (data.job.status === 'failed' || data.job.status === 'cancelled') {
-    throw data.job.status
-  }
 
   return data
 }

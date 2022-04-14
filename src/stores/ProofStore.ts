@@ -1,21 +1,50 @@
-import { ProofCheck, checkJobStatus } from 'helpers/callProof'
+import { checkJobStatus } from 'helpers/callProof'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
-import axios from 'axios'
+import ProofResponse from 'models/ProofResponse'
+
+type JobObject = {
+  _id: string
+  status: string
+  position?: number
+  proof?: ProofResponse
+}
+type TaskJob = { [badge: string]: JobObject }
 
 class ProofStore extends PersistableStore {
-  jobs: { [id: string]: ProofCheck } = {}
+  tasks: TaskJob = {}
 
-  async checkJobStatus(id: string) {
-    try {
-      return await checkJobStatus(id)
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log('error message: ', error.message)
-        throw error.message
-      } else {
-        throw error
+  startIntervalChecker() {
+    setInterval(async () => {
+      await this.checkTasks()
+    }, 5000)
+  }
+
+  async checkTasks() {
+    const fetchByKeys = Object.keys(this.tasks).map((key) =>
+      this.requestTaskData(this.tasks[key])
+    )
+    if (!fetchByKeys.length) return
+    await Promise.all(fetchByKeys).then((results) => {
+      for (const badge in this.tasks) {
+        const data = results.find((r) => r?._id === this.tasks[badge]._id)
+        if (!data) delete this.tasks[badge]
+        else {
+          this.tasks[badge] = data
+        }
       }
+    })
+  }
+
+  async requestTaskData(task: JobObject) {
+    try {
+      const { position, job } = await checkJobStatus(task._id)
+      return !job
+        ? undefined
+        : { ...task, status: job.status, proof: job.proof, position }
+    } catch (e) {
+      console.log('Error: ', e)
+      return
     }
   }
 }

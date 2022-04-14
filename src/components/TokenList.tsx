@@ -1,4 +1,6 @@
 import { BadgeText, ErrorText, SubBadgeText } from 'components/Text'
+import { BadgesEnum } from 'models/BadgeToken'
+import { FC, useEffect, useState } from 'react'
 import {
   alignItems,
   classnames,
@@ -13,10 +15,10 @@ import {
 } from 'classnames/tailwind'
 import { scheduleProofGeneration } from 'helpers/callProof'
 import { serializeError } from 'eth-rpc-errors'
-import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import EthStore from 'stores/EthStore'
+import ProofResponse from 'models/ProofResponse'
 import ProofStore from 'stores/ProofStore'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import TokensStore from 'stores/TokensStore'
@@ -49,7 +51,8 @@ enum LoadingStage {
   ecdsa = 'Generating ecdsa inputs',
   proof = 'Generating the merkletree proof inputs',
   output = 'Generating the proof outputs',
-  waiting = 'The proof is being generated, your position in the queue is #',
+  waiting = 'The proof generating task is scheduled',
+  running = 'The proof is being generated, your position in the queue',
   mint = 'Minting the nft',
   clear = '',
 }
@@ -66,9 +69,10 @@ const Errors = {
   clear: '',
 }
 
-export const TokenList = () => {
+export const TokenList: FC<{ badge: BadgesEnum }> = ({ badge }) => {
   const { accounts } = useSnapshot(EthStore)
-  const { jobs } = useSnapshot(ProofStore)
+  const { tasks } = useSnapshot(ProofStore)
+  const currentTask = tasks[badge]
 
   const [loadingMint, setLoadingMint] = useState(false)
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
@@ -76,32 +80,6 @@ export const TokenList = () => {
   )
   const [error, setError] = useState<string>(Errors.clear)
   const [minted, setMinted] = useState(false)
-
-  const checkProofStatus = async (address: string) => {
-    try {
-      const data = await ProofStore.checkJobStatus(jobs[address].job._id)
-      const { status, _id, proof } = data.job
-      return {
-        position: data.position,
-        job: { _id, status, proof },
-      }
-    } catch (error) {
-      setLoadingStage(LoadingStage.clear)
-      setLoadingMint(false)
-      delete ProofStore.jobs[address]
-      switch (error) {
-        case 'failed':
-          setError(Errors.invalidProof)
-          return undefined
-        case 'cancelled':
-          setError(Errors.proofCanceled)
-          return undefined
-        default:
-          setError(Errors.unknown)
-          return undefined
-      }
-    }
-  }
 
   useEffect(() => {
     async function checkMinted() {
@@ -113,37 +91,43 @@ export const TokenList = () => {
   }, [accounts])
 
   useEffect(() => {
-    function checkJob() {
-      const jobKeys = Object.keys(jobs)
-      const job = jobKeys.find((job) => job === accounts[0])
-      if (!job) return
-
-      setLoadingMint(true)
-      setLoadingStage(LoadingStage.waiting)
-      setError(Errors.clear)
-
-      const interval = setInterval(async () => {
-        const result = await checkProofStatus(job)
-        if (!result) clearInterval(interval)
-        if (result) {
-          ProofStore.jobs[job] = result
-          if (result?.job.status === 'success' && result.job.proof) {
-            delete ProofStore.jobs[job]
-            setLoadingStage(LoadingStage.mint)
-            const txResult = await PublicAccountStore.mintDerivative(
-              result.job.proof
-            )
-            console.log('Tx result', txResult)
-            setMinted(true)
-          }
-        }
-      }, 5000)
-      if (Object.keys(jobs).length === 0) clearInterval(interval)
+    async function checkProof(proof: ProofResponse) {
+      setLoadingStage(LoadingStage.mint)
+      const txResult = await PublicAccountStore.mintDerivative(proof)
+      console.log('Tx result', txResult)
+      setLoadingMint(false)
+      setMinted(true)
     }
 
-    void checkJob()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [jobs])
+    if (currentTask) {
+      setLoadingMint(true)
+      setError(Errors.clear)
+
+      switch (currentTask.status) {
+        case 'success':
+          if (!tasks[badge].proof) return
+          void checkProof(tasks[badge].proof as ProofResponse)
+          delete ProofStore.tasks[badge]
+          return
+        case 'running':
+          setLoadingStage(LoadingStage.running)
+          return
+        case 'failed':
+          delete ProofStore.tasks[badge]
+          setError(Errors.invalidProof)
+          setLoadingMint(false)
+          return
+        case 'cancelled':
+          delete ProofStore.tasks[badge]
+          setError(Errors.proofCanceled)
+          setLoadingMint(false)
+          return
+        default:
+          setLoadingStage(LoadingStage.waiting)
+          return
+      }
+    }
+  }, [tasks, badge, currentTask])
 
   return (
     <div className={listWrapper}>
@@ -153,8 +137,10 @@ export const TokenList = () => {
           <ErrorText>{error}</ErrorText>
         ) : (
           <SubBadgeText>
-            {loadingStage === LoadingStage.waiting
-              ? `${loadingStage} ${jobs[accounts[0]]?.position || ''}`
+            {loadingStage === LoadingStage.running
+              ? `${loadingStage} ${
+                  tasks[badge]?.position ? `is #${tasks[badge].position}` : ''
+                }`
               : loadingStage}
           </SubBadgeText>
         )}
@@ -188,7 +174,8 @@ export const TokenList = () => {
 
               setLoadingStage(LoadingStage.waiting)
               const job = { _id: proof._id, status: proof.status }
-              ProofStore.jobs[EthStore.accounts[0]] = { job }
+              console.log('Job: ', job)
+              ProofStore.tasks[badge] = { ...job }
             } catch (error) {
               console.error(error)
 

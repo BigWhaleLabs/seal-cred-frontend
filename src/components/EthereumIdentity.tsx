@@ -1,3 +1,4 @@
+import { BadgesEnum } from 'models/BadgeToken'
 import { BodyText } from 'components/Text'
 import { classnames, wordBreak } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
@@ -15,7 +16,8 @@ const EthereumIdentity = () => {
       <div className={breakWords}>
         <BodyText>{accounts[0]}</BodyText>
       </div>
-      <TokenList />
+
+      <TokenList badge={BadgesEnum.DOSU} />
     </Card>
   )
 }
