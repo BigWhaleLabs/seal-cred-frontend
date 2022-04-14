@@ -1,16 +1,9 @@
+import { serializeError } from 'eth-rpc-errors'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 
-class ProviderError {
-  code: number
-  message: string
-  stack?: string
-
-  constructor(code: number, message: string, stack?: string) {
-    this.code = code
-    this.message = message
-    this.stack = stack
-  }
+export const ProofGenerationErrors = {
+  invalidProof: 'Merkle Tree Proof is not valid',
 }
 
 export const EthErrors = {
@@ -29,11 +22,9 @@ export function handleError(error: unknown) {
   let displayedError: string
 
   if (typeof error === 'string') displayedError = error
-  if (
-    error instanceof ProviderError ||
-    error instanceof Error ||
-    axios.isAxiosError(error)
-  ) {
+  const message = serializeError(error).message
+  if (message) displayedError = message
+  if (error instanceof Error || axios.isAxiosError(error)) {
     displayedError = error.message
   } else {
     displayedError = CommonErrors.unknown
@@ -41,3 +32,10 @@ export function handleError(error: unknown) {
 
   toast.error(displayedError)
 }
+
+// if (/User denied message signature/.test(message))
+//   return setError(Errors.noSignature)
+// if (/cannot estimate gas/.test(message))
+//   return setError(Errors.insufficientFunds)
+// if (/eth_getBlockByNumber/.test(message))
+//   return setError(Errors.mintError)

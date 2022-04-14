@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { useSnapshot } from 'valtio'
