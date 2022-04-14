@@ -18,10 +18,10 @@ export function handleError(error: unknown) {
   let displayedError: string | undefined
 
   if (typeof error === 'string') displayedError = error
-  const message = serializeError(error).message
-  if (message) displayedError = message
   if (error instanceof Error || axios.isAxiosError(error))
     displayedError = error.message
+  const message = serializeError(error).message
+  if (message) displayedError = message
   if (!displayedError) displayedError = ErrorList.unknown
 
   toast.error(displayedError)
