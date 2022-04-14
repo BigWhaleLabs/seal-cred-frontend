@@ -32,12 +32,22 @@ import configuredModal from 'helpers/configuredModal'
 const outerContainer = classnames(margin('my-4'))
 const addressContainer = classnames(
   display('flex'),
-  flexDirection('flex-row'),
+  flexDirection('flex-col', 'lg:flex-row'),
   alignItems('items-center'),
   justifyContent('justify-center'),
   space('space-y-2', 'lg:space-y-0', 'lg:space-x-2'),
   margin('mt-10')
 )
+
+const walletContainer = classnames(
+  display('flex'),
+  flexDirection('flex-row'),
+  alignItems('items-center'),
+  justifyContent('justify-between'),
+  space('space-y-2', 'lg:space-y-0', 'lg:space-x-2'),
+  margin('mt-10')
+)
+
 const addressBackground = classnames(
   transitionProperty('transition-colors'),
   borderRadius('rounded-2xl'),
@@ -84,8 +94,10 @@ export default function PublicAddress() {
               {account.address} <Balance account={account} />
             </AccentText>
           </div>
-          <CopyPrivateKey />
-          <AddressPanel />
+          <div className={walletContainer}>
+            <CopyPrivateKey />
+            <AddressPanel />
+          </div>
         </div>
         {!isActive && (
           <div className={inactiveAccount}>

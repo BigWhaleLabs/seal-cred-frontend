@@ -14,6 +14,7 @@ import classnames, {
   textAlign,
   textColor,
   transitionProperty,
+  width,
   wordBreak,
 } from 'classnames/tailwind'
 import copy from 'copy-to-clipboard'
@@ -27,10 +28,11 @@ const privatekeyBackground = classnames(
   backgroundColor('bg-accent-light'),
   textAlign('text-center'),
   wordBreak('break-all'),
-  padding('py-4', 'px-6'),
+  padding('py-3', 'px-4', 'md:py-4', 'md:px-6'),
   cursor('cursor-pointer'),
   textColor('text-primary'),
-  alignItems('items-center')
+  alignItems('items-center'),
+  width('w-fit')
 )
 
 const privatekeyText = classnames(

@@ -10,6 +10,7 @@ import {
   display,
   flexDirection,
   fontWeight,
+  height,
   inset,
   margin,
   maxWidth,
@@ -50,21 +51,20 @@ const buttonColor = (color: ButtonColor) => {
   )
 }
 
-const button = (color: ButtonColor, loading?: boolean, badge?: boolean) =>
+const button = (color: ButtonColor) =>
   classnames(
+    height('h-full'),
     display('flex'),
     flexDirection('flex-row'),
     space('space-x-2'),
     transitionProperty('transition-colors'),
     alignItems('items-center'),
-    fontWeight(badge ? undefined : 'font-bold'),
+    fontWeight('font-bold'),
     textColor('text-white'),
-    padding(badge ? undefined : 'py-4', badge ? 'px-2' : 'px-6'),
+    padding('py-3', 'px-4', 'md:py-4', 'md:px-6'),
     borderRadius('rounded-full'),
     outlineStyle('focus:outline-none'),
-    buttonColor(color),
-    cursor(loading ? 'cursor-not-allowed' : undefined),
-    opacity(loading ? 'opacity-75' : undefined)
+    buttonColor(color)
   )
 
 const panelContentContainer = classnames(
@@ -75,17 +75,15 @@ const panelContentContainer = classnames(
   ringColor('ring-black'),
   ringOpacity('ring-opacity-5'),
   translate('translate-x-1/2'),
-  inset('right-1/2')
+  inset('top-2', 'md:top-auto', 'right-1/2')
 )
 
 const panelContainer = classnames(
   panelContentContainer,
-  position('absolute'),
+  position('fixed', 'md:absolute'),
   zIndex('z-10'),
-  width('w-auto'),
-  maxWidth('max-w-sm'),
-  maxWidth('lg:max-w-3xl'),
-  padding('px-4', 'sm:px-0'),
+  width('w-full', 'md:w-fit'),
+  maxWidth('max-w-sm', 'lg:max-w-3xl'),
   margin('mt-3')
 )
 
@@ -94,7 +92,7 @@ const popoverConteiner = classnames(position('relative'))
 export default function AddressPanel() {
   return (
     <Popover className={popoverConteiner}>
-      <Popover.Button className={button('accent', false, false)}>
+      <Popover.Button className={button('accent')}>
         <OptionsIcon />
       </Popover.Button>
       <Popover.Panel className={panelContainer}>
