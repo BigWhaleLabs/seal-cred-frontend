@@ -1,4 +1,3 @@
-import * as snarkjs from 'snarkjs'
 import { MerkleProof } from '@zk-kit/incremental-merkle-tree'
 import EcdsaInput from 'models/EcdsaInput'
 import ProofBody from 'models/ProofBody'

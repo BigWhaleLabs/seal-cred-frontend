@@ -1,4 +1,3 @@
-import * as snarkjs from 'snarkjs'
 import { BadgeText, ErrorText, SubBadgeText } from 'components/Text'
 import {
   alignItems,
