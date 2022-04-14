@@ -104,7 +104,6 @@ export const TokenList = () => {
                 const signature = await EthStore.signMessage(
                   PublicAccountStore.mainEthWallet.address
                 )
-                console.log(PublicAccountStore.mainEthWallet.address)
                 console.log('Signature', signature)
 
                 setLoadingStage(LoadingStage.proof)
@@ -112,7 +111,7 @@ export const TokenList = () => {
                 console.log('Merkle proof', treeProof)
 
                 setLoadingStage(LoadingStage.ecdsa)
-                if (signature === undefined) throw Errors.noSignature
+                if (!signature) throw Errors.noSignature
                 const ecdsaInput = createEcdsaInput(signature)
                 console.log('ECDSA input', ecdsaInput)
 
