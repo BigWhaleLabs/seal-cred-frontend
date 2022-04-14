@@ -62,6 +62,7 @@ class PublicAccountStore extends PersistableStore {
   }
 
   isActive(account: Account) {
+    if (account.provider === 'Generated') return true
     return this.activeAccount.get(account.provider)?.address === account.address
   }
 
@@ -180,6 +181,7 @@ class PublicAccountStore extends PersistableStore {
   }
 
   private clearData() {
+    console.log('clearData')
     configuredModal.clearCachedProvider()
     this.connectedAccounts = new Map()
   }
@@ -209,7 +211,7 @@ class PublicAccountStore extends PersistableStore {
         return new Wallet(defaultAccountValue.privateKey)
       }
       case 'activeAccount': {
-        return new Map(value as [string, Account][])
+        return new Map()
       }
       case 'connectedAccounts': {
         return new Map(
@@ -237,7 +239,7 @@ class PublicAccountStore extends PersistableStore {
         }
       }
       case 'activeAccount': {
-        return value instanceof Map ? Array.from(value.entries()) : []
+        return []
       }
       case 'connectedAccounts': {
         return value instanceof Map
@@ -291,11 +293,7 @@ class PublicAccountStore extends PersistableStore {
   }
 
   async getBalance(account: Account) {
-    const walletWithProvider = connectedProviders.get(account.provider)
-
-    if (!walletWithProvider) return
-
-    return formatEther(await walletWithProvider.getBalance(account.address))
+    return formatEther(await generatedProvider.getBalance(account.address))
   }
 }
 

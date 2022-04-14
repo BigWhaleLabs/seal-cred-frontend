@@ -8,6 +8,7 @@ import classnames, {
   cursor,
   display,
   flexDirection,
+  margin,
   padding,
   whitespace,
 } from 'classnames/tailwind'

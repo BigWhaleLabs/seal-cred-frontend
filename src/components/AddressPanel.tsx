@@ -6,7 +6,6 @@ import {
   borderRadius,
   boxShadow,
   classnames,
-  cursor,
   display,
   flexDirection,
   fontWeight,
@@ -87,7 +86,7 @@ const panelContainer = classnames(
   margin('mt-3')
 )
 
-const popoverConteiner = classnames(position('relative'))
+const popoverConteiner = classnames(position('relative'), margin('!mt-0'))
 
 export default function AddressPanel() {
   return (

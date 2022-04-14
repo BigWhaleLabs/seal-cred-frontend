@@ -5,7 +5,6 @@ const listAvailableContracts = async (account: Account): Promise<string[]> => {
   const walletWithProvider = PublicAccountStore.getWalletWithProvider(account)
 
   if (!walletWithProvider) {
-    console.error('Cannot connect to provider')
     return []
   }
 

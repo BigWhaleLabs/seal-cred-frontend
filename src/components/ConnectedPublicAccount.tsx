@@ -5,6 +5,7 @@ import classnames, {
   backgroundColor,
   cursor,
   display,
+  flexGrow,
   fontSize,
   fontWeight,
   justifyContent,
@@ -23,6 +24,7 @@ const connectedPublicAccountContainer = classnames(
 
 const accountText = (isActive: boolean) =>
   classnames(
+    flexGrow('grow'),
     fontSize('text-sm'),
     fontWeight('font-medium'),
     textColor(isActive ? 'text-accent' : 'text-gray-900'),
