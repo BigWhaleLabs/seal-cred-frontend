@@ -8,7 +8,7 @@ import configuredModal from 'helpers/configuredModal'
 let provider: Web3Provider
 let invitesContract: InvitesAbi
 
-const contractNetwork = import.meta.env.VITE_ETH_NETWORK as string
+const ethNetwork = import.meta.env.VITE_ETH_NETWORK as string
 
 class EthStore extends PersistableStore {
   accounts: string[] = []
@@ -21,8 +21,8 @@ class EthStore extends PersistableStore {
       const instance = await configuredModal.connect()
       provider = new Web3Provider(instance)
       const userNetwork = (await provider.getNetwork()).name
-      if (userNetwork !== contractNetwork)
-        throw new Error(ErrorList.wrongNetwork(userNetwork, contractNetwork))
+      if (userNetwork !== ethNetwork)
+        throw new Error(ErrorList.wrongNetwork(userNetwork, ethNetwork))
 
       invitesContract = InvitesAbi__factory.connect(
         import.meta.env.VITE_INVITES_CONTRACT_ADDRESS as string,
