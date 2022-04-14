@@ -2,16 +2,12 @@ import { serializeError } from 'eth-rpc-errors'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 
-export const ProofGenerationErrors = {
-  invalidProof: 'Merkle Tree Proof is not valid',
-}
+export const ProofGenerationErrors = {}
 
-export const EthErrors = {
+export const ErrorList = {
   wrongNetwork: (userNetwork: string, contractNetwork: string) =>
     `Looks like you're using ${userNetwork} network, try switching to ${contractNetwork} and connect again`,
-}
-
-export const CommonErrors = {
+  invalidProof: 'Merkle Tree Proof is not valid',
   unknown: 'An unknown error occurred, please, contact us',
   clear: '',
 }
@@ -19,23 +15,14 @@ export const CommonErrors = {
 export function handleError(error: unknown) {
   console.error(error)
 
-  let displayedError: string
+  let displayedError: string | undefined
 
   if (typeof error === 'string') displayedError = error
   const message = serializeError(error).message
   if (message) displayedError = message
-  if (error instanceof Error || axios.isAxiosError(error)) {
+  if (error instanceof Error || axios.isAxiosError(error))
     displayedError = error.message
-  } else {
-    displayedError = CommonErrors.unknown
-  }
+  if (!displayedError) displayedError = ErrorList.unknown
 
   toast.error(displayedError)
 }
-
-// if (/User denied message signature/.test(message))
-//   return setError(Errors.noSignature)
-// if (/cannot estimate gas/.test(message))
-//   return setError(Errors.insufficientFunds)
-// if (/eth_getBlockByNumber/.test(message))
-//   return setError(Errors.mintError)

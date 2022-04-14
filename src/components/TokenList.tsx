@@ -1,5 +1,5 @@
 import { BadgeText, SubBadgeText } from 'components/Text'
-import { ProofGenerationErrors, handleError } from 'helpers/handleError'
+import { ErrorList, handleError } from 'helpers/handleError'
 import {
   alignItems,
   classnames,
@@ -100,7 +100,7 @@ export const TokenList = () => {
 
               setLoadingStage(LoadingStage.output)
               const proof = await callProof(treeProof, ecdsaInput)
-              if (!proof) throw new Error(ProofGenerationErrors.invalidProof)
+              if (!proof) throw new Error(ErrorList.invalidProof)
               console.log('Proof', proof)
 
               setLoadingStage(LoadingStage.mint)
