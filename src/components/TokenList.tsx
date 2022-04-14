@@ -1,5 +1,6 @@
-import { BadgeText, ErrorText, SubBadgeText } from 'components/Text'
+import { BadgeText, SubBadgeText } from 'components/Text'
 import { BadgesEnum } from 'models/BadgeToken'
+import { ErrorList, handleError } from 'helpers/handleError'
 import { FC, useEffect, useState } from 'react'
 import {
   alignItems,
@@ -14,7 +15,6 @@ import {
   width,
 } from 'classnames/tailwind'
 import { scheduleProofGeneration } from 'helpers/callProof'
-import { serializeError } from 'eth-rpc-errors'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import EthStore from 'stores/EthStore'
@@ -57,18 +57,6 @@ enum LoadingStage {
   clear = '',
 }
 
-const Errors = {
-  insufficientFunds: "You don't have enough money on your public address",
-  noSignature: "Error getting user's signature",
-  invalidProof: 'Merkle Tree Proof is not valid',
-  mintError: 'An error occurred while minting your Badge',
-  unknown: 'An unknown error occurred, please contact us',
-  proofFailed: 'Proof generation failed, please, try again later',
-  proofCanceled:
-    'Server has reloaded while the proof was being generated, please, try again later',
-  clear: '',
-}
-
 export const TokenList: FC<{ badge: BadgesEnum }> = ({ badge }) => {
   const { accounts } = useSnapshot(EthStore)
   const { tasks } = useSnapshot(ProofStore)
@@ -78,7 +66,6 @@ export const TokenList: FC<{ badge: BadgesEnum }> = ({ badge }) => {
   const [loadingStage, setLoadingStage] = useState<LoadingStage>(
     LoadingStage.clear
   )
-  const [error, setError] = useState<string>(Errors.clear)
   const [minted, setMinted] = useState(false)
 
   useEffect(() => {
@@ -97,11 +84,11 @@ export const TokenList: FC<{ badge: BadgesEnum }> = ({ badge }) => {
       console.log('Tx result', txResult)
       setLoadingMint(false)
       setMinted(true)
+      setLoadingStage(LoadingStage.clear)
     }
 
     if (currentTask) {
       setLoadingMint(true)
-      setError(Errors.clear)
 
       switch (currentTask.status) {
         case 'success':
@@ -114,14 +101,14 @@ export const TokenList: FC<{ badge: BadgesEnum }> = ({ badge }) => {
           return
         case 'failed':
           delete ProofStore.tasks[badge]
-          setError(Errors.invalidProof)
           setLoadingMint(false)
-          return
+          setLoadingStage(LoadingStage.clear)
+          return handleError(new Error(ErrorList.invalidProof))
         case 'cancelled':
           delete ProofStore.tasks[badge]
-          setError(Errors.proofCanceled)
           setLoadingMint(false)
-          return
+          setLoadingStage(LoadingStage.clear)
+          return handleError(ErrorList.proofCanceled)
         default:
           setLoadingStage(LoadingStage.waiting)
           return
@@ -133,17 +120,13 @@ export const TokenList: FC<{ badge: BadgesEnum }> = ({ badge }) => {
     <div className={listWrapper}>
       <div className={listTokenTitle}>
         <BadgeText>Dosu 1 wave invite holder</BadgeText>
-        {error ? (
-          <ErrorText>{error}</ErrorText>
-        ) : (
-          <SubBadgeText>
-            {loadingStage === LoadingStage.running
-              ? `${loadingStage} ${
-                  tasks[badge]?.position ? `is #${tasks[badge].position}` : ''
-                }`
-              : loadingStage}
-          </SubBadgeText>
-        )}
+        <SubBadgeText>
+          {loadingStage === LoadingStage.running
+            ? `${loadingStage} ${
+                tasks[badge]?.position ? `is #${tasks[badge].position}` : ''
+              }`
+            : loadingStage}
+        </SubBadgeText>
       </div>
 
       <div className={listTokenAction}>
@@ -152,7 +135,6 @@ export const TokenList: FC<{ badge: BadgesEnum }> = ({ badge }) => {
           loading={loadingMint}
           onClick={async () => {
             setLoadingMint(true)
-            setError(Errors.clear)
             try {
               setLoadingStage(LoadingStage.sign)
               const signature = await EthStore.signMessage(
@@ -165,37 +147,31 @@ export const TokenList: FC<{ badge: BadgesEnum }> = ({ badge }) => {
               console.log('Merkle proof', treeProof)
 
               setLoadingStage(LoadingStage.ecdsa)
-              const ecdsaInput = await createEcdsaInput()
+              if (!signature) throw new Error(ErrorList.invalidSignature)
+              const ecdsaInput = createEcdsaInput(signature)
               console.log('ECDSA input', ecdsaInput)
 
               setLoadingStage(LoadingStage.output)
+
               const proof = await scheduleProofGeneration(treeProof, ecdsaInput)
               console.log('Proof', proof)
 
               setLoadingStage(LoadingStage.waiting)
-              const job = { _id: proof._id, status: proof.status }
+              const job = {
+                _id: proof._id,
+                status: proof.status,
+                proof: proof.proof,
+              }
               console.log('Job: ', job)
               ProofStore.tasks[badge] = { ...job }
             } catch (error) {
-              console.error(error)
-
-              if (typeof error === 'string') return setError(error)
-
-              const message = serializeError(error).message
-              if (/User denied message signature/.test(message))
-                return setError(Errors.noSignature)
-              if (/cannot estimate gas/.test(message))
-                return setError(Errors.insufficientFunds)
-              if (/eth_getBlockByNumber/.test(message))
-                return setError(Errors.mintError)
-
-              setError(Errors.unknown)
+              handleError(error)
             } finally {
               setLoadingStage(LoadingStage.clear)
               setLoadingMint(false)
             }
           }}
-          disabled={!!EthStore.ethError || minted}
+          disabled={minted}
           badge
         >
           {minted ? 'Minted' : 'Mint'}

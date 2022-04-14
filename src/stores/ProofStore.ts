@@ -3,7 +3,7 @@ import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResponse from 'models/ProofResponse'
 
-type JobObject = {
+interface JobObject {
   _id: string
   status: string
   position?: number
@@ -28,10 +28,7 @@ class ProofStore extends PersistableStore {
     await Promise.all(fetchByKeys).then((results) => {
       for (const badge in this.tasks) {
         const data = results.find((r) => r?._id === this.tasks[badge]._id)
-        if (!data) delete this.tasks[badge]
-        else {
-          this.tasks[badge] = data
-        }
+        !data ? delete this.tasks[badge] : (this.tasks[badge] = data)
       }
     })
   }
@@ -41,7 +38,12 @@ class ProofStore extends PersistableStore {
       const { position, job } = await checkJobStatus(task._id)
       return !job
         ? undefined
-        : { ...task, status: job.status, proof: job.proof, position }
+        : {
+            ...task,
+            status: job.status,
+            proof: job.proof,
+            position,
+          }
     } catch (e) {
       console.log('Error: ', e)
       return
