@@ -95,12 +95,14 @@ export const TokenList = () => {
               console.log('Merkle proof', treeProof)
 
               setLoadingStage(LoadingStage.ecdsa)
-              const ecdsaInput = await createEcdsaInput()
+              if (!signature) throw new Error(ErrorList.invalidSignature)
+              const ecdsaInput = createEcdsaInput(signature)
               console.log('ECDSA input', ecdsaInput)
 
               setLoadingStage(LoadingStage.output)
               const proof = await callProof(treeProof, ecdsaInput)
-              if (!proof) throw new Error(ErrorList.invalidProof)
+
+              if (!proof.proof) throw new Error(ErrorList.invalidProof)
               console.log('Proof', proof)
 
               setLoadingStage(LoadingStage.mint)

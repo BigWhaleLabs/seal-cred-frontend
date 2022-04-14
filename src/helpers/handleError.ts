@@ -9,6 +9,7 @@ export const ErrorList = {
     `Looks like you're using ${userNetwork} network, try switching to ${contractNetwork} and connect again`,
   invalidProof: 'Merkle Tree Proof is not valid',
   unknown: 'An unknown error occurred, please, contact us',
+  invalidSignature: 'Signature is invalid',
   clear: '',
 }
 
