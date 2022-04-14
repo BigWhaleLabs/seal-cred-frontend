@@ -1,6 +1,7 @@
 import { DerivativeAbi__factory } from 'helpers/abiTypes/derivativeAbi'
 import { Wallet, providers } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
+import { handleError } from 'helpers/handleError'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResponse from 'models/ProofResponse'
@@ -86,7 +87,7 @@ class PublicAccountStore extends PersistableStore {
       ).isZero()
       return !zeroBalance
     } catch (error) {
-      console.error(error)
+      handleError(error)
     }
   }
 

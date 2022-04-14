@@ -112,16 +112,6 @@ export const PopupBodyText: FC = ({ children }) => {
   return <div className={popupBodyText}>{children}</div>
 }
 
-const errorText = classnames(
-  textColor('text-error'),
-  fontWeight('font-medium'),
-  fontFamily('font-primary'),
-  transitionProperty('transition-colors')
-)
-export const ErrorText: FC = ({ children }) => (
-  <p className={errorText}>{children}</p>
-)
-
 const subBadgeText = classnames(
   transitionProperty('transition-colors'),
   textColor('text-primary'),
