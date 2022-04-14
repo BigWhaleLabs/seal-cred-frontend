@@ -1,3 +1,4 @@
+import * as snarkjs from 'snarkjs'
 import { MerkleProof } from '@zk-kit/incremental-merkle-tree'
 import EcdsaInput from 'models/EcdsaInput'
 import ProofBody from 'models/ProofBody'
@@ -29,6 +30,27 @@ export default async function callProof(
       },
     }
   )
+  console.log('data' + data)
+  const dataInHex: ProofResponse = {
+    proof: {
+      pi_a: [p256(data.proof.pi_a[0]), p256(data.proof.pi_a[1])],
+      pi_b: [
+        [p256(data.proof.pi_b[0][1]), p256(data.proof.pi_b[0][0])],
+        [p256(data.proof.pi_b[1][1]), p256(data.proof.pi_b[1][0])],
+      ],
+      pi_c: [p256(data.proof.pi_c[0]), p256(data.proof.pi_c[1])],
+      protocol: data.proof.protocol,
+      curve: data.proof.curve,
+    },
+    publicSignals: [p256(data.publicSignals[0]), p256(data.publicSignals[1])],
+  }
 
-  return data
+  return dataInHex
+}
+
+function p256(n: string) {
+  let nstr = BigInt(n).toString(16)
+  while (nstr.length < 64) nstr = '0' + nstr
+  nstr = '0x' + nstr
+  return nstr
 }

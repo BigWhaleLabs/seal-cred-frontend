@@ -1,10 +1,10 @@
 export default interface ProofResponse {
   proof: {
-    pi_a: [string, string]
-    pi_b: [[string, string], [string, string]]
-    pi_c: [string, string]
-    protocol: string
-    curve: string
+    pi_a: [any, any]
+    pi_b: [[any, any], [any, any]]
+    pi_c: [any, any]
+    protocol: any
+    curve: any
   }
-  publicSignals: [string, string]
+  publicSignals: [any, any]
 }

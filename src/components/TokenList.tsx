@@ -1,3 +1,4 @@
+import * as snarkjs from 'snarkjs'
 import { BadgeText, ErrorText, SubBadgeText } from 'components/Text'
 import {
   alignItems,
@@ -16,7 +17,6 @@ import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import EthStore from 'stores/EthStore'
-import ProofResponse from 'models/ProofResponse'
 import PublicAccountStore from 'stores/PublicAccountStore'
 import TokensStore from 'stores/TokensStore'
 import callProof from 'helpers/callProof'
@@ -118,36 +118,8 @@ export const TokenList = () => {
                 console.log('ECDSA input', ecdsaInput)
 
                 setLoadingStage(LoadingStage.output)
-                // const proof = await callProof(treeProof, ecdsaInput)
+                const proof = await callProof(treeProof, ecdsaInput)
 
-                const proof: ProofResponse = {
-                  proof: {
-                    pi_a: [
-                      '0x2be2b9c4b499e223c14e089f0f98fe7fc538e11a255721a98b73f1f4e26a3675',
-                      '0x17e37ca22fdca51f4b86e7e843799fe409b6f86683b771ef4101370ecdf3eac3',
-                    ],
-                    pi_b: [
-                      [
-                        '0x1726e526bdf785be6285b3f8c17ec099ea6918b915d852b2394252ff97317517',
-                        '0x28a1d1a79154ddb9c402dc5e532205175a4cd09ebc1248f15e3cf8fe4c03144c',
-                      ],
-                      [
-                        '0x2f874a3c56d8aec4a19440f7c8d0c98948267abd8fee5a373da88f3dcaea5544',
-                        '0x0f52d2de46c94d007f86fec2bef845c9f79561ac383650b70d03939e87db5bf7',
-                      ],
-                    ],
-                    pi_c: [
-                      '0x28771bd0d5e0630962902fc3b66020a83a4b63a21d771163be2ba5d14b569923',
-                      '0x179e1472c562ad11746cfb87680af43a8fe54c01f67eccc2e9253117099ebbba',
-                    ],
-                    protocol: 'groth16',
-                    curve: 'bn128',
-                  },
-                  publicSignals: [
-                    '0x0000000000000000000000000000000000000000000000000000000000000001',
-                    '0x0d41fba73f0dcde45a3683b4c16a32c1f0793268b3cfb01c8a1115aefc76da04',
-                  ],
-                }
                 if (!proof.proof) throw Errors.invalidProof
                 console.log('Proof', proof)
 

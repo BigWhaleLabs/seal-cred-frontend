@@ -72,11 +72,7 @@ class PublicAccountStore extends PersistableStore {
       proof.proof.pi_a,
       proof.proof.pi_b,
       proof.proof.pi_c,
-      proof.publicSignals,
-      {
-        gasLimit: 200000,
-        gasPrice: 16700000000,
-      }
+      proof.publicSignals
     )
     return transaction.wait()
   }
