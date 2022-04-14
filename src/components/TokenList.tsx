@@ -101,41 +101,44 @@ export const TokenList = () => {
               setLoadingMint(true)
               setError(Errors.clear)
               try {
-                // setLoadingStage(LoadingStage.sign)
-                // const signature = await EthStore.signMessage(
-                //   PublicAccountStore.mainEthWallet.address
-                // )
-                // console.log('Signature', signature)
+                setLoadingStage(LoadingStage.sign)
+                const signature = await EthStore.signMessage(
+                  PublicAccountStore.mainEthWallet.address
+                )
+                console.log(PublicAccountStore.mainEthWallet.address)
+                console.log('Signature', signature)
 
-                // setLoadingStage(LoadingStage.proof)
-                // const treeProof = await createTreeProof()
-                // console.log('Merkle proof', treeProof)
+                setLoadingStage(LoadingStage.proof)
+                const treeProof = await createTreeProof()
+                console.log('Merkle proof', treeProof)
 
-                // setLoadingStage(LoadingStage.ecdsa)
-                // const ecdsaInput = await createEcdsaInput()
-                // console.log('ECDSA input', ecdsaInput)
+                setLoadingStage(LoadingStage.ecdsa)
+                if (signature === undefined) throw Errors.noSignature
+                const ecdsaInput = createEcdsaInput(signature)
+                console.log('ECDSA input', ecdsaInput)
 
                 setLoadingStage(LoadingStage.output)
                 // const proof = await callProof(treeProof, ecdsaInput)
+
                 const proof: ProofResponse = {
                   proof: {
                     pi_a: [
-                      '0x0822278288cd06bc8f13cec22800b9c659d4ec65be08083af691ad37c6b202d7',
-                      '0x12ad4d551b648c12c62d19d74eaf4117dbc48fa09c34c48548c32b8896c2a47a',
+                      '0x2be2b9c4b499e223c14e089f0f98fe7fc538e11a255721a98b73f1f4e26a3675',
+                      '0x17e37ca22fdca51f4b86e7e843799fe409b6f86683b771ef4101370ecdf3eac3',
                     ],
                     pi_b: [
                       [
-                        '0x15d249dccba882718517e79ea1d028b28ebe31c558c6539990ad23fb7a9bd37d',
-                        '0x1d2816213b2f6449cde19d0a800439a5e745e0df1c003f42a4f37fb1fe6aaf0b',
+                        '0x1726e526bdf785be6285b3f8c17ec099ea6918b915d852b2394252ff97317517',
+                        '0x28a1d1a79154ddb9c402dc5e532205175a4cd09ebc1248f15e3cf8fe4c03144c',
                       ],
                       [
-                        '0x03293ef92005d511455f084019c8d9adf33bd9103bf3259f1453d89c9c995a4a',
-                        '0x16dfe4be29eb462929a3ee652e01c076c4f891510390648c465540abae6ef673',
+                        '0x2f874a3c56d8aec4a19440f7c8d0c98948267abd8fee5a373da88f3dcaea5544',
+                        '0x0f52d2de46c94d007f86fec2bef845c9f79561ac383650b70d03939e87db5bf7',
                       ],
                     ],
                     pi_c: [
-                      '0x030136c4a083bef72c090bfc95f860abd50d6a0fb369690d8c18e344007b0784',
-                      '0x0c98cad99f5ca1a87907e7852add432668a4de09afe0f726650e4f42bb63e14d',
+                      '0x28771bd0d5e0630962902fc3b66020a83a4b63a21d771163be2ba5d14b569923',
+                      '0x179e1472c562ad11746cfb87680af43a8fe54c01f67eccc2e9253117099ebbba',
                     ],
                     protocol: 'groth16',
                     curve: 'bn128',
@@ -149,12 +152,11 @@ export const TokenList = () => {
                 console.log('Proof', proof)
 
                 setLoadingStage(LoadingStage.mint)
-                console.log('where 1')
                 const txResult = await PublicAccountStore.mintDerivative(proof)
                 console.log('Tx result', txResult)
                 setMinted(true)
               } catch (error) {
-                console.error('i see' + error)
+                console.error('error: ' + error)
 
                 if (typeof error === 'string') return setError(error)
 
