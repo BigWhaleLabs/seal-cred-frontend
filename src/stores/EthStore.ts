@@ -1,3 +1,4 @@
+import { ErrorList, handleError } from 'helpers/handleError'
 import { InvitesAbi, InvitesAbi__factory } from 'helpers/abiTypes/invitesAbi'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
@@ -7,25 +8,21 @@ import configuredModal from 'helpers/configuredModal'
 let provider: Web3Provider
 let invitesContract: InvitesAbi
 
-const ethNetwork = import.meta.env.VITE_ETH_NETWORK
+const ethNetwork = import.meta.env.VITE_ETH_NETWORK as string
 
 class EthStore extends PersistableStore {
   accounts: string[] = []
   ethLoading = false
-  ethError = ''
 
   async onConnect() {
     try {
       this.ethLoading = true
-      this.ethError = ''
 
       const instance = await configuredModal.connect()
       provider = new Web3Provider(instance)
       const userNetwork = (await provider.getNetwork()).name
-      if (userNetwork !== ethNetwork) {
-        this.ethError = `Looks like you're using ${userNetwork} network, try switching to ${ethNetwork} and connect again`
-        return
-      }
+      if (userNetwork !== ethNetwork)
+        throw new Error(ErrorList.wrongNetwork(userNetwork, ethNetwork))
 
       invitesContract = InvitesAbi__factory.connect(
         import.meta.env.VITE_INVITES_CONTRACT_ADDRESS as string,
@@ -35,9 +32,10 @@ class EthStore extends PersistableStore {
       await this.handleAccountChanged()
       this.subscribeProvider(instance)
     } catch (error) {
-      if (typeof error === 'string') return
-      console.error(error)
-      this.clearData()
+      if (error !== 'Modal closed by user') {
+        handleError(error)
+        this.clearData()
+      }
     } finally {
       this.ethLoading = false
     }
@@ -92,21 +90,17 @@ class EthStore extends PersistableStore {
     if (!provider.on) return
 
     provider.on('error', (error: Error) => {
-      console.error(error)
-      this.ethError = error.message
+      handleError(error)
     })
 
     provider.on('accountsChanged', () => {
-      if (this.ethError) return
       void this.handleAccountChanged()
     })
     provider.on('disconnect', () => {
-      if (this.ethError) return
       void this.handleAccountChanged()
     })
 
     provider.on('stop', () => {
-      if (this.ethError) return
       void this.handleAccountChanged()
     })
     provider.on('chainChanged', async () => {
