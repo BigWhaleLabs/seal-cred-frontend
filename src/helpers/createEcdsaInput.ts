@@ -1,45 +1,33 @@
-import { Point, sign } from '@noble/secp256k1'
 import {
-  Uint8ArrayToBigint,
   bigintToArray,
-  bigintToTuple,
-  bigintToUint8Array,
+  hexStringToBigInt,
+  parsePubkey,
+  parseSignature,
 } from 'helpers/bigintConvert'
-import { utils } from 'ethers'
+import { ethers } from 'ethers'
 import EcdsaInput from 'models/EcdsaInput'
-import EthStore from 'stores/EthStore'
+import PublicAccountStore from 'stores/PublicAccountStore'
 
-export default async function createEcdsaInput() {
-  const tokenId = await EthStore.getTokenId()
-  const addresses = await EthStore.getAddresses()
-  if (!addresses || tokenId === undefined) return
-
-  const proverPrivkey = BigInt(addresses[tokenId])
-
-  const proverPubkey = Point.fromPrivateKey(proverPrivkey)
-  const msg = 'zk-airdrop'
-
-  const msghash_bigint = BigInt(utils.keccak256(utils.toUtf8Bytes(msg)))
-  const msghash = bigintToUint8Array(msghash_bigint)
-  const sig = await sign(msghash, bigintToUint8Array(proverPrivkey), {
-    canonical: true,
-    der: false,
-  })
-  const r = sig.slice(0, 32)
-  const s = sig.slice(32, 64)
-  const r_bigint = Uint8ArrayToBigint(r)
-  const s_bigint = Uint8ArrayToBigint(s)
-  const r_array = bigintToArray(86, 3, r_bigint)
-  const s_array = bigintToArray(86, 3, s_bigint)
+export default function createEcdsaInput(signature: string) {
+  const msg = PublicAccountStore.mainEthWallet.address
+  const msgHash = ethers.utils.hashMessage(msg)
+  const msghash_bigint = hexStringToBigInt(msgHash)
   const msghash_array = bigintToArray(86, 3, msghash_bigint)
+
+  const proverPubkey = ethers.utils.recoverPublicKey(
+    msgHash,
+    ethers.utils.arrayify(signature)
+  )
+  const [r_array, s_array] = parseSignature(signature)
+  const [pubkey_x, pubkey_y] = parsePubkey(proverPubkey)
 
   const ecdsaInput: EcdsaInput = {
     r: r_array.map((x) => x.toString()),
     s: s_array.map((x) => x.toString()),
     msghash: msghash_array.map((x) => x.toString()),
     pubkey: [
-      bigintToTuple(proverPubkey.x).map((x) => x.toString()),
-      bigintToTuple(proverPubkey.y).map((x) => x.toString()),
+      pubkey_x.map((x) => x.toString()),
+      pubkey_y.map((x) => x.toString()),
     ],
   }
 

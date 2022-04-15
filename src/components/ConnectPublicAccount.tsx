@@ -1,4 +1,3 @@
-import { ErrorText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import CryptoWallet from 'components/CryptoWallet'
 import Loading from 'components/Loading'
@@ -25,10 +24,8 @@ const accountText = classnames(padding('px-4'), whitespace('whitespace-nowrap'))
 
 const connectText = classnames(display('flex'))
 
-const errorTextContainer = classnames(padding('pt-4'), display('flex'))
-
 export default function ConnectPublicAccount() {
-  const { ethLoading, ethError } = useSnapshot(PublicAccountStore)
+  const { ethLoading } = useSnapshot(PublicAccountStore)
 
   function onConnect() {
     if (ethLoading) return
@@ -42,11 +39,6 @@ export default function ConnectPublicAccount() {
         {ethLoading ? <Loading /> : <CryptoWallet />}
         <span className={accountText}>Connect wallet</span>
       </span>
-      {ethError && (
-        <span className={errorTextContainer}>
-          <ErrorText>{ethError}</ErrorText>
-        </span>
-      )}
     </div>
   )
 }

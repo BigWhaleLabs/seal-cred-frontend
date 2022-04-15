@@ -1,4 +1,5 @@
 import { DerivativeAbi__factory } from 'helpers/abiTypes/derivativeAbi'
+import { ErrorList, handleError } from 'helpers/handleError'
 import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers'
 import { Wallet, providers } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
@@ -26,7 +27,6 @@ class PublicAccountStore extends PersistableStore {
   activeAccount: Map<string, Account> = new Map()
   connectedAccounts: Map<string, Set<string>> = new Map()
   ethLoading = false
-  ethError = ''
   chainId = ''
   blockId = ''
 
@@ -84,7 +84,6 @@ class PublicAccountStore extends PersistableStore {
   async onConnect() {
     try {
       this.ethLoading = true
-      this.ethError = ''
 
       const instance = await configuredModal.connect()
       const provider = new Web3Provider(instance)
@@ -95,17 +94,16 @@ class PublicAccountStore extends PersistableStore {
 
       const userNetwork = (await provider.getNetwork()).name
 
-      if (userNetwork !== network) {
-        this.ethError = `Looks like you're using ${userNetwork} network, try switching to ${network} and connect again`
-        return
-      }
+      if (userNetwork !== network)
+        throw new Error(ErrorList.wrongNetwork(userNetwork, network))
 
       await this.handleConnectAccount(providerName)
       this.subscribeProvider(instance)
     } catch (error) {
-      if (typeof error === 'string') return
-      console.error(error)
-      this.clearData()
+      if (error !== 'Modal closed by user') {
+        handleError(error)
+        this.clearData()
+      }
     } finally {
       this.ethLoading = false
     }
@@ -151,23 +149,18 @@ class PublicAccountStore extends PersistableStore {
     const providerName = providerInfo.name
 
     provider.on('error', (error: Error) => {
-      console.error(error)
-      this.ethError = error.message
+      handleError(error)
     })
 
     provider.on('accountsChanged', () => {
-      if (this.ethError) return
       void this.handleConnectAccount(providerName)
     })
 
     provider.on('disconnect', () => {
-      console.log('disconnect')
-      if (this.ethError) return
       void this.handleAccountChanged(providerName)
     })
 
     provider.on('stop', () => {
-      if (this.ethError) return
       void this.handleAccountChanged(providerName)
     })
 
@@ -181,7 +174,6 @@ class PublicAccountStore extends PersistableStore {
   }
 
   private clearData() {
-    console.log('clearData')
     configuredModal.clearCachedProvider()
     this.connectedAccounts = new Map()
   }
@@ -279,7 +271,7 @@ class PublicAccountStore extends PersistableStore {
       ).isZero()
       return !zeroBalance
     } catch (error) {
-      console.error(error)
+      handleError(error)
     }
   }
 
