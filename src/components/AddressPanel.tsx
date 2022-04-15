@@ -33,6 +33,8 @@ import AppStore from 'stores/AppStore'
 import ConnectPublicAccount from 'components/ConnectPublicAccount'
 import ConnectedPublicAccountList from 'components/ConnectedPublicAccountList'
 import OptionsIcon from 'components/OptionsIcon'
+import PublicAccountStore from 'stores/PublicAccountStore'
+import useBreakpoints from 'helpers/useBreakpoints'
 
 const buttonColor = (color: ButtonColor) => {
   const { theme } = useSnapshot(AppStore)
@@ -89,10 +91,16 @@ const panelContainer = classnames(
 const popoverConteiner = classnames(position('relative'), margin('!mt-0'))
 
 export default function AddressPanel() {
+  const { md } = useBreakpoints()
+
   return (
     <Popover className={popoverConteiner}>
       <Popover.Button className={button('accent')}>
-        <OptionsIcon />
+        {md || PublicAccountStore.privateKey ? (
+          <OptionsIcon />
+        ) : (
+          'Select another address'
+        )}
       </Popover.Button>
       <Popover.Panel className={panelContainer}>
         <ConnectedPublicAccountList />
