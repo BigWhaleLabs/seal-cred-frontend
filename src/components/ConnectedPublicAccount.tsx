@@ -49,8 +49,7 @@ export default function ConnectedPublicAccount({
 }: {
   account: Account
 }) {
-  const isSelected =
-    PublicAccountStore.currentAccount.address === account.address
+  const isSelected = PublicAccountStore.account.address === account.address
 
   const isActive = PublicAccountStore.isActive(account)
   const hasPrivateKey = PublicAccountStore.hasPrivateKey(account)
@@ -58,7 +57,7 @@ export default function ConnectedPublicAccount({
 
   function onClick() {
     if (!isSelected) {
-      PublicAccountStore.currentAccount = account
+      PublicAccountStore.account = account
     }
   }
 

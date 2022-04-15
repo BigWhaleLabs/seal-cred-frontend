@@ -23,7 +23,7 @@ export type Account = { provider: string; address: string }
 
 class PublicAccountStore extends PersistableStore {
   defaultAccount: Wallet = Wallet.createRandom()
-  currentAccount: Account = this.generated
+  account: Account = this.generated
   activeAccount: Map<string, Account> = new Map()
   connectedAccounts: Map<string, Set<string>> = new Map()
   ethLoading = false
@@ -67,13 +67,9 @@ class PublicAccountStore extends PersistableStore {
   }
 
   get privateKey() {
-    return this.currentAccount.address === this.defaultAccount.address
+    return this.account.address === this.defaultAccount.address
       ? this.defaultAccount.privateKey
       : null
-  }
-
-  get account() {
-    return this.currentAccount
   }
 
   removeAccount(account: Account) {
@@ -113,12 +109,12 @@ class PublicAccountStore extends PersistableStore {
     const accounts = await this.handleAccountChanged(providerName)
 
     if (accounts.length > 0) {
-      this.currentAccount = {
+      this.account = {
         provider: providerName,
         address: accounts[0] || this.defaultAccount.address,
       }
 
-      this.activeAccount.set(providerName, this.currentAccount)
+      this.activeAccount.set(providerName, this.account)
       this.activeAccount = new Map(this.activeAccount.entries())
     }
   }
@@ -247,7 +243,7 @@ class PublicAccountStore extends PersistableStore {
   }
 
   async mintDerivative(proof: ProofResponse) {
-    const derivativeContract = this.getContract(this.currentAccount)
+    const derivativeContract = this.getContract(this.account)
 
     if (!derivativeContract) return
 
@@ -262,7 +258,7 @@ class PublicAccountStore extends PersistableStore {
 
   async checkAddressForMint(ethAddress: string) {
     try {
-      const derivativeContract = this.getContract(this.currentAccount)
+      const derivativeContract = this.getContract(this.account)
 
       if (!derivativeContract) return
 
@@ -276,7 +272,7 @@ class PublicAccountStore extends PersistableStore {
   }
 
   async checkAddressIsOwner(tokenId: string, ethAddress: string) {
-    const derivativeContract = this.getContract(this.currentAccount)
+    const derivativeContract = this.getContract(this.account)
 
     if (!derivativeContract) return
 
