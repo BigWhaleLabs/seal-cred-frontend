@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import {
   backgroundColor,
+  borderColor,
   borderRadius,
   borderWidth,
   boxShadow,
@@ -23,7 +24,8 @@ const cardContainer = (shadow?: boolean) => {
     borderRadius('rounded-block'),
     backgroundColor(theme === 'dark' ? 'bg-semi-background' : 'bg-background'),
     boxShadow(shadow ? 'shadow' : undefined),
-    borderWidth(theme === 'light' ? 'border' : undefined),
+    borderWidth('border'),
+    borderColor(theme === 'dark' ? 'border-black' : 'border-gray-200'),
     padding('p-6'),
     space('space-y-4')
   )
