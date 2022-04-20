@@ -68,7 +68,8 @@ export default function ConnectedPublicAccount({
   return (
     <div className={connectedPublicAccountContainer}>
       <span className={accountText(isSelected)} onClick={onClick}>
-        {address.slice(0, 6)}...{address.slice(-6)}
+        {address.slice(0, 5)}...
+        {address.slice(address.length - 4, address.length)}
         <span className={providerText}>{provider}</span>
       </span>
       {!hasPrivateKey && !isActive && (

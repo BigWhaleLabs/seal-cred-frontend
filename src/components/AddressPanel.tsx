@@ -62,8 +62,8 @@ const button = (color: ButtonColor) =>
     alignItems('items-center'),
     fontWeight('font-bold'),
     textColor('text-white'),
-    padding('py-3', 'px-4', 'md:py-4', 'md:px-6'),
-    borderRadius('rounded-full'),
+    padding('py-4', 'px-6'),
+    borderRadius('rounded'),
     outlineStyle('focus:outline-none'),
     buttonColor(color)
   )
@@ -88,7 +88,10 @@ const panelContainer = classnames(
   margin('mt-3')
 )
 
-const popoverConteiner = classnames(position('relative'), margin('!mt-0'))
+const popoverConteiner = classnames(
+  position('relative'),
+  margin('!mt-0', 'mx-1')
+)
 
 export default function AddressPanel() {
   const { md } = useBreakpoints()
