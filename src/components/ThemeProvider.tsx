@@ -3,6 +3,7 @@ import {
   backgroundColor,
   classnames,
   height,
+  minHeight,
   transitionProperty,
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
@@ -12,7 +13,8 @@ const ThemeProvider: FC = ({ children }) => {
   const { theme } = useSnapshot(AppStore)
   const backgroundStyle = classnames(
     backgroundColor('bg-background'),
-    height('h-screen'),
+    height('h-full'),
+    minHeight('min-h-screen'),
     transitionProperty('transition-colors')
   )
   const root = window.document.documentElement
