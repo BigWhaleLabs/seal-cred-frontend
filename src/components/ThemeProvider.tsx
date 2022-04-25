@@ -6,11 +6,10 @@ import {
   minHeight,
   transitionProperty,
 } from 'classnames/tailwind'
-import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
 
 const ThemeProvider: FC = ({ children }) => {
-  const { theme } = useSnapshot(AppStore)
+  const { theme } = AppStore
   const backgroundStyle = classnames(
     backgroundColor('bg-background'),
     height('h-full'),

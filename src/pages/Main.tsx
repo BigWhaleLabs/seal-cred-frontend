@@ -1,11 +1,20 @@
-import Identities from 'components/Identities'
-import PublicAddress from 'components/PublicAddress'
+import { HeaderText } from 'components/Text'
+import { useSnapshot } from 'valtio'
+import Card from 'components/Card'
+import Wallet from 'components/Wallet'
+import WalletStore from 'stores/WalletStore'
 
 export default function Main() {
+  const { account } = useSnapshot(WalletStore)
   return (
-    <>
-      <PublicAddress />
-      <Identities />
-    </>
+    <Card>
+      <HeaderText>That's you:</HeaderText>
+      <Wallet />
+      {account && (
+        <>
+          <HeaderText>Supported NFTs that you own:</HeaderText>
+        </>
+      )}
+    </Card>
   )
 }

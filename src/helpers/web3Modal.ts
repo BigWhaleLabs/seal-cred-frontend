@@ -5,13 +5,14 @@ import Fortmatic from 'fortmatic'
 import Torus from '@toruslabs/torus-embed'
 import WalletConnect from '@walletconnect/web3-provider'
 import Web3Modal from 'web3modal'
+import env from 'helpers/env'
 
-const infuraId = import.meta.env.VITE_INFURA_ID as string
-const network = import.meta.env.VITE_ETH_NETWORK as string
-const appName = import.meta.env.VITE_APP_NAME as string
+const infuraId = env.VITE_INFURA_ID as string
+const network = env.VITE_ETH_NETWORK as string
+const appName = env.VITE_APP_NAME as string
 const theme = AppStore.theme
 
-const configuredModal = new Web3Modal({
+const web3Modal = new Web3Modal({
   cacheProvider: true,
   theme,
   disableInjectedProvider: false,
@@ -20,7 +21,7 @@ const configuredModal = new Web3Modal({
     fortmatic: {
       package: Fortmatic,
       options: {
-        key: import.meta.env.VITE_FORTMATIC_KEY as string,
+        key: env.VITE_FORTMATIC_KEY as string,
         network,
       },
     },
@@ -44,11 +45,11 @@ const configuredModal = new Web3Modal({
     bitski: {
       package: Bitski,
       options: {
-        clientId: import.meta.env.VITE_BITSKI_CLIENT_ID as string,
+        clientId: env.VITE_BITSKI_CLIENT_ID as string,
         callbackUrl: `${window.location.origin}/callback.html`,
       },
     },
   },
 })
 
-export default configuredModal
+export default web3Modal

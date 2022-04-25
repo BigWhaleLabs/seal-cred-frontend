@@ -6,13 +6,10 @@ import AppStore from 'stores/AppStore'
 import Main from 'pages/Main'
 import Navbar from 'components/Navbar'
 import NotFound from 'pages/NotFound'
-import ProofStore from 'stores/ProofStore'
 import Root from 'components/Root'
 
 export default function App() {
   const { theme } = useSnapshot(AppStore)
-  ProofStore.startIntervalChecker()
-
   return (
     <Root>
       <Router>

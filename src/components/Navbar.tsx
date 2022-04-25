@@ -14,7 +14,7 @@ import {
   transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
-import Logo from 'components/Logo'
+import Logo from 'icons/Logo'
 import ThemeToggle from 'components/ThemeToggle'
 
 const navbar = classnames(

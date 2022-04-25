@@ -17,7 +17,6 @@ import {
   translate,
   width,
 } from 'classnames/tailwind'
-import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
 import Theme from 'models/Theme'
 
@@ -51,15 +50,13 @@ const toggleDark = classnames(
 const toggleLight = classnames(rotate('rotate-0'), translate('translate-x-0'))
 const transition = classnames(transitionProperty('transition-colors'))
 
+const colors = (theme: Theme) => ({
+  path: `var(${theme === 'dark' ? '--accent' : '--logo-layer-gradient-from'})`,
+  circle: `var(--semi-background)`,
+})
+
 const ThemeToggle = () => {
-  const appStoreSnapshot = useSnapshot(AppStore)
-  const theme = appStoreSnapshot.theme
-  const colors = (theme: Theme) => ({
-    path: `var(${
-      theme === 'dark' ? '--accent' : '--logo-layer-gradient-from'
-    })`,
-    circle: `var(--semi-background)`,
-  })
+  const { theme } = AppStore
 
   return (
     <button

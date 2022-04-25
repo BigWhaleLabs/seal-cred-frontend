@@ -1,5 +1,5 @@
 import { IncrementalMerkleTree } from '@zk-kit/incremental-merkle-tree'
-import EthStore from 'stores/EthStore'
+import EthStore from 'stores/WalletStore'
 import poseidon from 'poseidon/poseidon.js'
 
 export default async function createTreeProof() {

@@ -15,9 +15,8 @@ import {
   textColor,
   transitionProperty,
 } from 'classnames/tailwind'
-import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
-import Loading from 'components/Loading'
+import Loading from 'icons/Loading'
 
 export type ButtonColor = 'accent' | 'primary' | 'success' | 'error'
 
@@ -53,7 +52,6 @@ const button = (
   )
 
 const buttonColor = (color: ButtonColor, disabled?: boolean) => {
-  const { theme } = useSnapshot(AppStore)
   return classnames(
     color === 'accent'
       ? backgroundColor('bg-accent', 'hover:bg-accent-dimmed')
@@ -66,7 +64,9 @@ const buttonColor = (color: ButtonColor, disabled?: boolean) => {
         )
       : backgroundColor('bg-error', 'hover:bg-error-light'),
     textColor(
-      color === 'primary' && theme === 'dark' ? 'text-semi-background' : null
+      color === 'primary' && AppStore.theme === 'dark'
+        ? 'text-semi-background'
+        : null
     )
   )
 }
