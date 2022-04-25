@@ -13,6 +13,10 @@ export default function Main() {
       {account && (
         <>
           <HeaderText>Supported NFTs that you own:</HeaderText>
+          <HeaderText>ZK proofs that you can generate:</HeaderText>
+          <HeaderText>ZK proofs that you generated:</HeaderText>
+          <HeaderText>Derivative NFTs that you can mint:</HeaderText>
+          <HeaderText>Derivative NFTs that you own:</HeaderText>
         </>
       )}
     </Card>
