@@ -1508,10 +1508,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/street-cred-ledger-contract@npm:^0.0.5":
-  version: 0.0.5
-  resolution: "@big-whale-labs/street-cred-ledger-contract@npm:0.0.5"
-  checksum: cc8e5279d6b0f4e4b96613f3b842fb6a2d0c8c9ac98e163043bdf493d436165223a8bdfc08158b8c91a2bc21a0ce980b4630722e8b39555e6fde118e263d7276
+"@big-whale-labs/street-cred-ledger-contract@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@big-whale-labs/street-cred-ledger-contract@npm:0.0.6"
+  checksum: 64821d0cc1030303285e2c3024ee63abdcc66f40d60eab93fbb3bece4aae37df8e09601f3bc8257e7213d2ee9030bcc302ae8ef65c69713650b5b70fd7de37f7
   languageName: node
   linkType: hard
 
@@ -14776,7 +14776,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "street-cred-frontend@workspace:."
   dependencies:
-    "@big-whale-labs/street-cred-ledger-contract": ^0.0.5
+    "@big-whale-labs/street-cred-ledger-contract": ^0.0.6
     "@coinbase/wallet-sdk": ^3.0.8
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@originjs/vite-plugin-commonjs": ^1.0.3
