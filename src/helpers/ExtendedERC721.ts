@@ -20,10 +20,17 @@ export default class ExtendedERC721Contract {
   async getListOfOwners() {
     const eventsFilter = this.contract.filters.Transfer()
     const events = await this.contract.queryFilter(eventsFilter)
-    const owners = []
+    const ownerMap = new Map<string, string>()
     for (const event of events) {
-      owners.push(event.args.to)
+      if (!event.args) {
+        continue
+      }
+      const { to, tokenId } = event.args
+      if (to) {
+        ownerMap.set(tokenId.toString(), to)
+      }
     }
-    return owners
+    const ownerSet = new Set(ownerMap.values())
+    return [...ownerSet]
   }
 }
