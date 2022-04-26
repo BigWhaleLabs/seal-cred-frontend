@@ -39,7 +39,7 @@ export default class ExtendedERC721Contract {
     const events = await this.contract.queryFilter(eventsFilter)
     const ids = events
       .filter((event) => event.args.to.toLowerCase() === account.toLowerCase())
-      .map((id) => Number(id))
+      .map((event) => Number(event.args.tokenId))
     return ids
   }
 
