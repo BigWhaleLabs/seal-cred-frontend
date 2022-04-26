@@ -33,4 +33,23 @@ export default class ExtendedERC721Contract {
     const ownerSet = new Set(ownerMap.values())
     return [...ownerSet]
   }
+
+  async getAllAccountTokenIds(account: string) {
+    const eventsFilter = this.contract.filters.Transfer()
+    const events = await this.contract.queryFilter(eventsFilter)
+    const ids = events
+      .filter((event) => event.args.to.toLowerCase() === account.toLowerCase())
+      .map((event) => Number(event.args.tokenId))
+    return ids
+  }
+
+  async getTokenId(account: string) {
+    const eventsFilter = this.contract.filters.Transfer()
+    const events = await this.contract.queryFilter(eventsFilter)
+    const event = events.find(
+      (event) => event.args.to.toLowerCase() === account.toLowerCase()
+    )
+
+    return event ? Number(event.args.tokenId) : undefined
+  }
 }
