@@ -1,4 +1,5 @@
 import { proxy } from 'valtio'
+import ExtendedERC721Contract from 'helpers/extendedERC721'
 import Ledger from 'types/Ledger'
 import getLedger from 'helpers/getLedger'
 import streetCred from 'helpers/streetCred'
@@ -15,15 +16,18 @@ const StreetCredStore = proxy<StreetCredStoreType>({
   ledger: getLedger(streetCred),
 })
 
-// TODO: make sure that the ledger is always up-to-date
 streetCred.on(
   streetCred.filters.SetMerkleRoot(),
-  (tokenAddress, merkleRoot) => {
-    // StreetCredStore.ledger[tokenAddress] = merkleRoot
+  async (tokenAddress, merkleRoot) => {
+    const ledger = await StreetCredStore.ledger
+    if (!ledger) return
+    ledger[tokenAddress] = new ExtendedERC721Contract(tokenAddress, merkleRoot)
   }
 )
-streetCred.on(streetCred.filters.DeleteMerkleRoot(), (tokenAddress) => {
-  // delete StreetCredStore.ledger[tokenAddress]
+streetCred.on(streetCred.filters.DeleteMerkleRoot(), async (tokenAddress) => {
+  const ledger = await StreetCredStore.ledger
+  if (!ledger) return
+  delete ledger[tokenAddress]
 })
 
 export default StreetCredStore
