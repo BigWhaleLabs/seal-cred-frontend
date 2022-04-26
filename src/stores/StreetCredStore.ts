@@ -1,15 +1,17 @@
+import { getDerivativeAddresses, getLedger } from 'helpers/getLedger'
 import { proxy } from 'valtio'
 import ExtendedERC721Contract from 'helpers/ExtendedERC721Contract'
 import Ledger from 'types/Ledger'
-import getLedger from 'helpers/getLedger'
 import streetCred from 'helpers/streetCred'
 
 type StreetCredStoreType = {
   ledger: Promise<Ledger | undefined>
+  derivatives: Promise<string[]>
 }
 
 const StreetCredStore = proxy<StreetCredStoreType>({
   ledger: getLedger(streetCred),
+  derivatives: getDerivativeAddresses(streetCred),
 })
 
 streetCred.on(
