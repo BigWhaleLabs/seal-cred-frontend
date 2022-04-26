@@ -1,12 +1,14 @@
 import { IncrementalMerkleTree } from '@zk-kit/incremental-merkle-tree'
-import { getAddresses, getTokenId } from 'helpers/getContractData'
+import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import poseidon from 'poseidon/poseidon.js'
 
 export default async function createTreeProof(contract?: string) {
   if (!contract || !WalletStore.account) return
-  const tokenId = await getTokenId(contract, WalletStore.account)
-  const addresses = await getAddresses(contract)
+  const ledger = await StreetCredStore.ledger
+  if (!ledger) return
+  const tokenId = await ledger[contract].getTokenId(WalletStore.account)
+  const addresses = await ledger[contract].getListOfOwners()
   if (!addresses || tokenId === undefined) return
 
   const tree = new IncrementalMerkleTree(poseidon, 20, BigInt(0), 2)
