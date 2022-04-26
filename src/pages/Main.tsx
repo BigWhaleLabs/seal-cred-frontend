@@ -4,6 +4,8 @@ import Card from 'components/Card'
 import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
 
+// TODO: use suspense and error boundaries as much as you can
+
 export default function Main() {
   const { account } = useSnapshot(WalletStore)
   return (
@@ -13,10 +15,19 @@ export default function Main() {
       {account && (
         <>
           <HeaderText>Supported NFTs that you own:</HeaderText>
+          {/* TODO: use StreetCredStore to fetch all NFTs that the user owns from the list of supported contracts in sc ledger */}
           <HeaderText>ZK proofs that you can generate:</HeaderText>
+          {/* TODO: Display "Supported NFTs that you own" minus the ZK proofs that are already generated (or take it from ProofStore?) */}
+          {/* TODO: each ZK proof that can be generated should have the button "generate", which should call ProofStore.generate method */}
+          {/* TODO: proofs that are being generated should be taken from ProofStore, just being displayed here, no actual business-logic should be present in the UI */}
+          {/* TODO: we should be able to generate multiple proofs at a time (even though they are queued) */}
+          {/* TODO: we should display the queue position of the jobs */}
           <HeaderText>ZK proofs that you generated:</HeaderText>
+          {/* TODO: should display saved ZK proofs from ProofStore */}
           <HeaderText>Derivative NFTs that you can mint:</HeaderText>
+          {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
           <HeaderText>Derivative NFTs that you own:</HeaderText>
+          {/* TODO: should display the derivative NFTs that are already minted for the address */}
         </>
       )}
     </Card>

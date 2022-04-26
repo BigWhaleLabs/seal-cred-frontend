@@ -3,6 +3,11 @@ import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResponse from 'models/ProofResponse'
 
+// TODO: Should have the "generate" function, and "proofsInProgress", "proofsReady" properties
+// TODO: "generate" should take derivative contract address as an argument; should fetch the list of owners from StreetCredStore and the account from WalletStore, then it should call the "generate" function of zk-proof-generator, add the proof to "proofsInProgress"
+// TODO: "checkJobs" should be called every 5 seconds and update the jobs in "proofsInProgress", moving them to "proofsReady" if they are done
+// TODO: "proofsInProgress" and "proofsReady" should be persisted
+
 interface JobObject {
   _id: string
   status: string
