@@ -15,7 +15,6 @@ function Proofs() {
     <>
       <HeaderText>Supported NFTs that you own:</HeaderText>
       <SupportedNftWrapper />
-      {/* TODO: use StreetCredStore to fetch all NFTs that the user owns from the list of supported contracts in sc ledger */}
       <HeaderText>ZK proofs that you can generate:</HeaderText>
       {/* {proofsCanGenerate.map((record) => (
         <ZKProofGenerate {...record} />
@@ -29,7 +28,6 @@ function Proofs() {
       {[...proofsReady.keys()].map((address) => (
         <ZKProofReady address={address} />
       ))}
-      {/* TODO: should display saved ZK proofs from ProofStore */}
       <HeaderText>Derivative NFTs that you can mint:</HeaderText>
       {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
       <HeaderText>Derivative NFTs that you own:</HeaderText>
