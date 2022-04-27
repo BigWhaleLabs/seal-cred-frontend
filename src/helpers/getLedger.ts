@@ -3,7 +3,6 @@ import {
   SCERC721Derivative__factory,
   StreetCredLedger,
 } from '@big-whale-labs/street-cred-ledger-contract'
-import ExtendedERC721Contract from 'helpers/ExtendedERC721Contract'
 import Ledger from 'types/Ledger'
 import defaultProvider from 'helpers/defaultProvider'
 
