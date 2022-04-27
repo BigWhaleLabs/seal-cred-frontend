@@ -4,14 +4,21 @@ import {
 } from '@big-whale-labs/street-cred-ledger-contract'
 import Ledger from 'types/Ledger'
 
-const getMintedContracts = async (
+async function isTokenOwner(contract: ERC721, account: string) {
+  return !!Number(await contract.balanceOf(account))
+}
+
+function getFilteredContracts(
   allContracts: (ERC721 | SCERC721Derivative)[],
-  account: string
-) => {
+  account: string,
+  minted = true
+) {
   try {
     return Promise.all(
-      await allContracts.filter(async (contract) =>
-        Number(await contract.balanceOf(account))
+      allContracts.filter((contract) =>
+        minted
+          ? isTokenOwner(contract, account)
+          : !isTokenOwner(contract, account)
       )
     )
   } catch (error) {
@@ -27,7 +34,7 @@ export function getDerivativeContracts(ledger: Ledger, account?: string) {
     derivativeContracts.push(derivativeContract)
   )
 
-  return getMintedContracts(derivativeContracts, account) as Promise<
+  return getFilteredContracts(derivativeContracts, account) as Promise<
     SCERC721Derivative[]
   >
 }
@@ -40,5 +47,5 @@ export function getOriginalContracts(ledger: Ledger, account?: string) {
     originalContracts.push(originalContract)
   )
 
-  return getMintedContracts(originalContracts, account)
+  return getFilteredContracts(originalContracts, account)
 }
