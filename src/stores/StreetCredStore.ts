@@ -1,4 +1,8 @@
-import { getOriginalContracts } from 'helpers/fetchTokens'
+import { SCERC721Derivative } from '@big-whale-labs/street-cred-ledger-contract'
+import {
+  getDerivativeUnmintedContracts,
+  getOriginalContracts,
+} from 'helpers/fetchTokens'
 import { proxy } from 'valtio'
 import Ledger from 'types/Ledger'
 import getLedger, { getLedgerRecord } from 'helpers/getLedger'
@@ -7,14 +11,23 @@ import streetCred from 'helpers/streetCred'
 type StreetCredStoreType = {
   ledger: Promise<Ledger>
   originalOwnedTokens: Promise<(string | undefined)[]>
+  unmintedDerivatives: Promise<SCERC721Derivative[]>
 
   requestOriginalContracts: (account?: string) => void
+  refreshUnmintedDerivatives: (account?: string) => void
 }
 
 const StreetCredStore = proxy<StreetCredStoreType>({
   ledger: getLedger(streetCred),
   originalOwnedTokens: Promise.resolve([]),
+  unmintedDerivatives: Promise.resolve([]),
 
+  refreshUnmintedDerivatives: async (account?: string) => {
+    StreetCredStore.unmintedDerivatives = getDerivativeUnmintedContracts(
+      await StreetCredStore.ledger,
+      account
+    )
+  },
   requestOriginalContracts: async (account?: string) => {
     const tokens = await getOriginalContracts(account)
     StreetCredStore.originalOwnedTokens = Promise.all(

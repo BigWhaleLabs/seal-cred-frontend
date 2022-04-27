@@ -4,6 +4,7 @@ import Card from 'components/Card'
 import ProofStore from 'stores/ProofStore'
 import React from 'react'
 import SupportedNftWrapper from 'components/SupportedNft'
+import UnmintedDerivatives from 'components/UnmintedDerivatives'
 import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
 import ZKProofReady from 'components/ZKProofReady'
@@ -30,6 +31,7 @@ function Proofs() {
       ))}
       <HeaderText>Derivative NFTs that you can mint:</HeaderText>
       {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
+      <UnmintedDerivatives />
       <HeaderText>Derivative NFTs that you own:</HeaderText>
       {/* TODO: should display the derivative NFTs that are already minted for the address */}
     </>
