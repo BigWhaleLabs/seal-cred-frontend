@@ -1,4 +1,7 @@
-import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
+import {
+  ERC721,
+  SCERC721Derivative,
+} from '@big-whale-labs/street-cred-ledger-contract'
 import {
   getDerivativeContracts,
   getOriginalContracts,
@@ -11,7 +14,7 @@ import streetCred from 'helpers/streetCred'
 type StreetCredStoreType = {
   ledger: Promise<Ledger>
   originalOwnedTokens: Promise<ERC721[]>
-  derivativeOwnedTokens: Promise<ERC721[]>
+  derivativeOwnedTokens: Promise<SCERC721Derivative[]>
 
   refreshOriginalContracts: (account?: string) => void
   refreshDerivativeContracts: (account?: string) => void

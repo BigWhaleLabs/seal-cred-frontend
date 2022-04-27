@@ -31,7 +31,7 @@ function Proofs() {
       <HeaderText>Derivative NFTs that you can mint:</HeaderText>
       {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
       <HeaderText>Derivative NFTs that you own:</HeaderText>
-      <MintedDerivativeNft />
+      {/* <MintedDerivativeNft /> */}
     </>
   )
 }

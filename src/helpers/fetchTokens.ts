@@ -1,9 +1,13 @@
-import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
+import {
+  ERC721,
+  SCERC721Derivative,
+} from '@big-whale-labs/street-cred-ledger-contract'
 import Ledger from 'types/Ledger'
-import getLedger from 'helpers/getLedger'
-import streetCred from 'helpers/streetCred'
 
-const getMintedContracts = async (allContracts: ERC721[], account: string) => {
+const getMintedContracts = async (
+  allContracts: (ERC721 | SCERC721Derivative)[],
+  account: string
+) => {
   try {
     return Promise.all(
       await allContracts.filter(async (contract) =>
@@ -15,18 +19,20 @@ const getMintedContracts = async (allContracts: ERC721[], account: string) => {
   }
 }
 
-function getDerivativeContracts(ledger: Ledger, account?: string) {
+export function getDerivativeContracts(ledger: Ledger, account?: string) {
   if (!account) return Promise.resolve([])
-  const derivativeContracts: ERC721[] = []
+  const derivativeContracts: SCERC721Derivative[] = []
 
   ledger.forEach(({ derivativeContract }) =>
     derivativeContracts.push(derivativeContract)
   )
 
-  return getMintedContracts(derivativeContracts, account)
+  return getMintedContracts(derivativeContracts, account) as Promise<
+    SCERC721Derivative[]
+  >
 }
 
-function getOriginalContracts(ledger: Ledger, account?: string) {
+export function getOriginalContracts(ledger: Ledger, account?: string) {
   if (!account) return Promise.resolve([])
   const originalContracts: ERC721[] = []
 
@@ -36,5 +42,3 @@ function getOriginalContracts(ledger: Ledger, account?: string) {
 
   return getMintedContracts(originalContracts, account)
 }
-
-export { getOriginalContracts, getDerivativeContracts }
