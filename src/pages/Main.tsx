@@ -1,9 +1,9 @@
 import { HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
+import MintedDerivativeNft from 'components/MintedDerivativeNft'
 import ProofStore from 'stores/ProofStore'
-import React from 'react'
-import SupportedNftWrapper from 'components/SupportedNft'
+import SupportedNFTs from 'components/SupportedNFTs'
 import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
 import ZKProofReady from 'components/ZKProofReady'
@@ -14,7 +14,7 @@ function Proofs() {
   return (
     <>
       <HeaderText>Supported NFTs that you own:</HeaderText>
-      <SupportedNftWrapper />
+      <SupportedNFTs />
       <HeaderText>ZK proofs that you can generate:</HeaderText>
       {/* {proofsCanGenerate.map((record) => (
         <ZKProofGenerate {...record} />
@@ -31,12 +31,12 @@ function Proofs() {
       <HeaderText>Derivative NFTs that you can mint:</HeaderText>
       {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
       <HeaderText>Derivative NFTs that you own:</HeaderText>
-      {/* TODO: should display the derivative NFTs that are already minted for the address */}
+      <MintedDerivativeNft />
     </>
   )
 }
 
-export function MainContent() {
+function Main() {
   const { account } = useSnapshot(WalletStore)
 
   return (
@@ -45,14 +45,6 @@ export function MainContent() {
       <Wallet />
       {account && <Proofs />}
     </Card>
-  )
-}
-
-function Main() {
-  return (
-    <React.Suspense fallback={'loading'}>
-      <MainContent />
-    </React.Suspense>
   )
 }
 
