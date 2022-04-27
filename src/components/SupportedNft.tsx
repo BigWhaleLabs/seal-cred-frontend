@@ -2,11 +2,10 @@ import { AccentText } from 'components/Text'
 import { Suspense, useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
-import StreetCredStore from 'stores/StreetCredStore'
-import WalletStore from 'stores/WalletStore'
+import StreetCredAccountStore from 'stores/StreetCredAccountStore'
 
 function SupportedNft() {
-  const { originalOwnedTokens } = useSnapshot(StreetCredStore)
+  const { originalOwnedTokens } = useSnapshot(StreetCredAccountStore)
 
   return (
     <>
@@ -18,11 +17,6 @@ function SupportedNft() {
 }
 
 function SupportedNftWrapper() {
-  const { account } = useSnapshot(WalletStore)
-  useEffect(() => {
-    StreetCredStore.requestOriginalContracts(account)
-  }, [account])
-
   return (
     <Suspense fallback={<AccentText>Fetching avaliable tokens ...</AccentText>}>
       <SupportedNft />

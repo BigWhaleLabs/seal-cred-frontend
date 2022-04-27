@@ -1,26 +1,30 @@
-import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
-import getLedger from 'helpers/getLedger'
-import streetCred from 'helpers/streetCred'
+import Ledger from 'types/Ledger'
 
-async function getDerivativeContracts() {
-  return await []
-}
-
-async function getOriginalContracts(account?: string) {
+function getDerivativeContracts(ledger: Ledger, account?: string) {
   if (!account) return []
-  const ledger = await getLedger(streetCred)
-  const listOfContracts: ERC721[] = []
-
-  ledger.forEach(({ originalContract }) =>
-    listOfContracts.push(originalContract)
-  )
 
   return Promise.all(
-    listOfContracts
-      .map(async (contract) =>
-        Number(await contract.balanceOf(account)) ? contract : undefined
-      )
-      .filter((v) => !!v) // Removes all undefined
+    Array.from(ledger.values())
+      .map(async ({ derivativeContract }) => {
+        return Number(await derivativeContract.balanceOf(account))
+          ? derivativeContract
+          : undefined
+      })
+      .filter((contract) => !!contract)
+  )
+}
+
+function getOriginalContracts(ledger: Ledger, account?: string) {
+  if (!account) return []
+
+  return Promise.all(
+    Array.from(ledger.values())
+      .map(async ({ originalContract }) => {
+        return Number(await originalContract.balanceOf(account))
+          ? originalContract
+          : undefined
+      })
+      .filter((contract) => !!contract)
   )
 }
 
