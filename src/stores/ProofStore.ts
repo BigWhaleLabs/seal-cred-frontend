@@ -4,11 +4,11 @@ import {
   scheduleProofGeneration,
 } from 'helpers/callProof'
 import { proxy } from 'valtio'
-import EcdsaInput from 'models/EcdsaInput'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResponse from 'models/ProofResponse'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
+import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
 import getMapOfOwners from 'helpers/getMapOfOwners'
 import isAddressOwner from 'helpers/isAddressOwner'
@@ -25,10 +25,7 @@ class ProofStore extends PersistableStore {
   proofsInProgress: Map<string, JobObject> = new Map()
   proofsReady: Map<string, JobObject> = new Map()
 
-  async generate(
-    derivativeContractAddress: string,
-    ecdsaInput: EcdsaInput | undefined
-  ) {
+  async generate(derivativeContractAddress: string) {
     const account = WalletStore.account
     if (!account) throw new Error('No account found')
 
@@ -48,7 +45,11 @@ class ProofStore extends PersistableStore {
     const tokenId = owners.get(account)
     if (!tokenId) throw new Error('Account is not owner of contract')
 
+    const signature = await WalletStore.signMessage(derivativeContractAddress)
+    if (!signature) throw new Error('Signature is not found')
+
     const treeProof = createTreeProof(tokenId, addresses)
+    const ecdsaInput = createEcdsaInput(signature)
     const result = await scheduleProofGeneration(treeProof, ecdsaInput)
 
     this.tasks.set(derivativeContractAddress, result)
