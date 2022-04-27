@@ -51,8 +51,8 @@ class ProofStore extends PersistableStore {
     const treeProof = createTreeProof(tokenId, addresses)
     const result = await scheduleProofGeneration(treeProof, ecdsaInput)
 
-    this.tasks.set(result._id, result)
-    this.proofsInProgress.set(result._id, result)
+    this.tasks.set(derivativeContractAddress, result)
+    this.proofsInProgress.set(derivativeContractAddress, result)
 
     return result
   }

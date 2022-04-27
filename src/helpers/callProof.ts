@@ -51,7 +51,6 @@ export async function scheduleProofGeneration(
 export async function checkJobStatus(id: string) {
   const { data } = await axios.get<ProofCheck>(`${baseURL}/proof/${id}`)
 
-  console.log('data' + data.job?.proof)
   if (data.job?.proof) {
     const { proof, publicSignals } = data.job.proof
     const dataInHex: ProofResponse = {
