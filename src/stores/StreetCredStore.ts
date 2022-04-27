@@ -5,7 +5,7 @@ import getLedger from 'helpers/getLedger'
 import streetCred from 'helpers/streetCred'
 
 type StreetCredStoreType = {
-  ledger: Promise<Ledger | undefined>
+  ledger: Promise<Ledger>
 }
 
 const StreetCredStore = proxy<StreetCredStoreType>({
@@ -16,14 +16,15 @@ streetCred.on(
   streetCred.filters.SetMerkleRoot(),
   async (tokenAddress, merkleRoot) => {
     const ledger = await StreetCredStore.ledger
-    if (!ledger) return
-    ledger[tokenAddress] = new ExtendedERC721Contract(tokenAddress, merkleRoot)
+    ledger.set(
+      tokenAddress,
+      new ExtendedERC721Contract(tokenAddress, merkleRoot)
+    )
   }
 )
 streetCred.on(streetCred.filters.DeleteMerkleRoot(), async (tokenAddress) => {
   const ledger = await StreetCredStore.ledger
-  if (!ledger) return
-  delete ledger[tokenAddress]
+  if (ledger.has(tokenAddress)) ledger.delete(tokenAddress)
 })
 
 export default StreetCredStore
