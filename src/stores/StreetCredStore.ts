@@ -13,8 +13,8 @@ import streetCred from 'helpers/streetCred'
 
 type StreetCredStoreType = {
   ledger: Promise<Ledger>
-  originalOwnedTokens: Promise<ERC721[]>
-  derivativeOwnedTokens: Promise<SCERC721Derivative[]>
+  originalContracts: Promise<ERC721[]>
+  derivativeContracts: Promise<SCERC721Derivative[]>
 
   refreshOriginalContracts: (account?: string) => void
   refreshDerivativeContracts: (account?: string) => void
@@ -22,17 +22,17 @@ type StreetCredStoreType = {
 
 const StreetCredStore: StreetCredStoreType = proxy<StreetCredStoreType>({
   ledger: getLedger(streetCred),
-  originalOwnedTokens: Promise.resolve([]),
-  derivativeOwnedTokens: Promise.resolve([]),
+  originalContracts: Promise.resolve([]),
+  derivativeContracts: Promise.resolve([]),
 
   refreshOriginalContracts: async (account?: string) => {
-    StreetCredStore.originalOwnedTokens = getOriginalContracts(
+    StreetCredStore.originalContracts = getOriginalContracts(
       await StreetCredStore.ledger,
       account
     )
   },
   refreshDerivativeContracts: async (account?: string) => {
-    StreetCredStore.derivativeOwnedTokens = getDerivativeContracts(
+    StreetCredStore.derivativeContracts = getDerivativeContracts(
       await StreetCredStore.ledger,
       account
     )

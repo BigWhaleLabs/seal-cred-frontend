@@ -1,3 +1,3 @@
 export default {
-  DOSU: 'Dosu invite NFT',
+  'DOSU-d': 'Dosu invite NFT',
 } as { [contractSymbol: string]: string }
