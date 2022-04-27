@@ -5,30 +5,30 @@ import Card from 'components/Card'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 
-function SupportedNft() {
-  const { originalOwnedTokens } = useSnapshot(StreetCredStore)
+function TokenList() {
+  const { derivativeOwnedTokens } = useSnapshot(StreetCredStore)
 
   return (
     <>
-      {originalOwnedTokens.map((token, index) => (
+      {derivativeOwnedTokens.map((token, index) => (
         <Card key={index}>{token}</Card>
       ))}
     </>
   )
 }
 
-function SupportedNftWrapper() {
+function MintedDerivativeNft() {
   const { account } = useSnapshot(WalletStore)
   useEffect(() => {
-    StreetCredStore.originalOwnedTokens =
-      StreetCredStore.requestOriginalContracts(account)
+    StreetCredStore.derivativeOwnedTokens =
+      StreetCredStore.requestDerivativeContracts(account)
   }, [account])
 
   return (
-    <Suspense fallback={<AccentText>Fetching avaliable tokens ...</AccentText>}>
-      <SupportedNft />
+    <Suspense fallback={<AccentText>Fetching minted tokens ...</AccentText>}>
+      <TokenList />
     </Suspense>
   )
 }
 
-export default SupportedNftWrapper
+export default MintedDerivativeNft
