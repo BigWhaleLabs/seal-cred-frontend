@@ -17,12 +17,10 @@ async function getOriginalContracts(account?: string) {
 
   return Promise.all(
     listOfContracts
-      .map(async (contract) => {
-        return Number(await contract.balanceOf(account)) > 0
-          ? contract
-          : undefined
-      })
-      .filter((v) => !!v)
+      .map(async (contract) =>
+        Number(await contract.balanceOf(account)) ? contract : undefined
+      )
+      .filter((v) => !!v) // Removes all undefined
   )
 }
 
