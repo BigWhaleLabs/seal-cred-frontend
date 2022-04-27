@@ -29,8 +29,10 @@ const StreetCredStore: StreetCredStoreType = proxy<StreetCredStoreType>({
     )
   },
   refreshDerivativeContracts: async (account?: string) => {
-    const tokens = await getDerivativeContracts(account)
-    return Promise.all(tokens.map((contract) => contract?.name()))
+    StreetCredStore.derivativeOwnedTokens = getDerivativeContracts(
+      await StreetCredStore.ledger,
+      account
+    )
   },
 })
 

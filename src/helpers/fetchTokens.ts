@@ -15,9 +15,8 @@ const getMintedContracts = async (allContracts: ERC721[], account: string) => {
   }
 }
 
-async function getDerivativeContracts(account?: string) {
-  if (!account) return []
-  const ledger = await getLedger(streetCred)
+function getDerivativeContracts(ledger: Ledger, account?: string) {
+  if (!account) return Promise.resolve([])
   const derivativeContracts: ERC721[] = []
 
   ledger.forEach(({ derivativeContract }) =>
@@ -29,7 +28,6 @@ async function getDerivativeContracts(account?: string) {
 
 function getOriginalContracts(ledger: Ledger, account?: string) {
   if (!account) return Promise.resolve([])
-  // const ledger = await getLedger(streetCred)
   const originalContracts: ERC721[] = []
 
   ledger.forEach(({ originalContract }) =>
