@@ -23,8 +23,6 @@ function Proofs() {
       )
     }
 
-    console.log(account)
-
     void fetchOwnedTokens()
   }, [account])
 
