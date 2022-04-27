@@ -23,13 +23,13 @@ const badgesWrapper = classnames(
 )
 
 function TokenList() {
-  const { derivativeOwnedTokens } = useSnapshot(StreetCredStore)
+  const { derivativeContracts } = useSnapshot(StreetCredStore)
 
   return (
     <>
-      {derivativeOwnedTokens.length ? (
+      {derivativeContracts.length ? (
         <div className={badgesWrapper}>
-          {derivativeOwnedTokens.map((contract, index) => {
+          {derivativeContracts.map((contract, index) => {
             const { name, address, symbol } = contract
             return (
               <Badge

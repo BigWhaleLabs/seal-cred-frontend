@@ -69,13 +69,13 @@ const Token: FC<{ token: { name: ERC721['name']; address: string } }> = ({
 }
 
 function TokenList() {
-  const { originalOwnedTokens } = useSnapshot(StreetCredStore)
+  const { originalContracts } = useSnapshot(StreetCredStore)
 
   return (
     <>
-      {originalOwnedTokens.length ? (
+      {originalContracts.length ? (
         <Card>
-          {originalOwnedTokens.map((contract, index) => {
+          {originalContracts.map((contract, index) => {
             const { name, address } = contract
             return <Token key={index} token={{ name, address }} />
           })}
