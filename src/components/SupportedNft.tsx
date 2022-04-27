@@ -6,21 +6,20 @@ import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 
 function SupportedNft() {
-  const { originalContracts } = useSnapshot(StreetCredStore)
+  const { originalOwnedTokens } = useSnapshot(StreetCredStore)
 
   return (
     <>
-      {originalContracts.map((token, index) => (
+      {originalOwnedTokens.map((token, index) => (
         <Card key={index}>{token}</Card>
       ))}
     </>
   )
 }
 
-const SupportedNftWrapper = () => {
+function SupportedNftWrapper() {
   const { account } = useSnapshot(WalletStore)
   useEffect(() => {
-    if (!account) return
     StreetCredStore.requestOriginalContracts(account)
   }, [account])
 

@@ -6,19 +6,20 @@ async function getDerivativeContracts() {
   return await []
 }
 
-async function getOriginalContracts(account: string) {
+async function getOriginalContracts(account?: string) {
+  if (!account) return []
   const ledger = await getLedger(streetCred)
-  const listOfContracts = []
-  const iterator = ledger.values()
-  for (let index = 0; index < ledger.size; index++) {
-    const { originalContract } = iterator.next().value
+  const listOfContracts: ERC721[] = []
+
+  ledger.forEach(({ originalContract }) =>
     listOfContracts.push(originalContract)
-  }
+  )
+
   return Promise.all(
     listOfContracts
-      .map(async (contract: ERC721) => {
+      .map(async (contract) => {
         return Number(await contract.balanceOf(account)) > 0
-          ? contract.name()
+          ? contract
           : undefined
       })
       .filter((v) => !!v)

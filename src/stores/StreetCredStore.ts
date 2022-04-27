@@ -6,17 +6,20 @@ import streetCred from 'helpers/streetCred'
 
 type StreetCredStoreType = {
   ledger: Promise<Ledger>
-  originalContracts: Promise<(string | undefined)[]>
+  originalOwnedTokens: Promise<(string | undefined)[]>
 
-  requestOriginalContracts: (account: string) => void
+  requestOriginalContracts: (account?: string) => void
 }
 
 const StreetCredStore = proxy<StreetCredStoreType>({
   ledger: getLedger(streetCred),
-  originalContracts: Promise.resolve([]),
+  originalOwnedTokens: Promise.resolve([]),
 
-  requestOriginalContracts: (account: string) => {
-    StreetCredStore.originalContracts = getOriginalContracts(account)
+  requestOriginalContracts: async (account?: string) => {
+    const tokens = await getOriginalContracts(account)
+    StreetCredStore.originalOwnedTokens = Promise.all(
+      tokens.map((ctx) => ctx?.name())
+    )
   },
 })
 
