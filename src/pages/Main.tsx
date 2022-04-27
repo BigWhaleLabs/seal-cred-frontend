@@ -2,7 +2,7 @@ import { HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import ProofStore from 'stores/ProofStore'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import StreetCredStore from 'stores/StreetCredStore'
 import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
@@ -10,12 +10,28 @@ import ZKProofReady from 'components/ZKProofReady'
 
 function Proofs() {
   const { proofsReady } = useSnapshot(ProofStore)
-  const { ownedTokens } = useSnapshot(StreetCredStore)
+  const { account } = useSnapshot(WalletStore)
+  const [ownedNames, setOwnedNames] = useState<string[]>([])
+
+  useEffect(() => {
+    async function fetchOwnedTokens() {
+      const contracts = await StreetCredStore.ownedTokens(account)
+      setOwnedNames(
+        await Promise.all(
+          contracts.map(async (contract) => await contract.name())
+        )
+      )
+    }
+
+    console.log(account)
+
+    void fetchOwnedTokens()
+  }, [account])
 
   return (
     <>
       <HeaderText>Supported NFTs that you own:</HeaderText>
-      {ownedTokens.map((tokenName) => (
+      {ownedNames.map((tokenName) => (
         <Card>{tokenName}</Card>
       ))}
       <HeaderText>ZK proofs that you can generate:</HeaderText>

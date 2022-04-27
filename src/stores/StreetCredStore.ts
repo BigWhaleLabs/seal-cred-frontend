@@ -1,3 +1,4 @@
+import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
 import { proxy } from 'valtio'
 import Ledger from 'types/Ledger'
 import fetchTokensOwned from 'helpers/fetchTokens'
@@ -6,12 +7,12 @@ import streetCred from 'helpers/streetCred'
 
 type StreetCredStoreType = {
   ledger: Promise<Ledger>
-  ownedTokens: Promise<string[]>
+  ownedTokens: (account?: string) => Promise<ERC721[]>
 }
 
 const StreetCredStore = proxy<StreetCredStoreType>({
   ledger: getLedger(streetCred),
-  ownedTokens: fetchTokensOwned(),
+  ownedTokens: (account) => fetchTokensOwned(account),
 })
 
 streetCred.on(
