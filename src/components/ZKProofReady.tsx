@@ -1,5 +1,4 @@
 import { BadgeText } from 'components/Text'
-import { SCERC721Derivative } from '@big-whale-labs/street-cred-ledger-contract'
 import {
   alignItems,
   classnames,
