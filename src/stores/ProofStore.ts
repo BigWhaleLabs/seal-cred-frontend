@@ -1,39 +1,75 @@
-import { checkJobStatus } from 'helpers/callProof'
+import {
+  ProofStatus,
+  checkJobStatus,
+  scheduleProofGeneration,
+} from 'helpers/callProof'
 import { proxy } from 'valtio'
+import EcdsaInput from 'models/EcdsaInput'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResponse from 'models/ProofResponse'
-
-// TODO: Should have the "generate" function, and "proofsInProgress", "proofsReady" properties
-// TODO: "generate" should take derivative contract address as an argument; should fetch the list of owners from StreetCredStore and the account from WalletStore, then it should call the "generate" function of zk-proof-generator, add the proof to "proofsInProgress"
-// TODO: "checkJobs" should be called every 5 seconds and update the jobs in "proofsInProgress", moving them to "proofsReady" if they are done
-// TODO: "proofsInProgress" and "proofsReady" should be persisted
+import StreetCredStore from 'stores/StreetCredStore'
+import WalletStore from 'stores/WalletStore'
+import createTreeProof from 'helpers/createTreeProof'
 
 interface JobObject {
   _id: string
-  status: string
+  status: ProofStatus
   position?: number
   proof?: ProofResponse
 }
-type TaskJob = { [badge: string]: JobObject }
 
 class ProofStore extends PersistableStore {
-  tasks: TaskJob = {}
+  tasks: Map<string, JobObject> = new Map()
+  proofsInProgress: Map<string, JobObject> = new Map()
+  proofsReady: Map<string, JobObject> = new Map()
 
-  startIntervalChecker() {
-    setInterval(async () => {
-      await this.checkTasks()
-    }, 5000)
+  async generate(
+    derivativeContractAddress: string,
+    ecdsaInput: EcdsaInput | undefined
+  ) {
+    const account = WalletStore.account
+    if (!account) throw new Error('No account found')
+
+    const ledger = await StreetCredStore.ledger
+    const contract = ledger.get(derivativeContractAddress)
+    if (!contract) throw new Error('Derivative contract not found')
+
+    const isOwner = contract.isAddressOwner(account)
+    if (!isOwner) throw new Error('Account is not owner of contract')
+
+    const owners = await contract.getMapOfOwners()
+    const addresses = Array.from(owners.keys())
+
+    const tokenId = owners.get(account)
+    if (!tokenId) throw new Error('Account is not owner of contract')
+
+    const treeProof = createTreeProof(0, addresses)
+    const result = await scheduleProofGeneration(treeProof, ecdsaInput)
+
+    this.tasks.set(result._id, result)
+    this.proofsInProgress.set(result._id, result)
+
+    return result
   }
 
   async checkTasks() {
-    const fetchByKeys = Object.keys(this.tasks).map((key) =>
-      this.requestTaskData(this.tasks[key])
+    const items = Array.from(this.tasks.values()).filter((task) =>
+      [ProofStatus.scheduled, ProofStatus.running].includes(task.status)
     )
+    const fetchByKeys = items.map(this.requestTaskData)
     if (!fetchByKeys.length) return
     await Promise.all(fetchByKeys).then((results) => {
-      for (const badge in this.tasks) {
-        const data = results.find((r) => r?._id === this.tasks[badge]._id)
-        !data ? delete this.tasks[badge] : (this.tasks[badge] = data)
+      for (const [badge, job] of this.tasks) {
+        const data = results.find((r) => r?._id === job._id)
+        if (!data) {
+          this.tasks.delete(badge)
+        } else {
+          this.tasks.set(badge, data)
+          if (data.status === ProofStatus.completed) {
+            this.proofsReady.set(badge, data)
+            this.proofsInProgress.delete(badge)
+          }
+        }
       }
     })
   }
@@ -54,6 +90,44 @@ class ProofStore extends PersistableStore {
       return
     }
   }
+
+  reviver = (key: string, value: unknown) => {
+    switch (key) {
+      case 'proofsInProgress': {
+        return new Map(value as [string, JobObject][])
+      }
+      case 'proofsReady': {
+        return new Map(value as [string, JobObject][])
+      }
+      case 'tasks': {
+        return new Map(value as [string, JobObject][])
+      }
+      default:
+        return value
+    }
+  }
+
+  replacer = (key: string, value: unknown) => {
+    switch (key) {
+      case 'proofsInProgress': {
+        return Array.from(value as Map<string, JobObject>)
+      }
+      case 'proofsReady': {
+        return Array.from(value as Map<string, JobObject>)
+      }
+      case 'tasks': {
+        return Array.from(value as Map<string, JobObject>)
+      }
+      default:
+        return value
+    }
+  }
 }
 
-export default proxy(new ProofStore()).makePersistent(false)
+const proofStore = proxy(new ProofStore()).makePersistent(true)
+
+setInterval(async () => {
+  await proofStore.checkTasks()
+}, 5000)
+
+export default proofStore

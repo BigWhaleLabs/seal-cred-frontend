@@ -5,13 +5,21 @@ import ProofResponse from 'models/ProofResponse'
 import axios from 'axios'
 
 const baseURL = 'https://verify.streetcred.one'
+export enum ProofStatus {
+  running = 'running',
+  scheduled = 'scheduled',
+  failed = 'failed',
+  completed = 'completed',
+  cancelled = 'cancelled',
+}
 export interface JobResponse {
   _id: string
-  status: string
+  status: ProofStatus
   proof?: ProofResponse
 }
 export interface ProofCheck {
   job: JobResponse
+  status: ProofStatus
   position?: number
 }
 

@@ -5,12 +5,12 @@ import Ledger from 'types/Ledger'
 export default async function getLedger(streetCredLedger: StreetCredLedger) {
   const eventsFilter = streetCredLedger.filters.SetMerkleRoot()
   const events = await streetCredLedger.queryFilter(eventsFilter)
-  const ledger = {} as Ledger
+  const ledger = new Map() as Ledger
   for (const event of events) {
-    const tokenAddress = event.args.tokenAddress
-    ledger[tokenAddress] = new ExtendedERC721Contract(
+    const { tokenAddress } = event.args
+    ledger.set(
       tokenAddress,
-      event.args.merkleRoot
+      new ExtendedERC721Contract(tokenAddress, event.args.merkleRoot)
     )
   }
   return ledger
