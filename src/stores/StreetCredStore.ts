@@ -1,4 +1,4 @@
-import { getOriginalContracts } from 'helpers/fetchTokens'
+import { getOriginalOwnedContracts } from 'helpers/fetchTokens'
 import { proxy } from 'valtio'
 import Ledger from 'types/Ledger'
 import getLedger, { getLedgerRecord } from 'helpers/getLedger'
@@ -16,7 +16,7 @@ const StreetCredStore = proxy<StreetCredStoreType>({
   originalOwnedTokens: Promise.resolve([]),
 
   requestOriginalContracts: async (account?: string) => {
-    const tokens = await getOriginalContracts(account)
+    const tokens = await getOriginalOwnedContracts(account)
     StreetCredStore.originalOwnedTokens = Promise.all(
       tokens.map((ctx) => ctx?.name())
     )

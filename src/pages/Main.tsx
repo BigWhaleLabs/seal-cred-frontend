@@ -1,9 +1,12 @@
+import {
+  DerivativesCanMint,
+  SupportedNftWrapper,
+} from 'components/SupportedNft'
 import { HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import ProofStore from 'stores/ProofStore'
 import React from 'react'
-import SupportedNftWrapper from 'components/SupportedNft'
 import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
 import ZKProofReady from 'components/ZKProofReady'
@@ -29,7 +32,7 @@ function Proofs() {
         <ZKProofReady address={address} />
       ))}
       <HeaderText>Derivative NFTs that you can mint:</HeaderText>
-      {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
+      <DerivativesCanMint />
       <HeaderText>Derivative NFTs that you own:</HeaderText>
       {/* TODO: should display the derivative NFTs that are already minted for the address */}
     </>
