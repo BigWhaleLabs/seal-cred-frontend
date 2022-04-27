@@ -20,11 +20,11 @@ export function getLedgerRecord(tokenAddress: string, merkleRoot: string) {
 export default async function getLedger(streetCredLedger: StreetCredLedger) {
   const eventsFilter = streetCredLedger.filters.SetMerkleRoot()
   const events = await streetCredLedger.queryFilter(eventsFilter)
-  const ledger = new Map() as Ledger
+  const ledger = {} as Ledger
   for (const event of events) {
     const { tokenAddress } = event.args
     const merkleRoot = event.args.merkleRoot
-    ledger.set(tokenAddress, getLedgerRecord(tokenAddress, merkleRoot))
+    ledger[tokenAddress] = getLedgerRecord(tokenAddress, merkleRoot)
   }
   return ledger
 }

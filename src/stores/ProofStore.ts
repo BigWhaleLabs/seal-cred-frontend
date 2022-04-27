@@ -25,12 +25,12 @@ class ProofStore extends PersistableStore {
   proofsInProgress: Map<string, JobObject> = new Map()
   proofsReady: Map<string, JobObject> = new Map()
 
-  async generate(derivativeContractAddress: string) {
+  async generate(address: string) {
     const account = WalletStore.account
     if (!account) throw new Error('No account found')
 
     const ledger = await StreetCredStore.ledger
-    const record = ledger.get(derivativeContractAddress)
+    const record = ledger[address]
     if (!record || !record.originalContract)
       throw new Error('Derivative contract not found')
 
@@ -45,15 +45,15 @@ class ProofStore extends PersistableStore {
     const tokenId = owners.get(account)
     if (!tokenId) throw new Error('Account is not owner of contract')
 
-    const signature = await WalletStore.signMessage(derivativeContractAddress)
+    const signature = await WalletStore.signMessage(address)
     if (!signature) throw new Error('Signature is not found')
 
-    const treeProof = createTreeProof(tokenId, addresses)
+    const treeProof = createTreeProof(tokenId - 1, addresses)
     const ecdsaInput = createEcdsaInput(signature)
     const result = await scheduleProofGeneration(treeProof, ecdsaInput)
 
-    this.tasks.set(derivativeContractAddress, result)
-    this.proofsInProgress.set(derivativeContractAddress, result)
+    this.tasks.set(address, result)
+    this.proofsInProgress.set(address, result)
 
     return result
   }
