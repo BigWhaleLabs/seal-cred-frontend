@@ -30,6 +30,7 @@ const listTokenTitle = classnames(
 
 export const ZKProofReadyContent = ({ address }: { address: string }) => {
   const { ledger } = useSnapshot(StreetCredStore)
+  // eslint-disable-next-line valtio/state-snapshot-rule
   const record = ledger.get(address)
   if (!record) return null
 
