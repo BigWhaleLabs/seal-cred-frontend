@@ -1,13 +1,18 @@
 import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
+import Ledger from 'types/Ledger'
 import getLedger from 'helpers/getLedger'
 import streetCred from 'helpers/streetCred'
 
-const getMintedContracts = (allContracts: ERC721[], account: string) => {
-  return allContracts
-    .map(async (contract) =>
-      Number(await contract.balanceOf(account)) > 0 ? contract : undefined
-    ) // Gets all contracts that have tokens minted by the account
-    .filter((v) => !!v) // Removes all undefined
+const getMintedContracts = async (allContracts: ERC721[], account: string) => {
+  try {
+    return Promise.all(
+      await allContracts.filter(async (contract) =>
+        Number(await contract.balanceOf(account))
+      )
+    )
+  } catch (error) {
+    return Promise.all([])
+  }
 }
 
 async function getDerivativeContracts(account?: string) {
@@ -19,19 +24,19 @@ async function getDerivativeContracts(account?: string) {
     derivativeContracts.push(derivativeContract)
   )
 
-  return Promise.all(getMintedContracts(derivativeContracts, account))
+  return getMintedContracts(derivativeContracts, account)
 }
 
-async function getOriginalContracts(account?: string) {
-  if (!account) return []
-  const ledger = await getLedger(streetCred)
+function getOriginalContracts(ledger: Ledger, account?: string) {
+  if (!account) return Promise.resolve([])
+  // const ledger = await getLedger(streetCred)
   const originalContracts: ERC721[] = []
 
   ledger.forEach(({ originalContract }) =>
     originalContracts.push(originalContract)
   )
 
-  return Promise.all(getMintedContracts(originalContracts, account))
+  return getMintedContracts(originalContracts, account)
 }
 
 export { getOriginalContracts, getDerivativeContracts }

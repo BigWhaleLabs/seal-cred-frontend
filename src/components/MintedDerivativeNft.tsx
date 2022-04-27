@@ -1,4 +1,4 @@
-import { AccentText } from 'components/Text'
+import { AccentText, BodyText } from 'components/Text'
 import { Suspense, useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
@@ -10,9 +10,13 @@ function TokenList() {
 
   return (
     <>
-      {derivativeOwnedTokens.map((token, index) => (
-        <Card key={index}>{token}</Card>
-      ))}
+      {derivativeOwnedTokens.length > 0 ? (
+        derivativeOwnedTokens.map((token, index) =>
+          token ? <Card key={index}>{token}</Card> : null
+        )
+      ) : (
+        <BodyText>You didn't mint anything yet.</BodyText>
+      )}
     </>
   )
 }
@@ -20,8 +24,7 @@ function TokenList() {
 function MintedDerivativeNft() {
   const { account } = useSnapshot(WalletStore)
   useEffect(() => {
-    StreetCredStore.derivativeOwnedTokens =
-      StreetCredStore.requestDerivativeContracts(account)
+    StreetCredStore.refreshDerivativeContracts(account)
   }, [account])
 
   return (

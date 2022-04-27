@@ -1,3 +1,4 @@
+import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
 import {
   getDerivativeContracts,
   getOriginalContracts,
@@ -9,34 +10,27 @@ import streetCred from 'helpers/streetCred'
 
 type StreetCredStoreType = {
   ledger: Promise<Ledger>
-  originalOwnedTokens: Promise<(string | undefined)[]>
-  derivativeOwnedTokens: Promise<(string | undefined)[]>
+  originalOwnedTokens: Promise<ERC721[]>
+  derivativeOwnedTokens: Promise<ERC721[]>
 
-  requestOriginalContracts: (
-    account?: string
-  ) => Promise<(string | undefined)[]>
-  requestDerivativeContracts: (
-    account?: string
-  ) => Promise<(string | undefined)[]>
+  refreshOriginalContracts: (account?: string) => void
+  refreshDerivativeContracts: (account?: string) => void
 }
 
-const StreetCredStore = proxy<StreetCredStoreType>({
+const StreetCredStore: StreetCredStoreType = proxy<StreetCredStoreType>({
   ledger: getLedger(streetCred),
   originalOwnedTokens: Promise.resolve([]),
   derivativeOwnedTokens: Promise.resolve([]),
 
-  requestOriginalContracts: async (account?: string) => {
-    const tokens = await getOriginalContracts(account)
-    return Promise.all(tokens.map((contract) => contract?.name()))
-  },
-  requestDerivativeContracts: async (account?: string) => {
-    const tokens = await getDerivativeContracts(account)
-    return Promise.all(
-      tokens.map((contract) => {
-        console.log('Symbol: ', contract?.symbol())
-        return contract?.name()
-      })
+  refreshOriginalContracts: async (account?: string) => {
+    StreetCredStore.originalOwnedTokens = getOriginalContracts(
+      await StreetCredStore.ledger,
+      account
     )
+  },
+  refreshDerivativeContracts: async (account?: string) => {
+    const tokens = await getDerivativeContracts(account)
+    return Promise.all(tokens.map((contract) => contract?.name()))
   },
 })
 

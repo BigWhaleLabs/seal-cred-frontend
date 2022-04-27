@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import MintedDerivativeNft from 'components/MintedDerivativeNft'
 import ProofStore from 'stores/ProofStore'
-import SupportedNftWrapper from 'components/SupportedNft'
+import SupportedNFTs from 'components/SupportedNFTs'
 import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
 import ZKProofReady from 'components/ZKProofReady'
@@ -14,7 +14,7 @@ function Proofs() {
   return (
     <>
       <HeaderText>Supported NFTs that you own:</HeaderText>
-      <SupportedNftWrapper />
+      <SupportedNFTs />
       <HeaderText>ZK proofs that you can generate:</HeaderText>
       {/* {proofsCanGenerate.map((record) => (
         <ZKProofGenerate {...record} />
