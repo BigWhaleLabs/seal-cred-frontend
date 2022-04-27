@@ -1,14 +1,17 @@
 import { proxy } from 'valtio'
 import Ledger from 'types/Ledger'
+import fetchTokensOwned from 'helpers/fetchTokens'
 import getLedger, { getLedgerRecord } from 'helpers/getLedger'
 import streetCred from 'helpers/streetCred'
 
 type StreetCredStoreType = {
   ledger: Promise<Ledger>
+  ownedTokens: Promise<string[]>
 }
 
 const StreetCredStore = proxy<StreetCredStoreType>({
   ledger: getLedger(streetCred),
+  ownedTokens: fetchTokensOwned(),
 })
 
 streetCred.on(
