@@ -1,4 +1,5 @@
 import { BadgeText } from 'components/Text'
+import { Suspense } from 'react'
 import {
   alignItems,
   classnames,
@@ -11,7 +12,6 @@ import {
   width,
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import React from 'react'
 import StreetCredStore from 'stores/StreetCredStore'
 
 const listWrapper = classnames(
@@ -28,7 +28,7 @@ const listTokenTitle = classnames(
   textColor('text-white')
 )
 
-export const ZKProofReadyContent = ({ address }: { address: string }) => {
+export function ZKProofReadyContent({ address }: { address: string }) {
   const { ledger } = useSnapshot(StreetCredStore)
   const record = ledger.get(address)
   if (!record) return null
@@ -46,9 +46,9 @@ export const ZKProofReadyContent = ({ address }: { address: string }) => {
 
 function ZKProofReady(props: { address: string }) {
   return (
-    <React.Suspense fallback={'loading'}>
+    <Suspense fallback={'loading'}>
       <ZKProofReadyContent {...props} />
-    </React.Suspense>
+    </Suspense>
   )
 }
 
