@@ -1,35 +1,59 @@
 import { HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
+import ProofStore from 'stores/ProofStore'
+import React from 'react'
 import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
+import ZKProofReady from 'components/ZKProofReady'
 
-// TODO: use suspense and error boundaries as much as you can
+function Proofs() {
+  const { proofsReady } = useSnapshot(ProofStore)
 
-export default function Main() {
+  return (
+    <>
+      <HeaderText>Supported NFTs that you own:</HeaderText>
+      {/* TODO: use StreetCredStore to fetch all NFTs that the user owns from the list of supported contracts in sc ledger */}
+      <HeaderText>ZK proofs that you can generate:</HeaderText>
+      {/* {proofsCanGenerate.map((record) => (
+        <ZKProofGenerate {...record} />
+      ))} */}
+      {/* TODO: Display "Supported NFTs that you own" minus the ZK proofs that are already generated (or take it from ProofStore?) */}
+      {/* TODO: each ZK proof that can be generated should have the button "generate", which should call ProofStore.generate method */}
+      {/* TODO: proofs that are being generated should be taken from ProofStore, just being displayed here, no actual business-logic should be present in the UI */}
+      {/* TODO: we should be able to generate multiple proofs at a time (even though they are queued) */}
+      {/* TODO: we should display the queue position of the jobs */}
+      <HeaderText>ZK proofs that you generated:</HeaderText>
+      {[...proofsReady.keys()].map((address) => (
+        <ZKProofReady address={address} />
+      ))}
+      {/* TODO: should display saved ZK proofs from ProofStore */}
+      <HeaderText>Derivative NFTs that you can mint:</HeaderText>
+      {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
+      <HeaderText>Derivative NFTs that you own:</HeaderText>
+      {/* TODO: should display the derivative NFTs that are already minted for the address */}
+    </>
+  )
+}
+
+export function MainContent() {
   const { account } = useSnapshot(WalletStore)
+
   return (
     <Card>
       <HeaderText>That's you:</HeaderText>
       <Wallet />
-      {account && (
-        <>
-          <HeaderText>Supported NFTs that you own:</HeaderText>
-          {/* TODO: use StreetCredStore to fetch all NFTs that the user owns from the list of supported contracts in sc ledger */}
-          <HeaderText>ZK proofs that you can generate:</HeaderText>
-          {/* TODO: Display "Supported NFTs that you own" minus the ZK proofs that are already generated (or take it from ProofStore?) */}
-          {/* TODO: each ZK proof that can be generated should have the button "generate", which should call ProofStore.generate method */}
-          {/* TODO: proofs that are being generated should be taken from ProofStore, just being displayed here, no actual business-logic should be present in the UI */}
-          {/* TODO: we should be able to generate multiple proofs at a time (even though they are queued) */}
-          {/* TODO: we should display the queue position of the jobs */}
-          <HeaderText>ZK proofs that you generated:</HeaderText>
-          {/* TODO: should display saved ZK proofs from ProofStore */}
-          <HeaderText>Derivative NFTs that you can mint:</HeaderText>
-          {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
-          <HeaderText>Derivative NFTs that you own:</HeaderText>
-          {/* TODO: should display the derivative NFTs that are already minted for the address */}
-        </>
-      )}
+      {account && <Proofs />}
     </Card>
   )
 }
+
+function Main() {
+  return (
+    <React.Suspense fallback={'loading'}>
+      <MainContent />
+    </React.Suspense>
+  )
+}
+
+export default Main

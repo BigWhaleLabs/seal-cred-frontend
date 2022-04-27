@@ -10,6 +10,8 @@ import ProofResponse from 'models/ProofResponse'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import createTreeProof from 'helpers/createTreeProof'
+import getMapOfOwners from 'helpers/getMapOfOwners'
+import isAddressOwner from 'helpers/isAddressOwner'
 
 interface JobObject {
   _id: string
@@ -31,23 +33,26 @@ class ProofStore extends PersistableStore {
     if (!account) throw new Error('No account found')
 
     const ledger = await StreetCredStore.ledger
-    const contract = ledger.get(derivativeContractAddress)
-    if (!contract) throw new Error('Derivative contract not found')
+    const record = ledger.get(derivativeContractAddress)
+    if (!record || !record.originalContract)
+      throw new Error('Derivative contract not found')
 
-    const isOwner = contract.isAddressOwner(account)
+    const { originalContract } = record
+
+    const isOwner = isAddressOwner(originalContract, account)
     if (!isOwner) throw new Error('Account is not owner of contract')
 
-    const owners = await contract.getMapOfOwners()
+    const owners = await getMapOfOwners(originalContract)
     const addresses = Array.from(owners.keys())
 
     const tokenId = owners.get(account)
     if (!tokenId) throw new Error('Account is not owner of contract')
 
-    const treeProof = createTreeProof(0, addresses)
+    const treeProof = createTreeProof(tokenId, addresses)
     const result = await scheduleProofGeneration(treeProof, ecdsaInput)
 
-    this.tasks.set(result._id, result)
-    this.proofsInProgress.set(result._id, result)
+    this.tasks.set(derivativeContractAddress, result)
+    this.proofsInProgress.set(derivativeContractAddress, result)
 
     return result
   }
