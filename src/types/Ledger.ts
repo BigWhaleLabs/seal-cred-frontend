@@ -1,5 +1,15 @@
-import ExtendedERC721Contract from 'helpers/ExtendedERC721Contract'
+import {
+  ERC721,
+  SCERC721Derivative,
+} from '@big-whale-labs/street-cred-ledger-contract'
 
-type Ledger = Map<string, ExtendedERC721Contract>
+type Ledger = Map<
+  string,
+  {
+    merkleRoot: string
+    originalContract: ERC721
+    derivativeContract: SCERC721Derivative
+  }
+>
 
 export default Ledger
