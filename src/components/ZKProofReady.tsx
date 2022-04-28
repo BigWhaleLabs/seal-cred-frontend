@@ -45,7 +45,7 @@ export function ZKProofReadyContent({ address }: { address: string }) {
     }
 
     void fetchContractName()
-  })
+  }, [derivativeContracts, address])
 
   return (
     <div className={listWrapper}>
