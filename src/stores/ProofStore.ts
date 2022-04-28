@@ -90,10 +90,10 @@ class ProofStore extends PersistableStore {
 
           delete this.proofsInProgress[proof.contract]
 
-          if (job.status === ProofStatus.cancelled)
-            handleError(new Error('Proof generation cancelled'))
-
-          if (job.status === ProofStatus.failed)
+          if (
+            job.status === ProofStatus.cancelled ||
+            job.status === ProofStatus.failed
+          )
             handleError(new Error('Proof generation failed'))
         } catch (e) {
           handleError(new Error('Proof generation failed'))

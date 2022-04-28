@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import DerivativeContractsOwned from 'components/DerivativeContractsOwned'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
-// import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
+import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import OriginalContractsOwned from 'components/OriginalContractsOwned'
 import SupportedContracts from 'components/SupportedContracts'
 import Wallet from 'components/Wallet'
@@ -17,7 +17,7 @@ function Proofs() {
       <HeaderText>ZK proofs that you can generate:</HeaderText>
       <ListOfAvailableZKProofs />
       <HeaderText>ZK proofs that you generated:</HeaderText>
-      {/* <ListOfReadyZKProofs /> */}
+      <ListOfReadyZKProofs />
       <HeaderText>Derivative NFTs that you can mint:</HeaderText>
       {/* <UnmintedDerivatives /> */}
       <HeaderText>Derivative NFTs that you own:</HeaderText>
