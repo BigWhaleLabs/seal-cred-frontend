@@ -73,8 +73,8 @@ class ProofStore extends PersistableStore {
           }
 
           if (
-            job.status === ProofStatus.cancelled ||
-            job.status === ProofStatus.failed
+            proof.status === ProofStatus.cancelled ||
+            proof.status === ProofStatus.failed
           ) {
             const index = this.proofsInProgress.indexOf(proof)
             if (index > -1) {
