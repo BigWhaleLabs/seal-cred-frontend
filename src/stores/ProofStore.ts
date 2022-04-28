@@ -1,5 +1,4 @@
 import { checkJobStatus, scheduleProofGeneration } from 'helpers/callProof'
-import { e } from 'poseidon/scalar_bigint'
 import { handleError } from 'helpers/handleError'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'

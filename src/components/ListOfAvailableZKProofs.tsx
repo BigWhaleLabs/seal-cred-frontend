@@ -16,12 +16,13 @@ const contractContainer = classnames(
   space('space-x-2')
 )
 
-const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
+function ZKProof({ contractAddress }: { contractAddress: string }) {
   const { proofsInProgress } = useSnapshot(ProofStore)
-  const { account } = useSnapshot(WalletStore)
 
   const proofInProgress = proofsInProgress.find(
-    (proof) => proof.account === account && proof.contract === contractAddress
+    (proof) =>
+      proof.account === WalletStore.account &&
+      proof.contract === contractAddress
   )
 
   return (
@@ -58,9 +59,12 @@ function ContractList() {
   }, {} as { [contractAddress: string]: { [account: string]: boolean } })
 
   const originalOwnedContractsWithoutCompletedProofs =
-    originalContracts?.owned.filter(
-      (contract) => !completedProofsMap[contract.address][account]
-    ) || []
+    originalContracts?.owned.filter((contract) => {
+      if (completedProofsMap[contract.address]) {
+        return !completedProofsMap[contract.address][account]
+      }
+      return contract
+    }) || []
 
   return (
     <>
