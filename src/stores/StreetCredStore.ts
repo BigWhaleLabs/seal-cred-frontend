@@ -15,9 +15,9 @@ interface StreetCredStoreType {
   derivativeContracts?: Promise<SortedContracts<SCERC721Derivative>>
   contractNames: { [contractAddress: string]: Promise<string | undefined> }
 
-  setupContractListeners: () => void
   handleAccountChange: (account?: string) => Promise<void>
-  refreshContracts: (account?: string) => Promise<void>
+  setupContractListeners: (account: string, ledger: Ledger) => void
+  refreshContracts: (account: string, ledger: Ledger) => void
   refreshContractNames: (ledger: Ledger) => void
 }
 
@@ -28,22 +28,31 @@ const StreetCredStore = proxy<StreetCredStoreType>({
   }),
   contractNames: {},
 
-  async setupContractListeners() {
-    const ledger = await StreetCredStore.ledger
+  setupContractListeners(account: string, ledger: Ledger) {
     for (const { originalContract, derivativeContract } of Object.values(
       ledger
     )) {
       originalContract.on(originalContract.filters.Transfer(), () => {
-        void StreetCredStore.refreshContracts()
+        void StreetCredStore.refreshContracts(account, ledger)
       })
       derivativeContract.on(derivativeContract.filters.Transfer(), () => {
-        void StreetCredStore.refreshContracts()
+        void StreetCredStore.refreshContracts(account, ledger)
       })
     }
   },
 
-  async refreshContracts(account?: string) {
+  async handleAccountChange(account?: string) {
+    if (!account) {
+      StreetCredStore.originalContracts = undefined
+      StreetCredStore.derivativeContracts = undefined
+      return
+    }
     const ledger = await StreetCredStore.ledger
+    StreetCredStore.setupContractListeners(account, ledger)
+    await StreetCredStore.refreshContracts(account, ledger)
+  },
+
+  refreshContracts(account: string, ledger: Ledger) {
     const originalContracts = Object.values(ledger).map(
       (record) => record.originalContract
     )
@@ -59,15 +68,6 @@ const StreetCredStore = proxy<StreetCredStoreType>({
       account
     )
     StreetCredStore.refreshContractNames(ledger)
-  },
-
-  async handleAccountChange(account?: string) {
-    if (!account) {
-      StreetCredStore.originalContracts = undefined
-      StreetCredStore.derivativeContracts = undefined
-      return
-    }
-    await StreetCredStore.refreshContracts(account)
   },
 
   refreshContractNames(ledger: Ledger) {
@@ -105,7 +105,5 @@ streetCred.on(streetCred.filters.DeleteMerkleRoot(), async (tokenAddress) => {
   const ledger = await StreetCredStore.ledger
   delete ledger[tokenAddress]
 })
-
-StreetCredStore.setupContractListeners()
 
 export default StreetCredStore
