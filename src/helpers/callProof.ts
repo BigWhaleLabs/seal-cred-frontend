@@ -1,7 +1,8 @@
 import { MerkleProof } from '@zk-kit/incremental-merkle-tree'
 import EcdsaInput from 'models/EcdsaInput'
+import JobResponse from 'models/JobResponse'
 import ProofBody from 'models/ProofBody'
-import ProofCheck from 'types/ProofCheck'
+import ProofCheck from 'models/ProofCheck'
 import ProofResponse from 'models/ProofResponse'
 import axios from 'axios'
 
