@@ -1,35 +1,25 @@
-import { BodyText, SubheaderText } from 'components/Text'
+import { SubheaderText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
+import ContractListContainer from 'components/ContractListContainer'
+import ContractName from 'components/ContractName'
 import StreetCredStore from 'stores/StreetCredStore'
-import classnames, { display, flexDirection, space } from 'classnames/tailwind'
-
-function SupportedContractName({ address }: { address: string }) {
-  const { contractNames } = useSnapshot(StreetCredStore)
-  return <BodyText>{contractNames[address] || address}</BodyText>
-}
-
-const container = classnames(
-  display('flex'),
-  flexDirection('flex-col'),
-  space('space-y-2')
-)
 
 function SupportedContractsComponent() {
   const { ledger } = useSnapshot(StreetCredStore)
   const contractAddresses = Object.keys(ledger)
 
   return contractAddresses.length ? (
-    <div className={container}>
+    <ContractListContainer>
       {contractAddresses.map((address) => (
         <Suspense
           key={address}
           fallback={<SubheaderText>{address}...</SubheaderText>}
         >
-          <SupportedContractName address={address} />
+          <ContractName address={address} />
         </Suspense>
       ))}
-    </div>
+    </ContractListContainer>
   ) : (
     <SubheaderText>No contracts supported yet</SubheaderText>
   )

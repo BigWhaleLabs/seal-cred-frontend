@@ -9,16 +9,16 @@ export default async function filterContracts<
   T extends ERC721 | SCERC721Derivative
 >(contracts: T[], account: string) {
   const sortedContracts: SortedContracts<T> = {
-    minted: [],
-    unminted: [],
+    owned: [],
+    unowned: [],
   }
 
   await Promise.all(
     contracts.map(async (contract) => {
       const accountOwnsToken = await ownsToken(contract, account)
       return accountOwnsToken
-        ? sortedContracts.minted.push(contract)
-        : sortedContracts.unminted.push(contract)
+        ? sortedContracts.owned.push(contract)
+        : sortedContracts.unowned.push(contract)
     })
   )
 

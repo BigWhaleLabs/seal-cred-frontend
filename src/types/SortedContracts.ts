@@ -4,8 +4,8 @@ import {
 } from '@big-whale-labs/street-cred-ledger-contract'
 
 type SortedContracts<T extends SCERC721Derivative | ERC721> = {
-  minted: T[]
-  unminted: T[]
+  owned: T[]
+  unowned: T[]
 }
 
 export default SortedContracts

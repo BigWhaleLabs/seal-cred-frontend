@@ -30,7 +30,7 @@ function TokenList() {
   useEffect(() => {
     async function fetchMintedDerivatives() {
       const allDerivatives = await derivativeContracts
-      setMintedDerivatives(allDerivatives?.minted)
+      setMintedDerivatives(allDerivatives?.owned)
     }
 
     void fetchMintedDerivatives()
