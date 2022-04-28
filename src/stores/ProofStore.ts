@@ -4,11 +4,11 @@ import {
   scheduleProofGeneration,
 } from 'helpers/callProof'
 import { proxy } from 'valtio'
-import EcdsaInput from 'models/EcdsaInput'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResponse from 'models/ProofResponse'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
+import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
 import getMapOfOwners from 'helpers/getMapOfOwners'
 import isAddressOwner from 'helpers/isAddressOwner'
@@ -20,20 +20,24 @@ interface JobObject {
   proof?: ProofResponse
 }
 
+type ProofRecord = {
+  name: string
+  proof?: ProofResponse
+  originalContractAddress: string
+}
+
 class ProofStore extends PersistableStore {
   tasks: Map<string, JobObject> = new Map()
-  proofsInProgress: Map<string, JobObject> = new Map()
-  proofsReady: Map<string, JobObject> = new Map()
+  proofsInProgress: Map<string, ProofRecord> = new Map()
+  proofsReady: Map<string, ProofRecord> = new Map()
 
-  async generate(
-    derivativeContractAddress: string,
-    ecdsaInput: EcdsaInput | undefined
-  ) {
+  async generate(address: string) {
     const account = WalletStore.account
     if (!account) throw new Error('No account found')
 
     const ledger = await StreetCredStore.ledger
-    const record = ledger[derivativeContractAddress]
+    const record = ledger[address]
+
     if (!record || !record.originalContract)
       throw new Error('Derivative contract not found')
 
@@ -48,11 +52,19 @@ class ProofStore extends PersistableStore {
     const tokenId = owners.get(account)
     if (!tokenId) throw new Error('Account is not owner of contract')
 
-    const treeProof = createTreeProof(tokenId, addresses)
+    const signature = await WalletStore.signMessage(address)
+    if (!signature) throw new Error('Signature is not found')
+
+    const treeProof = createTreeProof(tokenId - 1, addresses)
+    const ecdsaInput = createEcdsaInput(signature)
     const result = await scheduleProofGeneration(treeProof, ecdsaInput)
 
-    this.tasks.set(derivativeContractAddress, result)
-    this.proofsInProgress.set(derivativeContractAddress, result)
+    this.tasks.set(address, result)
+    this.proofsInProgress.set(address, {
+      name: address,
+      proof: result.proof,
+      originalContractAddress: address,
+    })
 
     return result
   }
@@ -71,7 +83,11 @@ class ProofStore extends PersistableStore {
         } else {
           this.tasks.set(badge, data)
           if (data.status === ProofStatus.completed) {
-            this.proofsReady.set(badge, data)
+            this.proofsReady.set(badge, {
+              name: badge,
+              proof: data.proof,
+              originalContractAddress: badge,
+            })
             this.proofsInProgress.delete(badge)
           }
         }

@@ -4,7 +4,7 @@ import {
 } from '@big-whale-labs/street-cred-ledger-contract'
 
 type Ledger = {
-  [address: string]: {
+  [key: string]: {
     merkleRoot: string
     originalContract: ERC721
     derivativeContract: SCERC721Derivative
