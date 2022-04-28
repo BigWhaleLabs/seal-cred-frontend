@@ -5,17 +5,25 @@ import StreetCredStore from 'stores/StreetCredStore'
 
 export default function SupportedContracts() {
   const { ledger } = useSnapshot(StreetCredStore)
-  const [supportedContracts, setSupportedContracts] = useState<string[]>()
+  const [supportedContracts, setSupportedContracts] =
+    useState<{ name: string; address: string }[]>()
 
   useEffect(() => {
     async function fetchSupportedContracts() {
-      const addresses: Promise<string>[] = await Object.values(ledger).map(
-        async ({ originalContract }) => {
-          const name = await originalContract.name()
-          return name
-        }
-      )
-      setSupportedContracts(await Promise.all(addresses))
+      const objects: Promise<{ name: string; address: string }>[] =
+        Object.values(ledger).map(async ({ originalContract }) => {
+          const contractName = await originalContract.name()
+          const name =
+            !contractName || !contractName.length
+              ? `Contract: ${originalContract.address}`
+              : contractName
+
+          return {
+            name,
+            address: originalContract.address,
+          }
+        })
+      setSupportedContracts(await Promise.all(objects))
     }
 
     void fetchSupportedContracts()
@@ -23,8 +31,8 @@ export default function SupportedContracts() {
 
   return supportedContracts && supportedContracts.length ? (
     <>
-      {supportedContracts.map((address) => (
-        <BodyText key={address}>{address}</BodyText>
+      {supportedContracts.map((contract) => (
+        <BodyText key={contract.address}>{contract.name}</BodyText>
       ))}
     </>
   ) : (
