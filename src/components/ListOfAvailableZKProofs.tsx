@@ -59,7 +59,7 @@ function ContractList() {
 
   const originalOwnedContractsWithoutCompletedProofs =
     originalContracts?.owned.filter(
-      (contract) => !completedProofsMap[contract.address][account]
+      (contract) => !completedProofsMap[contract.address]?.[account]
     ) || []
 
   return (
