@@ -1,19 +1,14 @@
 import { BodyText, SubheaderText } from 'components/Text'
+import { FC } from 'react'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
+import ProofStore from 'stores/ProofStore'
 import StreetCredStore from 'stores/StreetCredStore'
+import WalletStore from 'stores/WalletStore'
 import classnames, { display, flexDirection, space } from 'classnames/tailwind'
-
-/*
- TODO: Display "Supported NFTs that you own" minus the ZK proofs that are already generated (or take it from ProofStore?)
- TODO: each ZK proof that can be generated should have the button "generate", which should call ProofStore.generate method
- TODO: proofs that are being generated should be taken from ProofStore, just being displayed here, no actual business-logic should be present in the UI
- TODO: we should be able to generate multiple proofs at a time (even though they are queued)
- TODO: we should display the queue position of the jobs 
-*/
 
 const contractContainer = classnames(
   display('flex'),
@@ -21,19 +16,58 @@ const contractContainer = classnames(
   space('space-x-2')
 )
 
+const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
+  const { proofsInProgress } = useSnapshot(ProofStore)
+  const { account } = useSnapshot(WalletStore)
+
+  const proofInProgress = proofsInProgress.find(
+    (proof) => proof.account === account && proof.contract === contractAddress
+  )
+
+  return (
+    <div className={contractContainer}>
+      <ContractName address={contractAddress} />
+      <Button
+        loading={!!proofInProgress}
+        onClick={() => ProofStore.generate(contractAddress)}
+        small
+        color="primary"
+      >
+        {proofInProgress ? 'generating...' : 'generate'}
+      </Button>
+    </div>
+  )
+}
+
 function ContractList() {
   const { originalContracts } = useSnapshot(StreetCredStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
+  const { account } = useSnapshot(WalletStore)
+
+  if (!account) {
+    return null
+  }
+
+  const completedProofsMap = proofsCompleted.reduce((p, c) => {
+    if (p[c.contract]) {
+      p[c.contract][c.account] = true
+    } else {
+      p[c.contract] = { [c.account]: true }
+    }
+    return p
+  }, {} as { [contractAddress: string]: { [account: string]: boolean } })
+
+  const originalOwnedContractsWithoutCompletedProofs =
+    originalContracts?.owned.filter(
+      (contract) => !completedProofsMap[contract.address][account]
+    ) || []
+
   return (
     <>
-      {originalContracts?.owned?.length ? (
+      {originalOwnedContractsWithoutCompletedProofs.length ? (
         <ContractListContainer>
-          {originalContracts.owned.map((contract) => (
-            <div className={contractContainer} key={contract.address}>
-              <ContractName address={contract.address} />
-              <Button small color="primary">
-                Generate
-              </Button>
-            </div>
+          {originalOwnedContractsWithoutCompletedProofs.map((contract) => (
+            <ZKProof contractAddress={contract.address} />
           ))}
         </ContractListContainer>
       ) : (

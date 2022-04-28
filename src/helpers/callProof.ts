@@ -1,41 +1,26 @@
 import { MerkleProof } from '@zk-kit/incremental-merkle-tree'
 import EcdsaInput from 'models/EcdsaInput'
+import JobResponse from 'models/JobResponse'
 import ProofBody from 'models/ProofBody'
+import ProofCheck from 'models/ProofCheck'
 import ProofResponse from 'models/ProofResponse'
 import axios from 'axios'
 
 const baseURL = 'https://verify.streetcred.one'
-export enum ProofStatus {
-  running = 'running',
-  scheduled = 'scheduled',
-  failed = 'failed',
-  completed = 'completed',
-  cancelled = 'cancelled',
-}
-export interface JobResponse {
-  _id: string
-  status: ProofStatus
-  proof?: ProofResponse
-}
-export interface ProofCheck {
-  job: JobResponse
-  status: ProofStatus
-  position?: number
-}
 
 export async function scheduleProofGeneration(
-  proof: MerkleProof | undefined,
-  ecdsaInput: EcdsaInput | undefined
+  proof: MerkleProof,
+  ecdsaInput: EcdsaInput
 ) {
   const req: ProofBody = {
-    root: proof?.root,
-    leaf: proof?.leaf,
-    siblings: proof?.siblings,
-    pathIndices: proof?.pathIndices,
-    r: ecdsaInput?.r,
-    s: ecdsaInput?.s,
-    msghash: ecdsaInput?.msghash,
-    pubkey: ecdsaInput?.pubkey,
+    root: proof.root,
+    leaf: proof.leaf,
+    siblings: proof.siblings,
+    pathIndices: proof.pathIndices,
+    r: ecdsaInput.r,
+    s: ecdsaInput.s,
+    msghash: ecdsaInput.msghash,
+    pubkey: ecdsaInput.pubkey,
   }
 
   const { data } = await axios.post<JobResponse>(`${baseURL}/proof`, req, {
