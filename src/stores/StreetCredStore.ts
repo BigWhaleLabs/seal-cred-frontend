@@ -11,7 +11,7 @@ import streetCred from 'helpers/streetCred'
 // TODO: listen to ledger's original and derivative contracts Transfer events and update originalContractsOwned and derivativeContractsOwned
 // TODO: set up and destroy listeners on the ledger's original and derivative contracts on SetMerkleRoot (when adding a new contract) and DeleteMerkleRoot events
 
-export type StreetCredStoreType = {
+type StreetCredStoreType = {
   ledger: Promise<Ledger>
   originalContractsOwned?: Promise<ERC721[]>
   derivativeContractsOwned?: Promise<SCERC721Derivative[]>
