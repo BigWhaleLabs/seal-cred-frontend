@@ -14,28 +14,26 @@ import createTreeProof from 'helpers/createTreeProof'
 import getMapOfOwners from 'helpers/getMapOfOwners'
 import isAddressOwner from 'helpers/isAddressOwner'
 
-interface JobObject {
-  _id: string
+type Proof = {
+  id: string
+  contract: string
+  account: string
   status: ProofStatus
   position?: number
   proof?: ProofResponse
 }
 
-type ProofRecord = JobObject & {
-  originalContractAddress: string
-}
-
 class ProofStore extends PersistableStore {
-  proofsInProgress: { [badge: string]: ProofRecord } = {}
-  proofsReady: { [badge: string]: ProofRecord } = {}
+  proofsInProgress: { [badge: string]: Proof } = {}
+  proofsReady: Proof[] = []
 
-  async generate(address: string) {
+  async generate(contract: string) {
     try {
       const account = WalletStore.account
       if (!account) throw new Error('No account found')
 
       const ledger = await StreetCredStore.ledger
-      const record = ledger[address]
+      const record = ledger[contract]
 
       if (!record || !record.originalContract)
         throw new Error('Derivative contract not found')
@@ -51,16 +49,19 @@ class ProofStore extends PersistableStore {
       const tokenId = addresses.indexOf(account)
       if (tokenId < 0) throw new Error('Account is not owner of contract')
 
-      const signature = await WalletStore.signMessage(address)
+      const signature = await WalletStore.signMessage(contract)
       if (!signature) throw new Error('Signature is not found')
 
       const treeProof = createTreeProof(tokenId, addresses)
       const ecdsaInput = createEcdsaInput(signature)
       const result = await scheduleProofGeneration(treeProof, ecdsaInput)
 
-      this.proofsInProgress[address] = {
-        ...result,
-        originalContractAddress: address,
+      this.proofsInProgress[contract] = {
+        id: result._id,
+        status: result.status,
+        proof: result.proof,
+        account,
+        contract,
       }
 
       return result
@@ -70,53 +71,37 @@ class ProofStore extends PersistableStore {
     }
   }
 
-  async checkTasks() {
-    const fetchByKeys = Object.values(this.proofsInProgress).map(
-      this.requestTaskData
-    )
-    if (!fetchByKeys.length) return
-    await Promise.all(fetchByKeys).then((results) => {
-      for (const [badge, job] of Object.entries(this.proofsInProgress)) {
-        const data = results.find((r) => r?._id === job._id)
-        if (!data) {
-          delete this.proofsInProgress[badge]
-        } else {
-          this.proofsInProgress[badge] = {
-            ...this.proofsInProgress[badge],
-            ...data,
-          }
-          if (
-            [ProofStatus.scheduled, ProofStatus.running].includes(data.status)
-          )
-            continue
-          if (data.status === ProofStatus.completed) {
-            this.proofsReady[badge] = this.proofsInProgress[badge]
-          }
-          delete this.proofsInProgress[badge]
-          if (data.status === ProofStatus.cancelled)
-            handleError(new Error('Proof generation cancelled'))
-          if (data.status === ProofStatus.failed)
-            handleError(new Error('Proof generation failed'))
-        }
-      }
-    })
-  }
+  checkTasks() {
+    return Promise.all(
+      Object.values(this.proofsInProgress).map(async (proof) => {
+        try {
+          const { position, job } = await checkJobStatus(proof.id)
 
-  async requestTaskData(task: JobObject) {
-    try {
-      const { position, job } = await checkJobStatus(task._id)
-      return !job
-        ? undefined
-        : {
-            ...task,
-            status: job.status,
-            proof: job.proof,
-            position,
+          if (
+            [ProofStatus.scheduled, ProofStatus.running].includes(job.status)
+          ) {
+            this.proofsInProgress[proof.contract].position = position
+            return
           }
-    } catch (e) {
-      console.log('Error: ', e)
-      return
-    }
+
+          if (job.status === ProofStatus.completed) {
+            this.proofsReady.push(this.proofsInProgress[proof.contract])
+          }
+
+          delete this.proofsInProgress[proof.contract]
+
+          if (job.status === ProofStatus.cancelled)
+            handleError(new Error('Proof generation cancelled'))
+
+          if (job.status === ProofStatus.failed)
+            handleError(new Error('Proof generation failed'))
+        } catch (e) {
+          handleError(new Error('Proof generation failed'))
+          console.log('Error: ', e)
+          return
+        }
+      })
+    )
   }
 }
 

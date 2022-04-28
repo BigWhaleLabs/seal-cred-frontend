@@ -38,7 +38,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
         <BodyText>position #{proof.position}</BodyText>
       )}
       <Button loading={!!proof} onClick={onGenerate} small color="primary">
-        {proof.status ?? 'generate'}
+        {proof?.status ?? 'generate'}
       </Button>
     </div>
   )
