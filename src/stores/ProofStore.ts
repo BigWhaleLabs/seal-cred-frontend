@@ -1,12 +1,9 @@
-import {
-  ProofStatus,
-  checkJobStatus,
-  scheduleProofGeneration,
-} from 'helpers/callProof'
+import { checkJobStatus, scheduleProofGeneration } from 'helpers/callProof'
 import { handleError } from 'helpers/handleError'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
-import ProofResponse from 'models/ProofResponse'
+import Proof from 'models/Proof'
+import ProofStatus from 'models/ProofStatus'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import createEcdsaInput from 'helpers/createEcdsaInput'
@@ -14,18 +11,9 @@ import createTreeProof from 'helpers/createTreeProof'
 import getMapOfOwners from 'helpers/getMapOfOwners'
 import isAddressOwner from 'helpers/isAddressOwner'
 
-type Proof = {
-  id: string
-  contract: string
-  account: string
-  status: ProofStatus
-  position?: number
-  proof?: ProofResponse
-}
-
 class ProofStore extends PersistableStore {
-  proofsInProgress: { [contract: string]: Proof } = {}
-  proofsReady: Proof[] = []
+  proofsInProgress: Proof[] = []
+  proofsCompleted: Proof[] = []
 
   async generate(contract: string) {
     try {
@@ -56,49 +44,46 @@ class ProofStore extends PersistableStore {
       const ecdsaInput = createEcdsaInput(signature)
       const result = await scheduleProofGeneration(treeProof, ecdsaInput)
 
-      this.proofsInProgress[contract] = {
+      this.proofsInProgress.push({
         id: result._id,
         status: result.status,
         proof: result.proof,
         account,
         contract,
-      }
-
-      return result
+      })
     } catch (e) {
-      handleError(new Error('Proof generation failed'))
-      return
+      handleError(new Error('Scheduling the proof generation failed'))
     }
   }
 
   checkTasks() {
     return Promise.all(
-      Object.values(this.proofsInProgress).map(async (proof) => {
+      this.proofsInProgress.map(async (proof) => {
         try {
           const { position, job } = await checkJobStatus(proof.id)
+          proof.status = job.status
+          proof.position = position
 
-          if (
-            [ProofStatus.scheduled, ProofStatus.running].includes(job.status)
-          ) {
-            this.proofsInProgress[proof.contract].position = position
-            return
+          if (proof.status === ProofStatus.completed) {
+            this.proofsCompleted.push(proof)
+            const index = this.proofsInProgress.indexOf(proof)
+            if (index > -1) {
+              this.proofsInProgress.splice(index, 1)
+            }
           }
-
-          if (job.status === ProofStatus.completed) {
-            this.proofsReady.push(this.proofsInProgress[proof.contract])
-          }
-
-          delete this.proofsInProgress[proof.contract]
 
           if (
             job.status === ProofStatus.cancelled ||
             job.status === ProofStatus.failed
-          )
+          ) {
+            const index = this.proofsInProgress.indexOf(proof)
+            if (index > -1) {
+              this.proofsInProgress.splice(index, 1)
+            }
             handleError(new Error('Proof generation failed'))
+          }
         } catch (e) {
-          handleError(new Error('Proof generation failed'))
-          console.log('Error: ', e)
-          return
+          handleError(new Error('Checking proof status failed'))
         }
       })
     )
@@ -107,8 +92,15 @@ class ProofStore extends PersistableStore {
 
 const proofStore = proxy(new ProofStore()).makePersistent(true)
 
+let checking = false
 setInterval(async () => {
-  await proofStore.checkTasks()
-}, 5000)
+  if (checking) return
+  checking = true
+  try {
+    await proofStore.checkTasks()
+  } finally {
+    checking = false
+  }
+}, 5 * 1000)
 
 export default proofStore
