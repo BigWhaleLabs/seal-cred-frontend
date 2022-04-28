@@ -23,7 +23,7 @@ export type ButtonColor = 'accent' | 'primary' | 'success' | 'error'
 export interface ButtonProps {
   color: ButtonColor
   loading?: boolean
-  badge?: boolean
+  small?: boolean
 }
 
 type ButtonProperties = ButtonProps &
@@ -33,7 +33,7 @@ const button = (
   color: ButtonColor,
   loading?: boolean,
   disabled?: boolean,
-  badge?: boolean
+  small?: boolean
 ) =>
   classnames(
     display('flex'),
@@ -41,9 +41,9 @@ const button = (
     space('space-x-2'),
     transitionProperty('transition-colors'),
     alignItems('items-center'),
-    fontWeight(badge ? undefined : 'font-bold'),
+    fontWeight(small ? undefined : 'font-bold'),
     textColor('text-white'),
-    padding(badge ? undefined : 'py-4', badge ? 'px-2' : 'px-6'),
+    padding(small ? undefined : 'py-4', small ? 'px-2' : 'px-6'),
     borderRadius('rounded'),
     outlineStyle('focus:outline-none'),
     buttonColor(color, disabled),
@@ -76,16 +76,16 @@ const Button: FC<ButtonProperties> = ({
   children,
   loading,
   disabled,
-  badge,
+  small,
   ...rest
 }) => {
   return (
     <button
-      className={button(color, loading, disabled, badge)}
+      className={button(color, loading, disabled, small)}
       {...rest}
       disabled={loading || disabled}
     >
-      {loading && <Loading small={badge} />}
+      {loading && <Loading small={small} />}
       {typeof children === 'string' ? <span>{children}</span> : children}
     </button>
   )
