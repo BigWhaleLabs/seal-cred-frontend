@@ -7,6 +7,7 @@ import Proof from 'models/Proof'
 import ProofStatus from 'models/ProofStatus'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
+import axios from 'axios'
 import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
 import getMapOfOwners from 'helpers/getMapOfOwners'
@@ -88,6 +89,15 @@ class ProofStore extends PersistableStore {
             handleError(new Error('Proof generation failed'))
           }
         } catch (e) {
+          if (axios.isAxiosError(e)) {
+            console.log(e.response?.status)
+            if (e.response?.status === 404) {
+              const index = this.proofsInProgress.indexOf(proof)
+              if (index > -1) {
+                this.proofsInProgress.splice(index, 1)
+              }
+            }
+          }
           handleError(new Error('Checking proof status failed'))
         }
       })
