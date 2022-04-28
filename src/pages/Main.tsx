@@ -6,6 +6,7 @@ import Card from 'components/Card'
 import { Suspense } from 'react'
 import OriginalContractsOwned from 'components/OriginalContractsOwned'
 import SupportedContracts from 'components/SupportedContracts'
+import UnmintedDerivatives from 'components/UnmintedDerivatives'
 import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
 // import ZKProofReady from 'components/ZKProofReady'
@@ -31,7 +32,7 @@ function Proofs() {
         <ZKProofReady address={address} />
       ))} */}
       <HeaderText>Derivative NFTs that you can mint:</HeaderText>
-      {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
+      <UnmintedDerivatives />
       <HeaderText>Derivative NFTs that you own:</HeaderText>
       {/* <MintedDerivativeNft /> */}
     </>

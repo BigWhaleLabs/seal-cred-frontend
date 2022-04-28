@@ -1,6 +1,6 @@
 import { AccentText, BodyText, SubheaderText } from 'components/Text'
-import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
 import { FC, Suspense, useEffect, useState } from 'react'
+import { SCERC721Derivative } from '@big-whale-labs/street-cred-ledger-contract'
 import { handleError } from 'helpers/handleError'
 import StreetCredStore from 'stores/StreetCredStore'
 import classnames, {
@@ -17,7 +17,7 @@ const tokenCard = classnames(
 )
 
 const Contract: FC<{
-  contract: ERC721
+  contract: SCERC721Derivative
 }> = ({ contract }) => {
   const [name, setName] = useState<string>()
 
@@ -38,28 +38,29 @@ const Contract: FC<{
     <Suspense fallback={<AccentText>Fetching the contract name...</AccentText>}>
       <div className={tokenCard}>
         <BodyText>{name}</BodyText>
+        <button onClick={() => console.log('MINT!')}>mint</button>
       </div>
     </Suspense>
   )
 }
 
 function ContractList() {
-  const { originalContracts } = useWritableSnapshot(StreetCredStore)
-  const [mintedOriginals, setMintedOriginals] = useState<ERC721[]>()
+  const { derivativeContracts } = useWritableSnapshot(StreetCredStore)
+  const [contracts, setContracts] = useState<SCERC721Derivative[]>()
 
   useEffect(() => {
-    async function fetchMintedOriginals() {
-      const allOriginals = await originalContracts
-      setMintedOriginals(allOriginals?.minted)
+    async function fetchUnmintedContracts() {
+      const allContracts = await derivativeContracts
+      setContracts(allContracts?.unminted)
     }
 
-    void fetchMintedOriginals()
-  }, [originalContracts])
+    void fetchUnmintedContracts()
+  }, [derivativeContracts])
 
   return (
     <>
-      {mintedOriginals?.length ? (
-        mintedOriginals.map((contract) => (
+      {contracts?.length ? (
+        contracts.map((contract) => (
           <Contract key={contract.address} contract={contract} />
         ))
       ) : (
@@ -69,10 +70,10 @@ function ContractList() {
   )
 }
 
-export default function OriginalContractsOwned() {
+export default function UnmintedDerivatives() {
   return (
     <Suspense
-      fallback={<BodyText>Fetching available tokens owned by you...</BodyText>}
+      fallback={<BodyText>Fetching unminted badges for you...</BodyText>}
     >
       <ContractList />
     </Suspense>
