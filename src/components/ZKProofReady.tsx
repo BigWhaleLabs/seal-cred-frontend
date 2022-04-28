@@ -1,5 +1,5 @@
 import { BadgeText } from 'components/Text'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import {
   alignItems,
   classnames,
@@ -29,16 +29,27 @@ const listTokenTitle = classnames(
 )
 
 export function ZKProofReadyContent({ address }: { address: string }) {
-  const { ledger } = useSnapshot(StreetCredStore)
-  const record = ledger[address]
-  if (!record) return null
+  const { derivativeContracts } = useSnapshot(StreetCredStore)
+  const [contractName, setContractName] = useState<string>()
 
-  const { derivativeContract } = record
+  useEffect(() => {
+    async function fetchContractName() {
+      const contracts = await derivativeContracts
+      if (!contracts) return
+      setContractName(
+        await contracts.unminted
+          .find((value) => value.address === address)
+          ?.name()
+      )
+    }
+
+    void fetchContractName()
+  })
 
   return (
     <div className={listWrapper}>
       <div className={listTokenTitle}>
-        <BadgeText>{derivativeContract.name}</BadgeText>
+        <BadgeText>{contractName}</BadgeText>
       </div>
     </div>
   )
