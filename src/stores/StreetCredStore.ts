@@ -3,8 +3,8 @@ import {
   SCERC721Derivative,
 } from '@big-whale-labs/street-cred-ledger-contract'
 import { proxy } from 'valtio'
-import Ledger from 'types/Ledger'
-import SortedContracts from 'types/SortedContracts'
+import Ledger from 'models/Ledger'
+import SortedContracts from 'models/SortedContracts'
 import filterContracts from 'helpers/filterContracts'
 import getLedger, { getLedgerRecord } from 'helpers/ledger'
 import streetCred from 'helpers/streetCred'
