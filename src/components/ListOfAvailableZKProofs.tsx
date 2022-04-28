@@ -1,18 +1,11 @@
-import { AccentText, BadgeText, SubheaderText } from 'components/Text'
-import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
-import {
-  classnames,
-  display,
-  justifyContent,
-  padding,
-} from 'classnames/tailwind'
+import { BodyText, SubheaderText } from 'components/Text'
+import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
-import Card from 'components/Card'
-import React, { FC, useEffect, useState } from 'react'
+import ContractListContainer from 'components/ContractListContainer'
+import ContractName from 'components/ContractName'
 import StreetCredStore from 'stores/StreetCredStore'
-import WalletStore from 'stores/WalletStore'
-import proofStore from 'stores/ProofStore'
+import classnames, { display, flexDirection, space } from 'classnames/tailwind'
 
 /*
  TODO: Display "Supported NFTs that you own" minus the ZK proofs that are already generated (or take it from ProofStore?)
@@ -22,104 +15,40 @@ import proofStore from 'stores/ProofStore'
  TODO: we should display the queue position of the jobs 
 */
 
-const tokenCard = classnames(
+const contractContainer = classnames(
   display('flex'),
-  justifyContent('justify-between'),
-  padding('py-2')
+  flexDirection('flex-row'),
+  space('space-x-2')
 )
 
-const ZKProof: FC<{ token: { name: ERC721['name']; address: string } }> = ({
-  token,
-}) => {
-  const { tasks } = useSnapshot(proofStore)
-  const task = tasks.get(token.address)
-
-  const [contractName, setContractName] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    async function fetchContractName() {
-      try {
-        const contractName = await token.name()
-        setContractName(
-          contractName.length ? contractName : `Contract: ${token.address}`
-        )
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    void fetchContractName()
-  }, [token])
-
-  return (
-    <>
-      {contractName && (
-        <div className={tokenCard}>
-          <BadgeText>
-            {contractName}
-            {typeof task?.position !== 'undefined' && (
-              <>position# {task?.position}</>
-            )}
-          </BadgeText>
-          <Button
-            badge
-            color="success"
-            disabled={loading}
-            onClick={() => {
-              setLoading(true)
-              try {
-                void proofStore.generate(token.address)
-              } catch (e) {
-                console.error(e)
-              } finally {
-                setLoading(false)
-              }
-            }}
-          >
-            generate
-          </Button>
-        </div>
-      )}
-    </>
-  )
-}
-
-function ZKProofList() {
-  const { proofsReady } = useSnapshot(proofStore)
+function ContractList() {
   const { originalContracts } = useSnapshot(StreetCredStore)
-
-  const availableBadges = originalContracts.filter(
-    (token) => !proofsReady.has(token.address)
-  )
-
   return (
     <>
-      {availableBadges.length > 0 ? (
-        <Card>
-          {availableBadges.map((contract, index) => (
-            <ZKProof key={index} token={contract} />
+      {originalContracts?.owned?.length ? (
+        <ContractListContainer>
+          {originalContracts.owned.map((contract) => (
+            <div className={contractContainer} key={contract.address}>
+              <ContractName address={contract.address} />
+              <Button small color="primary">
+                Generate
+              </Button>
+            </div>
           ))}
-        </Card>
+        </ContractListContainer>
       ) : (
-        <SubheaderText>You didn't have any avaliable proof</SubheaderText>
+        <SubheaderText>You don't have any supported tokens yet.</SubheaderText>
       )}
     </>
   )
 }
 
-function ListOfAvailableZKProofs() {
-  const { account } = useSnapshot(WalletStore)
-
-  useEffect(() => {
-    StreetCredStore.refreshOriginalContracts(account)
-  }, [account])
-
+export default function ListOfAvailableZKProofs() {
   return (
-    <React.Suspense fallback={<AccentText>Fetching proofs...</AccentText>}>
-      <ZKProofList />
-    </React.Suspense>
+    <Suspense
+      fallback={<BodyText>Fetching available tokens owned by you...</BodyText>}
+    >
+      <ContractList />
+    </Suspense>
   )
 }
-
-export default ListOfAvailableZKProofs
