@@ -1,5 +1,4 @@
 import { checkJobStatus, scheduleProofGeneration } from 'helpers/callProof'
-import { e } from 'poseidon/scalar_bigint'
 import { handleError } from 'helpers/handleError'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
@@ -49,7 +48,6 @@ class ProofStore extends PersistableStore {
       this.proofsInProgress.push({
         id: result._id,
         status: result.status,
-        proof: result.proof,
         account,
         contract,
       })
@@ -67,9 +65,9 @@ class ProofStore extends PersistableStore {
           proof.position = position
 
           if (proof.status === ProofStatus.completed) {
-            proof.proof = job.proof
-            if (!proof.proof) {
-              throw new Error('Proof is completed but no proof is found')
+            proof.result = job.result
+            if (!proof.result) {
+              throw new Error('Proof is completed but no result is found')
             }
             this.proofsCompleted.push(proof)
             const index = this.proofsInProgress.indexOf(proof)

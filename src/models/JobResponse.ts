@@ -4,5 +4,5 @@ import ProofStatus from 'models/ProofStatus'
 export default interface JobResponse {
   _id: string
   status: ProofStatus
-  proof?: ProofResponse
+  result?: ProofResponse
 }

@@ -7,7 +7,7 @@ type Proof = {
   account: string
   status: ProofStatus
   position?: number
-  proof?: ProofResponse
+  result?: ProofResponse
 }
 
 export default Proof
