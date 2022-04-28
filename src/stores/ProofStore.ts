@@ -24,7 +24,7 @@ type Proof = {
 }
 
 class ProofStore extends PersistableStore {
-  proofsInProgress: { [badge: string]: Proof } = {}
+  proofsInProgress: { [contract: string]: Proof } = {}
   proofsReady: Proof[] = []
 
   async generate(contract: string) {
