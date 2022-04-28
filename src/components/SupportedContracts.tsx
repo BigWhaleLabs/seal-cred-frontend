@@ -1,41 +1,46 @@
 import { BodyText, SubheaderText } from 'components/Text'
-import { useEffect, useState } from 'react'
+import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import StreetCredStore from 'stores/StreetCredStore'
+import classnames, { display, flexDirection, space } from 'classnames/tailwind'
 
-export default function SupportedContracts() {
+function SupportedContractName({ address }: { address: string }) {
+  const { contractNames } = useSnapshot(StreetCredStore)
+  return <BodyText>{contractNames[address] || address}</BodyText>
+}
+
+const container = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  space('space-y-2')
+)
+
+function SupportedContractsComponent() {
   const { ledger } = useSnapshot(StreetCredStore)
-  const [supportedContracts, setSupportedContracts] =
-    useState<{ name: string; address: string }[]>()
+  const contractAddresses = Object.keys(ledger)
 
-  useEffect(() => {
-    async function fetchSupportedContracts() {
-      const objects: Promise<{ name: string; address: string }>[] =
-        Object.values(ledger).map(async ({ originalContract }) => {
-          const contractName = await originalContract.name()
-          const name =
-            !contractName || !contractName.length
-              ? `Contract: ${originalContract.address}`
-              : contractName
-
-          return {
-            name,
-            address: originalContract.address,
-          }
-        })
-      setSupportedContracts(await Promise.all(objects))
-    }
-
-    void fetchSupportedContracts()
-  }, [ledger])
-
-  return supportedContracts && supportedContracts.length ? (
-    <>
-      {supportedContracts.map((contract) => (
-        <BodyText key={contract.address}>{contract.name}</BodyText>
+  return contractAddresses.length ? (
+    <div className={container}>
+      {contractAddresses.map((address) => (
+        <Suspense
+          key={address}
+          fallback={<SubheaderText>{address}...</SubheaderText>}
+        >
+          <SupportedContractName address={address} />
+        </Suspense>
       ))}
-    </>
+    </div>
   ) : (
     <SubheaderText>No contracts supported yet</SubheaderText>
+  )
+}
+
+export default function SupportedContracts() {
+  return (
+    <Suspense
+      fallback={<SubheaderText>Fetching avaliable tokens...</SubheaderText>}
+    >
+      <SupportedContractsComponent />
+    </Suspense>
   )
 }

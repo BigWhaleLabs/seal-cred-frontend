@@ -16,12 +16,18 @@ interface StreetCredStoreType {
   ledger: Promise<Ledger>
   originalContracts?: Promise<SortedContracts<ERC721>>
   derivativeContracts?: Promise<SortedContracts<SCERC721Derivative>>
+  contractNames: { [contractAddress: string]: Promise<string | undefined> }
 
-  handleAccountChange: (account?: string) => void
+  handleAccountChange: (account?: string) => Promise<void>
+  refreshContractNames: (ledger: Ledger) => void
 }
 
 const StreetCredStore = proxy<StreetCredStoreType>({
-  ledger: getLedger(streetCred),
+  ledger: getLedger(streetCred).then((ledger) => {
+    StreetCredStore.refreshContractNames(ledger)
+    return ledger
+  }),
+  contractNames: {},
 
   async handleAccountChange(account?: string) {
     if (!account) {
@@ -44,6 +50,21 @@ const StreetCredStore = proxy<StreetCredStoreType>({
       derivativeContracts,
       account
     )
+  },
+
+  refreshContractNames(ledger: Ledger) {
+    for (const { originalContract, derivativeContract } of Object.values(
+      ledger
+    )) {
+      if (!StreetCredStore.contractNames[originalContract.address]) {
+        StreetCredStore.contractNames[originalContract.address] =
+          originalContract.name()
+      }
+      if (!StreetCredStore.contractNames[derivativeContract.address]) {
+        StreetCredStore.contractNames[derivativeContract.address] =
+          derivativeContract.name()
+      }
+    }
   },
 })
 
