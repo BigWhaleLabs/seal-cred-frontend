@@ -1,18 +1,29 @@
 import { BodyText, SubheaderText } from 'components/Text'
+import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import StreetCredStore from 'stores/StreetCredStore'
 
 export default function SupportedContracts() {
   const { ledger } = useSnapshot(StreetCredStore)
+  const [supportedContracts, setSupportedContracts] = useState<string[]>()
 
-  // TODO: make sure, that this works fine
-  const addresses: string[] = []
-  Object.values(ledger).forEach(async ({ originalContract }) =>
-    addresses.push(await originalContract.name())
-  )
-  return addresses.length ? (
+  useEffect(() => {
+    async function fetchSupportedContracts() {
+      const addresses: Promise<string>[] = await Object.values(ledger).map(
+        async ({ originalContract }) => {
+          const name = await originalContract.name()
+          return name
+        }
+      )
+      setSupportedContracts(await Promise.all(addresses))
+    }
+
+    void fetchSupportedContracts()
+  }, [ledger])
+
+  return supportedContracts && supportedContracts.length ? (
     <>
-      {addresses.map((address) => (
+      {supportedContracts.map((address) => (
         <BodyText key={address}>{address}</BodyText>
       ))}
     </>
