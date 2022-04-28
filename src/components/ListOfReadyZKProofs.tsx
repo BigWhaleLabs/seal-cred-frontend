@@ -9,7 +9,7 @@ import {
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import React, { FC, useEffect, useState } from 'react'
-import StreetCredStore, { StreetCredStoreType } from 'stores/StreetCredStore'
+import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import proofStore from 'stores/ProofStore'
 
@@ -52,8 +52,7 @@ const ReadyZKProof: FC<{
 
 function ZKProofList() {
   const { proofsReady } = useSnapshot(proofStore)
-  const { originalContracts } =
-    useSnapshot<StreetCredStoreType>(StreetCredStore)
+  const { originalContracts } = useSnapshot(StreetCredStore)
 
   const availableBadges = originalContracts.filter((token) =>
     proofsReady.has(token.address)
