@@ -7,7 +7,7 @@ import isAddressOwner from 'helpers/isAddressOwner'
 
 export default async function filterContracts<
   T extends ERC721 | SCERC721Derivative
->(contracts: T[], account?: string) {
+>(contracts: T[], account: string) {
   const sortedContracts: SortedContracts<T> = {
     owned: [],
     unowned: [],
@@ -15,9 +15,7 @@ export default async function filterContracts<
 
   await Promise.all(
     contracts.map(async (contract) => {
-      const accountOwnsToken = account
-        ? await isAddressOwner(contract, account)
-        : false
+      const accountOwnsToken = await isAddressOwner(contract, account)
       return accountOwnsToken
         ? sortedContracts.owned.push(contract)
         : sortedContracts.unowned.push(contract)
