@@ -1,7 +1,6 @@
 import { AccentText, BodyText, SubheaderText } from 'components/Text'
 import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
 import { FC, Suspense, useEffect, useState } from 'react'
-import { handleError } from 'helpers/handleError'
 import StreetCredStore from 'stores/StreetCredStore'
 import classnames, {
   display,
@@ -19,25 +18,14 @@ const tokenCard = classnames(
 const Contract: FC<{
   contract: ERC721
 }> = ({ contract }) => {
-  const [name, setName] = useState<string>()
+  const [name, setName] = useState<Promise<string>>()
 
-  useEffect(() => {
-    async function fetchContractName() {
-      try {
-        const contractName = await contract.name()
-        setName(contractName ? contractName : contract.address)
-      } catch (error) {
-        handleError(error)
-      }
-    }
-
-    void fetchContractName()
-  }, [contract])
+  setName(contract.name())
 
   return (
     <Suspense fallback={<AccentText>Fetching the contract name...</AccentText>}>
       <div className={tokenCard}>
-        <BodyText>{name}</BodyText>
+        <BodyText>{name ? name : contract.address}</BodyText>
       </div>
     </Suspense>
   )

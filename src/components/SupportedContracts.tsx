@@ -4,6 +4,8 @@ import StreetCredStore from 'stores/StreetCredStore'
 
 export default function SupportedContracts() {
   const { ledger } = useSnapshot(StreetCredStore)
+
+  // TODO: make sure, that this works fine
   const addresses: string[] = []
   Object.values(ledger).forEach(async ({ originalContract }) =>
     addresses.push(await originalContract.name())

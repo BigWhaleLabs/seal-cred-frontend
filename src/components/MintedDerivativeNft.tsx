@@ -61,11 +61,6 @@ function TokenList() {
 }
 
 function MintedDerivativeNft() {
-  const { account } = useSnapshot(WalletStore)
-  useEffect(() => {
-    StreetCredStore.handleAccountChange(account)
-  }, [account])
-
   return (
     <Suspense fallback={<AccentText>Fetching minted tokens...</AccentText>}>
       <TokenList />

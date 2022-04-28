@@ -3,8 +3,9 @@ import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 // import MintedDerivativeNft from 'components/MintedDerivativeNft'
 // import ProofStore from 'stores/ProofStore'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import OriginalContractsOwned from 'components/OriginalContractsOwned'
+import StreetCredStore from 'stores/StreetCredStore'
 import SupportedContracts from 'components/SupportedContracts'
 import UnmintedDerivatives from 'components/UnmintedDerivatives'
 import Wallet from 'components/Wallet'
@@ -13,6 +14,11 @@ import WalletStore from 'stores/WalletStore'
 
 function Proofs() {
   // const { proofsReady } = useSnapshot(ProofStore)
+  const { account } = useSnapshot(WalletStore)
+
+  useEffect(() => {
+    StreetCredStore.handleAccountChange(account)
+  }, [account])
 
   return (
     <>

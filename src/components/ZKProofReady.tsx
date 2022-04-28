@@ -37,6 +37,7 @@ export function ZKProofReadyContent({ address }: { address: string }) {
       const contracts = await derivativeContracts
       if (!contracts) return
       setContractName(
+        // TODO: make sure, that this works fine
         await contracts.unminted
           .find((value) => value.address === address)
           ?.name()
