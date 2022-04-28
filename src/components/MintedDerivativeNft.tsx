@@ -1,9 +1,9 @@
 import { AccentText, SubheaderText } from 'components/Text'
+import { SCERC721Derivative } from '@big-whale-labs/street-cred-ledger-contract'
 import { Suspense, useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import Badge from 'components/Badge'
 import StreetCredStore from 'stores/StreetCredStore'
-import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
   display,
@@ -12,7 +12,6 @@ import classnames, {
   gap,
   justifyContent,
 } from 'classnames/tailwind'
-import { SCERC721Derivative } from '@big-whale-labs/street-cred-ledger-contract'
 
 const badgesWrapper = classnames(
   display('flex'),
@@ -35,7 +34,7 @@ function TokenList() {
     }
 
     void fetchMintedDerivatives()
-  })
+  }, [derivativeContracts])
 
   return (
     <>
