@@ -1,5 +1,6 @@
 import { AccentText, BadgeText, SubheaderText } from 'components/Text'
 import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
+import { FC, Suspense, useEffect, useRef, useState } from 'react'
 import { ProofStatus } from 'helpers/callProof'
 import {
   classnames,
@@ -7,12 +8,10 @@ import {
   justifyContent,
   padding,
 } from 'classnames/tailwind'
-import { useSnapshot } from 'valtio'
+import { subscribe, useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import Card from 'components/Card'
-import React, { FC, useEffect, useState } from 'react'
 import StreetCredStore from 'stores/StreetCredStore'
-import WalletStore from 'stores/WalletStore'
 import proofStore from 'stores/ProofStore'
 
 /*
@@ -33,11 +32,22 @@ const ZKProof: FC<{ token: { name: ERC721['name']; address: string } }> = ({
   token,
 }) => {
   const { tasks } = useSnapshot(proofStore)
-  const task = tasks.get(token.address)
+  const task = useRef(tasks[token.address])
+
+  useEffect(
+    () =>
+      subscribe(proofStore.tasks, () => {
+        task.current = proofStore.tasks[token.address]
+      }),
+    [token.address]
+  )
+
   const [contractName, setContractName] = useState('')
 
-  const isProcessing = task?.status
-    ? [ProofStatus.scheduled, ProofStatus.running].includes(task?.status)
+  const isProcessing = task.current?.status
+    ? [ProofStatus.scheduled, ProofStatus.running].includes(
+        task.current?.status
+      )
     : false
 
   useEffect(() => {
@@ -60,9 +70,9 @@ const ZKProof: FC<{ token: { name: ERC721['name']; address: string } }> = ({
       {contractName && (
         <div className={tokenCard}>
           <BadgeText>
-            {contractName}
-            {typeof task?.position !== 'undefined' && (
-              <>position# {task?.position}</>
+            {contractName}{' '}
+            {typeof task.current?.position !== 'undefined' && (
+              <>position #{task.current?.position}</>
             )}
           </BadgeText>
           <Button
@@ -77,7 +87,7 @@ const ZKProof: FC<{ token: { name: ERC721['name']; address: string } }> = ({
               }
             }}
           >
-            generate
+            {isProcessing ? 'processing' : 'generate'}
           </Button>
         </div>
       )}
@@ -86,22 +96,20 @@ const ZKProof: FC<{ token: { name: ERC721['name']; address: string } }> = ({
 }
 
 function ZKProofList() {
-  const { proofsReady } = useSnapshot(proofStore)
-  const { originalContracts } = useSnapshot(StreetCredStore)
   const [availableBadges, setAvailableBadges] = useState<ERC721[]>()
 
   useEffect(() => {
     async function fetchContractName() {
-      if (!originalContracts) return
-      const contracts = await originalContracts
+      if (!StreetCredStore.originalContracts) return
+      const contracts = await StreetCredStore.originalContracts
       setAvailableBadges(
-        contracts.minted.filter((token) => !proofsReady.has(token.address))
+        contracts.minted.filter(
+          (token) => !proofStore.proofsReady.has(token.address)
+        )
       )
     }
     void fetchContractName()
-  }, [originalContracts, proofsReady])
-
-  if (!originalContracts) return null
+  }, [])
 
   return (
     <>
@@ -120,9 +128,9 @@ function ZKProofList() {
 
 function ListOfAvailableZKProofs() {
   return (
-    <React.Suspense fallback={<AccentText>Fetching proofs...</AccentText>}>
+    <Suspense fallback={<AccentText>Fetching proofs...</AccentText>}>
       <ZKProofList />
-    </React.Suspense>
+    </Suspense>
   )
 }
 

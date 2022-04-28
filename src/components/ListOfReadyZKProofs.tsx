@@ -1,16 +1,14 @@
 import { AccentText, BadgeText, SubheaderText } from 'components/Text'
 import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
+import { FC, Suspense, useEffect, useState } from 'react'
 import {
   classnames,
   display,
   justifyContent,
   padding,
 } from 'classnames/tailwind'
-import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
-import React, { FC, useEffect, useState } from 'react'
 import StreetCredStore from 'stores/StreetCredStore'
-import WalletStore from 'stores/WalletStore'
 import proofStore from 'stores/ProofStore'
 
 const tokenCard = classnames(
@@ -51,23 +49,20 @@ const ReadyZKProof: FC<{
 }
 
 function ZKProofList() {
-  const { proofsReady } = useSnapshot(proofStore)
-  const { originalContracts } = useSnapshot(StreetCredStore)
-
   const [availableBadges, setAvailableBadges] = useState<ERC721[]>()
 
   useEffect(() => {
     async function fetchContractName() {
-      if (!originalContracts) return
-      const contracts = await originalContracts
+      if (!StreetCredStore.originalContracts) return
+      const contracts = await StreetCredStore.originalContracts
       setAvailableBadges(
-        contracts.minted.filter((token) => proofsReady.has(token.address))
+        contracts.minted.filter((token) =>
+          proofStore.proofsReady.has(token.address)
+        )
       )
     }
     void fetchContractName()
-  }, [originalContracts, proofsReady])
-
-  if (!originalContracts) return null
+  }, [])
 
   return (
     <>
@@ -86,9 +81,9 @@ function ZKProofList() {
 
 function ListOfReadyZKProofs() {
   return (
-    <React.Suspense fallback={<AccentText>Fetching proofs...</AccentText>}>
+    <Suspense fallback={<AccentText>Fetching proofs...</AccentText>}>
       <ZKProofList />
-    </React.Suspense>
+    </Suspense>
   )
 }
 

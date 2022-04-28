@@ -28,7 +28,7 @@ type ProofRecord = {
 }
 
 class ProofStore extends PersistableStore {
-  tasks: Map<string, JobObject> = new Map()
+  tasks: { [badge: string]: JobObject } = {}
   proofsInProgress: Map<string, ProofRecord> = new Map()
   proofsReady: Map<string, ProofRecord> = new Map()
 
@@ -60,7 +60,7 @@ class ProofStore extends PersistableStore {
     const ecdsaInput = createEcdsaInput(signature)
     const result = await scheduleProofGeneration(treeProof, ecdsaInput)
 
-    this.tasks.set(address, result)
+    this.tasks[address] = result
     this.proofsInProgress.set(address, {
       name: address,
       proof: result.proof,
@@ -71,18 +71,21 @@ class ProofStore extends PersistableStore {
   }
 
   async checkTasks() {
-    const items = Array.from(this.tasks.values()).filter((task) =>
-      [ProofStatus.scheduled, ProofStatus.running].includes(task.status)
+    const items = Object.values(this.tasks).filter(
+      (task) =>
+        task &&
+        [ProofStatus.scheduled, ProofStatus.running].includes(task.status)
     )
     const fetchByKeys = items.map(this.requestTaskData)
     if (!fetchByKeys.length) return
     await Promise.all(fetchByKeys).then((results) => {
-      for (const [badge, job] of this.tasks) {
+      for (const [badge, job] of Object.entries(this.tasks)) {
+        if (!job) continue
         const data = results.find((r) => r?._id === job._id)
         if (!data) {
-          this.tasks.delete(badge)
+          delete this.tasks[badge]
         } else {
-          this.tasks.set(badge, data)
+          this.tasks[badge] = data
           if (data.status === ProofStatus.completed) {
             this.proofsReady.set(badge, {
               name: badge,
@@ -125,9 +128,6 @@ class ProofStore extends PersistableStore {
       case 'proofsReady': {
         return new Map(value as [string, JobObject][])
       }
-      case 'tasks': {
-        return new Map(value as [string, JobObject][])
-      }
       default:
         return value
     }
@@ -139,9 +139,6 @@ class ProofStore extends PersistableStore {
         return Array.from(value as Map<string, JobObject>)
       }
       case 'proofsReady': {
-        return Array.from(value as Map<string, JobObject>)
-      }
-      case 'tasks': {
         return Array.from(value as Map<string, JobObject>)
       }
       default:
