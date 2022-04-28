@@ -1,5 +1,6 @@
 import { AccentText, BadgeText, SubheaderText } from 'components/Text'
 import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
+import { ProofStatus } from 'helpers/callProof'
 import {
   classnames,
   display,
@@ -33,9 +34,11 @@ const ZKProof: FC<{ token: { name: ERC721['name']; address: string } }> = ({
 }) => {
   const { tasks } = useSnapshot(proofStore)
   const task = tasks.get(token.address)
-
   const [contractName, setContractName] = useState('')
-  const [loading, setLoading] = useState(false)
+
+  const isProcessing = task?.status
+    ? [ProofStatus.scheduled, ProofStatus.running].includes(task?.status)
+    : false
 
   useEffect(() => {
     async function fetchContractName() {
@@ -65,15 +68,12 @@ const ZKProof: FC<{ token: { name: ERC721['name']; address: string } }> = ({
           <Button
             badge
             color="success"
-            disabled={loading}
+            disabled={isProcessing}
             onClick={() => {
-              setLoading(true)
               try {
                 void proofStore.generate(token.address)
               } catch (e) {
                 console.error(e)
-              } finally {
-                setLoading(false)
               }
             }}
           >
@@ -92,12 +92,11 @@ function ZKProofList() {
 
   useEffect(() => {
     async function fetchContractName() {
-      if (originalContracts) {
-        const contracts = await originalContracts
-        setAvailableBadges(
-          contracts.minted.filter((token) => !proofsReady.has(token.address))
-        )
-      }
+      if (!originalContracts) return
+      const contracts = await originalContracts
+      setAvailableBadges(
+        contracts.minted.filter((token) => !proofsReady.has(token.address))
+      )
     }
     void fetchContractName()
   }, [originalContracts, proofsReady])

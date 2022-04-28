@@ -3,6 +3,7 @@ import {
   checkJobStatus,
   scheduleProofGeneration,
 } from 'helpers/callProof'
+import { handleError } from 'helpers/handleError'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResponse from 'models/ProofResponse'
@@ -90,6 +91,9 @@ class ProofStore extends PersistableStore {
             })
             this.proofsInProgress.delete(badge)
           }
+          if (data.status === ProofStatus.failed) {
+            handleError(new Error('Proof generation failed'))
+          }
         }
       }
     })
@@ -108,6 +112,7 @@ class ProofStore extends PersistableStore {
           }
     } catch (e) {
       console.log('Error: ', e)
+      handleError(new Error('Proof generation failed'))
       return
     }
   }

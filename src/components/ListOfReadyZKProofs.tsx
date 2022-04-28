@@ -58,12 +58,11 @@ function ZKProofList() {
 
   useEffect(() => {
     async function fetchContractName() {
-      if (originalContracts) {
-        const contracts = await originalContracts
-        setAvailableBadges(
-          contracts.minted.filter((token) => proofsReady.has(token.address))
-        )
-      }
+      if (!originalContracts) return
+      const contracts = await originalContracts
+      setAvailableBadges(
+        contracts.minted.filter((token) => proofsReady.has(token.address))
+      )
     }
     void fetchContractName()
   }, [originalContracts, proofsReady])
