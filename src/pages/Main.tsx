@@ -1,7 +1,7 @@
 import { HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
-// import MintedDerivativeNft from 'components/MintedDerivativeNft'
+import MintedDerivativeNft from 'components/MintedDerivativeNft'
 // import ProofStore from 'stores/ProofStore'
 // import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 // import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
@@ -23,7 +23,7 @@ function Proofs() {
       <HeaderText>Derivative NFTs that you can mint:</HeaderText>
       {/* <UnmintedDerivatives /> */}
       <HeaderText>Derivative NFTs that you own:</HeaderText>
-      {/* <MintedDerivativeNft /> */}
+      <MintedDerivativeNft />
     </>
   )
 }

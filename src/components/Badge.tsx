@@ -1,6 +1,5 @@
 import { BadgeText } from 'components/Text'
-import { FC, useEffect, useState } from 'react'
-import { SCERC721Derivative } from '@big-whale-labs/street-cred-ledger-contract'
+import { FC } from 'react'
 import {
   alignItems,
   borderColor,
@@ -11,7 +10,9 @@ import {
   justifyContent,
   padding,
 } from 'classnames/tailwind'
+import { useSnapshot } from 'valtio'
 import BadgeType from 'models/Badge'
+import StreetCredStore from 'stores/StreetCredStore'
 
 const badge = classnames(
   display('flex'),
@@ -23,42 +24,14 @@ const badge = classnames(
   borderRadius('rounded')
 )
 
-type BadgeProps = {
-  contractAddress: string
-  tokenName: SCERC721Derivative['name']
-  tokenSymbol: SCERC721Derivative['symbol']
-}
-
-const Badge: FC<BadgeProps> = ({ tokenName, tokenSymbol, contractAddress }) => {
-  const [token, setToken] = useState<string | undefined>(undefined)
-
-  useEffect(() => {
-    async function fetchToken() {
-      try {
-        const symbol = await tokenSymbol()
-        const contractName = await tokenName()
-        if (!symbol || !BadgeType[symbol]) {
-          setToken(
-            contractName.length ? contractName : `Contract: ${contractAddress}`
-          )
-        } else {
-          setToken(BadgeType[symbol] || contractName)
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    void fetchToken()
-  }, [tokenName, tokenSymbol, contractAddress])
+const Badge: FC<{ address: string }> = ({ address }) => {
+  const { contractNames } = useSnapshot(StreetCredStore)
 
   return (
     <>
-      {token && (
-        <div className={badge}>
-          <BadgeText>{token}</BadgeText>
-        </div>
-      )}
+      <div className={badge}>
+        <BadgeText>{contractNames[address] || address}</BadgeText>
+      </div>
     </>
   )
 }
