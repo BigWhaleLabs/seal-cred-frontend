@@ -54,13 +54,25 @@ function ZKProofList() {
   const { proofsReady } = useSnapshot(proofStore)
   const { originalContracts } = useSnapshot(StreetCredStore)
 
-  const availableBadges = originalContracts.filter((token) =>
-    proofsReady.has(token.address)
-  )
+  const [availableBadges, setAvailableBadges] = useState<ERC721[]>()
+
+  useEffect(() => {
+    async function fetchContractName() {
+      if (originalContracts) {
+        const contracts = await originalContracts
+        setAvailableBadges(
+          contracts.minted.filter((token) => proofsReady.has(token.address))
+        )
+      }
+    }
+    void fetchContractName()
+  }, [originalContracts, proofsReady])
+
+  if (!originalContracts) return null
 
   return (
     <>
-      {availableBadges.length > 0 ? (
+      {availableBadges && availableBadges.length > 0 ? (
         <Card>
           {availableBadges.map((contract, index) => (
             <ReadyZKProof key={index} token={contract} />
@@ -77,7 +89,7 @@ function ListOfReadyZKProofs() {
   const { account } = useSnapshot(WalletStore)
 
   useEffect(() => {
-    StreetCredStore.refreshOriginalContracts(account)
+    StreetCredStore.handleAccountChange(account)
   }, [account])
 
   return (
