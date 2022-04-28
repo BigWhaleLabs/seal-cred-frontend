@@ -4,6 +4,7 @@ import {
   SCERC721Derivative,
 } from '@big-whale-labs/street-cred-ledger-contract'
 import { ErrorList, handleError } from 'helpers/handleError'
+import { Suspense, useState } from 'react'
 import {
   alignItems,
   classnames,
@@ -17,7 +18,6 @@ import {
   width,
 } from 'classnames/tailwind'
 import Button from 'components/Button'
-import React, { useState } from 'react'
 import WalletStore from 'stores/WalletStore'
 import createEcdsaInput from 'helpers/createEcdsaInput'
 import proofStore from 'stores/ProofStore'
@@ -111,9 +111,9 @@ function ZKProofGenerate(props: {
   derivativeContract: SCERC721Derivative
 }) {
   return (
-    <React.Suspense fallback={'loading'}>
+    <Suspense fallback={'loading'}>
       <ZKProofGenerateContent {...props} />
-    </React.Suspense>
+    </Suspense>
   )
 }
 

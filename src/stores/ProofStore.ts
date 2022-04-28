@@ -33,7 +33,7 @@ class ProofStore extends PersistableStore {
     if (!account) throw new Error('No account found')
 
     const ledger = await StreetCredStore.ledger
-    const record = ledger.get(derivativeContractAddress)
+    const record = ledger[derivativeContractAddress]
     if (!record || !record.originalContract)
       throw new Error('Derivative contract not found')
 

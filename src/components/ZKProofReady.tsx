@@ -30,7 +30,7 @@ const listTokenTitle = classnames(
 
 export function ZKProofReadyContent({ address }: { address: string }) {
   const { ledger } = useSnapshot(StreetCredStore)
-  const record = ledger.get(address)
+  const record = ledger[address]
   if (!record) return null
 
   const { derivativeContract } = record

@@ -23,13 +23,13 @@ const badgesWrapper = classnames(
 )
 
 function TokenList() {
-  const { derivativeContracts } = useSnapshot(StreetCredStore)
+  const { derivativeContractsOwned } = useSnapshot(StreetCredStore)
 
   return (
     <>
-      {derivativeContracts.length ? (
+      {derivativeContractsOwned && derivativeContractsOwned.length ? (
         <div className={badgesWrapper}>
-          {derivativeContracts.map((contract, index) => {
+          {derivativeContractsOwned.map((contract, index) => {
             const { name, address, symbol } = contract
             return (
               <Badge
@@ -51,7 +51,7 @@ function TokenList() {
 function MintedDerivativeNft() {
   const { account } = useSnapshot(WalletStore)
   useEffect(() => {
-    StreetCredStore.refreshDerivativeContracts(account)
+    StreetCredStore.handleAccountChange(account)
   }, [account])
 
   return (
