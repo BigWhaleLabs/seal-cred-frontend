@@ -1,26 +1,18 @@
 import { AccentText, BadgeText, SubheaderText } from 'components/Text'
-import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
+import { ProofStatus } from 'helpers/callProof'
 import {
   classnames,
   display,
   justifyContent,
   padding,
 } from 'classnames/tailwind'
-import { useSnapshot } from 'valtio'
+import { subscribe, useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import Card from 'components/Card'
-import React, { FC, useEffect, useState } from 'react'
+import ContractName from 'components/ContractName'
+import React, { FC, useEffect, useRef } from 'react'
 import StreetCredStore from 'stores/StreetCredStore'
-import WalletStore from 'stores/WalletStore'
 import proofStore from 'stores/ProofStore'
-
-/*
- TODO: Display "Supported NFTs that you own" minus the ZK proofs that are already generated (or take it from ProofStore?)
- TODO: each ZK proof that can be generated should have the button "generate", which should call ProofStore.generate method
- TODO: proofs that are being generated should be taken from ProofStore, just being displayed here, no actual business-logic should be present in the UI
- TODO: we should be able to generate multiple proofs at a time (even though they are queued)
- TODO: we should display the queue position of the jobs 
-*/
 
 const tokenCard = classnames(
   display('flex'),
@@ -28,60 +20,37 @@ const tokenCard = classnames(
   padding('py-2')
 )
 
-const ZKProof: FC<{ token: { name: ERC721['name']; address: string } }> = ({
-  token,
-}) => {
-  const { tasks } = useSnapshot(proofStore)
-  const task = tasks.get(token.address)
+const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
+  const { proofsInProgress } = useSnapshot(proofStore)
+  const proofInProgress = useRef(proofsInProgress[contractAddress])
 
-  const [contractName, setContractName] = useState('')
-  const [loading, setLoading] = useState(false)
+  useEffect(
+    () =>
+      subscribe(proofStore.proofsInProgress, () => {
+        proofInProgress.current = proofStore.proofsInProgress[contractAddress]
+      }),
+    [contractAddress]
+  )
 
-  useEffect(() => {
-    async function fetchContractName() {
-      try {
-        const contractName = await token.name()
-        setContractName(
-          contractName.length ? contractName : `Contract: ${token.address}`
-        )
-      } catch (error) {
-        console.error(error)
-      }
-    }
+  const job = proofInProgress.current
+  const showPosition = job && job?.position && job?.position > 0
+  const isProcessing =
+    job && [ProofStatus.scheduled, ProofStatus.running].includes(job?.status)
 
-    void fetchContractName()
-  }, [token])
+  function onGenerate() {
+    void proofStore.generate(contractAddress)
+  }
 
   return (
-    <>
-      {contractName && (
-        <div className={tokenCard}>
-          <BadgeText>
-            {contractName}
-            {typeof task?.position !== 'undefined' && (
-              <>position# {task?.position}</>
-            )}
-          </BadgeText>
-          <Button
-            badge
-            color="success"
-            disabled={loading}
-            onClick={() => {
-              setLoading(true)
-              try {
-                void proofStore.generate(token.address)
-              } catch (e) {
-                console.error(e)
-              } finally {
-                setLoading(false)
-              }
-            }}
-          >
-            generate
-          </Button>
-        </div>
-      )}
-    </>
+    <div className={tokenCard}>
+      <BadgeText>
+        <ContractName address={contractAddress} />
+        {showPosition && <>position# {job.position}</>}
+      </BadgeText>
+      <Button badge color="success" loading={isProcessing} onClick={onGenerate}>
+        generate
+      </Button>
+    </div>
   )
 }
 
@@ -89,16 +58,16 @@ function ZKProofList() {
   const { proofsReady } = useSnapshot(proofStore)
   const { originalContracts } = useSnapshot(StreetCredStore)
 
-  const availableBadges = originalContracts.filter(
-    (token) => !proofsReady.has(token.address)
+  const availableBadges = originalContracts?.owned.filter(
+    (token) => typeof proofsReady[token.address] === 'undefined'
   )
 
   return (
     <>
-      {availableBadges.length > 0 ? (
+      {availableBadges && availableBadges.length > 0 ? (
         <Card>
           {availableBadges.map((contract, index) => (
-            <ZKProof key={index} token={contract} />
+            <ZKProof key={index} contractAddress={contract.address} />
           ))}
         </Card>
       ) : (
@@ -109,12 +78,6 @@ function ZKProofList() {
 }
 
 function ListOfAvailableZKProofs() {
-  const { account } = useSnapshot(WalletStore)
-
-  useEffect(() => {
-    StreetCredStore.refreshOriginalContracts(account)
-  }, [account])
-
   return (
     <React.Suspense fallback={<AccentText>Fetching proofs...</AccentText>}>
       <ZKProofList />

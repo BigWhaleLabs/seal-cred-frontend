@@ -3,6 +3,7 @@ import {
   checkJobStatus,
   scheduleProofGeneration,
 } from 'helpers/callProof'
+import { handleError } from 'helpers/handleError'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResponse from 'models/ProofResponse'
@@ -20,76 +21,83 @@ interface JobObject {
   proof?: ProofResponse
 }
 
-type ProofRecord = {
-  name: string
-  proof?: ProofResponse
+type ProofRecord = JobObject & {
   originalContractAddress: string
 }
 
 class ProofStore extends PersistableStore {
-  tasks: Map<string, JobObject> = new Map()
-  proofsInProgress: Map<string, ProofRecord> = new Map()
-  proofsReady: Map<string, ProofRecord> = new Map()
+  proofsInProgress: { [badge: string]: ProofRecord } = {}
+  proofsReady: { [badge: string]: ProofRecord } = {}
 
   async generate(address: string) {
-    const account = WalletStore.account
-    if (!account) throw new Error('No account found')
+    try {
+      const account = WalletStore.account
+      if (!account) throw new Error('No account found')
 
-    const ledger = await StreetCredStore.ledger
-    const record = ledger[address]
+      const ledger = await StreetCredStore.ledger
+      const record = ledger[address]
 
-    if (!record || !record.originalContract)
-      throw new Error('Derivative contract not found')
+      if (!record || !record.originalContract)
+        throw new Error('Derivative contract not found')
 
-    const { originalContract } = record
+      const { originalContract } = record
 
-    const isOwner = isAddressOwner(originalContract, account)
-    if (!isOwner) throw new Error('Account is not owner of contract')
+      const isOwner = isAddressOwner(originalContract, account)
+      if (!isOwner) throw new Error('Account is not owner of contract')
 
-    const owners = await getMapOfOwners(originalContract)
-    const addresses = Array.from(owners.keys())
+      const owners = await getMapOfOwners(originalContract)
+      const addresses = Array.from(owners.values())
 
-    const tokenId = owners.get(account)
-    if (!tokenId) throw new Error('Account is not owner of contract')
+      const tokenId = addresses.indexOf(account)
+      if (tokenId < 0) throw new Error('Account is not owner of contract')
 
-    const signature = await WalletStore.signMessage(address)
-    if (!signature) throw new Error('Signature is not found')
+      const signature = await WalletStore.signMessage(address)
+      if (!signature) throw new Error('Signature is not found')
 
-    const treeProof = createTreeProof(tokenId - 1, addresses)
-    const ecdsaInput = createEcdsaInput(signature)
-    const result = await scheduleProofGeneration(treeProof, ecdsaInput)
+      const treeProof = createTreeProof(tokenId, addresses)
+      const ecdsaInput = createEcdsaInput(signature)
+      const result = await scheduleProofGeneration(treeProof, ecdsaInput)
 
-    this.tasks.set(address, result)
-    this.proofsInProgress.set(address, {
-      name: address,
-      proof: result.proof,
-      originalContractAddress: address,
-    })
+      this.proofsInProgress[address] = {
+        ...result,
+        originalContractAddress: address,
+      }
 
-    return result
+      return result
+    } catch (e) {
+      handleError(new Error('Proof generation failed'))
+      return
+    }
   }
 
   async checkTasks() {
-    const items = Array.from(this.tasks.values()).filter((task) =>
-      [ProofStatus.scheduled, ProofStatus.running].includes(task.status)
-    )
-    const fetchByKeys = items.map(this.requestTaskData)
+    const fetchByKeys = Object.values(this.proofsInProgress)
+      .filter((task) => !!task)
+      .map(this.requestTaskData)
     if (!fetchByKeys.length) return
     await Promise.all(fetchByKeys).then((results) => {
-      for (const [badge, job] of this.tasks) {
+      for (const [badge, job] of Object.entries(this.proofsInProgress)) {
+        if (!job) continue
         const data = results.find((r) => r?._id === job._id)
         if (!data) {
-          this.tasks.delete(badge)
+          delete this.proofsInProgress[badge]
         } else {
-          this.tasks.set(badge, data)
-          if (data.status === ProofStatus.completed) {
-            this.proofsReady.set(badge, {
-              name: badge,
-              proof: data.proof,
-              originalContractAddress: badge,
-            })
-            this.proofsInProgress.delete(badge)
+          this.proofsInProgress[badge] = {
+            ...this.proofsInProgress[badge],
+            ...job,
           }
+          if (
+            [ProofStatus.scheduled, ProofStatus.running].includes(data.status)
+          )
+            continue
+          if (data.status === ProofStatus.completed) {
+            this.proofsReady[badge] = this.proofsInProgress[badge]
+          }
+          delete this.proofsInProgress[badge]
+          if (data.status === ProofStatus.cancelled)
+            handleError(new Error('Proof generation cancelled'))
+          if (data.status === ProofStatus.failed)
+            handleError(new Error('Proof generation failed'))
         }
       }
     })
@@ -109,38 +117,6 @@ class ProofStore extends PersistableStore {
     } catch (e) {
       console.log('Error: ', e)
       return
-    }
-  }
-
-  reviver = (key: string, value: unknown) => {
-    switch (key) {
-      case 'proofsInProgress': {
-        return new Map(value as [string, JobObject][])
-      }
-      case 'proofsReady': {
-        return new Map(value as [string, JobObject][])
-      }
-      case 'tasks': {
-        return new Map(value as [string, JobObject][])
-      }
-      default:
-        return value
-    }
-  }
-
-  replacer = (key: string, value: unknown) => {
-    switch (key) {
-      case 'proofsInProgress': {
-        return Array.from(value as Map<string, JobObject>)
-      }
-      case 'proofsReady': {
-        return Array.from(value as Map<string, JobObject>)
-      }
-      case 'tasks': {
-        return Array.from(value as Map<string, JobObject>)
-      }
-      default:
-        return value
     }
   }
 }

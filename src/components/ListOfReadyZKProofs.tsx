@@ -1,5 +1,4 @@
 import { AccentText, BadgeText, SubheaderText } from 'components/Text'
-import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
 import {
   classnames,
   display,
@@ -8,9 +7,9 @@ import {
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
-import React, { FC, useEffect, useState } from 'react'
+import ContractName from 'components/ContractName'
+import React, { FC } from 'react'
 import StreetCredStore from 'stores/StreetCredStore'
-import WalletStore from 'stores/WalletStore'
 import proofStore from 'stores/ProofStore'
 
 const tokenCard = classnames(
@@ -20,33 +19,14 @@ const tokenCard = classnames(
 )
 
 const ReadyZKProof: FC<{
-  token: { name: ERC721['name']; address: string }
-}> = ({ token }) => {
-  const [contractName, setContractName] = useState('')
-
-  useEffect(() => {
-    async function fetchContractName() {
-      try {
-        const contractName = await token.name()
-        setContractName(
-          contractName.length ? contractName : `Contract: ${token.address}`
-        )
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    void fetchContractName()
-  }, [token])
-
+  address: string
+}> = ({ address }) => {
   return (
-    <>
-      {contractName && (
-        <div className={tokenCard}>
-          <BadgeText>{contractName}</BadgeText>
-        </div>
-      )}
-    </>
+    <div className={tokenCard}>
+      <BadgeText>
+        <ContractName address={address} />
+      </BadgeText>
+    </div>
   )
 }
 
@@ -54,16 +34,16 @@ function ZKProofList() {
   const { proofsReady } = useSnapshot(proofStore)
   const { originalContracts } = useSnapshot(StreetCredStore)
 
-  const availableBadges = originalContracts.filter((token) =>
-    proofsReady.has(token.address)
+  const availableBadges = originalContracts?.owned.filter(
+    (token) => typeof proofsReady[token.address] !== 'undefined'
   )
 
   return (
     <>
-      {availableBadges.length > 0 ? (
+      {availableBadges && availableBadges.length > 0 ? (
         <Card>
           {availableBadges.map((contract, index) => (
-            <ReadyZKProof key={index} token={contract} />
+            <ReadyZKProof key={index} address={contract.address} />
           ))}
         </Card>
       ) : (
@@ -74,12 +54,6 @@ function ZKProofList() {
 }
 
 function ListOfReadyZKProofs() {
-  const { account } = useSnapshot(WalletStore)
-
-  useEffect(() => {
-    StreetCredStore.refreshOriginalContracts(account)
-  }, [account])
-
   return (
     <React.Suspense fallback={<AccentText>Fetching proofs...</AccentText>}>
       <ZKProofList />
