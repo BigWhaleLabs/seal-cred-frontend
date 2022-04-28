@@ -7,4 +7,5 @@ export default {
   VITE_APP_NAME: import.meta.env.VITE_APP_NAME as string,
   VITE_SC_LEDGER_CONTRACT_ADDRESS: import.meta.env
     .VITE_SC_LEDGER_CONTRACT_ADDRESS as string,
+  VITE_ETH_HTTP_URL: import.meta.env.VITE_ETH_HTTP_URL as string,
 }

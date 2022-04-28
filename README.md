@@ -21,6 +21,7 @@
 | `VITE_APP_NAME`                   | App name which is displayed in some wallets                           |
 | `VITE_BITSKI_CLIENT_ID`           | Bitski client ID                                                      |
 | `VITE_SC_LEDGER_CONTRACT_ADDRESS` | StreetCred Ledger contract address                                    |
+| `VITE_ETH_HTTP_URL`               | Ethereum HTTP URL                                                     |
 
 Also, please, consider looking at `.env.sample`.
 
