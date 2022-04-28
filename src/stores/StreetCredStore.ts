@@ -11,10 +11,19 @@ import streetCred from 'helpers/streetCred'
 // TODO: listen to ledger's original and derivative contracts Transfer events and update originalContractsOwned and derivativeContractsOwned
 // TODO: set up and destroy listeners on the ledger's original and derivative contracts on SetMerkleRoot (when adding a new contract) and DeleteMerkleRoot events
 
+type SortedDerivatives = {
+  minted: SCERC721Derivative[]
+  unminted: SCERC721Derivative[]
+}
+type SortedOriginals = {
+  minted: ERC721[]
+  unminted: ERC721[]
+}
+
 type StreetCredStoreType = {
   ledger: Promise<Ledger>
-  originalContractsOwned?: Promise<ERC721[]>
-  derivativeContractsOwned?: Promise<SCERC721Derivative[]>
+  originalContracts?: Promise<SortedOriginals>
+  derivativeContracts?: Promise<SortedDerivatives>
 
   handleAccountChange: (account?: string) => void
 }
@@ -24,22 +33,22 @@ const StreetCredStore: StreetCredStoreType = proxy<StreetCredStoreType>({
 
   async handleAccountChange(account?: string) {
     if (!account) {
-      StreetCredStore.originalContractsOwned = undefined
-      StreetCredStore.derivativeContractsOwned = undefined
+      StreetCredStore.originalContracts = undefined
+      StreetCredStore.derivativeContracts = undefined
       return
     }
     const ledger = await StreetCredStore.ledger
     const originalContracts = Object.values(ledger).map(
       (record) => record.originalContract
     )
-    StreetCredStore.originalContractsOwned = filterContracts(
+    StreetCredStore.originalContracts = filterContracts(
       originalContracts,
       account
     )
     const derivativeContracts = Object.values(ledger).map(
       (record) => record.derivativeContract
     )
-    StreetCredStore.derivativeContractsOwned = filterContracts(
+    StreetCredStore.derivativeContracts = filterContracts(
       derivativeContracts,
       account
     )
