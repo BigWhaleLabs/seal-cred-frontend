@@ -20,10 +20,16 @@ interface JobObject {
   proof?: ProofResponse
 }
 
+type ProofRecord = {
+  name: string
+  proof?: ProofResponse
+  originalContractAddress: string
+}
+
 class ProofStore extends PersistableStore {
   tasks: Map<string, JobObject> = new Map()
-  proofsInProgress: Map<string, JobObject> = new Map()
-  proofsReady: Map<string, JobObject> = new Map()
+  proofsInProgress: Map<string, ProofRecord> = new Map()
+  proofsReady: Map<string, ProofRecord> = new Map()
 
   async generate(address: string) {
     const account = WalletStore.account
@@ -54,7 +60,11 @@ class ProofStore extends PersistableStore {
     const result = await scheduleProofGeneration(treeProof, ecdsaInput)
 
     this.tasks.set(address, result)
-    this.proofsInProgress.set(address, result)
+    this.proofsInProgress.set(address, {
+      name: address,
+      proof: result.proof,
+      originalContractAddress: address,
+    })
 
     return result
   }
@@ -73,7 +83,11 @@ class ProofStore extends PersistableStore {
         } else {
           this.tasks.set(badge, data)
           if (data.status === ProofStatus.completed) {
-            this.proofsReady.set(badge, data)
+            this.proofsReady.set(badge, {
+              name: badge,
+              proof: data.proof,
+              originalContractAddress: badge,
+            })
             this.proofsInProgress.delete(badge)
           }
         }
