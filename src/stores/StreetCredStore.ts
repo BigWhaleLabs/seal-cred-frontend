@@ -12,7 +12,7 @@ import streetCred from 'helpers/streetCred'
 // TODO: listen to ledger's original and derivative contracts Transfer events and update originalContractsOwned and derivativeContractsOwned
 // TODO: set up and destroy listeners on the ledger's original and derivative contracts on SetMerkleRoot (when adding a new contract) and DeleteMerkleRoot events
 
-type StreetCredStoreType = {
+interface StreetCredStoreType {
   ledger: Promise<Ledger>
   originalContracts?: Promise<SortedContracts<ERC721>>
   derivativeContracts?: Promise<SortedContracts<SCERC721Derivative>>
@@ -20,7 +20,7 @@ type StreetCredStoreType = {
   handleAccountChange: (account?: string) => void
 }
 
-const StreetCredStore: StreetCredStoreType = proxy<StreetCredStoreType>({
+const StreetCredStore = proxy<StreetCredStoreType>({
   ledger: getLedger(streetCred),
 
   async handleAccountChange(account?: string) {
