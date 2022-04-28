@@ -1,20 +1,22 @@
-import { HeaderText } from 'components/Text'
+import { HeaderText, SubheaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
-import MintedDerivativeNft from 'components/MintedDerivativeNft'
-import ProofStore from 'stores/ProofStore'
-import SupportedNFTs from 'components/SupportedNFTs'
+// import MintedDerivativeNft from 'components/MintedDerivativeNft'
+// import ProofStore from 'stores/ProofStore'
+import { Suspense } from 'react'
+import OriginalContractsOwned from 'components/OriginalContractsOwned'
+import SupportedContracts from 'components/SupportedContracts'
 import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
-import ZKProofReady from 'components/ZKProofReady'
+// import ZKProofReady from 'components/ZKProofReady'
 
 function Proofs() {
-  const { proofsReady } = useSnapshot(ProofStore)
+  // const { proofsReady } = useSnapshot(ProofStore)
 
   return (
     <>
       <HeaderText>Supported NFTs that you own:</HeaderText>
-      <SupportedNFTs />
+      <OriginalContractsOwned />
       <HeaderText>ZK proofs that you can generate:</HeaderText>
       {/* {proofsCanGenerate.map((record) => (
         <ZKProofGenerate {...record} />
@@ -25,13 +27,13 @@ function Proofs() {
       {/* TODO: we should be able to generate multiple proofs at a time (even though they are queued) */}
       {/* TODO: we should display the queue position of the jobs */}
       <HeaderText>ZK proofs that you generated:</HeaderText>
-      {[...proofsReady.keys()].map((address) => (
+      {/* {[...proofsReady.keys()].map((address) => (
         <ZKProofReady address={address} />
-      ))}
+      ))} */}
       <HeaderText>Derivative NFTs that you can mint:</HeaderText>
       {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
       <HeaderText>Derivative NFTs that you own:</HeaderText>
-      <MintedDerivativeNft />
+      {/* <MintedDerivativeNft /> */}
     </>
   )
 }
@@ -43,6 +45,12 @@ function Main() {
     <Card>
       <HeaderText>That's you:</HeaderText>
       <Wallet />
+      <HeaderText>Supported NFTs:</HeaderText>
+      <Suspense
+        fallback={<SubheaderText>Fetching avaliable tokens...</SubheaderText>}
+      >
+        <SupportedContracts />
+      </Suspense>
       {account && <Proofs />}
     </Card>
   )

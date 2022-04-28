@@ -6,12 +6,16 @@ import {
 import Ledger from 'types/Ledger'
 import defaultProvider from 'helpers/defaultProvider'
 
-export function getLedgerRecord(tokenAddress: string, merkleRoot: string) {
+export async function getLedgerRecord(
+  streetCredLedger: StreetCredLedger,
+  tokenAddress: string,
+  merkleRoot: string
+) {
   return {
     merkleRoot,
     originalContract: ERC721__factory.connect(tokenAddress, defaultProvider),
     derivativeContract: SCERC721Derivative__factory.connect(
-      tokenAddress,
+      await streetCredLedger.getDerivativeAddress(tokenAddress),
       defaultProvider
     ),
   }
@@ -20,11 +24,15 @@ export function getLedgerRecord(tokenAddress: string, merkleRoot: string) {
 export default async function getLedger(streetCredLedger: StreetCredLedger) {
   const eventsFilter = streetCredLedger.filters.SetMerkleRoot()
   const events = await streetCredLedger.queryFilter(eventsFilter)
-  const ledger = new Map() as Ledger
+  const ledger = {} as Ledger
   for (const event of events) {
     const { tokenAddress } = event.args
     const merkleRoot = event.args.merkleRoot
-    ledger.set(tokenAddress, getLedgerRecord(tokenAddress, merkleRoot))
+    ledger[tokenAddress] = await getLedgerRecord(
+      streetCredLedger,
+      tokenAddress,
+      merkleRoot
+    )
   }
   return ledger
 }
