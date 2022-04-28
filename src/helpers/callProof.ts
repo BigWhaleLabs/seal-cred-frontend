@@ -9,18 +9,18 @@ import axios from 'axios'
 const baseURL = 'https://verify.streetcred.one'
 
 export async function scheduleProofGeneration(
-  proof: MerkleProof | undefined,
-  ecdsaInput: EcdsaInput | undefined
+  proof: MerkleProof,
+  ecdsaInput: EcdsaInput
 ) {
   const req: ProofBody = {
-    root: proof?.root,
-    leaf: proof?.leaf,
-    siblings: proof?.siblings,
-    pathIndices: proof?.pathIndices,
-    r: ecdsaInput?.r,
-    s: ecdsaInput?.s,
-    msghash: ecdsaInput?.msghash,
-    pubkey: ecdsaInput?.pubkey,
+    root: proof.root,
+    leaf: proof.leaf,
+    siblings: proof.siblings,
+    pathIndices: proof.pathIndices,
+    r: ecdsaInput.r,
+    s: ecdsaInput.s,
+    msghash: ecdsaInput.msghash,
+    pubkey: ecdsaInput.pubkey,
   }
 
   const { data } = await axios.post<JobResponse>(`${baseURL}/proof`, req, {
