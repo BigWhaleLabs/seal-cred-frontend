@@ -4,6 +4,7 @@ import {
 } from '@big-whale-labs/street-cred-ledger-contract'
 import { proxy } from 'valtio'
 import Ledger from 'types/Ledger'
+import SortedContracts from 'types/SortedContracts'
 import filterContracts from 'helpers/filterContracts'
 import getLedger, { getLedgerRecord } from 'helpers/ledger'
 import streetCred from 'helpers/streetCred'
@@ -11,19 +12,10 @@ import streetCred from 'helpers/streetCred'
 // TODO: listen to ledger's original and derivative contracts Transfer events and update originalContractsOwned and derivativeContractsOwned
 // TODO: set up and destroy listeners on the ledger's original and derivative contracts on SetMerkleRoot (when adding a new contract) and DeleteMerkleRoot events
 
-type SortedDerivatives = {
-  minted: SCERC721Derivative[]
-  unminted: SCERC721Derivative[]
-}
-type SortedOriginals = {
-  minted: ERC721[]
-  unminted: ERC721[]
-}
-
 type StreetCredStoreType = {
   ledger: Promise<Ledger>
-  originalContracts?: Promise<SortedOriginals>
-  derivativeContracts?: Promise<SortedDerivatives>
+  originalContracts?: Promise<SortedContracts<ERC721>>
+  derivativeContracts?: Promise<SortedContracts<SCERC721Derivative>>
 
   handleAccountChange: (account?: string) => void
 }
