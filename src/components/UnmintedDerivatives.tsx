@@ -1,79 +1,86 @@
-import { AccentText, BodyText, SubheaderText } from 'components/Text'
-import { FC, Suspense, useEffect, useState } from 'react'
-import { SCERC721Derivative } from '@big-whale-labs/street-cred-ledger-contract'
-import { handleError } from 'helpers/handleError'
+import { BodyText, SubheaderText } from 'components/Text'
+import { Suspense, useState } from 'react'
+import { useSnapshot } from 'valtio'
+import Button from 'components/Button'
+import ContractListContainer from 'components/ContractListContainer'
 import StreetCredStore from 'stores/StreetCredStore'
-import classnames, {
-  display,
-  justifyContent,
-  padding,
-} from 'classnames/tailwind'
-import useWritableSnapshot from 'helpers/useWritableSnapshot'
+import classnames, { display, flexDirection, space } from 'classnames/tailwind'
+import proofStore from 'stores/ProofStore'
+import shortenedAddress from 'helpers/shortenedAddress'
 
-const tokenCard = classnames(
+const container = classnames(
   display('flex'),
-  justifyContent('justify-between'),
-  padding('py-2')
+  flexDirection('flex-row'),
+  space('space-x-2')
 )
 
-const Contract: FC<{
-  contract: SCERC721Derivative
-}> = ({ contract }) => {
-  const [name, setName] = useState<string>()
+function ContractToMint({ address }: { address: string }) {
+  const { contractNames } = useSnapshot(StreetCredStore)
 
-  useEffect(() => {
-    async function fetchContractName() {
-      try {
-        const contractName = await contract.name()
-        setName(contractName ? contractName : contract.address)
-      } catch (error) {
-        handleError(error)
-      }
-    }
-
-    void fetchContractName()
-  }, [contract])
+  const [loading, setLoading] = useState(false)
 
   return (
-    <Suspense fallback={<AccentText>Fetching the contract name...</AccentText>}>
-      <div className={tokenCard}>
-        <BodyText>{name}</BodyText>
-        <button onClick={() => console.log('MINT!')}>mint</button>
-      </div>
-    </Suspense>
+    <div className={container}>
+      <BodyText>
+        {contractNames[address]
+          ? `${contractNames[address]} (${shortenedAddress(address)})`
+          : address}
+      </BodyText>
+      <Button
+        loading={!!loading}
+        onClick={() => {
+          console.log('minting')
+        }}
+        small
+        color="primary"
+      >
+        {loading ? 'minting...' : 'mint'}
+      </Button>
+    </div>
   )
 }
 
 function ContractList() {
-  const { derivativeContracts } = useWritableSnapshot(StreetCredStore)
-  const [contracts, setContracts] = useState<SCERC721Derivative[]>()
-
-  useEffect(() => {
-    async function fetchUnmintedContracts() {
-      const allContracts = await derivativeContracts
-      setContracts(allContracts?.unminted)
-    }
-
-    void fetchUnmintedContracts()
-  }, [derivativeContracts])
+  const { originalContracts, derivativeContracts, ledger } =
+    useSnapshot(StreetCredStore)
+  const { proofsCompleted } = useSnapshot(proofStore)
+  const originalContractsOwned = originalContracts?.owned || []
+  const derivativeContractsOwned = derivativeContracts?.owned || []
+  const derivativeContractsOwnedAddresses = derivativeContractsOwned.map(
+    (contract) => contract.address
+  )
+  const unownedOriginalContractsWithZKProofs = originalContractsOwned.filter(
+    (contract) =>
+      !!proofsCompleted.find((proof) => proof.contract === contract.address)
+  )
+  const unownedDerivativeContractsAddressesWithZKProofs =
+    unownedOriginalContractsWithZKProofs
+      .map((contract) => ledger[contract.address].derivativeContract.address)
+      .filter((address) => !derivativeContractsOwnedAddresses.includes(address))
 
   return (
-    <>
-      {contracts?.length ? (
-        contracts.map((contract) => (
-          <Contract key={contract.address} contract={contract} />
+    <ContractListContainer>
+      {unownedDerivativeContractsAddressesWithZKProofs.length ? (
+        unownedDerivativeContractsAddressesWithZKProofs.map((address) => (
+          <ContractToMint key={address} address={address} />
         ))
       ) : (
-        <SubheaderText>You don't have any supported tokens yet.</SubheaderText>
+        <SubheaderText>
+          You don't have any unowned derivative contracts that you can mint.
+        </SubheaderText>
       )}
-    </>
+    </ContractListContainer>
   )
 }
 
 export default function UnmintedDerivatives() {
   return (
     <Suspense
-      fallback={<BodyText>Fetching unminted badges for you...</BodyText>}
+      fallback={
+        <BodyText>
+          Fetching derivative NFTs that you haven't minted yet...
+        </BodyText>
+      }
     >
       <ContractList />
     </Suspense>

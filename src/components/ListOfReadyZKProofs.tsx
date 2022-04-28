@@ -13,15 +13,15 @@ const contractContainer = classnames(
 )
 
 function ContractList() {
-  const { proofsReady } = useSnapshot(proofStore)
+  const { proofsCompleted } = useSnapshot(proofStore)
 
   return (
     <>
-      {proofsReady?.length ? (
+      {proofsCompleted?.length ? (
         <ContractListContainer>
-          {proofsReady.map((proof) => (
+          {proofsCompleted.map((proof) => (
             <div className={contractContainer}>
-              <ContractName address={proof.contract} />
+              <ContractName address={proof.contract} account={proof.account} />
             </div>
           ))}
         </ContractListContainer>

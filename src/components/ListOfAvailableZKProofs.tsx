@@ -71,7 +71,10 @@ function ContractList() {
           ))}
         </ContractListContainer>
       ) : (
-        <SubheaderText>You don't have any supported tokens yet.</SubheaderText>
+        <SubheaderText>
+          You don't have any supported tokens available for zero knowledge proof
+          generation.
+        </SubheaderText>
       )}
     </>
   )
