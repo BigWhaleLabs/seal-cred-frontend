@@ -119,12 +119,6 @@ function ZKProofList() {
 }
 
 function ListOfAvailableZKProofs() {
-  const { account } = useSnapshot(WalletStore)
-
-  useEffect(() => {
-    StreetCredStore.handleAccountChange(account)
-  }, [account])
-
   return (
     <React.Suspense fallback={<AccentText>Fetching proofs...</AccentText>}>
       <ZKProofList />
