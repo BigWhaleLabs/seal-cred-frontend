@@ -71,20 +71,19 @@ class ProofStore extends PersistableStore {
   }
 
   async checkTasks() {
-    const fetchByKeys = Object.values(this.proofsInProgress)
-      .filter((task) => !!task)
-      .map(this.requestTaskData)
+    const fetchByKeys = Object.values(this.proofsInProgress).map(
+      this.requestTaskData
+    )
     if (!fetchByKeys.length) return
     await Promise.all(fetchByKeys).then((results) => {
       for (const [badge, job] of Object.entries(this.proofsInProgress)) {
-        if (!job) continue
         const data = results.find((r) => r?._id === job._id)
         if (!data) {
           delete this.proofsInProgress[badge]
         } else {
           this.proofsInProgress[badge] = {
             ...this.proofsInProgress[badge],
-            ...job,
+            ...data,
           }
           if (
             [ProofStatus.scheduled, ProofStatus.running].includes(data.status)

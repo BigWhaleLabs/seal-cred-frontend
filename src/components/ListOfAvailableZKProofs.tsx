@@ -1,8 +1,7 @@
 import { BodyText, SubheaderText } from 'components/Text'
-import { FC, useEffect, useRef } from 'react'
-import { ProofStatus } from 'helpers/callProof'
+import { FC } from 'react'
 import { Suspense } from 'react'
-import { subscribe, useSnapshot } from 'valtio'
+import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
@@ -26,20 +25,7 @@ const contractContainer = classnames(
 
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const { proofsInProgress } = useSnapshot(proofStore)
-  const proofInProgress = useRef(proofsInProgress[contractAddress])
-
-  useEffect(
-    () =>
-      subscribe(proofStore.proofsInProgress, () => {
-        proofInProgress.current = proofStore.proofsInProgress[contractAddress]
-      }),
-    [contractAddress]
-  )
-
-  const job = proofInProgress.current
-  const showPosition = job && job?.position && job?.position > 0
-  const isProcessing =
-    job && [ProofStatus.scheduled, ProofStatus.running].includes(job?.status)
+  const proof = proofsInProgress[contractAddress]
 
   function onGenerate() {
     void proofStore.generate(contractAddress)
@@ -48,9 +34,11 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
   return (
     <div className={contractContainer}>
       <ContractName address={contractAddress} />
-      {showPosition && <>position# {job.position}</>}
-      <Button loading={isProcessing} onClick={onGenerate} small color="primary">
-        Generate
+      {proof && proof.position && (
+        <BodyText>position #{proof.position}</BodyText>
+      )}
+      <Button loading={!!proof} onClick={onGenerate} small color="primary">
+        {proof.status ?? 'generate'}
       </Button>
     </div>
   )
