@@ -56,7 +56,7 @@ class WalletStore {
     this.account = accounts[0]
     this.walletLoading = false
 
-    StreetCredStore.handleAccountChange(this.account)
+    await StreetCredStore.handleAccountChange(this.account)
   }
 
   private subscribeProvider(provider: Web3Provider) {
