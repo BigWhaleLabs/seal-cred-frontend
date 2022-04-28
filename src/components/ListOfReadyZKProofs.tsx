@@ -1,4 +1,4 @@
-import { AccentText, BadgeText, SubheaderText } from 'components/Text'
+import { AccentText, SubheaderText } from 'components/Text'
 import {
   classnames,
   display,
@@ -23,9 +23,7 @@ const ReadyZKProof: FC<{
 }> = ({ address }) => {
   return (
     <div className={tokenCard}>
-      <BadgeText>
-        <ContractName address={address} />
-      </BadgeText>
+      <ContractName address={address} />
     </div>
   )
 }
