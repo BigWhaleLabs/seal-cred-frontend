@@ -3,15 +3,22 @@ import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 // import MintedDerivativeNft from 'components/MintedDerivativeNft'
 // import ProofStore from 'stores/ProofStore'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import OriginalContractsOwned from 'components/OriginalContractsOwned'
+import StreetCredStore from 'stores/StreetCredStore'
 import SupportedContracts from 'components/SupportedContracts'
+import UnmintedDerivatives from 'components/UnmintedDerivatives'
 import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
 // import ZKProofReady from 'components/ZKProofReady'
 
 function Proofs() {
   // const { proofsReady } = useSnapshot(ProofStore)
+  const { account } = useSnapshot(WalletStore)
+
+  useEffect(() => {
+    StreetCredStore.handleAccountChange(account)
+  }, [account])
 
   return (
     <>
@@ -31,7 +38,7 @@ function Proofs() {
         <ZKProofReady address={address} />
       ))} */}
       <HeaderText>Derivative NFTs that you can mint:</HeaderText>
-      {/* TODO: should display the derivative NFTs that can be minted (but that are not minted yet) */}
+      <UnmintedDerivatives />
       <HeaderText>Derivative NFTs that you own:</HeaderText>
       {/* <MintedDerivativeNft /> */}
     </>

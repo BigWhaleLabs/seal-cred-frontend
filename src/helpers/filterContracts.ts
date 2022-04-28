@@ -7,12 +7,19 @@ import ownsToken from 'helpers/ownsToken'
 export default async function filterContracts<
   T extends ERC721 | SCERC721Derivative
 >(contracts: T[], account: string) {
-  return (
-    await Promise.all(
-      contracts.map(async (contract) => {
-        const accountOwnsToken = await ownsToken(contract, account)
-        return accountOwnsToken ? contract : undefined
-      })
-    )
-  ).filter((v) => !!v) as T[]
+  const sortedContracts: { minted: T[]; unminted: T[] } = {
+    minted: [],
+    unminted: [],
+  }
+
+  await Promise.all(
+    contracts.map(async (contract) => {
+      const accountOwnsToken = await ownsToken(contract, account)
+      return accountOwnsToken
+        ? sortedContracts.minted.push(contract)
+        : sortedContracts.unminted.push(contract)
+    })
+  )
+
+  return sortedContracts
 }

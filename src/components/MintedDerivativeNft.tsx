@@ -1,5 +1,5 @@
 import { AccentText, SubheaderText } from 'components/Text'
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import Badge from 'components/Badge'
 import StreetCredStore from 'stores/StreetCredStore'
@@ -12,6 +12,7 @@ import classnames, {
   gap,
   justifyContent,
 } from 'classnames/tailwind'
+import { SCERC721Derivative } from '@big-whale-labs/street-cred-ledger-contract'
 
 const badgesWrapper = classnames(
   display('flex'),
@@ -24,12 +25,23 @@ const badgesWrapper = classnames(
 
 function TokenList() {
   const { derivativeContracts } = useSnapshot(StreetCredStore)
+  const [mintedDerivatives, setMintedDerivatives] =
+    useState<SCERC721Derivative[]>()
+
+  useEffect(() => {
+    async function fetchMintedDerivatives() {
+      const allDerivatives = await derivativeContracts
+      setMintedDerivatives(allDerivatives?.minted)
+    }
+
+    void fetchMintedDerivatives()
+  })
 
   return (
     <>
-      {derivativeContracts.length ? (
+      {mintedDerivatives?.length ? (
         <div className={badgesWrapper}>
-          {derivativeContracts.map((contract, index) => {
+          {mintedDerivatives.map((contract, index) => {
             const { name, address, symbol } = contract
             return (
               <Badge
@@ -49,11 +61,6 @@ function TokenList() {
 }
 
 function MintedDerivativeNft() {
-  const { account } = useSnapshot(WalletStore)
-  useEffect(() => {
-    StreetCredStore.refreshDerivativeContracts(account)
-  }, [account])
-
   return (
     <Suspense fallback={<AccentText>Fetching minted tokens...</AccentText>}>
       <TokenList />
