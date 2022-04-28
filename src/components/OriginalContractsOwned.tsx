@@ -1,13 +1,13 @@
-import { AccentText, BodyText, SubheaderText } from 'components/Text'
+import { BodyText, SubheaderText } from 'components/Text'
 import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
 import { FC, Suspense, useEffect, useState } from 'react'
+import { useSnapshot } from 'valtio'
 import StreetCredStore from 'stores/StreetCredStore'
 import classnames, {
   display,
   justifyContent,
   padding,
 } from 'classnames/tailwind'
-import useWritableSnapshot from 'helpers/useWritableSnapshot'
 
 const tokenCard = classnames(
   display('flex'),
@@ -18,21 +18,26 @@ const tokenCard = classnames(
 const Contract: FC<{
   contract: ERC721
 }> = ({ contract }) => {
-  const [name, setName] = useState<Promise<string>>()
+  const [name, setName] = useState<string>()
 
-  setName(contract.name())
+  useEffect(() => {
+    async function fetchName() {
+      const name = await contract.name()
+      setName(name || contract.address)
+    }
+
+    void fetchName()
+  }, [contract])
 
   return (
-    <Suspense fallback={<AccentText>Fetching the contract name...</AccentText>}>
-      <div className={tokenCard}>
-        <BodyText>{name ? name : contract.address}</BodyText>
-      </div>
-    </Suspense>
+    <div className={tokenCard}>
+      <BodyText>{name ? name : contract.address}</BodyText>
+    </div>
   )
 }
 
 function ContractList() {
-  const { originalContracts } = useWritableSnapshot(StreetCredStore)
+  const { originalContracts } = useSnapshot(StreetCredStore)
   const [mintedOriginals, setMintedOriginals] = useState<ERC721[]>()
 
   useEffect(() => {
