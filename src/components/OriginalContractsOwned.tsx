@@ -2,13 +2,13 @@ import { AccentText, BodyText, SubheaderText } from 'components/Text'
 import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
 import { FC, Suspense, useEffect, useState } from 'react'
 import { handleError } from 'helpers/handleError'
-import { useWritableSnapshot } from 'valtio'
 import StreetCredStore from 'stores/StreetCredStore'
 import classnames, {
   display,
   justifyContent,
   padding,
 } from 'classnames/tailwind'
+import useWritableSnapshot from 'helpers/useWritableSnapshot'
 
 const tokenCard = classnames(
   display('flex'),
@@ -48,11 +48,8 @@ function ContractList() {
   const [contracts, setContracts] = useState<ERC721[]>()
 
   useEffect(() => {
-    async function resolveContracts() {
-      if (originalContractsOwned) setContracts(await originalContractsOwned)
-    }
-    void resolveContracts()
-  })
+    setContracts(void originalContractsOwned)
+  }, [originalContractsOwned])
 
   return (
     <>
