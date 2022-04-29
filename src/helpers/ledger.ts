@@ -3,7 +3,7 @@ import {
   SCERC721Derivative__factory,
   StreetCredLedger,
 } from '@big-whale-labs/street-cred-ledger-contract'
-import Ledger from 'types/Ledger'
+import Ledger from 'models/Ledger'
 import defaultProvider from 'helpers/defaultProvider'
 
 export async function getLedgerRecord(
