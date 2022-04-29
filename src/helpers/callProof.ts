@@ -1,6 +1,5 @@
 import { MerkleProof } from '@zk-kit/incremental-merkle-tree'
 import EcdsaInput from 'models/EcdsaInput'
-import JobResponse from 'models/JobResponse'
 import ProofBody from 'models/ProofBody'
 import ProofCheck from 'models/ProofCheck'
 import axios from 'axios'
@@ -22,7 +21,7 @@ export async function scheduleProofGeneration(
     pubkey: ecdsaInput.pubkey,
   }
 
-  const { data } = await axios.post<JobResponse>(`${baseURL}/proof`, req, {
+  const { data } = await axios.post<ProofCheck>(`${baseURL}/proof`, req, {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',

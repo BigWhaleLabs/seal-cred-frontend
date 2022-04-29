@@ -43,11 +43,15 @@ class ProofStore extends PersistableStore {
 
       const treeProof = createTreeProof(tokenId, addresses)
       const ecdsaInput = createEcdsaInput(signature)
-      const result = await scheduleProofGeneration(treeProof, ecdsaInput)
+      const { job, position } = await scheduleProofGeneration(
+        treeProof,
+        ecdsaInput
+      )
 
       this.proofsInProgress.push({
-        id: result._id,
-        status: result.status,
+        id: job._id,
+        status: job.status,
+        position: position,
         account,
         contract,
       })
