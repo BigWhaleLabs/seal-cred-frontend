@@ -1,7 +1,6 @@
 import { BodyText, SubheaderText } from 'components/Text'
 import { FC } from 'react'
 import { Suspense, useState } from 'react'
-import { handleError } from 'helpers/handleError'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import ContractListContainer from 'components/ContractListContainer'
@@ -18,7 +17,7 @@ const contractContainer = classnames(
 )
 
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
-  const [generating, setGenerating] = useState(false)
+  const [postingProof, setPostingProof] = useState(false)
 
   const proofInProgress = ProofStore.proofsInProgress.find(
     (proof) =>
@@ -30,23 +29,23 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
     <div className={contractContainer}>
       <ContractName address={contractAddress} />
       <Button
-        loading={!!proofInProgress}
-        disabled={generating}
+        loading={!!proofInProgress || postingProof}
         onClick={async () => {
-          setGenerating(true)
-
-          try {
-            await ProofStore.generate(contractAddress)
-          } catch (error) {
-            handleError(error)
-          } finally {
-            setGenerating(false)
-          }
+          setPostingProof(true)
+          await ProofStore.generate(contractAddress)
+          setPostingProof(false)
         }}
         small
         color="primary"
       >
-        {proofInProgress ? 'generating...' : 'generate'}
+        {!proofInProgress && 'generate'}
+        {proofInProgress?.status === 'running' && 'generating...'}
+        {proofInProgress?.status === 'scheduled' &&
+          `queued${
+            proofInProgress?.position !== undefined
+              ? `(position: ${proofInProgress?.position + 1})`
+              : ''
+          }...`}
       </Button>
     </div>
   )
