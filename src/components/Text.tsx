@@ -13,7 +13,6 @@ import {
 const headerText = classnames(
   transitionProperty('transition-colors'),
   textColor('text-primary'),
-  textAlign('text-center'),
   fontFamily('font-primary'),
   fontWeight('font-bold'),
   fontSize('text-2xl')

@@ -1,55 +1,37 @@
 import { MerkleProof } from '@zk-kit/incremental-merkle-tree'
 import EcdsaInput from 'models/EcdsaInput'
 import ProofBody from 'models/ProofBody'
-import ProofResponse from 'models/ProofResponse'
+import ProofCheck from 'models/ProofCheck'
 import axios from 'axios'
 
-export default async function callProof(
-  proof: MerkleProof | undefined,
-  ecdsaInput: EcdsaInput | undefined
+const baseURL = 'https://verify.streetcred.one'
+
+export async function scheduleProofGeneration(
+  proof: MerkleProof,
+  ecdsaInput: EcdsaInput
 ) {
   const req: ProofBody = {
-    root: proof?.root,
-    leaf: proof?.leaf,
-    siblings: proof?.siblings,
-    pathIndices: proof?.pathIndices,
-    r: ecdsaInput?.r,
-    s: ecdsaInput?.s,
-    msghash: ecdsaInput?.msghash,
-    pubkey: ecdsaInput?.pubkey,
+    root: proof.root,
+    leaf: proof.leaf,
+    siblings: proof.siblings,
+    pathIndices: proof.pathIndices,
+    r: ecdsaInput.r,
+    s: ecdsaInput.s,
+    msghash: ecdsaInput.msghash,
+    pubkey: ecdsaInput.pubkey,
   }
 
-  const { data } = await axios.post<ProofResponse>(
-    'https://verify.streetcred.one/proof',
-    req,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  )
-  console.log('data' + data)
-  const dataInHex: ProofResponse = {
-    proof: {
-      pi_a: [p256(data.proof.pi_a[0]), p256(data.proof.pi_a[1])],
-      pi_b: [
-        [p256(data.proof.pi_b[0][1]), p256(data.proof.pi_b[0][0])],
-        [p256(data.proof.pi_b[1][1]), p256(data.proof.pi_b[1][0])],
-      ],
-      pi_c: [p256(data.proof.pi_c[0]), p256(data.proof.pi_c[1])],
-      protocol: data.proof.protocol,
-      curve: data.proof.curve,
+  const { data } = await axios.post<ProofCheck>(`${baseURL}/proof`, req, {
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
-    publicSignals: [p256(data.publicSignals[0]), p256(data.publicSignals[1])],
-  }
+  })
 
-  return dataInHex
+  return data
 }
 
-function p256(n: string) {
-  let nstr = BigInt(n).toString(16)
-  while (nstr.length < 64) nstr = '0' + nstr
-  nstr = '0x' + nstr
-  return nstr
+export async function checkJobStatus(id: string) {
+  const { data } = await axios.get<ProofCheck>(`${baseURL}/proof/${id}`)
+  return data
 }

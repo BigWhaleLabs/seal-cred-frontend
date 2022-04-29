@@ -11,6 +11,9 @@ export const ErrorList = {
   unknown: 'An unknown error occurred, please, contact us',
   invalidSignature: 'Signature is invalid',
   clear: '',
+  proofFailed: 'Proof generation failed, please, try again later',
+  proofCanceled:
+    'Server has reloaded while the proof was being generated, please, try again later',
 }
 
 export function handleError(error: unknown) {

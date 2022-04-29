@@ -9,7 +9,6 @@ import Root from 'components/Root'
 
 export default function App() {
   const { theme } = useSnapshot(AppStore)
-
   return (
     <Root>
       <Router>

@@ -6,10 +6,13 @@ import {
 } from 'helpers/bigintConvert'
 import { ethers } from 'ethers'
 import EcdsaInput from 'models/EcdsaInput'
-import PublicAccountStore from 'stores/PublicAccountStore'
+import WalletStore from 'stores/WalletStore'
 
 export default function createEcdsaInput(signature: string) {
-  const msg = PublicAccountStore.mainEthWallet.address
+  if (!WalletStore.account) {
+    throw new Error('No account found')
+  }
+  const msg = WalletStore.account
   const msgHash = ethers.utils.hashMessage(msg)
   const msghash_bigint = hexStringToBigInt(msgHash)
   const msghash_array = bigintToArray(86, 3, msghash_bigint)

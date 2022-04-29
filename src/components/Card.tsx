@@ -10,7 +10,6 @@ import {
   space,
   transitionProperty,
 } from 'classnames/tailwind'
-import { useSnapshot } from 'valtio'
 import AppStore from 'stores/AppStore'
 
 interface CardProps {
@@ -18,7 +17,7 @@ interface CardProps {
 }
 
 const cardContainer = (shadow?: boolean) => {
-  const { theme } = useSnapshot(AppStore)
+  const { theme } = AppStore
   return classnames(
     transitionProperty('transition-colors'),
     borderRadius('rounded-block'),

@@ -39,9 +39,5 @@ module.exports = {
         glass: '107px',
       },
     },
-    container: {
-      center: true,
-      padding: '2rem',
-    },
   },
 }
