@@ -18,7 +18,7 @@ const contractContainer = classnames(
 )
 
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
-  const [isGenerated, setIsGenerated] = useState(false)
+  const [generating, setGenerating] = useState(false)
 
   const proofInProgress = ProofStore.proofsInProgress.find(
     (proof) =>
@@ -31,16 +31,16 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
       <ContractName address={contractAddress} />
       <Button
         loading={!!proofInProgress}
-        disabled={isGenerated}
+        disabled={generating}
         onClick={async () => {
-          setIsGenerated(true)
+          setGenerating(true)
 
           try {
             await ProofStore.generate(contractAddress)
           } catch (error) {
             handleError(error)
           } finally {
-            setIsGenerated(false)
+            setGenerating(false)
           }
         }}
         small
