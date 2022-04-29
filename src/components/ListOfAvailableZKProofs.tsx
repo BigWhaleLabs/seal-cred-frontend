@@ -1,6 +1,7 @@
 import { BodyText, SubheaderText } from 'components/Text'
 import { FC } from 'react'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
+import { handleError } from 'helpers/handleError'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import ContractListContainer from 'components/ContractListContainer'
@@ -17,11 +18,12 @@ const contractContainer = classnames(
 )
 
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
-  const { proofsInProgress } = useSnapshot(ProofStore)
-  const { account } = useSnapshot(WalletStore)
+  const [generating, setGenerating] = useState(false)
 
-  const proofInProgress = proofsInProgress.find(
-    (proof) => proof.account === account && proof.contract === contractAddress
+  const proofInProgress = ProofStore.proofsInProgress.find(
+    (proof) =>
+      proof.account === WalletStore.account &&
+      proof.contract === contractAddress
   )
 
   return (
@@ -29,12 +31,28 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
       <ContractName address={contractAddress} />
       <Button
         loading={!!proofInProgress}
-        onClick={() => ProofStore.generate(contractAddress)}
+        disabled={generating}
+        onClick={async () => {
+          setGenerating(true)
+
+          try {
+            await ProofStore.generate(contractAddress)
+          } catch (error) {
+            handleError(error)
+          } finally {
+            setGenerating(false)
+          }
+        }}
         small
         color="primary"
       >
         {proofInProgress ? 'generating...' : 'generate'}
       </Button>
+      {generating && !!proofInProgress && (
+        <SubheaderText>
+          Your position in queue is: {proofInProgress.position}
+        </SubheaderText>
+      )}
     </div>
   )
 }
