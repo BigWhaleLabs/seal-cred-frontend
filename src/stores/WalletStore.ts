@@ -1,6 +1,9 @@
+import { BigNumberish } from 'ethers'
 import { ErrorList, handleError } from 'helpers/handleError'
+import { SCERC721Derivative__factory } from '@big-whale-labs/street-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
+import ProofResponse from 'models/ProofResponse'
 import StreetCredStore from 'stores/StreetCredStore'
 import env from 'helpers/env'
 import web3Modal from 'helpers/web3Modal'
@@ -46,6 +49,39 @@ class WalletStore {
     } finally {
       this.walletLoading = false
     }
+  }
+
+  async mintDerivative(
+    derivativeContractAddress: string,
+    proofResult: ProofResponse
+  ) {
+    if (!provider) {
+      throw new Error('No provider found')
+    }
+    if (!this.account) {
+      throw new Error('No account found')
+    }
+    const derivativeContract = SCERC721Derivative__factory.connect(
+      derivativeContractAddress,
+      provider.getSigner(0)
+    )
+    // This is a hacky way to get rid of the third arguements that are unnecessary
+    const tx = await derivativeContract.mint(
+      [proofResult.proof.pi_a[0], proofResult.proof.pi_a[1]] as [
+        BigNumberish,
+        BigNumberish
+      ],
+      [proofResult.proof.pi_b[0], proofResult.proof.pi_b[1]] as [
+        [BigNumberish, BigNumberish],
+        [BigNumberish, BigNumberish]
+      ],
+      [proofResult.proof.pi_c[0], proofResult.proof.pi_c[1]] as [
+        BigNumberish,
+        BigNumberish
+      ],
+      proofResult.publicSignals as [BigNumberish, BigNumberish]
+    )
+    await tx.wait()
   }
 
   private async handleAccountChanged() {

@@ -1,11 +1,13 @@
 import { BodyText, SubheaderText } from 'components/Text'
 import { Suspense, useState } from 'react'
+import { handleError } from 'helpers/handleError'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import ContractListContainer from 'components/ContractListContainer'
+import ProofStore from 'stores/ProofStore'
 import StreetCredStore from 'stores/StreetCredStore'
+import WalletStore from 'stores/WalletStore'
 import classnames, { display, flexDirection, space } from 'classnames/tailwind'
-import proofStore from 'stores/ProofStore'
 import shortenedAddress from 'helpers/shortenedAddress'
 
 const container = classnames(
@@ -14,8 +16,16 @@ const container = classnames(
   space('space-x-2')
 )
 
-function ContractToMint({ address }: { address: string }) {
-  const { contractNames } = useSnapshot(StreetCredStore)
+function ContractToMint({
+  address,
+  originalAddress,
+}: {
+  address: string
+  originalAddress: string
+}) {
+  const { contractNames, ledger } = useSnapshot(StreetCredStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
+  const { account } = useSnapshot(WalletStore)
 
   const [loading, setLoading] = useState(false)
 
@@ -28,8 +38,28 @@ function ContractToMint({ address }: { address: string }) {
       </BodyText>
       <Button
         loading={!!loading}
-        onClick={() => {
-          console.log('minting')
+        onClick={async () => {
+          setLoading(true)
+          try {
+            if (!account) throw new Error('No account found')
+            const derivativeContractAddress =
+              ledger[originalAddress].derivativeContract.address
+            const proof = proofsCompleted.find(
+              (proof) => proof.contract === originalAddress
+            )
+            if (!proof || !proof.result) throw new Error('No proof found')
+            console.log('Minting derivative...')
+            await WalletStore.mintDerivative(
+              derivativeContractAddress,
+              proof.result
+            )
+            console.log('Derivative minted!')
+            await StreetCredStore.refreshDerivativeContracts(account)
+          } catch (error) {
+            handleError(error)
+          } finally {
+            setLoading(false)
+          }
         }}
         small
         color="primary"
@@ -41,28 +71,44 @@ function ContractToMint({ address }: { address: string }) {
 }
 
 function ContractList() {
-  const { originalContracts, derivativeContracts, ledger } =
-    useSnapshot(StreetCredStore)
-  const { proofsCompleted } = useSnapshot(proofStore)
-  const originalContractsOwned = originalContracts?.owned || []
-  const derivativeContractsOwned = derivativeContracts?.owned || []
-  const derivativeContractsOwnedAddresses = derivativeContractsOwned.map(
-    (contract) => contract.address
-  )
-  const unownedOriginalContractsWithZKProofs = originalContractsOwned.filter(
-    (contract) =>
-      !!proofsCompleted.find((proof) => proof.contract === contract.address)
-  )
-  const unownedDerivativeContractsAddressesWithZKProofs =
-    unownedOriginalContractsWithZKProofs
-      .map((contract) => ledger[contract.address].derivativeContract.address)
-      .filter((address) => !derivativeContractsOwnedAddresses.includes(address))
+  const { derivativeContracts, ledger } = useSnapshot(StreetCredStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
+  const unownedDerivativeContracts = derivativeContracts?.unowned || []
+  const unownedDerivativeToOriginalAddressesMap = {} as {
+    [derivativeAddress: string]: string
+  }
+  for (const originalAddress of Object.keys(ledger)) {
+    const derivativeContract = ledger[originalAddress].derivativeContract
+    if (derivativeContract) {
+      unownedDerivativeToOriginalAddressesMap[derivativeContract.address] =
+        originalAddress
+    }
+  }
+
+  const unownedDerivativeContractsWithZKProofs =
+    unownedDerivativeContracts.filter(
+      (contract) =>
+        !!proofsCompleted.find(
+          (proof) =>
+            proof.contract ===
+            unownedDerivativeToOriginalAddressesMap[contract.address]
+        )
+    )
+  const unownedLedgerRecordsWithZKProofs =
+    unownedDerivativeContractsWithZKProofs.map(
+      (contract) =>
+        ledger[unownedDerivativeToOriginalAddressesMap[contract.address]]
+    )
 
   return (
     <ContractListContainer>
-      {unownedDerivativeContractsAddressesWithZKProofs.length ? (
-        unownedDerivativeContractsAddressesWithZKProofs.map((address) => (
-          <ContractToMint key={address} address={address} />
+      {unownedLedgerRecordsWithZKProofs.length ? (
+        unownedLedgerRecordsWithZKProofs.map((ledgerRecord) => (
+          <ContractToMint
+            key={ledgerRecord.originalContract.address}
+            address={ledgerRecord.derivativeContract.address}
+            originalAddress={ledgerRecord.originalContract.address}
+          />
         ))
       ) : (
         <SubheaderText>

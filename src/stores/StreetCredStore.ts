@@ -20,6 +20,7 @@ interface StreetCredStoreType {
 
   handleAccountChange: (account?: string) => Promise<void>
   refreshContractNames: (ledger: Ledger) => void
+  refreshDerivativeContracts: (account: string) => Promise<void>
 }
 
 const StreetCredStore = proxy<StreetCredStoreType>({
@@ -43,13 +44,7 @@ const StreetCredStore = proxy<StreetCredStoreType>({
       originalContracts,
       account
     )
-    const derivativeContracts = Object.values(ledger).map(
-      (record) => record.derivativeContract
-    )
-    StreetCredStore.derivativeContracts = filterContracts(
-      derivativeContracts,
-      account
-    )
+    await StreetCredStore.refreshDerivativeContracts(account)
   },
 
   refreshContractNames(ledger: Ledger) {
@@ -65,6 +60,16 @@ const StreetCredStore = proxy<StreetCredStoreType>({
           derivativeContract.name()
       }
     }
+  },
+
+  async refreshDerivativeContracts(account: string) {
+    const derivativeContracts = Object.values(await StreetCredStore.ledger).map(
+      (record) => record.derivativeContract
+    )
+    StreetCredStore.derivativeContracts = filterContracts(
+      derivativeContracts,
+      account
+    )
   },
 })
 
