@@ -73,12 +73,12 @@ class WalletStore {
       ],
       [
         [
-          BigNumber.from(proofResult.proof.pi_b[0][0]),
           BigNumber.from(proofResult.proof.pi_b[0][1]),
+          BigNumber.from(proofResult.proof.pi_b[0][0]),
         ],
         [
-          BigNumber.from(proofResult.proof.pi_b[1][0]),
           BigNumber.from(proofResult.proof.pi_b[1][1]),
+          BigNumber.from(proofResult.proof.pi_b[1][0]),
         ],
       ],
       [
