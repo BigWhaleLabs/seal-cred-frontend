@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers'
 import { BodyText, SubheaderText } from 'components/Text'
 import { Suspense, useState } from 'react'
 import { handleError } from 'helpers/handleError'
@@ -9,6 +10,7 @@ import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import classnames, { display, flexDirection, space } from 'classnames/tailwind'
 import shortenedAddress from 'helpers/shortenedAddress'
+import streetCred from 'helpers/streetCred'
 
 const container = classnames(
   display('flex'),
@@ -48,6 +50,20 @@ function ContractToMint({
               (proof) => proof.contract === originalAddress
             )
             if (!proof || !proof.result) throw new Error('No proof found')
+            const ledgerMerkleTree = await streetCred.getRoot(originalAddress)
+            if (
+              !BigNumber.from(ledgerMerkleTree).eq(
+                BigNumber.from(proof.result.publicSignals[1])
+              )
+            ) {
+              const index = ProofStore.proofsInProgress.indexOf(proof)
+              if (index > -1) {
+                ProofStore.proofsInProgress.splice(index, 1)
+              }
+              throw new Error(
+                'This proof is outdated, please, generate a new one'
+              )
+            }
             console.log('Minting derivative...')
             await WalletStore.mintDerivative(
               derivativeContractAddress,
