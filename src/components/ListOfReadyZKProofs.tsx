@@ -1,10 +1,11 @@
 import { BodyText, SubheaderText } from 'components/Text'
 import { classnames, display, flexDirection, space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
+import Button from 'components/Button'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
+import ProofStore from 'stores/ProofStore'
 import React from 'react'
-import proofStore from 'stores/ProofStore'
 
 const contractContainer = classnames(
   display('flex'),
@@ -13,7 +14,7 @@ const contractContainer = classnames(
 )
 
 function ContractList() {
-  const { proofsCompleted } = useSnapshot(proofStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
 
   return (
     <>
@@ -22,6 +23,19 @@ function ContractList() {
           {proofsCompleted.map((proof) => (
             <div className={contractContainer}>
               <ContractName address={proof.contract} account={proof.account} />
+              <Button
+                small
+                color="error"
+                onClick={() => {
+                  ProofStore.proofsCompleted = proofsCompleted.filter(
+                    (p) =>
+                      p.contract !== proof.contract &&
+                      p.account !== proof.account
+                  )
+                }}
+              >
+                Delete
+              </Button>
             </div>
           ))}
         </ContractListContainer>
