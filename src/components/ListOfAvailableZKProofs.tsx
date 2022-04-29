@@ -25,6 +25,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
       proof.account === WalletStore.account &&
       proof.contract === contractAddress
   )
+  const position = proofInProgress?.position
 
   return (
     <div className={contractContainer}>
@@ -48,10 +49,8 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
       >
         {proofInProgress ? 'generating...' : 'generate'}
       </Button>
-      {generating && !!proofInProgress && (
-        <SubheaderText>
-          Your position in queue is: {proofInProgress.position}
-        </SubheaderText>
+      {proofInProgress?.status === 'scheduled' && position && position >= 0 && (
+        <SubheaderText>Your position in queue is: {position + 1}</SubheaderText>
       )}
     </div>
   )
