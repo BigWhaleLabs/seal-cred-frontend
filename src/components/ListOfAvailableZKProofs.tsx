@@ -38,14 +38,17 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
         small
         color="primary"
       >
-        {!proofInProgress && 'generate'}
-        {proofInProgress?.status === 'running' && 'generating...'}
-        {proofInProgress?.status === 'scheduled' &&
-          `queued${
-            proofInProgress?.position !== undefined
-              ? `(position: ${proofInProgress?.position + 1})`
-              : ''
-          }...`}
+        {!proofInProgress
+          ? 'generate'
+          : proofInProgress?.status === 'running'
+          ? 'generating...'
+          : proofInProgress?.status === 'scheduled'
+          ? `queued${
+              proofInProgress?.position !== undefined
+                ? ` (position: ${proofInProgress?.position + 1})`
+                : ''
+            }...`
+          : null}
       </Button>
     </div>
   )
