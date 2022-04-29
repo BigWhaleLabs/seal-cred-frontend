@@ -1,4 +1,4 @@
-import { BigNumberish } from 'ethers'
+import { BigNumber } from 'ethers'
 import { ErrorList, handleError } from 'helpers/handleError'
 import { SCERC721Derivative__factory } from '@big-whale-labs/street-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
@@ -65,21 +65,30 @@ class WalletStore {
       derivativeContractAddress,
       provider.getSigner(0)
     )
-    // This is a hacky way to get rid of the third arguements that are unnecessary
+    // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
     const tx = await derivativeContract.mint(
-      [proofResult.proof.pi_a[0], proofResult.proof.pi_a[1]] as [
-        BigNumberish,
-        BigNumberish
+      [
+        BigNumber.from(proofResult.proof.pi_a[0]),
+        BigNumber.from(proofResult.proof.pi_a[1]),
       ],
-      [proofResult.proof.pi_b[0], proofResult.proof.pi_b[1]] as [
-        [BigNumberish, BigNumberish],
-        [BigNumberish, BigNumberish]
+      [
+        [
+          BigNumber.from(proofResult.proof.pi_b[0][0]),
+          BigNumber.from(proofResult.proof.pi_b[0][1]),
+        ],
+        [
+          BigNumber.from(proofResult.proof.pi_b[1][0]),
+          BigNumber.from(proofResult.proof.pi_b[1][1]),
+        ],
       ],
-      [proofResult.proof.pi_c[0], proofResult.proof.pi_c[1]] as [
-        BigNumberish,
-        BigNumberish
+      [
+        BigNumber.from(proofResult.proof.pi_c[0]),
+        BigNumber.from(proofResult.proof.pi_c[1]),
       ],
-      proofResult.publicSignals as [BigNumberish, BigNumberish]
+      [
+        BigNumber.from(proofResult.publicSignals[0]),
+        BigNumber.from(proofResult.publicSignals[1]),
+      ]
     )
     await tx.wait()
   }
