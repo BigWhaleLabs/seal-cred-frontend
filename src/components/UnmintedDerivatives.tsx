@@ -72,8 +72,11 @@ function ContractToMint({
 
 function ContractList() {
   const { derivativeContracts, ledger } = useSnapshot(StreetCredStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
   const unownedDerivativeContracts = derivativeContracts?.unowned || []
+  const completedProofs = proxy(proofsCompleted)
   const scLendger = proxy(ledger)
+
   const unownedDerivativeToOriginalAddressesMap = {} as {
     [derivativeAddress: string]: string
   }
@@ -88,7 +91,7 @@ function ContractList() {
   const unownedDerivativeContractsWithZKProofs =
     unownedDerivativeContracts.filter(
       (contract) =>
-        !!ProofStore.proofsCompleted.find(
+        !!completedProofs.find(
           (proof) =>
             proof.contract ===
               unownedDerivativeToOriginalAddressesMap[contract.address] &&
