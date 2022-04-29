@@ -1,7 +1,7 @@
 import { BodyText, SubheaderText } from 'components/Text'
 import { Suspense, useState } from 'react'
 import { handleError } from 'helpers/handleError'
-import { useSnapshot } from 'valtio'
+import { proxy, useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import ContractListContainer from 'components/ContractListContainer'
 import ProofStore from 'stores/ProofStore'
@@ -73,6 +73,7 @@ function ContractToMint({
 function ContractList() {
   const { derivativeContracts, ledger } = useSnapshot(StreetCredStore)
   const unownedDerivativeContracts = derivativeContracts?.unowned || []
+  const scLendger = proxy(ledger)
   const unownedDerivativeToOriginalAddressesMap = {} as {
     [derivativeAddress: string]: string
   }
@@ -97,7 +98,7 @@ function ContractList() {
   const unownedLedgerRecordsWithZKProofs =
     unownedDerivativeContractsWithZKProofs.map(
       (contract) =>
-        ledger[unownedDerivativeToOriginalAddressesMap[contract.address]]
+        scLendger[unownedDerivativeToOriginalAddressesMap[contract.address]]
     )
 
   return (
