@@ -94,8 +94,7 @@ function ContractList() {
         !!completedProofs.find(
           (proof) =>
             proof.contract ===
-              unownedDerivativeToOriginalAddressesMap[contract.address] &&
-            proof.account === WalletStore.account
+            unownedDerivativeToOriginalAddressesMap[contract.address]
         )
     )
   const unownedLedgerRecordsWithZKProofs =
