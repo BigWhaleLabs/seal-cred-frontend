@@ -16,7 +16,12 @@ interface StreetCredStoreType {
   contractNames: { [contractAddress: string]: Promise<string | undefined> }
 
   handleAccountChange: (account?: string) => Promise<void>
-  setupContractListeners: (account: string, ledger: Ledger) => void
+  setupContractListeners: (ledger: Ledger) => void
+  refreshOriginalContract: (ledger: Ledger, contract: ERC721) => void
+  refreshDerivativeContract: (
+    ledger: Ledger,
+    contract: SCERC721Derivative
+  ) => void
   refreshContracts: (account: string, ledger: Ledger) => void
   refreshContractNames: (ledger: Ledger) => void
 }
@@ -28,28 +33,38 @@ const StreetCredStore = proxy<StreetCredStoreType>({
   }),
   contractNames: {},
 
-  setupContractListeners(account: string, ledger: Ledger) {
+  setupContractListeners(ledger) {
     for (const { originalContract, derivativeContract } of Object.values(
       ledger
     )) {
       originalContract.on(originalContract.filters.Transfer(), () => {
-        void StreetCredStore.refreshContracts(account, ledger)
+        void StreetCredStore.refreshOriginalContract(ledger, originalContract)
       })
       derivativeContract.on(derivativeContract.filters.Transfer(), () => {
-        void StreetCredStore.refreshContracts(account, ledger)
+        void StreetCredStore.refreshDerivativeContract(
+          ledger,
+          derivativeContract
+        )
       })
     }
   },
 
-  async handleAccountChange(account?: string) {
+  async handleAccountChange(account) {
     if (!account) {
       StreetCredStore.originalContracts = undefined
       StreetCredStore.derivativeContracts = undefined
       return
     }
     const ledger = await StreetCredStore.ledger
-    StreetCredStore.setupContractListeners(account, ledger)
-    await StreetCredStore.refreshContracts(account, ledger)
+    StreetCredStore.setupContractListeners(ledger)
+    StreetCredStore.refreshContracts(account, ledger)
+  },
+
+  refreshDerivativeContract(ledger, contract) {
+    ledger[contract.address].derivativeContract = contract
+  },
+  async refreshOriginalContract(ledger, contract) {
+    const originals = await StreetCredStore.originalContracts
   },
 
   refreshContracts(account: string, ledger: Ledger) {
@@ -70,7 +85,7 @@ const StreetCredStore = proxy<StreetCredStoreType>({
     StreetCredStore.refreshContractNames(ledger)
   },
 
-  refreshContractNames(ledger: Ledger) {
+  refreshContractNames(ledger) {
     for (const { originalContract, derivativeContract } of Object.values(
       ledger
     )) {
