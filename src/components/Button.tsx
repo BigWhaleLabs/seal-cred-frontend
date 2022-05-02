@@ -13,9 +13,7 @@ import {
   padding,
   space,
   textColor,
-  transitionProperty,
 } from 'classnames/tailwind'
-import AppStore from 'stores/AppStore'
 import Loading from 'icons/Loading'
 
 export type ButtonColor = 'accent' | 'primary' | 'success' | 'error'
@@ -39,7 +37,6 @@ const button = (
     display('flex'),
     flexDirection('flex-row'),
     space('space-x-2'),
-    transitionProperty('transition-colors'),
     alignItems('items-center'),
     fontWeight(small ? undefined : 'font-bold'),
     textColor('text-white'),
@@ -63,11 +60,7 @@ const buttonColor = (color: ButtonColor, disabled?: boolean) => {
           opacity(disabled ? 'hover:opacity-75' : 'hover:opacity-90')
         )
       : backgroundColor('bg-error', 'hover:bg-error-light'),
-    textColor(
-      color === 'primary' && AppStore.theme === 'dark'
-        ? 'text-semi-background'
-        : null
-    )
+    textColor('text-primary')
   )
 }
 

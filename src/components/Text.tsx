@@ -7,22 +7,18 @@ import {
   textAlign,
   textColor,
   textDecoration,
-  transitionProperty,
 } from 'classnames/tailwind'
 
 const headerText = classnames(
-  transitionProperty('transition-colors'),
-  textColor('text-primary'),
   fontFamily('font-primary'),
   fontWeight('font-bold'),
-  fontSize('text-2xl')
+  fontSize('text-40')
 )
 export const HeaderText: FC = ({ children }) => {
   return <h1 className={headerText}>{children}</h1>
 }
 
 const subheaderText = classnames(
-  transitionProperty('transition-colors'),
   textColor('text-primary-dimmed'),
   fontFamily('font-primary')
 )
@@ -31,7 +27,6 @@ export const SubheaderText: FC = ({ children }) => {
 }
 
 const accentText = classnames(
-  transitionProperty('transition-colors'),
   textColor('text-accent'),
   fontFamily('font-primary'),
   fontWeight('font-bold')
@@ -42,7 +37,6 @@ export const AccentText: FC = ({ children }) => {
 
 const bodyText = (center: boolean) =>
   classnames(
-    transitionProperty('transition-colors'),
     textColor('text-primary'),
     center ? textAlign('text-center') : null
   )
@@ -50,17 +44,12 @@ export const BodyText: FC<{ center?: boolean }> = ({ center, children }) => {
   return <div className={bodyText(center || false)}>{children}</div>
 }
 
-const largerText = classnames(
-  transitionProperty('transition-colors'),
-  textColor('text-primary'),
-  fontSize('text-2xl')
-)
+const largerText = classnames(textColor('text-primary'), fontSize('text-2xl'))
 export const LargerText: FC = ({ children }) => {
   return <div className={largerText}>{children}</div>
 }
 
 const logoText = classnames(
-  transitionProperty('transition-colors'),
   textColor('text-primary'),
   fontFamily('font-secondary'),
   fontWeight('font-bold'),
@@ -71,7 +60,6 @@ export const LogoText: FC = ({ children }) => {
 }
 
 const badgeText = classnames(
-  transitionProperty('transition-colors'),
   textColor('text-primary'),
   fontFamily('font-secondary')
 )
@@ -103,7 +91,6 @@ export const Link: FC<{ url: string; onClick?: () => void }> = ({
 }
 
 const popupBodyText = classnames(
-  transitionProperty('transition-colors'),
   textColor('text-primary'),
   textAlign('text-center')
 )
@@ -111,11 +98,7 @@ export const PopupBodyText: FC = ({ children }) => {
   return <div className={popupBodyText}>{children}</div>
 }
 
-const subBadgeText = classnames(
-  transitionProperty('transition-colors'),
-  textColor('text-primary'),
-  fontSize('text-sm')
-)
+const subBadgeText = classnames(textColor('text-primary'), fontSize('text-sm'))
 export const SubBadgeText: FC = ({ children }) => {
   return <span className={subBadgeText}>{children}</span>
 }

@@ -6,7 +6,6 @@ import {
   maxWidth,
   padding,
 } from 'classnames/tailwind'
-import ThemeProvider from 'components/ThemeProvider'
 
 const root = classnames(
   container('container'),
@@ -15,11 +14,7 @@ const root = classnames(
   maxWidth('max-w-md')
 )
 const Root: FC = ({ children }) => {
-  return (
-    <ThemeProvider>
-      <div className={root}>{children}</div>
-    </ThemeProvider>
-  )
+  return <div className={root}>{children}</div>
 }
 
 export default Root

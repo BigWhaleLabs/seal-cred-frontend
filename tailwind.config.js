@@ -3,40 +3,36 @@ module.exports = {
   content: ['./public/index.html', './src/**/!(tailwind).{ts,tsx}'],
   theme: {
     fontFamily: {
-      secondary: 'DM Sans',
-      primary: 'Poppins',
+      primary: 'var(--font-primary)',
+      secondary: 'var(--font-secondary)',
     },
     extend: {
+      borderWidth: {
+        1: '1px',
+      },
+      fontSize: {
+        40: 'var(--40)',
+        18: 'var(--18)',
+      },
       colors: {
-        primary: 'var(--primary)',
-        'primary-dimmed': 'var(--primary-text-dimmed)',
-        secondary: 'var(--secondary)',
-        accent: 'var(--accent)',
-        'accent-light': 'var(--accent-light)',
-        'accent-dimmed': 'var(--accent-dimmed)',
-        background: 'var(--background)',
-        'semi-background': 'var(--semi-background)',
-        border: 'var(--border)',
-        error: 'var(--error)',
-        'error-light': 'var(--error-light)',
-        success: 'var(--success)',
-        'private-key': 'var(--private-key)',
+        'blue-100': 'var(--blue-100)',
+        'blue-200': 'var(--blue-200)',
+        'blue-300': 'var(--blue-300)',
+        'blue-400': 'var(--blue-400)',
+        'blue-500': 'var(--blue-500)',
+        'blue-600': 'var(--blue-600)',
+
+        'accent-orange': 'var(--accent-orange)',
+        'accent-yellow': 'var(--accent-yellow)',
+        'accent-pink': 'var(--accent-pink)',
+        'accent-green': 'var(--accent-green)',
+        'accent-white': 'var(--accent-white)',
       },
-      fontWeight: {
-        normal: 'var(--font-medium)',
-      },
-      borderRadius: {
-        avatar: '6rem',
-        DEFAULT: '1rem',
-        block: '1.5rem',
-      },
-      boxShadow: {
-        DEFAULT: '0px 64px 64px -48px var(--shadow)',
-      },
-      width: {
-        chart: '108px',
-        time: '95px',
-        glass: '107px',
+      dropShadow: {
+        pink: 'var(--shadow-indent) var(--shadow-pink)',
+        yellow: 'var(--shadow-indent) var(--shadow-yellow)',
+        blue: 'var(--shadow-indent) var(--shadow-blue)',
+        white: 'var(--shadow-indent) var(--shadow-white)',
       },
     },
   },
