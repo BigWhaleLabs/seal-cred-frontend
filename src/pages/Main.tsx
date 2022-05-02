@@ -7,7 +7,6 @@ import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import OriginalContractsOwned from 'components/OriginalContractsOwned'
 import SupportedContracts from 'components/SupportedContracts'
 import UnmintedDerivatives from 'components/UnmintedDerivatives'
-import Wallet from 'components/Wallet'
 import WalletStore from 'stores/WalletStore'
 
 function Proofs() {
