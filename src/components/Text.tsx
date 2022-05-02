@@ -12,14 +12,15 @@ import {
 const headerText = classnames(
   fontFamily('font-primary'),
   fontWeight('font-bold'),
-  fontSize('text-4xl')
+  fontSize('text-4xl'),
+  textColor('text-white')
 )
 export const HeaderText: FC = ({ children }) => {
   return <h1 className={headerText}>{children}</h1>
 }
 
 const subheaderText = classnames(
-  textColor('text-blue-800'),
+  textColor('text-blue-500'),
   fontFamily('font-primary')
 )
 export const SubheaderText: FC = ({ children }) => {
