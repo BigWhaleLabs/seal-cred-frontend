@@ -1,4 +1,4 @@
-import { FC } from 'react'
+Йimport { FC } from 'react'
 import {
   classnames,
   container,
