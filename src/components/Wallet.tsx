@@ -13,7 +13,7 @@ export default function Wallet() {
     <>
       <BodyText>Connect a wallet to see this section:</BodyText>
       <Button
-        color="primary"
+        color="success"
         loading={walletLoading}
         onClick={async () => {
           configuredModal.clearCachedProvider()

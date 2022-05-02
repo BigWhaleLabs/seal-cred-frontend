@@ -31,7 +31,7 @@ function Main() {
   const { account } = useSnapshot(WalletStore)
 
   return (
-    <Card>
+    <Card shadow color="green">
       <HeaderText>That's you:</HeaderText>
       <Wallet />
       <HeaderText>Supported NFTs:</HeaderText>

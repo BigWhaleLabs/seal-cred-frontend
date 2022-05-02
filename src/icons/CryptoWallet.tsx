@@ -1,7 +1,4 @@
 import { FC } from 'react'
-import classnames, { transitionProperty } from 'classnames/tailwind'
-
-const transition = classnames(transitionProperty('transition-colors'))
 
 const CryptoWallet: FC = () => {
   return (
@@ -11,7 +8,6 @@ const CryptoWallet: FC = () => {
       height="24"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={transition}
     >
       <title>ETH wallet icon</title>
       <path d="M16 12h2v4h-2z" />

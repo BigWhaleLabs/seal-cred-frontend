@@ -36,7 +36,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
           setPostingProof(false)
         }}
         small
-        color="primary"
+        color="success"
       >
         {!proofInProgress
           ? 'generate'

@@ -11,14 +11,11 @@ import {
   padding,
   position,
   space,
-  transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
 import Logo from 'icons/Logo'
-import ThemeToggle from 'components/ThemeToggle'
 
 const navbar = classnames(
-  transitionProperty('transition-colors'),
   position('sticky'),
   inset('top-0'),
   display('flex'),
@@ -27,7 +24,7 @@ const navbar = classnames(
   padding('py-4'),
   margin('my-2'),
   zIndex('z-10'),
-  backgroundColor('bg-background')
+  backgroundColor('bg-transparent')
 )
 
 const logoContainer = classnames(
@@ -45,8 +42,6 @@ export default function Navbar() {
           <LogoText>StreetCred</LogoText>
         </div>
       </Link>
-
-      <ThemeToggle />
     </nav>
   )
 }

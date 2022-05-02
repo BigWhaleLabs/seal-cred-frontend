@@ -15,10 +15,9 @@ import {
   textColor,
   transitionProperty,
 } from 'classnames/tailwind'
-import AppStore from 'stores/AppStore'
 import Loading from 'icons/Loading'
 
-export type ButtonColor = 'accent' | 'primary' | 'success' | 'error'
+export type ButtonColor = 'orange' | 'pink' | 'success' | 'error'
 
 export interface ButtonProps {
   color: ButtonColor
@@ -39,9 +38,9 @@ const button = (
     display('flex'),
     flexDirection('flex-row'),
     space('space-x-2'),
-    transitionProperty('transition-colors'),
     alignItems('items-center'),
     fontWeight(small ? undefined : 'font-bold'),
+    transitionProperty('transition-colors'),
     textColor('text-white'),
     padding(small ? undefined : 'py-4', small ? 'px-2' : 'px-6'),
     borderRadius('rounded'),
@@ -53,21 +52,17 @@ const button = (
 
 const buttonColor = (color: ButtonColor, disabled?: boolean) => {
   return classnames(
-    color === 'accent'
-      ? backgroundColor('bg-accent', 'hover:bg-accent-dimmed')
-      : color === 'primary'
-      ? backgroundColor('bg-primary', 'hover:bg-secondary')
+    color === 'orange'
+      ? backgroundColor('bg-orange', 'hover:bg-orange')
+      : color === 'pink'
+      ? backgroundColor('bg-pink', 'hover:bg-pink')
       : color === 'success'
       ? classnames(
-          backgroundColor('bg-success'),
+          backgroundColor('bg-green'),
           opacity(disabled ? 'hover:opacity-75' : 'hover:opacity-90')
         )
-      : backgroundColor('bg-error', 'hover:bg-error-light'),
-    textColor(
-      color === 'primary' && AppStore.theme === 'dark'
-        ? 'text-semi-background'
-        : null
-    )
+      : backgroundColor('bg-pink', 'hover:bg-pink'),
+    textColor('text-blue-900')
   )
 }
 
