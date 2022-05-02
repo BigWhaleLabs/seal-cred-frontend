@@ -25,7 +25,7 @@ const navbar = (visible?: boolean) =>
     justifyContent('justify-between'),
     padding('py-4', 'px-4'),
     margin('mb-2'),
-    space('space-x-9'),
+    space('space-x-9', 'md:space-x-0'),
     zIndex('z-10'),
     backgroundColor(visible ? 'bg-blue-900' : 'bg-transparent')
   )
@@ -37,9 +37,9 @@ const logoContainer = classnames(
 )
 
 export default function Navbar() {
-  const [visible, setVisible] = useState(false)
+  const [backgroundVisible, setBackgroundVisible] = useState(false)
   const onScroll = () => {
-    setVisible(document.documentElement.scrollTop > 20)
+    setBackgroundVisible(document.documentElement.scrollTop > 20)
   }
   useEffect(() => {
     document.addEventListener('scroll', onScroll)
@@ -47,7 +47,7 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className={navbar(visible)}>
+    <nav className={navbar(backgroundVisible)}>
       <Link to="/">
         <div className={logoContainer}>
           <Logo />

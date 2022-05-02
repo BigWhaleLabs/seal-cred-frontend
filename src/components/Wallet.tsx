@@ -11,12 +11,12 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import configuredModal from 'helpers/web3Modal'
-import truncate from 'helpers/truncate'
+import truncateMiddle from 'helpers/truncateMiddle'
 
 const walletContainer = classnames(
   display('inline-flex'),
   alignItems('items-center'),
-  space('space-x-3'),
+  space('space-x-4'),
   cursor('cursor-pointer')
 )
 const walletAccount = classnames(textAlign('text-center'))
@@ -33,10 +33,10 @@ export default function Wallet() {
     >
       <div className={walletAccount}>
         <AccentText active={!!account}>
-          {account ? truncate(account) : 'No wallet connected'}
+          {account ? truncateMiddle(account) : 'No wallet connected'}
         </AccentText>
       </div>
-      <div className={classnames(width('w-full'))}>
+      <div className={classnames(width('w-fit'))}>
         <SealWallet connected={!!account} />
       </div>
     </div>
