@@ -27,7 +27,7 @@ export const SubheaderText: FC = ({ children }) => {
 }
 
 const accentText = classnames(
-  textColor('text-accent'),
+  textColor('text-accent-yellow'),
   fontFamily('font-primary'),
   fontWeight('font-bold')
 )

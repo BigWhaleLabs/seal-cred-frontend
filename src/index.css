@@ -40,13 +40,8 @@ body {
 
   --font-primary: 'Space Grotesk', sans-serif;
   --font-secondary: 'JetBrains Mono', monospace;
-
-  /* Font sizes */
-  --40: 2.25rem;
-  --18: 1.125rem;
 }
 
 .web3modal-modal-lightbox {
   z-index: 100 !important;
-  --toastify-font-family: var(--font-primary);
 }
