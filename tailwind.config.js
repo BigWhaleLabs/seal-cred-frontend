@@ -10,10 +10,6 @@ module.exports = {
       borderWidth: {
         1: '1px',
       },
-      fontSize: {
-        40: 'var(--40)',
-        18: 'var(--18)',
-      },
       colors: {
         'blue-100': 'var(--blue-100)',
         'blue-200': 'var(--blue-200)',

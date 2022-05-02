@@ -12,7 +12,7 @@ import {
 const headerText = classnames(
   fontFamily('font-primary'),
   fontWeight('font-bold'),
-  fontSize('text-40')
+  fontSize('text-4xl')
 )
 export const HeaderText: FC = ({ children }) => {
   return <h1 className={headerText}>{children}</h1>
@@ -69,7 +69,7 @@ export const BadgeText: FC = ({ children }) => {
 
 const link = classnames(
   textDecoration('underline'),
-  textColor('text-accent', 'hover:text-primary'),
+  textColor('text-accent-yellow', 'hover:text-primary'),
   fontWeight('font-bold')
 )
 export const Link: FC<{ url: string; onClick?: () => void }> = ({

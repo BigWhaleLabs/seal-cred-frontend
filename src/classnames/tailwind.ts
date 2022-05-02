@@ -7459,8 +7459,6 @@ export type TTextDecorationStyle =
 export type TFontFamily = 'font-primary' | 'font-secondary'
 
 export type TFontSize =
-  | 'text-18'
-  | 'text-40'
   | 'text-xs'
   | 'text-sm'
   | 'text-base'
