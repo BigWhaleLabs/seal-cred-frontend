@@ -19,7 +19,7 @@ export const HeaderText: FC = ({ children }) => {
 }
 
 const subheaderText = classnames(
-  textColor('text-primary-dimmed'),
+  textColor('text-blue-200'),
   fontFamily('font-primary')
 )
 export const SubheaderText: FC = ({ children }) => {
@@ -37,20 +37,20 @@ export const AccentText: FC = ({ children }) => {
 
 const bodyText = (center: boolean) =>
   classnames(
-    textColor('text-primary'),
+    textColor('text-accent-white'),
     center ? textAlign('text-center') : null
   )
 export const BodyText: FC<{ center?: boolean }> = ({ center, children }) => {
   return <div className={bodyText(center || false)}>{children}</div>
 }
 
-const largerText = classnames(textColor('text-primary'), fontSize('text-2xl'))
+const largerText = classnames(textColor('text-blue-100'), fontSize('text-2xl'))
 export const LargerText: FC = ({ children }) => {
   return <div className={largerText}>{children}</div>
 }
 
 const logoText = classnames(
-  textColor('text-primary'),
+  textColor('text-accent-yellow'),
   fontFamily('font-secondary'),
   fontWeight('font-bold'),
   fontSize('text-xl')
@@ -60,7 +60,7 @@ export const LogoText: FC = ({ children }) => {
 }
 
 const badgeText = classnames(
-  textColor('text-primary'),
+  textColor('text-accent-white'),
   fontFamily('font-secondary')
 )
 export const BadgeText: FC = ({ children }) => {
@@ -69,7 +69,7 @@ export const BadgeText: FC = ({ children }) => {
 
 const link = classnames(
   textDecoration('underline'),
-  textColor('text-accent-yellow', 'hover:text-primary'),
+  textColor('text-accent-yellow', 'hover:text-accent-orange'),
   fontWeight('font-bold')
 )
 export const Link: FC<{ url: string; onClick?: () => void }> = ({
@@ -91,14 +91,17 @@ export const Link: FC<{ url: string; onClick?: () => void }> = ({
 }
 
 const popupBodyText = classnames(
-  textColor('text-primary'),
+  textColor('text-accent-white'),
   textAlign('text-center')
 )
 export const PopupBodyText: FC = ({ children }) => {
   return <div className={popupBodyText}>{children}</div>
 }
 
-const subBadgeText = classnames(textColor('text-primary'), fontSize('text-sm'))
+const subBadgeText = classnames(
+  textColor('text-accent-pink'),
+  fontSize('text-sm')
+)
 export const SubBadgeText: FC = ({ children }) => {
   return <span className={subBadgeText}>{children}</span>
 }

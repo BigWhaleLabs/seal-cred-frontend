@@ -16,7 +16,7 @@ import {
 } from 'classnames/tailwind'
 import Loading from 'icons/Loading'
 
-export type ButtonColor = 'accent' | 'primary' | 'success' | 'error'
+export type ButtonColor = 'orange' | 'pink' | 'success' | 'error'
 
 export interface ButtonProps {
   color: ButtonColor
@@ -50,17 +50,17 @@ const button = (
 
 const buttonColor = (color: ButtonColor, disabled?: boolean) => {
   return classnames(
-    color === 'accent'
-      ? backgroundColor('bg-accent', 'hover:bg-accent-dimmed')
-      : color === 'primary'
-      ? backgroundColor('bg-primary', 'hover:bg-secondary')
+    color === 'orange'
+      ? backgroundColor('bg-accent-orange', 'hover:bg-accent-orange')
+      : color === 'pink'
+      ? backgroundColor('bg-accent-pink', 'hover:bg-accent-pink')
       : color === 'success'
       ? classnames(
-          backgroundColor('bg-success'),
+          backgroundColor('bg-accent-green'),
           opacity(disabled ? 'hover:opacity-75' : 'hover:opacity-90')
         )
-      : backgroundColor('bg-error', 'hover:bg-error-light'),
-    textColor('text-primary')
+      : backgroundColor('bg-accent-pink', 'hover:bg-accent-pink'),
+    textColor('text-blue-100')
   )
 }
 
