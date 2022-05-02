@@ -13,6 +13,7 @@ import {
   padding,
   space,
   textColor,
+  transitionProperty,
 } from 'classnames/tailwind'
 import Loading from 'icons/Loading'
 
@@ -39,6 +40,7 @@ const button = (
     space('space-x-2'),
     alignItems('items-center'),
     fontWeight(small ? undefined : 'font-bold'),
+    transitionProperty('transition-colors'),
     textColor('text-white'),
     padding(small ? undefined : 'py-4', small ? 'px-2' : 'px-6'),
     borderRadius('rounded'),

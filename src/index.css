@@ -36,6 +36,7 @@ body {
   --shadow-pink: rgba(255, 123, 237, 0.5);
   --shadow-yellow: rgba(254, 216, 35, 0.4);
   --shadow-blue: rgba(21, 161, 252, 0.5);
+  --shadow-green: rgba(1, 254, 182, 0.4);
   --shadow-white: rgba(239, 236, 214, 0.3);
 
   --font-primary: 'Space Grotesk', sans-serif;

@@ -29,6 +29,7 @@ module.exports = {
         yellow: 'var(--shadow-indent) var(--shadow-yellow)',
         blue: 'var(--shadow-indent) var(--shadow-blue)',
         white: 'var(--shadow-indent) var(--shadow-white)',
+        green: 'var(--shadow-indent) var(--shadow-green)',
       },
     },
   },
