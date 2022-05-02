@@ -1,9 +1,9 @@
 import { SubheaderText } from 'components/Text'
-import { Suspense } from 'react'
+import { Suspense, lazy } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
-import ContractName from 'components/ContractName'
 import StreetCredStore from 'stores/StreetCredStore'
+const ContractName = lazy(() => import('components/ContractName'))
 
 function SupportedContractsComponent() {
   const { ledger } = useSnapshot(StreetCredStore)
@@ -12,12 +12,7 @@ function SupportedContractsComponent() {
   return contractAddresses.length ? (
     <ContractListContainer>
       {contractAddresses.map((address) => (
-        <Suspense
-          key={address}
-          fallback={<SubheaderText>{address}...</SubheaderText>}
-        >
-          <ContractName address={address} />
-        </Suspense>
+        <ContractName key={address} address={address} />
       ))}
     </ContractListContainer>
   ) : (
