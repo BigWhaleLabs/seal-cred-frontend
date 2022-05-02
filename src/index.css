@@ -6,7 +6,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--accent-white);
+  color: var(--white);
   font-family: var(--font-secondary);
   /* Grid */
   background: conic-gradient(
