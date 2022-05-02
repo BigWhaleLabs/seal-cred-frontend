@@ -32,8 +32,6 @@ function Main() {
 
   return (
     <Card shadow color="green">
-      <HeaderText>That's you:</HeaderText>
-      <Wallet />
       <HeaderText>Supported NFTs:</HeaderText>
       <SupportedContracts />
       {account && <Proofs />}
