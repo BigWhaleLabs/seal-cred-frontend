@@ -7,6 +7,7 @@ import {
   textAlign,
   textColor,
   textDecoration,
+  wordBreak,
 } from 'classnames/tailwind'
 
 const headerText = classnames(
@@ -27,13 +28,17 @@ export const SubheaderText: FC = ({ children }) => {
   return <h2 className={subheaderText}>{children}</h2>
 }
 
-const accentText = classnames(
-  textColor('text-yellow'),
-  fontFamily('font-primary'),
-  fontWeight('font-bold')
-)
-export const AccentText: FC = ({ children }) => {
-  return <span className={accentText}>{children}</span>
+const accentText = (active?: boolean) =>
+  classnames(
+    textColor(active ? 'text-yellow' : 'text-blue-600'),
+    wordBreak(active ? 'break-all' : undefined),
+    textAlign('text-center'),
+    fontFamily('font-primary'),
+    fontWeight('font-bold'),
+    fontSize('text-sm')
+  )
+export const AccentText: FC<{ active?: boolean }> = ({ active, children }) => {
+  return <span className={accentText(active)}>{children}</span>
 }
 
 const bodyText = (center: boolean) =>

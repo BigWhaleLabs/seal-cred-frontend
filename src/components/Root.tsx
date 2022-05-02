@@ -10,7 +10,7 @@ import {
 const root = classnames(
   container('container'),
   margin('mx-auto'),
-  padding('pb-10', 'pt-4'),
+  padding('pb-10'),
   maxWidth('max-w-md')
 )
 const Root: FC = ({ children }) => {
