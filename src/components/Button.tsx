@@ -53,16 +53,16 @@ const button = (
 const buttonColor = (color: ButtonColor, disabled?: boolean) => {
   return classnames(
     color === 'orange'
-      ? backgroundColor('bg-accent-orange', 'hover:bg-accent-orange')
+      ? backgroundColor('bg-orange', 'hover:bg-orange')
       : color === 'pink'
-      ? backgroundColor('bg-accent-pink', 'hover:bg-accent-pink')
+      ? backgroundColor('bg-pink', 'hover:bg-pink')
       : color === 'success'
       ? classnames(
-          backgroundColor('bg-accent-green'),
+          backgroundColor('bg-green'),
           opacity(disabled ? 'hover:opacity-75' : 'hover:opacity-90')
         )
-      : backgroundColor('bg-accent-pink', 'hover:bg-accent-pink'),
-    textColor('text-blue-100')
+      : backgroundColor('bg-pink', 'hover:bg-pink'),
+    textColor('text-blue-900')
   )
 }
 

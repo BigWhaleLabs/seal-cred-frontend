@@ -4,7 +4,6 @@ import {
   borderColor,
   borderRadius,
   borderWidth,
-  boxShadowColor,
   classnames,
   dropShadow,
   padding,
@@ -21,14 +20,14 @@ const cardColor = (color?: Color) => {
   return classnames(
     borderColor(
       color === 'yellow'
-        ? 'border-accent-yellow'
+        ? 'border-yellow'
         : color === 'green'
-        ? 'border-accent-green'
+        ? 'border-green'
         : color === 'pink'
-        ? 'border-accent-pink'
+        ? 'border-pink'
         : color === 'blue'
         ? 'border-blue-500'
-        : 'border-blue-100'
+        : 'border-blue-900'
     ),
     dropShadow(
       color === 'yellow'
@@ -47,7 +46,7 @@ const cardColor = (color?: Color) => {
 const cardContainer = (shadow?: boolean, color?: Color) => {
   return classnames(
     borderRadius('rounded-2xl'),
-    backgroundColor('bg-blue-100'),
+    backgroundColor('bg-blue-900'),
     borderWidth('border-1'),
     cardColor(shadow ? color : undefined),
     padding('p-6'),
