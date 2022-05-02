@@ -4,7 +4,6 @@ import {
   borderColor,
   borderRadius,
   borderWidth,
-  boxShadowColor,
   classnames,
   dropShadow,
   padding,
