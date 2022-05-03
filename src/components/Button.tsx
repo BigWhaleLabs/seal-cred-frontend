@@ -103,9 +103,7 @@ const Button: FC<ButtonProperties> = ({
   ...rest
 }) => (
   <button
-    className={
-      button(colors, loading, disabled, small)
-    }
+    className={button(colors, loading, disabled, small)}
     disabled={loading || disabled}
     {...rest}
   >
