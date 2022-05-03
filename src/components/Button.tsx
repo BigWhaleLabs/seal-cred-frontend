@@ -61,34 +61,37 @@ const button = (
   disabled?: boolean,
   small?: boolean
 ) =>
-  colors === 'primary'
-    ? classnames(
-        textColor('text-blue-900'),
-        fontSize(small ? 'text-sm' : 'text-lg'),
-        padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
-        borderRadius('rounded-full'),
-        backgroundColor('bg-green'),
-        boxShadowColor(
-          'shadow-green50',
-          'hover:shadow-green50',
-          'active:shadow-green50'
-        ),
-        brightness(
-          loading || disabled ? undefined : 'hover:brightness-75',
-          loading || disabled ? undefined : 'active:brightness-50'
+  classnames(
+    sharedClassNames(loading, disabled),
+    colors === 'primary'
+      ? classnames(
+          textColor('text-blue-900'),
+          fontSize(small ? 'text-sm' : 'text-lg'),
+          padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
+          borderRadius('rounded-full'),
+          backgroundColor('bg-green'),
+          boxShadowColor(
+            'shadow-green50',
+            'hover:shadow-green50',
+            'active:shadow-green50'
+          ),
+          brightness(
+            loading || disabled ? undefined : 'hover:brightness-75',
+            loading || disabled ? undefined : 'active:brightness-50'
+          )
         )
-      )
-    : colors === 'secondary'
-    ? classnames(textColor('text-yellow')) // TBD
-    : classnames(
-        textColor(
-          'text-transparent',
-          loading || disabled ? undefined : 'active:text-yellow'
-        ),
-        backgroundClip('bg-clip-text'),
-        backgroundImage('bg-gradient-to-r'),
-        gradientColorStops('from-pink', 'to-yellow')
-      )
+      : colors === 'secondary'
+      ? classnames(textColor('text-yellow')) // TBD
+      : classnames(
+          textColor(
+            'text-transparent',
+            loading || disabled ? undefined : 'active:text-yellow'
+          ),
+          backgroundClip('bg-clip-text'),
+          backgroundImage('bg-gradient-to-r'),
+          gradientColorStops('from-pink', 'to-yellow')
+        )
+  )
 
 const Button: FC<ButtonProperties> = ({
   colors,
@@ -101,7 +104,7 @@ const Button: FC<ButtonProperties> = ({
 }) => (
   <button
     className={
-      sharedClassNames(loading, disabled) &&
+      // sharedClassNames(loading, disabled) ||
       button(colors, loading, disabled, small)
     }
     disabled={loading || disabled}
