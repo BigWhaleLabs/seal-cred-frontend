@@ -10,6 +10,8 @@ import {
   wordBreak,
 } from 'classnames/tailwind'
 
+type TextColor = 'pink' | 'yellow' | 'blue'
+
 const headerText = classnames(
   fontFamily('font-primary'),
   fontWeight('font-bold'),
@@ -50,6 +52,21 @@ export const BodyText: FC<{ center?: boolean }> = ({ center, children }) => {
 const largerText = classnames(textColor('text-blue-900'), fontSize('text-2xl'))
 export const LargerText: FC = ({ children }) => {
   return <div className={largerText}>{children}</div>
+}
+
+const cardHeader = classnames(textColor('text-pink'), fontSize('text-base'))
+export const CardHeader: FC = ({ children }) => {
+  return <div className={cardHeader}>{children}</div>
+}
+
+const subHeaderDescription = classnames(
+  textColor('text-white'),
+  fontSize('text-2xl'),
+  fontFamily('font-primary'),
+  fontWeight('font-bold')
+)
+export const SubHeaderDescription: FC = ({ children }) => {
+  return <div className={subHeaderDescription}>{children}</div>
 }
 
 const logoText = classnames(
@@ -100,6 +117,25 @@ export const PopupBodyText: FC = ({ children }) => {
 const subBadgeText = classnames(textColor('text-pink'), fontSize('text-sm'))
 export const SubBadgeText: FC = ({ children }) => {
   return <span className={subBadgeText}>{children}</span>
+}
+
+const boldColoredText = (color?: TextColor) =>
+  classnames(
+    textColor('text-pink'),
+    fontSize('text-sm'),
+    textColor(
+      color === 'pink'
+        ? 'text-pink'
+        : color === 'yellow'
+        ? 'text-yellow'
+        : 'text-blue-900'
+    )
+  )
+export const BoldColoredText: FC<{ color?: TextColor }> = ({
+  color,
+  children,
+}) => {
+  return <span className={boldColoredText(color)}>{children}</span>
 }
 
 const tooltipText = classnames(
