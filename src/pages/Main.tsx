@@ -1,6 +1,5 @@
 import { HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
-import Button from 'components/Button'
 import Card from 'components/Card'
 import DerivativeContractsOwned from 'components/DerivativeContractsOwned'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
