@@ -77,7 +77,7 @@ function ContractToMint({
             setLoading(false)
           }
         }}
-        design="primary"
+        colors="primary"
         small
       >
         {loading ? 'minting...' : 'mint'}

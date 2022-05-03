@@ -19,10 +19,10 @@ import {
 } from 'classnames/tailwind'
 import Loading from 'icons/Loading'
 
-type ButtonType = 'primary' | 'secondary' | 'tertiary'
+type ButtonColors = 'primary' | 'secondary' | 'tertiary'
 
 export interface ButtonProps {
-  design: ButtonType
+  colors: ButtonColors
   loading?: boolean
   small?: boolean
 }
@@ -31,7 +31,7 @@ type ButtonProperties = ButtonProps &
   React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const button = (
-  design: ButtonType,
+  colors: ButtonColors,
   loading?: boolean,
   disabled?: boolean,
   small?: boolean
@@ -55,7 +55,7 @@ const button = (
   )
 
 const Button: FC<ButtonProperties> = ({
-  design,
+  colors,
   small,
   children,
   loading,
@@ -64,7 +64,7 @@ const Button: FC<ButtonProperties> = ({
 }) => {
   return (
     <button
-      className={button(design, loading, disabled, small)}
+      className={button(colors, loading, disabled, small)}
       disabled={loading || disabled}
       {...rest}
     >

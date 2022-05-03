@@ -38,7 +38,7 @@ export default function NotFound() {
         <HeaderText>404</HeaderText>
         <div className={wrapperBody}>
           <SubheaderText>Not found</SubheaderText>
-          <Button design="primary" onClick={() => navigate('/')}>
+          <Button colors="primary" onClick={() => navigate('/')}>
             Go to the main page
           </Button>
         </div>
