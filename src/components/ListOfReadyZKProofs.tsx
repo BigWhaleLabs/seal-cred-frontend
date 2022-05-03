@@ -1,16 +1,35 @@
-import { BodyText, SubheaderText } from 'components/Text'
+import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
-import { classnames, display, flexDirection, space } from 'classnames/tailwind'
+import {
+  alignItems,
+  backgroundColor,
+  borderRadius,
+  classnames,
+  display,
+  flexDirection,
+  fontSize,
+  height,
+  justifyContent,
+  padding,
+  space,
+} from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import Button from 'components/Button'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
+import ProofButton from 'components/ProofButton'
 import ProofStore from 'stores/ProofStore'
 
 const contractContainer = classnames(
   display('flex'),
   flexDirection('flex-row'),
-  space('space-x-2')
+  alignItems('items-center'),
+  justifyContent('justify-between'),
+  space('space-x-2'),
+  backgroundColor('bg-blue-700'),
+  borderRadius('rounded-lg'),
+  height('h-8'),
+  padding('px-4', 'py-1'),
+  fontSize('text-sm')
 )
 
 function ContractList() {
@@ -22,27 +41,12 @@ function ContractList() {
         <ContractListContainer>
           {proofsCompleted.map((proof) => (
             <div className={contractContainer}>
-              <ContractName address={proof.contract} account={proof.account} />
-              <Button
-                colors="primary"
-                small
-                color="error"
-                onClick={() => {
-                  ProofStore.proofsCompleted = proofsCompleted.filter(
-                    (p) =>
-                      p.contract !== proof.contract &&
-                      p.account !== proof.account
-                  )
-                }}
-              >
-                Delete
-              </Button>
+              <ContractName address={proof.contract} />
+              <ProofButton color="yellow">Proof saved</ProofButton>
             </div>
           ))}
         </ContractListContainer>
-      ) : (
-        <SubheaderText>You don't have any generated proofs yet.</SubheaderText>
-      )}
+      ) : null}
     </>
   )
 }

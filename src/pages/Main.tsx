@@ -1,10 +1,10 @@
-import GenerateCard from 'components/GenerateCard'
+import ProofsCard from 'components/ProofsCard'
 import ZkProofButton from 'components/ZkProofButton'
 
 function Main() {
   return (
     <>
-      <GenerateCard />
+      <ProofsCard />
       <ZkProofButton />
     </>
   )

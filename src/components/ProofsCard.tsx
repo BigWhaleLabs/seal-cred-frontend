@@ -1,20 +1,22 @@
-import { HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
-import Card from 'components/Card'
+import Card, { CardDescription, CardTitle } from 'components/Card'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
+import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import WalletButton from 'components/WalletButton'
 import WalletStore from 'stores/WalletStore'
 
 function Proofs() {
   return (
     <>
-      <HeaderText>ZK proofs that you can generate:</HeaderText>
+      <CardTitle>Start proofing!</CardTitle>
+      <CardDescription>Generate your ZK proof</CardDescription>
+      <ListOfReadyZKProofs />
       <ListOfAvailableZKProofs />
     </>
   )
 }
 
-function GenerateCard() {
+function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
 
   return (
@@ -24,4 +26,4 @@ function GenerateCard() {
   )
 }
 
-export default GenerateCard
+export default ProofsCard

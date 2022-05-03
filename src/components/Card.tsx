@@ -6,10 +6,12 @@ import {
   borderWidth,
   classnames,
   dropShadow,
+  fontSize,
   margin,
   maxWidth,
   padding,
   space,
+  textColor,
 } from 'classnames/tailwind'
 
 type Color = 'pink' | 'yellow' | 'green' | 'blue'
@@ -56,6 +58,16 @@ const cardContainer = (shadow?: boolean, color?: Color) => {
     margin('mx-auto'),
     maxWidth('max-w-md')
   )
+}
+
+const cardTitle = classnames(textColor('text-yellow'), fontSize('text-sm'))
+export const CardTitle: FC = ({ children }) => {
+  return <p className={cardTitle}>{children}</p>
+}
+
+const cardDescription = classnames(fontSize('text-xl'))
+export const CardDescription: FC = ({ children }) => {
+  return <p className={cardDescription}>{children}</p>
 }
 
 const Card: FC<CardProps> = ({ color, shadow, children }) => {

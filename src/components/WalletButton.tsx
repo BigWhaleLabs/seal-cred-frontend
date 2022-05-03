@@ -1,6 +1,5 @@
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
-import CryptoWallet from 'icons/CryptoWallet'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
@@ -58,8 +57,7 @@ export default function WalletButton() {
             await WalletStore.connect()
           }}
         >
-          <CryptoWallet />
-          <span>Connect wallet</span>
+          <span>Connect a wallet</span>
         </Button>
       </div>
     </div>

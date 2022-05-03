@@ -2,18 +2,36 @@ import { BodyText, SubheaderText } from 'components/Text'
 import { FC } from 'react'
 import { Suspense, useState } from 'react'
 import { useSnapshot } from 'valtio'
-import Button from 'components/Button'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
+import ProofButton from 'components/ProofButton'
 import ProofStore from 'stores/ProofStore'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
-import classnames, { display, flexDirection, space } from 'classnames/tailwind'
+import classnames, {
+  alignItems,
+  backgroundColor,
+  borderRadius,
+  display,
+  flexDirection,
+  fontSize,
+  height,
+  justifyContent,
+  padding,
+  space,
+} from 'classnames/tailwind'
 
 const contractContainer = classnames(
   display('flex'),
   flexDirection('flex-row'),
-  space('space-x-2')
+  alignItems('items-center'),
+  justifyContent('justify-between'),
+  space('space-x-2'),
+  backgroundColor('bg-blue-700'),
+  borderRadius('rounded-lg'),
+  height('h-8'),
+  padding('px-4', 'py-1'),
+  fontSize('text-sm')
 )
 
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
@@ -28,28 +46,34 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
   return (
     <div className={contractContainer}>
       <ContractName address={contractAddress} />
-      <Button
-        loading={!!proofInProgress || postingProof}
+      <ProofButton
+        color={
+          !proofInProgress
+            ? 'green'
+            : proofInProgress?.status === 'running'
+            ? 'yellow'
+            : proofInProgress?.status === 'scheduled'
+            ? 'pink'
+            : 'yellow'
+        }
         onClick={async () => {
           setPostingProof(true)
           await ProofStore.generate(contractAddress)
           setPostingProof(false)
         }}
-        colors="primary"
-        small
       >
         {!proofInProgress
-          ? 'generate'
+          ? 'Create proof'
           : proofInProgress?.status === 'running'
-          ? 'generating...'
+          ? 'Generating...'
           : proofInProgress?.status === 'scheduled'
-          ? `queued${
+          ? `Queued by ${
               proofInProgress?.position !== undefined
-                ? ` (position: ${proofInProgress?.position + 1})`
+                ? ` position: ${proofInProgress?.position + 1}`
                 : ''
-            }...`
+            }`
           : null}
-      </Button>
+      </ProofButton>
     </div>
   )
 }
@@ -85,12 +109,7 @@ function ContractList() {
             <ZKProof contractAddress={contract.address} />
           ))}
         </ContractListContainer>
-      ) : (
-        <SubheaderText>
-          You don't have any supported tokens available for zero knowledge proof
-          generation.
-        </SubheaderText>
-      )}
+      ) : null}
     </>
   )
 }

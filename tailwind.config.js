@@ -20,7 +20,7 @@ module.exports = {
         orange: '#f1962e',
         yellow: '#fed823',
         pink: '#ff7bed',
-        green: '#01feb6',
+        green: '#01FEB6',
         white: '#efecd6',
       },
       dropShadow: {
