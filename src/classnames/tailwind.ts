@@ -3661,7 +3661,6 @@ export type TDropShadow =
   | 'drop-shadow-xl'
   | 'drop-shadow-2xl'
   | 'drop-shadow-none'
-  | 'drop-shadow-orange'
   | 'drop-shadow-pink'
   | 'drop-shadow-yellow'
   | 'drop-shadow-blue'
