@@ -8,6 +8,7 @@ import {
   display,
   dropShadow,
   flexDirection,
+  fontSize,
   fontWeight,
   opacity,
   outlineStyle,
@@ -18,74 +19,52 @@ import {
 } from 'classnames/tailwind'
 import Loading from 'icons/Loading'
 
-export type ButtonColor = 'orange' | 'pink' | 'green' | 'yellow'
+type ButtonType = 'primary' | 'secondary' | 'tertiary' | 'small'
 
 export interface ButtonProps {
-  color: ButtonColor
+  design: ButtonType
   loading?: boolean
-  small?: boolean
-  glow?: boolean
 }
 
 type ButtonProperties = ButtonProps &
   React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const button = (
-  color: ButtonColor,
-  loading?: boolean,
-  disabled?: boolean,
-  small?: boolean,
-  glow?: boolean
-) =>
+const button = (design: ButtonType, loading?: boolean, disabled?: boolean) =>
   classnames(
     display('flex'),
     flexDirection('flex-row'),
     space('space-x-2'),
     alignItems('items-center'),
-    fontWeight(small ? undefined : 'font-bold'),
+    fontWeight('font-bold'),
     transitionProperty('transition-colors'),
-    textColor('text-white'),
-    padding(small ? undefined : 'py-4', small ? 'px-2' : 'px-6'),
+    textColor('text-blue-900'),
+    fontSize(design === 'small' ? 'text-sm' : 'text-lg'),
+    padding(
+      design === 'small' ? 'py-2' : 'py-4',
+      design === 'small' ? 'px-4' : 'px-6'
+    ),
     borderRadius('rounded-full'),
     outlineStyle('focus:outline-none'),
-    buttonColor(color, disabled),
     cursor(loading || disabled ? 'cursor-not-allowed' : undefined),
-    opacity(loading || disabled ? 'opacity-75' : undefined),
-    dropShadow(glow ? `drop-shadow-${color}` : undefined)
+    backgroundColor('bg-green'),
+    dropShadow(loading || disabled ? undefined : 'drop-shadow-green'),
+    opacity(loading || disabled ? 'opacity-50' : undefined)
   )
-
-const buttonColor = (color: ButtonColor, disabled?: boolean) => {
-  return classnames(
-    color === 'orange'
-      ? backgroundColor('bg-orange', 'hover:bg-orange')
-      : color === 'pink'
-      ? backgroundColor('bg-pink', 'hover:bg-pink')
-      : color === 'green'
-      ? classnames(
-          backgroundColor('bg-green'),
-          opacity(disabled ? 'hover:opacity-75' : 'hover:opacity-90')
-        )
-      : backgroundColor('bg-pink', 'hover:bg-pink'),
-    textColor('text-blue-900')
-  )
-}
 
 const Button: FC<ButtonProperties> = ({
-  color,
+  design,
   children,
   loading,
-  glow,
   disabled,
-  small,
   ...rest
 }) => {
   return (
     <button
-      className={button(color, loading, disabled, small, glow)}
+      className={button(design, loading, disabled)}
       disabled={loading || disabled}
       {...rest}
     >
-      {loading && <Loading small={small} />}
+      {loading && <Loading small={design === 'small'} />}
       {typeof children === 'string' ? <span>{children}</span> : children}
     </button>
   )

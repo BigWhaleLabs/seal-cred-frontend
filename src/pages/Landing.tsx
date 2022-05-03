@@ -11,9 +11,7 @@ function Main() {
         badges. This means you can prove ownership of an NFT without it tracing
         back to you.
       </BodyText>
-      <Button color="green" glow>
-        Get started
-      </Button>
+      <Button design="primary" />
     </Card>
   )
 }
