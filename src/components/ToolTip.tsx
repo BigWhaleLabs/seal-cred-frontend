@@ -7,6 +7,12 @@ import classnames, {
   textColor,
 } from 'classnames/tailwind'
 
+const tooltipClasses = classnames(
+  backgroundColor('bg-white'),
+  textColor('text-blue-900'),
+  maxWidth('max-w-sm')
+)
+
 const ToolTip: FC<{
   place: Place
   dataFor: string
@@ -22,11 +28,7 @@ const ToolTip: FC<{
         textColor={textColor('text-blue-900')}
         arrowColor={backgroundColor('bg-white')}
         clickable={clickable}
-        className={classnames(
-          backgroundColor('bg-white'),
-          textColor('text-blue-900'),
-          maxWidth('max-w-sm')
-        )}
+        className={tooltipClasses}
       />
     </TooltipText>
   )

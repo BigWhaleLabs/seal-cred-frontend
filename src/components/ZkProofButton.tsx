@@ -6,9 +6,10 @@ import classnames, {
   display,
   fill,
   flexDirection,
+  fontFamily,
+  fontSize,
   justifyContent,
   margin,
-  maxWidth,
   padding,
   space,
   stroke,
@@ -25,24 +26,23 @@ const zkProofButton = classnames(
   cursor('cursor-pointer')
 )
 
+const circleStyles = classnames(fill('fill-blue-800'), stroke('stroke-yellow'))
+const textStyles = classnames(
+  fontFamily('font-primary'),
+  fontSize('text-sm'),
+  fill('fill-yellow')
+)
+
 const QuestionMark = () => {
   return (
     <svg width="22" height="22">
-      <circle
-        cx="11"
-        cy="11"
-        r="10"
-        className={classnames(fill('fill-blue-800'), stroke('stroke-yellow'))}
-        strokeWidth="1"
-      />
+      <circle cx="11" cy="11" r="10" className={circleStyles} strokeWidth="1" />
       <text
         x="50%"
         y="50%"
-        text-anchor="middle"
-        font-size="14px"
-        font-family="Verdana"
         dy=".4em"
-        className={fill('fill-yellow')}
+        text-anchor="middle"
+        className={textStyles}
       >
         ?
       </text>
@@ -53,6 +53,7 @@ const QuestionMark = () => {
 const ZkProofButton = () => {
   const popoverText =
     'In your wallet(s), you have NFTs that can point back to your identity (aka, getting doxxed). But with ZK proof, you can verify ownership of NFTs while staying pseudonymous.'
+
   return (
     <>
       <div className={zkProofButton} data-tip={popoverText}>
