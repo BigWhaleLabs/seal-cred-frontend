@@ -105,3 +105,12 @@ const subBadgeText = classnames(textColor('text-pink'), fontSize('text-sm'))
 export const SubBadgeText: FC = ({ children }) => {
   return <span className={subBadgeText}>{children}</span>
 }
+
+const tooltipText = classnames(
+  fontWeight('font-bold'),
+  textColor('text-blue-900'),
+  fontFamily('font-primary')
+)
+export const TooltipText: FC = ({ children }) => {
+  return <div className={tooltipText}>{children}</div>
+}

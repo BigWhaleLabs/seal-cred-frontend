@@ -8,6 +8,7 @@ import OriginalContractsOwned from 'components/OriginalContractsOwned'
 import SupportedContracts from 'components/SupportedContracts'
 import UnmintedDerivatives from 'components/UnmintedDerivatives'
 import WalletStore from 'stores/WalletStore'
+import ZkProofButton from 'components/ZkProofButton'
 
 function Proofs() {
   return (
@@ -30,11 +31,14 @@ function Main() {
   const { account } = useSnapshot(WalletStore)
 
   return (
-    <Card shadow color="green">
-      <HeaderText>Supported NFTs:</HeaderText>
-      <SupportedContracts />
-      {account && <Proofs />}
-    </Card>
+    <>
+      <Card shadow color="green">
+        <HeaderText>Supported NFTs:</HeaderText>
+        <SupportedContracts />
+        {account && <Proofs />}
+      </Card>
+      <ZkProofButton />
+    </>
   )
 }
 
