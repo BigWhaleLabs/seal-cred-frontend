@@ -19,12 +19,13 @@ module.exports = {
         'blue-400': 'var(--blue-400)',
 
         orange: 'var(--orange)',
-        yellow: 'var(--yellow)',
         pink: 'var(--pink)',
+        yellow: 'var(--yellow)',
         green: 'var(--green)',
         white: 'var(--white)',
       },
       dropShadow: {
+        orange: 'var(--shadow-indent) var(--shadow-orange)',
         pink: 'var(--shadow-indent) var(--shadow-pink)',
         yellow: 'var(--shadow-indent) var(--shadow-yellow)',
         blue: 'var(--shadow-indent) var(--shadow-blue)',
