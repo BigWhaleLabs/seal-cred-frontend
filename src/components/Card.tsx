@@ -4,8 +4,9 @@ import {
   borderColor,
   borderRadius,
   borderWidth,
+  boxShadow,
+  boxShadowColor,
   classnames,
-  dropShadow,
   padding,
   space,
 } from 'classnames/tailwind'
@@ -29,15 +30,16 @@ const cardColor = (color?: Color) => {
         ? 'border-blue-500'
         : 'border-blue-900'
     ),
-    dropShadow(
+    boxShadow('shadow-2xl'),
+    boxShadowColor(
       color === 'yellow'
-        ? 'drop-shadow-yellow'
+        ? 'shadow-yellow50'
         : color === 'green'
-        ? 'drop-shadow-green'
+        ? 'shadow-green50'
         : color === 'pink'
-        ? 'drop-shadow-pink'
+        ? 'shadow-pink50'
         : color === 'blue'
-        ? 'drop-shadow-blue'
+        ? 'shadow-blue50'
         : undefined
     )
   )

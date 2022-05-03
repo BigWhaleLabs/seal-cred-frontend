@@ -10,6 +10,15 @@ module.exports = {
       borderWidth: {
         1: '1px',
       },
+      keyframes: {
+        'pulse-horizontal': {
+          '0%, 100%': { transform: 'translateX(8px)' },
+          '50%': { transform: 'translateX(0px)' },
+        },
+      },
+      animation: {
+        'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
+      },
       colors: {
         'blue-900': 'var(--blue-900)',
         'blue-800': 'var(--blue-800)',
@@ -23,13 +32,17 @@ module.exports = {
         pink: 'var(--pink)',
         green: 'var(--green)',
         white: 'var(--white)',
+
+        pink50: 'var(--shadow-pink)',
+        yellow50: 'var(--shadow-yellow)',
+        blue50: 'var(--shadow-blue)',
+        white50: 'var(--shadow-white)',
+        green50: 'var(--shadow-green)',
       },
-      dropShadow: {
-        pink: 'var(--shadow-indent) var(--shadow-pink)',
-        yellow: 'var(--shadow-indent) var(--shadow-yellow)',
-        blue: 'var(--shadow-indent) var(--shadow-blue)',
-        white: 'var(--shadow-indent) var(--shadow-white)',
-        green: 'var(--shadow-indent) var(--shadow-green)',
+      boxShadow: {
+        '2xl': '0px 4px 44px 0px rgb(0 0 0 / 0.25)',
+        lg: '0px 0px 16px 0px rgb(0 0 0 / 0.25)',
+        md: '0px 0px 6px 0px rgb(0 0 0 / 0.25)',
       },
     },
   },
