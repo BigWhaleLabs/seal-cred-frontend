@@ -63,7 +63,6 @@ const button = (
 ) =>
   colors === 'primary'
     ? classnames(
-        sharedClassNames(loading, disabled),
         textColor('text-blue-900'),
         fontSize(small ? 'text-sm' : 'text-lg'),
         padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
@@ -80,9 +79,8 @@ const button = (
         )
       )
     : colors === 'secondary'
-    ? classnames(sharedClassNames(loading, disabled)) // TBD
+    ? classnames(textColor('text-yellow')) // TBD
     : classnames(
-        sharedClassNames(loading, disabled),
         textColor(
           'text-transparent',
           loading || disabled ? undefined : 'active:text-yellow'
@@ -102,7 +100,10 @@ const Button: FC<ButtonProperties> = ({
   ...rest
 }) => (
   <button
-    className={button(colors, loading, disabled, small)}
+    className={
+      sharedClassNames(loading, disabled) &&
+      button(colors, loading, disabled, small)
+    }
     disabled={loading || disabled}
     {...rest}
   >
