@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { LogoText } from 'components/Text'
-import {
+import { useEffect, useState } from 'react'
+import Logo from 'icons/Logo'
+import Wallet from 'components/Wallet'
+import classnames, {
   alignItems,
   backgroundColor,
-  classnames,
   display,
   inset,
   justifyContent,
@@ -13,19 +15,20 @@ import {
   space,
   zIndex,
 } from 'classnames/tailwind'
-import Logo from 'icons/Logo'
 
-const navbar = classnames(
-  position('sticky'),
-  inset('top-0'),
-  display('flex'),
-  alignItems('items-center'),
-  justifyContent('justify-between'),
-  padding('py-4'),
-  margin('my-2'),
-  zIndex('z-10'),
-  backgroundColor('bg-transparent')
-)
+const navbar = (visible?: boolean) =>
+  classnames(
+    position('sticky'),
+    inset('top-0'),
+    display('flex'),
+    alignItems('items-center'),
+    justifyContent('justify-between'),
+    padding('py-4', 'px-4'),
+    margin('mb-2'),
+    space('space-x-9', 'md:space-x-0'),
+    zIndex('z-10'),
+    backgroundColor(visible ? 'bg-blue-900' : 'bg-transparent')
+  )
 
 const logoContainer = classnames(
   display('inline-flex'),
@@ -34,14 +37,24 @@ const logoContainer = classnames(
 )
 
 export default function Navbar() {
+  const [backgroundVisible, setBackgroundVisible] = useState(false)
+  const onScroll = () => {
+    setBackgroundVisible(document.documentElement.scrollTop > 20)
+  }
+  useEffect(() => {
+    document.addEventListener('scroll', onScroll)
+    return () => document.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <nav className={navbar}>
+    <nav className={navbar(backgroundVisible)}>
       <Link to="/">
         <div className={logoContainer}>
           <Logo />
-          <LogoText>StreetCred</LogoText>
+          <LogoText>SealCred</LogoText>
         </div>
       </Link>
+      <Wallet />
     </nav>
   )
 }

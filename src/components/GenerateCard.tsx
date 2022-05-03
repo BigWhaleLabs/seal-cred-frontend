@@ -2,7 +2,7 @@ import { HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
-import Wallet from 'components/Wallet'
+import WalletButton from 'components/WalletButton'
 import WalletStore from 'stores/WalletStore'
 
 function Proofs() {
@@ -17,7 +17,11 @@ function Proofs() {
 function GenerateCard() {
   const { account } = useSnapshot(WalletStore)
 
-  return <Card shadow>{account ? <Proofs /> : <Wallet />}</Card>
+  return (
+    <Card color="yellow" shadow>
+      {account ? <Proofs /> : <WalletButton />}
+    </Card>
+  )
 }
 
 export default GenerateCard

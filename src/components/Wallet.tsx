@@ -1,66 +1,43 @@
+import { AccentText } from 'components/Text'
 import { useSnapshot } from 'valtio'
-import Button from 'components/Button'
-import CryptoWallet from 'icons/CryptoWallet'
+import SealWallet from 'icons/SealWallet'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
+  cursor,
   display,
-  flexDirection,
-  fontSize,
-  fontWeight,
-  margin,
+  space,
   textAlign,
-  textColor,
   width,
 } from 'classnames/tailwind'
 import configuredModal from 'helpers/web3Modal'
+import truncateMiddle from 'helpers/truncateMiddle'
 
 const walletContainer = classnames(
-  display('flex'),
-  flexDirection('flex-col'),
-  alignItems('items-center')
+  display('inline-flex'),
+  alignItems('items-center'),
+  space('space-x-4'),
+  cursor('cursor-pointer')
 )
-
-const contentWrapper = classnames(
-  width('w-9/12'),
-  display('flex'),
-  flexDirection('flex-col'),
-  alignItems('items-center')
-)
-
-const cardTitle = classnames(
-  textColor('text-accent-yellow'),
-  fontSize('text-4xl'),
-  fontWeight('font-bold'),
-  margin('mb-4')
-)
-
-const bodyText = classnames(
-  textColor('text-accent-white'),
-  textAlign('text-center'),
-  margin('mb-8')
-)
+const walletAccount = classnames(textAlign('text-center'))
 
 export default function Wallet() {
-  const { walletLoading } = useSnapshot(WalletStore)
+  const { account } = useSnapshot(WalletStore)
   return (
-    <div className={walletContainer}>
-      <div className={contentWrapper}>
-        <div className={cardTitle}>First</div>
-        <div className={bodyText}>
-          Connect a wallet with NFTs to create ZK proof.
-        </div>
-        <Button
-          color="success"
-          loading={walletLoading}
-          onClick={async () => {
-            configuredModal.clearCachedProvider()
-            await WalletStore.connect()
-          }}
-        >
-          <CryptoWallet />
-          <span>Connect wallet</span>
-        </Button>
+    <div
+      className={walletContainer}
+      onClick={async () => {
+        configuredModal.clearCachedProvider()
+        await WalletStore.connect()
+      }}
+    >
+      <div className={walletAccount}>
+        <AccentText active={!!account}>
+          {account ? truncateMiddle(account) : 'No wallet connected'}
+        </AccentText>
+      </div>
+      <div className={classnames(width('w-fit'))}>
+        <SealWallet connected={!!account} />
       </div>
     </div>
   )
