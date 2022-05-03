@@ -35,22 +35,6 @@ function Main() {
       <HeaderText>Supported NFTs:</HeaderText>
       <SupportedContracts />
       {account && <Proofs />}
-      <Button colors="primary">Test button</Button>
-      <Button colors="primary" disabled={true}>
-        Test button
-      </Button>
-      <Button colors="primary" small>
-        Test button
-      </Button>
-      <Button colors="primary" disabled={true} small>
-        Test button
-      </Button>
-      <Button colors="tertiary" arrow>
-        Learn more about us
-      </Button>
-      <Button colors="tertiary" arrow disabled={true}>
-        Learn more about us
-      </Button>
     </Card>
   )
 }
