@@ -26,7 +26,6 @@ function ContractList() {
               <Button
                 colors="primary"
                 small
-                color="error"
                 onClick={() => {
                   ProofStore.proofsCompleted = proofsCompleted.filter(
                     (p) =>

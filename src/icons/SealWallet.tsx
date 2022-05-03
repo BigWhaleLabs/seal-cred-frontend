@@ -1,5 +1,9 @@
 import { FC } from 'react'
-import classnames, { dropShadow } from 'classnames/tailwind'
+import classnames, {
+  borderRadius,
+  boxShadow,
+  boxShadowColor,
+} from 'classnames/tailwind'
 
 const SealWallet: FC<{ connected?: boolean }> = ({ connected }) => {
   return connected ? (
@@ -9,7 +13,11 @@ const SealWallet: FC<{ connected?: boolean }> = ({ connected }) => {
       viewBox="0 0 42 42"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={classnames(dropShadow('drop-shadow-pink'))}
+      className={classnames(
+        boxShadow('shadow-lg'),
+        boxShadowColor('shadow-pink'),
+        borderRadius('rounded-full')
+      )}
     >
       <circle
         cx="21"
