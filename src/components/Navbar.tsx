@@ -10,6 +10,7 @@ import classnames, {
   inset,
   justifyContent,
   margin,
+  maxWidth,
   padding,
   position,
   space,
