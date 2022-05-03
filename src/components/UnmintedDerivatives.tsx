@@ -77,8 +77,8 @@ function ContractToMint({
             setLoading(false)
           }
         }}
+        design="primary"
         small
-        color="pink"
       >
         {loading ? 'minting...' : 'mint'}
       </Button>

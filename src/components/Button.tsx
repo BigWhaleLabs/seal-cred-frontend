@@ -19,17 +19,23 @@ import {
 } from 'classnames/tailwind'
 import Loading from 'icons/Loading'
 
-type ButtonType = 'primary' | 'secondary' | 'tertiary' | 'small'
+type ButtonType = 'primary' | 'secondary' | 'tertiary'
 
 export interface ButtonProps {
   design: ButtonType
   loading?: boolean
+  small?: boolean
 }
 
 type ButtonProperties = ButtonProps &
   React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const button = (design: ButtonType, loading?: boolean, disabled?: boolean) =>
+const button = (
+  design: ButtonType,
+  loading?: boolean,
+  disabled?: boolean,
+  small?: boolean
+) =>
   classnames(
     display('flex'),
     flexDirection('flex-row'),
@@ -38,11 +44,8 @@ const button = (design: ButtonType, loading?: boolean, disabled?: boolean) =>
     fontWeight('font-bold'),
     transitionProperty('transition-colors'),
     textColor('text-blue-900'),
-    fontSize(design === 'small' ? 'text-sm' : 'text-lg'),
-    padding(
-      design === 'small' ? 'py-2' : 'py-4',
-      design === 'small' ? 'px-4' : 'px-6'
-    ),
+    fontSize(small ? 'text-sm' : 'text-lg'),
+    padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
     borderRadius('rounded-full'),
     outlineStyle('focus:outline-none'),
     cursor(loading || disabled ? 'cursor-not-allowed' : undefined),
@@ -53,6 +56,7 @@ const button = (design: ButtonType, loading?: boolean, disabled?: boolean) =>
 
 const Button: FC<ButtonProperties> = ({
   design,
+  small,
   children,
   loading,
   disabled,
@@ -60,11 +64,11 @@ const Button: FC<ButtonProperties> = ({
 }) => {
   return (
     <button
-      className={button(design, loading, disabled)}
+      className={button(design, loading, disabled, small)}
       disabled={loading || disabled}
       {...rest}
     >
-      {loading && <Loading small={design === 'small'} />}
+      {loading && <Loading small={small} />}
       {typeof children === 'string' ? <span>{children}</span> : children}
     </button>
   )
