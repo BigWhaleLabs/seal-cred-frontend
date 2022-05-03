@@ -54,7 +54,6 @@ export const LargerText: FC = ({ children }) => {
 
 const logoText = classnames(
   textColor('text-yellow'),
-  fontFamily('font-secondary'),
   fontWeight('font-bold'),
   fontSize('text-xl')
 )
@@ -62,10 +61,7 @@ export const LogoText: FC = ({ children }) => {
   return <span className={logoText}>{children}</span>
 }
 
-const badgeText = classnames(
-  textColor('text-white'),
-  fontFamily('font-secondary')
-)
+const badgeText = classnames(textColor('text-white'))
 export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
