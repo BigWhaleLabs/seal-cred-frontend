@@ -6,6 +6,8 @@ import {
   borderWidth,
   classnames,
   dropShadow,
+  margin,
+  maxWidth,
   padding,
   space,
 } from 'classnames/tailwind'
@@ -50,7 +52,9 @@ const cardContainer = (shadow?: boolean, color?: Color) => {
     borderWidth('border-1'),
     cardColor(shadow ? color : undefined),
     padding('p-6'),
-    space('space-y-4')
+    space('space-y-4'),
+    margin('mx-auto'),
+    maxWidth('max-w-md')
   )
 }
 
