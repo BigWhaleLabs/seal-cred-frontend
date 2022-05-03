@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { TooltipText } from 'components/Text'
+import { maxWidth } from 'classnames/tailwind'
 import ReactTooltip, { Place } from 'react-tooltip'
 
 const ToolTip: FC<{
@@ -10,7 +11,6 @@ const ToolTip: FC<{
   return (
     <TooltipText>
       <ReactTooltip
-        multiline
         place={place}
         data-for={dataFor}
         effect="solid"
@@ -18,6 +18,7 @@ const ToolTip: FC<{
         textColor={'var(--blue-900)'}
         arrowColor={'var(--white)'}
         clickable={clickable}
+        className={maxWidth('max-w-xs')}
       />
     </TooltipText>
   )
