@@ -54,7 +54,6 @@ export const LargerText: FC = ({ children }) => {
 
 const logoText = classnames(
   textColor('text-yellow'),
-  fontFamily('font-secondary'),
   fontWeight('font-bold'),
   fontSize('text-xl')
 )
@@ -62,10 +61,7 @@ export const LogoText: FC = ({ children }) => {
   return <span className={logoText}>{children}</span>
 }
 
-const badgeText = classnames(
-  textColor('text-white'),
-  fontFamily('font-secondary')
-)
+const badgeText = classnames(textColor('text-white'))
 export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
@@ -104,4 +100,13 @@ export const PopupBodyText: FC = ({ children }) => {
 const subBadgeText = classnames(textColor('text-pink'), fontSize('text-sm'))
 export const SubBadgeText: FC = ({ children }) => {
   return <span className={subBadgeText}>{children}</span>
+}
+
+const tooltipText = classnames(
+  fontWeight('font-bold'),
+  textColor('text-blue-900'),
+  fontFamily('font-primary')
+)
+export const TooltipText: FC = ({ children }) => {
+  return <div className={tooltipText}>{children}</div>
 }

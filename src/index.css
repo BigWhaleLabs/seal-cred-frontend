@@ -6,41 +6,11 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--white);
-  font-family: var(--font-secondary);
+  font-family: 'JetBrains Mono', monospace;
+  color: #efecd6;
   /* Grid */
-  background: conic-gradient(
-      from 90deg at 1px 1px,
-      var(--blue-900) 90deg,
-      var(--blue-800) 0
-    )
-    0 0/48px 48px;
-}
-
-:root {
-  /* Main colors */
-  --blue-900: #0d0030;
-  --blue-800: #1a0259;
-  --blue-700: #3a00d6;
-  --blue-600: #4b61d5;
-  --blue-500: #15a1fc;
-  --blue-400: #bff5fa;
-
-  --orange: #f1962e;
-  --pink: #ff7bed;
-  --yellow: #fed823;
-  --green: #01feb6;
-  --white: #efecd6;
-
-  --shadow-indent: 0px 4px 44px;
-  --shadow-pink: rgba(255, 123, 237, 0.5);
-  --shadow-yellow: rgba(254, 216, 35, 0.4);
-  --shadow-blue: rgba(21, 161, 252, 0.5);
-  --shadow-green: rgba(1, 254, 182, 0.4);
-  --shadow-white: rgba(239, 236, 214, 0.3);
-
-  --font-primary: 'Space Grotesk', sans-serif;
-  --font-secondary: 'JetBrains Mono', monospace;
+  background: conic-gradient(from 90deg at 1px 1px, #0d0030 90deg, #1a0259 0) 0
+    0/48px 48px;
 }
 
 .web3modal-modal-lightbox {
