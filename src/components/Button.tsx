@@ -104,7 +104,6 @@ const Button: FC<ButtonProperties> = ({
 }) => (
   <button
     className={
-      // sharedClassNames(loading, disabled) ||
       button(colors, loading, disabled, small)
     }
     disabled={loading || disabled}
