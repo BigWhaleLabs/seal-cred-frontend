@@ -24,6 +24,7 @@ function ContractList() {
             <div className={contractContainer}>
               <ContractName address={proof.contract} account={proof.account} />
               <Button
+                design="primary"
                 small
                 color="error"
                 onClick={() => {
