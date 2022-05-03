@@ -3,14 +3,17 @@ import { TooltipText } from 'components/Text'
 import ReactTooltip, { Place } from 'react-tooltip'
 import classnames, {
   backgroundColor,
+  borderRadius,
   maxWidth,
+  opacity,
   textColor,
 } from 'classnames/tailwind'
 
 const tooltipClasses = classnames(
   backgroundColor('bg-white'),
-  textColor('text-blue-900'),
-  maxWidth('max-w-sm')
+  maxWidth('max-w-sm'),
+  opacity('!opacity-100'),
+  borderRadius('!rounded-lg')
 )
 
 const ToolTip: FC<{

@@ -2,6 +2,7 @@ import { AccentText } from 'components/Text'
 import ToolTip from 'components/ToolTip'
 import classnames, {
   backgroundColor,
+  borderRadius,
   cursor,
   display,
   fill,
@@ -25,7 +26,8 @@ const zkProofButton = classnames(
   padding('py-4'),
   maxWidth('max-w-md'),
   margin('my-6', 'mx-auto'),
-  cursor('cursor-pointer')
+  cursor('cursor-pointer'),
+  borderRadius('rounded-2xl')
 )
 
 const circleStyles = classnames(fill('fill-blue-800'), stroke('stroke-yellow'))
