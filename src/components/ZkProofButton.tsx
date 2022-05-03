@@ -1,16 +1,17 @@
 import { AccentText } from 'components/Text'
-import { FC } from 'react'
 import ToolTip from 'components/ToolTip'
 import classnames, {
   backgroundColor,
   cursor,
   display,
+  fill,
   flexDirection,
   justifyContent,
   margin,
   maxWidth,
   padding,
   space,
+  stroke,
 } from 'classnames/tailwind'
 
 const zkProofButton = classnames(
@@ -31,18 +32,17 @@ const QuestionMark = () => {
         cx="11"
         cy="11"
         r="10"
-        fill="var(--blue-800)"
-        stroke="var(--yellow)"
+        className={classnames(fill('fill-blue-800'), stroke('stroke-yellow'))}
         strokeWidth="1"
       />
       <text
         x="50%"
         y="50%"
         text-anchor="middle"
-        fill="var(--yellow)"
         font-size="14px"
         font-family="Verdana"
         dy=".4em"
+        className={fill('fill-yellow')}
       >
         ?
       </text>
@@ -57,12 +57,9 @@ const ZkProofButton = () => {
     <>
       <div className={zkProofButton} data-tip={popoverText}>
         <AccentText active>What’s ZK proof?</AccentText>
-
         <QuestionMark />
       </div>
-      <div className={classnames(maxWidth('max-w-md'))}>
-        <ToolTip place="bottom" dataFor={popoverText} clickable />
-      </div>
+      <ToolTip place="bottom" dataFor={popoverText} clickable />
     </>
   )
 }
