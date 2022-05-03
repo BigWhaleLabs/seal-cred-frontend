@@ -34,7 +34,8 @@ const navbar = (visible?: boolean) =>
 const logoContainer = classnames(
   display('inline-flex'),
   alignItems('items-center'),
-  space('space-x-2')
+  space('space-x-2'),
+  margin('mt-2')
 )
 
 export default function Navbar() {
