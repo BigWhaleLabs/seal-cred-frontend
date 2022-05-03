@@ -6833,7 +6833,7 @@ export type TTextDecorationStyle =
   | 'decoration-dashed'
   | 'decoration-wavy'
 
-export type TFontFamily = 'font-primary' | 'font-secondary'
+export type TFontFamily = 'font-primary'
 
 export type TFontSize =
   | 'text-xs'

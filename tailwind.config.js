@@ -3,8 +3,7 @@ module.exports = {
   content: ['./public/index.html', './src/**/!(tailwind).{ts,tsx}'],
   theme: {
     fontFamily: {
-      primary: 'var(--font-primary)',
-      secondary: 'var(--font-secondary)',
+      primary: ['"Space Grotesk"', 'sans-serif'],
     },
     extend: {
       borderWidth: {
@@ -20,24 +19,24 @@ module.exports = {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
       },
       colors: {
-        'blue-900': 'var(--blue-900)',
-        'blue-800': 'var(--blue-800)',
-        'blue-700': 'var(--blue-700)',
-        'blue-600': 'var(--blue-600)',
-        'blue-500': 'var(--blue-500)',
-        'blue-400': 'var(--blue-400)',
+        'blue-900': '#0d0030',
+        'blue-800': '#1a0259',
+        'blue-700': '#3a00d6',
+        'blue-600': '#4b61d5',
+        'blue-500': '#15a1fc',
+        'blue-400': '#bff5fa',
 
-        orange: 'var(--orange)',
-        yellow: 'var(--yellow)',
-        pink: 'var(--pink)',
-        green: 'var(--green)',
-        white: 'var(--white)',
+        orange: '#f1962e',
+        yellow: '#fed823',
+        pink: '#ff7bed',
+        green: '#01feb6',
+        white: '#efecd6',
 
-        pink50: 'var(--shadow-pink)',
-        yellow50: 'var(--shadow-yellow)',
-        blue50: 'var(--shadow-blue)',
-        white50: 'var(--shadow-white)',
-        green50: 'var(--shadow-green)',
+        pink50: 'rgba(255, 123, 237, 0.5)',
+        yellow50: 'rgba(254, 216, 35, 0.4)',
+        blue50: 'rgba(21, 161, 252, 0.5)',
+        white50: 'rgba(239, 236, 214, 0.3)',
+        green50: 'rgba(1, 254, 182, 0.4)',
       },
       boxShadow: {
         '2xl': '0px 4px 44px 0px rgb(0 0 0 / 0.25)',
