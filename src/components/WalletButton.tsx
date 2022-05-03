@@ -29,14 +29,14 @@ const contentWrapper = classnames(
 )
 
 const cardTitle = classnames(
-  textColor('text-accent-yellow'),
+  textColor('text-yellow'),
   fontSize('text-4xl'),
   fontWeight('font-bold'),
   margin('mb-4')
 )
 
 const bodyText = classnames(
-  textColor('text-accent-white'),
+  textColor('text-white'),
   textAlign('text-center'),
   margin('mb-8')
 )
@@ -46,10 +46,10 @@ export default function WalletButton() {
   return (
     <div className={walletContainer}>
       <div className={contentWrapper}>
-        <div className={cardTitle}>First</div>
-        <div className={bodyText}>
+        <span className={cardTitle}>First</span>
+        <span className={bodyText}>
           Connect a wallet with NFTs to create ZK proof.
-        </div>
+        </span>
         <Button
           color="success"
           loading={walletLoading}
