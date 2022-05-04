@@ -12,7 +12,7 @@ import ProofingCard from 'components/ProofingCard'
 const proofingCardContainer = classnames(
   display('flex'),
   flexDirection('flex-row'),
-  alignItems('items-stretch'),
+  alignItems('items-start'),
   space('space-x-5'),
   justifyContent('justify-center')
 )

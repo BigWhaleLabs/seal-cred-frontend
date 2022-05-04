@@ -39,7 +39,6 @@ function Main() {
         <SupportedContracts />
         {account && <Proofs />}
       </Card> */}
-      <ZkProofButton />
     </>
   )
 }
