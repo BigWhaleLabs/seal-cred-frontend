@@ -1,12 +1,9 @@
 import { FC } from 'react'
 import {
   backgroundColor,
-  borderColor,
   borderRadius,
-  borderWidth,
   boxShadow,
   boxShadowColor,
-  boxSizing,
   classnames,
   margin,
   maxWidth,

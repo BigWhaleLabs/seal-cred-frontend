@@ -65,8 +65,9 @@ const mintList = classnames(
 )
 
 const mintListOverflow = classnames(
-  position('fixed'),
-  inset('bottom-6', 'right-0', 'left-0'),
+  position('sticky'),
+  inset('bottom-0', 'right-0', 'left-0'),
+  width('w-full'),
   height('h-8'),
   backgroundImage('bg-gradient-to-b'),
   gradientColorStops('from-transparent', 'to-blue-900')
