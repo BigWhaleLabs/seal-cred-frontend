@@ -4,20 +4,26 @@ import {
   fontFamily,
   fontSize,
   fontWeight,
+  gradientColorStops,
   textAlign,
   textColor,
   textDecoration,
   wordBreak,
 } from 'classnames/tailwind'
 
-const headerText = classnames(
-  fontFamily('font-primary'),
-  fontWeight('font-bold'),
-  fontSize('text-4xl'),
-  textColor('text-white')
-)
-export const HeaderText: FC = ({ children }) => {
-  return <h1 className={headerText}>{children}</h1>
+const headerText = (color?: string, text?: string) =>
+  classnames(
+    fontFamily('font-primary'),
+    fontWeight('font-bold'),
+    fontSize(text === 'small' ? 'text-2xl' : 'text-4xl'),
+    textColor(color === 'yellow' ? 'text-yellow' : 'text-white')
+  )
+export const HeaderText: FC<{ color?: string; text?: string }> = ({
+  color,
+  text,
+  children,
+}) => {
+  return <h1 className={headerText(color, text)}>{children}</h1>
 }
 
 const subheaderText = classnames(
@@ -41,6 +47,16 @@ export const AccentText: FC<{ active?: boolean }> = ({ active, children }) => {
   return <span className={accentText(active)}>{children}</span>
 }
 
+const gradientText = classnames(
+  fontWeight('font-bold'),
+  textColor('text-blue-900'),
+  fontFamily('font-primary'),
+  gradientColorStops('from-neutral-500')
+)
+export const GradientText: FC = ({ children }) => {
+  return <div className={gradientText}>{children}</div>
+}
+
 const bodyText = (center: boolean) =>
   classnames(textColor('text-white'), center ? textAlign('text-center') : null)
 export const BodyText: FC<{ center?: boolean }> = ({ center, children }) => {
@@ -61,9 +77,10 @@ export const LogoText: FC = ({ children }) => {
   return <span className={logoText}>{children}</span>
 }
 
-const badgeText = classnames(textColor('text-white'))
-export const BadgeText: FC = ({ children }) => {
-  return <span className={badgeText}>{children}</span>
+const badgeText = (color?: string) =>
+  classnames(textColor(color === 'pink' ? 'text-pink' : 'text-white'))
+export const BadgeText: FC<{ color?: string }> = ({ color, children }) => {
+  return <span className={badgeText(color)}>{children}</span>
 }
 
 const link = classnames(

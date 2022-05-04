@@ -6,6 +6,7 @@ import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import OriginalContractsOwned from 'components/OriginalContractsOwned'
 import SupportedContracts from 'components/SupportedContracts'
+import TwoMainCards from 'components/TwoMainCards'
 import UnmintedDerivatives from 'components/UnmintedDerivatives'
 import WalletStore from 'stores/WalletStore'
 import ZkProofButton from 'components/ZkProofButton'
@@ -32,6 +33,7 @@ function Main() {
 
   return (
     <>
+      <TwoMainCards />
       <Card shadow color="green">
         <HeaderText>Supported NFTs:</HeaderText>
         <SupportedContracts />
