@@ -1,6 +1,6 @@
-import classnames, { dropShadow } from 'classnames/tailwind'
+import { dropShadow } from 'classnames/tailwind'
 
-const completeContainer = classnames(dropShadow('drop-shadow-yellow'))
+const completeContainer = dropShadow('drop-shadow-yellow')
 
 const Complete = () => {
   return (
