@@ -14,6 +14,7 @@ import {
   space,
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
+import Complete from 'components/Complete'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
 import ProofButton from 'components/ProofButton'
@@ -42,7 +43,10 @@ function ContractList() {
           {proofsCompleted.map((proof) => (
             <div className={contractContainer}>
               <ContractName address={proof.contract} />
-              <ProofButton color="yellow">Proof saved</ProofButton>
+              <ProofButton color="yellow">
+                <span>Proof made</span>
+                <Complete />
+              </ProofButton>
             </div>
           ))}
         </ContractListContainer>

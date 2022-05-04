@@ -4,8 +4,9 @@ import {
   borderColor,
   borderRadius,
   borderWidth,
+  boxShadow,
+  boxShadowColor,
   classnames,
-  dropShadow,
   fontSize,
   margin,
   maxWidth,
@@ -33,15 +34,16 @@ const cardColor = (color?: Color) => {
         ? 'border-blue-500'
         : 'border-blue-900'
     ),
-    dropShadow(
+    boxShadow('shadow-2xl'),
+    boxShadowColor(
       color === 'yellow'
-        ? 'drop-shadow-yellow'
+        ? 'shadow-yellow50'
         : color === 'green'
-        ? 'drop-shadow-green'
+        ? 'shadow-green50'
         : color === 'pink'
-        ? 'drop-shadow-pink'
+        ? 'shadow-pink50'
         : color === 'blue'
-        ? 'drop-shadow-blue'
+        ? 'shadow-blue50'
         : undefined
     )
   )
@@ -65,7 +67,7 @@ export const CardTitle: FC = ({ children }) => {
   return <p className={cardTitle}>{children}</p>
 }
 
-const cardDescription = classnames(fontSize('text-xl'))
+const cardDescription = classnames(fontSize('text-2xl'), margin('mt-2'))
 export const CardDescription: FC = ({ children }) => {
   return <p className={cardDescription}>{children}</p>
 }

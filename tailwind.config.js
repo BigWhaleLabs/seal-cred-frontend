@@ -9,6 +9,15 @@ module.exports = {
       borderWidth: {
         1: '1px',
       },
+      keyframes: {
+        'pulse-horizontal': {
+          '0%, 100%': { transform: 'translateX(8px)' },
+          '50%': { transform: 'translateX(0px)' },
+        },
+      },
+      animation: {
+        'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
+      },
       colors: {
         'blue-900': '#0d0030',
         'blue-800': '#1a0259',
@@ -22,13 +31,20 @@ module.exports = {
         pink: '#ff7bed',
         green: '#01FEB6',
         white: '#efecd6',
+
+        pink50: 'rgba(255, 123, 237, 0.5)',
+        yellow50: 'rgba(254, 216, 35, 0.4)',
+        blue50: 'rgba(21, 161, 252, 0.5)',
+        white50: 'rgba(239, 236, 214, 0.3)',
+        green50: 'rgba(1, 254, 182, 0.4)',
+      },
+      boxShadow: {
+        '2xl': '0px 4px 44px 0px rgb(0 0 0 / 0.25)',
+        lg: '0px 0px 16px 0px rgb(0 0 0 / 0.25)',
+        md: '0px 0px 6px 0px rgb(0 0 0 / 0.25)',
       },
       dropShadow: {
-        pink: '0px 4px 44px rgba(255, 123, 237, 0.5)',
-        yellow: '0px 4px 44px rgba(254, 216, 35, 0.4)',
-        blue: '0px 4px 44px rgba(21, 161, 252, 0.5)',
-        white: '0px 4px 44px rgba(239, 236, 214, 0.3)',
-        green: '0px 4px 44px rgba(1, 254, 182, 0.4)',
+        yellow: '0px 0px 10px #FED823',
       },
     },
   },

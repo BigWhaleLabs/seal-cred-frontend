@@ -246,6 +246,12 @@ export type TBackgroundColor =
   | 'bg-blue-600'
   | 'bg-blue-500'
   | 'bg-blue-400'
+  | 'bg-pink50'
+  | 'bg-yellow50'
+  | 'bg-yellow100'
+  | 'bg-blue50'
+  | 'bg-white50'
+  | 'bg-green50'
 
 export type TBackgroundPosition =
   | 'bg-bottom'
@@ -857,6 +863,24 @@ export type TGradientColorStops =
   | 'from-blue-400'
   | 'via-blue-400'
   | 'to-blue-400'
+  | 'from-pink50'
+  | 'via-pink50'
+  | 'to-pink50'
+  | 'from-yellow50'
+  | 'via-yellow50'
+  | 'to-yellow50'
+  | 'from-yellow100'
+  | 'via-yellow100'
+  | 'to-yellow100'
+  | 'from-blue50'
+  | 'via-blue50'
+  | 'to-blue50'
+  | 'from-white50'
+  | 'via-white50'
+  | 'to-white50'
+  | 'from-green50'
+  | 'via-green50'
+  | 'to-green50'
 
 export type TBackgrounds =
   | TBackgroundAttachment
@@ -2229,6 +2253,36 @@ export type TBorderColor =
   | 'border-r-blue-400'
   | 'border-b-blue-400'
   | 'border-l-blue-400'
+  | 'border-pink50'
+  | 'border-t-pink50'
+  | 'border-r-pink50'
+  | 'border-b-pink50'
+  | 'border-l-pink50'
+  | 'border-yellow50'
+  | 'border-t-yellow50'
+  | 'border-r-yellow50'
+  | 'border-b-yellow50'
+  | 'border-l-yellow50'
+  | 'border-yellow100'
+  | 'border-t-yellow100'
+  | 'border-r-yellow100'
+  | 'border-b-yellow100'
+  | 'border-l-yellow100'
+  | 'border-blue50'
+  | 'border-t-blue50'
+  | 'border-r-blue50'
+  | 'border-b-blue50'
+  | 'border-l-blue50'
+  | 'border-white50'
+  | 'border-t-white50'
+  | 'border-r-white50'
+  | 'border-b-white50'
+  | 'border-l-white50'
+  | 'border-green50'
+  | 'border-t-green50'
+  | 'border-r-green50'
+  | 'border-b-green50'
+  | 'border-l-green50'
 
 export type TBorderOpacity =
   | 'border-opacity-0'
@@ -2830,6 +2884,12 @@ export type TRingColor =
   | 'ring-blue-600'
   | 'ring-blue-500'
   | 'ring-blue-400'
+  | 'ring-pink50'
+  | 'ring-yellow50'
+  | 'ring-yellow100'
+  | 'ring-blue50'
+  | 'ring-white50'
+  | 'ring-green50'
 
 export type TRingWidth =
   | 'ring-0'
@@ -3054,6 +3114,12 @@ export type TRingOffsetColor =
   | 'ring-offset-blue-600'
   | 'ring-offset-blue-500'
   | 'ring-offset-blue-400'
+  | 'ring-offset-pink50'
+  | 'ring-offset-yellow50'
+  | 'ring-offset-yellow100'
+  | 'ring-offset-blue50'
+  | 'ring-offset-white50'
+  | 'ring-offset-green50'
 
 export type TRingOffsetWidth =
   | 'ring-offset-0'
@@ -3272,6 +3338,12 @@ export type TOutlineColor =
   | 'outline-blue-600'
   | 'outline-blue-500'
   | 'outline-blue-400'
+  | 'outline-pink50'
+  | 'outline-yellow50'
+  | 'outline-yellow100'
+  | 'outline-blue50'
+  | 'outline-white50'
+  | 'outline-green50'
 
 export type TBorders =
   | TBorderStyle
@@ -3541,6 +3613,12 @@ export type TBoxShadowColor =
   | 'shadow-blue-600'
   | 'shadow-blue-500'
   | 'shadow-blue-400'
+  | 'shadow-pink50'
+  | 'shadow-yellow50'
+  | 'shadow-yellow100'
+  | 'shadow-blue50'
+  | 'shadow-white50'
+  | 'shadow-green50'
 
 export type TOpacity =
   | 'opacity-0'
@@ -3608,6 +3686,7 @@ export type TAnimation =
   | 'animate-ping'
   | 'animate-pulse'
   | 'animate-bounce'
+  | 'animate-pulse-horizontal'
 
 export type TTransitionsAndAnimations =
   | TTransitionProperty
@@ -3661,11 +3740,7 @@ export type TDropShadow =
   | 'drop-shadow-xl'
   | 'drop-shadow-2xl'
   | 'drop-shadow-none'
-  | 'drop-shadow-pink'
   | 'drop-shadow-yellow'
-  | 'drop-shadow-blue'
-  | 'drop-shadow-white'
-  | 'drop-shadow-green'
 
 export type TGrayscale = 'grayscale-0' | 'grayscale'
 
@@ -5054,6 +5129,12 @@ export type TCaretColor =
   | 'caret-blue-600'
   | 'caret-blue-500'
   | 'caret-blue-400'
+  | 'caret-pink50'
+  | 'caret-yellow50'
+  | 'caret-yellow100'
+  | 'caret-blue50'
+  | 'caret-white50'
+  | 'caret-green50'
 
 export type TWillChange =
   | 'will-change-auto'
@@ -5258,6 +5339,12 @@ export type TAccentColor =
   | 'accent-blue-600'
   | 'accent-blue-500'
   | 'accent-blue-400'
+  | 'accent-pink50'
+  | 'accent-yellow50'
+  | 'accent-yellow100'
+  | 'accent-blue50'
+  | 'accent-white50'
+  | 'accent-green50'
 
 export type TScrollPadding =
   | 'scroll-p-0'
@@ -6489,6 +6576,12 @@ export type TFill =
   | 'fill-blue-600'
   | 'fill-blue-500'
   | 'fill-blue-400'
+  | 'fill-pink50'
+  | 'fill-yellow50'
+  | 'fill-yellow100'
+  | 'fill-blue50'
+  | 'fill-white50'
+  | 'fill-green50'
 
 export type TStroke =
   | 'stroke-inherit'
@@ -6524,6 +6617,12 @@ export type TStroke =
   | 'stroke-blue-600'
   | 'stroke-blue-500'
   | 'stroke-blue-400'
+  | 'stroke-pink50'
+  | 'stroke-yellow50'
+  | 'stroke-yellow100'
+  | 'stroke-blue50'
+  | 'stroke-white50'
+  | 'stroke-green50'
 
 export type TStrokeWidth = 'stroke-0' | 'stroke-1' | 'stroke-2'
 
@@ -7002,6 +7101,12 @@ export type TPlaceholderColor =
   | 'placeholder-blue-600'
   | 'placeholder-blue-500'
   | 'placeholder-blue-400'
+  | 'placeholder-pink50'
+  | 'placeholder-yellow50'
+  | 'placeholder-yellow100'
+  | 'placeholder-blue50'
+  | 'placeholder-white50'
+  | 'placeholder-green50'
 
 export type TPlaceholderOpacity =
   | 'placeholder-opacity-0'
@@ -7216,6 +7321,12 @@ export type TTextColor =
   | 'text-blue-600'
   | 'text-blue-500'
   | 'text-blue-400'
+  | 'text-pink50'
+  | 'text-yellow50'
+  | 'text-yellow100'
+  | 'text-blue50'
+  | 'text-white50'
+  | 'text-green50'
 
 export type TTextOpacity =
   | 'text-opacity-0'
@@ -7469,6 +7580,12 @@ export type TTextDecorationColor =
   | 'decoration-blue-600'
   | 'decoration-blue-500'
   | 'decoration-blue-400'
+  | 'decoration-pink50'
+  | 'decoration-yellow50'
+  | 'decoration-yellow100'
+  | 'decoration-blue50'
+  | 'decoration-white50'
+  | 'decoration-green50'
 
 export type TTextDecorationThickness =
   | 'decoration-0'

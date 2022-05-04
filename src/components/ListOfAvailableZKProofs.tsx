@@ -1,4 +1,4 @@
-import { BodyText, SubheaderText } from 'components/Text'
+import { BodyText } from 'components/Text'
 import { FC } from 'react'
 import { Suspense, useState } from 'react'
 import { useSnapshot } from 'valtio'
@@ -6,6 +6,7 @@ import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
 import ProofButton from 'components/ProofButton'
 import ProofStore from 'stores/ProofStore'
+import Star from 'components/Star'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -48,9 +49,9 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
       <ContractName address={contractAddress} />
       <ProofButton
         color={
-          !proofInProgress
+          !proofInProgress && !postingProof
             ? 'green'
-            : proofInProgress?.status === 'running'
+            : proofInProgress?.status === 'running' || postingProof
             ? 'yellow'
             : proofInProgress?.status === 'scheduled'
             ? 'pink'
@@ -62,17 +63,20 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
           setPostingProof(false)
         }}
       >
-        {!proofInProgress
-          ? 'Create proof'
-          : proofInProgress?.status === 'running'
-          ? 'Generating...'
-          : proofInProgress?.status === 'scheduled'
-          ? `Queued by ${
-              proofInProgress?.position !== undefined
-                ? ` position: ${proofInProgress?.position + 1}`
-                : ''
-            }`
-          : null}
+        {!proofInProgress && !postingProof ? (
+          'Create proof'
+        ) : proofInProgress?.status === 'running' || postingProof ? (
+          <>
+            <span>Generating...</span>
+            <Star />
+          </>
+        ) : proofInProgress?.status === 'scheduled' ? (
+          `Queued by ${
+            proofInProgress?.position !== undefined
+              ? ` position: ${proofInProgress?.position + 1}`
+              : ''
+          }`
+        ) : null}
       </ProofButton>
     </div>
   )

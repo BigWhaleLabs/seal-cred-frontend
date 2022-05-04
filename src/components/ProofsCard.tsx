@@ -8,8 +8,10 @@ import WalletStore from 'stores/WalletStore'
 function Proofs() {
   return (
     <>
-      <CardTitle>Start proofing!</CardTitle>
-      <CardDescription>Generate your ZK proof</CardDescription>
+      <div>
+        <CardTitle>Start proofing!</CardTitle>
+        <CardDescription>Generate your ZK proof</CardDescription>
+      </div>
       <ListOfReadyZKProofs />
       <ListOfAvailableZKProofs />
     </>

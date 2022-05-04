@@ -4,10 +4,8 @@ import {
   classnames,
   cursor,
   display,
-  dropShadow,
   flexDirection,
   fontFamily,
-  fontSize,
   fontWeight,
   opacity,
   outlineStyle,
@@ -37,7 +35,6 @@ const button = (color: ButtonColors, disabled?: boolean) =>
     fontFamily('font-primary'),
     outlineStyle('focus:outline-none'),
     cursor(disabled ? 'cursor-not-allowed' : undefined),
-    dropShadow(disabled ? undefined : 'drop-shadow-green'),
     opacity(disabled ? 'opacity-50' : undefined)
   )
 

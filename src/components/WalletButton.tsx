@@ -50,7 +50,7 @@ export default function WalletButton() {
           Connect a wallet with NFTs to create ZK proof.
         </span>
         <Button
-          color="success"
+          colors="primary"
           loading={walletLoading}
           onClick={async () => {
             configuredModal.clearCachedProvider()
