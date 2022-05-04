@@ -2,9 +2,9 @@ import { CardDescription, CardHeader } from 'components/Text'
 import { margin } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
+import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
-import WalletButton from 'components/WalletButton'
 import WalletStore from 'stores/WalletStore'
 
 const titleContainer = margin('mb-2')
@@ -29,7 +29,7 @@ function ProofsCard() {
 
   return (
     <Card color="yellow" shadow>
-      {account ? <Proofs /> : <WalletButton />}
+      {account ? <Proofs /> : <ConnectAccount />}
     </Card>
   )
 }

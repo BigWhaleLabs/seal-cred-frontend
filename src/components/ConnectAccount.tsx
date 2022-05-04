@@ -8,6 +8,8 @@ import classnames, {
   fontFamily,
   fontSize,
   fontWeight,
+  height,
+  justifyContent,
   margin,
   textAlign,
   textColor,
@@ -18,7 +20,9 @@ import configuredModal from 'helpers/web3Modal'
 const walletContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-center')
+  alignItems('items-center'),
+  justifyContent('justify-center'),
+  height('h-full')
 )
 
 const contentWrapper = classnames(
@@ -42,7 +46,7 @@ const bodyText = classnames(
   margin('mb-8')
 )
 
-export default function WalletButton() {
+export default function ConnectAccount() {
   const { walletLoading } = useSnapshot(WalletStore)
   return (
     <div className={walletContainer}>
