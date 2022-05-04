@@ -49,7 +49,7 @@ module.exports = {
         orange: '#f1962e',
         yellow: '#fed823',
         pink: '#ff7bed',
-        green: '#01FEB6',
+        green: '#01feb6',
         white: '#efecd6',
 
         pink50: 'rgba(255, 123, 237, 0.5)',
