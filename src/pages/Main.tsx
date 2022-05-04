@@ -12,8 +12,8 @@ import classnames, {
 
 const mainBlock = classnames(
   display('flex'),
-  flexDirection('flex-col', 'md:flex-row'),
-  alignItems('items-stretch'),
+  flexDirection('flex-col', 'sm:flex-row'),
+  alignItems('items-center', 'sm:items-stretch'),
   justifyContent('sm:justify-center')
 )
 
