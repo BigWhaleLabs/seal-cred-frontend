@@ -4,12 +4,39 @@ import { Suspense, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
+import Proof from 'models/Proof'
 import ProofButton from 'components/ProofButton'
 import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
 import Star from 'components/Star'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
+
+function useProofContent(
+  proofInProgress?: Proof,
+  posting?: boolean
+): ['green' | 'yellow' | 'pink', JSX.Element | null] {
+  if (!proofInProgress && !posting) return ['green', <>Create proof</>]
+  if (proofInProgress?.status === 'running' || posting)
+    return [
+      'yellow',
+      <>
+        <span>Generating...</span>
+        <Star />
+      </>,
+    ]
+  if (proofInProgress?.status === 'scheduled')
+    return [
+      'pink',
+      <>
+        Queued by
+        {proofInProgress?.position !== undefined
+          ? ` position: ${proofInProgress?.position + 1}`
+          : ''}
+      </>,
+    ]
+  return ['yellow', null]
+}
 
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const [postingProof, setPostingProof] = useState(false)
@@ -20,39 +47,20 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
       proof.contract === contractAddress
   )
 
+  const [color, content] = useProofContent(proofInProgress, postingProof)
+
   return (
     <ProofLine>
       <ContractName address={contractAddress} />
       <ProofButton
-        color={
-          !proofInProgress && !postingProof
-            ? 'green'
-            : proofInProgress?.status === 'running' || postingProof
-            ? 'yellow'
-            : proofInProgress?.status === 'scheduled'
-            ? 'pink'
-            : 'yellow'
-        }
+        color={color}
         onClick={async () => {
           setPostingProof(true)
           await ProofStore.generate(contractAddress)
           setPostingProof(false)
         }}
       >
-        {!proofInProgress && !postingProof ? (
-          'Create proof'
-        ) : proofInProgress?.status === 'running' || postingProof ? (
-          <>
-            <span>Generating...</span>
-            <Star />
-          </>
-        ) : proofInProgress?.status === 'scheduled' ? (
-          `Queued by ${
-            proofInProgress?.position !== undefined
-              ? ` position: ${proofInProgress?.position + 1}`
-              : ''
-          }`
-        ) : null}
+        {content}
       </ProofButton>
     </ProofLine>
   )
