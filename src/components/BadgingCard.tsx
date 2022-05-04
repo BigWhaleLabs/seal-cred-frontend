@@ -5,6 +5,7 @@ import classnames, {
   backgroundColor,
   cursor,
   display,
+  flexDirection,
   margin,
   padding,
 } from 'classnames/tailwind'
@@ -12,6 +13,7 @@ import configuredModal from 'helpers/web3Modal'
 
 const badgingCardContainer = classnames(
   display('flex'),
+  flexDirection('flex-col'),
   margin('m-0'),
   padding('pb-44')
 )
@@ -25,8 +27,8 @@ const anonWalletContainer = classnames(cursor('cursor-pointer'))
 
 export default function BadgingCard() {
   return (
-    <div className={badgingCardContainer}>
-      <Card shadow color="pink">
+    <Card shadow color="pink">
+      <div className={badgingCardContainer}>
         <BadgeText color="pink">Then</BadgeText>
         <HeaderText text="small">
           Once you've created ZK proof, create badges for your anonymous wallet.
@@ -46,7 +48,7 @@ export default function BadgingCard() {
             <GradientText>Connect your anonymous wallet &gt;</GradientText>
           </div>
         </div>
-      </Card>
-    </div>
+      </div>
+    </Card>
   )
 }

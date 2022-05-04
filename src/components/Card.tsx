@@ -11,6 +11,7 @@ import {
   maxWidth,
   padding,
   space,
+  textAlign,
 } from 'classnames/tailwind'
 
 type Color = 'pink' | 'yellow' | 'green' | 'blue'
@@ -55,7 +56,6 @@ const cardContainer = (shadow?: boolean, color?: Color) => {
     cardColor(shadow ? color : undefined),
     padding('p-6'),
     space('space-y-4'),
-    margin('mx-auto'),
     maxWidth('max-w-md')
   )
 }

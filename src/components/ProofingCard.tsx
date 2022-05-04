@@ -4,7 +4,9 @@ import Card from 'components/Card'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
+  borderWidth,
   display,
+  flexDirection,
   justifyContent,
   margin,
   padding,
@@ -13,18 +15,16 @@ import classnames, {
 import configuredModal from 'helpers/web3Modal'
 
 const proofingCardContainer = classnames(
-  textAlign('text-center'),
-  alignItems('items-center'),
   display('flex'),
-  justifyContent('justify-center'),
-  margin('m-0'),
-  padding('pb-20')
+  flexDirection('flex-col'),
+  textAlign('text-center'),
+  justifyContent('justify-center')
 )
 
 export default function ProofingCard() {
   return (
-    <div className={proofingCardContainer}>
-      <Card shadow color="yellow">
+    <Card shadow color="yellow">
+      <div className={proofingCardContainer}>
         <HeaderText color="yellow">First</HeaderText>
         <BadgeText>Connect a wallet with NFTs to create ZK proof.</BadgeText>
         <Button
@@ -36,7 +36,7 @@ export default function ProofingCard() {
         >
           Connect a wallet
         </Button>
-      </Card>
-    </div>
+      </div>
+    </Card>
   )
 }
