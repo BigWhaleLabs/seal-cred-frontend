@@ -14,7 +14,6 @@ import configuredModal from 'helpers/web3Modal'
 const badgingCardContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  margin('m-0'),
   padding('pb-44')
 )
 const headerTextContainer = classnames(margin('mt-2'))
@@ -31,9 +30,9 @@ export default function BadgingCard() {
   return (
     <Card shadow color="pink">
       <div className={badgingCardContainer}>
-        <BadgeText color="pink">Then</BadgeText>
+        <BadgeText pink>Then</BadgeText>
         <div className={headerTextContainer}>
-          <HeaderText text="small">
+          <HeaderText small>
             Once you've created ZK proof, create badges for your anonymous
             wallet.
           </HeaderText>
@@ -50,7 +49,7 @@ export default function BadgingCard() {
               await WalletStore.connect()
             }}
           >
-            <GradientText>Connect your anonymous wallet &gt;</GradientText>
+            <GradientText>Connect your anonymous wallet {'>'}</GradientText>
           </div>
         </div>
       </div>

@@ -13,8 +13,6 @@ import classnames, {
 } from 'classnames/tailwind'
 import configuredModal from 'helpers/web3Modal'
 
-const cardAndZKProofContainer = classnames(alignContent('content-center'))
-
 const proofingCardContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
@@ -25,8 +23,6 @@ const proofingCardContainer = classnames(
   margin('mx-16')
 )
 
-const firstHeaderContainer = classnames(margin('mb-4'))
-
 const connectWalletButtonContainer = classnames(
   display('flex'),
   margin('mt-8'),
@@ -35,11 +31,11 @@ const connectWalletButtonContainer = classnames(
 
 export default function ProofingCard() {
   return (
-    <div className={cardAndZKProofContainer}>
+    <div className={alignContent('content-center')}>
       <Card shadow color="yellow">
         <div className={proofingCardContainer}>
-          <div className={firstHeaderContainer}>
-            <HeaderText color="yellow">First</HeaderText>
+          <div className={margin('mb-4')}>
+            <HeaderText yellow>First</HeaderText>
           </div>
           <BadgeText>Connect a wallet with NFTs to create ZK proof.</BadgeText>
           <div className={connectWalletButtonContainer}>

@@ -13,19 +13,19 @@ import {
   wordBreak,
 } from 'classnames/tailwind'
 
-const headerText = (color?: string, text?: string) =>
+const headerText = (small?: boolean, yellow?: boolean) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight('font-bold'),
-    fontSize(text === 'small' ? 'text-2xl' : 'text-4xl'),
-    textColor(color === 'yellow' ? 'text-yellow' : 'text-white')
+    fontSize(small ? 'text-2xl' : 'text-4xl'),
+    textColor(yellow ? 'text-yellow' : 'text-white')
   )
-export const HeaderText: FC<{ color?: string; text?: string }> = ({
-  color,
-  text,
+export const HeaderText: FC<{ yellow?: boolean; small?: boolean }> = ({
+  small,
+  yellow,
   children,
 }) => {
-  return <h1 className={headerText(color, text)}>{children}</h1>
+  return <h1 className={headerText(small, yellow)}>{children}</h1>
 }
 
 const subheaderText = classnames(
@@ -82,10 +82,10 @@ export const LogoText: FC = ({ children }) => {
   return <span className={logoText}>{children}</span>
 }
 
-const badgeText = (color?: string) =>
-  classnames(textColor(color === 'pink' ? 'text-pink' : 'text-white'))
-export const BadgeText: FC<{ color?: string }> = ({ color, children }) => {
-  return <span className={badgeText(color)}>{children}</span>
+const badgeText = (pink?: boolean) =>
+  classnames(textColor(pink ? 'text-pink' : 'text-white'))
+export const BadgeText: FC<{ pink?: boolean }> = ({ pink, children }) => {
+  return <span className={badgeText(pink)}>{children}</span>
 }
 
 const link = classnames(
