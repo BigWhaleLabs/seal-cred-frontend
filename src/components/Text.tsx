@@ -18,7 +18,7 @@ import {
   textDecoration,
 } from 'classnames/tailwind'
 
-const headerText = (size: HeaderSize, bold = true) =>
+const headerText = (size: HeaderSize, leading = 8, bold = true) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
@@ -27,14 +27,14 @@ const headerText = (size: HeaderSize, bold = true) =>
       size === '4xl' ? 'text-3xl' : size === '3xl' ? 'text-2xl' : 'text-xl'
     ),
     textColor('text-white'),
-    lineHeight('leading-7')
+    lineHeight(`leading-${leading}`)
   )
-export const HeaderText: FC<{ size: HeaderSize; bold?: boolean }> = ({
-  size,
-  bold,
-  children,
-}) => {
-  return <h1 className={headerText(size, bold)}>{children}</h1>
+export const HeaderText: FC<{
+  size: HeaderSize
+  leading?: 11
+  bold?: boolean
+}> = ({ size, bold, leading, children }) => {
+  return <h1 className={headerText(size, leading, bold)}>{children}</h1>
 }
 
 const subheaderText = classnames(
@@ -49,26 +49,25 @@ const accentText = ({ color, align, bold }: AccentTextProps) =>
   classnames(
     textColor(color),
     textAlign(align),
-    fontFamily('font-primary'),
     fontWeight(bold ? 'font-bold' : 'font-normal')
   )
 export const AccentText: FC<AccentTextProps> = (props) => {
   return <span className={accentText(props)}>{props.children}</span>
 }
 
-const bodyText = (size: BodyTextSize, center?: boolean) =>
+const bodyText = (size: BodyTextSize, leading = 6, center?: boolean) =>
   classnames(
     textColor('text-white'),
     center ? textAlign('text-center') : null,
     fontSize(`text-${size}`),
-    lineHeight('leading-4')
+    lineHeight(`leading-${leading}`)
   )
-export const BodyText: FC<{ size: BodyTextSize; center?: boolean }> = ({
-  size,
-  center,
-  children,
-}) => {
-  return <div className={bodyText(size, center)}>{children}</div>
+export const BodyText: FC<{
+  size: BodyTextSize
+  leading?: 3 | 4 | 5 | 6
+  center?: boolean
+}> = ({ size, center, leading, children }) => {
+  return <div className={bodyText(size, leading, center)}>{children}</div>
 }
 
 const largerText = classnames(textColor('text-blue-900'), fontSize('text-2xl'))

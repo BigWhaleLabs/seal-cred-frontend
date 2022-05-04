@@ -6878,13 +6878,13 @@ export type TLineHeight =
   | 'leading-8'
   | 'leading-9'
   | 'leading-10'
+  | 'leading-11'
   | 'leading-none'
   | 'leading-tight'
   | 'leading-snug'
   | 'leading-normal'
   | 'leading-relaxed'
   | 'leading-loose'
-  | 'leading-leading-7'
 
 export type TListStyleType = 'list-none' | 'list-disc' | 'list-decimal'
 
