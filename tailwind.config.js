@@ -15,6 +15,16 @@ module.exports = {
           '50%': { transform: 'translateX(0px)' },
         },
       },
+      fontSize: {
+        '3xl': '2rem',
+        '4xl': '2.5rem',
+      },
+      lineHeight: {
+        'leading-7': '30px',
+      },
+      screens: {
+        md: '600px',
+      },
       animation: {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
       },

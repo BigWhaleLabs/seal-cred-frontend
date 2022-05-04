@@ -35,7 +35,7 @@ export default function NotFound() {
   return (
     <div className={container}>
       <Card shadow>
-        <HeaderText>404</HeaderText>
+        <HeaderText size="4xl">404</HeaderText>
         <div className={wrapperBody}>
           <SubheaderText>Not found</SubheaderText>
           <Button colors="primary" onClick={() => navigate('/')}>

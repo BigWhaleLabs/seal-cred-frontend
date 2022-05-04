@@ -61,7 +61,7 @@ const ZkProofButton = () => {
   return (
     <>
       <div className={zkProofButton} data-tip={popoverText}>
-        <AccentText active>What’s ZK proof?</AccentText>
+        <AccentText color="text-yellow">What’s ZK proof?</AccentText>
         <QuestionMark />
       </div>
       <ToolTip place="bottom" dataFor={popoverText} clickable />
