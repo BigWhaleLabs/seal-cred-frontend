@@ -53,7 +53,7 @@ const button = (color: ButtonColors, disabled?: boolean) =>
     outlineStyle('focus:outline-none'),
     cursor(disabled ? 'cursor-not-allowed' : undefined),
     opacity(disabled ? 'opacity-50' : undefined),
-    lineHeight('leading-leading-4')
+    lineHeight('leading-5')
   )
 
 const ProofButton: FC<ButtonProperties> = ({
