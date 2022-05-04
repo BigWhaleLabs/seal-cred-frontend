@@ -13,7 +13,7 @@ function ContractList() {
 
   return (
     <>
-      {proofsCompleted?.length ? (
+      {!!proofsCompleted?.length && (
         <ContractListContainer>
           {proofsCompleted.map((proof) => (
             <ProofLine>
@@ -25,7 +25,7 @@ function ContractList() {
             </ProofLine>
           ))}
         </ContractListContainer>
-      ) : null}
+      )}
     </>
   )
 }

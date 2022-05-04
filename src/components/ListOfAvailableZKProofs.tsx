@@ -90,13 +90,13 @@ function ContractList() {
 
   return (
     <>
-      {originalOwnedContractsWithoutCompletedProofs.length ? (
+      {!!originalOwnedContractsWithoutCompletedProofs.length && (
         <ContractListContainer>
           {originalOwnedContractsWithoutCompletedProofs.map((contract) => (
             <ZKProof contractAddress={contract.address} />
           ))}
         </ContractListContainer>
-      ) : null}
+      )}
     </>
   )
 }
