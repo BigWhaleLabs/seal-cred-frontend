@@ -3,9 +3,7 @@ import { AccentTextProps } from 'types/TextProps'
 import { FC } from 'react'
 import {
   backgroundColor,
-  borderColor,
   borderRadius,
-  borderWidth,
   boxShadow,
   boxShadowColor,
   classnames,
@@ -13,9 +11,16 @@ import {
   fontSize,
   fontWeight,
   margin,
+  maxHeight,
   maxWidth,
+  minHeight,
+  outlineColor,
+  outlineStyle,
+  outlineWidth,
+  overflow,
   padding,
   space,
+  width,
 } from 'classnames/tailwind'
 
 type Color = 'pink' | 'yellow' | 'green' | 'blue'
@@ -26,16 +31,18 @@ interface CardProps {
 
 const cardColor = (color?: Color) => {
   return classnames(
-    borderColor(
+    outlineWidth('outline-1'),
+    outlineStyle('outline'),
+    outlineColor(
       color === 'yellow'
-        ? 'border-yellow'
+        ? 'outline-yellow'
         : color === 'green'
-        ? 'border-green'
+        ? 'outline-green'
         : color === 'pink'
-        ? 'border-pink'
+        ? 'outline-pink'
         : color === 'blue'
-        ? 'border-blue-500'
-        : 'border-blue-900'
+        ? 'outline-blue-500'
+        : 'outline-blue-900'
     ),
     boxShadow('shadow-2xl'),
     boxShadowColor(
@@ -52,18 +59,20 @@ const cardColor = (color?: Color) => {
   )
 }
 
-const cardContainer = (shadow?: boolean, color?: Color) => {
-  return classnames(
+const cardContainer = (shadow?: boolean, color?: Color) =>
+  classnames(
     borderRadius('rounded-2xl'),
     backgroundColor('bg-blue-900'),
-    borderWidth('border-1'),
     cardColor(shadow ? color : undefined),
     padding('p-6'),
     space('space-y-4'),
-    margin('mx-auto'),
-    maxWidth('max-w-md')
+    margin('mx-4', 'md:mx-0'),
+    maxWidth('max-w-sm', 'md:max-w-400'),
+    width('md:w-full'),
+    minHeight('min-h-full'),
+    maxHeight('max-h-508'),
+    overflow('overflow-auto')
   )
-}
 
 const cardDescription = classnames(
   fontSize('text-2xl'),
