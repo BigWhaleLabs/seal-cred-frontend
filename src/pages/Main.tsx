@@ -34,11 +34,11 @@ function Main() {
   return (
     <>
       <TwoMainCards />
-      <Card shadow color="green">
+      {/* <Card shadow color="green">
         <HeaderText>Supported NFTs:</HeaderText>
         <SupportedContracts />
         {account && <Proofs />}
-      </Card>
+      </Card> */}
       <ZkProofButton />
     </>
   )

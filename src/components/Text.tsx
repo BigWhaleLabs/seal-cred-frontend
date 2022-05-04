@@ -1,5 +1,7 @@
 import { FC } from 'react'
 import {
+  backgroundClip,
+  backgroundImage,
   classnames,
   fontFamily,
   fontSize,
@@ -49,9 +51,12 @@ export const AccentText: FC<{ active?: boolean }> = ({ active, children }) => {
 
 const gradientText = classnames(
   fontWeight('font-bold'),
-  textColor('text-blue-900'),
   fontFamily('font-primary'),
-  gradientColorStops('from-neutral-500')
+  textColor('text-transparent'),
+  backgroundClip('bg-clip-text'),
+  backgroundImage('bg-gradient-to-r'),
+  gradientColorStops('from-pink-100'),
+  gradientColorStops('to-yellow-100')
 )
 export const GradientText: FC = ({ children }) => {
   return <div className={gradientText}>{children}</div>

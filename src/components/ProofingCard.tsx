@@ -7,6 +7,7 @@ import classnames, {
   display,
   justifyContent,
   margin,
+  padding,
   textAlign,
 } from 'classnames/tailwind'
 import configuredModal from 'helpers/web3Modal'
@@ -16,7 +17,8 @@ const proofingCardContainer = classnames(
   alignItems('items-center'),
   display('flex'),
   justifyContent('justify-center'),
-  margin('m-0')
+  margin('m-0'),
+  padding('pb-20')
 )
 
 export default function ProofingCard() {
