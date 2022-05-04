@@ -98,7 +98,11 @@ function ContractList() {
 export default function ListOfAvailableZKProofs() {
   return (
     <Suspense
-      fallback={<BodyText>Fetching available tokens owned by you...</BodyText>}
+      fallback={
+        <BodyText size="base">
+          Fetching available tokens owned by you...
+        </BodyText>
+      }
     >
       <ContractList />
     </Suspense>
