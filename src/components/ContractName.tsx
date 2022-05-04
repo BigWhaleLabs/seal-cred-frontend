@@ -14,7 +14,7 @@ function ContractNameComponent({
 }) {
   const { contractNames } = useSnapshot(StreetCredStore)
   return (
-    <BodyText>
+    <BodyText size="base">
       {contractNames[address]
         ? `${contractNames[address]} (${shortenedAddress(address)})`
         : `Contract: ${shortenedAddress(address)}`}
