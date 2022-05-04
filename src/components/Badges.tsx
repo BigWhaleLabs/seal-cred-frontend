@@ -1,4 +1,4 @@
-import { CardHeader, SubHeaderDescription } from 'components/Text'
+import { CardDescription, CardHeader } from 'components/Text'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgesHintCard from 'components/BadgesHintCard'
@@ -16,11 +16,11 @@ function Badges() {
         <CardHeader color="text-pink">
           {!account ? 'Then' : 'Create ZK badges'}
         </CardHeader>
-        <SubHeaderDescription>
+        <CardDescription>
           {!account
             ? 'Once you’ve created ZK proof, create badges for your anonymous wallet'
             : 'Looks like you can create ZK badges for this wallet'}
-        </SubHeaderDescription>
+        </CardDescription>
       </div>
       {account ? (
         <BadgesList />

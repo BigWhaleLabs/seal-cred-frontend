@@ -1,20 +1,41 @@
-import { BodyText, SubheaderText } from 'components/Text'
+import { BodyText } from 'components/Text'
 import { FC } from 'react'
 import { Suspense, useState } from 'react'
 import { useSnapshot } from 'valtio'
-import Button from 'components/Button'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
+import Proof from 'models/Proof'
+import ProofButton from 'components/ProofButton'
+import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
+import Star from 'icons/Star'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
-import classnames, { display, flexDirection, space } from 'classnames/tailwind'
 
-const contractContainer = classnames(
-  display('flex'),
-  flexDirection('flex-row'),
-  space('space-x-2')
-)
+function useProofContent(
+  proofInProgress?: Proof,
+  posting?: boolean
+): ['green' | 'yellow' | 'pink', JSX.Element | null] {
+  if (!proofInProgress && !posting) return ['green', <>Create proof</>]
+  if (proofInProgress?.status === 'running' || posting)
+    return [
+      'yellow',
+      <>
+        <span>Generating...</span>
+        <Star />
+      </>,
+    ]
+  if (proofInProgress?.status === 'scheduled')
+    return [
+      'pink',
+      <>
+        {proofInProgress?.position !== undefined
+          ? `Queued by position: ${proofInProgress?.position + 1}`
+          : 'Queued'}
+      </>,
+    ]
+  return ['yellow', null]
+}
 
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const [postingProof, setPostingProof] = useState(false)
@@ -25,32 +46,22 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
       proof.contract === contractAddress
   )
 
+  const [color, content] = useProofContent(proofInProgress, postingProof)
+
   return (
-    <div className={contractContainer}>
+    <ProofLine>
       <ContractName address={contractAddress} />
-      <Button
-        loading={!!proofInProgress || postingProof}
+      <ProofButton
+        color={color}
         onClick={async () => {
           setPostingProof(true)
           await ProofStore.generate(contractAddress)
           setPostingProof(false)
         }}
-        colors="primary"
-        small
       >
-        {!proofInProgress
-          ? 'generate'
-          : proofInProgress?.status === 'running'
-          ? 'generating...'
-          : proofInProgress?.status === 'scheduled'
-          ? `queued${
-              proofInProgress?.position !== undefined
-                ? ` (position: ${proofInProgress?.position + 1})`
-                : ''
-            }...`
-          : null}
-      </Button>
-    </div>
+        {content}
+      </ProofButton>
+    </ProofLine>
   )
 }
 
@@ -79,17 +90,12 @@ function ContractList() {
 
   return (
     <>
-      {originalOwnedContractsWithoutCompletedProofs.length ? (
+      {!!originalOwnedContractsWithoutCompletedProofs.length && (
         <ContractListContainer>
           {originalOwnedContractsWithoutCompletedProofs.map((contract) => (
             <ZKProof contractAddress={contract.address} />
           ))}
         </ContractListContainer>
-      ) : (
-        <SubheaderText>
-          You don't have any supported tokens available for zero knowledge proof
-          generation.
-        </SubheaderText>
       )}
     </>
   )

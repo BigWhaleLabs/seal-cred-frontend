@@ -3727,6 +3727,7 @@ export type TDropShadow =
   | 'drop-shadow-xl'
   | 'drop-shadow-2xl'
   | 'drop-shadow-none'
+  | 'drop-shadow-yellow'
 
 export type TGrayscale = 'grayscale-0' | 'grayscale'
 

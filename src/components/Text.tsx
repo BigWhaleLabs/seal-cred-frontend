@@ -24,7 +24,7 @@ const headerText = (size: HeaderSize, leading = 8, bold = true) =>
     fontFamily('font-primary'),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
     fontSize(
-      `md:text-${size}`,
+      `sm:text-${size}`,
       size === '4xl' ? 'text-3xl' : size === '3xl' ? 'text-2xl' : 'text-xl'
     ),
     textColor('text-white'),
@@ -82,14 +82,14 @@ export const CardHeader: FC<{ color?: TTextColor }> = ({ color, children }) => {
   return <div className={cardHeader(color)}>{children}</div>
 }
 
-const subHeaderDescription = classnames(
+const cardDescription = classnames(
   textColor('text-white'),
   fontSize('text-2xl'),
   fontFamily('font-primary'),
   fontWeight('font-bold')
 )
-export const SubHeaderDescription: FC = ({ children }) => {
-  return <div className={subHeaderDescription}>{children}</div>
+export const CardDescription: FC = ({ children }) => {
+  return <div className={cardDescription}>{children}</div>
 }
 
 const logoText = classnames(

@@ -15,10 +15,10 @@ type Color = 'pink' | 'yellow' | 'green' | 'blue'
 
 const connectiveBlock = classnames(
   display('flex'),
-  justifyContent('justify-center', 'md:justify-start'),
-  flexDirection('flex-row', 'md:flex-col'),
-  space('space-x-2', 'md:space-x-0', 'md:space-y-2'),
-  margin('mx-auto', 'mx-0', 'md:mt-12')
+  justifyContent('justify-center', 'sm:justify-start'),
+  flexDirection('flex-row', 'sm:flex-col'),
+  space('space-x-2', 'sm:space-x-0', 'sm:space-y-2'),
+  margin('mx-auto', 'mx-0', 'sm:mt-12')
 )
 
 const connectiveLine = (from?: Color, to?: Color) =>
@@ -39,9 +39,9 @@ const connectiveLine = (from?: Color, to?: Color) =>
         ? 'to-yellow'
         : 'to-pink'
     ),
-    backgroundImage('bg-gradient-to-b', 'md:bg-gradient-to-r'),
-    width('w-px', 'md:w-4'),
-    height('h-4', 'md:h-px')
+    backgroundImage('bg-gradient-to-b', 'sm:bg-gradient-to-r'),
+    width('w-px', 'sm:w-4'),
+    height('h-4', 'sm:h-px')
   )
 
 const CardSeparator: FC<{ number: number; from?: Color; to?: Color }> = ({

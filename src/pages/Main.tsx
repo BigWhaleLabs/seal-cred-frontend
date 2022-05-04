@@ -1,7 +1,7 @@
-import { HeaderText } from 'components/Text'
 import Badges from 'components/Badges'
 import Card from 'components/Card'
 import CardSeparator from 'components/CardSeparator'
+import ProofsCard from 'components/ProofsCard'
 import ZkProofButton from 'components/ZkProofButton'
 import classnames, {
   alignItems,
@@ -12,8 +12,8 @@ import classnames, {
 
 const mainBlock = classnames(
   display('flex'),
-  flexDirection('flex-col', 'md:flex-row'),
-  alignItems('items-center', 'md:items-start'),
+  flexDirection('flex-col', 'sm:flex-row'),
+  alignItems('items-center', 'sm:items-stretch'),
   justifyContent('sm:justify-center')
 )
 
@@ -21,11 +21,7 @@ function Main() {
   return (
     <>
       <div className={mainBlock}>
-        <Card shadow color="yellow">
-          <HeaderText size="4xl" bold>
-            Supported NFTs:
-          </HeaderText>
-        </Card>
+        <ProofsCard />
         <CardSeparator number={3} from="yellow" to="pink" />
         <Card shadow color="pink">
           <Badges />
