@@ -6,9 +6,13 @@ import {
   borderWidth,
   boxShadow,
   boxShadowColor,
+  boxSizing,
   classnames,
   margin,
   maxWidth,
+  outlineColor,
+  outlineStyle,
+  outlineWidth,
   padding,
   space,
   width,
@@ -22,16 +26,18 @@ interface CardProps {
 
 const cardColor = (color?: Color) => {
   return classnames(
-    borderColor(
+    outlineWidth('outline-1'),
+    outlineStyle('outline'),
+    outlineColor(
       color === 'yellow'
-        ? 'border-yellow'
+        ? 'outline-yellow'
         : color === 'green'
-        ? 'border-green'
+        ? 'outline-green'
         : color === 'pink'
-        ? 'border-pink'
+        ? 'outline-pink'
         : color === 'blue'
-        ? 'border-blue-500'
-        : 'border-blue-900'
+        ? 'outline-blue-500'
+        : 'outline-blue-900'
     ),
     boxShadow('shadow-2xl'),
     boxShadowColor(
@@ -52,7 +58,6 @@ const cardContainer = (shadow?: boolean, color?: Color) => {
   return classnames(
     borderRadius('rounded-2xl'),
     backgroundColor('bg-blue-900'),
-    borderWidth('border-1'),
     cardColor(shadow ? color : undefined),
     padding('p-6'),
     space('space-y-4'),

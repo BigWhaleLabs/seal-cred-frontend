@@ -22,11 +22,23 @@ const mintWrapper = (minted?: boolean) =>
     alignItems('items-center'),
     borderRadius('rounded-lg'),
     backgroundColor(minted ? 'bg-blue-700' : 'bg-blue-800'),
-    padding('px-7', 'py-4'),
+    padding('px-4', 'py-4'),
     space(
       minted ? 'space-x-2' : 'space-y-2',
       minted ? 'md:space-x-0' : undefined,
       'md:space-y-2'
+    )
+  )
+
+const mintBody = (minted?: boolean) =>
+  classnames(
+    display('flex'),
+    flexDirection('flex-col'),
+    space('space-y-2'),
+    textAlign(!minted ? 'text-center' : 'text-left'),
+    justifyContent(
+      minted ? 'justify-start' : 'justify-center',
+      'sm:justify-center'
     )
   )
 
@@ -73,18 +85,7 @@ const BadgeBlock: FC<{ name: string; minted?: boolean }> = ({
       ) : (
         <BadgeIcon />
       )}
-      <div
-        className={classnames(
-          display('flex'),
-          flexDirection('flex-col'),
-          space('space-y-2'),
-          textAlign(!minted ? 'text-center' : 'text-left'),
-          justifyContent(
-            minted ? 'justify-start' : 'justify-center',
-            'sm:justify-center'
-          )
-        )}
-      >
+      <div className={mintBody(minted)}>
         <BadgeText>{name}</BadgeText>
         {minted ? (
           <MintedPassed />
