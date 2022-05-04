@@ -13,7 +13,7 @@ import classnames, {
 } from 'classnames/tailwind'
 import configuredModal from 'helpers/web3Modal'
 
-const bothContainer = classnames(alignContent('content-center'))
+const cardAndZKProofContainer = classnames(alignContent('content-center'))
 
 const proofingCardContainer = classnames(
   display('flex'),
@@ -35,7 +35,7 @@ const connectWalletButtonContainer = classnames(
 
 export default function ProofingCard() {
   return (
-    <div className={bothContainer}>
+    <div className={cardAndZKProofContainer}>
       <Card shadow color="yellow">
         <div className={proofingCardContainer}>
           <div className={firstHeaderContainer}>

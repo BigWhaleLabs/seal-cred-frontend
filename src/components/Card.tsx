@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import {
-  alignContent,
   backgroundColor,
   borderColor,
   borderRadius,
@@ -8,11 +7,9 @@ import {
   boxShadow,
   boxShadowColor,
   classnames,
-  margin,
   maxWidth,
   padding,
   space,
-  textAlign,
 } from 'classnames/tailwind'
 
 type Color = 'pink' | 'yellow' | 'green' | 'blue'
