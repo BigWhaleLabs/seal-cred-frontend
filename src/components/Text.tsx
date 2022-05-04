@@ -6,6 +6,7 @@ import {
 } from 'types/TextProps'
 import { FC } from 'react'
 import {
+  TTextColor,
   backgroundImage,
   classnames,
   fontFamily,
@@ -75,6 +76,22 @@ export const LargerText: FC = ({ children }) => {
   return <div className={largerText}>{children}</div>
 }
 
+const cardHeader = (color?: TTextColor) =>
+  classnames(textColor(color || 'text-white'))
+export const CardHeader: FC<{ color?: TTextColor }> = ({ color, children }) => {
+  return <div className={cardHeader(color)}>{children}</div>
+}
+
+const subHeaderDescription = classnames(
+  textColor('text-white'),
+  fontSize('text-2xl'),
+  fontFamily('font-primary'),
+  fontWeight('font-bold')
+)
+export const SubHeaderDescription: FC = ({ children }) => {
+  return <div className={subHeaderDescription}>{children}</div>
+}
+
 const logoText = classnames(
   textColor('text-yellow'),
   fontWeight('font-bold'),
@@ -113,6 +130,19 @@ export const LinkText: FC<LinkTextProps> = (props) => {
 const subBadgeText = classnames(textColor('text-pink'), fontSize('text-sm'))
 export const SubBadgeText: FC = ({ children }) => {
   return <span className={subBadgeText}>{children}</span>
+}
+
+const boldColoredText = (color?: TTextColor) =>
+  classnames(
+    textColor('text-pink'),
+    fontSize('text-sm'),
+    textColor(color || 'text-blue-900')
+  )
+export const BoldColoredText: FC<{ color?: TTextColor }> = ({
+  color,
+  children,
+}) => {
+  return <span className={boldColoredText(color)}>{children}</span>
 }
 
 const tooltipText = classnames(
