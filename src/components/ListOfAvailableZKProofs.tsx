@@ -29,9 +29,9 @@ function useProofContent(
     return [
       'pink',
       <>
-        Queued
-        {proofInProgress?.position !== undefined &&
-          `by position: ${proofInProgress?.position + 1}`}
+        {proofInProgress?.position !== undefined
+          ? `Queued by position: ${proofInProgress?.position + 1}`
+          : 'Queued'}
       </>,
     ]
   return ['yellow', null]
