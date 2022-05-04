@@ -5,35 +5,11 @@ import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
 import ProofButton from 'components/ProofButton'
+import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
 import Star from 'components/Star'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
-import classnames, {
-  alignItems,
-  backgroundColor,
-  borderRadius,
-  display,
-  flexDirection,
-  fontSize,
-  height,
-  justifyContent,
-  padding,
-  space,
-} from 'classnames/tailwind'
-
-const contractContainer = classnames(
-  display('flex'),
-  flexDirection('flex-row'),
-  alignItems('items-center'),
-  justifyContent('justify-between'),
-  space('space-x-2'),
-  backgroundColor('bg-blue-700'),
-  borderRadius('rounded-lg'),
-  height('h-8'),
-  padding('px-4', 'py-1'),
-  fontSize('text-sm')
-)
 
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const [postingProof, setPostingProof] = useState(false)
@@ -45,7 +21,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
   )
 
   return (
-    <div className={contractContainer}>
+    <ProofLine>
       <ContractName address={contractAddress} />
       <ProofButton
         color={
@@ -78,7 +54,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
           }`
         ) : null}
       </ProofButton>
-    </div>
+    </ProofLine>
   )
 }
 
@@ -121,7 +97,11 @@ function ContractList() {
 export default function ListOfAvailableZKProofs() {
   return (
     <Suspense
-      fallback={<BodyText>Fetching available tokens owned by you...</BodyText>}
+      fallback={
+        <BodyText size="base">
+          Fetching available tokens owned by you...
+        </BodyText>
+      }
     >
       <ContractList />
     </Suspense>

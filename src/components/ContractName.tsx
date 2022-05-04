@@ -8,7 +8,7 @@ import shortenedAddress from 'helpers/shortenedAddress'
 function ContractNameComponent({ address }: { address: string }) {
   const { contractNames } = useSnapshot(StreetCredStore)
   return (
-    <BodyText>
+    <BodyText size="base">
       {contractNames[address]
         ? contractNames[address]
         : `Contract: ${shortenedAddress(address)}`}

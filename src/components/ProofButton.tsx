@@ -10,6 +10,7 @@ import {
   fontFamily,
   fontWeight,
   gradientColorStops,
+  lineHeight,
   opacity,
   outlineStyle,
   space,
@@ -51,7 +52,8 @@ const button = (color: ButtonColors, disabled?: boolean) =>
     fontFamily('font-primary'),
     outlineStyle('focus:outline-none'),
     cursor(disabled ? 'cursor-not-allowed' : undefined),
-    opacity(disabled ? 'opacity-50' : undefined)
+    opacity(disabled ? 'opacity-50' : undefined),
+    lineHeight('leading-leading-4')
   )
 
 const ProofButton: FC<ButtonProperties> = ({

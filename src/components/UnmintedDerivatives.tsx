@@ -33,7 +33,7 @@ function ContractToMint({
 
   return (
     <div className={container}>
-      <BodyText>
+      <BodyText size="base">
         {contractNames[address]
           ? `${contractNames[address]} (${shortenedAddress(address)})`
           : address}
@@ -142,7 +142,7 @@ export default function UnmintedDerivatives() {
   return (
     <Suspense
       fallback={
-        <BodyText>
+        <BodyText size="base">
           Fetching derivative NFTs that you haven't minted yet...
         </BodyText>
       }

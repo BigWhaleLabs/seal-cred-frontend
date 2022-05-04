@@ -1,3 +1,5 @@
+import { AccentText } from 'components/Text'
+import { AccentTextProps } from 'types/TextProps'
 import { FC } from 'react'
 import {
   backgroundColor,
@@ -7,12 +9,13 @@ import {
   boxShadow,
   boxShadowColor,
   classnames,
+  fontFamily,
   fontSize,
+  fontWeight,
   margin,
   maxWidth,
   padding,
   space,
-  textColor,
 } from 'classnames/tailwind'
 
 type Color = 'pink' | 'yellow' | 'green' | 'blue'
@@ -62,12 +65,24 @@ const cardContainer = (shadow?: boolean, color?: Color) => {
   )
 }
 
-const cardTitle = classnames(textColor('text-yellow'), fontSize('text-sm'))
-export const CardTitle: FC = ({ children }) => {
-  return <p className={cardTitle}>{children}</p>
+const cardTitle = classnames(fontSize('text-sm'))
+export const CardTitle: FC<{ color: AccentTextProps['color'] }> = ({
+  children,
+  color,
+}) => {
+  return (
+    <p className={cardTitle}>
+      <AccentText color={color}>{children}</AccentText>
+    </p>
+  )
 }
 
-const cardDescription = classnames(fontSize('text-2xl'), margin('mt-2'))
+const cardDescription = classnames(
+  fontSize('text-2xl'),
+  margin('mt-2'),
+  fontFamily('font-primary'),
+  fontWeight('font-bold')
+)
 export const CardDescription: FC = ({ children }) => {
   return <p className={cardDescription}>{children}</p>
 }

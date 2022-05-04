@@ -9,7 +9,7 @@ function Proofs() {
   return (
     <>
       <div>
-        <CardTitle>Start proofing!</CardTitle>
+        <CardTitle color="text-yellow">Start proofing!</CardTitle>
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
       <ListOfReadyZKProofs />

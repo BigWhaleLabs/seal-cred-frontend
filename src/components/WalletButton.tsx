@@ -5,6 +5,7 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
+  fontFamily,
   fontSize,
   fontWeight,
   margin,
@@ -28,6 +29,7 @@ const contentWrapper = classnames(
 )
 
 const cardTitle = classnames(
+  fontFamily('font-primary'),
   textColor('text-yellow'),
   fontSize('text-4xl'),
   fontWeight('font-bold'),
