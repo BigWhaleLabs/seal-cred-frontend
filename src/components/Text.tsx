@@ -12,6 +12,7 @@ import {
   fontSize,
   fontWeight,
   gradientColorStops,
+  lineHeight,
   textAlign,
   textColor,
   textDecoration,
@@ -25,7 +26,8 @@ const headerText = (size: HeaderSize, bold?: boolean) =>
       `md:text-${size}`,
       size === '4xl' ? 'text-3xl' : size === '3xl' ? 'text-2xl' : 'text-xl'
     ),
-    textColor('text-white')
+    textColor('text-white'),
+    lineHeight('leading-7')
   )
 export const HeaderText: FC<{ size: HeaderSize; bold?: boolean }> = ({
   size,
@@ -58,7 +60,8 @@ const bodyText = (size: BodyTextSize, center?: boolean) =>
   classnames(
     textColor('text-white'),
     center ? textAlign('text-center') : null,
-    fontSize(`text-${size}`)
+    fontSize(`text-${size}`),
+    lineHeight('leading-4')
   )
 export const BodyText: FC<{ size: BodyTextSize; center?: boolean }> = ({
   size,

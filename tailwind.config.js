@@ -19,6 +19,9 @@ module.exports = {
         '3xl': '2rem',
         '4xl': '2.5rem',
       },
+      lineHeight: {
+        'leading-7': '30px',
+      },
       screens: {
         md: '600px',
       },
