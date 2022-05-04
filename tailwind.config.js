@@ -20,11 +20,11 @@ module.exports = {
         '4xl': '2.5rem',
       },
       lineHeight: {
-        'leading-3': '14px',
-        'leading-5': '18px',
-        'leading-6': '21px',
-        'leading-8': '31px',
-        'leading-11': '51px',
+        3: '14px',
+        5: '18px',
+        6: '21px',
+        8: '31px',
+        11: '51px',
       },
       screens: {
         md: '600px',
