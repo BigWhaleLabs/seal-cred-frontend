@@ -33,7 +33,6 @@ const accentText = (active?: boolean) =>
     textColor(active ? 'text-yellow' : 'text-blue-600'),
     wordBreak(active ? 'break-all' : undefined),
     textAlign('text-center'),
-    fontFamily('font-primary'),
     fontWeight('font-bold'),
     fontSize('text-sm')
   )
