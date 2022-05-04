@@ -1,30 +1,23 @@
 import { useSnapshot } from 'valtio'
-import Card, { CardDescription, CardTitle } from 'components/Card'
-import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
-import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
-import WalletButton from 'components/WalletButton'
+import Card from 'components/Card'
+import Initial from 'components/Initial'
+import ProofListCard from 'components/ProofListCard'
 import WalletStore from 'stores/WalletStore'
+import ZkProofButton from 'components/ZkProofButton'
+import classnames, { alignContent } from 'classnames/tailwind'
 
-function Proofs() {
-  return (
-    <>
-      <div>
-        <CardTitle>Start proofing!</CardTitle>
-        <CardDescription>Generate your ZK proof</CardDescription>
-      </div>
-      <ListOfReadyZKProofs />
-      <ListOfAvailableZKProofs />
-    </>
-  )
-}
+const cardAndZKProofContainer = classnames(alignContent('content-center'))
 
 function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
 
   return (
-    <Card color="yellow" shadow>
-      {account ? <Proofs /> : <WalletButton />}
-    </Card>
+    <div className={cardAndZKProofContainer}>
+      <Card color="yellow" shadow>
+        {account ? <ProofListCard /> : <Initial />}
+      </Card>
+      <ZkProofButton />
+    </div>
   )
 }
 

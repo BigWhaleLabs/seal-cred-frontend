@@ -1,13 +1,7 @@
-import ProofsCard from 'components/ProofsCard'
-import ZkProofButton from 'components/ZkProofButton'
+import TwoMainCards from 'components/TwoMainCards'
 
 function Main() {
-  return (
-    <>
-      <ProofsCard />
-      <ZkProofButton />
-    </>
-  )
+  return <TwoMainCards />
 }
 
 export default Main
