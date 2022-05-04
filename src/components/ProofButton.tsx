@@ -2,7 +2,6 @@ import { FC } from 'react'
 import {
   alignItems,
   backgroundClip,
-  backgroundColor,
   backgroundImage,
   classnames,
   cursor,
@@ -27,6 +26,12 @@ export interface ButtonProps {
 type ButtonProperties = ButtonProps &
   React.ButtonHTMLAttributes<HTMLButtonElement>
 
+const greenGradient = classnames(
+  gradientColorStops('from-blue-400', 'via-green', 'to-green'),
+  backgroundClip('bg-clip-text'),
+  backgroundImage('bg-gradient-to-t')
+)
+
 const button = (color: ButtonColors, disabled?: boolean) =>
   classnames(
     display('flex'),
@@ -42,17 +47,7 @@ const button = (color: ButtonColors, disabled?: boolean) =>
         ? `text-pink`
         : `text-yellow`
     ),
-    color === 'green'
-      ? gradientColorStops('from-blue-400', 'via-green', 'to-green')
-      : undefined,
-    color === 'green'
-      ? textColor(
-          'text-transparent',
-          disabled ? undefined : 'active:text-yellow'
-        )
-      : undefined,
-    color === 'green' ? backgroundClip('bg-clip-text') : undefined,
-    color === 'green' ? backgroundImage('bg-gradient-to-t') : undefined,
+    color === 'green' ? greenGradient : undefined,
     fontFamily('font-primary'),
     outlineStyle('focus:outline-none'),
     cursor(disabled ? 'cursor-not-allowed' : undefined),
