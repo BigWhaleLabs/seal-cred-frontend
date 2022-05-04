@@ -47,6 +47,15 @@ module.exports = {
         lg: '0px 0px 16px 0px rgb(0 0 0 / 0.25)',
         md: '0px 0px 6px 0px rgb(0 0 0 / 0.25)',
       },
+      height: {
+        card: '508px',
+        'mobile-proofing-card': '276px',
+        'mobile-badging-card': '365px',
+      },
+      width: {
+        card: '398px',
+        'mobile-card': '343px',
+      },
     },
   },
 }

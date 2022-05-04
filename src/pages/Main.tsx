@@ -16,14 +16,15 @@ import classnames, {
   display,
   flexDirection,
   justifyContent,
+  margin,
   space,
 } from 'classnames/tailwind'
 
 const proofingCardContainer = classnames(
   display('flex'),
-  flexDirection('flex-row'),
+  flexDirection('flex-col', 'lg:flex-row'),
   alignItems('items-start'),
-  space('space-x-5'),
+  space('lg:space-x-5'),
   justifyContent('justify-center')
 )
 
@@ -52,6 +53,7 @@ function Main() {
       <div className={proofingCardContainer}>
         <ProofingCard />
         <BadgingCard />
+        <ZkProofButton />
       </div>
       {/* <Card shadow color="green">
         <HeaderText>Supported NFTs:</HeaderText>

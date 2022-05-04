@@ -5,11 +5,15 @@ import WalletStore from 'stores/WalletStore'
 import ZkProofButton from 'components/ZkProofButton'
 import classnames, {
   alignContent,
+  alignItems,
+  alignSelf,
   display,
   flexDirection,
   justifyContent,
   margin,
+  padding,
   textAlign,
+  width,
 } from 'classnames/tailwind'
 import configuredModal from 'helpers/web3Modal'
 
@@ -17,10 +21,10 @@ const proofingCardContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
   textAlign('text-center'),
+  width('w-4/5', 'lg:w-3/4'),
+  margin('m-auto'),
   justifyContent('justify-center'),
-  alignContent('content-center'),
-  margin('my-36'),
-  margin('mx-16')
+  alignContent('content-center')
 )
 
 const connectWalletButtonContainer = classnames(
@@ -31,8 +35,8 @@ const connectWalletButtonContainer = classnames(
 
 export default function ProofingCard() {
   return (
-    <div className={alignContent('content-center')}>
-      <Card shadow color="yellow">
+    <div>
+      <Card shadow proofing color="yellow">
         <div className={proofingCardContainer}>
           <div className={margin('mb-4')}>
             <HeaderText yellow>First</HeaderText>
@@ -51,7 +55,6 @@ export default function ProofingCard() {
           </div>
         </div>
       </Card>
-      <ZkProofButton />
     </div>
   )
 }

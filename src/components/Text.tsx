@@ -56,7 +56,8 @@ const gradientText = classnames(
   backgroundClip('bg-clip-text'),
   backgroundImage('bg-gradient-to-r'),
   gradientColorStops('from-pink-100'),
-  gradientColorStops('to-yellow-100')
+  gradientColorStops('to-yellow-100'),
+  fontSize('text-sm')
 )
 export const GradientText: FC = ({ children }) => {
   return <div className={gradientText}>{children}</div>

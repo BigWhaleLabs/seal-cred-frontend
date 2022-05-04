@@ -6,6 +6,7 @@ import classnames, {
   cursor,
   display,
   flexDirection,
+  lineHeight,
   margin,
   padding,
 } from 'classnames/tailwind'
@@ -14,7 +15,7 @@ import configuredModal from 'helpers/web3Modal'
 const badgingCardContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  padding('pb-44')
+  lineHeight('leading-5', 'lg:leading-6')
 )
 const headerTextContainer = classnames(margin('mt-2'))
 
@@ -24,7 +25,7 @@ const badgingDescriptionContainer = classnames(
   backgroundColor('bg-blue-200')
 )
 
-const anonWalletContainer = classnames(cursor('cursor-pointer'))
+const anonWalletContainer = classnames(cursor('cursor-pointer'), margin('mt-4'))
 
 export default function BadgingCard() {
   return (
