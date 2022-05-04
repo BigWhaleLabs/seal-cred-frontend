@@ -26,7 +26,11 @@ module.exports = {
         '4xl': '2.5rem',
       },
       lineHeight: {
-        'leading-7': '30px',
+        3: '14px',
+        5: '18px',
+        6: '21px',
+        8: '31px',
+        11: '51px',
       },
       screens: {
         md: '600px',
