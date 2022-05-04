@@ -9,11 +9,31 @@ module.exports = {
       borderWidth: {
         1: '1px',
       },
+      maxHeight: {
+        508: '508px',
+      },
+      maxWidth: {
+        400: '400px',
+      },
       keyframes: {
         'pulse-horizontal': {
           '0%, 100%': { transform: 'translateX(8px)' },
           '50%': { transform: 'translateX(0px)' },
         },
+      },
+      fontSize: {
+        '3xl': '2rem',
+        '4xl': '2.5rem',
+      },
+      lineHeight: {
+        3: '14px',
+        5: '18px',
+        6: '21px',
+        8: '31px',
+        11: '51px',
+      },
+      screens: {
+        md: '600px',
       },
       animation: {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
@@ -55,6 +75,9 @@ module.exports = {
       width: {
         card: '398px',
         'mobile-card': '343px',
+      },
+      dropShadow: {
+        yellow: '0px 0px 10px #fed823',
       },
     },
   },

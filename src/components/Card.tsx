@@ -1,18 +1,19 @@
 import { FC } from 'react'
 import {
-  alignContent,
-  alignItems,
-  alignSelf,
   backgroundColor,
-  borderColor,
   borderRadius,
-  borderWidth,
   boxShadow,
   boxShadowColor,
   classnames,
   height,
-  justifyContent,
+  margin,
+  maxHeight,
   maxWidth,
+  minHeight,
+  outlineColor,
+  outlineStyle,
+  outlineWidth,
+  overflow,
   padding,
   space,
   width,
@@ -27,16 +28,18 @@ interface CardProps {
 
 const cardColor = (color?: Color) => {
   return classnames(
-    borderColor(
+    outlineWidth('outline-1'),
+    outlineStyle('outline'),
+    outlineColor(
       color === 'yellow'
-        ? 'border-yellow'
+        ? 'outline-yellow'
         : color === 'green'
-        ? 'border-green'
+        ? 'outline-green'
         : color === 'pink'
-        ? 'border-pink'
+        ? 'outline-pink'
         : color === 'blue'
-        ? 'border-blue-500'
-        : 'border-blue-900'
+        ? 'outline-blue-500'
+        : 'outline-blue-900'
     ),
     boxShadow('shadow-2xl'),
     boxShadowColor(
@@ -57,16 +60,20 @@ const cardContainer = (shadow?: boolean, color?: Color, proofing?: boolean) => {
   return classnames(
     borderRadius('rounded-2xl'),
     backgroundColor('bg-blue-900'),
-    borderWidth('border-1'),
     cardColor(shadow ? color : undefined),
     padding('p-6'),
     space('space-y-4'),
-    maxWidth('max-w-md'),
     height(
       proofing ? 'h-mobile-proofing-card' : 'h-mobile-badging-card',
       'lg:h-card'
     ),
-    width('w-mobile-card', 'lg:w-card')
+    width('w-mobile-card', 'lg:w-card'),
+    margin('mx-4', 'sm:mx-0'),
+    maxWidth('max-w-xs', 'sm:max-w-400'),
+    width('w-fit', 'sm:w-full'),
+    minHeight('min-h-full'),
+    maxHeight('max-h-508'),
+    overflow('overflow-auto')
   )
 }
 

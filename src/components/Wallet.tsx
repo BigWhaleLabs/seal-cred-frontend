@@ -6,9 +6,11 @@ import classnames, {
   alignItems,
   cursor,
   display,
+  lineHeight,
   space,
   textAlign,
   width,
+  wordBreak,
 } from 'classnames/tailwind'
 import configuredModal from 'helpers/web3Modal'
 import truncateMiddle from 'helpers/truncateMiddle'
@@ -19,7 +21,11 @@ const walletContainer = classnames(
   space('space-x-4'),
   cursor('cursor-pointer')
 )
-const walletAccount = classnames(textAlign('text-center'))
+const walletAccount = classnames(
+  textAlign('text-center'),
+  wordBreak('break-all'),
+  lineHeight('leading-5')
+)
 
 export default function Wallet() {
   const { account } = useSnapshot(WalletStore)
@@ -32,7 +38,7 @@ export default function Wallet() {
       }}
     >
       <div className={walletAccount}>
-        <AccentText active={!!account}>
+        <AccentText color={account ? 'text-yellow' : 'text-blue-600'}>
           {account ? truncateMiddle(account) : 'No wallet connected'}
         </AccentText>
       </div>

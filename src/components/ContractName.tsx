@@ -5,38 +5,25 @@ import { useSnapshot } from 'valtio'
 import StreetCredStore from 'stores/StreetCredStore'
 import shortenedAddress from 'helpers/shortenedAddress'
 
-function ContractNameComponent({
-  address,
-  account,
-}: {
-  address: string
-  account?: string
-}) {
+function ContractNameComponent({ address }: { address: string }) {
   const { contractNames } = useSnapshot(StreetCredStore)
   return (
-    <BodyText>
+    <BodyText size="base">
       {contractNames[address]
-        ? `${contractNames[address]} (${shortenedAddress(address)})`
+        ? contractNames[address]
         : `Contract: ${shortenedAddress(address)}`}
-      {!!account && ` for ${shortenedAddress(account)}`}
     </BodyText>
   )
 }
 
-export default function ContractName({
-  address,
-  account,
-}: {
-  address: string
-  account?: string
-}) {
+export default function ContractName({ address }: { address: string }) {
   const shortAddress = `${address.slice(0, 5)}...${address.slice(
     -5,
     address.length
   )}`
   return (
     <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
-      <ContractNameComponent address={address} account={account} />
+      <ContractNameComponent address={address} />
     </Suspense>
   )
 }

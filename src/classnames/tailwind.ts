@@ -3766,6 +3766,7 @@ export type TDropShadow =
   | 'drop-shadow-xl'
   | 'drop-shadow-2xl'
   | 'drop-shadow-none'
+  | 'drop-shadow-yellow'
 
 export type TGrayscale = 'grayscale-0' | 'grayscale'
 
@@ -6434,6 +6435,7 @@ export type TMinWidth =
 
 export type TMaxWidth =
   | 'max-w-0'
+  | 'max-w-400'
   | 'max-w-none'
   | 'max-w-xs'
   | 'max-w-sm'
@@ -6557,6 +6559,7 @@ export type TMaxHeight =
   | 'max-h-72'
   | 'max-h-80'
   | 'max-h-96'
+  | 'max-h-508'
   | 'max-h-px'
   | 'max-h-0.5'
   | 'max-h-1.5'
@@ -6934,6 +6937,7 @@ export type TLineHeight =
   | 'leading-8'
   | 'leading-9'
   | 'leading-10'
+  | 'leading-11'
   | 'leading-none'
   | 'leading-tight'
   | 'leading-snug'

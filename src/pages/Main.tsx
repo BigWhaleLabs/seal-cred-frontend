@@ -1,12 +1,15 @@
 import { HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
+import Badges from 'components/Badges'
 import BadgingCard from 'components/BadgingCard'
 import Card from 'components/Card'
+import CardSeparator from 'components/CardSeparator'
 import DerivativeContractsOwned from 'components/DerivativeContractsOwned'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import OriginalContractsOwned from 'components/OriginalContractsOwned'
 import ProofingCard from 'components/ProofingCard'
+import ProofsCard from 'components/ProofsCard'
 import SupportedContracts from 'components/SupportedContracts'
 import UnmintedDerivatives from 'components/UnmintedDerivatives'
 import WalletStore from 'stores/WalletStore'
@@ -28,38 +31,29 @@ const proofingCardContainer = classnames(
   justifyContent('justify-center')
 )
 
-function Proofs() {
-  return (
-    <>
-      <HeaderText>Supported NFTs that you own:</HeaderText>
-      <OriginalContractsOwned />
-      <HeaderText>ZK proofs that you can generate:</HeaderText>
-      <ListOfAvailableZKProofs />
-      <HeaderText>ZK proofs that you generated:</HeaderText>
-      <ListOfReadyZKProofs />
-      <HeaderText>Derivative NFTs that you can mint:</HeaderText>
-      <UnmintedDerivatives />
-      <HeaderText>Derivative NFTs that you own:</HeaderText>
-      <DerivativeContractsOwned />
-    </>
-  )
-}
+const mainBlock = classnames(
+  display('flex'),
+  flexDirection('flex-col', 'sm:flex-row'),
+  alignItems('items-center', 'sm:items-stretch'),
+  justifyContent('sm:justify-center')
+)
 
 function Main() {
-  const { account } = useSnapshot(WalletStore)
-
   return (
     <>
-      <div className={proofingCardContainer}>
+      {/* <div className={proofingCardContainer}>
         <ProofingCard />
         <BadgingCard />
         <ZkProofButton />
+      </div> */}
+      <div className={mainBlock}>
+        <ProofsCard />
+        <CardSeparator number={3} from="yellow" to="pink" />
+        <Card shadow color="pink">
+          <Badges />
+        </Card>
       </div>
-      {/* <Card shadow color="green">
-        <HeaderText>Supported NFTs:</HeaderText>
-        <SupportedContracts />
-        {account && <Proofs />}
-      </Card> */}
+      <ZkProofButton />
     </>
   )
 }

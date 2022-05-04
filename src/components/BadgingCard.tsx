@@ -1,4 +1,4 @@
-import { BadgeText, GradientText, HeaderText } from 'components/Text'
+import { BadgeText, HeaderText } from 'components/Text'
 import Card from 'components/Card'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -33,7 +33,7 @@ export default function BadgingCard() {
       <div className={badgingCardContainer}>
         <BadgeText pink>Then</BadgeText>
         <div className={headerTextContainer}>
-          <HeaderText small>
+          <HeaderText size="2xl">
             Once you've created ZK proof, create badges for your anonymous
             wallet.
           </HeaderText>
