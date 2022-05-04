@@ -18,8 +18,8 @@ function Badges() {
         </CardHeader>
         <SubHeaderDescription>
           {!account
-            ? 'Once you’ve created ZK proof, create badges for your anonymous wallet.'
-            : 'Looks like you can create ZK badges for this wallet.'}
+            ? 'Once you’ve created ZK proof, create badges for your anonymous wallet'
+            : 'Looks like you can create ZK badges for this wallet'}
         </SubHeaderDescription>
       </div>
       {account ? (

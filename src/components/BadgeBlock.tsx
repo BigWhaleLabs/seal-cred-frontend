@@ -54,6 +54,7 @@ const badgeBody = (minted?: boolean) =>
 
 const mintPassed = classnames(
   display('flex'),
+  justifyContent('justify-center'),
   alignItems('items-center'),
   justifyContent('justify-start', 'md:justify-center'),
   flexDirection('flex-row'),
