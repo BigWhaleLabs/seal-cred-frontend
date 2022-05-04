@@ -62,8 +62,8 @@ const cardContainer = (shadow?: boolean, color?: Color) =>
     padding('p-6'),
     space('space-y-4'),
     margin('mx-4', 'sm:mx-0'),
-    maxWidth('max-w-sm', 'sm:max-w-400'),
-    width('sm:w-full', 'w-fit'),
+    maxWidth('max-w-xs', 'sm:max-w-400'),
+    width('w-fit', 'sm:w-full'),
     minHeight('min-h-full'),
     maxHeight('max-h-508'),
     overflow('overflow-auto')

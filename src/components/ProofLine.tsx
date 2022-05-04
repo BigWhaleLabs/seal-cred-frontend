@@ -12,6 +12,7 @@ import classnames, {
   justifyContent,
   padding,
   space,
+  width,
 } from 'classnames/tailwind'
 
 const contractContainer = classnames(
@@ -24,6 +25,7 @@ const contractContainer = classnames(
   borderRadius('rounded-lg'),
   height('h-8'),
   padding('px-4', 'py-2'),
+  width('w-full'),
   fontSize('text-sm'),
   fontWeight('font-bold')
 )

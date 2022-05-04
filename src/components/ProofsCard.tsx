@@ -1,5 +1,5 @@
 import { CardDescription, CardHeader } from 'components/Text'
-import { margin } from 'classnames/tailwind'
+import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import ConnectAccount from 'components/ConnectAccount'
@@ -7,15 +7,13 @@ import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import WalletStore from 'stores/WalletStore'
 
-const titleContainer = margin('mb-2')
+const titleContainer = space('space-y-2')
 
 function Proofs() {
   return (
     <>
-      <div>
-        <div className={titleContainer}>
-          <CardHeader color="text-yellow">Start proofing!</CardHeader>
-        </div>
+      <div className={titleContainer}>
+        <CardHeader color="text-yellow">Start proofing!</CardHeader>
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
       <ListOfReadyZKProofs />

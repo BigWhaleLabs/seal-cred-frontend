@@ -20,7 +20,7 @@ function ContractList() {
               <ContractName address={proof.contract} />
               <ProofButton color="yellow">
                 <span>Proof made</span>
-                <Complete />
+                <Complete color="yellow" />
               </ProofButton>
             </ProofLine>
           ))}
