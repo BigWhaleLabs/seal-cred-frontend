@@ -48,7 +48,7 @@ function BadgeListSuspender() {
   const ownedDerivativeContracts = derivativeContracts?.owned || []
   const unownedDerivativeContracts = derivativeContracts?.unowned || []
   const completedProofs = proxy(proofsCompleted)
-  const scLendger = proxy(ledger)
+  const scLedger = proxy(ledger)
 
   const unownedDerivativeToOriginalAddressesMap = {} as {
     [derivativeAddress: string]: string
@@ -73,11 +73,12 @@ function BadgeListSuspender() {
   const unownedLedgerRecordsWithZKProofs =
     unownedDerivativeContractsWithZKProofs.map(
       (contract) =>
-        scLendger[unownedDerivativeToOriginalAddressesMap[contract.address]]
+        scLedger[unownedDerivativeToOriginalAddressesMap[contract.address]]
     )
 
-  const badgesAmount =
-    ownedDerivativeContracts.length + unownedLedgerRecordsWithZKProofs.length
+  const ownedDerivativesLength = ownedDerivativeContracts.length
+  const unownedLedgerRecordsWithProofs = unownedLedgerRecordsWithZKProofs.length
+  const badgesAmount = ownedDerivativesLength + unownedLedgerRecordsWithProofs
   const isOneBadge = badgesAmount < 2
   const isEmpty = badgesAmount < 1
 
@@ -90,14 +91,14 @@ function BadgeListSuspender() {
         />
       )}
       <div className={badgesList(isOneBadge)}>
-        {ownedDerivativeContracts.length > 0 &&
+        {!!ownedDerivativesLength &&
           ownedDerivativeContracts.map((ledgerRecord) => (
             <BadgeBlock
               key={ledgerRecord.address}
               address={ledgerRecord.address}
             />
           ))}
-        {unownedLedgerRecordsWithZKProofs.length > 0 &&
+        {!!unownedLedgerRecordsWithProofs &&
           unownedLedgerRecordsWithZKProofs.map((ledgerRecord) => (
             <BadgeBlock
               key={ledgerRecord.originalContract.address}

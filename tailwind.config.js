@@ -9,6 +9,9 @@ module.exports = {
       borderWidth: {
         1: '1px',
       },
+      maxHeight: {
+        508: '508px',
+      },
       keyframes: {
         'pulse-horizontal': {
           '0%, 100%': { transform: 'translateX(8px)' },

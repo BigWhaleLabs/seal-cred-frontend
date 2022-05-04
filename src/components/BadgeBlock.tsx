@@ -109,9 +109,8 @@ function Badge({
                   )
                 ) {
                   const index = ProofStore.proofsInProgress.indexOf(proof)
-                  if (index > -1) {
-                    ProofStore.proofsInProgress.splice(index, 1)
-                  }
+                  if (index > -1) ProofStore.proofsInProgress.splice(index, 1)
+
                   throw new Error(
                     'This proof is outdated, please, generate a new one'
                   )
@@ -148,10 +147,7 @@ function BadgeBlock({
   address: string
   originalAddress?: string
 }) {
-  const shortAddress = `${address.slice(0, 5)}...${address.slice(
-    -5,
-    address.length
-  )}`
+  const shortAddress = shortenedAddress(address, 5)
 
   return (
     <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
