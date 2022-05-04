@@ -1,12 +1,16 @@
 import { FC } from 'react'
 import {
   alignItems,
+  backgroundClip,
+  backgroundColor,
+  backgroundImage,
   classnames,
   cursor,
   display,
   flexDirection,
   fontFamily,
   fontWeight,
+  gradientColorStops,
   opacity,
   outlineStyle,
   space,
@@ -31,7 +35,17 @@ const button = (color: ButtonColors, disabled?: boolean) =>
     alignItems('items-center'),
     fontWeight('font-bold'),
     transitionProperty('transition-colors'),
-    textColor(`text-${color}`),
+    textColor(
+      color === 'green'
+        ? 'text-transparent'
+        : color === 'pink'
+        ? `text-pink`
+        : `text-yellow`
+    ),
+    gradientColorStops('from-blue-400', 'via-green', 'to-green'),
+    textColor('text-transparent', disabled ? undefined : 'active:text-yellow'),
+    backgroundClip('bg-clip-text'),
+    backgroundImage('bg-gradient-to-t'),
     fontFamily('font-primary'),
     outlineStyle('focus:outline-none'),
     cursor(disabled ? 'cursor-not-allowed' : undefined),
