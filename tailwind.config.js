@@ -19,6 +19,9 @@ module.exports = {
         '3xl': '2rem',
         '4xl': '2.5rem',
       },
+      screens: {
+        md: '600px',
+      },
       animation: {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
       },
