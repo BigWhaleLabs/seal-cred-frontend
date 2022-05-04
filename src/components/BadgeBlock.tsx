@@ -5,7 +5,7 @@ import { handleError } from 'helpers/handleError'
 import { useSnapshot } from 'valtio'
 import BadgeIcon from 'icons/BadgeIcon'
 import Button from 'components/Button'
-import CheckPassed from 'icons/CheckPassed'
+import Complete from 'icons/Complete'
 import ProofStore from 'stores/ProofStore'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
@@ -135,7 +135,7 @@ function Badge({
         ) : (
           <div className={mintPassed}>
             <BoldColoredText color="text-pink">Minted</BoldColoredText>
-            <CheckPassed color="pink" />
+            <Complete color="pink" />
           </div>
         )}
       </div>

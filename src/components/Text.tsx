@@ -54,7 +54,7 @@ export const LargerText: FC = ({ children }) => {
 }
 
 const cardHeader = (color?: TTextColor) =>
-  classnames(textColor(color || 'text-white'), fontSize('text-base'))
+  classnames(textColor(color || 'text-white'))
 export const CardHeader: FC<{ color?: TTextColor }> = ({ color, children }) => {
   return <div className={cardHeader(color)}>{children}</div>
 }

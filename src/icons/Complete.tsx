@@ -20,7 +20,7 @@ const circleClasses = (color?: Color) =>
 const pathClasses = (color?: Color) =>
   classnames(stroke(color === 'yellow' ? 'stroke-blue-700' : 'stroke-blue-600'))
 
-const CheckPassed: FC<{ color: Color }> = ({ color }) => {
+const Complete: FC<{ color: Color }> = ({ color }) => {
   return (
     <svg
       width="18"
@@ -42,4 +42,4 @@ const CheckPassed: FC<{ color: Color }> = ({ color }) => {
   )
 }
 
-export default CheckPassed
+export default Complete
