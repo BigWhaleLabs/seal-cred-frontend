@@ -42,10 +42,17 @@ const button = (color: ButtonColors, disabled?: boolean) =>
         ? `text-pink`
         : `text-yellow`
     ),
-    gradientColorStops('from-blue-400', 'via-green', 'to-green'),
-    textColor('text-transparent', disabled ? undefined : 'active:text-yellow'),
-    backgroundClip('bg-clip-text'),
-    backgroundImage('bg-gradient-to-t'),
+    color === 'green'
+      ? gradientColorStops('from-blue-400', 'via-green', 'to-green')
+      : undefined,
+    color === 'green'
+      ? textColor(
+          'text-transparent',
+          disabled ? undefined : 'active:text-yellow'
+        )
+      : undefined,
+    color === 'green' ? backgroundClip('bg-clip-text') : undefined,
+    color === 'green' ? backgroundImage('bg-gradient-to-t') : undefined,
     fontFamily('font-primary'),
     outlineStyle('focus:outline-none'),
     cursor(disabled ? 'cursor-not-allowed' : undefined),
