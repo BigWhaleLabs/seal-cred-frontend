@@ -13,7 +13,7 @@ import classnames, {
 const mainBlock = classnames(
   display('flex'),
   flexDirection('flex-col', 'md:flex-row'),
-  alignItems('items-center', 'md:items-start'),
+  alignItems('items-stretch'),
   justifyContent('sm:justify-center')
 )
 
