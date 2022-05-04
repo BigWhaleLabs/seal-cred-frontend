@@ -1,5 +1,3 @@
-import { AccentText } from 'components/Text'
-import { AccentTextProps } from 'types/TextProps'
 import { FC } from 'react'
 import {
   backgroundColor,

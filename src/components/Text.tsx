@@ -82,14 +82,14 @@ export const CardHeader: FC<{ color?: TTextColor }> = ({ color, children }) => {
   return <div className={cardHeader(color)}>{children}</div>
 }
 
-const subHeaderDescription = classnames(
+const cardDescription = classnames(
   textColor('text-white'),
   fontSize('text-2xl'),
   fontFamily('font-primary'),
   fontWeight('font-bold')
 )
-export const SubHeaderDescription: FC = ({ children }) => {
-  return <div className={subHeaderDescription}>{children}</div>
+export const CardDescription: FC = ({ children }) => {
+  return <div className={cardDescription}>{children}</div>
 }
 
 const logoText = classnames(
