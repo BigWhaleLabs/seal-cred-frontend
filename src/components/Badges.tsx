@@ -13,7 +13,9 @@ function Badges() {
   return (
     <div className={space('space-y-6')}>
       <div className={space('space-y-2')}>
-        <CardHeader>{!account ? 'Then' : 'Create ZK badges'}</CardHeader>
+        <CardHeader color="text-pink">
+          {!account ? 'Then' : 'Create ZK badges'}
+        </CardHeader>
         <SubHeaderDescription>
           {!account
             ? 'Once you’ve created ZK proof, create badges for your anonymous wallet.'

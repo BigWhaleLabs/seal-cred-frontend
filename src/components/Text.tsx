@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import {
+  TTextColor,
   classnames,
   fontFamily,
   fontSize,
@@ -9,8 +10,6 @@ import {
   textDecoration,
   wordBreak,
 } from 'classnames/tailwind'
-
-type TextColor = 'pink' | 'yellow' | 'blue'
 
 const headerText = classnames(
   fontFamily('font-primary'),
@@ -54,9 +53,10 @@ export const LargerText: FC = ({ children }) => {
   return <div className={largerText}>{children}</div>
 }
 
-const cardHeader = classnames(textColor('text-pink'), fontSize('text-base'))
-export const CardHeader: FC = ({ children }) => {
-  return <div className={cardHeader}>{children}</div>
+const cardHeader = (color?: TTextColor) =>
+  classnames(textColor(color || 'text-white'), fontSize('text-base'))
+export const CardHeader: FC<{ color?: TTextColor }> = ({ color, children }) => {
+  return <div className={cardHeader(color)}>{children}</div>
 }
 
 const subHeaderDescription = classnames(
@@ -119,19 +119,13 @@ export const SubBadgeText: FC = ({ children }) => {
   return <span className={subBadgeText}>{children}</span>
 }
 
-const boldColoredText = (color?: TextColor) =>
+const boldColoredText = (color?: TTextColor) =>
   classnames(
     textColor('text-pink'),
     fontSize('text-sm'),
-    textColor(
-      color === 'pink'
-        ? 'text-pink'
-        : color === 'yellow'
-        ? 'text-yellow'
-        : 'text-blue-900'
-    )
+    textColor(color || 'text-blue-900')
   )
-export const BoldColoredText: FC<{ color?: TextColor }> = ({
+export const BoldColoredText: FC<{ color?: TTextColor }> = ({
   color,
   children,
 }) => {

@@ -20,7 +20,7 @@ import classnames, {
 
 const badges = classnames(
   position('relative'),
-  height('h-80'),
+  height('h-fit'),
   overflow('overflow-auto')
 )
 const badgesList = (oneElement?: boolean) =>
@@ -86,8 +86,8 @@ function BadgeListSuspender() {
     <>
       {isEmpty && (
         <BadgesHintCard
-          text="You don't have any unowned derivative contracts that you can mint
-          or any owned token to share."
+          text="You don't have any unowned derivative contracts that you can mint 
+          or any owned token to share. Generate ZK proof first and then mint token."
         />
       )}
       <div className={badgesList(isOneBadge)}>

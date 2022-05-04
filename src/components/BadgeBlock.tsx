@@ -22,6 +22,7 @@ import classnames, {
 } from 'classnames/tailwind'
 import shortenedAddress from 'helpers/shortenedAddress'
 import streetCred from 'helpers/streetCred'
+import truncateMiddle from 'helpers/truncateMiddle'
 
 const badgeWrapper = (minted?: boolean) =>
   classnames(
@@ -60,10 +61,10 @@ const mintPassed = classnames(
 )
 
 function Badge({
-  address,
+  derivativeAddress,
   originalAddress,
 }: {
-  address: string
+  derivativeAddress: string
   originalAddress?: string
 }) {
   const { contractNames, ledger } = useSnapshot(StreetCredStore)
@@ -75,15 +76,17 @@ function Badge({
   return (
     <div className={badgeWrapper(!!originalAddress)}>
       {originalAddress ? (
-        <BadgeIcon />
+        <BadgeIcon color="pink" />
       ) : (
         <img src="/img/qr.png" alt="Scan to view a badge" />
       )}
       <div className={badgeBody(!!originalAddress)}>
         <BadgeText>
-          {contractNames[address]
-            ? `${contractNames[address]} (${shortenedAddress(address)})`
-            : `Contract: ${shortenedAddress(address)}`}
+          {contractNames[derivativeAddress]
+            ? `${contractNames[derivativeAddress]} (${shortenedAddress(
+                derivativeAddress
+              )})`
+            : `Contract: ${shortenedAddress(derivativeAddress)}`}
         </BadgeText>
         {originalAddress ? (
           <Button
@@ -131,7 +134,7 @@ function Badge({
           </Button>
         ) : (
           <div className={mintPassed}>
-            <BoldColoredText color="pink">Minted</BoldColoredText>
+            <BoldColoredText color="text-pink">Minted</BoldColoredText>
             <CheckPassed color="pink" />
           </div>
         )}
@@ -147,11 +150,11 @@ function BadgeBlock({
   address: string
   originalAddress?: string
 }) {
-  const shortAddress = shortenedAddress(address, 5)
+  const shortAddress = truncateMiddle(address)
 
   return (
     <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
-      <Badge address={address} originalAddress={originalAddress} />
+      <Badge derivativeAddress={address} originalAddress={originalAddress} />
     </Suspense>
   )
 }
