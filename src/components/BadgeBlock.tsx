@@ -1,7 +1,14 @@
-import { BadgeText, BoldColoredText } from 'components/Text'
-import { FC } from 'react'
+import { BadgeText, BoldColoredText, SubheaderText } from 'components/Text'
+import { BigNumber } from 'ethers'
+import { Suspense, useState } from 'react'
+import { handleError } from 'helpers/handleError'
+import { useSnapshot } from 'valtio'
 import BadgeIcon from 'icons/BadgeIcon'
 import Button from 'components/Button'
+import CheckPassed from 'icons/CheckPassed'
+import ProofStore from 'stores/ProofStore'
+import StreetCredStore from 'stores/StreetCredStore'
+import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -13,8 +20,10 @@ import classnames, {
   space,
   textAlign,
 } from 'classnames/tailwind'
+import shortenedAddress from 'helpers/shortenedAddress'
+import streetCred from 'helpers/streetCred'
 
-const mintWrapper = (minted?: boolean) =>
+const badgeWrapper = (minted?: boolean) =>
   classnames(
     display('flex'),
     flexDirection(minted ? 'flex-row' : 'flex-col', 'md:flex-col'),
@@ -30,7 +39,7 @@ const mintWrapper = (minted?: boolean) =>
     )
   )
 
-const mintBody = (minted?: boolean) =>
+const badgeBody = (minted?: boolean) =>
   classnames(
     display('flex'),
     flexDirection('flex-col'),
@@ -42,7 +51,7 @@ const mintBody = (minted?: boolean) =>
     )
   )
 
-const mintedPassed = classnames(
+const mintPassed = classnames(
   display('flex'),
   alignItems('items-center'),
   justifyContent('justify-start', 'md:justify-center'),
@@ -50,52 +59,104 @@ const mintedPassed = classnames(
   space('space-x-2')
 )
 
-const MintedPassed = () => {
+function Badge({
+  address,
+  originalAddress,
+}: {
+  address: string
+  originalAddress?: string
+}) {
+  const { contractNames, ledger } = useSnapshot(StreetCredStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
+  const { account } = useSnapshot(WalletStore)
+
+  const [loading, setLoading] = useState(false)
+
   return (
-    <div className={mintedPassed}>
-      <BoldColoredText color="pink">Minted</BoldColoredText>
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 18 18"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle cx="9" cy="9" r="9" fill="#FF7BED" />
-        <path
-          d="M5 9L8 12L13 7"
-          stroke="#4B61D5"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+    <div className={badgeWrapper(!!originalAddress)}>
+      {originalAddress ? (
+        <BadgeIcon />
+      ) : (
+        <img src="/img/qr.png" alt="Scan to view a badge" />
+      )}
+      <div className={badgeBody(!!originalAddress)}>
+        <BadgeText>
+          {contractNames[address]
+            ? `${contractNames[address]} (${shortenedAddress(address)})`
+            : `Contract: ${shortenedAddress(address)}`}
+        </BadgeText>
+        {originalAddress ? (
+          <Button
+            small
+            colors="primary"
+            loading={!!loading}
+            onClick={async () => {
+              setLoading(true)
+              try {
+                if (!account) throw new Error('No account found')
+                const derivativeContractAddress =
+                  ledger[originalAddress].derivativeContract.address
+                const proof = proofsCompleted.find(
+                  (proof) => proof.contract === originalAddress
+                )
+                if (!proof || !proof.result) throw new Error('No proof found')
+                const ledgerMerkleTree = await streetCred.getRoot(
+                  originalAddress
+                )
+                if (
+                  !BigNumber.from(ledgerMerkleTree).eq(
+                    BigNumber.from(proof.result.publicSignals[1])
+                  )
+                ) {
+                  const index = ProofStore.proofsInProgress.indexOf(proof)
+                  if (index > -1) {
+                    ProofStore.proofsInProgress.splice(index, 1)
+                  }
+                  throw new Error(
+                    'This proof is outdated, please, generate a new one'
+                  )
+                }
+                await WalletStore.mintDerivative(
+                  derivativeContractAddress,
+                  proof.result
+                )
+                await StreetCredStore.refreshDerivativeContracts(account)
+              } catch (error) {
+                handleError(error)
+              } finally {
+                setLoading(false)
+              }
+            }}
+          >
+            Mint badge
+          </Button>
+        ) : (
+          <div className={mintPassed}>
+            <BoldColoredText color="pink">Minted</BoldColoredText>
+            <CheckPassed color="pink" />
+          </div>
+        )}
+      </div>
     </div>
   )
 }
 
-const BadgeBlock: FC<{ name: string; minted?: boolean }> = ({
-  name,
-  minted,
-}) => {
+function BadgeBlock({
+  address,
+  originalAddress,
+}: {
+  address: string
+  originalAddress?: string
+}) {
+  const shortAddress = `${address.slice(0, 5)}...${address.slice(
+    -5,
+    address.length
+  )}`
+
   return (
-    <div className={mintWrapper(minted)}>
-      {minted ? (
-        <img src="/img/qr.png" alt="Scan to view a badge" />
-      ) : (
-        <BadgeIcon />
-      )}
-      <div className={mintBody(minted)}>
-        <BadgeText>{name}</BadgeText>
-        {minted ? (
-          <MintedPassed />
-        ) : (
-          <Button small colors="primary">
-            Mint badge
-          </Button>
-        )}
-      </div>
-    </div>
+    <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
+      <Badge address={address} originalAddress={originalAddress} />
+    </Suspense>
   )
 }
 
