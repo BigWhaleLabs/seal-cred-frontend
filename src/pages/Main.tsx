@@ -22,7 +22,9 @@ function Main() {
     <>
       <div className={mainBlock}>
         <Card shadow color="yellow">
-          <HeaderText>Supported NFTs:</HeaderText>
+          <HeaderText size="4xl" bold>
+            Supported NFTs:
+          </HeaderText>
         </Card>
         <CardSeparator number={3} from="yellow" to="pink" />
         <Card shadow color="pink">

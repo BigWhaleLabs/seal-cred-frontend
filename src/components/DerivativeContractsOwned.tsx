@@ -25,7 +25,11 @@ function ContractList() {
 export default function DerivativeContractsOwned() {
   return (
     <Suspense
-      fallback={<BodyText>Fetching derivative tokens owned by you...</BodyText>}
+      fallback={
+        <BodyText size="base">
+          Fetching derivative tokens owned by you...
+        </BodyText>
+      }
     >
       <ContractList />
     </Suspense>
