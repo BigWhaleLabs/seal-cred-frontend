@@ -1,9 +1,11 @@
+import {
+  AccentTextProps,
+  BodyTextSize,
+  HeaderSize,
+  LinkTextProps,
+} from 'types/TextProps'
 import { FC } from 'react'
 import {
-  TFontSize,
-  TGradientColorStops,
-  TTextAlign,
-  TTextColor,
   backgroundImage,
   classnames,
   fontFamily,
@@ -15,14 +17,22 @@ import {
   textDecoration,
 } from 'classnames/tailwind'
 
-const headerText = classnames(
-  fontFamily('font-primary'),
-  fontWeight('font-bold'),
-  fontSize('text-4xl'),
-  textColor('text-white')
-)
-export const HeaderText: FC = ({ children }) => {
-  return <h1 className={headerText}>{children}</h1>
+const headerText = (size: HeaderSize, bold?: boolean) =>
+  classnames(
+    fontFamily('font-primary'),
+    fontWeight(bold ? 'font-bold' : 'font-normal'),
+    fontSize(
+      `md:text-${size}`,
+      size === '4xl' ? 'text-3xl' : size === '3xl' ? 'text-2xl' : 'text-xl'
+    ),
+    textColor('text-white')
+  )
+export const HeaderText: FC<{ size: HeaderSize; bold?: boolean }> = ({
+  size,
+  bold,
+  children,
+}) => {
+  return <h1 className={headerText(size, bold)}>{children}</h1>
 }
 
 const subheaderText = classnames(
@@ -33,28 +43,29 @@ export const SubheaderText: FC = ({ children }) => {
   return <h2 className={subheaderText}>{children}</h2>
 }
 
-interface AccentTextProps {
-  color: TTextColor
-  align?: TTextAlign
-  size?: TFontSize
-  bold?: boolean
-}
-const accentText = ({ color, align, bold, size }: AccentTextProps) =>
+const accentText = ({ color, align, bold }: AccentTextProps) =>
   classnames(
     textColor(color),
     textAlign(align),
     fontFamily('font-primary'),
-    fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize(size)
+    fontWeight(bold ? 'font-bold' : 'font-normal')
   )
 export const AccentText: FC<AccentTextProps> = (props) => {
   return <span className={accentText(props)}>{props.children}</span>
 }
 
-const bodyText = (center: boolean) =>
-  classnames(textColor('text-white'), center ? textAlign('text-center') : null)
-export const BodyText: FC<{ center?: boolean }> = ({ center, children }) => {
-  return <div className={bodyText(center || false)}>{children}</div>
+const bodyText = (size: BodyTextSize, center?: boolean) =>
+  classnames(
+    textColor('text-white'),
+    center ? textAlign('text-center') : null,
+    fontSize(`text-${size}`)
+  )
+export const BodyText: FC<{ size: BodyTextSize; center?: boolean }> = ({
+  size,
+  center,
+  children,
+}) => {
+  return <div className={bodyText(size, center)}>{children}</div>
 }
 
 const largerText = classnames(textColor('text-blue-900'), fontSize('text-2xl'))
@@ -76,12 +87,6 @@ export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
 
-interface LinkTextProps {
-  url: string
-  gradient?: TGradientColorStops
-  bold?: boolean
-  onClick?: () => void
-}
 const linkText = ({ gradient, bold }: LinkTextProps) =>
   classnames(
     textDecoration('no-underline'),

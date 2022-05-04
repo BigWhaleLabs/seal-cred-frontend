@@ -13,15 +13,15 @@ import ZkProofButton from 'components/ZkProofButton'
 function Proofs() {
   return (
     <>
-      <HeaderText>Supported NFTs that you own:</HeaderText>
+      <HeaderText size="3xl">Supported NFTs that you own:</HeaderText>
       <OriginalContractsOwned />
-      <HeaderText>ZK proofs that you can generate:</HeaderText>
+      <HeaderText size="3xl">ZK proofs that you can generate:</HeaderText>
       <ListOfAvailableZKProofs />
-      <HeaderText>ZK proofs that you generated:</HeaderText>
+      <HeaderText size="3xl">ZK proofs that you generated:</HeaderText>
       <ListOfReadyZKProofs />
-      <HeaderText>Derivative NFTs that you can mint:</HeaderText>
+      <HeaderText size="3xl">Derivative NFTs that you can mint:</HeaderText>
       <UnmintedDerivatives />
-      <HeaderText>Derivative NFTs that you own:</HeaderText>
+      <HeaderText size="3xl">Derivative NFTs that you own:</HeaderText>
       <DerivativeContractsOwned />
     </>
   )
@@ -33,7 +33,9 @@ function Main() {
   return (
     <>
       <Card shadow color="green">
-        <HeaderText>Supported NFTs:</HeaderText>
+        <HeaderText size="4xl" bold>
+          Supported NFTs:
+        </HeaderText>
         <SupportedContracts />
         {account && <Proofs />}
       </Card>

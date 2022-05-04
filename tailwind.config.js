@@ -15,6 +15,10 @@ module.exports = {
           '50%': { transform: 'translateX(0px)' },
         },
       },
+      fontSize: {
+        '3xl': '2rem',
+        '4xl': '2.5rem',
+      },
       animation: {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
       },
