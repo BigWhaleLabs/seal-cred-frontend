@@ -8,7 +8,7 @@ import Proof from 'models/Proof'
 import ProofButton from 'components/ProofButton'
 import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
-import Star from 'components/Star'
+import Star from 'icons/Star'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 

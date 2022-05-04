@@ -65,21 +65,8 @@ const cardContainer = (shadow?: boolean, color?: Color) => {
   )
 }
 
-const cardTitle = classnames(fontSize('text-sm'))
-export const CardTitle: FC<{ color: AccentTextProps['color'] }> = ({
-  children,
-  color,
-}) => {
-  return (
-    <p className={cardTitle}>
-      <AccentText color={color}>{children}</AccentText>
-    </p>
-  )
-}
-
 const cardDescription = classnames(
   fontSize('text-2xl'),
-  margin('mt-2'),
   fontFamily('font-primary'),
   fontWeight('font-bold')
 )

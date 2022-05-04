@@ -58,7 +58,7 @@ module.exports = {
         md: '0px 0px 6px 0px rgb(0 0 0 / 0.25)',
       },
       dropShadow: {
-        yellow: '0px 0px 10px #FED823',
+        yellow: '0px 0px 10px #fed823',
       },
     },
   },

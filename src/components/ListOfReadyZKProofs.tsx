@@ -1,7 +1,7 @@
 import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
-import Complete from 'components/Complete'
+import Complete from 'icons/Complete'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
 import ProofButton from 'components/ProofButton'
