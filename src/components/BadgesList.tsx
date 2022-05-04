@@ -115,7 +115,9 @@ function BadgeListSuspender() {
 function BadgesList() {
   return (
     <div className={badges}>
-      <Suspense fallback={<BodyText>Fetching derivative NFTs...</BodyText>}>
+      <Suspense
+        fallback={<BodyText size="base">Fetching derivative NFTs...</BodyText>}
+      >
         <BadgeListSuspender />
       </Suspense>
     </div>
