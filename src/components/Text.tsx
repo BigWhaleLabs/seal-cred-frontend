@@ -18,7 +18,7 @@ import {
   textDecoration,
 } from 'classnames/tailwind'
 
-const headerText = (size: HeaderSize, bold?: boolean) =>
+const headerText = (size: HeaderSize, bold = true) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
