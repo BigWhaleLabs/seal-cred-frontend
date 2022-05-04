@@ -1,13 +1,18 @@
 import { FC } from 'react'
 import {
+  TFontSize,
+  TGradientColorStops,
+  TTextAlign,
+  TTextColor,
+  backgroundImage,
   classnames,
   fontFamily,
   fontSize,
   fontWeight,
+  gradientColorStops,
   textAlign,
   textColor,
   textDecoration,
-  wordBreak,
 } from 'classnames/tailwind'
 
 const headerText = classnames(
@@ -28,17 +33,22 @@ export const SubheaderText: FC = ({ children }) => {
   return <h2 className={subheaderText}>{children}</h2>
 }
 
-const accentText = (active?: boolean) =>
+interface AccentTextProps {
+  color: TTextColor
+  align?: TTextAlign
+  size?: TFontSize
+  bold?: boolean
+}
+const accentText = ({ color, align, bold, size }: AccentTextProps) =>
   classnames(
-    textColor(active ? 'text-yellow' : 'text-blue-600'),
-    wordBreak(active ? 'break-all' : undefined),
-    textAlign('text-center'),
+    textColor(color),
+    textAlign(align),
     fontFamily('font-primary'),
-    fontWeight('font-bold'),
-    fontSize('text-sm')
+    fontWeight(bold ? 'font-bold' : 'font-normal'),
+    fontSize(size)
   )
-export const AccentText: FC<{ active?: boolean }> = ({ active, children }) => {
-  return <span className={accentText(active)}>{children}</span>
+export const AccentText: FC<AccentTextProps> = (props) => {
+  return <span className={accentText(props)}>{props.children}</span>
 }
 
 const bodyText = (center: boolean) =>
@@ -66,35 +76,31 @@ export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
 
-const link = classnames(
-  textDecoration('underline'),
-  textColor('text-yellow', 'hover:text-orange'),
-  fontWeight('font-bold')
-)
-export const Link: FC<{ url: string; onClick?: () => void }> = ({
-  children,
-  url,
-  onClick,
-}) => {
+interface LinkTextProps {
+  url: string
+  gradient?: TGradientColorStops
+  bold?: boolean
+  onClick?: () => void
+}
+const linkText = ({ gradient, bold }: LinkTextProps) =>
+  classnames(
+    textDecoration('no-underline'),
+    textColor(gradient ? 'text-transparent' : 'text-yellow'),
+    backgroundImage(gradient ? 'bg-gradient-to-r' : undefined),
+    gradientColorStops(gradient),
+    fontWeight(bold ? 'font-bold' : 'font-normal')
+  )
+export const LinkText: FC<LinkTextProps> = (props) => {
   return (
     <a
-      className={link}
-      href={url}
+      className={linkText(props)}
+      href={props.url}
       rel="noopener noreferrer"
-      target={onClick ? '' : '_blank'}
-      onClick={onClick}
+      target={'_blank'}
     >
-      {children}
+      {props.children}
     </a>
   )
-}
-
-const popupBodyText = classnames(
-  textColor('text-white'),
-  textAlign('text-center')
-)
-export const PopupBodyText: FC = ({ children }) => {
-  return <div className={popupBodyText}>{children}</div>
 }
 
 const subBadgeText = classnames(textColor('text-pink'), fontSize('text-sm'))
