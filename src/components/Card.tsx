@@ -5,9 +5,6 @@ import {
   boxShadow,
   boxShadowColor,
   classnames,
-  fontFamily,
-  fontSize,
-  fontWeight,
   margin,
   maxHeight,
   maxWidth,
@@ -71,15 +68,6 @@ const cardContainer = (shadow?: boolean, color?: Color) =>
     maxHeight('max-h-508'),
     overflow('overflow-auto')
   )
-
-const cardDescription = classnames(
-  fontSize('text-2xl'),
-  fontFamily('font-primary'),
-  fontWeight('font-bold')
-)
-export const CardDescription: FC = ({ children }) => {
-  return <p className={cardDescription}>{children}</p>
-}
 
 const Card: FC<CardProps> = ({ color, shadow, children }) => {
   return <div className={cardContainer(shadow, color)}>{children}</div>

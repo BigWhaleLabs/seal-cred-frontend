@@ -1,7 +1,7 @@
-import { AccentText } from 'components/Text'
+import { CardDescription, CardHeader } from 'components/Text'
 import { margin } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import Card, { CardDescription } from 'components/Card'
+import Card from 'components/Card'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import WalletButton from 'components/WalletButton'
@@ -14,7 +14,7 @@ function Proofs() {
     <>
       <div>
         <div className={titleContainer}>
-          <AccentText color="text-yellow">Start proofing!</AccentText>
+          <CardHeader color="text-yellow">Start proofing!</CardHeader>
         </div>
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
