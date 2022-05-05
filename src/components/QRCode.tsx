@@ -24,10 +24,6 @@ const qrCode = new QRCodeStyling({
   cornersDotOptions: {
     type: 'dot',
   },
-  imageOptions: {
-    imageSize: 0.7,
-    crossOrigin: 'anonymous',
-  },
   backgroundOptions: {
     color: '#0d0030',
   },
@@ -44,7 +40,7 @@ export default function QRCode({
   useEffect(() => {
     if (ref.current) qrCode.append(ref.current)
     qrCode.update({
-      data: `/public/${derivativeAddress}/${tokenId}`,
+      data: `https://streetcred.one/public/${derivativeAddress}/${tokenId}`,
     })
   }, [derivativeAddress, tokenId])
 
