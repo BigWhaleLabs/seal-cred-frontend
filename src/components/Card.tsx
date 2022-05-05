@@ -12,15 +12,18 @@ import {
   outlineStyle,
   outlineWidth,
   padding,
+  position,
   space,
   width,
 } from 'classnames/tailwind'
+import ArcText from 'components/ArcText'
 
 type Color = 'pink' | 'yellow' | 'green' | 'blue'
 interface CardProps {
   shadow?: boolean
   color?: Color
   onlyWrap?: boolean
+  spinner?: string
 }
 
 const cardColor = (color?: Color) => {
@@ -55,6 +58,7 @@ const cardColor = (color?: Color) => {
 
 const cardContainer = (shadow?: boolean, color?: Color, onlyWrap = false) => {
   return classnames(
+    position('relative'),
     borderRadius('rounded-2xl'),
     backgroundColor('bg-blue-900'),
     cardColor(shadow ? color : undefined),
@@ -67,9 +71,20 @@ const cardContainer = (shadow?: boolean, color?: Color, onlyWrap = false) => {
   )
 }
 
-const Card: FC<CardProps> = ({ color, shadow, onlyWrap, children }) => {
+const Card: FC<CardProps> = ({
+  color,
+  shadow,
+  onlyWrap,
+  spinner,
+  children,
+}) => {
   return (
-    <div className={cardContainer(shadow, color, onlyWrap)}>{children}</div>
+    <div className={cardContainer(shadow, color, onlyWrap)}>
+      <div className="absolute -top-28 -right-28 md:block hidden">
+        {!!spinner && <ArcText text={spinner} />}
+      </div>
+      {children}
+    </div>
   )
 }
 
