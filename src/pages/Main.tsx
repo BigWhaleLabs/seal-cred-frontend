@@ -1,5 +1,4 @@
 import Badges from 'components/Badges'
-import Card from 'components/Card'
 import CardSeparator from 'components/CardSeparator'
 import ProofsCard from 'components/ProofsCard'
 import ZkProofButton from 'components/ZkProofButton'
@@ -32,9 +31,7 @@ function Main() {
       <div className={mainBlock}>
         <ProofsCard />
         <CardSeparator number={3} from="yellow" to="pink" />
-        <Card shadow color="pink">
-          <Badges />
-        </Card>
+        <Badges />
       </div>
       {mobile && <ZkProofButton />}
     </>
