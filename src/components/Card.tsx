@@ -21,7 +21,6 @@ type Color = 'pink' | 'yellow' | 'green' | 'blue'
 interface CardProps {
   shadow?: boolean
   color?: Color
-  proofing?: boolean
 }
 
 const cardColor = (color?: Color) => {
