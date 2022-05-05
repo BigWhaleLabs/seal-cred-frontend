@@ -8,9 +8,6 @@ import {
   height,
   margin,
   maxHeight,
-  maxWidth,
-  minHeight,
-  minWidth,
   outlineColor,
   outlineStyle,
   outlineWidth,
@@ -64,9 +61,9 @@ const cardContainer = (shadow?: boolean, color?: Color) => {
     cardColor(shadow ? color : undefined),
     padding('p-6'),
     space('space-y-4'),
-    width('w-mobile-card', 'sm:w-card'),
-    margin('mx-4', 'sm:mx-0'),
-    height('h-mobile-card', 'sm:h-card'),
+    width('w-mobile-card', 'lg:w-card'),
+    margin('mx-4', 'lg:mx-0'),
+    height('h-mobile-card', 'lg:h-card'),
     maxHeight('max-h-508'),
     overflow('overflow-auto')
   )

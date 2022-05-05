@@ -10,7 +10,6 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
-  justifyContent,
   space,
   width,
 } from 'classnames/tailwind'
@@ -22,7 +21,7 @@ const proofCardZKButtonContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
   alignItems('items-center'),
-  width('w-full', 'sm:w-fit')
+  width('w-full', 'lg:w-fit')
 )
 
 function Proofs() {
@@ -41,7 +40,7 @@ function Proofs() {
 function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
   const { width } = useWindowDimensions()
-  const mobile = width < 640
+  const mobile = width < 1024
 
   return (
     <div className={proofCardZKButtonContainer}>

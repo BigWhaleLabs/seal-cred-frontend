@@ -1,38 +1,26 @@
-import { HeaderText } from 'components/Text'
-import { useSnapshot } from 'valtio'
 import Badges from 'components/Badges'
 import Card from 'components/Card'
 import CardSeparator from 'components/CardSeparator'
-import DerivativeContractsOwned from 'components/DerivativeContractsOwned'
-import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
-import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
-import OriginalContractsOwned from 'components/OriginalContractsOwned'
 import ProofsCard from 'components/ProofsCard'
-import SupportedContracts from 'components/SupportedContracts'
-import UnmintedDerivatives from 'components/UnmintedDerivatives'
-import WalletStore from 'stores/WalletStore'
 import ZkProofButton from 'components/ZkProofButton'
 import classnames, {
   alignItems,
   display,
   flexDirection,
-  gridTemplateColumns,
   justifyContent,
-  margin,
-  space,
 } from 'classnames/tailwind'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 const mainBlock = classnames(
   display('flex'),
-  flexDirection('flex-col', 'sm:flex-row'),
-  alignItems('items-center', 'sm:items-stretch'),
-  justifyContent('sm:justify-center')
+  flexDirection('flex-col', 'lg:flex-row'),
+  alignItems('items-center', 'lg:items-stretch'),
+  justifyContent('lg:justify-center')
 )
 
 function Main() {
   const { width } = useWindowDimensions()
-  const mobile = width < 640
+  const mobile = width < 1024
 
   return (
     <>

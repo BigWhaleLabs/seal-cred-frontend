@@ -24,7 +24,7 @@ const headerText = (size: HeaderSize, leading = 8, bold = true) =>
     fontFamily('font-primary'),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
     fontSize(
-      `sm:text-${size}`,
+      `lg:text-${size}`,
       size === '4xl' ? 'text-3xl' : size === '3xl' ? 'text-2xl' : 'text-xl'
     ),
     textColor('text-white'),

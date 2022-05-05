@@ -30,7 +30,7 @@ const badgesList = (oneElement?: boolean) =>
     gridAutoRows('auto-rows-auto'),
     gridTemplateColumns(
       'grid-cols-1',
-      oneElement ? 'sm:grid-cols-1' : 'sm:grid-cols-2'
+      oneElement ? 'lg:grid-cols-1' : 'lg:grid-cols-2'
     )
   )
 

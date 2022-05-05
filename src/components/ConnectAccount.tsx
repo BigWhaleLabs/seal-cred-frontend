@@ -26,7 +26,7 @@ const walletContainer = classnames(
 )
 
 const contentWrapper = classnames(
-  width('w-11/12', 'sm:w-9/12'),
+  width('w-11/12', 'lg:w-9/12'),
   display('flex'),
   flexDirection('flex-col'),
   alignItems('items-center')

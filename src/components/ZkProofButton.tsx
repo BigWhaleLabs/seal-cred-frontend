@@ -11,7 +11,6 @@ import classnames, {
   fontSize,
   justifyContent,
   margin,
-  maxWidth,
   padding,
   space,
   stroke,
@@ -25,7 +24,7 @@ const zkProofButton = classnames(
   backgroundColor('bg-blue-800'),
   space('space-x-2'),
   padding('py-4'),
-  width('w-mobile-card', 'sm:w-card'),
+  width('w-mobile-card', 'lg:w-card'),
   margin('my-6', 'mx-auto'),
   cursor('cursor-pointer'),
   borderRadius('rounded-2xl')
