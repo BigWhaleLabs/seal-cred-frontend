@@ -23,11 +23,6 @@ function Main() {
 
   return (
     <>
-      {/* <div className={proofingCardContainer}>
-        <ProofingCard />
-        <BadgingCard />
-        <ZkProofButton />
-      </div> */}
       <div className={mainBlock}>
         <ProofsCard />
         <CardSeparator number={3} from="yellow" to="pink" />
