@@ -1,21 +1,20 @@
-import { AccentText, BodyText, HeaderText, LinkText } from 'components/Text'
-import { SCERC721Derivative__factory } from '@big-whale-labs/street-cred-ledger-contract'
-import { useEffect, useState } from 'react'
+import { AccentText, BodyText, HeaderText } from 'components/Text'
 import { useParams } from 'react-router-dom'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import ContractName from 'components/ContractName'
 import NotFound from 'pages/NotFound'
+import OwnedBadgeAddress from 'components/OwnedBadgeAddress'
 import Smile from 'icons/Smile'
 import classnames, {
   alignItems,
+  borderColor,
   display,
   flexDirection,
   justifyContent,
   margin,
   textOverflow,
 } from 'classnames/tailwind'
-import defaultProvider from 'helpers/defaultProvider'
 
 const mainBox = classnames(
   display('flex'),
@@ -34,24 +33,8 @@ const getStartedCard = classnames(margin('mt-6'))
 
 export default function OwnedBadge() {
   const { derivativeAddress, tokenId } = useParams()
-  const [badge, setBadge] = useState<{ address: string; owner: string }>()
 
-  useEffect(() => {
-    async function fetchData() {
-      if (derivativeAddress && tokenId !== undefined)
-        setBadge({
-          address: derivativeAddress,
-          owner: await SCERC721Derivative__factory.connect(
-            derivativeAddress,
-            defaultProvider
-          ).ownerOf(tokenId),
-        })
-    }
-
-    void fetchData()
-  })
-
-  return badge ? (
+  return derivativeAddress && tokenId ? (
     <div className={mainBox}>
       <Card
         color="pink"
@@ -62,32 +45,28 @@ export default function OwnedBadge() {
         <HeaderText size="4xl" leading={11}>
           This wallet owns a{' '}
           <AccentText color="text-pink" bold>
-            <ContractName address={badge.address} otherStyle />
+            <ContractName address={derivativeAddress} otherStyle />
           </AccentText>
         </HeaderText>
         <BodyText size="base">
           This is a zkNFT derivative. It means this person has been verified to
           own at least one{' '}
           <AccentText color="text-pink">
-            `<ContractName address={badge.address} otherStyle />`
+            `<ContractName address={derivativeAddress} otherStyle />`
           </AccentText>{' '}
           NFT.
         </BodyText>
 
-        <hr />
+        <hr className={borderColor('border-blue-600')} />
 
         <div className={walletBox}>
           <Smile />
           <div className={walletAddress}>
             <BodyText size="sm">Wallet address</BodyText>
-            <LinkText
-              url={`https://etherscan.io/address/${badge.owner}`}
-              gradientFrom="from-pink"
-              gradientTo="to-yellow"
-              bold
-            >
-              {badge.owner}
-            </LinkText>
+            <OwnedBadgeAddress
+              tokenId={tokenId}
+              derivativeAddress={derivativeAddress}
+            />
           </div>
         </div>
       </Card>

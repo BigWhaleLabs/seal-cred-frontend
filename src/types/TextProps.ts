@@ -14,6 +14,7 @@ export interface LinkTextProps {
   url: string
   gradientFrom?: TGradientColorStops
   gradientTo?: TGradientColorStops
+  title?: string
   bold?: boolean
   onClick?: () => void
 }

@@ -1,12 +1,30 @@
-import { BodyText, SubheaderText } from 'components/Text'
+import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import StreetCredStore from 'stores/StreetCredStore'
-import shortenedAddress from 'helpers/shortenedAddress'
+import truncateMiddle from 'helpers/truncateMiddle'
 
 interface ContractNameProps {
   address: string
   otherStyle?: boolean
+}
+
+interface FetchingContract extends ContractNameProps {
+  isFetching?: boolean
+}
+
+function TextBlock({ address, otherStyle, isFetching }: FetchingContract) {
+  return otherStyle ? (
+    <>
+      {isFetching && <>Fetching </>}
+      {address}
+    </>
+  ) : (
+    <BodyText size="base">
+      {isFetching && <>Fetching </>}
+      {address}
+    </BodyText>
+  )
 }
 
 function ContractNameComponent({ address, otherStyle }: ContractNameProps) {
@@ -14,25 +32,22 @@ function ContractNameComponent({ address, otherStyle }: ContractNameProps) {
 
   const nameOrAddress = contractNames[address]
     ? contractNames[address]
-    : `Contract: ${shortenedAddress(address)}`
+    : truncateMiddle(address, 5, -5)
 
-  return otherStyle ? (
-    <>{nameOrAddress}</>
-  ) : (
-    <BodyText size="base">{nameOrAddress}</BodyText>
-  )
+  return <TextBlock address={nameOrAddress || ''} otherStyle={otherStyle} />
 }
 
 export default function ContractName({
   address,
   otherStyle,
 }: ContractNameProps) {
-  const shortAddress = `${address.slice(0, 5)}...${address.slice(
-    -5,
-    address.length
-  )}`
+  const shortAddress = truncateMiddle(address, 5, -5)
   return (
-    <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
+    <Suspense
+      fallback={
+        <TextBlock isFetching address={shortAddress} otherStyle={otherStyle} />
+      }
+    >
       <ContractNameComponent address={address} otherStyle={otherStyle} />
     </Suspense>
   )
