@@ -11,6 +11,7 @@ module.exports = {
       },
       maxHeight: {
         508: '508px',
+        85: '21.25rem',
       },
       maxWidth: {
         400: '400px',
@@ -62,6 +63,14 @@ module.exports = {
         '2xl': '0px 4px 44px 0px rgb(0 0 0 / 0.25)',
         lg: '0px 0px 16px 0px rgb(0 0 0 / 0.25)',
         md: '0px 0px 6px 0px rgb(0 0 0 / 0.25)',
+      },
+      height: {
+        card: '508px',
+        'mobile-card': '365px',
+      },
+      width: {
+        card: '398px',
+        'mobile-card': '92%',
       },
       dropShadow: {
         yellow: '0px 0px 10px #fed823',

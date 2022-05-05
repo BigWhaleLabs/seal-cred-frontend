@@ -1,15 +1,31 @@
 import { AccentText, CardDescription, CardHeader } from 'components/Text'
-import { margin, space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import WalletStore from 'stores/WalletStore'
+import ZkProofButton from 'components/ZkProofButton'
+import classnames, {
+  alignItems,
+  display,
+  flexDirection,
+  margin,
+  space,
+  width,
+} from 'classnames/tailwind'
 import proofStore from 'stores/ProofStore'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
+
+const proofCardZKButtonContainer = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  alignItems('items-center'),
+  width('w-full', 'lg:w-fit')
+)
 
 function Proofs() {
   const { proofsCompleted } = useSnapshot(proofStore)
@@ -52,17 +68,22 @@ function ReadyProofs() {
 function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
+  const { width } = useWindowDimensions()
+  const mobile = width < 1024
 
   return (
-    <Card color="yellow" shadow>
-      {account ? (
-        <Proofs />
-      ) : proofsCompleted.length > 0 ? (
-        <ReadyProofs />
-      ) : (
-        <ConnectAccount />
-      )}
-    </Card>
+    <div className={proofCardZKButtonContainer}>
+      <Card color="yellow" shadow>
+        {account ? (
+          <Proofs />
+        ) : proofsCompleted.length > 0 ? (
+          <ReadyProofs />
+        ) : (
+          <ConnectAccount />
+        )}
+      </Card>
+      {!mobile && <ZkProofButton />}
+    </div>
   )
 }
 

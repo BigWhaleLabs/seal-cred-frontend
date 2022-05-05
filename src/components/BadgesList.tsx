@@ -14,6 +14,7 @@ import classnames, {
   gridTemplateColumns,
   height,
   inset,
+  maxHeight,
   overflow,
   position,
 } from 'classnames/tailwind'
@@ -21,6 +22,7 @@ import classnames, {
 const badges = classnames(
   position('relative'),
   height('h-fit'),
+  maxHeight('max-h-85'),
   overflow('overflow-auto')
 )
 const badgesList = (oneElement?: boolean) =>
@@ -30,7 +32,7 @@ const badgesList = (oneElement?: boolean) =>
     gridAutoRows('auto-rows-auto'),
     gridTemplateColumns(
       'grid-cols-1',
-      oneElement ? 'sm:grid-cols-1' : 'sm:grid-cols-2'
+      oneElement ? 'lg:grid-cols-1' : 'lg:grid-cols-2'
     )
   )
 

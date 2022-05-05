@@ -6378,6 +6378,8 @@ export type TWidth =
   | 'w-min'
   | 'w-max'
   | 'w-fit'
+  | 'w-card'
+  | 'w-mobile-card'
 
 export type TMinWidth =
   | 'min-w-0'
@@ -6469,6 +6471,8 @@ export type THeight =
   | 'h-min'
   | 'h-max'
   | 'h-fit'
+  | 'h-card'
+  | 'h-mobile-card'
 
 export type TMinHeight =
   | 'min-h-0'
@@ -6508,6 +6512,7 @@ export type TMaxHeight =
   | 'max-h-64'
   | 'max-h-72'
   | 'max-h-80'
+  | 'max-h-85'
   | 'max-h-96'
   | 'max-h-508'
   | 'max-h-px'

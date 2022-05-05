@@ -27,7 +27,7 @@ import truncateMiddle from 'helpers/truncateMiddle'
 const badgeWrapper = (minted?: boolean) =>
   classnames(
     display('flex'),
-    flexDirection(minted ? 'flex-row' : 'flex-col', 'sm:flex-col'),
+    flexDirection(minted ? 'flex-row' : 'flex-col', 'lg:flex-col'),
     justifyContent('justify-center'),
     alignItems('items-center'),
     borderRadius('rounded-lg'),
@@ -35,8 +35,8 @@ const badgeWrapper = (minted?: boolean) =>
     padding('px-4', 'py-4'),
     space(
       minted ? 'space-x-2' : 'space-y-2',
-      minted ? 'sm:space-x-0' : undefined,
-      'sm:space-y-2'
+      minted ? 'lg:space-x-0' : undefined,
+      'lg:space-y-2'
     )
   )
 
@@ -48,7 +48,7 @@ const badgeBody = (minted?: boolean) =>
     textAlign(!minted ? 'text-center' : 'text-left'),
     justifyContent(
       minted ? 'justify-start' : 'justify-center',
-      'sm:justify-center'
+      'lg:justify-center'
     )
   )
 
@@ -56,7 +56,7 @@ const mintPassed = classnames(
   display('flex'),
   justifyContent('justify-center'),
   alignItems('items-center'),
-  justifyContent('justify-start', 'sm:justify-center'),
+  justifyContent('justify-start', 'lg:justify-center'),
   flexDirection('flex-row'),
   space('space-x-2')
 )

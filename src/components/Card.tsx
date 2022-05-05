@@ -5,14 +5,12 @@ import {
   boxShadow,
   boxShadowColor,
   classnames,
+  height,
   margin,
   maxHeight,
-  maxWidth,
-  minHeight,
   outlineColor,
   outlineStyle,
   outlineWidth,
-  overflow,
   padding,
   space,
   width,
@@ -54,20 +52,19 @@ const cardColor = (color?: Color) => {
   )
 }
 
-const cardContainer = (shadow?: boolean, color?: Color) =>
-  classnames(
+const cardContainer = (shadow?: boolean, color?: Color) => {
+  return classnames(
     borderRadius('rounded-2xl'),
     backgroundColor('bg-blue-900'),
     cardColor(shadow ? color : undefined),
     padding('p-6'),
     space('space-y-4'),
-    margin('mx-4', 'sm:mx-0'),
-    maxWidth('max-w-xs', 'sm:max-w-400'),
-    width('w-fit', 'sm:w-full'),
-    minHeight('min-h-full'),
-    maxHeight('max-h-508'),
-    overflow('overflow-auto')
+    width('w-mobile-card', 'lg:w-card'),
+    margin('mx-4', 'lg:mx-0'),
+    height('h-fit', 'lg:h-card'),
+    maxHeight('max-h-508')
   )
+}
 
 const Card: FC<CardProps> = ({ color, shadow, children }) => {
   return <div className={cardContainer(shadow, color)}>{children}</div>
