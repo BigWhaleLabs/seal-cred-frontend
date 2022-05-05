@@ -1,46 +1,34 @@
-import { BodyText, SubheaderText } from 'components/Text'
+import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
-import { classnames, display, flexDirection, space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import Button from 'components/Button'
+import Complete from 'icons/Complete'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
+import ProofButton from 'components/ProofButton'
+import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
-
-const contractContainer = classnames(
-  display('flex'),
-  flexDirection('flex-row'),
-  space('space-x-2')
-)
+import WalletStore from 'stores/WalletStore'
 
 function ContractList() {
+  const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
 
   return (
     <>
-      {proofsCompleted?.length ? (
+      {!!proofsCompleted?.length && (
         <ContractListContainer>
           {proofsCompleted.map((proof) => (
-            <div className={contractContainer}>
-              <ContractName address={proof.contract} account={proof.account} />
-              <Button
-                colors="primary"
-                small
-                onClick={() => {
-                  ProofStore.proofsCompleted = proofsCompleted.filter(
-                    (p) =>
-                      p.contract !== proof.contract &&
-                      p.account !== proof.account
-                  )
-                }}
-              >
-                Delete
-              </Button>
-            </div>
+            <ProofLine>
+              <ContractName address={proof.contract} />
+              <ProofButton color="yellow">
+                <span>
+                  Proof {proof.account === account ? 'made' : 'saved'}
+                </span>
+                <Complete color="yellow" />
+              </ProofButton>
+            </ProofLine>
           ))}
         </ContractListContainer>
-      ) : (
-        <SubheaderText>You don't have any generated proofs yet.</SubheaderText>
       )}
     </>
   )

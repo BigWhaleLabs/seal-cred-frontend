@@ -25,7 +25,7 @@ const navbar = (visible?: boolean) =>
     justifyContent('justify-between'),
     padding('py-4', 'px-4'),
     margin('mb-2'),
-    space('space-x-9', 'md:space-x-0'),
+    space('space-x-9', 'lg:space-x-0'),
     zIndex('z-10'),
     backgroundColor(visible ? 'bg-blue-900' : 'bg-transparent')
   )

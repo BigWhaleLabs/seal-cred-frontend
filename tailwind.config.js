@@ -9,6 +9,13 @@ module.exports = {
       borderWidth: {
         1: '1px',
       },
+      maxHeight: {
+        508: '508px',
+        85: '21.25rem',
+      },
+      maxWidth: {
+        400: '400px',
+      },
       keyframes: {
         'pulse-horizontal': {
           '0%, 100%': { transform: 'translateX(8px)' },
@@ -20,7 +27,11 @@ module.exports = {
         '4xl': '2.5rem',
       },
       lineHeight: {
-        'leading-7': '30px',
+        3: '14px',
+        5: '18px',
+        6: '21px',
+        8: '31px',
+        11: '51px',
       },
       screens: {
         md: '600px',
@@ -52,6 +63,17 @@ module.exports = {
         '2xl': '0px 4px 44px 0px rgb(0 0 0 / 0.25)',
         lg: '0px 0px 16px 0px rgb(0 0 0 / 0.25)',
         md: '0px 0px 6px 0px rgb(0 0 0 / 0.25)',
+      },
+      height: {
+        card: '508px',
+        'mobile-card': '365px',
+      },
+      width: {
+        card: '398px',
+        'mobile-card': '92%',
+      },
+      dropShadow: {
+        yellow: '0px 0px 10px #fed823',
       },
     },
   },

@@ -3727,6 +3727,7 @@ export type TDropShadow =
   | 'drop-shadow-xl'
   | 'drop-shadow-2xl'
   | 'drop-shadow-none'
+  | 'drop-shadow-yellow'
 
 export type TGrayscale = 'grayscale-0' | 'grayscale'
 
@@ -6377,6 +6378,8 @@ export type TWidth =
   | 'w-min'
   | 'w-max'
   | 'w-fit'
+  | 'w-card'
+  | 'w-mobile-card'
 
 export type TMinWidth =
   | 'min-w-0'
@@ -6387,6 +6390,7 @@ export type TMinWidth =
 
 export type TMaxWidth =
   | 'max-w-0'
+  | 'max-w-400'
   | 'max-w-none'
   | 'max-w-xs'
   | 'max-w-sm'
@@ -6467,6 +6471,8 @@ export type THeight =
   | 'h-min'
   | 'h-max'
   | 'h-fit'
+  | 'h-card'
+  | 'h-mobile-card'
 
 export type TMinHeight =
   | 'min-h-0'
@@ -6506,7 +6512,9 @@ export type TMaxHeight =
   | 'max-h-64'
   | 'max-h-72'
   | 'max-h-80'
+  | 'max-h-85'
   | 'max-h-96'
+  | 'max-h-508'
   | 'max-h-px'
   | 'max-h-0.5'
   | 'max-h-1.5'
@@ -6878,13 +6886,13 @@ export type TLineHeight =
   | 'leading-8'
   | 'leading-9'
   | 'leading-10'
+  | 'leading-11'
   | 'leading-none'
   | 'leading-tight'
   | 'leading-snug'
   | 'leading-normal'
   | 'leading-relaxed'
   | 'leading-loose'
-  | 'leading-leading-7'
 
 export type TListStyleType = 'list-none' | 'list-disc' | 'list-decimal'
 
