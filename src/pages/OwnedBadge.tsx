@@ -62,14 +62,14 @@ export default function OwnedBadge() {
         <HeaderText size="4xl" leading={11}>
           This wallet owns a{' '}
           <AccentText color="text-pink" bold>
-            <ContractName address={badge.address} />
+            <ContractName address={badge.address} otherStyle />
           </AccentText>
         </HeaderText>
         <BodyText size="base">
           This is a zkNFT derivative. It means this person has been verified to
           own at least one{' '}
           <AccentText color="text-pink">
-            `<ContractName address={badge.address} />`
+            `<ContractName address={badge.address} otherStyle />`
           </AccentText>{' '}
           NFT.
         </BodyText>

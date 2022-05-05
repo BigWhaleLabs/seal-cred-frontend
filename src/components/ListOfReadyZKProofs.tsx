@@ -19,9 +19,7 @@ function ContractList() {
         <ContractListContainer>
           {proofsCompleted.map((proof) => (
             <ProofLine>
-              <BodyText size="base">
-                <ContractName address={proof.contract} />
-              </BodyText>
+              <ContractName address={proof.contract} />
               <ProofButton color="yellow">
                 <span>
                   Proof {proof.account === account ? 'made' : 'saved'}

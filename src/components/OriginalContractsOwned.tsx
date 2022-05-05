@@ -12,9 +12,7 @@ function ContractList() {
       {originalContracts?.owned?.length ? (
         <ContractListContainer>
           {originalContracts.owned.map((contract) => (
-            <BodyText size="base">
-              <ContractName key={contract.address} address={contract.address} />
-            </BodyText>
+            <ContractName key={contract.address} address={contract.address} />
           ))}
         </ContractListContainer>
       ) : (

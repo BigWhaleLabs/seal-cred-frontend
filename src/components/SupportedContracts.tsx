@@ -1,4 +1,4 @@
-import { BodyText, SubheaderText } from 'components/Text'
+import { SubheaderText } from 'components/Text'
 import { Suspense, lazy } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
@@ -12,9 +12,7 @@ function SupportedContractsComponent() {
   return contractAddresses.length ? (
     <ContractListContainer>
       {contractAddresses.map((address) => (
-        <BodyText size="base">
-          <ContractName key={address} address={address} />
-        </BodyText>
+        <ContractName key={address} address={address} />
       ))}
     </ContractListContainer>
   ) : (
