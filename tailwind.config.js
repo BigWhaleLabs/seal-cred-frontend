@@ -74,7 +74,7 @@ module.exports = {
       },
       width: {
         card: '398px',
-        'mobile-card': '343px',
+        'mobile-card': '92%',
       },
       dropShadow: {
         yellow: '0px 0px 10px #fed823',

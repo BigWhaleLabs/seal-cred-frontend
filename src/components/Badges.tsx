@@ -1,5 +1,5 @@
 import { CardDescription, CardHeader } from 'components/Text'
-import { space } from 'classnames/tailwind'
+import { fontSize, space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
@@ -29,16 +29,18 @@ function Badges() {
           text="You must disconnect your first wallet after ZK proof is made, and then
         reconnect with a new one for the magic to work."
         >
-          <Button
-            colors="tertiary"
-            arrow
-            onClick={async () => {
-              configuredModal.clearCachedProvider()
-              await WalletStore.connect()
-            }}
-          >
-            Connect your anonymous wallet
-          </Button>
+          <div className={fontSize('text-sm', 'lg:text-base')}>
+            <Button
+              colors="tertiary"
+              arrow
+              onClick={async () => {
+                configuredModal.clearCachedProvider()
+                await WalletStore.connect()
+              }}
+            >
+              Connect your anonymous wallet
+            </Button>
+          </div>
         </BadgesHintCard>
       )}
     </div>

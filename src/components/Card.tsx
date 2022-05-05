@@ -10,6 +10,7 @@ import {
   maxHeight,
   maxWidth,
   minHeight,
+  minWidth,
   outlineColor,
   outlineStyle,
   outlineWidth,
@@ -63,14 +64,12 @@ const cardContainer = (shadow?: boolean, color?: Color, proofing?: boolean) => {
     cardColor(shadow ? color : undefined),
     padding('p-6'),
     space('space-y-4'),
+    width('w-mobile-card', 'lg:w-card'),
+    margin('mx-4', 'sm:mx-0'),
     height(
       proofing ? 'h-mobile-proofing-card' : 'h-mobile-badging-card',
       'lg:h-card'
     ),
-    width('w-mobile-card', 'lg:w-card'),
-    margin('mx-4', 'sm:mx-0'),
-    maxWidth('max-w-xs', 'sm:max-w-400'),
-    width('w-fit', 'sm:w-full'),
     minHeight('min-h-full'),
     maxHeight('max-h-508'),
     overflow('overflow-auto')

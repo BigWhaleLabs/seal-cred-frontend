@@ -1,7 +1,6 @@
 import { HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Badges from 'components/Badges'
-import BadgingCard from 'components/BadgingCard'
 import Card from 'components/Card'
 import CardSeparator from 'components/CardSeparator'
 import DerivativeContractsOwned from 'components/DerivativeContractsOwned'
@@ -18,18 +17,11 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
+  gridTemplateColumns,
   justifyContent,
   margin,
   space,
 } from 'classnames/tailwind'
-
-const proofingCardContainer = classnames(
-  display('flex'),
-  flexDirection('flex-col', 'lg:flex-row'),
-  alignItems('items-start'),
-  space('lg:space-x-5'),
-  justifyContent('justify-center')
-)
 
 const mainBlock = classnames(
   display('flex'),
@@ -37,6 +29,8 @@ const mainBlock = classnames(
   alignItems('items-center', 'sm:items-stretch'),
   justifyContent('sm:justify-center')
 )
+
+const mobile = false
 
 function Main() {
   return (
@@ -53,7 +47,7 @@ function Main() {
           <Badges />
         </Card>
       </div>
-      <ZkProofButton />
+      {mobile && <ZkProofButton />}
     </>
   )
 }
