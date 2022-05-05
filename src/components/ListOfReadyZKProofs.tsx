@@ -7,8 +7,10 @@ import ContractName from 'components/ContractName'
 import ProofButton from 'components/ProofButton'
 import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
+import WalletStore from 'stores/WalletStore'
 
 function ContractList() {
+  const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
 
   return (
@@ -19,7 +21,9 @@ function ContractList() {
             <ProofLine>
               <ContractName address={proof.contract} />
               <ProofButton color="yellow">
-                <span>Proof made</span>
+                <span>
+                  Proof {proof.account === account ? 'made' : 'saved'}
+                </span>
                 <Complete color="yellow" />
               </ProofButton>
             </ProofLine>

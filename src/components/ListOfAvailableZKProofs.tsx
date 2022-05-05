@@ -2,6 +2,7 @@ import { BodyText } from 'components/Text'
 import { FC } from 'react'
 import { Suspense, useState } from 'react'
 import { useSnapshot } from 'valtio'
+import BadgesHintCard from 'components/BadgesHintCard'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
 import Proof from 'models/Proof'
@@ -96,6 +97,9 @@ function ContractList() {
             <ZKProof contractAddress={contract.address} />
           ))}
         </ContractListContainer>
+      )}
+      {originalContracts?.owned.length === 0 && (
+        <BadgesHintCard text="You don't have any available proofs to generate." />
       )}
     </>
   )
