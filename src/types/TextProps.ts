@@ -12,7 +12,8 @@ export interface AccentTextProps {
 
 export interface LinkTextProps {
   url: string
-  gradient?: TGradientColorStops
+  gradientFrom?: TGradientColorStops
+  gradientTo?: TGradientColorStops
   bold?: boolean
   onClick?: () => void
 }

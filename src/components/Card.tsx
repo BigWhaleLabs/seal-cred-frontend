@@ -20,6 +20,7 @@ type Color = 'pink' | 'yellow' | 'green' | 'blue'
 interface CardProps {
   shadow?: boolean
   color?: Color
+  onlyWrap?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -52,7 +53,7 @@ const cardColor = (color?: Color) => {
   )
 }
 
-const cardContainer = (shadow?: boolean, color?: Color) => {
+const cardContainer = (shadow?: boolean, color?: Color, onlyWrap = false) => {
   return classnames(
     borderRadius('rounded-2xl'),
     backgroundColor('bg-blue-900'),
@@ -61,13 +62,15 @@ const cardContainer = (shadow?: boolean, color?: Color) => {
     space('space-y-4'),
     width('w-mobile-card', 'lg:w-card'),
     margin('mx-4', 'lg:mx-0'),
-    height('h-fit', 'lg:h-card'),
+    height(onlyWrap ? undefined : 'h-fit', onlyWrap ? undefined : 'lg:h-card'),
     maxHeight('max-h-508')
   )
 }
 
-const Card: FC<CardProps> = ({ color, shadow, children }) => {
-  return <div className={cardContainer(shadow, color)}>{children}</div>
+const Card: FC<CardProps> = ({ color, shadow, onlyWrap, children }) => {
+  return (
+    <div className={cardContainer(shadow, color, onlyWrap)}>{children}</div>
+  )
 }
 
 export default Card

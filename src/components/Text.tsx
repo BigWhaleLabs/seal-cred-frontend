@@ -7,6 +7,7 @@ import {
 import { FC } from 'react'
 import {
   TTextColor,
+  backgroundClip,
   backgroundImage,
   classnames,
   fontFamily,
@@ -106,13 +107,16 @@ export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
 
-const linkText = ({ gradient, bold }: LinkTextProps) =>
+const linkText = ({ gradientFrom, gradientTo, bold }: LinkTextProps) =>
   classnames(
     textDecoration('no-underline'),
-    textColor(gradient ? 'text-transparent' : 'text-yellow'),
-    backgroundImage(gradient ? 'bg-gradient-to-r' : undefined),
-    gradientColorStops(gradient),
-    fontWeight(bold ? 'font-bold' : 'font-normal')
+    textColor(gradientFrom || gradientTo ? 'text-transparent' : 'text-yellow'),
+    backgroundImage(
+      gradientFrom || gradientTo ? 'bg-gradient-to-r' : undefined
+    ),
+    backgroundClip(gradientFrom || gradientTo ? 'bg-clip-text' : undefined),
+    gradientColorStops(gradientFrom, gradientTo),
+    fontWeight(bold ? 'font-semibold' : 'font-normal')
   )
 export const LinkText: FC<LinkTextProps> = (props) => {
   return (
