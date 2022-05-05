@@ -1,6 +1,9 @@
 import { AccentText, BodyText, HeaderText, LinkText } from 'components/Text'
+import { useParams } from 'react-router-dom'
 import Button from 'components/Button'
 import Card from 'components/Card'
+import ContractName from 'components/ContractName'
+import NotFound from 'pages/NotFound'
 import Smile from 'icons/Smile'
 import classnames, {
   alignItems,
@@ -27,7 +30,9 @@ const walletAddress = classnames(
 const getStartedCard = classnames(margin('mt-6'))
 
 export default function OwnedBadge() {
-  return (
+  const { derivativeAddress, tokenId } = useParams()
+
+  return !!derivativeAddress && tokenId !== undefined ? (
     <div className={mainBox}>
       <Card
         color="pink"
@@ -38,13 +43,16 @@ export default function OwnedBadge() {
         <HeaderText size="4xl" leading={11}>
           This wallet owns a{' '}
           <AccentText color="text-pink" bold>
-            Cryptopunk
+            <ContractName address={derivativeAddress} />
           </AccentText>
         </HeaderText>
         <BodyText size="base">
           This is a zkNFT derivative. It means this person has been verified to
           own at least one{' '}
-          <AccentText color="text-pink">‘Cryptopunk’</AccentText> NFT.
+          <AccentText color="text-pink">
+            `<ContractName address={derivativeAddress} />`
+          </AccentText>{' '}
+          NFT.
         </BodyText>
 
         <hr />
@@ -76,5 +84,7 @@ export default function OwnedBadge() {
         </Card>
       </div>
     </div>
+  ) : (
+    <NotFound />
   )
 }
