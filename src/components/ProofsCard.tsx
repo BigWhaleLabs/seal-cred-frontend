@@ -5,9 +5,25 @@ import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import WalletStore from 'stores/WalletStore'
-import classnames, { space } from 'classnames/tailwind'
+import ZkProofButton from 'components/ZkProofButton'
+import classnames, {
+  alignItems,
+  display,
+  flexDirection,
+  justifyContent,
+  space,
+  width,
+} from 'classnames/tailwind'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 const titleContainer = classnames(space('space-y-2'))
+
+const proofCardZKButtonContainer = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  alignItems('items-center'),
+  width('w-full', 'sm:w-fit')
+)
 
 function Proofs() {
   return (
@@ -24,11 +40,16 @@ function Proofs() {
 
 function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
+  const { width } = useWindowDimensions()
+  const mobile = width < 640
 
   return (
-    <Card color="yellow" shadow>
-      {account ? <Proofs /> : <ConnectAccount />}
-    </Card>
+    <div className={proofCardZKButtonContainer}>
+      <Card color="yellow" shadow>
+        {account ? <Proofs /> : <ConnectAccount />}
+      </Card>
+      {!mobile && <ZkProofButton />}
+    </div>
   )
 }
 

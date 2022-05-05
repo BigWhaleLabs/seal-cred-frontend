@@ -69,8 +69,7 @@ module.exports = {
       },
       height: {
         card: '508px',
-        'mobile-proofing-card': '276px',
-        'mobile-badging-card': '365px',
+        'mobile-card': '365px',
       },
       width: {
         card: '398px',

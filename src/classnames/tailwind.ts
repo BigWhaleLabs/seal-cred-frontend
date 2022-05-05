@@ -6517,8 +6517,7 @@ export type THeight =
   | 'h-max'
   | 'h-fit'
   | 'h-card'
-  | 'h-mobile-proofing-card'
-  | 'h-mobile-badging-card'
+  | 'h-mobile-card'
 
 export type TMinHeight =
   | 'min-h-0'

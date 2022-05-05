@@ -57,29 +57,23 @@ const cardColor = (color?: Color) => {
   )
 }
 
-const cardContainer = (shadow?: boolean, color?: Color, proofing?: boolean) => {
+const cardContainer = (shadow?: boolean, color?: Color) => {
   return classnames(
     borderRadius('rounded-2xl'),
     backgroundColor('bg-blue-900'),
     cardColor(shadow ? color : undefined),
     padding('p-6'),
     space('space-y-4'),
-    width('w-mobile-card', 'lg:w-card'),
+    width('w-mobile-card', 'sm:w-card'),
     margin('mx-4', 'sm:mx-0'),
-    height(
-      proofing ? 'h-mobile-proofing-card' : 'h-mobile-badging-card',
-      'lg:h-card'
-    ),
-    minHeight('min-h-full'),
+    height('h-mobile-card', 'sm:h-card'),
     maxHeight('max-h-508'),
     overflow('overflow-auto')
   )
 }
 
-const Card: FC<CardProps> = ({ color, shadow, proofing, children }) => {
-  return (
-    <div className={cardContainer(shadow, color, proofing)}>{children}</div>
-  )
+const Card: FC<CardProps> = ({ color, shadow, children }) => {
+  return <div className={cardContainer(shadow, color)}>{children}</div>
 }
 
 export default Card

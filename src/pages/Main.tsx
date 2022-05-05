@@ -7,7 +7,6 @@ import DerivativeContractsOwned from 'components/DerivativeContractsOwned'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import OriginalContractsOwned from 'components/OriginalContractsOwned'
-import ProofingCard from 'components/ProofingCard'
 import ProofsCard from 'components/ProofsCard'
 import SupportedContracts from 'components/SupportedContracts'
 import UnmintedDerivatives from 'components/UnmintedDerivatives'
@@ -22,6 +21,7 @@ import classnames, {
   margin,
   space,
 } from 'classnames/tailwind'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 const mainBlock = classnames(
   display('flex'),
@@ -30,9 +30,10 @@ const mainBlock = classnames(
   justifyContent('sm:justify-center')
 )
 
-const mobile = false
-
 function Main() {
+  const { width } = useWindowDimensions()
+  const mobile = width < 640
+
   return (
     <>
       {/* <div className={proofingCardContainer}>
