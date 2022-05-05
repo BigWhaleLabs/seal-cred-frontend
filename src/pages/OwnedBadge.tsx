@@ -1,4 +1,6 @@
 import { AccentText, BodyText, HeaderText, LinkText } from 'components/Text'
+import { SCERC721Derivative__factory } from '@big-whale-labs/street-cred-ledger-contract'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Button from 'components/Button'
 import Card from 'components/Card'
@@ -13,6 +15,7 @@ import classnames, {
   margin,
   textOverflow,
 } from 'classnames/tailwind'
+import defaultProvider from 'helpers/defaultProvider'
 
 const mainBox = classnames(
   display('flex'),
@@ -31,8 +34,24 @@ const getStartedCard = classnames(margin('mt-6'))
 
 export default function OwnedBadge() {
   const { derivativeAddress, tokenId } = useParams()
+  const [badge, setBadge] = useState<{ address: string; owner: string }>()
 
-  return !!derivativeAddress && tokenId !== undefined ? (
+  useEffect(() => {
+    async function fetchData() {
+      if (derivativeAddress && tokenId !== undefined)
+        setBadge({
+          address: derivativeAddress,
+          owner: await SCERC721Derivative__factory.connect(
+            derivativeAddress,
+            defaultProvider
+          ).ownerOf(tokenId),
+        })
+    }
+
+    void fetchData()
+  })
+
+  return badge ? (
     <div className={mainBox}>
       <Card
         color="pink"
@@ -43,14 +62,14 @@ export default function OwnedBadge() {
         <HeaderText size="4xl" leading={11}>
           This wallet owns a{' '}
           <AccentText color="text-pink" bold>
-            <ContractName address={derivativeAddress} />
+            <ContractName address={badge.address} />
           </AccentText>
         </HeaderText>
         <BodyText size="base">
           This is a zkNFT derivative. It means this person has been verified to
           own at least one{' '}
           <AccentText color="text-pink">
-            `<ContractName address={derivativeAddress} />`
+            `<ContractName address={badge.address} />`
           </AccentText>{' '}
           NFT.
         </BodyText>
@@ -62,12 +81,12 @@ export default function OwnedBadge() {
           <div className={walletAddress}>
             <BodyText size="sm">Wallet address</BodyText>
             <LinkText
-              url=""
+              url={`https://etherscan.io/address/${badge.owner}`}
               gradientFrom="from-pink"
               gradientTo="to-yellow"
               bold
             >
-              0x9F44Bd870c03Bda38bc18f277D04A1C9E9318FeA
+              {badge.owner}
             </LinkText>
           </div>
         </div>

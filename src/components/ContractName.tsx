@@ -1,4 +1,3 @@
-import { BodyText } from 'components/Text'
 import { SubheaderText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
@@ -8,11 +7,11 @@ import shortenedAddress from 'helpers/shortenedAddress'
 function ContractNameComponent({ address }: { address: string }) {
   const { contractNames } = useSnapshot(StreetCredStore)
   return (
-    <BodyText size="base">
+    <>
       {contractNames[address]
         ? contractNames[address]
         : `Contract: ${shortenedAddress(address)}`}
-    </BodyText>
+    </>
   )
 }
 

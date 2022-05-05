@@ -54,7 +54,9 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
 
   return (
     <ProofLine>
-      <ContractName address={contractAddress} />
+      <BodyText size="base">
+        <ContractName address={contractAddress} />
+      </BodyText>
       <ProofButton
         color={color}
         onClick={async () => {

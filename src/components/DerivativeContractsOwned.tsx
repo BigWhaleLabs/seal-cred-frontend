@@ -12,7 +12,9 @@ function ContractList() {
       {derivativeContracts?.owned?.length ? (
         <ContractListContainer>
           {derivativeContracts.owned.map((contract) => (
-            <ContractName key={contract.address} address={contract.address} />
+            <BodyText size="base">
+              <ContractName key={contract.address} address={contract.address} />
+            </BodyText>
           ))}
         </ContractListContainer>
       ) : (
