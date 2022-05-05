@@ -80,9 +80,11 @@ const Card: FC<CardProps> = ({
 }) => {
   return (
     <div className={cardContainer(shadow, color, onlyWrap)}>
-      <div className="absolute -top-28 -right-28 md:block hidden">
-        {!!spinner && <ArcText text={spinner} />}
-      </div>
+      {!!spinner && (
+        <div className="absolute -top-28 -right-28 md:block hidden">
+          <ArcText text={spinner} />
+        </div>
+      )}
       {children}
     </div>
   )
