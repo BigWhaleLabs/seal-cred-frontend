@@ -101,10 +101,9 @@ export const LogoText: FC = ({ children }) => {
   return <span className={logoText}>{children}</span>
 }
 
-const badgeText = (pink?: boolean) =>
-  classnames(textColor(pink ? 'text-pink' : 'text-white'))
-export const BadgeText: FC<{ pink?: boolean }> = ({ pink, children }) => {
-  return <span className={badgeText(pink)}>{children}</span>
+const badgeText = textColor('text-white')
+export const BadgeText: FC = ({ children }) => {
+  return <span className={badgeText}>{children}</span>
 }
 
 const linkText = ({ gradient, bold }: LinkTextProps) =>
