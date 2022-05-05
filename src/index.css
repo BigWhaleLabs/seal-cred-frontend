@@ -13,21 +13,29 @@ body {
     0/48px 48px;
 }
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #fed823 transparent;
+  scrollbar-shadow-color: #1a0259;
+  scrollbar-width: 8px;
+  scrollbar-gutter: 8px;
+}
 ::-webkit-scrollbar {
   background-color: #00000000;
-  width: 16px;
+  width: 8px;
 }
 
 /* background of the scrollbar except button or resizer */
 ::-webkit-scrollbar-track {
-  background-color: #00000000;
+  width: 1px;
+  border: 1px solid #1a0259;
+  background-color: #f1962e;
 }
 
 /* scrollbar itself */
 ::-webkit-scrollbar-thumb {
   background-color: #fed823;
-  border-radius: 16px;
-  border: 5px solid #fff;
+  border-radius: 50px;
   filter: dropShadow(0px 0px 10px #fed823);
 }
 ::-webkit-scrollbar-thumb:hover {
