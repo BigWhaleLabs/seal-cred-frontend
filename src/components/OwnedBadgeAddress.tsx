@@ -3,7 +3,7 @@ import { LinkText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import StreetCredStore from 'stores/StreetCredStore'
 import truncateMiddle from 'helpers/truncateMiddle'
-import useWindowDimensions from 'helpers/useWindowDimensions'
+import useBreakpoints from 'helpers/useBreakpoints'
 
 function OwnedBadgeAddressSuspender({
   derivativeAddress,
@@ -15,8 +15,7 @@ function OwnedBadgeAddressSuspender({
   const { ledger } = useSnapshot(StreetCredStore)
   const contract = ledger[derivativeAddress].derivativeContract
   const [address, setAddress] = useState<string | undefined>(undefined)
-  const { width } = useWindowDimensions()
-  const mobile = width < 600
+  const { md } = useBreakpoints()
 
   useEffect(() => {
     async function getAddress() {
@@ -36,7 +35,7 @@ function OwnedBadgeAddressSuspender({
           title={address}
           bold
         >
-          {truncateMiddle(address, mobile ? 11 : 13, -(mobile ? 11 : 14))}
+          {truncateMiddle(address, !md ? 11 : 13, -(!md ? 11 : 14))}
         </LinkText>
       )}
     </>
