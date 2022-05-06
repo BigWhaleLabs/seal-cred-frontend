@@ -123,6 +123,7 @@ export const LinkText: FC<LinkTextProps> = (props) => {
     <a
       className={linkText(props)}
       href={props.url}
+      title={props.title}
       rel="noopener noreferrer"
       target={'_blank'}
     >
