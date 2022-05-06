@@ -7,6 +7,7 @@ import BadgeIcon from 'icons/BadgeIcon'
 import Button from 'components/Button'
 import Complete from 'icons/Complete'
 import ProofStore from 'stores/ProofStore'
+import QRCode from 'components/QRCode'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -79,7 +80,7 @@ function Badge({
       {originalAddress ? (
         <BadgeIcon color="pink" />
       ) : (
-        <img src="/img/qr.png" alt="Scan to view a badge" />
+        <QRCode derivativeAddress={derivativeAddress} tokenId={0} />
       )}
       <div className={badgeBody(!!originalAddress)}>
         <BadgeText>
