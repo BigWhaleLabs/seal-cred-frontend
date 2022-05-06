@@ -40,7 +40,7 @@ export default function QRCode({
   useEffect(() => {
     if (ref.current) qrCode.append(ref.current)
     qrCode.update({
-      data: `https://streetcred.one/public/${derivativeAddress}/${tokenId}`,
+      data: `https://streetcred.one/${derivativeAddress}/${tokenId}`,
     })
   }, [derivativeAddress, tokenId])
 
