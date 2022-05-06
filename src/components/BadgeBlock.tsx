@@ -8,6 +8,7 @@ import Button from 'components/Button'
 import Complete from 'icons/Complete'
 import ProofStore from 'stores/ProofStore'
 import QRCode from 'components/QRCode'
+import QRLoading from 'icons/QRLoading'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -69,7 +70,8 @@ function Badge({
   derivativeAddress: string
   originalAddress?: string
 }) {
-  const { contractNames, ledger } = useSnapshot(StreetCredStore)
+  const { contractNames, derivativeTokenIds, ledger } =
+    useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
 
@@ -79,8 +81,13 @@ function Badge({
     <div className={badgeWrapper(!!originalAddress)}>
       {originalAddress ? (
         <BadgeIcon color="pink" />
+      ) : derivativeTokenIds[derivativeAddress] ? (
+        <QRCode
+          derivativeAddress={derivativeAddress}
+          tokenId={derivativeTokenIds[derivativeAddress][0]}
+        />
       ) : (
-        <QRCode derivativeAddress={derivativeAddress} />
+        <QRLoading />
       )}
       <div className={badgeBody(!!originalAddress)}>
         <BadgeText>

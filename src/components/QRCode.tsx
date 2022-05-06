@@ -1,12 +1,11 @@
-import { Suspense, useEffect, useRef } from 'react'
-import { useSnapshot } from 'valtio'
+import { useEffect, useRef } from 'react'
 import QRCodeStyling from 'qr-code-styling'
-import QrLoader from 'components/QrLoader'
-import StreetCredStore from 'stores/StreetCredStore'
+import QRLoading from 'icons/QRLoading'
 import classnames, { borderRadius, overflow } from 'classnames/tailwind'
 
 interface QRCodeProps {
   derivativeAddress: string
+  tokenId?: number
 }
 
 const qrCodeContainer = classnames(
@@ -15,9 +14,9 @@ const qrCodeContainer = classnames(
 )
 
 const qrCode = new QRCodeStyling({
-  width: 200,
-  height: 200,
-  margin: 10,
+  width: 140,
+  height: 140,
+  margin: 7,
   type: 'svg',
   image: '/img/logo.svg',
   dotsOptions: {
@@ -36,25 +35,22 @@ const qrCode = new QRCodeStyling({
   },
 })
 
-function QRCodeSuspender({ derivativeAddress }: QRCodeProps) {
-  const { derivativeTokenIds } = useSnapshot(StreetCredStore)
-  const tokenId = derivativeTokenIds[derivativeAddress]
-
-  const ref = useRef(null)
+export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
+  const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    if (ref.current) qrCode.append(ref.current)
-    qrCode.update({
-      data: `https://streetcred.one/public/${derivativeAddress}/${tokenId}`,
-    })
+    if (ref.current) {
+      if (ref.current.firstChild)
+        ref.current.removeChild(ref.current.firstChild)
+      qrCode.append(ref.current)
+      qrCode.update({
+        data: `https://streetcred.one/public/${derivativeAddress}/${tokenId}`,
+      })
+    }
   }, [derivativeAddress, tokenId])
 
-  return <div ref={ref} className={qrCodeContainer} />
-}
-
-export default function QRCode({ derivativeAddress }: QRCodeProps) {
   return (
-    <Suspense fallback={<QrLoader />}>
-      <QRCodeSuspender derivativeAddress={derivativeAddress} />
-    </Suspense>
+    <div ref={ref} className={qrCodeContainer}>
+      <QRLoading />
+    </div>
   )
 }
