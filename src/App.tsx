@@ -1,4 +1,9 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { useSnapshot } from 'valtio'
 import Landing from 'pages/Landing'
@@ -19,7 +24,11 @@ export default function App() {
         <ToastContainer position="bottom-right" theme="dark" />
         <Routes>
           <Route path="/:derivativeAddress/:tokenId" element={<OwnedBadge />} />
-          <Route path="/" element={account ? <Main /> : <Landing />} />
+          <Route path="/" element={<Landing />} />
+          <Route
+            path="/app"
+            element={account ? <Main /> : <Navigate to="/" />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

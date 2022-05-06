@@ -1,7 +1,7 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
+import { useNavigate } from 'react-router-dom'
 import Button from 'components/Button'
 import Card from 'components/Card'
-import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
   display,
@@ -15,6 +15,8 @@ const pageBox = classnames(
 )
 
 function Landing() {
+  const navigate = useNavigate()
+
   return (
     <div className={pageBox}>
       <Card shadow color="yellow" onlyWrap>
@@ -26,7 +28,7 @@ function Landing() {
           experience the world pseudonymously with ZK badges. This means you can
           prove ownership of an NFT without it tracing back to you.
         </BodyText>
-        <Button colors="primary" onClick={() => WalletStore.connect(true)}>
+        <Button colors="primary" onClick={() => navigate('/app')}>
           Get started
         </Button>
       </Card>
