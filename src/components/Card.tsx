@@ -81,7 +81,6 @@ const Card: FC<CardProps> = ({
   return (
     <div className={cardContainer(shadow, color, onlyWrap)}>
       {!!spinner && (
-        // Can't use negative positioning in classnames()
         <div className="absolute md:-top-28 md:-right-28 -top-24 -right-4">
           <ArcText text={spinner} />
         </div>
