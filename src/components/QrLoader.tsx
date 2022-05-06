@@ -1,4 +1,5 @@
 import { BodyText } from 'components/Text'
+import QRLoading from 'icons/QRLoading'
 import classnames, {
   alignItems,
   borderRadius,
@@ -30,7 +31,7 @@ const loader = classnames(
 export default function QrLoader() {
   return (
     <div className={wrapper}>
-      <img src="img/loadingQr.png" className={image} />
+      <QRLoading className={image} />
       <div className={loader}>
         <BodyText size="lg" center>
           Generating
