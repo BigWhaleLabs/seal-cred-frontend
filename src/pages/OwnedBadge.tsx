@@ -1,5 +1,5 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import ContractName from 'components/ContractName'
@@ -33,6 +33,8 @@ const getStartedCard = classnames(margin('mt-6'))
 
 export default function OwnedBadge() {
   const { derivativeAddress, tokenId } = useParams()
+
+  const navigate = useNavigate()
 
   return derivativeAddress && tokenId ? (
     <div className={mainBox}>
@@ -76,7 +78,7 @@ export default function OwnedBadge() {
           <AccentText color="text-green">
             Create your own zkNFT with SealCred.
           </AccentText>
-          <Button colors="primary" small>
+          <Button colors="primary" small onClick={() => navigate('/')}>
             Get started
           </Button>
         </Card>
