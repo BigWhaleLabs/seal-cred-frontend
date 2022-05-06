@@ -18,10 +18,7 @@ export default function App() {
         <Navbar />
         <ToastContainer position="bottom-right" theme="dark" />
         <Routes>
-          <Route
-            path="/public/:derivativeAddress/:tokenId"
-            element={<OwnedBadge />}
-          />
+          <Route path="/:derivativeAddress/:tokenId" element={<OwnedBadge />} />
           <Route path="/" element={account ? <Main /> : <Landing />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
