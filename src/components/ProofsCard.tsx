@@ -15,6 +15,7 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import proofStore from 'stores/ProofStore'
+import useBreakpoints from 'helpers/useBreakpoints'
 
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
@@ -66,6 +67,7 @@ function ReadyProofs() {
 function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
+  const { lg } = useBreakpoints()
 
   return (
     <div className={proofCardZKButtonContainer}>
@@ -78,7 +80,7 @@ function ProofsCard() {
           <ConnectAccount />
         )}
       </Card>
-      <ZkProofButton />
+      {!lg && <ZkProofButton />}
     </div>
   )
 }
