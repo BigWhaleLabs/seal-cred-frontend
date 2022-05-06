@@ -14,7 +14,7 @@ const pageBox = classnames(
   alignItems('items-center')
 )
 
-function Main() {
+function Landing() {
   return (
     <div className={pageBox}>
       <Card shadow color="yellow" onlyWrap>
@@ -34,4 +34,4 @@ function Main() {
   )
 }
 
-export default Main
+export default Landing
