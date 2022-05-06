@@ -7,6 +7,7 @@ import Ledger from 'models/Ledger'
 import SortedContracts from 'models/SortedContracts'
 import filterContracts from 'helpers/filterContracts'
 import getLedger, { getLedgerRecord } from 'helpers/ledger'
+import getOwnerTokenIds from 'helpers/getOwnerTokenIds'
 import streetCred from 'helpers/streetCred'
 
 // TODO: listen to ledger's original and derivative contracts Transfer events and update originalContractsOwned and derivativeContractsOwned
@@ -17,9 +18,11 @@ interface StreetCredStoreType {
   originalContracts?: Promise<SortedContracts<ERC721>>
   derivativeContracts?: Promise<SortedContracts<SCERC721Derivative>>
   contractNames: { [contractAddress: string]: Promise<string | undefined> }
+  derivativeTokenIds: { [contractAddress: string]: Promise<number> }
 
   handleAccountChange: (account?: string) => Promise<void>
   refreshContractNames: (ledger: Ledger) => void
+  refreshDerivativeTokenIds: (account: string) => void
   refreshDerivativeContracts: (account: string) => Promise<void>
 }
 
@@ -29,6 +32,7 @@ const StreetCredStore = proxy<StreetCredStoreType>({
     return ledger
   }),
   contractNames: {},
+  derivativeTokenIds: {},
 
   async handleAccountChange(account?: string) {
     if (!account) {
@@ -45,6 +49,19 @@ const StreetCredStore = proxy<StreetCredStoreType>({
       account
     )
     await StreetCredStore.refreshDerivativeContracts(account)
+  },
+
+  async refreshDerivativeTokenIds(account: string) {
+    if (!account) StreetCredStore.derivativeTokenIds = {}
+    const derivativeContracts = await StreetCredStore.derivativeContracts
+    for (const contract of derivativeContracts?.owned ?? []) {
+      if (!StreetCredStore.derivativeTokenIds[contract.address]) {
+        StreetCredStore.derivativeTokenIds[contract.address] = getOwnerTokenIds(
+          contract,
+          account
+        )
+      }
+    }
   },
 
   refreshContractNames(ledger: Ledger) {
@@ -70,6 +87,7 @@ const StreetCredStore = proxy<StreetCredStoreType>({
       derivativeContracts,
       account
     )
+    await StreetCredStore.refreshDerivativeTokenIds(account)
   },
 })
 

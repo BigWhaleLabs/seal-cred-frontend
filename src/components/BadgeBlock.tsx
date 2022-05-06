@@ -80,14 +80,12 @@ function Badge({
       {originalAddress ? (
         <BadgeIcon color="pink" />
       ) : (
-        <QRCode derivativeAddress={derivativeAddress} tokenId={0} />
+        <QRCode derivativeAddress={derivativeAddress} />
       )}
       <div className={badgeBody(!!originalAddress)}>
         <BadgeText>
           {contractNames[derivativeAddress]
-            ? `${contractNames[derivativeAddress]} (${shortenedAddress(
-                derivativeAddress
-              )})`
+            ? `${contractNames[derivativeAddress]}`
             : `Contract: ${shortenedAddress(derivativeAddress)}`}
         </BadgeText>
         {originalAddress ? (

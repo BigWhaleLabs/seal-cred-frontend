@@ -1,6 +1,13 @@
-import { useEffect, useRef } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
+import { useSnapshot } from 'valtio'
 import QRCodeStyling from 'qr-code-styling'
+import QrLoader from 'components/QrLoader'
+import StreetCredStore from 'stores/StreetCredStore'
 import classnames, { borderRadius, overflow } from 'classnames/tailwind'
+
+interface QRCodeProps {
+  derivativeAddress: string
+}
 
 const qrCodeContainer = classnames(
   borderRadius('rounded-2xl'),
@@ -29,13 +36,10 @@ const qrCode = new QRCodeStyling({
   },
 })
 
-export default function QRCode({
-  derivativeAddress,
-  tokenId,
-}: {
-  derivativeAddress: string
-  tokenId: number
-}) {
+function QRCodeSuspender({ derivativeAddress }: QRCodeProps) {
+  const { derivativeTokenIds } = useSnapshot(StreetCredStore)
+  const tokenId = derivativeTokenIds[derivativeAddress]
+
   const ref = useRef(null)
   useEffect(() => {
     if (ref.current) qrCode.append(ref.current)
@@ -45,4 +49,12 @@ export default function QRCode({
   }, [derivativeAddress, tokenId])
 
   return <div ref={ref} className={qrCodeContainer} />
+}
+
+export default function QRCode({ derivativeAddress }: QRCodeProps) {
+  return (
+    <Suspense fallback={<QrLoader />}>
+      <QRCodeSuspender derivativeAddress={derivativeAddress} />
+    </Suspense>
+  )
 }
