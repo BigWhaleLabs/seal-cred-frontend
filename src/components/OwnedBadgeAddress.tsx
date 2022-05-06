@@ -16,7 +16,7 @@ function OwnedBadgeAddressSuspender({
   const contract = ledger[derivativeAddress].derivativeContract
   const [address, setAddress] = useState<string | undefined>(undefined)
   const { width } = useWindowDimensions()
-  const mobile = width < 1024
+  const mobile = width < 600
 
   useEffect(() => {
     async function getAddress() {

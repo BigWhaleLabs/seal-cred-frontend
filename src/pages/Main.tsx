@@ -19,7 +19,7 @@ const mainBlock = classnames(
 
 function Main() {
   const { width } = useWindowDimensions()
-  const mobile = width < 1024
+  const mobile = width < 600
 
   return (
     <>

@@ -69,7 +69,7 @@ function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
   const { width } = useWindowDimensions()
-  const mobile = width < 1024
+  const mobile = width < 600
 
   return (
     <div className={proofCardZKButtonContainer}>
