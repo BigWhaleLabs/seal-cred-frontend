@@ -1,6 +1,14 @@
-import { dropShadow } from 'classnames/tailwind'
+import classnames, {
+  borderRadius,
+  boxShadow,
+  boxShadowColor,
+} from 'classnames/tailwind'
 
-const smileCircle = dropShadow('drop-shadow-yellow')
+const smileGlow = classnames(
+  boxShadow('shadow-lg'),
+  boxShadowColor('shadow-pink50'),
+  borderRadius('rounded-full')
+)
 
 const Smile = () => {
   return (
@@ -10,15 +18,9 @@ const Smile = () => {
       viewBox="0 0 42 43"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={smileGlow}
     >
-      <circle
-        cx="21"
-        cy="21.5"
-        r="20"
-        stroke="#FF7BED"
-        stroke-width="2"
-        className={smileCircle}
-      />
+      <circle cx="21" cy="21.5" r="20" stroke="#FF7BED" stroke-width="2" />
       <path
         d="M29.75 26.2172C29.75 31.2059 25.8325 35.25 21 35.25C16.1675 35.25 12.25 31.2059 12.25 26.2172C12.25 21.2285 16.1675 26.2171 21 26.2171C25.8325 26.2171 29.75 21.2285 29.75 26.2172Z"
         stroke="#FF7BED"
