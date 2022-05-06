@@ -1,14 +1,12 @@
 import Badges from 'components/Badges'
 import CardSeparator from 'components/CardSeparator'
 import ProofsCard from 'components/ProofsCard'
-import ZkProofButton from 'components/ZkProofButton'
 import classnames, {
   alignItems,
   display,
   flexDirection,
   justifyContent,
 } from 'classnames/tailwind'
-import useWindowDimensions from 'helpers/useWindowDimensions'
 
 const mainBlock = classnames(
   display('flex'),
@@ -18,9 +16,6 @@ const mainBlock = classnames(
 )
 
 function Main() {
-  const { width } = useWindowDimensions()
-  const mobile = width < 600
-
   return (
     <>
       <div className={mainBlock}>
@@ -28,7 +23,6 @@ function Main() {
         <CardSeparator number={3} from="yellow" to="pink" />
         <Badges />
       </div>
-      {mobile && <ZkProofButton />}
     </>
   )
 }

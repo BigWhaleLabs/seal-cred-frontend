@@ -15,14 +15,13 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import proofStore from 'stores/ProofStore'
-import useWindowDimensions from 'helpers/useWindowDimensions'
 
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
-  flexDirection('flex-col'),
+  flexDirection('flex-col-reverse', 'lg:flex-col'),
   alignItems('items-center'),
   width('w-full', 'lg:w-fit')
 )
@@ -68,8 +67,6 @@ function ReadyProofs() {
 function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
-  const { width } = useWindowDimensions()
-  const mobile = width < 600
 
   return (
     <div className={proofCardZKButtonContainer}>
@@ -82,7 +79,7 @@ function ProofsCard() {
           <ConnectAccount />
         )}
       </Card>
-      {!mobile && <ZkProofButton />}
+      <ZkProofButton />
     </div>
   )
 }
