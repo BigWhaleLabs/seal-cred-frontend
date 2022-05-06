@@ -50,13 +50,15 @@ const StreetCredStore = proxy<StreetCredStoreType>({
       account
     )
     await StreetCredStore.refreshDerivativeContracts(account)
-    await StreetCredStore.refreshDerivativeTokenIds(account)
+    StreetCredStore.refreshDerivativeTokenIds(account)
   },
 
   async refreshDerivativeTokenIds(account: string) {
     if (!account) StreetCredStore.derivativeTokenIds = {}
     const derivativeContracts = await StreetCredStore.derivativeContracts
-    for (const contract of derivativeContracts?.owned ?? []) {
+    const ownedDerivativeContracts = derivativeContracts?.owned ?? []
+
+    for (const contract of ownedDerivativeContracts) {
       if (!StreetCredStore.derivativeTokenIds[contract.address]) {
         const owners = await getMapOfOwners(contract)
         StreetCredStore.derivativeTokenIds[contract.address] = findByValue<
