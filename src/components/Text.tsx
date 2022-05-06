@@ -47,11 +47,12 @@ export const SubheaderText: FC = ({ children }) => {
   return <h2 className={subheaderText}>{children}</h2>
 }
 
-const accentText = ({ color, align, bold }: AccentTextProps) =>
+const accentText = ({ color, align, bold, small }: AccentTextProps) =>
   classnames(
     textColor(color),
     textAlign(align),
-    fontWeight(bold ? 'font-bold' : 'font-normal')
+    fontWeight(bold ? 'font-bold' : 'font-normal'),
+    fontSize(small ? 'text-sm' : 'text-base')
   )
 export const AccentText: FC<AccentTextProps> = (props) => {
   return <span className={accentText(props)}>{props.children}</span>

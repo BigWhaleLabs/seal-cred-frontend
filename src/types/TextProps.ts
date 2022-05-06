@@ -8,6 +8,7 @@ export interface AccentTextProps {
   color: TTextColor
   align?: TTextAlign
   bold?: boolean
+  small?: boolean
 }
 
 export interface LinkTextProps {
