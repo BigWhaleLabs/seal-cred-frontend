@@ -20,7 +20,7 @@ function TextBlock({ address, otherStyle, isFetching }: FetchingContract) {
       {address}
     </>
   ) : (
-    <BodyText size="base">
+    <BodyText size="sm">
       {isFetching && <>Fetching </>}
       {address}
     </BodyText>
