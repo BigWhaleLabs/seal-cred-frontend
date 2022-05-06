@@ -36,7 +36,7 @@ export default function OwnedBadge() {
 
   const navigate = useNavigate()
 
-  return derivativeAddress && tokenId ? (
+  return derivativeAddress && tokenId !== undefined ? (
     <div className={mainBox}>
       <Card
         color="pink"
