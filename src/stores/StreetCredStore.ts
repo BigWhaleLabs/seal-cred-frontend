@@ -59,12 +59,13 @@ const StreetCredStore = proxy<StreetCredStoreType>({
     const ownedDerivativeContracts = derivativeContracts?.owned ?? []
 
     for (const contract of ownedDerivativeContracts) {
-      if (!StreetCredStore.derivativeTokenIds[contract.address]) {
-        const owners = await getMapOfOwners(contract)
-        StreetCredStore.derivativeTokenIds[contract.address] = findByValue<
-          number,
-          string
-        >(owners, account)
+      const owners = await getMapOfOwners(contract)
+      const tokenIds = findByValue<number, string>(owners, account)
+      if (
+        !!tokenIds.length &&
+        !StreetCredStore.derivativeTokenIds[contract.address]
+      ) {
+        StreetCredStore.derivativeTokenIds[contract.address] = tokenIds
       }
     }
   },
