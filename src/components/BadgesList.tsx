@@ -45,45 +45,39 @@ const badgesListOverflow = classnames(
 )
 
 function BadgeListSuspender() {
-  const {
-    derivativeContracts = [],
-    ledger,
-    derivativeTokenIds,
-  } = useSnapshot(StreetCredStore)
+  const { derivativeContracts, ledger, derivativeTokenIds } =
+    useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const completedProofs = proxy(proofsCompleted)
   const scLedger = proxy(ledger)
+  const derivatives = proxy(derivativeContracts)
 
   const proofContracts = useMemo(
     () => new Set(completedProofs.map((p) => p.contract)),
     [completedProofs]
   )
 
-  const unownedDerivativeRecords = useMemo(() => {
-    const unownedDerivativeToOriginalAddressesMap = {} as {
-      [derivativeAddress: string]: string
-    }
+  const unownedDerivativeToOriginalAddressesMap = {} as {
+    [derivativeAddress: string]: string
+  }
 
-    for (const proofContract of proofContracts) {
-      const derivativeContract = scLedger[proofContract].derivativeContract
-      if (!derivativeContract) continue
-      if (derivativeTokenIds[derivativeContract.address]) continue
-      unownedDerivativeToOriginalAddressesMap[derivativeContract.address] =
-        proofContract
-    }
+  for (const proofContract of proofContracts) {
+    const derivativeContract = scLedger[proofContract].derivativeContract
+    if (!derivativeContract) continue
+    if (derivativeTokenIds[derivativeContract.address]) continue
+    unownedDerivativeToOriginalAddressesMap[derivativeContract.address] =
+      proofContract
+  }
 
-    return Object.keys(unownedDerivativeToOriginalAddressesMap).map(
-      (address) => scLedger[unownedDerivativeToOriginalAddressesMap[address]]
-    )
-  }, [scLedger, proofContracts, derivativeTokenIds])
+  const unownedDerivativeRecords = Object.keys(
+    unownedDerivativeToOriginalAddressesMap
+  ).map((address) => scLedger[unownedDerivativeToOriginalAddressesMap[address]])
 
-  const ownedDerivatives = useMemo(
-    () =>
-      Object.keys(derivativeTokenIds).map((address) =>
-        derivativeContracts.find((contract) => contract.address === address)
-      ),
-    [derivativeTokenIds, derivativeContracts]
-  )
+  const ownedDerivatives = derivatives
+    ? Object.keys(derivativeTokenIds).map((address) =>
+        derivatives.find((contract) => contract.address === address)
+      )
+    : []
 
   const ownedDerivativesLength = ownedDerivatives.length
   const unownedLedgerRecordsWithProofs = unownedDerivativeRecords.length
