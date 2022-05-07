@@ -23,6 +23,7 @@ import {
   transitionDuration,
   transitionProperty,
   transitionTimingFunction,
+  width,
 } from 'classnames/tailwind'
 import Arrow from 'components/Arrow'
 import Loading from 'icons/Loading'
@@ -34,12 +35,17 @@ export interface ButtonProps {
   loading?: boolean
   small?: boolean
   arrow?: boolean
+  fullWidth?: boolean
 }
 
 type ButtonProperties = ButtonProps &
   React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const sharedClassNames = (loading?: boolean, disabled?: boolean) =>
+const sharedClassNames = (
+  fullWidth?: boolean,
+  loading?: boolean,
+  disabled?: boolean
+) =>
   classnames(
     display('flex'),
     flexDirection('flex-row'),
@@ -52,17 +58,19 @@ const sharedClassNames = (loading?: boolean, disabled?: boolean) =>
     cursor(loading || disabled ? 'cursor-not-allowed' : undefined),
     outlineStyle('focus:outline-none'),
     opacity(loading || disabled ? 'opacity-50' : undefined),
-    boxShadow('shadow-2xl', 'hover:shadow-lg', 'active:shadow-md')
+    boxShadow('shadow-2xl', 'hover:shadow-lg', 'active:shadow-md'),
+    width(!fullWidth ? 'w-fit' : undefined)
   )
 
 const button = (
   colors: ButtonColors,
   loading?: boolean,
   disabled?: boolean,
-  small?: boolean
+  small?: boolean,
+  fullWidth?: boolean
 ) =>
   classnames(
-    sharedClassNames(loading, disabled),
+    sharedClassNames(fullWidth, loading, disabled),
     colors === 'primary'
       ? classnames(
           textColor('text-blue-900'),

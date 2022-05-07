@@ -26,7 +26,7 @@ function Main() {
         <ProofsCard />
         <CardSeparator number={3} from="yellow" to="pink" />
         <Badges />
-        {lg && <ZkProofButton />}
+        {!lg && <ZkProofButton />}
       </div>
     </>
   )

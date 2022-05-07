@@ -80,7 +80,7 @@ function ProofsCard() {
           <ConnectAccount />
         )}
       </Card>
-      {!lg && <ZkProofButton />}
+      {lg && <ZkProofButton />}
     </div>
   )
 }

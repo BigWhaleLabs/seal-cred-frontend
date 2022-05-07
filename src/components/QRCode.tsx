@@ -1,16 +1,20 @@
 import { useEffect, useRef } from 'react'
 import QRCodeStyling from 'qr-code-styling'
-import classnames, { borderRadius, overflow } from 'classnames/tailwind'
+import classnames, {
+  borderRadius,
+  minWidth,
+  overflow,
+} from 'classnames/tailwind'
 
 const qrCodeContainer = classnames(
   borderRadius('rounded-2xl'),
-  overflow('overflow-hidden')
+  overflow('overflow-hidden'),
+  minWidth('min-w-fit')
 )
 
 const qrCode = new QRCodeStyling({
-  width: 200,
-  height: 200,
-  margin: 10,
+  width: 140,
+  height: 140,
   type: 'svg',
   image: '/img/logo.svg',
   dotsOptions: {
