@@ -1,9 +1,8 @@
 import { BodyText } from 'components/Text'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { Suspense, useState } from 'react'
 import { animation } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import BadgesHintCard from 'components/BadgesHintCard'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
 import Proof from 'models/Proof'
@@ -13,6 +12,7 @@ import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
+import proofStore from 'stores/ProofStore'
 
 function useProofContent(
   proofInProgress?: Proof,
@@ -70,27 +70,36 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
 }
 
 function ContractList() {
-  const { originalContracts } = useSnapshot(StreetCredStore)
-  const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
+  const { originalContracts } = useSnapshot(StreetCredStore)
+  const { proofsCompleted } = useSnapshot(proofStore)
+
+  const completedProofsMap = useMemo(
+    () =>
+      proofsCompleted.reduce((p, c) => {
+        if (p[c.contract]) {
+          p[c.contract][c.account] = true
+        } else {
+          p[c.contract] = { [c.account]: true }
+        }
+        return p
+      }, {} as { [contractAddress: string]: { [account: string]: boolean } }),
+    [proofsCompleted]
+  )
+
+  const originalOwnedContractsWithoutCompletedProofs = useMemo(
+    () =>
+      account
+        ? originalContracts?.owned.filter(
+            (contract) => !completedProofsMap[contract.address]?.[account]
+          ) ?? []
+        : [],
+    [originalContracts?.owned, completedProofsMap, account]
+  )
 
   if (!account) {
     return null
   }
-
-  const completedProofsMap = proofsCompleted.reduce((p, c) => {
-    if (p[c.contract]) {
-      p[c.contract][c.account] = true
-    } else {
-      p[c.contract] = { [c.account]: true }
-    }
-    return p
-  }, {} as { [contractAddress: string]: { [account: string]: boolean } })
-
-  const originalOwnedContractsWithoutCompletedProofs =
-    originalContracts?.owned.filter(
-      (contract) => !completedProofsMap[contract.address]?.[account]
-    ) || []
 
   return (
     <>
@@ -100,9 +109,6 @@ function ContractList() {
             <ZKProof contractAddress={contract.address} />
           ))}
         </ContractListContainer>
-      )}
-      {originalContracts?.owned.length === 0 && (
-        <BadgesHintCard text="You don't have any available proofs to generate." />
       )}
     </>
   )
