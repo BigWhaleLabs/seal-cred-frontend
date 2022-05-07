@@ -1,7 +1,11 @@
 import { useEffect, useRef } from 'react'
 import QRCodeStyling from 'qr-code-styling'
 import QRLoading from 'icons/QRLoading'
-import classnames, { borderRadius, overflow } from 'classnames/tailwind'
+import classnames, {
+  borderRadius,
+  minWidth,
+  overflow,
+} from 'classnames/tailwind'
 
 interface QRCodeProps {
   derivativeAddress: string
@@ -10,13 +14,13 @@ interface QRCodeProps {
 
 const qrCodeContainer = classnames(
   borderRadius('rounded-2xl'),
-  overflow('overflow-hidden')
+  overflow('overflow-hidden'),
+  minWidth('min-w-fit')
 )
 
 const qrCode = new QRCodeStyling({
   width: 140,
   height: 140,
-  margin: 7,
   type: 'svg',
   image: '/img/logo.svg',
   dotsOptions: {
@@ -43,7 +47,7 @@ export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
         ref.current.removeChild(ref.current.firstChild)
       qrCode.append(ref.current)
       qrCode.update({
-        data: `https://streetcred.one/public/${derivativeAddress}/${tokenId}`,
+        data: `https://streetcred.one/${derivativeAddress}/${tokenId}`,
       })
     }
   }, [derivativeAddress, tokenId])

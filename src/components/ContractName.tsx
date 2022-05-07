@@ -1,29 +1,54 @@
 import { BodyText } from 'components/Text'
-import { SubheaderText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import StreetCredStore from 'stores/StreetCredStore'
-import shortenedAddress from 'helpers/shortenedAddress'
+import truncateMiddle from 'helpers/truncateMiddle'
 
-function ContractNameComponent({ address }: { address: string }) {
-  const { contractNames } = useSnapshot(StreetCredStore)
-  return (
-    <BodyText size="base">
-      {contractNames[address]
-        ? contractNames[address]
-        : `Contract: ${shortenedAddress(address)}`}
+interface ContractNameProps {
+  address: string
+  otherStyle?: boolean
+}
+
+interface FetchingContract extends ContractNameProps {
+  isFetching?: boolean
+}
+
+function TextBlock({ address, otherStyle, isFetching }: FetchingContract) {
+  return otherStyle ? (
+    <>
+      {isFetching && <>Fetching </>}
+      {address}
+    </>
+  ) : (
+    <BodyText size="sm">
+      {isFetching && <>Fetching </>}
+      {address}
     </BodyText>
   )
 }
 
-export default function ContractName({ address }: { address: string }) {
-  const shortAddress = `${address.slice(0, 5)}...${address.slice(
-    -5,
-    address.length
-  )}`
+function ContractNameComponent({ address, otherStyle }: ContractNameProps) {
+  const { contractNames } = useSnapshot(StreetCredStore)
+
+  const nameOrAddress = contractNames[address]
+    ? contractNames[address]
+    : truncateMiddle(address, 5, -5)
+
+  return <TextBlock address={nameOrAddress || ''} otherStyle={otherStyle} />
+}
+
+export default function ContractName({
+  address,
+  otherStyle,
+}: ContractNameProps) {
+  const shortAddress = truncateMiddle(address, 5, -5)
   return (
-    <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
-      <ContractNameComponent address={address} />
+    <Suspense
+      fallback={
+        <TextBlock isFetching address={shortAddress} otherStyle={otherStyle} />
+      }
+    >
+      <ContractNameComponent address={address} otherStyle={otherStyle} />
     </Suspense>
   )
 }

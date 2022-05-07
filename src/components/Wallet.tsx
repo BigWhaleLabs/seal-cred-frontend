@@ -12,7 +12,6 @@ import classnames, {
   width,
   wordBreak,
 } from 'classnames/tailwind'
-import configuredModal from 'helpers/web3Modal'
 import truncateMiddle from 'helpers/truncateMiddle'
 
 const walletContainer = classnames(
@@ -24,7 +23,8 @@ const walletContainer = classnames(
 const walletAccount = classnames(
   textAlign('text-center'),
   wordBreak('break-all'),
-  lineHeight('leading-5')
+  lineHeight('leading-5'),
+  display('sm:block', 'hidden')
 )
 
 export default function Wallet() {
@@ -33,8 +33,7 @@ export default function Wallet() {
     <div
       className={walletContainer}
       onClick={async () => {
-        configuredModal.clearCachedProvider()
-        await WalletStore.connect()
+        await WalletStore.connect(true)
       }}
     >
       <div className={walletAccount}>

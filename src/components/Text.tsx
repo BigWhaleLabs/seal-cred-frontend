@@ -7,6 +7,7 @@ import {
 import { FC } from 'react'
 import {
   TTextColor,
+  backgroundClip,
   backgroundImage,
   classnames,
   fontFamily,
@@ -46,11 +47,12 @@ export const SubheaderText: FC = ({ children }) => {
   return <h2 className={subheaderText}>{children}</h2>
 }
 
-const accentText = ({ color, align, bold }: AccentTextProps) =>
+const accentText = ({ color, align, bold, small }: AccentTextProps) =>
   classnames(
     textColor(color),
     textAlign(align),
-    fontWeight(bold ? 'font-bold' : 'font-normal')
+    fontWeight(bold ? 'font-bold' : 'font-normal'),
+    fontSize(small ? 'text-sm' : undefined)
   )
 export const AccentText: FC<AccentTextProps> = (props) => {
   return <span className={accentText(props)}>{props.children}</span>
@@ -106,19 +108,23 @@ export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
 
-const linkText = ({ gradient, bold }: LinkTextProps) =>
+const linkText = ({ gradientFrom, gradientTo, bold }: LinkTextProps) =>
   classnames(
     textDecoration('no-underline'),
-    textColor(gradient ? 'text-transparent' : 'text-yellow'),
-    backgroundImage(gradient ? 'bg-gradient-to-r' : undefined),
-    gradientColorStops(gradient),
-    fontWeight(bold ? 'font-bold' : 'font-normal')
+    textColor(gradientFrom || gradientTo ? 'text-transparent' : 'text-yellow'),
+    backgroundImage(
+      gradientFrom || gradientTo ? 'bg-gradient-to-r' : undefined
+    ),
+    backgroundClip(gradientFrom || gradientTo ? 'bg-clip-text' : undefined),
+    gradientColorStops(gradientFrom, gradientTo),
+    fontWeight(bold ? 'font-semibold' : 'font-normal')
   )
 export const LinkText: FC<LinkTextProps> = (props) => {
   return (
     <a
       className={linkText(props)}
       href={props.url}
+      title={props.title}
       rel="noopener noreferrer"
       target={'_blank'}
     >
