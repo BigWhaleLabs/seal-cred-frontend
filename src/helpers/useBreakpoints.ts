@@ -10,14 +10,17 @@ function getWidth() {
 
 export default function useBreakpoints() {
   const [width, setWidth] = useState(getWidth())
-  const [size] = useState({ md: width > mdSize, lg: width > lgSize })
 
   useEffect(() => {
-    window.addEventListener('resize', () => setWidth(window.innerWidth))
+    function resizer() {
+      setWidth(window.innerWidth)
+    }
 
-    size.md = width > mdSize
-    size.lg = width > lgSize
-  }, [size, width])
+    window.addEventListener('resize', resizer)
+    return () => {
+      window.removeEventListener('resize', resizer)
+    }
+  }, [])
 
-  return size
+  return { md: width > mdSize, lg: width > lgSize }
 }
