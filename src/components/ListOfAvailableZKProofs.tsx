@@ -1,6 +1,7 @@
 import { BodyText } from 'components/Text'
 import { FC } from 'react'
 import { Suspense, useState } from 'react'
+import { animation } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgesHintCard from 'components/BadgesHintCard'
 import ContractListContainer from 'components/ContractListContainer'
@@ -23,7 +24,9 @@ function useProofContent(
       'yellow',
       <>
         <span>Generating...</span>
-        <Star />
+        <div className={animation('animate-spin')}>
+          <Star />
+        </div>
       </>,
     ]
   if (proofInProgress?.status === 'scheduled')

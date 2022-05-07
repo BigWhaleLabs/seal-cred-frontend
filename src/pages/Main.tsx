@@ -8,7 +8,7 @@ import classnames, {
   flexDirection,
   justifyContent,
 } from 'classnames/tailwind'
-import useWindowDimensions from 'helpers/useWindowDimensions'
+import useBreakpoints from 'helpers/useBreakpoints'
 
 const mainBlock = classnames(
   display('flex'),
@@ -18,8 +18,7 @@ const mainBlock = classnames(
 )
 
 function Main() {
-  const { width } = useWindowDimensions()
-  const mobile = width < 1024
+  const { lg } = useBreakpoints()
 
   return (
     <>
@@ -27,8 +26,8 @@ function Main() {
         <ProofsCard />
         <CardSeparator number={3} from="yellow" to="pink" />
         <Badges />
+        {!lg && <ZkProofButton />}
       </div>
-      {mobile && <ZkProofButton />}
     </>
   )
 }

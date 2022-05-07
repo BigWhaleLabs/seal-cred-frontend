@@ -8,11 +8,14 @@ export interface AccentTextProps {
   color: TTextColor
   align?: TTextAlign
   bold?: boolean
+  small?: boolean
 }
 
 export interface LinkTextProps {
   url: string
-  gradient?: TGradientColorStops
+  gradientFrom?: TGradientColorStops
+  gradientTo?: TGradientColorStops
+  title?: string
   bold?: boolean
   onClick?: () => void
 }
