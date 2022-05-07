@@ -1,8 +1,13 @@
-import classnames, { borderRadius, overflow } from 'classnames/tailwind'
+import classnames, {
+  borderRadius,
+  minWidth,
+  overflow,
+} from 'classnames/tailwind'
 
 const qrCodeContainer = classnames(
   borderRadius('rounded-2xl'),
-  overflow('overflow-hidden')
+  overflow('overflow-hidden'),
+  minWidth('min-w-fit')
 )
 
 export default function QRLoading() {

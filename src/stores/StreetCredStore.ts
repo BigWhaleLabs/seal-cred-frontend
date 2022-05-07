@@ -17,7 +17,7 @@ import streetCred from 'helpers/streetCred'
 interface StreetCredStoreType {
   ledger: Promise<Ledger>
   originalContracts?: Promise<SortedContracts<ERC721>>
-  derivativeContracts?: Promise<SortedContracts<SCERC721Derivative>>
+  derivativeContracts?: Promise<SCERC721Derivative[]>
   contractNames: { [contractAddress: string]: Promise<string | undefined> }
   derivativeTokenIds: { [contractAddress: string]: number[] }
 
@@ -54,11 +54,11 @@ const StreetCredStore = proxy<StreetCredStoreType>({
   },
 
   async refreshDerivativeTokenIds(account: string) {
-    if (!account) StreetCredStore.derivativeTokenIds = {}
+    StreetCredStore.derivativeTokenIds = {}
+    if (!account) return
     const derivativeContracts = await StreetCredStore.derivativeContracts
-    const ownedDerivativeContracts = derivativeContracts?.owned ?? []
 
-    for (const contract of ownedDerivativeContracts) {
+    for (const contract of derivativeContracts ?? []) {
       const owners = await getMapOfOwners(contract)
       const tokenIds = findByValue<number, string>(owners, account)
       if (
@@ -85,14 +85,11 @@ const StreetCredStore = proxy<StreetCredStoreType>({
     }
   },
 
-  async refreshDerivativeContracts(account: string) {
+  async refreshDerivativeContracts() {
     const derivativeContracts = Object.values(await StreetCredStore.ledger).map(
       (record) => record.derivativeContract
     )
-    StreetCredStore.derivativeContracts = filterContracts(
-      derivativeContracts,
-      account
-    )
+    StreetCredStore.derivativeContracts = Promise.all(derivativeContracts)
   },
 })
 

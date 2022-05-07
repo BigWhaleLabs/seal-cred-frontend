@@ -47,7 +47,7 @@ const badgeBody = (minted?: boolean) =>
     display('flex'),
     flexDirection('flex-col'),
     space('space-y-2'),
-    textAlign(minted ? 'text-left' : 'text-center'),
+    textAlign(minted ? 'text-left' : 'text-center', 'lg:text-center'),
     alignItems(minted ? 'items-start' : 'items-center', 'lg:items-center'),
     justifyContent(
       minted ? 'justify-start' : 'justify-center',
