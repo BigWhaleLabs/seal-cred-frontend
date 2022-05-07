@@ -3,13 +3,8 @@ import { useEffect, useState } from 'react'
 const mdSize = 600
 const lgSize = 1023
 
-function getWidth() {
-  const { innerWidth: width } = window
-  return width
-}
-
 export default function useBreakpoints() {
-  const [width, setWidth] = useState(getWidth())
+  const [width, setWidth] = useState(window.innerWidth)
 
   useEffect(() => {
     function resizer() {
