@@ -52,7 +52,7 @@ const accentText = ({ color, align, bold, small }: AccentTextProps) =>
     textColor(color),
     textAlign(align),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize(small ? 'text-sm' : 'text-base')
+    fontSize(small ? 'text-sm' : undefined)
   )
 export const AccentText: FC<AccentTextProps> = (props) => {
   return <span className={accentText(props)}>{props.children}</span>

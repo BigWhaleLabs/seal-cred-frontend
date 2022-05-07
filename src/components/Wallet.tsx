@@ -23,7 +23,8 @@ const walletContainer = classnames(
 const walletAccount = classnames(
   textAlign('text-center'),
   wordBreak('break-all'),
-  lineHeight('leading-5')
+  lineHeight('leading-5'),
+  display('sm:block', 'hidden')
 )
 
 export default function Wallet() {
