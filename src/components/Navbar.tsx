@@ -23,7 +23,7 @@ const navbar = (visible?: boolean, withoutWallet?: boolean) =>
     inset('top-0'),
     display('flex'),
     alignItems('items-center'),
-    justifyContent(withoutWallet ? 'justify-center' : 'justify-between'),
+    justifyContent(withoutWallet ? 'sm:justify-center' : 'justify-between'),
     padding('py-4', 'px-4'),
     margin('mb-2'),
     space('space-x-9', 'lg:space-x-0'),
