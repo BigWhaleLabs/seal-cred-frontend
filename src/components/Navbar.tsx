@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { LogoText } from 'components/Text'
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Logo from 'icons/Logo'
 import Wallet from 'components/Wallet'
 import classnames, {
@@ -16,13 +17,13 @@ import classnames, {
   zIndex,
 } from 'classnames/tailwind'
 
-const navbar = (visible?: boolean) =>
+const navbar = (visible?: boolean, withoutWallet?: boolean) =>
   classnames(
     position('sticky'),
     inset('top-0'),
     display('flex'),
     alignItems('items-center'),
-    justifyContent('justify-between'),
+    justifyContent(withoutWallet ? 'justify-center' : 'justify-between'),
     padding('py-4', 'px-4'),
     margin('mb-2'),
     space('space-x-9', 'lg:space-x-0'),
@@ -38,6 +39,9 @@ const logoContainer = classnames(
 )
 
 export default function Navbar() {
+  const { pathname } = useLocation()
+  const withoutWallet = pathname.split('/').length >= 3
+
   const [backgroundVisible, setBackgroundVisible] = useState(false)
   const onScroll = () => {
     setBackgroundVisible(document.documentElement.scrollTop > 20)
@@ -48,14 +52,14 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className={navbar(backgroundVisible)}>
+    <nav className={navbar(backgroundVisible, withoutWallet)}>
       <Link to="/">
         <div className={logoContainer}>
           <Logo />
           <LogoText>SealCred</LogoText>
         </div>
       </Link>
-      <Wallet />
+      {!withoutWallet && <Wallet />}
     </nav>
   )
 }
