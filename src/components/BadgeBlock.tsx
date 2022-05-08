@@ -6,6 +6,7 @@ import { useSnapshot } from 'valtio'
 import BadgeIcon from 'icons/BadgeIcon'
 import Button from 'components/Button'
 import Complete from 'icons/Complete'
+import ContractName from 'components/ContractName'
 import ProofStore from 'stores/ProofStore'
 import QRCode from 'components/QRCode'
 import StreetCredStore from 'stores/StreetCredStore'
@@ -21,7 +22,6 @@ import classnames, {
   space,
   textAlign,
 } from 'classnames/tailwind'
-import shortenedAddress from 'helpers/shortenedAddress'
 import streetCred from 'helpers/streetCred'
 import truncateMiddle from 'helpers/truncateMiddle'
 
@@ -46,7 +46,8 @@ const badgeBody = (minted?: boolean) =>
     display('flex'),
     flexDirection('flex-col'),
     space('space-y-2'),
-    textAlign(!minted ? 'text-center' : 'text-left'),
+    textAlign(minted ? 'text-left' : 'text-center'),
+    alignItems(minted ? 'items-start' : 'items-center', 'lg:items-center'),
     justifyContent(
       minted ? 'justify-start' : 'justify-center',
       'lg:justify-center'
@@ -69,28 +70,26 @@ function Badge({
   derivativeAddress: string
   originalAddress?: string
 }) {
-  const { contractNames, ledger } = useSnapshot(StreetCredStore)
+  const { ledger } = useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
 
   const [loading, setLoading] = useState(false)
 
+  const unminted = !!originalAddress
+
   return (
-    <div className={badgeWrapper(!!originalAddress)}>
+    <div className={badgeWrapper(!unminted)}>
       {originalAddress ? (
         <BadgeIcon color="pink" />
       ) : (
         <QRCode derivativeAddress={derivativeAddress} tokenId={0} />
       )}
-      <div className={badgeBody(!!originalAddress)}>
+      <div className={badgeBody(!unminted)}>
         <BadgeText>
-          {contractNames[derivativeAddress]
-            ? `${contractNames[derivativeAddress]} (${shortenedAddress(
-                derivativeAddress
-              )})`
-            : `Contract: ${shortenedAddress(derivativeAddress)}`}
+          <ContractName address={derivativeAddress} />
         </BadgeText>
-        {originalAddress ? (
+        {unminted ? (
           <Button
             small
             colors="primary"

@@ -1,19 +1,23 @@
 import { AccentText } from 'components/Text'
 import ToolTip from 'components/ToolTip'
 import classnames, {
+  alignItems,
   backgroundColor,
+  borderColor,
   borderRadius,
+  borderWidth,
   cursor,
   display,
   fill,
   flexDirection,
   fontFamily,
   fontSize,
+  height,
   justifyContent,
   margin,
   padding,
   space,
-  stroke,
+  textColor,
   width,
 } from 'classnames/tailwind'
 
@@ -24,34 +28,29 @@ const zkProofButton = classnames(
   backgroundColor('bg-blue-800'),
   space('space-x-2'),
   padding('py-4'),
-  width('w-mobile-card', 'lg:w-card'),
+  width('w-mobile-card', 'md:w-card'),
   margin('my-6', 'mx-auto'),
   cursor('cursor-pointer'),
   borderRadius('rounded-2xl')
 )
 
-const circleStyles = classnames(fill('fill-blue-800'), stroke('stroke-yellow'))
-const textStyles = classnames(
+const questionStyles = classnames(
   fontFamily('font-primary'),
   fontSize('text-sm'),
-  fill('fill-yellow')
+  fill('fill-yellow'),
+  width('w-6'),
+  height('h-6'),
+  borderRadius('rounded-full'),
+  borderWidth('border-1'),
+  borderColor('border-yellow'),
+  display('flex'),
+  justifyContent('justify-center'),
+  alignItems('items-center'),
+  textColor('text-yellow')
 )
 
 const QuestionMark = () => {
-  return (
-    <svg width="22" height="22">
-      <circle cx="11" cy="11" r="10" className={circleStyles} strokeWidth="1" />
-      <text
-        x="50%"
-        y="50%"
-        dy=".4em"
-        text-anchor="middle"
-        className={textStyles}
-      >
-        ?
-      </text>
-    </svg>
-  )
+  return <div className={questionStyles}>?</div>
 }
 
 const ZkProofButton = () => {
