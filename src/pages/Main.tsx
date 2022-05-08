@@ -24,9 +24,14 @@ function Main() {
     <>
       <div className={mainBlock}>
         <ProofsCard />
-        <CardSeparator number={3} from="yellow" to="pink" />
+        <CardSeparator number={3} from="yellow" to="pink" vertical={!lg} />
         <Badges />
-        {!lg && <ZkProofButton />}
+        {!lg && (
+          <>
+            <CardSeparator number={1} from="pink" vertical />
+            <ZkProofButton />
+          </>
+        )}
       </div>
     </>
   )

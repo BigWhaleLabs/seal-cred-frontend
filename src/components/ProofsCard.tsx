@@ -1,6 +1,7 @@
 import { AccentText, CardDescription, CardHeader } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
+import CardSeparator from 'components/CardSeparator'
 import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
@@ -80,7 +81,12 @@ function ProofsCard() {
           <ConnectAccount />
         )}
       </Card>
-      {lg && <ZkProofButton />}
+      {lg && (
+        <>
+          <CardSeparator number={1} from="yellow" vertical />
+          <ZkProofButton />
+        </>
+      )}
     </div>
   )
 }

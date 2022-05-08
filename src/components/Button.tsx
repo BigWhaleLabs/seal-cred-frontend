@@ -19,6 +19,7 @@ import {
   opacity,
   outlineStyle,
   padding,
+  space,
   textColor,
   transitionDuration,
   transitionProperty,
@@ -70,6 +71,7 @@ const button = (
   fullWidth?: boolean
 ) =>
   classnames(
+    space('space-x-2'),
     sharedClassNames(fullWidth, loading, disabled),
     colors === 'primary'
       ? classnames(
