@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { proxy, useSnapshot } from 'valtio'
 import BadgeBlock from 'components/BadgeBlock'
 import BadgesHintCard from 'components/BadgesHintCard'
+import CustomScrollbar from 'components/CustomScrollBar'
 import ProofStore from 'stores/ProofStore'
 import StreetCredStore from 'stores/StreetCredStore'
 import classnames, {
@@ -23,7 +24,7 @@ const badges = classnames(
   position('relative'),
   height('h-fit'),
   maxHeight('max-h-85'),
-  overflow('overflow-y-auto')
+  overflow('overflow-y-visible')
 )
 const badgesList = (oneElement?: boolean) =>
   classnames(
@@ -117,11 +118,15 @@ function BadgeListSuspender() {
 function BadgesList() {
   return (
     <div className={badges}>
-      <Suspense
-        fallback={<BodyText size="base">Fetching derivative NFTs...</BodyText>}
-      >
-        <BadgeListSuspender />
-      </Suspense>
+      <CustomScrollbar height={350}>
+        <Suspense
+          fallback={
+            <BodyText size="base">Fetching derivative NFTs...</BodyText>
+          }
+        >
+          <BadgeListSuspender />
+        </Suspense>
+      </CustomScrollbar>
     </div>
   )
 }

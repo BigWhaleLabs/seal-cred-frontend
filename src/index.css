@@ -13,33 +13,6 @@ body {
     0/48px 48px;
 }
 
-::-webkit-scrollbar,
-::-webkit-scrollbar-thumb,
-::-webkit-scrollbar-track {
-  width: 8px;
-  border: none;
-  background: #0d0030;
-}
-
-::-webkit-scrollbar-button,
-::-webkit-scrollbar-track-piece,
-::-webkit-scrollbar-corner,
-::-webkit-resizer {
-  display: none;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 6px;
-  background-color: #fed823;
-  box-shadow: 0px 0px 5vmin 5vmin #fed82350;
-}
-
-::-webkit-scrollbar-track {
-  background-image: url('/img/scrollBarBack.png');
-  background-repeat: repeat-y;
-  background-size: contain;
-}
-
 .web3modal-modal-lightbox {
   z-index: 100 !important;
 }
