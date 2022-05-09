@@ -6,7 +6,6 @@ import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
 import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
-import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
