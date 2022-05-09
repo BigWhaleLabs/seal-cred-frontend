@@ -118,7 +118,7 @@ function BadgeListSuspender() {
 function BadgesList() {
   return (
     <div className={badges}>
-      <CustomScrollbar height={350}>
+      <CustomScrollbar>
         <Suspense
           fallback={
             <BodyText size="base">Fetching derivative NFTs...</BodyText>
