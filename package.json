@@ -1,0 +1,83 @@
+{
+  "name": "seal-cred-frontend",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn generate-css-types && vite",
+    "build": "yarn generate-css-types && cross-env NODE_ENV=production tsc && vite build",
+    "preview": "yarn build && yarn vite preview",
+    "pretty": "prettier --check src",
+    "lint": "yarn pretty && eslint --max-warnings 0 --ext ts,tsx,json src",
+    "postinstall": "yarn generate-css-types",
+    "generate-css-types": "tailwindcss-classnames -o src/classnames/tailwind.ts && prettier --write src/classnames/tailwind.ts"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@big-whale-labs/seal-cred-ledger-contract": "^0.0.2",
+    "@coinbase/wallet-sdk": "^3.0.11",
+    "@toruslabs/torus-embed": "^1.22.5",
+    "@walletconnect/web3-provider": "^1.7.8",
+    "@zk-kit/incremental-merkle-tree": "^0.4.3",
+    "axios": "^0.27.2",
+    "bitski": "^0.14.1",
+    "circomlibjs": "^0.1.2",
+    "copy-to-clipboard": "^3.3.1",
+    "eth-rpc-errors": "^4.0.3",
+    "ethers": "^5.6.5",
+    "fortmatic": "^2.2.1",
+    "preact": "^10.7.2",
+    "qr-code-styling": "^1.6.0-rc.1",
+    "react-router-dom": "^6.3.0",
+    "react-toastify": "^9.0.1",
+    "react-tooltip": "^4.2.21",
+    "secure-ls": "^1.2.6",
+    "valtio": "^1.6.0",
+    "web3modal": "^1.9.7"
+  },
+  "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
+    "@preact/preset-vite": "^2.2.0",
+    "@rollup/plugin-inject": "^4.0.4",
+    "@typechain/ethers-v5": "^10.0.0",
+    "@types/react": "^17.0.43",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "@vitejs/plugin-react": "^1.3.2",
+    "assert-browserify": "^2.0.0",
+    "autoprefixer": "^10.4.7",
+    "buffer": "^6.0.3",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-no-relative-import-paths": "^1.3.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
+    "eslint-plugin-valtio": "^0.4.4",
+    "postcss": "^8.4.13",
+    "prettier": "^2.6.2",
+    "react-scripts": "^5.0.1",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "rollup-plugin-visualizer": "^5.6.0",
+    "tailwindcss": "^3.0.24",
+    "tailwindcss-classnames": "^3.0.4",
+    "typescript": "^4.6.4",
+    "vite": "^2.9.8",
+    "vite-tsconfig-paths": "^3.4.1"
+  },
+  "packageManager": "yarn@3.1.1"
+}
