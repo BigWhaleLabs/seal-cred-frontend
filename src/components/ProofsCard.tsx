@@ -43,37 +43,30 @@ function ZkProofSavedMessage({ allGenerated }: { allGenerated?: boolean }) {
 function Proofs() {
   const { originalContracts } = useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(proofStore)
-  const { account } = useSnapshot(WalletStore)
 
   const canGenerateProof =
-    originalContracts && account
-      ? new Set(
-          proofsCompleted
-            .filter((proof) => WalletStore.account === proof.account)
-            .map((proof) => proof.contract)
-        ).size === originalContracts?.owned.length
-      : false
+    new Set(
+      proofsCompleted
+        .filter((proof) => WalletStore.account === proof.account)
+        .map((proof) => proof.contract)
+    ).size === originalContracts?.owned.length
 
   return (
     <>
-      {originalContracts && (
-        <>
-          <div className={titleContainer}>
-            <CardHeader color="text-yellow">
-              {canGenerateProof ? 'Start proofing!' : 'All proofed out'}
-            </CardHeader>
-            <CardDescription>
-              {canGenerateProof
-                ? `Generate your ZK proof`
-                : `You generated all available ZK proof from this wallet`}
-            </CardDescription>
-          </div>
-          <ListOfReadyZKProofs />
-          <ListOfAvailableZKProofs />
-          {proofsCompleted.length > 0 && (
-            <ZkProofSavedMessage allGenerated={!canGenerateProof} />
-          )}
-        </>
+      <div className={titleContainer}>
+        <CardHeader color="text-yellow">
+          {canGenerateProof ? 'Start proofing!' : 'All proofed out'}
+        </CardHeader>
+        <CardDescription>
+          {canGenerateProof
+            ? `Generate your ZK proof`
+            : `You generated all available ZK proof from this wallet`}
+        </CardDescription>
+      </div>
+      <ListOfReadyZKProofs />
+      <ListOfAvailableZKProofs />
+      {proofsCompleted.length > 0 && (
+        <ZkProofSavedMessage allGenerated={!canGenerateProof} />
       )}
     </>
   )

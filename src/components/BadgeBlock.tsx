@@ -70,7 +70,9 @@ function Badge({
   derivativeAddress: string
   originalAddress?: string
 }) {
-  const { derivativeTokenIds, ledger } = useSnapshot(StreetCredStore)
+  const { derivativeTokenIds, ledger } = useSnapshot(StreetCredStore, {
+    sync: true,
+  })
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
 

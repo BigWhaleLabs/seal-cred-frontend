@@ -73,11 +73,9 @@ function BadgeListSuspender() {
     unownedDerivativeToOriginalAddressesMap
   ).map((address) => scLedger[unownedDerivativeToOriginalAddressesMap[address]])
 
-  const ownedDerivatives = derivatives
-    ? Object.keys(derivativeTokenIds).map((address) =>
-        derivatives.find((contract) => contract.address === address)
-      )
-    : []
+  const ownedDerivatives = Object.keys(derivativeTokenIds).map((address) =>
+    derivatives.find((contract) => contract.address === address)
+  )
 
   const ownedDerivativesLength = ownedDerivatives.length
   const unownedLedgerRecordsWithProofs = unownedDerivativeRecords.length
