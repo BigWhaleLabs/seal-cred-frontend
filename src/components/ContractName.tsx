@@ -1,5 +1,5 @@
 import { BodyText } from 'components/Text'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import StreetCredStore from 'stores/StreetCredStore'
 import truncateMiddle from 'helpers/truncateMiddle'
@@ -29,10 +29,16 @@ function TextBlock({ address, otherStyle, isFetching }: FetchingContract) {
 
 function ContractNameComponent({ address, otherStyle }: ContractNameProps) {
   const { contractNames } = useSnapshot(StreetCredStore)
+  const [nameOrAddress, setNameOrAddress] = useState('')
 
-  const nameOrAddress = contractNames[address]
-    ? contractNames[address]
-    : truncateMiddle(address, 5, -5)
+  useEffect(() => {
+    async function getNameOrAddress() {
+      const name = await StreetCredStore.contractNames[address]
+      setNameOrAddress(name || truncateMiddle(address, 5, -5))
+    }
+
+    void getNameOrAddress()
+  }, [contractNames, address])
 
   return <TextBlock address={nameOrAddress || ''} otherStyle={otherStyle} />
 }
