@@ -9,6 +9,7 @@ import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
 import ProofStore from 'stores/ProofStore'
 import QRCode from 'components/QRCode'
+import QRLoading from 'icons/QRLoading'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -46,7 +47,7 @@ const badgeBody = (minted?: boolean) =>
     display('flex'),
     flexDirection('flex-col'),
     space('space-y-2'),
-    textAlign(minted ? 'text-left' : 'text-center'),
+    textAlign(minted ? 'text-left' : 'text-center', 'lg:text-center'),
     alignItems(minted ? 'items-start' : 'items-center', 'lg:items-center'),
     justifyContent(
       minted ? 'justify-start' : 'justify-center',
@@ -70,7 +71,7 @@ function Badge({
   derivativeAddress: string
   originalAddress?: string
 }) {
-  const { ledger } = useSnapshot(StreetCredStore)
+  const { derivativeTokenIds, ledger } = useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
 
@@ -82,8 +83,13 @@ function Badge({
     <div className={badgeWrapper(!unminted)}>
       {originalAddress ? (
         <BadgeIcon color="pink" />
+      ) : derivativeTokenIds[derivativeAddress] ? (
+        <QRCode
+          derivativeAddress={derivativeAddress}
+          tokenId={derivativeTokenIds[derivativeAddress][0]}
+        />
       ) : (
-        <QRCode derivativeAddress={derivativeAddress} tokenId={0} />
+        <QRLoading />
       )}
       <div className={badgeBody(!unminted)}>
         <BadgeText>

@@ -29,7 +29,7 @@ const zkProofButton = classnames(
   space('space-x-2'),
   padding('py-4'),
   width('w-mobile-card', 'md:w-card'),
-  margin('my-6', 'mx-auto'),
+  margin('mx-auto'),
   cursor('cursor-pointer'),
   borderRadius('rounded-2xl')
 )

@@ -1,10 +1,16 @@
 import { useEffect, useRef } from 'react'
 import QRCodeStyling from 'qr-code-styling'
+import QRLoading from 'icons/QRLoading'
 import classnames, {
   borderRadius,
   minWidth,
   overflow,
 } from 'classnames/tailwind'
+
+interface QRCodeProps {
+  derivativeAddress: string
+  tokenId?: number
+}
 
 const qrCodeContainer = classnames(
   borderRadius('rounded-2xl'),
@@ -33,20 +39,22 @@ const qrCode = new QRCodeStyling({
   },
 })
 
-export default function QRCode({
-  derivativeAddress,
-  tokenId,
-}: {
-  derivativeAddress: string
-  tokenId: number
-}) {
-  const ref = useRef(null)
+export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
+  const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    if (ref.current) qrCode.append(ref.current)
-    qrCode.update({
-      data: `https://streetcred.one/${derivativeAddress}/${tokenId}`,
-    })
+    if (ref.current) {
+      if (ref.current.firstChild)
+        ref.current.removeChild(ref.current.firstChild)
+      qrCode.append(ref.current)
+      qrCode.update({
+        data: `https://streetcred.one/${derivativeAddress}/${tokenId}`,
+      })
+    }
   }, [derivativeAddress, tokenId])
 
-  return <div ref={ref} className={qrCodeContainer} />
+  return (
+    <div ref={ref} className={qrCodeContainer}>
+      <QRLoading />
+    </div>
+  )
 }

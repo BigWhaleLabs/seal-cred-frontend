@@ -11,17 +11,18 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 
-type Color = 'pink' | 'yellow' | 'green' | 'blue'
+type Color = 'pink' | 'yellow' | 'green' | 'blue' | 'transparent'
 
-const connectiveBlock = classnames(
-  display('flex'),
-  justifyContent('justify-center', 'lg:justify-start'),
-  flexDirection('flex-row', 'lg:flex-col'),
-  space('space-x-2', 'lg:space-x-0', 'lg:space-y-2'),
-  margin('mx-auto', 'mx-0', 'lg:mt-12')
-)
+const connectiveBlock = (vertical = true) =>
+  classnames(
+    display('flex'),
+    justifyContent(vertical ? 'justify-center' : 'justify-start'),
+    flexDirection(vertical ? 'flex-row' : 'flex-col'),
+    space(vertical ? 'space-x-2' : 'space-y-2'),
+    margin(vertical ? 'mx-auto' : 'mt-12')
+  )
 
-const connectiveLine = (from?: Color, to?: Color) =>
+const connectiveLine = (from?: Color, to?: Color, vertical = true) =>
   classnames(
     gradientColorStops(
       from === 'blue'
@@ -30,29 +31,34 @@ const connectiveLine = (from?: Color, to?: Color) =>
         ? 'from-green'
         : from === 'yellow'
         ? 'from-yellow'
-        : 'from-pink',
+        : from === 'pink'
+        ? 'from-pink'
+        : 'from-transparent',
       to === 'blue'
         ? 'to-blue-500'
         : to === 'green'
         ? 'to-green'
         : to === 'yellow'
         ? 'to-yellow'
-        : 'to-pink'
+        : to === 'pink'
+        ? 'to-pink'
+        : 'to-transparent'
     ),
     backgroundImage('bg-gradient-to-b', 'lg:bg-gradient-to-r'),
-    width('w-px', 'lg:w-4'),
-    height('h-4', 'lg:h-px')
+    width(vertical ? 'w-px' : 'w-4'),
+    height(vertical ? 'h-4' : 'h-px')
   )
 
-const CardSeparator: FC<{ number: number; from?: Color; to?: Color }> = ({
-  to,
-  from,
-  number,
-}) => {
+const CardSeparator: FC<{
+  number: number
+  from?: Color
+  to?: Color
+  vertical?: boolean
+}> = ({ to, from, number, vertical }) => {
   return (
-    <div className={connectiveBlock}>
+    <div className={connectiveBlock(vertical)}>
       {[...Array(number).keys()].map((_, index) => (
-        <div key={index} className={connectiveLine(from, to)}></div>
+        <div key={index} className={connectiveLine(from, to, vertical)}></div>
       ))}
     </div>
   )
