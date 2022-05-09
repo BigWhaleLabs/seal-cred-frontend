@@ -20,7 +20,7 @@ import proofStore from 'stores/ProofStore'
 import useBreakpoints from 'helpers/useBreakpoints'
 
 const titleContainer = space('space-y-2')
-const hintContainer = margin('mt-2')
+const hintContainer = margin('mb-2')
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
@@ -50,7 +50,8 @@ function Proofs() {
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
       <div className={proofContainer}>
-        <CustomScrollbar maxHeight={390}>
+        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
+        <CustomScrollbar maxHeight={320}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
           <ul>
@@ -83,7 +84,6 @@ function Proofs() {
             <li>1</li>
           </ul>
         </CustomScrollbar>
-        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
       </div>
     </>
   )
