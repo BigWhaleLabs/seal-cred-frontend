@@ -50,40 +50,11 @@ function Proofs() {
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
       <div className={proofContainer}>
-        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
         <CustomScrollbar maxHeight={320}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
-          <ul>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-          </ul>
         </CustomScrollbar>
+        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
       </div>
     </>
   )
