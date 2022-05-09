@@ -1,4 +1,4 @@
-import { BodyText } from 'components/Text'
+import { AccentText, BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import Complete from 'icons/Complete'
@@ -12,19 +12,15 @@ import classnames, {
   display,
   flexDirection,
   fontFamily,
-  fontWeight,
   lineHeight,
   space,
-  textColor,
 } from 'classnames/tailwind'
 
-const ProofText = classnames(
+const proofText = classnames(
   display('flex'),
   flexDirection('flex-row'),
   space('space-x-2'),
   alignItems('items-center'),
-  fontWeight('font-bold'),
-  textColor('text-yellow'),
   fontFamily('font-primary'),
   lineHeight('leading-5')
 )
@@ -40,10 +36,10 @@ function ContractList() {
           {proofsCompleted.map((proof) => (
             <ProofLine>
               <ContractName address={proof.contract} />
-              <div className={ProofText}>
-                <span>
+              <div className={proofText}>
+                <AccentText bold color="text-yellow">
                   Proof {proof.account === account ? 'made' : 'saved'}
-                </span>
+                </AccentText>
                 <Complete color="yellow" />
               </div>
             </ProofLine>
