@@ -76,16 +76,17 @@ function Badge({
 
   const [loading, setLoading] = useState(false)
 
+  const derivativeTokenId = derivativeTokenIds[derivativeAddress]
   const unminted = !!originalAddress
 
   return (
     <div className={badgeWrapper(!unminted)}>
-      {!derivativeTokenIds[derivativeAddress] && originalAddress ? (
+      {!derivativeTokenId && originalAddress ? (
         <BadgeIcon color="pink" />
       ) : (
         <QRCode
           derivativeAddress={derivativeAddress}
-          tokenId={derivativeTokenIds[derivativeAddress][0]}
+          tokenId={derivativeTokenId[0]}
         />
       )}
       <div className={badgeBody(!unminted)}>
