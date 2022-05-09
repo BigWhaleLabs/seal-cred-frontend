@@ -49,9 +49,9 @@ const CustomScrollbar: FC<{ height?: number }> = ({
 }) => {
   return (
     <Scrollbars
+      autoHide
       autoHeight
       autoHeightMin={height}
-      autoHide
       renderThumbVertical={renderThumb}
       renderTrackVertical={renderTrack}
     >
