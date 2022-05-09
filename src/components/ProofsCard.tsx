@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import CardSeparator from 'components/CardSeparator'
 import ConnectAccount from 'components/ConnectAccount'
+import CustomScrollbar from 'components/CustomScrollBar'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import WalletStore from 'stores/WalletStore'
@@ -46,9 +47,11 @@ function Proofs() {
         <CardHeader color="text-yellow">Start proofing!</CardHeader>
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
-      <ListOfReadyZKProofs />
-      <ListOfAvailableZKProofs />
-      {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
+      <CustomScrollbar height={390}>
+        <ListOfReadyZKProofs />
+        <ListOfAvailableZKProofs />
+        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
+      </CustomScrollbar>
     </>
   )
 }
