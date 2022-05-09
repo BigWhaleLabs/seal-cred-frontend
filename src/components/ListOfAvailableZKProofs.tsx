@@ -87,11 +87,10 @@ function ContractList() {
     return p
   }, {} as { [contractAddress: string]: { [account: string]: boolean } })
 
-  const originalOwnedContractsWithoutCompletedProofs = account
-    ? originalContracts?.owned.filter(
-        (contract) => !completedProofsMap[contract.address]?.[account]
-      ) ?? []
-    : []
+  const originalOwnedContractsWithoutCompletedProofs =
+    originalContracts?.owned.filter(
+      (contract) => !completedProofsMap[contract.address]?.[account]
+    ) ?? []
 
   return (
     <>
