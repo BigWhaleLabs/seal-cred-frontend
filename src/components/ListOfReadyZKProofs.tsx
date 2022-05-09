@@ -27,13 +27,12 @@ const proofText = classnames(
 )
 
 function ContractList() {
-  const { originalContracts } = useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
 
   return (
     <>
-      {originalContracts && !!proofsCompleted?.length && (
+      {!!proofsCompleted?.length && (
         <ContractListContainer>
           {proofsCompleted.map((proof) => (
             <ProofLine>
