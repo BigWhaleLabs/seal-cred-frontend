@@ -26,7 +26,7 @@ const badges = classnames(
   height('h-fit'),
   maxHeight('max-h-85'),
   overflow('overflow-y-visible'),
-  margin('mr-8')
+  margin('mr-5')
 )
 const badgesList = (oneElement?: boolean) =>
   classnames(

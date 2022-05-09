@@ -38,7 +38,7 @@ function ZkProofSavedMessage() {
   )
 }
 
-const proofContainer = classnames(margin('mr-8'))
+const proofContainer = classnames(margin('mr-5'))
 
 function Proofs() {
   const { proofsCompleted } = useSnapshot(proofStore)
@@ -53,8 +53,37 @@ function Proofs() {
         <CustomScrollbar maxHeight={390}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
-          {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
+          <ul>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+          </ul>
         </CustomScrollbar>
+        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
       </div>
     </>
   )
