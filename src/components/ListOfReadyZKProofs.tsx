@@ -10,8 +10,8 @@ import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 
 function ContractList() {
-  const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
+  const { account } = useSnapshot(WalletStore)
 
   return (
     <>
@@ -19,13 +19,13 @@ function ContractList() {
         <ContractListContainer>
           {proofsCompleted.map((proof) => (
             <ProofLine>
-              <ContractName address={proof.contract} />
-              <ProofButton color="yellow">
-                <span>
-                  Proof {proof.account === account ? 'made' : 'saved'}
-                </span>
+              {proof.contract} - {proof.account === account ? 'made' : 'saved'}
+              {/* <ContractName address={proof.contract} />
+              {proof.account} */}
+              {/* <ProofButton color="yellow">
+                <span>Proof {account === account ? 'made' : 'saved'}</span>
                 <Complete color="yellow" />
-              </ProofButton>
+              </ProofButton> */}
             </ProofLine>
           ))}
         </ContractListContainer>
