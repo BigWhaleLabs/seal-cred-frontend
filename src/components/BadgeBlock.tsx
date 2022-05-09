@@ -9,7 +9,6 @@ import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
 import ProofStore from 'stores/ProofStore'
 import QRCode from 'components/QRCode'
-import QRLoading from 'icons/QRLoading'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -81,15 +80,13 @@ function Badge({
 
   return (
     <div className={badgeWrapper(!unminted)}>
-      {originalAddress ? (
+      {!derivativeTokenIds[derivativeAddress] && originalAddress ? (
         <BadgeIcon color="pink" />
-      ) : derivativeTokenIds[derivativeAddress] ? (
+      ) : (
         <QRCode
           derivativeAddress={derivativeAddress}
           tokenId={derivativeTokenIds[derivativeAddress][0]}
         />
-      ) : (
-        <QRLoading />
       )}
       <div className={badgeBody(!unminted)}>
         <BadgeText>

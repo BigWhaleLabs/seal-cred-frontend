@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import QRCodeStyling from 'qr-code-styling'
-import QRLoading from 'icons/QRLoading'
 import classnames, {
   borderRadius,
   minWidth,
@@ -52,9 +51,5 @@ export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
     }
   }, [derivativeAddress, tokenId])
 
-  return (
-    <div ref={ref} className={qrCodeContainer}>
-      <QRLoading />
-    </div>
-  )
+  return <div ref={ref} className={qrCodeContainer} />
 }
