@@ -6,7 +6,9 @@ import { proxy } from 'valtio'
 import Ledger from 'models/Ledger'
 import SortedContracts from 'models/SortedContracts'
 import filterContracts from 'helpers/filterContracts'
+import findByValue from 'helpers/findByValue'
 import getLedger, { getLedgerRecord } from 'helpers/ledger'
+import getMapOfOwners from 'helpers/getMapOfOwners'
 import streetCred from 'helpers/streetCred'
 
 // TODO: listen to ledger's original and derivative contracts Transfer events and update originalContractsOwned and derivativeContractsOwned
@@ -15,11 +17,13 @@ import streetCred from 'helpers/streetCred'
 interface StreetCredStoreType {
   ledger: Promise<Ledger>
   originalContracts?: Promise<SortedContracts<ERC721>>
-  derivativeContracts?: Promise<SortedContracts<SCERC721Derivative>>
+  derivativeContracts?: Promise<SCERC721Derivative[]>
   contractNames: { [contractAddress: string]: Promise<string | undefined> }
+  derivativeTokenIds: { [contractAddress: string]: number[] }
 
   handleAccountChange: (account?: string) => Promise<void>
   refreshContractNames: (ledger: Ledger) => void
+  refreshDerivativeTokenIds: (account: string) => void
   refreshDerivativeContracts: (account: string) => Promise<void>
 }
 
@@ -29,6 +33,7 @@ const StreetCredStore = proxy<StreetCredStoreType>({
     return ledger
   }),
   contractNames: {},
+  derivativeTokenIds: {},
 
   async handleAccountChange(account?: string) {
     if (!account) {
@@ -45,6 +50,24 @@ const StreetCredStore = proxy<StreetCredStoreType>({
       account
     )
     await StreetCredStore.refreshDerivativeContracts(account)
+    StreetCredStore.refreshDerivativeTokenIds(account)
+  },
+
+  async refreshDerivativeTokenIds(account: string) {
+    StreetCredStore.derivativeTokenIds = {}
+    if (!account) return
+    const derivativeContracts = await StreetCredStore.derivativeContracts
+
+    for (const contract of derivativeContracts ?? []) {
+      const owners = await getMapOfOwners(contract)
+      const tokenIds = findByValue<number, string>(owners, account)
+      if (
+        !!tokenIds.length &&
+        !StreetCredStore.derivativeTokenIds[contract.address]
+      ) {
+        StreetCredStore.derivativeTokenIds[contract.address] = tokenIds
+      }
+    }
   },
 
   refreshContractNames(ledger: Ledger) {
@@ -62,14 +85,11 @@ const StreetCredStore = proxy<StreetCredStoreType>({
     }
   },
 
-  async refreshDerivativeContracts(account: string) {
+  async refreshDerivativeContracts() {
     const derivativeContracts = Object.values(await StreetCredStore.ledger).map(
       (record) => record.derivativeContract
     )
-    StreetCredStore.derivativeContracts = filterContracts(
-      derivativeContracts,
-      account
-    )
+    StreetCredStore.derivativeContracts = Promise.all(derivativeContracts)
   },
 })
 
