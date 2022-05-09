@@ -15,7 +15,6 @@ import classnames, {
   gridTemplateColumns,
   height,
   inset,
-  margin,
   maxHeight,
   overflow,
   position,
@@ -25,8 +24,7 @@ const badges = classnames(
   position('relative'),
   height('h-fit'),
   maxHeight('max-h-85'),
-  overflow('overflow-y-visible'),
-  margin('mr-5')
+  overflow('overflow-y-visible')
 )
 const badgesList = (oneElement?: boolean) =>
   classnames(
