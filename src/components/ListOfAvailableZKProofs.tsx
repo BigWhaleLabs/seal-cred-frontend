@@ -12,7 +12,6 @@ import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
 import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
-import proofStore from 'stores/ProofStore'
 
 function useProofContent(
   proofInProgress?: Proof,
@@ -71,7 +70,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
 
 function ContractList() {
   const { originalContracts } = useSnapshot(StreetCredStore)
-  const { proofsCompleted } = useSnapshot(proofStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
 
   if (!account) {
@@ -90,7 +89,7 @@ function ContractList() {
   const originalOwnedContractsWithoutCompletedProofs =
     originalContracts?.owned.filter(
       (contract) => !completedProofsMap[contract.address]?.[account]
-    ) ?? []
+    ) || []
 
   return (
     <>
