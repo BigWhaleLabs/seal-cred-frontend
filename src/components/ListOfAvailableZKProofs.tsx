@@ -1,5 +1,5 @@
 import { BodyText } from 'components/Text'
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import { Suspense, useState } from 'react'
 import { animation } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
@@ -70,36 +70,28 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
 }
 
 function ContractList() {
-  const { account } = useSnapshot(WalletStore)
   const { originalContracts } = useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(proofStore)
-
-  const completedProofsMap = useMemo(
-    () =>
-      proofsCompleted.reduce((p, c) => {
-        if (p[c.contract]) {
-          p[c.contract][c.account] = true
-        } else {
-          p[c.contract] = { [c.account]: true }
-        }
-        return p
-      }, {} as { [contractAddress: string]: { [account: string]: boolean } }),
-    [proofsCompleted]
-  )
-
-  const originalOwnedContractsWithoutCompletedProofs = useMemo(
-    () =>
-      account
-        ? originalContracts?.owned.filter(
-            (contract) => !completedProofsMap[contract.address]?.[account]
-          ) ?? []
-        : [],
-    [originalContracts?.owned, completedProofsMap, account]
-  )
+  const { account } = useSnapshot(WalletStore)
 
   if (!account) {
     return null
   }
+
+  const completedProofsMap = proofsCompleted.reduce((p, c) => {
+    if (p[c.contract]) {
+      p[c.contract][c.account] = true
+    } else {
+      p[c.contract] = { [c.account]: true }
+    }
+    return p
+  }, {} as { [contractAddress: string]: { [account: string]: boolean } })
+
+  const originalOwnedContractsWithoutCompletedProofs = account
+    ? originalContracts?.owned.filter(
+        (contract) => !completedProofsMap[contract.address]?.[account]
+      ) ?? []
+    : []
 
   return (
     <>
