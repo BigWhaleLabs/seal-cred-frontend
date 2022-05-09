@@ -20,7 +20,7 @@ import proofStore from 'stores/ProofStore'
 import useBreakpoints from 'helpers/useBreakpoints'
 
 const titleContainer = space('space-y-2')
-const hintContainer = margin('mb-2')
+const hintContainer = margin('mt-2')
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
