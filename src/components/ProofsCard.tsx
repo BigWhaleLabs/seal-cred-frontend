@@ -38,6 +38,8 @@ function ZkProofSavedMessage() {
   )
 }
 
+const proofContainer = classnames(margin('mr-8'))
+
 function Proofs() {
   const { proofsCompleted } = useSnapshot(proofStore)
 
@@ -47,11 +49,13 @@ function Proofs() {
         <CardHeader color="text-yellow">Start proofing!</CardHeader>
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
-      <CustomScrollbar height={390}>
-        <ListOfReadyZKProofs />
-        <ListOfAvailableZKProofs />
-        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
-      </CustomScrollbar>
+      <div className={proofContainer}>
+        <CustomScrollbar maxHeight={390}>
+          <ListOfReadyZKProofs />
+          <ListOfAvailableZKProofs />
+          {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
+        </CustomScrollbar>
+      </div>
     </>
   )
 }
