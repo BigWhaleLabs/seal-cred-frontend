@@ -4,10 +4,30 @@ import { useSnapshot } from 'valtio'
 import Complete from 'icons/Complete'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
-import ProofButton from 'components/ProofButton'
 import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
+import classnames, {
+  alignItems,
+  display,
+  flexDirection,
+  fontFamily,
+  fontWeight,
+  lineHeight,
+  space,
+  textColor,
+} from 'classnames/tailwind'
+
+const ProofText = classnames(
+  display('flex'),
+  flexDirection('flex-row'),
+  space('space-x-2'),
+  alignItems('items-center'),
+  fontWeight('font-bold'),
+  textColor('text-yellow'),
+  fontFamily('font-primary'),
+  lineHeight('leading-5')
+)
 
 function ContractList() {
   const { account } = useSnapshot(WalletStore)
@@ -20,12 +40,12 @@ function ContractList() {
           {proofsCompleted.map((proof) => (
             <ProofLine>
               <ContractName address={proof.contract} />
-              <ProofButton color="yellow">
+              <div className={ProofText}>
                 <span>
                   Proof {proof.account === account ? 'made' : 'saved'}
                 </span>
                 <Complete color="yellow" />
-              </ProofButton>
+              </div>
             </ProofLine>
           ))}
         </ContractListContainer>
