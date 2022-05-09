@@ -1,10 +1,5 @@
-import {
-  AccentText,
-  BodyText,
-  CardDescription,
-  CardHeader,
-} from 'components/Text'
-import { Suspense, lazy } from 'react'
+import { AccentText, CardDescription, CardHeader } from 'components/Text'
+import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import CardSeparator from 'components/CardSeparator'
@@ -54,7 +49,7 @@ function Proofs() {
     originalContracts && account
       ? new Set(
           proofsCompleted
-            .filter((proof) => account === proof.account)
+            .filter((proof) => WalletStore.account === proof.account)
             .map((proof) => proof.contract)
         ).size === originalContracts?.owned.length
       : false

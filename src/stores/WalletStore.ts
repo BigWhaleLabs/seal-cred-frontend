@@ -117,11 +117,11 @@ class WalletStore {
       void StreetCredStore.handleAccountChange(this.account)
       void this.handleAccountChanged(accounts)
     })
-    provider.on('disconnect', (accounts: string[]) => {
+    provider.on('disconnect', () => {
       void this.handleAccountChanged()
     })
 
-    provider.on('stop', (accounts: string[]) => {
+    provider.on('stop', () => {
       void this.handleAccountChanged()
     })
     provider.on('chainChanged', async () => {
