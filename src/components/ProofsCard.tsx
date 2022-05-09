@@ -47,7 +47,7 @@ function Proofs() {
         <CardHeader color="text-yellow">Start proofing!</CardHeader>
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
-      <CustomScrollbar maxHeight={320}>
+      <CustomScrollbar maxHeight={320} mobileHeight="h-8">
         <ListOfReadyZKProofs />
         <ListOfAvailableZKProofs />
       </CustomScrollbar>

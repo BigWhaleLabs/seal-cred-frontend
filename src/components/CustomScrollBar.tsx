@@ -2,21 +2,28 @@ import 'simplebar/dist/simplebar.min.css'
 import { FC, MutableRefObject, useEffect, useRef, useState } from 'react'
 import SimpleBar from 'simplebar-react'
 import classnames, {
+  THeight,
   height,
   margin,
   transitionProperty,
 } from 'classnames/tailwind'
 import isOverflowing from 'helpers/isOverflowing'
 
-const container = (overflows?: boolean) =>
+interface ScrollbarProps {
+  mobileHeight?: THeight
+  maxHeight?: number
+}
+
+const container = (mobileHeight?: THeight, overflows?: boolean) =>
   classnames(
     overflows ? margin('mr-5') : undefined,
-    height('h-80'),
+    height('lg:h-80', mobileHeight),
     transitionProperty('transition-all')
   )
 
-const CustomScrollbar: FC<{ maxHeight?: number }> = ({
+const CustomScrollbar: FC<ScrollbarProps> = ({
   children,
+  mobileHeight = 'h-80',
   maxHeight = 350,
 }) => {
   const boxRef = useRef() as MutableRefObject<HTMLDivElement>
@@ -29,7 +36,7 @@ const CustomScrollbar: FC<{ maxHeight?: number }> = ({
 
   return (
     <SimpleBar style={{ maxHeight }}>
-      <div ref={boxRef} className={container(overflows)}>
+      <div ref={boxRef} className={container(mobileHeight, overflows)}>
         {children}
       </div>
     </SimpleBar>
