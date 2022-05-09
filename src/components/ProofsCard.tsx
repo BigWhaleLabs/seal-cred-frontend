@@ -15,17 +15,26 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import proofStore from 'stores/ProofStore'
-import useWindowDimensions from 'helpers/useWindowDimensions'
+import useBreakpoints from 'helpers/useBreakpoints'
 
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
-  flexDirection('flex-col'),
+  flexDirection('flex-col-reverse', 'lg:flex-col'),
   alignItems('items-center'),
   width('w-full', 'lg:w-fit')
 )
+function ZkProofSavedMessage() {
+  return (
+    <div className={hintContainer}>
+      <AccentText small color="text-blue-500">
+        Your ZK Proof will save in the browser while you switch wallets.
+      </AccentText>
+    </div>
+  )
+}
 
 function Proofs() {
   const { proofsCompleted } = useSnapshot(proofStore)
@@ -38,13 +47,7 @@ function Proofs() {
       </div>
       <ListOfReadyZKProofs />
       <ListOfAvailableZKProofs />
-      {proofsCompleted.length > 0 && (
-        <div className={hintContainer}>
-          <AccentText color="text-blue-500">
-            Your ZK Proof will save in the browser while you switch wallets.
-          </AccentText>
-        </div>
-      )}
+      {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
     </>
   )
 }
@@ -56,11 +59,7 @@ function ReadyProofs() {
         <CardHeader color="text-yellow">Your saved ZK Proof</CardHeader>
       </div>
       <ListOfReadyZKProofs />
-      <div className={hintContainer}>
-        <AccentText color="text-blue-500">
-          Your ZK Proof will save in the browser while you switch wallets.
-        </AccentText>
-      </div>
+      <ZkProofSavedMessage />
     </>
   )
 }
@@ -68,8 +67,7 @@ function ReadyProofs() {
 function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
-  const { width } = useWindowDimensions()
-  const mobile = width < 1024
+  const { lg } = useBreakpoints()
 
   return (
     <div className={proofCardZKButtonContainer}>
@@ -82,7 +80,7 @@ function ProofsCard() {
           <ConnectAccount />
         )}
       </Card>
-      {!mobile && <ZkProofButton />}
+      {lg && <ZkProofButton />}
     </div>
   )
 }

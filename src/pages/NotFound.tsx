@@ -4,7 +4,6 @@ import {
   classnames,
   display,
   flexDirection,
-  height,
   justifyContent,
   margin,
   space,
@@ -17,8 +16,8 @@ import Card from 'components/Card'
 const container = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  height('h-full'),
-  margin('my-4')
+  margin('my-4'),
+  alignItems('items-center')
 )
 const wrapperBody = classnames(
   display('flex'),
@@ -34,11 +33,15 @@ export default function NotFound() {
   const navigate = useNavigate()
   return (
     <div className={container}>
-      <Card shadow>
-        <HeaderText size="4xl">404</HeaderText>
-        <div className={wrapperBody}>
+      <Card shadow onlyWrap color="yellow">
+        <div className={textAlign('text-center')}>
+          <HeaderText size="4xl" bold>
+            404
+          </HeaderText>
           <SubheaderText>Not found</SubheaderText>
-          <Button colors="primary" onClick={() => navigate('/')}>
+        </div>
+        <div className={wrapperBody}>
+          <Button colors="primary" small onClick={() => navigate('/')}>
             Go to the main page
           </Button>
         </div>

@@ -14,9 +14,11 @@ class WalletStore {
   account?: string
   walletLoading = false
 
-  async connect() {
+  async connect(clearCachedProvider = false) {
     this.walletLoading = true
     try {
+      if (clearCachedProvider) web3Modal.clearCachedProvider()
+
       const instance = await web3Modal.connect()
       provider = new Web3Provider(instance)
       const userNetwork = (await provider.getNetwork()).name
