@@ -51,7 +51,7 @@ const CustomScrollbar: FC<{ height?: number }> = ({
     <Scrollbars
       autoHide
       autoHeight
-      autoHeightMin={height}
+      autoHeightMax={height}
       renderThumbVertical={renderThumb}
       renderTrackVertical={renderTrack}
     >
