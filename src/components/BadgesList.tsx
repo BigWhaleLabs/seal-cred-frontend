@@ -129,6 +129,8 @@ function BadgesList() {
           }
         >
           <BadgeListSuspender />
+          <BadgeListSuspender />
+          <BadgeListSuspender />
         </Suspense>
       </CustomScrollbar>
     </div>
