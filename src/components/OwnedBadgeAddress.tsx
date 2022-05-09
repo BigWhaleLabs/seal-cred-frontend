@@ -13,13 +13,15 @@ function OwnedBadgeAddressSuspender({
   tokenId: string
 }) {
   const { ledger } = useSnapshot(StreetCredStore)
-  const contract = ledger[derivativeAddress].derivativeContract
+  const contract = Object.values(ledger).find(
+    ({ derivativeContract }) => derivativeAddress === derivativeContract.address
+  )
   const [address, setAddress] = useState<string | undefined>(undefined)
   const { md } = useBreakpoints()
 
   useEffect(() => {
     async function getAddress() {
-      setAddress(await contract.ownerOf(tokenId))
+      setAddress(await contract?.derivativeContract.ownerOf(tokenId))
     }
 
     void getAddress()

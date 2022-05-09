@@ -1,5 +1,5 @@
 import { BodyText } from 'components/Text'
-import { Suspense } from 'react'
+import { Suspense, useMemo } from 'react'
 import { proxy, useSnapshot } from 'valtio'
 import BadgeBlock from 'components/BadgeBlock'
 import BadgesHintCard from 'components/BadgesHintCard'
@@ -46,41 +46,42 @@ const badgesListOverflow = classnames(
 )
 
 function BadgeListSuspender() {
-  const { derivativeContracts, ledger } = useSnapshot(StreetCredStore)
+  const { derivativeContracts, ledger, derivativeTokenIds } =
+    useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
-  const ownedDerivativeContracts = derivativeContracts?.owned || []
-  const unownedDerivativeContracts = derivativeContracts?.unowned || []
   const completedProofs = proxy(proofsCompleted)
   const scLedger = proxy(ledger)
+  const derivatives = proxy(derivativeContracts)
+
+  const proofContracts = useMemo(
+    () => new Set(completedProofs.map((p) => p.contract)),
+    [completedProofs]
+  )
 
   const unownedDerivativeToOriginalAddressesMap = {} as {
     [derivativeAddress: string]: string
   }
-  for (const originalAddress of Object.keys(ledger)) {
-    const derivativeContract = ledger[originalAddress].derivativeContract
-    if (derivativeContract) {
-      unownedDerivativeToOriginalAddressesMap[derivativeContract.address] =
-        originalAddress
-    }
+
+  for (const proofContract of proofContracts) {
+    const derivativeContract = scLedger[proofContract].derivativeContract
+    if (!derivativeContract) continue
+    if (derivativeTokenIds[derivativeContract.address]) continue
+    unownedDerivativeToOriginalAddressesMap[derivativeContract.address] =
+      proofContract
   }
 
-  const unownedDerivativeContractsWithZKProofs =
-    unownedDerivativeContracts.filter(
-      (contract) =>
-        !!completedProofs.find(
-          (proof) =>
-            proof.contract ===
-            unownedDerivativeToOriginalAddressesMap[contract.address]
-        )
-    )
-  const unownedLedgerRecordsWithZKProofs =
-    unownedDerivativeContractsWithZKProofs.map(
-      (contract) =>
-        scLedger[unownedDerivativeToOriginalAddressesMap[contract.address]]
-    )
+  const unownedDerivativeRecords = Object.keys(
+    unownedDerivativeToOriginalAddressesMap
+  ).map((address) => scLedger[unownedDerivativeToOriginalAddressesMap[address]])
 
-  const ownedDerivativesLength = ownedDerivativeContracts.length
-  const unownedLedgerRecordsWithProofs = unownedLedgerRecordsWithZKProofs.length
+  const ownedDerivatives = derivatives
+    ? Object.keys(derivativeTokenIds).map((address) =>
+        derivatives.find((contract) => contract.address === address)
+      )
+    : []
+
+  const ownedDerivativesLength = ownedDerivatives.length
+  const unownedLedgerRecordsWithProofs = unownedDerivativeRecords.length
   const badgesAmount = ownedDerivativesLength + unownedLedgerRecordsWithProofs
   const isOneBadge = badgesAmount < 2
   const isEmpty = badgesAmount < 1
@@ -95,14 +96,17 @@ function BadgeListSuspender() {
       )}
       <div className={badgesList(isOneBadge)}>
         {!!ownedDerivativesLength &&
-          ownedDerivativeContracts.map((ledgerRecord) => (
-            <BadgeBlock
-              key={ledgerRecord.address}
-              address={ledgerRecord.address}
-            />
-          ))}
-        {!!unownedLedgerRecordsWithProofs &&
-          unownedLedgerRecordsWithZKProofs.map((ledgerRecord) => (
+          ownedDerivatives.map(
+            (derivative) =>
+              derivative && (
+                <BadgeBlock
+                  key={derivative.address}
+                  address={derivative.address}
+                />
+              )
+          )}
+        {!!unownedDerivativeRecords &&
+          unownedDerivativeRecords.map((ledgerRecord) => (
             <BadgeBlock
               key={ledgerRecord.originalContract.address}
               address={ledgerRecord.derivativeContract.address}

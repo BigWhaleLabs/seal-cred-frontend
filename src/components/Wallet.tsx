@@ -10,7 +10,6 @@ import classnames, {
   space,
   textAlign,
   width,
-  wordBreak,
 } from 'classnames/tailwind'
 import truncateMiddle from 'helpers/truncateMiddle'
 
@@ -21,10 +20,9 @@ const walletContainer = classnames(
   cursor('cursor-pointer')
 )
 const walletAccount = classnames(
-  textAlign('text-center'),
-  wordBreak('break-all'),
+  textAlign('text-right'),
   lineHeight('leading-5'),
-  display('sm:block', 'hidden')
+  display('sm:flex', 'hidden')
 )
 
 export default function Wallet() {
