@@ -95,12 +95,11 @@ class WalletStore {
     await tx.wait()
   }
 
-  private async handleAccountChanged() {
+  private async handleAccountChanged(accounts?: string[]) {
     if (!provider) return
 
     this.walletLoading = true
-    const accounts = await provider.listAccounts()
-    this.account = accounts[0]
+    this.account = accounts ? accounts[0] : (await provider.listAccounts())[0]
     this.walletLoading = false
 
     await StreetCredStore.handleAccountChange(this.account)
@@ -113,14 +112,16 @@ class WalletStore {
       handleError(error)
     })
 
-    provider.on('accountsChanged', () => {
-      void this.handleAccountChanged()
+    provider.on('accountsChanged', (accounts: string[]) => {
+      this.account = accounts[0]
+      void StreetCredStore.handleAccountChange(this.account)
+      void this.handleAccountChanged(accounts)
     })
-    provider.on('disconnect', () => {
+    provider.on('disconnect', (accounts: string[]) => {
       void this.handleAccountChanged()
     })
 
-    provider.on('stop', () => {
+    provider.on('stop', (accounts: string[]) => {
       void this.handleAccountChanged()
     })
     provider.on('chainChanged', async () => {
