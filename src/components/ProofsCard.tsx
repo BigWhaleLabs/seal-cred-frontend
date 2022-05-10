@@ -12,6 +12,7 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
+  height,
   margin,
   space,
   width,
@@ -48,8 +49,45 @@ function Proofs() {
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
       <Scrollbar maxHeight={320}>
-        <ListOfReadyZKProofs />
-        <ListOfAvailableZKProofs />
+        <div className={height('h-80')}>
+          <ListOfReadyZKProofs />
+          <ListOfAvailableZKProofs />
+          <ul>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+          </ul>
+        </div>
       </Scrollbar>
       {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
     </>
@@ -62,7 +100,9 @@ function ReadyProofs() {
       <div className={titleContainer}>
         <CardHeader color="text-yellow">Your saved ZK Proof</CardHeader>
       </div>
-      <ListOfReadyZKProofs />
+      <Scrollbar maxHeight={320}>
+        <ListOfReadyZKProofs />
+      </Scrollbar>
       <ZkProofSavedMessage />
     </>
   )

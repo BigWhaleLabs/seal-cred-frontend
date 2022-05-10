@@ -26,7 +26,6 @@ body {
   opacity: 100% !important;
 }
 .simplebar-track {
-  right: -20px !important;
   width: 11px !important;
   background: url('/img/scrollbarBg.png');
   overflow: visible !important;
