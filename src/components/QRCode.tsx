@@ -41,12 +41,12 @@ const qrCode = new QRCodeStyling({
 export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    if (ref.current) {
-      qrCode.append(ref.current)
-      qrCode.update({
-        data: `https://sealcred.xyz/${derivativeAddress}/${tokenId}`,
-      })
-    }
+    if (!ref.current) return
+
+    qrCode.append(ref.current)
+    qrCode.update({
+      data: `https://sealcred.xyz/${derivativeAddress}/${tokenId}`,
+    })
   }, [derivativeAddress, tokenId])
 
   return <div ref={ref} className={qrCodeContainer} />

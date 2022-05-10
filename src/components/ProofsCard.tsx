@@ -21,6 +21,7 @@ import useBreakpoints from 'helpers/useBreakpoints'
 
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
+const innerScrollableBlock = space('space-y-4')
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
@@ -47,8 +48,8 @@ function Proofs() {
         <CardHeader color="text-yellow">Start proofing!</CardHeader>
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
-      <ScrollableBlock fade="both">
-        <div className={space('space-y-4')}>
+      <ScrollableBlock>
+        <div className={innerScrollableBlock}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
         </div>
@@ -64,8 +65,8 @@ function ReadyProofs() {
       <div className={titleContainer}>
         <CardHeader color="text-yellow">Your saved ZK Proof</CardHeader>
       </div>
-      <ScrollableBlock fade="both">
-        <div className={space('space-y-4')}>
+      <ScrollableBlock>
+        <div className={innerScrollableBlock}>
           <ListOfReadyZKProofs />
           <ZkProofSavedMessage />
         </div>
