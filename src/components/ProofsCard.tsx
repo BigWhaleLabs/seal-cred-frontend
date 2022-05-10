@@ -39,6 +39,8 @@ function ZkProofSavedMessage() {
   )
 }
 
+const proofsStyles = classnames(height('lg:h-80', 'h-min'))
+
 function Proofs() {
   const { proofsCompleted } = useSnapshot(proofStore)
 
@@ -49,44 +51,9 @@ function Proofs() {
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
       <Scrollbar maxHeight={320}>
-        <div className={height('h-80')}>
+        <div className={proofsStyles}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
-          <ul>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-          </ul>
         </div>
       </Scrollbar>
       {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
