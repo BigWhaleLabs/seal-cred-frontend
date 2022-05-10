@@ -6,9 +6,10 @@ const arrowAnimation = (disabled?: boolean) =>
 
 interface ArrowProps {
   disabled?: boolean
+  rotate?: number
 }
 
-const Arrow: FC<ArrowProps> = ({ disabled }) => (
+const Arrow: FC<ArrowProps> = ({ disabled, rotate }) => (
   <svg
     width="21"
     height="25"
@@ -17,7 +18,10 @@ const Arrow: FC<ArrowProps> = ({ disabled }) => (
     xmlns="http://www.w3.org/2000/svg"
     className={arrowAnimation(disabled)}
   >
-    <g filter="url(#filter0_d_97_51757)">
+    <g
+      filter="url(#filter0_d_97_51757)"
+      transform={rotate ? `rotate(${rotate})` : undefined}
+    >
       <path
         d="M8 8L12.5 12.5L8 17"
         stroke="url(#paint0_linear_97_51757)"
