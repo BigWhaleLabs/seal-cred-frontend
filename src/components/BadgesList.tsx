@@ -4,7 +4,7 @@ import { proxy, useSnapshot } from 'valtio'
 import BadgeBlock from 'components/BadgeBlock'
 import BadgesHintCard from 'components/BadgesHintCard'
 import ProofStore from 'stores/ProofStore'
-import SealCredStore from 'stores/SealCredStore'
+import StreetCredStore from 'stores/StreetCredStore'
 import classnames, {
   backgroundImage,
   display,
@@ -46,7 +46,7 @@ const badgesListOverflow = classnames(
 
 function BadgeListSuspender() {
   const { derivativeContracts, ledger, derivativeTokenIds } =
-    useSnapshot(SealCredStore)
+    useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const completedProofs = proxy(proofsCompleted)
   const scLedger = proxy(ledger)

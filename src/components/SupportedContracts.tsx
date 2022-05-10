@@ -2,11 +2,11 @@ import { SubheaderText } from 'components/Text'
 import { Suspense, lazy } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
-import SealCredStore from 'stores/SealCredStore'
+import StreetCredStore from 'stores/StreetCredStore'
 const ContractName = lazy(() => import('components/ContractName'))
 
 function SupportedContractsComponent() {
-  const { ledger } = useSnapshot(SealCredStore)
+  const { ledger } = useSnapshot(StreetCredStore)
   const contractAddresses = Object.keys(ledger)
 
   return contractAddresses.length ? (

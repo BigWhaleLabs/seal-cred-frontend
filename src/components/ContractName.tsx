@@ -1,7 +1,7 @@
 import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
-import SealCredStore from 'stores/SealCredStore'
+import StreetCredStore from 'stores/StreetCredStore'
 import truncateMiddle from 'helpers/truncateMiddle'
 
 interface ContractNameProps {
@@ -28,7 +28,7 @@ function TextBlock({ address, otherStyle, isFetching }: FetchingContract) {
 }
 
 function ContractNameComponent({ address, otherStyle }: ContractNameProps) {
-  const { contractNames } = useSnapshot(SealCredStore)
+  const { contractNames } = useSnapshot(StreetCredStore)
 
   const nameOrAddress = contractNames[address]
     ? contractNames[address]

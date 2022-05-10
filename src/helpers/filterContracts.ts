@@ -1,7 +1,7 @@
 import {
   ERC721,
   SCERC721Derivative,
-} from '@big-whale-labs/seal-cred-ledger-contract'
+} from '@big-whale-labs/street-cred-ledger-contract'
 import SortedContracts from 'models/SortedContracts'
 import isAddressOwner from 'helpers/isAddressOwner'
 

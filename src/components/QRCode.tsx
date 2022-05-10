@@ -47,7 +47,7 @@ export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
         ref.current.removeChild(ref.current.firstChild)
       qrCode.append(ref.current)
       qrCode.update({
-        data: `https://sealcred.xyz/${derivativeAddress}/${tokenId}`,
+        data: `https://streetcred.one/${derivativeAddress}/${tokenId}`,
       })
     }
   }, [derivativeAddress, tokenId])

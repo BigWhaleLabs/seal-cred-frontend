@@ -1,10 +1,10 @@
 import { BigNumber } from 'ethers'
 import { ErrorList, handleError } from 'helpers/handleError'
-import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
+import { SCERC721Derivative__factory } from '@big-whale-labs/street-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import ProofResponse from 'models/ProofResponse'
-import SealCredStore from 'stores/SealCredStore'
+import StreetCredStore from 'stores/StreetCredStore'
 import env from 'helpers/env'
 import web3Modal from 'helpers/web3Modal'
 
@@ -103,7 +103,7 @@ class WalletStore {
     this.account = accounts[0]
     this.walletLoading = false
 
-    await SealCredStore.handleAccountChange(this.account)
+    await StreetCredStore.handleAccountChange(this.account)
   }
 
   private subscribeProvider(provider: Web3Provider) {

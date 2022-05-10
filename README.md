@@ -1,4 +1,4 @@
-# SealCred frontend code
+# StreetCred frontend code
 
 ## Local launch
 
@@ -20,7 +20,7 @@
 | `VITE_INFURA_ID`                  | Create an app and get one [here](https://infura.io/dashboard)         |
 | `VITE_APP_NAME`                   | App name which is displayed in some wallets                           |
 | `VITE_BITSKI_CLIENT_ID`           | Bitski client ID                                                      |
-| `VITE_SC_LEDGER_CONTRACT_ADDRESS` | SealCred Ledger contract address                                      |
+| `VITE_SC_LEDGER_CONTRACT_ADDRESS` | StreetCred Ledger contract address                                    |
 | `VITE_ETH_HTTP_URL`               | Ethereum HTTP URL                                                     |
 
 Also, please, consider looking at `.env.sample`.
@@ -31,4 +31,4 @@ Also, please, consider looking at `.env.sample`.
 
 ## CD
 
-`main` branch gets deployed to [sealcred.xyz](https://sealcred.xyz) automatically.
+`main` branch gets deployed to [streetcred.one](https://streetcred.one) automatically.

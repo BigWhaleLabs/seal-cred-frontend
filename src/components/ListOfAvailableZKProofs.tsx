@@ -10,8 +10,8 @@ import Proof from 'models/Proof'
 import ProofButton from 'components/ProofButton'
 import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
-import SealCredStore from 'stores/SealCredStore'
 import Star from 'icons/Star'
+import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 
 function useProofContent(
@@ -70,7 +70,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
 }
 
 function ContractList() {
-  const { originalContracts } = useSnapshot(SealCredStore)
+  const { originalContracts } = useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
 

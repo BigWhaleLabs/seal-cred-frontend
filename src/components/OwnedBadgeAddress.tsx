@@ -1,7 +1,7 @@
 import { FC, Suspense, useEffect, useState } from 'react'
 import { LinkText } from 'components/Text'
 import { useSnapshot } from 'valtio'
-import SealCredStore from 'stores/SealCredStore'
+import StreetCredStore from 'stores/StreetCredStore'
 import truncateMiddle from 'helpers/truncateMiddle'
 import useBreakpoints from 'helpers/useBreakpoints'
 
@@ -12,7 +12,7 @@ function OwnedBadgeAddressSuspender({
   derivativeAddress: string
   tokenId: string
 }) {
-  const { ledger } = useSnapshot(SealCredStore)
+  const { ledger } = useSnapshot(StreetCredStore)
   const contract = Object.values(ledger).find(
     ({ derivativeContract }) => derivativeAddress === derivativeContract.address
   )

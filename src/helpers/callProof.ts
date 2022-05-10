@@ -4,7 +4,7 @@ import ProofBody from 'models/ProofBody'
 import ProofCheck from 'models/ProofCheck'
 import axios from 'axios'
 
-const baseURL = 'https://verify.sealcred.xyz'
+const baseURL = 'https://verify.streetcred.one'
 
 export async function scheduleProofGeneration(
   proof: MerkleProof,

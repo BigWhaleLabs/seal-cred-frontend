@@ -4,7 +4,7 @@ import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import Proof from 'models/Proof'
 import ProofStatus from 'models/ProofStatus'
-import SealCredStore from 'stores/SealCredStore'
+import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import axios from 'axios'
 import createEcdsaInput from 'helpers/createEcdsaInput'
@@ -21,7 +21,7 @@ class ProofStore extends PersistableStore {
       const account = WalletStore.account
       if (!account) throw new Error('No account found')
 
-      const ledger = await SealCredStore.ledger
+      const ledger = await StreetCredStore.ledger
       const record = ledger[contract]
 
       if (!record || !record.originalContract)

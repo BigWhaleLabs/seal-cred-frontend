@@ -1,4 +1,4 @@
-import { ERC721 } from '@big-whale-labs/seal-cred-ledger-contract'
+import { ERC721 } from '@big-whale-labs/street-cred-ledger-contract'
 
 export default async function isAddressOwner(
   contract: ERC721,

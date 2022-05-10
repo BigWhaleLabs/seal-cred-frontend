@@ -10,7 +10,7 @@ import ContractName from 'components/ContractName'
 import ProofStore from 'stores/ProofStore'
 import QRCode from 'components/QRCode'
 import QRLoading from 'icons/QRLoading'
-import SealCredStore from 'stores/SealCredStore'
+import StreetCredStore from 'stores/StreetCredStore'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
@@ -23,7 +23,7 @@ import classnames, {
   space,
   textAlign,
 } from 'classnames/tailwind'
-import sealCred from 'helpers/sealCred'
+import streetCred from 'helpers/streetCred'
 import truncateMiddle from 'helpers/truncateMiddle'
 
 const badgeWrapper = (minted?: boolean) =>
@@ -71,7 +71,7 @@ function Badge({
   derivativeAddress: string
   originalAddress?: string
 }) {
-  const { derivativeTokenIds, ledger } = useSnapshot(SealCredStore)
+  const { derivativeTokenIds, ledger } = useSnapshot(StreetCredStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
 
@@ -110,7 +110,9 @@ function Badge({
                   (proof) => proof.contract === originalAddress
                 )
                 if (!proof || !proof.result) throw new Error('No proof found')
-                const ledgerMerkleTree = await sealCred.getRoot(originalAddress)
+                const ledgerMerkleTree = await streetCred.getRoot(
+                  originalAddress
+                )
                 if (
                   !BigNumber.from(ledgerMerkleTree).eq(
                     BigNumber.from(proof.result.publicSignals[1])
@@ -127,7 +129,7 @@ function Badge({
                   derivativeContractAddress,
                   proof.result
                 )
-                await SealCredStore.refreshDerivativeContracts(account)
+                await StreetCredStore.refreshDerivativeContracts(account)
               } catch (error) {
                 handleError(error)
               } finally {

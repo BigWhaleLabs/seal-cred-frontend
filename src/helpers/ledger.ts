@@ -1,13 +1,13 @@
 import {
   ERC721__factory,
   SCERC721Derivative__factory,
-  SealCredLedger,
-} from '@big-whale-labs/seal-cred-ledger-contract'
+  StreetCredLedger,
+} from '@big-whale-labs/street-cred-ledger-contract'
 import Ledger from 'models/Ledger'
 import defaultProvider from 'helpers/defaultProvider'
 
 export async function getLedgerRecord(
-  sealCredLedger: SealCredLedger,
+  streetCredLedger: StreetCredLedger,
   tokenAddress: string,
   merkleRoot: string
 ) {
@@ -15,21 +15,21 @@ export async function getLedgerRecord(
     merkleRoot,
     originalContract: ERC721__factory.connect(tokenAddress, defaultProvider),
     derivativeContract: SCERC721Derivative__factory.connect(
-      await sealCredLedger.getDerivativeAddress(tokenAddress),
+      await streetCredLedger.getDerivativeAddress(tokenAddress),
       defaultProvider
     ),
   }
 }
 
-export default async function getLedger(sealCredLedger: SealCredLedger) {
-  const eventsFilter = sealCredLedger.filters.SetMerkleRoot()
-  const events = await sealCredLedger.queryFilter(eventsFilter)
+export default async function getLedger(streetCredLedger: StreetCredLedger) {
+  const eventsFilter = streetCredLedger.filters.SetMerkleRoot()
+  const events = await streetCredLedger.queryFilter(eventsFilter)
   const ledger = {} as Ledger
   for (const event of events) {
     const { tokenAddress } = event.args
     const merkleRoot = event.args.merkleRoot
     ledger[tokenAddress] = await getLedgerRecord(
-      sealCredLedger,
+      streetCredLedger,
       tokenAddress,
       merkleRoot
     )
