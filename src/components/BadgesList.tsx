@@ -3,17 +3,15 @@ import { Suspense, useMemo } from 'react'
 import { proxy, useSnapshot } from 'valtio'
 import BadgeBlock from 'components/BadgeBlock'
 import BadgesHintCard from 'components/BadgesHintCard'
+import Fade from 'components/Fade'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
 import classnames, {
-  backgroundImage,
   display,
   gap,
-  gradientColorStops,
   gridAutoRows,
   gridTemplateColumns,
   height,
-  inset,
   maxHeight,
   overflow,
   position,
@@ -35,14 +33,6 @@ const badgesList = (oneElement?: boolean) =>
       oneElement ? 'lg:grid-cols-1' : 'lg:grid-cols-2'
     )
   )
-
-const badgesListOverflow = classnames(
-  position('sticky'),
-  inset('bottom-0', 'right-0', 'left-0'),
-  height('h-8'),
-  backgroundImage('bg-gradient-to-b'),
-  gradientColorStops('from-transparent', 'to-blue-900')
-)
 
 function BadgeListSuspender() {
   const { derivativeContracts, ledger, derivativeTokenIds } =
@@ -113,7 +103,7 @@ function BadgeListSuspender() {
             />
           ))}
       </div>
-      {!isOneBadge && <div className={badgesListOverflow}></div>}
+      {!isOneBadge && <Fade bottom />}
     </>
   )
 }
