@@ -9,7 +9,7 @@ import classnames, {
 const arrowsWrapper = classnames(
   transitionProperty('transition-all'),
   animation('animate-bounce'),
-  space('-space-y-4'),
+  space('space-y-4'),
   margin('my-2')
 )
 
