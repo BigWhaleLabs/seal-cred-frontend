@@ -2,7 +2,7 @@ import 'simplebar/dist/simplebar.min.css'
 import { FC, MutableRefObject, useRef } from 'react'
 import SimpleBar from 'simplebar-react'
 import classnames, { margin, transitionProperty } from 'classnames/tailwind'
-import useIsOverflow from 'helpers/useOverflow'
+import useIsOverflow from 'helpers/useIsOverflow'
 
 const Scrollbar: FC<{ maxHeight?: number }> = ({
   children,
