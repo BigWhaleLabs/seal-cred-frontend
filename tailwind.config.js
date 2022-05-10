@@ -58,7 +58,7 @@ module.exports = {
         pink50: 'rgba(255, 123, 237, 0.5)',
         yellow50: 'rgba(254, 216, 35, 0.4)',
         blue50: 'rgba(21, 161, 252, 0.5)',
-        white50: 'rgba(239, 236, 214, 0.3)',
+        white50: 'rgba(239, 236, 214, 0.4)',
         green50: 'rgba(1, 254, 182, 0.4)',
       },
       boxShadow: {
@@ -72,6 +72,7 @@ module.exports = {
       },
       width: {
         card: '398px',
+        'thin-card': '187px',
         'mobile-card': '92%',
       },
       dropShadow: {

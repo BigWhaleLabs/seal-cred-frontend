@@ -6379,6 +6379,7 @@ export type TWidth =
   | 'w-max'
   | 'w-fit'
   | 'w-card'
+  | 'w-thin-card'
   | 'w-mobile-card'
 
 export type TMinWidth =

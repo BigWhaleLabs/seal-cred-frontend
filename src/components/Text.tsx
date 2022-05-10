@@ -8,13 +8,16 @@ import { FC } from 'react'
 import {
   TTextColor,
   backgroundClip,
+  backgroundColor,
   backgroundImage,
+  borderRadius,
   classnames,
   fontFamily,
   fontSize,
   fontWeight,
   gradientColorStops,
   lineHeight,
+  padding,
   textAlign,
   textColor,
   textDecoration,
@@ -158,4 +161,15 @@ const tooltipText = classnames(
 )
 export const TooltipText: FC = ({ children }) => {
   return <div className={tooltipText}>{children}</div>
+}
+
+const highlightedText = classnames(
+  textColor('text-blue-900'),
+  fontWeight('font-bold'),
+  borderRadius('rounded-full'),
+  backgroundColor('bg-white'),
+  padding('px-4', 'py-1')
+)
+export const HighlightedText: FC = ({ children }) => {
+  return <div className={highlightedText}>{children}</div>
 }

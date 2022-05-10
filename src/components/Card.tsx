@@ -18,12 +18,13 @@ import {
 } from 'classnames/tailwind'
 import ArcText from 'components/ArcText'
 
-type Color = 'pink' | 'yellow' | 'green' | 'blue'
+type Color = 'pink' | 'yellow' | 'green' | 'blue' | 'white'
 interface CardProps {
   shadow?: boolean
   color?: Color
   onlyWrap?: boolean
   spinner?: string
+  thin?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -37,6 +38,8 @@ const cardColor = (color?: Color) => {
         ? 'outline-green'
         : color === 'pink'
         ? 'outline-pink'
+        : color === 'white'
+        ? 'outline-white'
         : color === 'blue'
         ? 'outline-blue-500'
         : 'outline-blue-900'
@@ -49,6 +52,8 @@ const cardColor = (color?: Color) => {
         ? 'shadow-green50'
         : color === 'pink'
         ? 'shadow-pink50'
+        : color === 'white'
+        ? 'shadow-white50'
         : color === 'blue'
         ? 'shadow-blue50'
         : undefined
@@ -56,7 +61,12 @@ const cardColor = (color?: Color) => {
   )
 }
 
-const cardContainer = (shadow?: boolean, color?: Color, onlyWrap = false) => {
+const cardContainer = (
+  shadow?: boolean,
+  color?: Color,
+  onlyWrap = false,
+  thin = false
+) => {
   return classnames(
     position('relative'),
     borderRadius('rounded-2xl'),
@@ -64,9 +74,15 @@ const cardContainer = (shadow?: boolean, color?: Color, onlyWrap = false) => {
     cardColor(shadow ? color : undefined),
     padding('p-6'),
     space('space-y-4'),
-    width('w-mobile-card', 'sm:w-card'),
+    width(
+      thin ? 'w-thin-card' : 'w-mobile-card',
+      thin ? undefined : 'sm:w-card'
+    ),
     margin('mx-4', 'lg:mx-0'),
-    height(onlyWrap ? undefined : 'h-fit', onlyWrap ? undefined : 'lg:h-card'),
+    height(
+      onlyWrap ? undefined : thin ? 'h-60' : 'h-fit',
+      onlyWrap ? undefined : thin ? 'h-60' : 'lg:h-card'
+    ),
     maxHeight('max-h-508')
   )
 }
@@ -76,10 +92,11 @@ const Card: FC<CardProps> = ({
   shadow,
   onlyWrap,
   spinner,
+  thin,
   children,
 }) => {
   return (
-    <div className={cardContainer(shadow, color, onlyWrap)}>
+    <div className={cardContainer(shadow, color, onlyWrap, thin)}>
       {!!spinner && (
         <div className="absolute md:-top-28 md:-right-28 -top-24 -right-4">
           <ArcText text={spinner} />
