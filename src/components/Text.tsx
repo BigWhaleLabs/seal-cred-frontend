@@ -29,14 +29,20 @@ const headerText = (size: HeaderSize, leading = 8, bold = true) =>
     fontWeight(bold ? 'font-bold' : 'font-normal'),
     fontSize(
       `lg:text-${size}`,
-      size === '4xl' ? 'text-3xl' : size === '3xl' ? 'text-2xl' : 'text-xl'
+      size === '4xl'
+        ? 'text-4xl'
+        : size === '3xl'
+        ? 'text-3xl'
+        : size === '2xl'
+        ? 'text-2xl'
+        : 'text-xl'
     ),
     textColor('text-white'),
     lineHeight(`leading-${leading}`)
   )
 export const HeaderText: FC<{
   size: HeaderSize
-  leading?: 11
+  leading?: number
   bold?: boolean
 }> = ({ size, bold, leading, children }) => {
   return <h1 className={headerText(size, leading, bold)}>{children}</h1>
@@ -58,7 +64,7 @@ const accentText = ({ color, align, bold, small }: AccentTextProps) =>
     fontSize(small ? 'text-sm' : undefined)
   )
 export const AccentText: FC<AccentTextProps> = (props) => {
-  return <span className={accentText(props)}>{props.children}</span>
+  return <div className={accentText(props)}>{props.children}</div>
 }
 
 const bodyText = (size: BodyTextSize, leading = 6, center?: boolean) =>
@@ -111,10 +117,16 @@ export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
 
-const linkText = ({ gradientFrom, gradientTo, bold }: LinkTextProps) =>
+const linkText = ({ gradientFrom, gradientTo, bold, color }: LinkTextProps) =>
   classnames(
     textDecoration('no-underline'),
-    textColor(gradientFrom || gradientTo ? 'text-transparent' : 'text-yellow'),
+    textColor(
+      color
+        ? color
+        : gradientFrom || gradientTo
+        ? 'text-transparent'
+        : 'text-yellow'
+    ),
     backgroundImage(
       gradientFrom || gradientTo ? 'bg-gradient-to-r' : undefined
     ),

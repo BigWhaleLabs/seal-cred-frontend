@@ -3,6 +3,7 @@ import {
   BodyText,
   HeaderText,
   HighlightedText,
+  LinkText,
 } from 'components/Text'
 import Button from 'components/Button'
 import Card from 'components/Card'
@@ -62,7 +63,7 @@ function Landing() {
         onlyWrap
         spinner="One Identity to rule them all"
       >
-        <HeaderText size="4xl">
+        <HeaderText size="4xl" leading={11}>
           Build your pseudonymous identity with ZK badges
         </HeaderText>
         <BodyText size="base">
@@ -144,7 +145,9 @@ function Landing() {
       <Card color="blue" shadow onlyWrap>
         <PrivacyDeath />
         <BodyText size="base">
-          <AccentText color="text-blue-500">Big Whale Labs </AccentText>
+          <LinkText color="text-blue-500" url={`https://bigwhalelabs.com`}>
+            Big Whale Labs{' '}
+          </LinkText>
           is dedicated to building a pseudonymous world in which privacy and
           identity are owned by the human, not the corporation.
         </BodyText>
