@@ -5,6 +5,7 @@ import BadgeBlock from 'components/BadgeBlock'
 import BadgesHintCard from 'components/BadgesHintCard'
 import Fade from 'components/Fade'
 import ProofStore from 'stores/ProofStore'
+import ScrollableBlock from 'components/ScrollableBlock'
 import SealCredStore from 'stores/SealCredStore'
 import classnames, {
   display,
@@ -110,13 +111,13 @@ function BadgeListSuspender() {
 
 function BadgesList() {
   return (
-    <div className={badges}>
+    <ScrollableBlock fade="bottom" maxHeight="max-h-85">
       <Suspense
         fallback={<BodyText size="base">Fetching derivative NFTs...</BodyText>}
       >
         <BadgeListSuspender />
       </Suspense>
-    </div>
+    </ScrollableBlock>
   )
 }
 

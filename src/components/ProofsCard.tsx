@@ -5,6 +5,7 @@ import CardSeparator from 'components/CardSeparator'
 import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
+import ScrollableBlock from 'components/ScrollableBlock'
 import WalletStore from 'stores/WalletStore'
 import ZkProofButton from 'components/ZkProofButton'
 import classnames, {
@@ -46,8 +47,12 @@ function Proofs() {
         <CardHeader color="text-yellow">Start proofing!</CardHeader>
         <CardDescription>Generate your ZK proof</CardDescription>
       </div>
-      <ListOfReadyZKProofs />
-      <ListOfAvailableZKProofs />
+      <ScrollableBlock fade="both">
+        <div className={space('space-y-4')}>
+          <ListOfReadyZKProofs />
+          <ListOfAvailableZKProofs />
+        </div>
+      </ScrollableBlock>
       {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
     </>
   )
@@ -59,8 +64,12 @@ function ReadyProofs() {
       <div className={titleContainer}>
         <CardHeader color="text-yellow">Your saved ZK Proof</CardHeader>
       </div>
-      <ListOfReadyZKProofs />
-      <ZkProofSavedMessage />
+      <ScrollableBlock fade="both">
+        <div className={space('space-y-4')}>
+          <ListOfReadyZKProofs />
+          <ZkProofSavedMessage />
+        </div>
+      </ScrollableBlock>
     </>
   )
 }
