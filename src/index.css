@@ -20,6 +20,18 @@ body {
   }
 }
 
+.simplebar-scrollbar:before {
+  background: #fed823 !important;
+  filter: drop-shadow(0px 0px 10px #fed823);
+  opacity: 100% !important;
+}
+.simplebar-track {
+  right: -20px !important;
+  width: 11px !important;
+  background: url('/img/scrollbarBg.png');
+  overflow: visible !important;
+}
+
 .web3modal-modal-lightbox {
   z-index: 100 !important;
 }
