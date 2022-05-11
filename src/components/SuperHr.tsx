@@ -1,8 +1,5 @@
 import classnames, {
-  alignItems,
   backgroundColor,
-  borderColor,
-  borderWidth,
   display,
   height,
   inset,
@@ -10,6 +7,7 @@ import classnames, {
   margin,
   position,
   width,
+  zIndex,
 } from 'classnames/tailwind'
 
 const svgBox = classnames(
@@ -24,7 +22,8 @@ const longLine = classnames(
   inset('top-1/2'),
   width('w-full'),
   height('h-px'),
-  backgroundColor('bg-yellow')
+  backgroundColor('bg-yellow'),
+  zIndex('z-10')
 )
 
 export default function SuperHr() {
@@ -37,6 +36,7 @@ export default function SuperHr() {
         viewBox="0 0 199 67"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className={zIndex('z-20')}
       >
         <circle
           cx="99.5"

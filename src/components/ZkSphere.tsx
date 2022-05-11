@@ -36,8 +36,12 @@ const sphereStyles = (
 const ZkSphere: FC<{
   bgColor: TBackgroundColor
   shadowColor: TBoxShadowColor
-}> = ({ bgColor, shadowColor }) => {
-  return <div className={sphereStyles(bgColor, shadowColor)}>ZK</div>
+}> = ({ bgColor, shadowColor, children }) => {
+  return (
+    <div className={sphereStyles(bgColor, shadowColor)}>
+      {children ? children : 'ZK'}
+    </div>
+  )
 }
 
 export default ZkSphere

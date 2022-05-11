@@ -78,6 +78,8 @@ module.exports = {
       },
       dropShadow: {
         yellow: '0px 0px 10px #fed823',
+        pink: '0px 0px 10px #ff7bed',
+        green: '0px 0px 10px #01fed6',
       },
       padding: {
         3.875: '15.5px',
