@@ -9,7 +9,7 @@ import WalletStore from 'stores/WalletStore'
 import axios from 'axios'
 import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
-import getMapOfOwners from 'helpers/getMapOfOwners'
+import getTokenIdToOwnerMap from 'helpers/getTokenIdToOwnerMap'
 import isAddressOwner from 'helpers/isAddressOwner'
 
 class ProofStore extends PersistableStore {
@@ -32,7 +32,7 @@ class ProofStore extends PersistableStore {
       const isOwner = isAddressOwner(originalContract, account)
       if (!isOwner) throw new Error('Account is not owner of contract')
 
-      const owners = await getMapOfOwners(originalContract)
+      const owners = await getTokenIdToOwnerMap(originalContract)
       const addresses = Array.from(owners.values())
 
       const tokenId = addresses.indexOf(account)
