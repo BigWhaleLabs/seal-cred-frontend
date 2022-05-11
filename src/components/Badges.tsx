@@ -8,7 +8,6 @@ import Card from 'components/Card'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
-import configuredModal from 'helpers/web3Modal'
 import useDerivativesOwned from 'helpers/useDerivativesOwned'
 
 function Badges() {
@@ -46,8 +45,7 @@ function Badges() {
                 colors="tertiary"
                 arrow
                 onClick={async () => {
-                  configuredModal.clearCachedProvider()
-                  await WalletStore.connect()
+                  await WalletStore.connect(true)
                 }}
               >
                 Connect your anonymous wallet

@@ -15,7 +15,6 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
-import configuredModal from 'helpers/web3Modal'
 
 const walletContainer = classnames(
   display('flex'),
@@ -59,8 +58,7 @@ export default function ConnectAccount() {
           colors="primary"
           loading={walletLoading}
           onClick={async () => {
-            configuredModal.clearCachedProvider()
-            await WalletStore.connect()
+            await WalletStore.connect(true)
           }}
         >
           <span>Connect a wallet</span>
