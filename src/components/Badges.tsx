@@ -5,14 +5,14 @@ import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
 import Button from 'components/Button'
 import Card from 'components/Card'
+import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
 import configuredModal from 'helpers/web3Modal'
-import proofStore from 'stores/ProofStore'
 
 function Badges() {
   const { account } = useSnapshot(WalletStore)
-  const { proofsCompleted } = useSnapshot(proofStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
   const { derivativeTokenIds } = useSnapshot(SealCredStore)
 
   const noBadges =
