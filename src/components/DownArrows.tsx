@@ -1,4 +1,5 @@
 import Arrow from 'components/Arrow'
+import CardSeparator from 'components/CardSeparator'
 import classnames, {
   animation,
   margin,
@@ -10,15 +11,18 @@ const arrowsWrapper = classnames(
   transitionProperty('transition-all'),
   animation('animate-bounce'),
   space('space-y-4'),
-  margin('my-2')
+  margin('my-10')
 )
 
 const DownArrows = () => {
   return (
-    <div className={arrowsWrapper}>
-      <Arrow flip disabled />
-      <Arrow flip disabled />
-      <Arrow flip disabled />
+    <div>
+      <div className={arrowsWrapper}>
+        <Arrow flip disabled />
+        <Arrow flip disabled />
+        <Arrow flip disabled />
+      </div>
+      <CardSeparator number={1} from="yellow" vertical customHeight={9} />
     </div>
   )
 }

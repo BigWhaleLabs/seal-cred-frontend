@@ -1,4 +1,5 @@
 import { AccentText, HighlightedText } from 'components/Text'
+import CardSeparator from 'components/CardSeparator'
 import DownArrows from 'components/DownArrows'
 import IdentityCardOne from 'components/IdentityCardOne'
 import IdentityCardTwo from 'components/IdentityCardTwo'

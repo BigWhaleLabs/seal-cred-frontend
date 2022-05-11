@@ -13,7 +13,7 @@ const Arrow: FC<ArrowProps> = ({ disabled, flip }) => (
   <svg
     width="21"
     height="25"
-    viewBox="0 0 21 25"
+    viewBox="-4 0 21 25"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={arrowAnimation(disabled)}
