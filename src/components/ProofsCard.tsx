@@ -42,7 +42,7 @@ function ZkProofSavedMessage() {
   )
 }
 
-const proofsStyles = classnames(height('lg:h-80', 'h-min'))
+const proofsStyles = classnames(height('lg:h-72', 'h-min'))
 
 function Proofs() {
   const availableProofs = useAvaliableProofs()
