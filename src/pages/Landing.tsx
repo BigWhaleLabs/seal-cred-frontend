@@ -37,6 +37,8 @@ const identityCards = classnames(
   margin('mb-6')
 )
 const highlightedBlock = classnames(width('lg:w-fit', 'w-3/4'))
+const orbBoxes = classnames(display('flex'), flexDirection('flex-row'))
+const orbBox = classnames(display('flex'), flexDirection('flex-col'))
 
 function Landing() {
   return (
@@ -57,10 +59,19 @@ function Landing() {
           It starts with connecting your wallets with NFTs
         </HighlightedText>
       </div>
-      <div className="flex flex-row">
-        <OrbInBox color={OrbsColors.green} />
-        <OrbInBox color={OrbsColors.yellow} />
-        <OrbInBox color={OrbsColors.pink} />
+      <div className={orbBoxes}>
+        <div className={orbBox}>
+          <OrbInBox color={OrbsColors.green} />
+          <HighlightedText>Wallet 01</HighlightedText>
+        </div>
+        <div className={orbBox}>
+          <OrbInBox color={OrbsColors.yellow} />
+          <HighlightedText>Wallet 02</HighlightedText>
+        </div>
+        <div className={orbBox}>
+          <OrbInBox color={OrbsColors.pink} />
+          <HighlightedText>Wallet 03</HighlightedText>
+        </div>
       </div>
       <LandingCreatingZKProofCard />
       <SuperOrb />
