@@ -11,7 +11,7 @@ const textStyle = classnames(
   fill('fill-pink'),
   textTransform('uppercase'),
   fontWeight('font-semibold'),
-  fontSize('text-xl')
+  fontSize('text-3xl')
 )
 const svgBox = classnames(height('md:h-64', 'h-40'))
 

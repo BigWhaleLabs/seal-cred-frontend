@@ -1,5 +1,4 @@
 import { AccentText, HighlightedText } from 'components/Text'
-import CardSeparator from 'components/CardSeparator'
 import DownArrows from 'components/DownArrows'
 import IdentityCardOne from 'components/IdentityCardOne'
 import IdentityCardTwo from 'components/IdentityCardTwo'
@@ -8,12 +7,14 @@ import LandingCreatingZKProofCard from 'components/LandingCreatingZKProofCard'
 import LandingInitialCard from 'components/LandingInitialCard'
 import LandingLearnMoreCard from 'components/LandingLearnMoreCard'
 import SuperHr from 'components/SuperHr'
+import SuperOrb from 'icons/SuperOrb'
 import classnames, {
   alignItems,
   display,
   flexDirection,
   margin,
   space,
+  width,
 } from 'classnames/tailwind'
 
 const pageBox = classnames(
@@ -31,9 +32,10 @@ const identityCards = classnames(
   display('flex'),
   flexDirection('flex-row'),
   alignItems('items-center'),
-  space('space-x-6'),
+  space('lg:space-x-6', 'space-x-4'),
   margin('mb-6')
 )
+const highlightedBlock = classnames(width('lg:w-fit', 'w-3/4'))
 
 function Landing() {
   return (
@@ -49,10 +51,13 @@ function Landing() {
         <AccentText color="text-yellow">How does this work?</AccentText>
         <DownArrows />
       </button>
-      <HighlightedText>
-        It starts with connecting your wallets with NFTs
-      </HighlightedText>
+      <div className={highlightedBlock}>
+        <HighlightedText center>
+          It starts with connecting your wallets with NFTs
+        </HighlightedText>
+      </div>
       <LandingCreatingZKProofCard />
+      <SuperOrb />
       <div className={identityCards}>
         <IdentityCardOne />
         <IdentityCardTwo />

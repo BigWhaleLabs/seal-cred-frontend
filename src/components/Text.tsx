@@ -167,13 +167,18 @@ export const TooltipText: FC = ({ children }) => {
   return <div className={tooltipText}>{children}</div>
 }
 
-const highlightedText = classnames(
-  textColor('text-blue-900'),
-  fontWeight('font-bold'),
-  borderRadius('rounded-full'),
-  backgroundColor('bg-white'),
-  padding('px-4', 'py-1')
-)
-export const HighlightedText: FC = ({ children }) => {
-  return <div className={highlightedText}>{children}</div>
+const highlightedText = (center?: boolean) =>
+  classnames(
+    textColor('text-blue-900'),
+    fontWeight('font-bold'),
+    borderRadius('rounded-full'),
+    backgroundColor('bg-white'),
+    padding('px-4', 'py-1'),
+    textAlign(center ? 'text-center' : 'text-left')
+  )
+export const HighlightedText: FC<{ center?: boolean }> = ({
+  children,
+  center,
+}) => {
+  return <div className={highlightedText(center)}>{children}</div>
 }

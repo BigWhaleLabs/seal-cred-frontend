@@ -17,8 +17,8 @@ const wrapperBox = classnames(
 const PrivacyDeath = () => {
   return (
     <div className={wrapperBox}>
-      <div className="absolute -top-1/2">
-        <ArcText text="Give me privacy or give me death •" radius={400} />
+      <div className="absolute lg:-top-1/2 -top-5">
+        <ArcText text="Give me privacy or give me death •" radius={450} />
       </div>
       <EyeWhale />
     </div>
