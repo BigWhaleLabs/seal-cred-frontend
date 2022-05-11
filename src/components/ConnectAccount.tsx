@@ -52,7 +52,7 @@ export default function ConnectAccount() {
       <div className={contentWrapper}>
         <span className={cardTitle}>First</span>
         <span className={bodyText}>
-          Connect a wallet with NFTs to create ZK proof.
+          Connect a wallet with supported NFTs to create ZK proofs.
         </span>
         <Button
           colors="primary"

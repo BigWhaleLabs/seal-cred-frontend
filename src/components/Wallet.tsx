@@ -13,12 +13,13 @@ import classnames, {
 } from 'classnames/tailwind'
 import truncateMiddle from 'helpers/truncateMiddle'
 
-const walletContainer = classnames(
-  display('inline-flex'),
-  alignItems('items-center'),
-  space('space-x-4'),
-  cursor('cursor-pointer')
-)
+const walletContainer = (accountExists: boolean) =>
+  classnames(
+    display('inline-flex'),
+    alignItems('items-center'),
+    space('space-x-4'),
+    accountExists ? undefined : cursor('cursor-pointer')
+  )
 const walletAccount = classnames(
   textAlign('text-right'),
   lineHeight('leading-5'),
@@ -29,8 +30,9 @@ export default function Wallet() {
   const { account } = useSnapshot(WalletStore)
   return (
     <div
-      className={walletContainer}
+      className={walletContainer(!!account)}
       onClick={async () => {
+        if (account) return
         await WalletStore.connect(true)
       }}
     >

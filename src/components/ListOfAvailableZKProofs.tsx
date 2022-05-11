@@ -33,7 +33,7 @@ function useProofContent(
       'pink',
       <>
         {proofInProgress?.position !== undefined
-          ? `Queued by position: ${proofInProgress?.position + 1}`
+          ? `Queued with position: ${proofInProgress?.position + 1}`
           : 'Queued'}
       </>,
     ]

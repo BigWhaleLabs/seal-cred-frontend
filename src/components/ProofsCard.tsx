@@ -36,7 +36,7 @@ function ZkProofSavedMessage() {
   return (
     <div className={hintContainer}>
       <AccentText small color="text-blue-500">
-        Your ZK Proof will save in the browser while you switch wallets.
+        Created ZK proofs are saved in the browser even if you switch wallets.
       </AccentText>
     </div>
   )
@@ -61,10 +61,13 @@ function Proofs() {
         </CardHeader>
         <CardDescription>
           {allGenerated
-            ? 'You generated all available ZK proof from this wallet'
-            : 'Generate your ZK proof'}
+            ? 'You generated all available ZK proofs for this wallet'
+            : 'Generate ZK proofs'}
         </CardDescription>
       </div>
+      {noWayToGenerate && (
+        <BadgesHintCard text="You don't have any supported tokens." />
+      )}
       <Scrollbar maxHeight={320}>
         <div className={proofsStyles}>
           <ListOfReadyZKProofs />
@@ -72,9 +75,6 @@ function Proofs() {
         </div>
       </Scrollbar>
       {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
-      {noWayToGenerate && (
-        <BadgesHintCard text="You don't have any available proofs to generate." />
-      )}
     </>
   )
 }
@@ -102,7 +102,16 @@ function ProofsCard() {
     <div className={proofCardZKButtonContainer}>
       <Card color="yellow" shadow>
         {account ? (
-          <Suspense fallback="Loading">
+          <Suspense
+            fallback={
+              <div className={titleContainer}>
+                <CardHeader color="text-yellow">Loading...</CardHeader>
+                <CardDescription>
+                  Please, wait until I load supported NFTs, it can take a minute
+                </CardDescription>
+              </div>
+            }
+          >
             <Proofs />
           </Suspense>
         ) : proofsCompleted.length > 0 ? (

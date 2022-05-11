@@ -94,7 +94,6 @@ class ProofStore extends PersistableStore {
           }
         } catch (e) {
           if (axios.isAxiosError(e)) {
-            console.log(e.response?.status)
             if (e.response?.status === 404) {
               const index = this.proofsInProgress.indexOf(proof)
               if (index > -1) {

@@ -26,7 +26,7 @@ import classnames, {
 import sealCred from 'helpers/sealCred'
 import truncateMiddle from 'helpers/truncateMiddle'
 
-const badgeWrapper = (minted?: boolean) =>
+const badgeWrapper = (minted: boolean) =>
   classnames(
     display('flex'),
     flexDirection(minted ? 'flex-row' : 'flex-col', 'lg:flex-col'),
@@ -66,22 +66,21 @@ const mintPassed = classnames(
 
 function Badge({
   derivativeAddress,
-  originalAddress,
+  tokenId,
 }: {
   derivativeAddress: string
-  originalAddress?: string
+  tokenId?: number
 }) {
-  const { derivativeTokenIds, ledger } = useSnapshot(SealCredStore)
-  const { proofsCompleted } = useSnapshot(ProofStore)
-  const { account } = useSnapshot(WalletStore)
+  // const { derivativeTokenIds, ledger } = useSnapshot(SealCredStore)
+  // const { proofsCompleted } = useSnapshot(ProofStore)
+  // const { account } = useSnapshot(WalletStore)
 
-  const [loading, setLoading] = useState(false)
-
-  const unminted = !!originalAddress
+  // const [loading, setLoading] = useState(false)
+  const minted = !!tokenId
 
   return (
-    <div className={badgeWrapper(!unminted)}>
-      {originalAddress ? (
+    <>
+      {/* {originalAddress ? (
         <BadgeIcon color="pink" />
       ) : derivativeTokenIds[derivativeAddress] ? (
         <QRCode
@@ -90,12 +89,12 @@ function Badge({
         />
       ) : (
         <QRLoading />
-      )}
-      <div className={badgeBody(!unminted)}>
+      )} */}
+      <div className={badgeBody(minted)}>
         <BadgeText>
           <ContractName address={derivativeAddress} />
         </BadgeText>
-        {unminted ? (
+        {/* {unminted ? (
           <Button
             small
             colors="primary"
@@ -142,25 +141,27 @@ function Badge({
             <BoldColoredText color="text-pink">Minted</BoldColoredText>
             <Complete color="pink" />
           </div>
-        )}
+        )} */}
       </div>
-    </div>
+    </>
   )
 }
 
 function BadgeBlock({
-  address,
-  originalAddress,
+  contractAddress,
+  tokenId,
 }: {
-  address: string
-  originalAddress?: string
+  contractAddress: string
+  tokenId?: number
 }) {
-  const shortAddress = truncateMiddle(address)
+  const shortAddress = truncateMiddle(contractAddress)
 
   return (
-    <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
-      <Badge derivativeAddress={address} originalAddress={originalAddress} />
-    </Suspense>
+    <div className={badgeWrapper(!!tokenId)}>
+      <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
+        <Badge derivativeAddress={contractAddress} tokenId={tokenId} />
+      </Suspense>
+    </div>
   )
 }
 

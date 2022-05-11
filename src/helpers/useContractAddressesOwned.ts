@@ -4,14 +4,24 @@ import WalletStore from 'stores/WalletStore'
 
 export default function (contractType: 'original' | 'derivative') {
   const { account } = useSnapshot(WalletStore)
+  if (!account) {
+    return []
+  }
+  const { ledger } = useSnapshot(SealCredStore)
+  if (!Object.keys(ledger).length) {
+    return []
+  }
+  const contractAddresses =
+    contractType === 'original'
+      ? Object.keys(ledger)
+      : Object.values(ledger).map(
+          ({ derivativeContract }) => derivativeContract.address
+        )
   const contractsToOwnersMaps =
     contractType === 'original'
       ? useSnapshot(SealCredStore).originalContractsToOwnersMaps
       : useSnapshot(SealCredStore).derivativeContractsToOwnersMaps
-  if (!account) {
-    return []
-  }
-  return Object.entries(contractsToOwnersMaps)
-    .filter(([_, owners]) => Object.values(owners).includes(account))
-    .map(([contractAddress]) => contractAddress)
+  return contractAddresses.filter((address) =>
+    Object.values(contractsToOwnersMaps[address]).includes(account)
+  )
 }

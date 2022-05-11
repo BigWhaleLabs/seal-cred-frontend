@@ -16,56 +16,42 @@ interface SealCredStoreType {
     [contractAddress: string]: Promise<TokenIdToOwnerMap>
   }
 
-  refreshContractNames: (ledger: Ledger) => void
-  refreshDerivativeContractsToOwnerMaps: (ledger: Ledger) => void
-  refreshOriginalContractsToOwnerMaps: (ledger: Ledger) => void
+  fetchContractNames: (ledger: Ledger) => void
+  fetchContractsToOwnerMaps: (ledger: Ledger) => void
 }
 
 const SealCredStore = proxy<SealCredStoreType>({
   ledger: getLedger(sealCred).then((ledger) => {
+    SealCredStore.fetchContractNames(ledger)
+    SealCredStore.fetchContractsToOwnerMaps(ledger)
     for (const record of Object.values(ledger)) {
       addListenersToLedgerRecord(record)
     }
-    SealCredStore.refreshOriginalContractsToOwnerMaps(ledger)
-    SealCredStore.refreshDerivativeContractsToOwnerMaps(ledger)
     return ledger
   }),
   contractNames: {},
   originalContractsToOwnersMaps: {},
   derivativeContractsToOwnersMaps: {},
 
-  refreshContractNames(ledger: Ledger) {
+  fetchContractNames(ledger: Ledger) {
     for (const { originalContract, derivativeContract } of Object.values(
       ledger
     )) {
-      if (!SealCredStore.contractNames[originalContract.address]) {
-        SealCredStore.contractNames[originalContract.address] =
-          originalContract.name()
-      }
-      if (!SealCredStore.contractNames[derivativeContract.address]) {
-        SealCredStore.contractNames[derivativeContract.address] =
-          derivativeContract.name()
-      }
+      SealCredStore.contractNames[originalContract.address] =
+        originalContract.name()
+      SealCredStore.contractNames[derivativeContract.address] =
+        derivativeContract.name()
     }
   },
-  refreshOriginalContractsToOwnerMaps(ledger: Ledger) {
-    SealCredStore.originalContractsToOwnersMaps = {}
-    const originalContracts = Object.values(ledger).map(
-      ({ originalContract }) => originalContract
-    )
-    for (const contract of originalContracts) {
-      SealCredStore.originalContractsToOwnersMaps[contract.address] =
-        getMapOfOwners(contract)
-    }
-  },
-  refreshDerivativeContractsToOwnerMaps(ledger: Ledger) {
-    SealCredStore.derivativeContractsToOwnersMaps = {}
-    const derivativeContracts = Object.values(ledger).map(
-      ({ derivativeContract }) => derivativeContract
-    )
-    for (const contract of derivativeContracts) {
-      SealCredStore.derivativeContractsToOwnersMaps[contract.address] =
-        getMapOfOwners(contract)
+  fetchContractsToOwnerMaps(ledger: Ledger) {
+    for (const { originalContract, derivativeContract } of Object.values(
+      ledger
+    )) {
+      SealCredStore.originalContractsToOwnersMaps[originalContract.address] =
+        getMapOfOwners(originalContract)
+      SealCredStore.derivativeContractsToOwnersMaps[
+        derivativeContract.address
+      ] = getMapOfOwners(derivativeContract)
     }
   },
 })
