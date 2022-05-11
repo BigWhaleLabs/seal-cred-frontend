@@ -1,16 +1,15 @@
 import { FC } from 'react'
 import {
   backgroundColor,
+  borderColor,
   borderRadius,
+  borderWidth,
   boxShadow,
   boxShadowColor,
   classnames,
   height,
   margin,
   maxHeight,
-  outlineColor,
-  outlineStyle,
-  outlineWidth,
   padding,
   position,
   space,
@@ -28,18 +27,17 @@ interface CardProps {
 
 const cardColor = (color?: Color) => {
   return classnames(
-    outlineWidth('outline-1'),
-    outlineStyle('outline'),
-    outlineColor(
+    borderWidth('border-1'),
+    borderColor(
       color === 'yellow'
-        ? 'outline-yellow'
+        ? 'border-yellow'
         : color === 'green'
-        ? 'outline-green'
+        ? 'border-green'
         : color === 'pink'
-        ? 'outline-pink'
+        ? 'border-pink'
         : color === 'blue'
-        ? 'outline-blue-500'
-        : 'outline-blue-900'
+        ? 'border-blue-500'
+        : 'border-blue-900'
     ),
     boxShadow('shadow-2xl'),
     boxShadowColor(
