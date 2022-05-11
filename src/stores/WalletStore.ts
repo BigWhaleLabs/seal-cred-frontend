@@ -14,6 +14,10 @@ class WalletStore {
   account?: string
   walletLoading = false
 
+  get cachedProvider() {
+    return web3Modal.cachedProvider
+  }
+
   async connect(clearCachedProvider = false) {
     this.walletLoading = true
     try {
@@ -22,7 +26,7 @@ class WalletStore {
       const instance = await web3Modal.connect()
       provider = new Web3Provider(instance)
       const userNetwork = (await provider.getNetwork()).name
-      if (userNetwork !== env.VITE_ETH_NETWORK)
+      if (userNetwork !== env.VITE_ETH_NETWORK && env.VITE_ETH_NETWORK)
         throw new Error(
           ErrorList.wrongNetwork(userNetwork, env.VITE_ETH_NETWORK)
         )
@@ -135,4 +139,8 @@ class WalletStore {
   }
 }
 
-export default proxy(new WalletStore())
+const exportedStore = proxy(new WalletStore())
+
+if (exportedStore.cachedProvider) void exportedStore.connect()
+
+export default exportedStore
