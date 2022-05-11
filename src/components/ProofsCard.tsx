@@ -1,11 +1,14 @@
 import { AccentText, CardDescription, CardHeader } from 'components/Text'
+import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
+import BadgesHintCard from 'components/BadgesHintCard'
 import Card from 'components/Card'
 import CardSeparator from 'components/CardSeparator'
 import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
-import ScrollableBlock from 'components/ScrollableBlock'
+import ProofStore from 'stores/ProofStore'
+import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
 import ZkProofButton from 'components/ZkProofButton'
 import classnames, {
@@ -16,12 +19,12 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import proofStore from 'stores/ProofStore'
+import useAvaliableProofs from 'helpers/useAvaliableProofs'
 import useBreakpoints from 'helpers/useBreakpoints'
 
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
-const innerScrollableBlock = space('space-y-4')
+const innerScrollableBlock = space('space-y-2')
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
@@ -40,21 +43,37 @@ function ZkProofSavedMessage() {
 }
 
 function Proofs() {
-  const { proofsCompleted } = useSnapshot(proofStore)
+  const availableProofs = useAvaliableProofs()
+  const { proofsCompleted } = useSnapshot(ProofStore)
+
+  const allGenerated =
+    proofsCompleted.length > 0 && availableProofs.length === 0
+
+  const noWayToGenerate =
+    proofsCompleted.length === 0 && availableProofs.length === 0
 
   return (
     <>
       <div className={titleContainer}>
-        <CardHeader color="text-yellow">Start proofing!</CardHeader>
-        <CardDescription>Generate your ZK proof</CardDescription>
+        <CardHeader color="text-yellow">
+          {allGenerated ? 'All proofed out' : 'Start proofing!'}
+        </CardHeader>
+        <CardDescription>
+          {allGenerated
+            ? 'You generated all available ZK proof from this wallet'
+            : 'Generate your ZK proof'}
+        </CardDescription>
       </div>
-      <ScrollableBlock>
+      <Scrollbar maxHeight={320}>
         <div className={innerScrollableBlock}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
         </div>
-      </ScrollableBlock>
+      </Scrollbar>
       {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
+      {noWayToGenerate && (
+        <BadgesHintCard text="You don't have any available proofs to generate." />
+      )}
     </>
   )
 }
@@ -65,26 +84,26 @@ function ReadyProofs() {
       <div className={titleContainer}>
         <CardHeader color="text-yellow">Your saved ZK Proof</CardHeader>
       </div>
-      <ScrollableBlock>
-        <div className={innerScrollableBlock}>
-          <ListOfReadyZKProofs />
-          <ZkProofSavedMessage />
-        </div>
-      </ScrollableBlock>
+      <Scrollbar maxHeight={320}>
+        <ListOfReadyZKProofs />
+      </Scrollbar>
+      <ZkProofSavedMessage />
     </>
   )
 }
 
 function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
-  const { proofsCompleted } = useSnapshot(proofStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
   const { lg } = useBreakpoints()
 
   return (
     <div className={proofCardZKButtonContainer}>
       <Card color="yellow" shadow>
         {account ? (
-          <Proofs />
+          <Suspense fallback="Loading">
+            <Proofs />
+          </Suspense>
         ) : proofsCompleted.length > 0 ? (
           <ReadyProofs />
         ) : (

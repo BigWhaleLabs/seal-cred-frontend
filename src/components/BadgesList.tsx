@@ -5,7 +5,7 @@ import BadgeBlock from 'components/BadgeBlock'
 import BadgesHintCard from 'components/BadgesHintCard'
 import Fade from 'components/Fade'
 import ProofStore from 'stores/ProofStore'
-import ScrollableBlock from 'components/ScrollableBlock'
+import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
 import classnames, {
   display,
@@ -43,7 +43,7 @@ function BadgeListSuspender() {
   }
 
   for (const proofContract of proofContracts) {
-    const derivativeContract = scLedger[proofContract].derivativeContract
+    const derivativeContract = scLedger[proofContract]?.derivativeContract
     if (!derivativeContract) continue
     if (derivativeTokenIds[derivativeContract.address]) continue
     unownedDerivativeToOriginalAddressesMap[derivativeContract.address] =
@@ -74,26 +74,28 @@ function BadgeListSuspender() {
           or any owned token to share. Generate ZK proof first and then mint token."
         />
       )}
-      <div className={badgesList(isOneBadge)}>
-        {!!ownedDerivativesLength &&
-          ownedDerivatives.map(
-            (derivative) =>
-              derivative && (
-                <BadgeBlock
-                  key={derivative.address}
-                  address={derivative.address}
-                />
-              )
-          )}
-        {!!unownedDerivativeRecords &&
-          unownedDerivativeRecords.map((ledgerRecord) => (
-            <BadgeBlock
-              key={ledgerRecord.originalContract.address}
-              address={ledgerRecord.derivativeContract.address}
-              originalAddress={ledgerRecord.originalContract.address}
-            />
-          ))}
-      </div>
+      <Scrollbar maxHeight={330} fade="bottom">
+        <div className={badgesList(isOneBadge)}>
+          {!!ownedDerivativesLength &&
+            ownedDerivatives.map(
+              (derivative) =>
+                derivative && (
+                  <BadgeBlock
+                    key={derivative.address}
+                    address={derivative.address}
+                  />
+                )
+            )}
+          {!!unownedDerivativeRecords &&
+            unownedDerivativeRecords.map((ledgerRecord) => (
+              <BadgeBlock
+                key={ledgerRecord.originalContract.address}
+                address={ledgerRecord.derivativeContract.address}
+                originalAddress={ledgerRecord.originalContract.address}
+              />
+            ))}
+        </div>
+      </Scrollbar>
       {!isOneBadge && <Fade bottom />}
     </>
   )
@@ -101,13 +103,11 @@ function BadgeListSuspender() {
 
 function BadgesList() {
   return (
-    <ScrollableBlock fade="bottom" maxHeight="max-h-85">
-      <Suspense
-        fallback={<BodyText size="base">Fetching derivative NFTs...</BodyText>}
-      >
-        <BadgeListSuspender />
-      </Suspense>
-    </ScrollableBlock>
+    <Suspense
+      fallback={<BodyText size="base">Fetching derivative NFTs...</BodyText>}
+    >
+      <BadgeListSuspender />
+    </Suspense>
   )
 }
 
