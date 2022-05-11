@@ -1,12 +1,20 @@
 import 'simplebar/dist/simplebar.min.css'
 import { FC, MutableRefObject, useRef } from 'react'
+import Fade from 'components/Fade'
 import SimpleBar from 'simplebar-react'
-import classnames, { margin, transitionProperty } from 'classnames/tailwind'
+import classnames, {
+  margin,
+  position,
+  transitionProperty,
+} from 'classnames/tailwind'
 import useIsOverflow from 'helpers/useIsOverflow'
 
-const Scrollbar: FC<{ maxHeight?: number }> = ({
+type FadeType = 'top' | 'bottom' | 'both'
+
+const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
   children,
   maxHeight = 350,
+  fade = 'both',
 }) => {
   const wrapRef = useRef() as MutableRefObject<HTMLDivElement>
   const overflows = useIsOverflow(wrapRef)
@@ -18,11 +26,15 @@ const Scrollbar: FC<{ maxHeight?: number }> = ({
     )
 
   return (
-    <SimpleBar style={{ maxHeight }}>
-      <div ref={wrapRef} className={wrapperStyle(overflows)}>
-        {children}
-      </div>
-    </SimpleBar>
+    <div className={classnames(position('relative'))}>
+      {(fade === 'both' || fade === 'top') && <Fade />}
+      <SimpleBar style={{ maxHeight }}>
+        <div ref={wrapRef} className={wrapperStyle(overflows)}>
+          {children}
+        </div>
+      </SimpleBar>
+      {(fade === 'both' || fade === 'bottom') && <Fade bottom />}
+    </div>
   )
 }
 

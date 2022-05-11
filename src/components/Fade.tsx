@@ -5,6 +5,7 @@ import {
   height,
   inset,
   position,
+  zIndex,
 } from 'classnames/tailwind'
 
 const fade = (bottom = true) =>
@@ -14,9 +15,10 @@ const fade = (bottom = true) =>
       bottom ? 'from-transparent' : 'from-blue-900',
       bottom ? 'to-blue-900' : 'to-transparent'
     ),
-    position('sticky'),
-    inset('inset-0'),
-    height('h-6')
+    position('absolute'),
+    inset(bottom ? 'bottom-0' : 'top-0', 'left-0', 'right-0'),
+    height('h-3'),
+    zIndex('z-10')
   )
 
 export default function Fade({ bottom }: { bottom?: boolean }) {
