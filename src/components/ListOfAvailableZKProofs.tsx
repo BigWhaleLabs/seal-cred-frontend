@@ -9,9 +9,9 @@ import Proof from 'models/Proof'
 import ProofButton from 'components/ProofButton'
 import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
-import SealCredStore from 'stores/SealCredStore'
 import Star from 'icons/Star'
 import WalletStore from 'stores/WalletStore'
+import useAvaliableProofs from 'helpers/useAvaliableProofs'
 
 function useProofContent(
   proofInProgress?: Proof,
@@ -69,28 +69,13 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
 }
 
 function ContractList() {
-  const { originalContracts } = useSnapshot(SealCredStore)
-  const { proofsCompleted } = useSnapshot(ProofStore)
+  const originalOwnedContractsWithoutCompletedProofs = useAvaliableProofs()
+
   const { account } = useSnapshot(WalletStore)
 
   if (!account) {
     return null
   }
-
-  const completedProofsSet = proofsCompleted.reduce(
-    (contracts, proof) => ({
-      ...contracts,
-      [proof.contract]: true,
-    }),
-    {} as {
-      [address: string]: boolean
-    }
-  )
-
-  const originalOwnedContractsWithoutCompletedProofs =
-    originalContracts?.owned.filter(
-      (contract) => !completedProofsSet[contract.address]
-    ) || []
 
   return (
     <>
