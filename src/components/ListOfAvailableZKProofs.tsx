@@ -78,18 +78,13 @@ function ContractList() {
     return null
   }
 
-  const completedProofsMap = proofsCompleted.reduce((p, c) => {
-    if (p[c.contract]) {
-      p[c.contract][c.account] = true
-    } else {
-      p[c.contract] = { [c.account]: true }
-    }
-    return p
-  }, {} as { [contractAddress: string]: { [account: string]: boolean } })
+  const completedProofsSet = new Set(
+    proofsCompleted.map((proof) => proof.contract)
+  )
 
   const originalOwnedContractsWithoutCompletedProofs =
     originalContracts?.owned.filter(
-      (contract) => !completedProofsMap[contract.address]?.[account]
+      (contract) => !completedProofsSet.has(contract.address)
     ) || []
 
   return (
@@ -100,9 +95,6 @@ function ContractList() {
             <ZKProof contractAddress={contract.address} />
           ))}
         </ContractListContainer>
-      )}
-      {originalContracts?.owned.length === 0 && (
-        <BadgesHintCard text="You don't have any available proofs to generate." />
       )}
     </>
   )
