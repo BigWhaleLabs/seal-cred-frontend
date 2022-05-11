@@ -6,6 +6,7 @@ import LandingBuildingIdentitiesCard from 'components/LandingBuildingIdentitiesC
 import LandingCreatingZKProofCard from 'components/LandingCreatingZKProofCard'
 import LandingInitialCard from 'components/LandingInitialCard'
 import LandingLearnMoreCard from 'components/LandingLearnMoreCard'
+import OrbInBox, { OrbsColors } from 'icons/OrbInBox'
 import SuperHr from 'components/SuperHr'
 import SuperOrb from 'icons/SuperOrb'
 import classnames, {
@@ -55,6 +56,11 @@ function Landing() {
         <HighlightedText center>
           It starts with connecting your wallets with NFTs
         </HighlightedText>
+      </div>
+      <div className="flex flex-row">
+        <OrbInBox color={OrbsColors.green} />
+        <OrbInBox color={OrbsColors.yellow} />
+        <OrbInBox color={OrbsColors.pink} />
       </div>
       <LandingCreatingZKProofCard />
       <SuperOrb />

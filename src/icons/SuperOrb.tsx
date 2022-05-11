@@ -51,7 +51,6 @@ export default function SuperOrb() {
       <g filter="url(#filter0_d_712_3052)">
         <mask
           id="mask0_712_3052"
-          style="mask-type:alpha"
           maskUnits="userSpaceOnUse"
           x="24"
           y="24"
@@ -82,7 +81,6 @@ export default function SuperOrb() {
             />
             <mask
               id="mask1_712_3052"
-              style="mask-type:alpha"
               maskUnits="userSpaceOnUse"
               x="24"
               y="24"
@@ -107,7 +105,7 @@ export default function SuperOrb() {
                 fill="url(#paint4_radial_712_3052)"
               />
             </g>
-            <g style="mix-blend-mode:soft-light">
+            <g>
               <rect
                 x="54.1836"
                 y="16"
@@ -116,7 +114,8 @@ export default function SuperOrb() {
                 fill="url(#paint5_radial_712_3052)"
               />
             </g>
-            <g style="mix-blend-mode:soft-light">
+            <g>
+              /
               <path
                 d="M11 48.6489H58.8161V95.6224H11V48.6489Z"
                 fill="url(#paint6_radial_712_3052)"
