@@ -6,6 +6,7 @@ import BadgesList from 'components/BadgesList'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import ProofStore from 'stores/ProofStore'
+import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
 import configuredModal from 'helpers/web3Modal'
@@ -32,7 +33,9 @@ function Badges() {
           </CardDescription>
         </div>
         {account ? (
-          <BadgesList />
+          <Scrollbar maxHeight={330}>
+            <BadgesList />
+          </Scrollbar>
         ) : (
           <BadgesHintCard
             text="You must disconnect your first wallet after ZK proof is made, and then
