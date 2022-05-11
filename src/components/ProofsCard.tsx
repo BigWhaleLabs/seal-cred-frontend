@@ -8,12 +8,14 @@ import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import ProofStore from 'stores/ProofStore'
+import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
 import ZkProofButton from 'components/ZkProofButton'
 import classnames, {
   alignItems,
   display,
   flexDirection,
+  height,
   margin,
   space,
   width,
@@ -40,6 +42,8 @@ function ZkProofSavedMessage() {
   )
 }
 
+const proofsStyles = classnames(height('lg:h-80', 'h-min'))
+
 function Proofs() {
   const availableProofs = useAvaliableProofs()
   const { proofsCompleted } = useSnapshot(ProofStore)
@@ -62,8 +66,12 @@ function Proofs() {
             : 'Generate your ZK proof'}
         </CardDescription>
       </div>
-      <ListOfReadyZKProofs />
-      <ListOfAvailableZKProofs />
+      <Scrollbar maxHeight={320}>
+        <div className={proofsStyles}>
+          <ListOfReadyZKProofs />
+          <ListOfAvailableZKProofs />
+        </div>
+      </Scrollbar>
       {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
       {noWayToGenerate && (
         <BadgesHintCard text="You don't have any available proofs to generate." />
@@ -78,7 +86,9 @@ function ReadyProofs() {
       <div className={titleContainer}>
         <CardHeader color="text-yellow">Your saved ZK Proof</CardHeader>
       </div>
-      <ListOfReadyZKProofs />
+      <Scrollbar maxHeight={320}>
+        <ListOfReadyZKProofs />
+      </Scrollbar>
       <ZkProofSavedMessage />
     </>
   )
