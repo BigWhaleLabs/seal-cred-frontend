@@ -46,8 +46,7 @@ function Badges() {
                 colors="tertiary"
                 arrow
                 onClick={async () => {
-                  configuredModal.clearCachedProvider()
-                  await WalletStore.connect()
+                  await WalletStore.connect(true)
                 }}
               >
                 Connect your anonymous wallet
