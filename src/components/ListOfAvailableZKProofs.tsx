@@ -11,7 +11,7 @@ import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
 import WalletStore from 'stores/WalletStore'
-import useAvaliableProofs from 'helpers/useAvaliableProofs'
+import useProofAddressesAvailableToCreate from 'helpers/useProofAddressesAvailableToCreate'
 
 function useProofContent(
   proofInProgress?: Proof,
@@ -69,8 +69,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
 }
 
 function ContractList() {
-  const originalOwnedContractsWithoutCompletedProofs = useAvaliableProofs()
-
+  const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
   const { account } = useSnapshot(WalletStore)
 
   if (!account) {
@@ -79,10 +78,10 @@ function ContractList() {
 
   return (
     <>
-      {!!originalOwnedContractsWithoutCompletedProofs.length && (
+      {!!proofAddressesAvailableToCreate.length && (
         <ContractListContainer>
-          {originalOwnedContractsWithoutCompletedProofs.map((contract) => (
-            <ZKProof contractAddress={contract.address} />
+          {proofAddressesAvailableToCreate.map((address) => (
+            <ZKProof contractAddress={address} />
           ))}
         </ContractListContainer>
       )}
@@ -95,7 +94,7 @@ export default function ListOfAvailableZKProofs() {
     <Suspense
       fallback={
         <BodyText size="base">
-          Fetching available tokens owned by you...
+          Fetching the supported tokens owned by you...
         </BodyText>
       }
     >

@@ -9,10 +9,10 @@ import sealCred from 'helpers/sealCred'
 interface SealCredStoreType {
   ledger: Promise<Ledger>
   contractNames: { [contractAddress: string]: Promise<string | undefined> }
-  originalContractsToOwnerMaps: {
+  originalContractsToOwnersMaps: {
     [contractAddress: string]: Promise<TokenIdToOwnerMap>
   }
-  derivativeContractsToOwnerMaps: {
+  derivativeContractsToOwnersMaps: {
     [contractAddress: string]: Promise<TokenIdToOwnerMap>
   }
 
@@ -31,8 +31,8 @@ const SealCredStore = proxy<SealCredStoreType>({
     return ledger
   }),
   contractNames: {},
-  originalContractsToOwnerMaps: {},
-  derivativeContractsToOwnerMaps: {},
+  originalContractsToOwnersMaps: {},
+  derivativeContractsToOwnersMaps: {},
 
   refreshContractNames(ledger: Ledger) {
     for (const { originalContract, derivativeContract } of Object.values(
@@ -49,22 +49,22 @@ const SealCredStore = proxy<SealCredStoreType>({
     }
   },
   refreshOriginalContractsToOwnerMaps(ledger: Ledger) {
-    SealCredStore.originalContractsToOwnerMaps = {}
+    SealCredStore.originalContractsToOwnersMaps = {}
     const originalContracts = Object.values(ledger).map(
       ({ originalContract }) => originalContract
     )
     for (const contract of originalContracts) {
-      SealCredStore.originalContractsToOwnerMaps[contract.address] =
+      SealCredStore.originalContractsToOwnersMaps[contract.address] =
         getMapOfOwners(contract)
     }
   },
   refreshDerivativeContractsToOwnerMaps(ledger: Ledger) {
-    SealCredStore.derivativeContractsToOwnerMaps = {}
+    SealCredStore.derivativeContractsToOwnersMaps = {}
     const derivativeContracts = Object.values(ledger).map(
       ({ derivativeContract }) => derivativeContract
     )
     for (const contract of derivativeContracts) {
-      SealCredStore.derivativeContractsToOwnerMaps[contract.address] =
+      SealCredStore.derivativeContractsToOwnersMaps[contract.address] =
         getMapOfOwners(contract)
     }
   },
@@ -78,7 +78,7 @@ function addListenersToLedgerRecord({
     originalContract.filters.Transfer(),
     async (_, to, tokenId) => {
       const originalContractToOwnerMap = await SealCredStore
-        .originalContractsToOwnerMaps[originalContract.address]
+        .originalContractsToOwnersMaps[originalContract.address]
       originalContractToOwnerMap[tokenId.toNumber()] = to
     }
   )
@@ -86,7 +86,7 @@ function addListenersToLedgerRecord({
     derivativeContract.filters.Transfer(),
     async (_, to, tokenId) => {
       const derivativeContractToOwnerMap = await SealCredStore
-        .derivativeContractsToOwnerMaps[derivativeContract.address]
+        .derivativeContractsToOwnersMaps[derivativeContract.address]
       derivativeContractToOwnerMap[tokenId.toNumber()] = to
     }
   )

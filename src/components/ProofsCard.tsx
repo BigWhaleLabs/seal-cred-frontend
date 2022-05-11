@@ -20,8 +20,8 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import useAvaliableProofs from 'helpers/useAvaliableProofs'
 import useBreakpoints from 'helpers/useBreakpoints'
+import useProofAddressesAvailableToCreate from 'helpers/useProofAddressesAvailableToCreate'
 
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
@@ -45,14 +45,13 @@ function ZkProofSavedMessage() {
 const proofsStyles = classnames(height('lg:h-72', 'h-min'))
 
 function Proofs() {
-  const availableProofs = useAvaliableProofs()
+  const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
   const { proofsCompleted } = useSnapshot(ProofStore)
 
   const allGenerated =
-    proofsCompleted.length > 0 && availableProofs.length === 0
-
+    proofsCompleted.length > 0 && proofAddressesAvailableToCreate.length === 0
   const noWayToGenerate =
-    proofsCompleted.length === 0 && availableProofs.length === 0
+    proofsCompleted.length === 0 && proofAddressesAvailableToCreate.length === 0
 
   return (
     <>
@@ -84,7 +83,7 @@ function ReadyProofs() {
   return (
     <>
       <div className={titleContainer}>
-        <CardHeader color="text-yellow">Your saved ZK Proof</CardHeader>
+        <CardHeader color="text-yellow">Your saved ZK Proofs</CardHeader>
       </div>
       <Scrollbar maxHeight={320}>
         <ListOfReadyZKProofs />

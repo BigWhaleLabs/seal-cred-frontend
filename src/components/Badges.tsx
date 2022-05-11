@@ -7,17 +7,17 @@ import Button from 'components/Button'
 import Card from 'components/Card'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
-import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
 import configuredModal from 'helpers/web3Modal'
+import useDerivativesOwned from 'helpers/useDerivativesOwned'
 
 function Badges() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
-  const { derivativeTokenIds } = useSnapshot(SealCredStore)
+  const derivativesOwned = useDerivativesOwned()
 
   const noBadges =
-    !Object.keys(derivativeTokenIds).length && !proofsCompleted.length
+    !Object.keys(derivativesOwned).length && !proofsCompleted.length
 
   return (
     <Card shadow color="pink">
