@@ -19,9 +19,6 @@ interface SealCredStoreType {
   derivativeContractsToOwnerMaps: {
     [contractAddress: string]: Promise<TokenIdToOwnerMap>
   }
-  derivativeContractsToOwnerMapsLoading: {
-    [contractAddress: string]: boolean
-  }
 
   handleAccountChange: (account?: string) => Promise<void>
   refreshContractNames: (ledger: Ledger) => void
@@ -39,7 +36,6 @@ const SealCredStore = proxy<SealCredStoreType>({
   }),
   contractNames: {},
   derivativeContractsToOwnerMaps: {},
-  derivativeContractsToOwnerMapsLoading: {}, // Used when Transfer events fire
 
   async handleAccountChange(account?: string) {
     if (!account) {
