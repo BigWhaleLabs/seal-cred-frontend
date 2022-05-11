@@ -9,7 +9,8 @@ const useIsOverflow = (ref: MutableRefObject<HTMLDivElement>) => {
 
     const overflows =
       current.scrollHeight > current.clientHeight ||
-      current.scrollWidth > current.clientWidth
+      current.scrollHeight > current.offsetHeight
+
     setIsOverflow(overflows)
   }, [ref])
 

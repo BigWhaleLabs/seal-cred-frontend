@@ -53,6 +53,18 @@ function Proofs() {
       <Scrollbar maxHeight={320}>
         <div className={proofsStyles}>
           <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
+          <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
         </div>
       </Scrollbar>
