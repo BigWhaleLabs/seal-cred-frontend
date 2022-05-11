@@ -3,7 +3,6 @@ import { FC } from 'react'
 import { Suspense, useState } from 'react'
 import { animation } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import BadgesHintCard from 'components/BadgesHintCard'
 import ContractListContainer from 'components/ContractListContainer'
 import ContractName from 'components/ContractName'
 import Proof from 'models/Proof'
@@ -79,18 +78,19 @@ function ContractList() {
     return null
   }
 
-  const completedProofsMap = proofsCompleted.reduce((p, c) => {
-    if (p[c.contract]) {
-      p[c.contract][c.account] = true
-    } else {
-      p[c.contract] = { [c.account]: true }
+  const completedProofsSet = proofsCompleted.reduce(
+    (contracts, proof) => ({
+      ...contracts,
+      [proof.contract]: true,
+    }),
+    {} as {
+      [address: string]: boolean
     }
-    return p
-  }, {} as { [contractAddress: string]: { [account: string]: boolean } })
+  )
 
   const originalOwnedContractsWithoutCompletedProofs =
     originalContracts?.owned.filter(
-      (contract) => !completedProofsMap[contract.address]?.[account]
+      (contract) => !completedProofsSet[contract.address]
     ) || []
 
   return (
@@ -101,9 +101,6 @@ function ContractList() {
             <ZKProof contractAddress={contract.address} />
           ))}
         </ContractListContainer>
-      )}
-      {originalContracts?.owned.length === 0 && (
-        <BadgesHintCard text="You don't have any available proofs to generate." />
       )}
     </>
   )
