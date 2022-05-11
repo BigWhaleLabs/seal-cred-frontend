@@ -5,12 +5,19 @@ import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
 import Button from 'components/Button'
 import Card from 'components/Card'
+import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
+import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
 import configuredModal from 'helpers/web3Modal'
 
 function Badges() {
   const { account } = useSnapshot(WalletStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
+  const { derivativeTokenIds } = useSnapshot(SealCredStore)
+
+  const noBadges =
+    !Object.keys(derivativeTokenIds).length && !proofsCompleted.length
 
   return (
     <Card shadow color="pink">
@@ -20,7 +27,7 @@ function Badges() {
             {!account ? 'Then' : 'Create ZK badges'}
           </CardHeader>
           <CardDescription>
-            {!account
+            {!account || noBadges
               ? 'Once you’ve created ZK proof, create badges for your anonymous wallet'
               : 'Looks like you can create ZK badges for this wallet'}
           </CardDescription>

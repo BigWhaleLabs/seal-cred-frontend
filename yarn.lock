@@ -1509,6 +1509,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@big-whale-labs/poseidon@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@big-whale-labs/poseidon@npm:0.0.4"
+  dependencies:
+    big-integer: ^1.6.51
+  checksum: a0f6194b2b6f7deff8632316e721ef469230fd2eb935113d71965805a8b87b35e4afb5db23e6b4de57ba3cbdc6c8d68c2c652344b8c05ad3c456ea85f0c39df6
+  languageName: node
+  linkType: hard
+
 "@big-whale-labs/seal-cred-ledger-contract@npm:^0.0.2":
   version: 0.0.2
   resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.0.2"
@@ -5082,7 +5091,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"big-integer@npm:^1.6.42, big-integer@npm:^1.6.48":
+"big-integer@npm:^1.6.42, big-integer@npm:^1.6.48, big-integer@npm:^1.6.51":
   version: 1.6.51
   resolution: "big-integer@npm:1.6.51"
   checksum: 3d444173d1b2e20747e2c175568bedeebd8315b0637ea95d75fd27830d3b8e8ba36c6af40374f36bdaea7b5de376dcada1b07587cb2a79a928fccdb6e6e3c518
@@ -14522,6 +14531,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "seal-cred-frontend@workspace:."
   dependencies:
+    "@big-whale-labs/poseidon": ^0.0.4
     "@big-whale-labs/seal-cred-ledger-contract": ^0.0.2
     "@coinbase/wallet-sdk": ^3.0.11
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
