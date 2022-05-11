@@ -9,7 +9,6 @@ import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
-import configuredModal from 'helpers/web3Modal'
 
 function Badges() {
   const { account } = useSnapshot(WalletStore)
@@ -46,8 +45,7 @@ function Badges() {
                 colors="tertiary"
                 arrow
                 onClick={async () => {
-                  configuredModal.clearCachedProvider()
-                  await WalletStore.connect()
+                  await WalletStore.connect(true)
                 }}
               >
                 Connect your anonymous wallet
