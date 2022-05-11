@@ -1,12 +1,10 @@
-import {
-  ERC721,
-  SCERC721Derivative,
-} from '@big-whale-labs/seal-cred-ledger-contract'
+import { ERC721 } from '@big-whale-labs/seal-cred-ledger-contract'
 import { proxy } from 'valtio'
 import Ledger from 'models/Ledger'
+import LedgerRecord from 'models/LedgerRecord'
 import SortedContracts from 'models/SortedContracts'
+import TokenIdToOwnerMap from 'models/TokenIdToOwnerMap'
 import filterContracts from 'helpers/filterContracts'
-import findByValue from 'helpers/findByValue'
 import getLedger, { getLedgerRecord } from 'helpers/ledger'
 import getMapOfOwners from 'helpers/getMapOfOwners'
 import sealCred from 'helpers/sealCred'
@@ -17,28 +15,35 @@ import sealCred from 'helpers/sealCred'
 interface SealCredStoreType {
   ledger: Promise<Ledger>
   originalContracts?: Promise<SortedContracts<ERC721>>
-  derivativeContracts?: Promise<SCERC721Derivative[]>
   contractNames: { [contractAddress: string]: Promise<string | undefined> }
-  derivativeTokenIds: { [contractAddress: string]: number[] }
+  derivativeContractsToOwnerMaps: {
+    [contractAddress: string]: Promise<TokenIdToOwnerMap>
+  }
+  derivativeContractsToOwnerMapsLoading: {
+    [contractAddress: string]: boolean
+  }
 
   handleAccountChange: (account?: string) => Promise<void>
   refreshContractNames: (ledger: Ledger) => void
-  refreshDerivativeTokenIds: (account: string) => void
-  refreshDerivativeContracts: (account: string) => Promise<void>
+  refreshDerivativeContractsToOwnerMaps: (ledger: Ledger) => void
 }
 
 const SealCredStore = proxy<SealCredStoreType>({
   ledger: getLedger(sealCred).then((ledger) => {
+    for (const record of Object.values(ledger)) {
+      addListenersToLedgerRecord(record)
+    }
     SealCredStore.refreshContractNames(ledger)
+    SealCredStore.refreshDerivativeContractsToOwnerMaps(ledger)
     return ledger
   }),
   contractNames: {},
-  derivativeTokenIds: {},
+  derivativeContractsToOwnerMaps: {},
+  derivativeContractsToOwnerMapsLoading: {}, // Used when Transfer events fire
 
   async handleAccountChange(account?: string) {
     if (!account) {
       SealCredStore.originalContracts = undefined
-      SealCredStore.derivativeContracts = undefined
       return
     }
     const ledger = await SealCredStore.ledger
@@ -49,27 +54,7 @@ const SealCredStore = proxy<SealCredStoreType>({
       originalContracts,
       account
     )
-    await SealCredStore.refreshDerivativeContracts(account)
-    SealCredStore.refreshDerivativeTokenIds(account)
   },
-
-  async refreshDerivativeTokenIds(account: string) {
-    SealCredStore.derivativeTokenIds = {}
-    if (!account) return
-    const derivativeContracts = await SealCredStore.derivativeContracts
-
-    for (const contract of derivativeContracts ?? []) {
-      const owners = await getMapOfOwners(contract)
-      const tokenIds = findByValue<number, string>(owners, account)
-      if (
-        !!tokenIds.length &&
-        !SealCredStore.derivativeTokenIds[contract.address]
-      ) {
-        SealCredStore.derivativeTokenIds[contract.address] = tokenIds
-      }
-    }
-  },
-
   refreshContractNames(ledger: Ledger) {
     for (const { originalContract, derivativeContract } of Object.values(
       ledger
@@ -84,25 +69,40 @@ const SealCredStore = proxy<SealCredStoreType>({
       }
     }
   },
-
-  async refreshDerivativeContracts() {
-    const derivativeContracts = Object.values(await SealCredStore.ledger).map(
-      (record) => record.derivativeContract
+  refreshDerivativeContractsToOwnerMaps(ledger: Ledger) {
+    SealCredStore.derivativeContractsToOwnerMaps = {}
+    const derivativeContracts = Object.values(ledger).map(
+      ({ derivativeContract }) => derivativeContract
     )
-    SealCredStore.derivativeContracts = Promise.all(derivativeContracts)
+    for (const contract of derivativeContracts) {
+      SealCredStore.derivativeContractsToOwnerMaps[contract.address] =
+        getMapOfOwners(contract)
+    }
   },
 })
+
+function addListenersToLedgerRecord({
+  originalContract,
+  derivativeContract,
+}: LedgerRecord) {
+  originalContract.on(
+    originalContract.filters.Transfer(),
+    (from, to, tokenId) => {}
+  )
+  derivativeContract.on(
+    originalContract.filters.Transfer(),
+    (from, to, tokenId) => {}
+  )
+}
 
 sealCred.on(
   sealCred.filters.SetMerkleRoot(),
   async (tokenAddress, merkleRoot) => {
     const ledger = await SealCredStore.ledger
     if (!ledger[tokenAddress]) {
-      ledger[tokenAddress] = await getLedgerRecord(
-        sealCred,
-        tokenAddress,
-        merkleRoot
-      )
+      const record = await getLedgerRecord(sealCred, tokenAddress, merkleRoot)
+      ledger[tokenAddress] = record
+      addListenersToLedgerRecord(record)
     } else {
       ledger[tokenAddress].merkleRoot = merkleRoot
     }
@@ -110,6 +110,8 @@ sealCred.on(
 )
 sealCred.on(sealCred.filters.DeleteMerkleRoot(), async (tokenAddress) => {
   const ledger = await SealCredStore.ledger
+  ledger[tokenAddress]?.originalContract.removeAllListeners()
+  ledger[tokenAddress]?.derivativeContract.removeAllListeners()
   delete ledger[tokenAddress]
 })
 
