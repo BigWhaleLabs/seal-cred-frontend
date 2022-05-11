@@ -27,19 +27,11 @@ const headerText = (size: HeaderSize, leading = 8, bold = true) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize(
-      `lg:text-${size}`,
-      size === '4xl'
-        ? 'text-4xl'
-        : size === '3xl'
-        ? 'text-3xl'
-        : size === '2xl'
-        ? 'text-2xl'
-        : 'text-xl'
-    ),
+    fontSize(`text-${size}`),
     textColor('text-white'),
-    lineHeight(`leading-${leading}`)
+    lineHeight(leading === 11 ? 'leading-11' : 'leading-8')
   )
+
 export const HeaderText: FC<{
   size: HeaderSize
   leading?: number
@@ -64,7 +56,7 @@ const accentText = ({ color, align, bold, small }: AccentTextProps) =>
     fontSize(small ? 'text-sm' : undefined)
   )
 export const AccentText: FC<AccentTextProps> = (props) => {
-  return <div className={accentText(props)}>{props.children}</div>
+  return <span className={accentText(props)}>{props.children}</span>
 }
 
 const bodyText = (size: BodyTextSize, leading = 6, center?: boolean) =>
@@ -72,7 +64,7 @@ const bodyText = (size: BodyTextSize, leading = 6, center?: boolean) =>
     textColor('text-white'),
     center ? textAlign('text-center') : null,
     fontSize(`text-${size}`),
-    lineHeight(`leading-${leading}`)
+    lineHeight(leading === 6 ? 'leading-6' : 'leading-4')
   )
 export const BodyText: FC<{
   size: BodyTextSize

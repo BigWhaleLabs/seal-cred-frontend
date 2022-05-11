@@ -69,6 +69,7 @@ module.exports = {
       height: {
         card: '508px',
         'mobile-card': '365px',
+        2.75: '11px',
       },
       width: {
         card: '398px',
@@ -77,6 +78,12 @@ module.exports = {
       },
       dropShadow: {
         yellow: '0px 0px 10px #fed823',
+      },
+      padding: {
+        3.875: '15.5px',
+      },
+      margin: {
+        1.875: '7.5px',
       },
     },
   },

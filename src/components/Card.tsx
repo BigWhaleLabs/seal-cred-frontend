@@ -13,7 +13,6 @@ import {
   outlineWidth,
   padding,
   position,
-  space,
   width,
 } from 'classnames/tailwind'
 import ArcText from 'components/ArcText'
@@ -25,6 +24,7 @@ interface CardProps {
   onlyWrap?: boolean
   spinner?: string
   thin?: boolean
+  small?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -65,15 +65,15 @@ const cardContainer = (
   shadow?: boolean,
   color?: Color,
   onlyWrap = false,
-  thin = false
+  thin = false,
+  small?: boolean
 ) => {
   return classnames(
     position('relative'),
     borderRadius('rounded-2xl'),
     backgroundColor('bg-blue-900'),
     cardColor(shadow ? color : undefined),
-    padding('p-6'),
-    space('space-y-4'),
+    padding(small ? 'p-3.875' : 'p-6'),
     width(
       thin ? 'w-thin-card' : 'w-mobile-card',
       thin ? undefined : 'sm:w-card'
@@ -94,9 +94,10 @@ const Card: FC<CardProps> = ({
   spinner,
   thin,
   children,
+  small,
 }) => {
   return (
-    <div className={cardContainer(shadow, color, onlyWrap, thin)}>
+    <div className={cardContainer(shadow, color, onlyWrap, thin, small)}>
       {!!spinner && (
         <div className="absolute md:-top-28 md:-right-28 -top-24 -right-4">
           <ArcText text={spinner} />

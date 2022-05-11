@@ -3984,6 +3984,7 @@ export type TFlexBasis =
   | 'basis-10/12'
   | 'basis-11/12'
   | 'basis-full'
+  | 'basis-3.875'
 
 export type TFlexGrow = 'grow-0' | 'grow'
 
@@ -4180,6 +4181,7 @@ export type TGap =
   | 'gap-1.5'
   | 'gap-2.5'
   | 'gap-3.5'
+  | 'gap-3.875'
   | 'gap-y-0'
   | 'gap-y-1'
   | 'gap-y-2'
@@ -4215,6 +4217,7 @@ export type TGap =
   | 'gap-y-1.5'
   | 'gap-y-2.5'
   | 'gap-y-3.5'
+  | 'gap-y-3.875'
   | 'gap-x-0'
   | 'gap-x-1'
   | 'gap-x-2'
@@ -4250,6 +4253,7 @@ export type TGap =
   | 'gap-x-1.5'
   | 'gap-x-2.5'
   | 'gap-x-3.5'
+  | 'gap-x-3.875'
 
 export type TGrid =
   | TGridAutoFlow
@@ -4301,6 +4305,7 @@ export type TPadding =
   | 'p-1.5'
   | 'p-2.5'
   | 'p-3.5'
+  | 'p-3.875'
   | 'py-0'
   | 'py-1'
   | 'py-2'
@@ -4336,6 +4341,7 @@ export type TPadding =
   | 'py-1.5'
   | 'py-2.5'
   | 'py-3.5'
+  | 'py-3.875'
   | 'px-0'
   | 'px-1'
   | 'px-2'
@@ -4371,6 +4377,7 @@ export type TPadding =
   | 'px-1.5'
   | 'px-2.5'
   | 'px-3.5'
+  | 'px-3.875'
   | 'pt-0'
   | 'pt-1'
   | 'pt-2'
@@ -4406,6 +4413,7 @@ export type TPadding =
   | 'pt-1.5'
   | 'pt-2.5'
   | 'pt-3.5'
+  | 'pt-3.875'
   | 'pr-0'
   | 'pr-1'
   | 'pr-2'
@@ -4441,6 +4449,7 @@ export type TPadding =
   | 'pr-1.5'
   | 'pr-2.5'
   | 'pr-3.5'
+  | 'pr-3.875'
   | 'pb-0'
   | 'pb-1'
   | 'pb-2'
@@ -4476,6 +4485,7 @@ export type TPadding =
   | 'pb-1.5'
   | 'pb-2.5'
   | 'pb-3.5'
+  | 'pb-3.875'
   | 'pl-0'
   | 'pl-1'
   | 'pl-2'
@@ -4511,6 +4521,7 @@ export type TPadding =
   | 'pl-1.5'
   | 'pl-2.5'
   | 'pl-3.5'
+  | 'pl-3.875'
 
 export type TMargin =
   | 'm-0'
@@ -4549,6 +4560,8 @@ export type TMargin =
   | 'm-1.5'
   | 'm-2.5'
   | 'm-3.5'
+  | 'm-1.875'
+  | 'm-3.875'
   | 'my-0'
   | 'my-1'
   | 'my-2'
@@ -4585,6 +4598,8 @@ export type TMargin =
   | 'my-1.5'
   | 'my-2.5'
   | 'my-3.5'
+  | 'my-1.875'
+  | 'my-3.875'
   | 'mx-0'
   | 'mx-1'
   | 'mx-2'
@@ -4621,6 +4636,8 @@ export type TMargin =
   | 'mx-1.5'
   | 'mx-2.5'
   | 'mx-3.5'
+  | 'mx-1.875'
+  | 'mx-3.875'
   | 'mt-0'
   | 'mt-1'
   | 'mt-2'
@@ -4657,6 +4674,8 @@ export type TMargin =
   | 'mt-1.5'
   | 'mt-2.5'
   | 'mt-3.5'
+  | 'mt-1.875'
+  | 'mt-3.875'
   | 'mr-0'
   | 'mr-1'
   | 'mr-2'
@@ -4693,6 +4712,8 @@ export type TMargin =
   | 'mr-1.5'
   | 'mr-2.5'
   | 'mr-3.5'
+  | 'mr-1.875'
+  | 'mr-3.875'
   | 'mb-0'
   | 'mb-1'
   | 'mb-2'
@@ -4729,6 +4750,8 @@ export type TMargin =
   | 'mb-1.5'
   | 'mb-2.5'
   | 'mb-3.5'
+  | 'mb-1.875'
+  | 'mb-3.875'
   | 'ml-0'
   | 'ml-1'
   | 'ml-2'
@@ -4765,6 +4788,8 @@ export type TMargin =
   | 'ml-1.5'
   | 'ml-2.5'
   | 'ml-3.5'
+  | 'ml-1.875'
+  | 'ml-3.875'
 
 export type TSpace =
   | 'space-x-0'
@@ -4802,6 +4827,7 @@ export type TSpace =
   | 'space-x-1.5'
   | 'space-x-2.5'
   | 'space-x-3.5'
+  | 'space-x-3.875'
   | 'space-x-reverse'
   | 'space-y-0'
   | 'space-y-1'
@@ -4838,6 +4864,7 @@ export type TSpace =
   | 'space-y-1.5'
   | 'space-y-2.5'
   | 'space-y-3.5'
+  | 'space-y-3.875'
   | 'space-y-reverse'
 
 export type TSpacing = TPadding | TMargin | TSpace
@@ -5367,6 +5394,7 @@ export type TScrollPadding =
   | 'scroll-p-1.5'
   | 'scroll-p-2.5'
   | 'scroll-p-3.5'
+  | 'scroll-p-3.875'
   | 'scroll-py-0'
   | 'scroll-py-1'
   | 'scroll-py-2'
@@ -5402,6 +5430,7 @@ export type TScrollPadding =
   | 'scroll-py-1.5'
   | 'scroll-py-2.5'
   | 'scroll-py-3.5'
+  | 'scroll-py-3.875'
   | 'scroll-px-0'
   | 'scroll-px-1'
   | 'scroll-px-2'
@@ -5437,6 +5466,7 @@ export type TScrollPadding =
   | 'scroll-px-1.5'
   | 'scroll-px-2.5'
   | 'scroll-px-3.5'
+  | 'scroll-px-3.875'
   | 'scroll-pt-0'
   | 'scroll-pt-1'
   | 'scroll-pt-2'
@@ -5472,6 +5502,7 @@ export type TScrollPadding =
   | 'scroll-pt-1.5'
   | 'scroll-pt-2.5'
   | 'scroll-pt-3.5'
+  | 'scroll-pt-3.875'
   | 'scroll-pr-0'
   | 'scroll-pr-1'
   | 'scroll-pr-2'
@@ -5507,6 +5538,7 @@ export type TScrollPadding =
   | 'scroll-pr-1.5'
   | 'scroll-pr-2.5'
   | 'scroll-pr-3.5'
+  | 'scroll-pr-3.875'
   | 'scroll-pb-0'
   | 'scroll-pb-1'
   | 'scroll-pb-2'
@@ -5542,6 +5574,7 @@ export type TScrollPadding =
   | 'scroll-pb-1.5'
   | 'scroll-pb-2.5'
   | 'scroll-pb-3.5'
+  | 'scroll-pb-3.875'
   | 'scroll-pl-0'
   | 'scroll-pl-1'
   | 'scroll-pl-2'
@@ -5577,6 +5610,7 @@ export type TScrollPadding =
   | 'scroll-pl-1.5'
   | 'scroll-pl-2.5'
   | 'scroll-pl-3.5'
+  | 'scroll-pl-3.875'
 
 export type TScrollMargin =
   | 'scroll-m-0'
@@ -5614,6 +5648,7 @@ export type TScrollMargin =
   | 'scroll-m-1.5'
   | 'scroll-m-2.5'
   | 'scroll-m-3.5'
+  | 'scroll-m-3.875'
   | 'scroll-my-0'
   | 'scroll-my-1'
   | 'scroll-my-2'
@@ -5649,6 +5684,7 @@ export type TScrollMargin =
   | 'scroll-my-1.5'
   | 'scroll-my-2.5'
   | 'scroll-my-3.5'
+  | 'scroll-my-3.875'
   | 'scroll-mx-0'
   | 'scroll-mx-1'
   | 'scroll-mx-2'
@@ -5684,6 +5720,7 @@ export type TScrollMargin =
   | 'scroll-mx-1.5'
   | 'scroll-mx-2.5'
   | 'scroll-mx-3.5'
+  | 'scroll-mx-3.875'
   | 'scroll-mt-0'
   | 'scroll-mt-1'
   | 'scroll-mt-2'
@@ -5719,6 +5756,7 @@ export type TScrollMargin =
   | 'scroll-mt-1.5'
   | 'scroll-mt-2.5'
   | 'scroll-mt-3.5'
+  | 'scroll-mt-3.875'
   | 'scroll-mr-0'
   | 'scroll-mr-1'
   | 'scroll-mr-2'
@@ -5754,6 +5792,7 @@ export type TScrollMargin =
   | 'scroll-mr-1.5'
   | 'scroll-mr-2.5'
   | 'scroll-mr-3.5'
+  | 'scroll-mr-3.875'
   | 'scroll-mb-0'
   | 'scroll-mb-1'
   | 'scroll-mb-2'
@@ -5789,6 +5828,7 @@ export type TScrollMargin =
   | 'scroll-mb-1.5'
   | 'scroll-mb-2.5'
   | 'scroll-mb-3.5'
+  | 'scroll-mb-3.875'
   | 'scroll-ml-0'
   | 'scroll-ml-1'
   | 'scroll-ml-2'
@@ -5824,6 +5864,7 @@ export type TScrollMargin =
   | 'scroll-ml-1.5'
   | 'scroll-ml-2.5'
   | 'scroll-ml-3.5'
+  | 'scroll-ml-3.875'
 
 export type TInteractivity =
   | TAppearance
@@ -6248,6 +6289,13 @@ export type TInset =
   | 'right-full'
   | 'bottom-full'
   | 'left-full'
+  | 'inset-3.875'
+  | 'inset-x-3.875'
+  | 'inset-y-3.875'
+  | 'top-3.875'
+  | 'right-3.875'
+  | 'bottom-3.875'
+  | 'left-3.875'
 
 export type TZIndex =
   | 'z-0'
@@ -6381,6 +6429,7 @@ export type TWidth =
   | 'w-card'
   | 'w-thin-card'
   | 'w-mobile-card'
+  | 'w-3.875'
 
 export type TMinWidth =
   | 'min-w-0'
@@ -6475,6 +6524,8 @@ export type THeight =
   | 'h-fit'
   | 'h-card'
   | 'h-mobile-card'
+  | 'h-2.75'
+  | 'h-3.875'
 
 export type TMinHeight =
   | 'min-h-0'
@@ -6527,6 +6578,7 @@ export type TMaxHeight =
   | 'max-h-min'
   | 'max-h-max'
   | 'max-h-fit'
+  | 'max-h-3.875'
 
 export type TSizing =
   | TWidth
@@ -6708,6 +6760,7 @@ export type TTranslate =
   | 'translate-x-2/4'
   | 'translate-x-3/4'
   | 'translate-x-full'
+  | 'translate-x-3.875'
   | 'translate-y-0'
   | 'translate-y-1'
   | 'translate-y-2'
@@ -6750,6 +6803,7 @@ export type TTranslate =
   | 'translate-y-2/4'
   | 'translate-y-3/4'
   | 'translate-y-full'
+  | 'translate-y-3.875'
 
 export type TSkew =
   | 'skew-x-0'
@@ -7374,6 +7428,7 @@ export type TTextIndent =
   | 'indent-1.5'
   | 'indent-2.5'
   | 'indent-3.5'
+  | 'indent-3.875'
 
 export type TTextDecorationColor =
   | 'decoration-inherit'

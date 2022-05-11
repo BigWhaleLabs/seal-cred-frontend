@@ -1,4 +1,4 @@
-const Grim = () => {
+const DoubleSmile = () => {
   return (
     <svg
       width="91"
@@ -398,4 +398,4 @@ const Grim = () => {
   )
 }
 
-export default Grim
+export default DoubleSmile
