@@ -15,7 +15,6 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
-import configuredModal from 'helpers/web3Modal'
 
 const walletContainer = classnames(
   display('flex'),
