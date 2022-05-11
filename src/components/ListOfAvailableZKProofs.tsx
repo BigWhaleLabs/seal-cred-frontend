@@ -77,13 +77,19 @@ function ContractList() {
     return null
   }
 
-  const completedProofsSet = new Set(
-    proofsCompleted.map((proof) => proof.contract)
+  const completedProofsSet = proofsCompleted.reduce(
+    (contracts, proof) => ({
+      ...contracts,
+      [proof.contract]: true,
+    }),
+    {} as {
+      [address: string]: boolean
+    }
   )
 
   const originalOwnedContractsWithoutCompletedProofs =
     originalContracts?.owned.filter(
-      (contract) => !completedProofsSet.has(contract.address)
+      (contract) => !completedProofsSet[contract.address]
     ) || []
 
   return (
