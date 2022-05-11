@@ -99,7 +99,7 @@ function Badge({
           <Button
             small
             colors="primary"
-            loading={!!loading}
+            loading={loading}
             onClick={async () => {
               setLoading(true)
               try {
