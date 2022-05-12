@@ -3730,6 +3730,7 @@ export type TDropShadow =
   | 'drop-shadow-yellow'
   | 'drop-shadow-pink'
   | 'drop-shadow-green'
+  | 'drop-shadow-white'
 
 export type TGrayscale = 'grayscale-0' | 'grayscale'
 

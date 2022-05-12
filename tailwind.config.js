@@ -80,6 +80,7 @@ module.exports = {
         yellow: '0px 0px 10px #fed823',
         pink: '0px 0px 10px #ff7bed',
         green: '0px 0px 10px #01fed6',
+        white: '0px 0px 10px #efecd6',
       },
       padding: {
         3.875: '15.5px',

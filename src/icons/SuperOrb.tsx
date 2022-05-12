@@ -1,297 +1,203 @@
+import classnames, { brightness, dropShadow } from 'classnames/tailwind'
+
+const orbStyles = classnames(
+  brightness('brightness-125'),
+  dropShadow('drop-shadow-white')
+)
+
 export default function SuperOrb() {
   return (
-    <svg
-      width="108"
-      height="108"
-      viewBox="0 0 108 108"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle
-        cx="54"
-        cy="54"
-        r="40"
-        fill="#0D0030"
-        stroke="#EFECD6"
-        stroke-width="2"
-        stroke-linecap="round"
-      />
-      <line
-        x1="1.5"
-        y1="59.5"
-        x2="26.5"
-        y2="59.5"
-        stroke="#EFECD6"
-        stroke-linecap="round"
-      />
-      <line
-        x1="81.5"
-        y1="59.5"
-        x2="106.5"
-        y2="59.5"
-        stroke="#EFECD6"
-        stroke-linecap="round"
-      />
-      <line
-        x1="1.5"
-        y1="51.5"
-        x2="26.5"
-        y2="51.5"
-        stroke="#EFECD6"
-        stroke-linecap="round"
-      />
-      <line
-        x1="81.5"
-        y1="51.5"
-        x2="106.5"
-        y2="51.5"
-        stroke="#EFECD6"
-        stroke-linecap="round"
-      />
-      <g filter="url(#filter0_d_712_3052)">
-        <mask
-          id="mask0_712_3052"
-          maskUnits="userSpaceOnUse"
-          x="24"
-          y="24"
-          width="60"
-          height="60"
-        >
-          <circle cx="54" cy="54" r="30" fill="#C4C4C4" />
-        </mask>
-        <g mask="url(#mask0_712_3052)">
-          <g filter="url(#filter1_d_712_3052)">
-            <circle
-              cx="54.1848"
-              cy="54.1262"
-              r="29.9114"
-              fill="url(#paint0_radial_712_3052)"
-            />
-            <circle
-              cx="54.1848"
-              cy="54.1262"
-              r="29.9114"
-              fill="url(#paint1_radial_712_3052)"
-            />
-            <circle
-              cx="54.1848"
-              cy="54.1262"
-              r="29.9114"
-              fill="url(#paint2_radial_712_3052)"
-            />
-            <mask
-              id="mask1_712_3052"
-              maskUnits="userSpaceOnUse"
-              x="24"
-              y="24"
-              width="61"
-              height="61"
-            >
-              <circle cx="54.177" cy="54.1257" r="29.9114" fill="white" />
-            </mask>
-            <g mask="url(#mask1_712_3052)">
-              <circle
-                cx="54.177"
-                cy="54.1257"
-                r="29.9114"
-                fill="url(#paint3_radial_712_3052)"
-              />
-              <rect
-                x="39.6445"
-                y="81.1069"
-                width="71.4912"
-                height="65.4324"
-                transform="rotate(-56.5217 39.6445 81.1069)"
-                fill="url(#paint4_radial_712_3052)"
-              />
+    <div style={{ width: '106px', height: '80px' }}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
+        viewBox="0 0 107.21 88.48"
+        className={orbStyles}
+      >
+        <defs>
+          <mask
+            id="a"
+            x="8.78"
+            y="1"
+            width="80.22"
+            height="82.87"
+            maskUnits="userSpaceOnUse"
+          >
+            <g transform="translate(-1 -13)">
+              <circle cx="54.5" cy="54.5" r="30.5" fill="#c4c4c4" />
             </g>
-            <g>
-              <rect
-                x="54.1836"
-                y="16"
-                width="34.3349"
-                height="33.7029"
-                fill="url(#paint5_radial_712_3052)"
-              />
+          </mask>
+          <radialGradient
+            id="b"
+            cx="-895.94"
+            cy="621.41"
+            r="1"
+            gradientTransform="matrix(-5.91, 36.3, 36.3, 5.91, -27789.22, 28887.04)"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stop-color="#31b5ff" />
+            <stop offset="1" stop-color="#ff87c8" />
+          </radialGradient>
+          <radialGradient
+            id="c"
+            cx="-879.89"
+            cy="610.92"
+            r="1"
+            gradientTransform="matrix(16.97, 30.07, 30.07, -16.97, -3398.69, 36849.64)"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stop-color="#5200ff" />
+            <stop offset="1" stop-color="#fff" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient
+            id="d"
+            cx="-909.72"
+            cy="637"
+            r="1"
+            gradientTransform="matrix(-11.17, 16.86, 20.29, 13.44, -23004.13, 6806.6)"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stop-color="#fff" />
+            <stop offset="1" stop-color="#fff" stop-opacity="0" />
+          </radialGradient>
+          <mask
+            id="e"
+            x="23"
+            y="11"
+            width="84.21"
+            height="77.48"
+            maskUnits="userSpaceOnUse"
+          >
+            <g transform="translate(-1 -13)">
+              <circle cx="54.5" cy="54.5" r="30.5" fill="#fff" />
             </g>
-            <g>
-              /
-              <path
-                d="M11 48.6489H58.8161V95.6224H11V48.6489Z"
-                fill="url(#paint6_radial_712_3052)"
-              />
-            </g>
+          </mask>
+          <radialGradient
+            id="f"
+            cx="-899.02"
+            cy="625.02"
+            r="1"
+            gradientTransform="matrix(-9.88, 33.4, 32.11, 9.5, -28898.9, 24126.55)"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0.62" stop-color="#fff" stop-opacity="0" />
+            <stop offset="0.8" stop-color="#fff" stop-opacity="0" />
+            <stop offset="1" stop-color="#fff" />
+          </radialGradient>
+          <radialGradient
+            id="g"
+            cx="-874.85"
+            cy="597.6"
+            r="1"
+            gradientTransform="matrix(19.8, 9.86, 14.4, -16.39, 8785.89, 18481.58)"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stop-color="#ffe600" />
+            <stop offset="1" stop-color="#ffe600" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient
+            id="h"
+            cx="-877.35"
+            cy="645.6"
+            gradientTransform="matrix(0, 17.54, 17.89, 0, -11476.53, 15405.52)"
+            xlinkHref="#d"
+          />
+          <radialGradient
+            id="i"
+            cx="-885.16"
+            cy="631.33"
+            gradientTransform="matrix(0, 24.44, 24.91, 0, -15691.99, 21708.97)"
+            xlinkHref="#d"
+          />
+        </defs>
+        <circle
+          cx="53"
+          cy="41"
+          r="40"
+          fill="#0d0030"
+          stroke="#efecd6"
+          stroke-linecap="round"
+          stroke-width="2"
+        />
+        <g mask="url(#a)">
+          <circle cx="53.5" cy="41.5" r="30.5" fill="url(#b)" />
+          <circle cx="53.5" cy="41.5" r="30.5" fill="url(#c)" />
+          <circle cx="53.5" cy="41.5" r="30.5" fill="url(#d)" />
+          <g mask="url(#e)">
+            <circle cx="53.5" cy="41.5" r="30.5" fill="url(#f)" />
+            <polygon
+              points="39 68.76 67.61 36.2 107.21 55.91 78.6 88.47 39 68.76"
+              fill="url(#g)"
+            />
           </g>
+          <rect x="53.47" y="1" width="35.53" height="35.08" fill="url(#h)" />
+          <path
+            d="M9.78,48H59.26V96.87H9.78Z"
+            transform="translate(-1 -13)"
+            fill="url(#i)"
+          />
         </g>
-      </g>
-      <path
-        d="M55 77C48.5967 77 42.8046 74.3833 38.6346 70.1609C34.5324 66.0071 32 60.2993 32 54C32 47.7007 34.5324 41.9929 38.6346 37.8391M55 31C61.4033 31 67.1954 33.6167 71.3654 37.8391C75.4676 41.9929 78 47.7007 78 54C78 60.2993 75.4676 66.0071 71.3654 70.1609"
-        stroke="#EFECD6"
-        stroke-width="2"
-        stroke-linecap="round"
-      />
-      <path
-        d="M40 54C40 49.8239 41.7065 46.0465 44.4603 43.3269C47.1693 40.6515 50.8918 39 55 39C59.1082 39 62.8307 40.6515 65.5397 43.3269M70 54C70 58.1761 68.2935 61.9535 65.5397 64.6731C62.8307 67.3485 59.1082 69 55 69C50.8918 69 47.1693 67.3485 44.4603 64.6731"
-        stroke="#EFECD6"
-        stroke-width="2"
-        stroke-linecap="round"
-      />
-      <path
-        d="M55 47C56.9488 47 58.7116 47.7964 59.9808 49.0815C61.2293 50.3457 62 52.0828 62 54C62 55.9172 61.2293 57.6543 59.9808 58.9185M55 61C53.0512 61 51.2884 60.2036 50.0192 58.9185C48.7707 57.6543 48 55.9172 48 54C48 52.0828 48.7707 50.3457 50.0192 49.0815"
-        stroke="#EFECD6"
-        stroke-width="2"
-        stroke-linecap="round"
-      />
-      <defs>
-        <filter
-          id="filter0_d_712_3052"
-          x="0"
-          y="0"
-          width="108"
-          height="108"
-          filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
-        >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset />
-          <feGaussianBlur stdDeviation="12" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.937255 0 0 0 0 0.92549 0 0 0 0 0.839216 0 0 0 1 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_712_3052"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_712_3052"
-            result="shape"
-          />
-        </filter>
-        <filter
-          id="filter1_d_712_3052"
-          x="7"
-          y="16"
-          width="85.5185"
-          height="87.6224"
-          filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
-        >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dy="4" />
-          <feGaussianBlur stdDeviation="2" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_712_3052"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_712_3052"
-            result="shape"
-          />
-        </filter>
-        <radialGradient
-          id="paint0_radial_712_3052"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(59.9775 48.4388) rotate(99.2423) scale(36.067)"
-        >
-          <stop stop-color="#31B5FF" />
-          <stop offset="1" stop-color="#FF87C8" />
-        </radialGradient>
-        <radialGradient
-          id="paint1_radial_712_3052"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(42.8101 37.696) rotate(60.5646) scale(33.8612)"
-        >
-          <stop stop-color="#5200FF" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
-        </radialGradient>
-        <radialGradient
-          id="paint2_radial_712_3052"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(84.0962 44.0153) rotate(123.521) scale(19.8343 23.8734)"
-        >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
-        </radialGradient>
-        <radialGradient
-          id="paint3_radial_712_3052"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(56.0728 49.9129) rotate(106.479) scale(34.1582 32.8433)"
-        >
-          <stop offset="0.619792" stop-color="white" stop-opacity="0" />
-          <stop offset="0.796875" stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="white" />
-        </radialGradient>
-        <radialGradient
-          id="paint4_radial_712_3052"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(75.3901 113.823) rotate(90) scale(32.7162 35.9911)"
-        >
-          <stop stop-color="#FFE600" />
-          <stop offset="1" stop-color="#FFE600" stop-opacity="0" />
-        </radialGradient>
-        <radialGradient
-          id="paint5_radial_712_3052"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(71.351 32.8515) rotate(90) scale(16.8515 17.2854)"
-        >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
-        </radialGradient>
-        <radialGradient
-          id="paint6_radial_712_3052"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(34.908 72.1357) rotate(90) scale(23.4867 24.0722)"
-        >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
-        </radialGradient>
-      </defs>
-    </svg>
+        <path
+          d="M55,77A23,23,0,0,1,38.63,37.84M55,31A23,23,0,0,1,71.37,70.16"
+          transform="translate(-1 -13)"
+          fill="none"
+          stroke="#efecd6"
+          stroke-linecap="round"
+          stroke-width="2"
+        />
+        <path
+          d="M40,54A15,15,0,0,1,65.54,43.33M70,54A15,15,0,0,1,44.46,64.67"
+          transform="translate(-1 -13)"
+          fill="none"
+          stroke="#efecd6"
+          stroke-linecap="round"
+          stroke-width="2"
+        />
+        <path
+          d="M55,47a7,7,0,0,1,5,11.92M55,61a7,7,0,0,1-5-11.92"
+          transform="translate(-1 -13)"
+          fill="none"
+          stroke="#efecd6"
+          stroke-linecap="round"
+          stroke-width="2"
+        />
+        <line
+          x1="0.5"
+          y1="46.5"
+          x2="25.5"
+          y2="46.5"
+          fill="none"
+          stroke="#efecd6"
+          stroke-linecap="round"
+        />
+        <line
+          x1="80.5"
+          y1="46.5"
+          x2="105.5"
+          y2="46.5"
+          fill="none"
+          stroke="#efecd6"
+          stroke-linecap="round"
+        />
+        <line
+          x1="0.5"
+          y1="38.5"
+          x2="25.5"
+          y2="38.5"
+          fill="none"
+          stroke="#efecd6"
+          stroke-linecap="round"
+        />
+        <line
+          x1="80.5"
+          y1="38.5"
+          x2="105.5"
+          y2="38.5"
+          fill="none"
+          stroke="#efecd6"
+          stroke-linecap="round"
+        />
+      </svg>
+    </div>
   )
 }

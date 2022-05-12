@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { dropShadow, position } from 'classnames/tailwind'
+import { dropShadow } from 'classnames/tailwind'
 import Colors from 'types/Colors'
 
 const OrbBox: FC<{ color: Colors }> = ({ color }) => {
@@ -11,35 +11,65 @@ const OrbBox: FC<{ color: Colors }> = ({ color }) => {
       : 'drop-shadow-yellow'
 
   return (
-    <div className={position('relative')}>
+    <div style={{ height: '65px', width: '65px' }}>
       <svg
-        width="210"
-        height="150"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 66 66"
+        className={dropShadow(colorToDropShadow)}
       >
-        <g className={dropShadow(colorToDropShadow)}>
-          <path
-            d="M75 83C75 78.5817 78.5817 75 83 75H127C131.418 75 135 78.5817 135 83V127C135 131.418 131.418 135 127 135H83C78.5817 135 75 131.418 75 127V83Z"
-            fill="#0D0030"
-          />
-          <path
-            d="M75 83C75 78.5817 78.5817 75 83 75H127C131.418 75 135 78.5817 135 83V127C135 131.418 131.418 135 127 135H83C78.5817 135 75 131.418 75 127V83Z"
-            stroke={color}
-          />
-        </g>
         <path
-          d="M130 80V105V126C130 128.209 128.209 130 126 130H105M80 130V105V84C80 81.7909 81.7909 80 84 80H105"
+          d="M3.77,11.72a8.67,8.67,0,0,1,8.66-8.67H60.1a8.68,8.68,0,0,1,8.67,8.67V59.38a8.68,8.68,0,0,1-8.67,8.67H12.43a8.67,8.67,0,0,1-8.66-8.67Z"
+          transform="translate(-3.27 -2.55)"
+          fill="#0d0030"
+        />
+        <path
+          d="M3.77,11.72a8.67,8.67,0,0,1,8.66-8.67H60.1a8.68,8.68,0,0,1,8.67,8.67V59.38a8.68,8.68,0,0,1-8.67,8.67H12.43a8.67,8.67,0,0,1-8.66-8.67Z"
+          transform="translate(-3.27 -2.55)"
+          fill="none"
           stroke={color}
         />
-        <circle cx="105" cy="130" r="1" fill={color} />
-        <circle cx="80" cy="130" r="1" fill={color} />
-        <circle cx="105" cy="80" r="1" fill={color} />
-        <circle cx="130" cy="80" r="1" fill={color} />
-        <line x1="130" y1="101.5" x2="135" y2="101.5" stroke={color} />
-        <line x1="75" y1="101.5" x2="80" y2="101.5" stroke={color} />
-        <line x1="89.5" y1="75" x2="89.5" y2="80" stroke={color} />
-        <line x1="121.5" y1="130" x2="121.5" y2="135" stroke={color} />
+        <path
+          d="M63.35,8.47V58.3A4.33,4.33,0,0,1,59,62.63H36.27m-27.09,0V12.8a4.33,4.33,0,0,1,4.34-4.33H36.27"
+          transform="translate(-3.27 -2.55)"
+          fill="none"
+          stroke={color}
+        />
+        <circle cx="33" cy="60.08" r="1.08" fill={color} />
+        <circle cx="5.92" cy="60.08" r="1.08" fill={color} />
+        <circle cx="33" cy="5.92" r="1.08" fill={color} />
+        <circle cx="60.08" cy="5.92" r="1.08" fill={color} />
+        <line
+          x1="60.08"
+          y1="29.21"
+          x2="65.5"
+          y2="29.21"
+          fill="none"
+          stroke={color}
+        />
+        <line
+          x1="0.5"
+          y1="29.21"
+          x2="5.92"
+          y2="29.21"
+          fill="none"
+          stroke={color}
+        />
+        <line
+          x1="16.21"
+          y1="0.5"
+          x2="16.21"
+          y2="5.92"
+          fill="none"
+          stroke={color}
+        />
+        <line
+          x1="50.87"
+          y1="60.08"
+          x2="50.87"
+          y2="65.5"
+          fill="none"
+          stroke={color}
+        />
       </svg>
     </div>
   )

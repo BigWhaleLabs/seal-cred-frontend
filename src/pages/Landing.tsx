@@ -38,7 +38,7 @@ function Landing() {
       <LandingInitialCard />
       <ScrollDownButton />
       <div className={highlightedBlock}>
-        <HighlightedText center>
+        <HighlightedText center bold>
           It starts with connecting your wallets with NFTs
         </HighlightedText>
       </div>

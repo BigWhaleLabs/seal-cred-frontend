@@ -170,21 +170,28 @@ export const TooltipText: FC = ({ children }) => {
   return <div className={tooltipText}>{children}</div>
 }
 
-const highlightedText = (bgColor: TBackgroundColor, center?: boolean) =>
+const highlightedText = (
+  bgColor: TBackgroundColor,
+  center?: boolean,
+  bold?: boolean,
+  onlyWrap?: boolean
+) =>
   classnames(
     textColor('text-blue-900'),
-    fontWeight('font-bold'),
+    fontWeight(bold ? 'font-bold' : 'font-medium'),
+    fontSize('text-sm'),
     borderRadius('rounded-full'),
     backgroundColor(bgColor),
     width('w-fit'),
-    padding('px-4', 'py-1'),
+    padding(onlyWrap ? 'px-2' : 'px-4', 'py-1'),
     textAlign(center ? 'text-center' : 'text-left')
   )
-export const HighlightedText: FC<{ center?: boolean; color?: Colors }> = ({
-  children,
-  center,
-  color,
-}) => {
+export const HighlightedText: FC<{
+  center?: boolean
+  color?: Colors
+  bold?: boolean
+  onlyWrap?: boolean
+}> = ({ children, center, color, bold, onlyWrap }) => {
   const colorToTailwindBg =
     color === Colors.green
       ? 'bg-green'
@@ -195,6 +202,8 @@ export const HighlightedText: FC<{ center?: boolean; color?: Colors }> = ({
       : 'bg-white'
 
   return (
-    <div className={highlightedText(colorToTailwindBg, center)}>{children}</div>
+    <div className={highlightedText(colorToTailwindBg, center, bold, onlyWrap)}>
+      {children}
+    </div>
   )
 }
