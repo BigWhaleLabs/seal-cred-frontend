@@ -1,7 +1,9 @@
 import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
+import { useSnapshot } from 'valtio'
 import BadgeBlock from 'components/BadgeBlock'
 import BadgesHintCard from 'components/BadgesHintCard'
+import SealCredStore from 'stores/SealCredStore'
 import classnames, {
   display,
   gap,
@@ -28,6 +30,16 @@ const badgesList = classnames(
   gridTemplateColumns('grid-cols-1', 'lg:grid-cols-2')
 )
 
+function originalAddressFromDerivativeAddress(derivativeAddress: string) {
+  const { ledger } = useSnapshot(SealCredStore)
+  const ledgerRecord = Object.entries(ledger).find(
+    ([_, { derivativeContract }]) =>
+      derivativeContract.address === derivativeAddress
+  )
+  if (!ledgerRecord) throw new Error('No ledger record found')
+  return ledgerRecord[0]
+}
+
 function BadgeListSuspender() {
   const derivativeTokensOwned = useDerivativeTokensOwned()
   const proofsAvailableToMint = useProofsAvailableToMint()
@@ -41,11 +53,13 @@ function BadgeListSuspender() {
       )}
       <div className={badgesList}>
         {Object.entries(derivativeTokensOwned)
-          .map(([contractAddress, tokenIds]) =>
+          .map(([derivativeAddress, tokenIds]) =>
             tokenIds.map((tokenId) => (
               <BadgeBlock
-                key={`${contractAddress}-${tokenId}`}
-                contractAddress={contractAddress}
+                key={`${derivativeAddress}-${tokenId}`}
+                contractAddress={originalAddressFromDerivativeAddress(
+                  derivativeAddress
+                )}
                 tokenId={tokenId}
               />
             ))

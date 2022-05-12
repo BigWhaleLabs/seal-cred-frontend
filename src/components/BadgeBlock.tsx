@@ -77,7 +77,7 @@ function Badge({
   const [loading, setLoading] = useState(false)
   const [completed, setCompleted] = useState(false)
 
-  const minted = !!tokenId
+  const minted = tokenId !== undefined
   const ledgerRecord = ledger[contractAddress]
   const derivativeAddress = ledgerRecord.derivativeContract.address
 
