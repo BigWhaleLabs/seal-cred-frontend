@@ -4,6 +4,7 @@ import Fade from 'components/Fade'
 import SimpleBar from 'simplebar-react'
 import classnames, {
   margin,
+  overflow,
   position,
   transitionProperty,
 } from 'classnames/tailwind'
@@ -27,6 +28,7 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
       transitionProperty('transition-all')
     )
 
+  console.log(overflows)
   useEffect(() => {
     const { current } = wrapRef
     if (!current) return
@@ -34,7 +36,12 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
   }, [wrapRef, maxHeight])
 
   return (
-    <div className={classnames(position('relative'))}>
+    <div
+      className={classnames(
+        position('relative'),
+        overflow('overflow-x-hidden')
+      )}
+    >
       {showFade && (fade === 'both' || fade === 'top') && <Fade />}
       <SimpleBar style={{ maxHeight }}>
         <div ref={wrapRef} className={wrapperStyle(overflows)}>

@@ -1,10 +1,11 @@
-import { BodyText } from 'components/Text'
+import { BodyText, textTruncateStyles } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import SealCredStore from 'stores/SealCredStore'
 import truncateMiddle from 'helpers/truncateMiddle'
-
 interface ContractNameProps {
+  truncate?: boolean
+  overflow?: boolean
   address: string
   otherStyle?: boolean
 }
@@ -13,31 +14,54 @@ interface FetchingContract extends ContractNameProps {
   isFetching?: boolean
 }
 
-function TextBlock({ address, otherStyle, isFetching }: FetchingContract) {
+function TextBlock({
+  overflow,
+  truncate,
+  address,
+  otherStyle,
+  isFetching,
+}: FetchingContract) {
+  const truncatedText =
+    truncate && address.length > 15 ? truncateMiddle(address, 15) : address
+
   return otherStyle ? (
-    <>
+    <div className={overflow ? textTruncateStyles : undefined}>
       {isFetching && <>Fetching </>}
-      {address}
-    </>
+      {truncatedText}
+    </div>
   ) : (
-    <BodyText size="sm">
+    <BodyText size="sm" overflow={overflow}>
       {isFetching && <>Fetching </>}
-      {address}
+      {truncatedText}
     </BodyText>
   )
 }
 
-function ContractNameComponent({ address, otherStyle }: ContractNameProps) {
+function ContractNameComponent({
+  overflow,
+  truncate,
+  address,
+  otherStyle,
+}: ContractNameProps) {
   const { contractNames } = useSnapshot(SealCredStore)
 
   const nameOrAddress = contractNames[address]
     ? contractNames[address]
     : truncateMiddle(address, 4, -4)
 
-  return <TextBlock address={nameOrAddress || ''} otherStyle={otherStyle} />
+  return (
+    <TextBlock
+      address={nameOrAddress || ''}
+      otherStyle={otherStyle}
+      truncate={truncate}
+      overflow={overflow}
+    />
+  )
 }
 
 export default function ContractName({
+  overflow,
+  truncate,
   address,
   otherStyle,
 }: ContractNameProps) {
@@ -48,7 +72,12 @@ export default function ContractName({
         <TextBlock isFetching address={shortAddress} otherStyle={otherStyle} />
       }
     >
-      <ContractNameComponent address={address} otherStyle={otherStyle} />
+      <ContractNameComponent
+        overflow={overflow}
+        truncate={truncate}
+        address={address}
+        otherStyle={otherStyle}
+      />
     </Suspense>
   )
 }

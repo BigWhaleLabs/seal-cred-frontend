@@ -15,6 +15,7 @@ import classnames, {
   lineHeight,
   space,
 } from 'classnames/tailwind'
+import useBreakpoints from 'helpers/useBreakpoints'
 
 const proofText = classnames(
   display('flex'),
@@ -28,6 +29,7 @@ const proofText = classnames(
 function ContractList() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
+  const { xs, sm } = useBreakpoints()
 
   return (
     <>
@@ -35,11 +37,13 @@ function ContractList() {
         <ContractListContainer>
           {proofsCompleted.map((proof) => (
             <ProofLine>
-              <ContractName address={proof.contract} />
+              <ContractName address={proof.contract} truncate={xs} overflow />
               <div className={proofText}>
-                <AccentText bold color="text-yellow">
-                  Proof {proof.account === account ? 'made' : 'saved'}
-                </AccentText>
+                {sm && (
+                  <AccentText bold color="text-yellow">
+                    Proof {proof.account === account ? 'made' : 'saved'}
+                  </AccentText>
+                )}
                 <Complete color="yellow" />
               </div>
             </ProofLine>

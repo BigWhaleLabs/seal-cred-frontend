@@ -51,6 +51,8 @@ function Proofs() {
   const noWayToGenerate =
     proofsCompleted.length === 0 && proofAddressesAvailableToCreate.length === 0
 
+  const { sm, md } = useBreakpoints()
+
   return (
     <>
       <div className={titleContainer}>
@@ -66,7 +68,7 @@ function Proofs() {
       {noWayToGenerate && (
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
-      <Scrollbar maxHeight={320}>
+      <Scrollbar maxHeight={md ? 300 : sm ? 240 : 190}>
         <div className={innerScrollableBlock}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
