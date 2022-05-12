@@ -32,7 +32,7 @@ function ContractNameComponent({ address, otherStyle }: ContractNameProps) {
 
   const nameOrAddress = contractNames[address]
     ? contractNames[address]
-    : truncateMiddle(address, 5, -5)
+    : truncateMiddle(address, 4, -4)
 
   return <TextBlock address={nameOrAddress || ''} otherStyle={otherStyle} />
 }
@@ -41,7 +41,7 @@ export default function ContractName({
   address,
   otherStyle,
 }: ContractNameProps) {
-  const shortAddress = truncateMiddle(address, 5, -5)
+  const shortAddress = truncateMiddle(address, 4, -4)
   return (
     <Suspense
       fallback={
