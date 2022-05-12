@@ -1,17 +1,12 @@
 import { FC } from 'react'
 import { dropShadow, position } from 'classnames/tailwind'
+import Colors from 'types/Colors'
 
-export enum OrbsColors {
-  pink = '#ff7bed',
-  green = '#01feb6',
-  yellow = '#fed823',
-}
-
-const OrbInBox: FC<{ color: OrbsColors }> = ({ color }) => {
+const OrbBox: FC<{ color: Colors }> = ({ color }) => {
   const colorToDropShadow =
-    color === OrbsColors.pink
+    color === Colors.pink
       ? 'drop-shadow-pink'
-      : color === OrbsColors.green
+      : color === Colors.green
       ? 'drop-shadow-green'
       : 'drop-shadow-yellow'
 
@@ -19,8 +14,7 @@ const OrbInBox: FC<{ color: OrbsColors }> = ({ color }) => {
     <div className={position('relative')}>
       <svg
         width="210"
-        height="210"
-        viewBox="0 0 210 210"
+        height="150"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -51,4 +45,4 @@ const OrbInBox: FC<{ color: OrbsColors }> = ({ color }) => {
   )
 }
 
-export default OrbInBox
+export default OrbBox

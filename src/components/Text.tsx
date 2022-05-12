@@ -6,6 +6,7 @@ import {
 } from 'types/TextProps'
 import { FC } from 'react'
 import {
+  TBackgroundColor,
   TTextColor,
   backgroundClip,
   backgroundColor,
@@ -21,7 +22,9 @@ import {
   textAlign,
   textColor,
   textDecoration,
+  width,
 } from 'classnames/tailwind'
+import Colors from 'types/Colors'
 
 const headerText = (size: HeaderSize, leading = 8, bold = true) =>
   classnames(
@@ -167,18 +170,31 @@ export const TooltipText: FC = ({ children }) => {
   return <div className={tooltipText}>{children}</div>
 }
 
-const highlightedText = (center?: boolean) =>
+const highlightedText = (bgColor: TBackgroundColor, center?: boolean) =>
   classnames(
     textColor('text-blue-900'),
     fontWeight('font-bold'),
     borderRadius('rounded-full'),
-    backgroundColor('bg-white'),
+    backgroundColor(bgColor),
+    width('w-fit'),
     padding('px-4', 'py-1'),
     textAlign(center ? 'text-center' : 'text-left')
   )
-export const HighlightedText: FC<{ center?: boolean }> = ({
+export const HighlightedText: FC<{ center?: boolean; color?: Colors }> = ({
   children,
   center,
+  color,
 }) => {
-  return <div className={highlightedText(center)}>{children}</div>
+  const colorToTailwindBg =
+    color === Colors.green
+      ? 'bg-green'
+      : color === Colors.yellow
+      ? 'bg-yellow'
+      : color == Colors.pink
+      ? 'bg-pink'
+      : 'bg-white'
+
+  return (
+    <div className={highlightedText(colorToTailwindBg, center)}>{children}</div>
+  )
 }
