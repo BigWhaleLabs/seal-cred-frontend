@@ -1,14 +1,7 @@
-import {
-  ERC721,
-  SCERC721Derivative,
-} from '@big-whale-labs/seal-cred-ledger-contract'
+import LedgerRecord from 'models/LedgerRecord'
 
 type Ledger = {
-  [key: string]: {
-    merkleRoot: string
-    originalContract: ERC721
-    derivativeContract: SCERC721Derivative
-  }
+  [key: string]: LedgerRecord
 }
 
 export default Ledger

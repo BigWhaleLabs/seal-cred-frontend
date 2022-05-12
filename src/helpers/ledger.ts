@@ -4,6 +4,7 @@ import {
   SealCredLedger,
 } from '@big-whale-labs/seal-cred-ledger-contract'
 import Ledger from 'models/Ledger'
+import LedgerRecord from 'models/LedgerRecord'
 import defaultProvider from 'helpers/defaultProvider'
 
 export async function getLedgerRecord(
@@ -18,7 +19,7 @@ export async function getLedgerRecord(
       await sealCredLedger.getDerivativeAddress(tokenAddress),
       defaultProvider
     ),
-  }
+  } as LedgerRecord
 }
 
 export default async function getLedger(sealCredLedger: SealCredLedger) {
