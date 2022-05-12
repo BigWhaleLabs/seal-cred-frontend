@@ -9,7 +9,6 @@ import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
 import ProofStore from 'stores/ProofStore'
 import QRCode from 'components/QRCode'
-import QRLoading from 'icons/QRLoading'
 import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -25,109 +24,131 @@ import classnames, {
 } from 'classnames/tailwind'
 import sealCred from 'helpers/sealCred'
 import truncateMiddle from 'helpers/truncateMiddle'
+import useBreakpoints from 'helpers/useBreakpoints'
 
-const badgeWrapper = (minted?: boolean) =>
+const badgeWrapper = (minted: boolean, small?: boolean) =>
   classnames(
     display('flex'),
-    flexDirection(minted ? 'flex-row' : 'flex-col', 'lg:flex-col'),
+    flexDirection(
+      minted ? (small ? 'flex-col' : 'flex-row') : 'flex-col',
+      'lg:flex-col'
+    ),
     justifyContent('justify-center'),
     alignItems('items-center'),
     borderRadius('rounded-lg'),
     backgroundColor(minted ? 'bg-blue-700' : 'bg-blue-800'),
     padding('px-4', 'py-4'),
     space(
-      minted ? 'space-x-2' : 'space-y-2',
+      minted ? (small ? 'space-y-2' : 'space-x-2') : 'space-y-2',
       minted ? 'lg:space-x-0' : undefined,
       'lg:space-y-2'
     )
   )
 
-const badgeBody = (minted?: boolean) =>
+const badgeBody = (minted?: boolean, small?: boolean) =>
   classnames(
     display('flex'),
     flexDirection('flex-col'),
     space('space-y-2'),
-    textAlign(minted ? 'text-left' : 'text-center', 'lg:text-center'),
-    alignItems(minted ? 'items-start' : 'items-center', 'lg:items-center'),
+    textAlign(
+      minted ? (small ? 'text-center' : 'text-left') : 'text-center',
+      'lg:text-center'
+    ),
+    alignItems(
+      minted ? (small ? 'items-center' : 'items-start') : 'items-center',
+      'lg:items-center'
+    ),
     justifyContent(
-      minted ? 'justify-start' : 'justify-center',
+      minted ? (small ? 'justify-center' : 'justify-start') : 'justify-center',
       'lg:justify-center'
     )
   )
 
-const mintPassed = classnames(
-  display('flex'),
-  justifyContent('justify-center'),
-  alignItems('items-center'),
-  justifyContent('justify-start', 'lg:justify-center'),
-  flexDirection('flex-row'),
-  space('space-x-2')
-)
+const mintPassed = (small?: boolean) =>
+  classnames(
+    display('flex'),
+    justifyContent('justify-center'),
+    alignItems('items-center'),
+    justifyContent(
+      small ? 'justify-start' : 'justify-center',
+      'lg:justify-center'
+    ),
+    flexDirection('flex-row'),
+    space('space-x-2')
+  )
 
 function Badge({
-  derivativeAddress,
-  originalAddress,
+  contractAddress,
+  tokenId,
 }: {
-  derivativeAddress: string
-  originalAddress?: string
+  contractAddress: string
+  tokenId?: number
 }) {
-  const { derivativeTokenIds, ledger } = useSnapshot(SealCredStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
+  const { ledger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
 
-  const [loading, setLoading] = useState(false)
+  const { xs, sm } = useBreakpoints()
 
-  const unminted = !!originalAddress
+  const [loading, setLoading] = useState(false)
+  const [completed, setCompleted] = useState(false)
+
+  const small = xs && !sm
+  const minted = tokenId !== undefined
+  const ledgerRecord = ledger[contractAddress]
+  const derivativeAddress = ledgerRecord.derivativeContract.address
 
   return (
-    <div className={badgeWrapper(!unminted)}>
-      {originalAddress ? (
-        <BadgeIcon color="pink" />
-      ) : derivativeTokenIds[derivativeAddress] ? (
-        <QRCode
-          derivativeAddress={derivativeAddress}
-          tokenId={derivativeTokenIds[derivativeAddress][0]}
-        />
+    <>
+      {minted ? (
+        <QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />
       ) : (
-        <QRLoading />
+        <BadgeIcon color="pink" />
       )}
-      <div className={badgeBody(!unminted)}>
+      <div className={badgeBody(minted, small)}>
         <BadgeText>
           <ContractName address={derivativeAddress} />
         </BadgeText>
-        {unminted ? (
+        {minted && (
+          <div className={mintPassed(small)}>
+            <BoldColoredText color="text-pink">Minted</BoldColoredText>
+            <Complete color="pink" />
+          </div>
+        )}
+        {!minted && (
           <Button
             small
             colors="primary"
             loading={!!loading}
+            disabled={completed}
             onClick={async () => {
               setLoading(true)
               try {
                 if (!account) throw new Error('No account found')
-                const derivativeContractAddress =
-                  ledger[originalAddress].derivativeContract.address
                 const proof = proofsCompleted.find(
-                  (proof) => proof.contract === originalAddress
+                  (proof) => proof.contract === contractAddress
                 )
                 if (!proof || !proof.result) throw new Error('No proof found')
-                const ledgerMerkleTree = await sealCred.getRoot(originalAddress)
+                const ledgerMerkleTree = await sealCred.getRoot(contractAddress)
                 if (
                   !BigNumber.from(ledgerMerkleTree).eq(
                     BigNumber.from(proof.result.publicSignals[1])
                   )
                 ) {
-                  const index = ProofStore.proofsInProgress.indexOf(proof)
-                  if (index > -1) ProofStore.proofsInProgress.splice(index, 1)
+                  const index = ProofStore.proofsCompleted.findIndex(
+                    (p) => p.contract === proof.contract
+                  )
+                  if (index > -1) ProofStore.proofsCompleted.splice(index, 1)
 
                   throw new Error(
                     'This proof is outdated, please, generate a new one'
                   )
                 }
                 await WalletStore.mintDerivative(
-                  derivativeContractAddress,
+                  derivativeAddress,
                   proof.result
                 )
-                await SealCredStore.refreshDerivativeContracts(account)
+                setCompleted(true)
               } catch (error) {
                 handleError(error)
               } finally {
@@ -135,32 +156,30 @@ function Badge({
               }
             }}
           >
-            Mint badge
+            {completed ? 'Minted!' : 'Mint badge'}
           </Button>
-        ) : (
-          <div className={mintPassed}>
-            <BoldColoredText color="text-pink">Minted</BoldColoredText>
-            <Complete color="pink" />
-          </div>
         )}
       </div>
-    </div>
+    </>
   )
 }
 
 function BadgeBlock({
-  address,
-  originalAddress,
+  contractAddress,
+  tokenId,
 }: {
-  address: string
-  originalAddress?: string
+  contractAddress: string
+  tokenId?: number
 }) {
-  const shortAddress = truncateMiddle(address)
+  const { xs, sm } = useBreakpoints()
+  const shortAddress = truncateMiddle(contractAddress)
 
   return (
-    <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
-      <Badge derivativeAddress={address} originalAddress={originalAddress} />
-    </Suspense>
+    <div className={badgeWrapper(!!tokenId, xs && !sm)}>
+      <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
+        <Badge contractAddress={contractAddress} tokenId={tokenId} />
+      </Suspense>
+    </div>
   )
 }
 

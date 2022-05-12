@@ -52,10 +52,11 @@ export default function OwnedBadge() {
         </HeaderText>
         <BodyText size="base">
           This is a zkNFT derivative. It means this person has been verified to
-          own at least one{' '}
+          own at least one{' ‘'}
           <AccentText color="text-pink">
-            `<ContractName address={derivativeAddress} otherStyle />`
-          </AccentText>{' '}
+            <ContractName address={derivativeAddress} otherStyle />`
+          </AccentText>
+          {'’ '}
           NFT.
         </BodyText>
 

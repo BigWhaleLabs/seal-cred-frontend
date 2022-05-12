@@ -11,7 +11,8 @@ import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
 import WalletStore from 'stores/WalletStore'
-import useAvaliableProofs from 'helpers/useAvaliableProofs'
+import useBreakpoints from 'helpers/useBreakpoints'
+import useProofAddressesAvailableToCreate from 'helpers/useProofAddressesAvailableToCreate'
 
 function useProofContent(
   proofInProgress?: Proof,
@@ -33,7 +34,7 @@ function useProofContent(
       'pink',
       <>
         {proofInProgress?.position !== undefined
-          ? `Queued by position: ${proofInProgress?.position + 1}`
+          ? `Queued with position: ${proofInProgress?.position + 1}`
           : 'Queued'}
       </>,
     ]
@@ -42,8 +43,10 @@ function useProofContent(
 
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const [postingProof, setPostingProof] = useState(false)
+  const { proofsInProgress } = useSnapshot(ProofStore)
+  const { xs } = useBreakpoints()
 
-  const proofInProgress = ProofStore.proofsInProgress.find(
+  const proofInProgress = proofsInProgress.find(
     (proof) =>
       proof.account === WalletStore.account &&
       proof.contract === contractAddress
@@ -53,9 +56,10 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
 
   return (
     <ProofLine>
-      <ContractName address={contractAddress} />
+      <ContractName address={contractAddress} truncate={xs} overflow />
       <ProofButton
         color={color}
+        disabled={postingProof || !!proofInProgress}
         onClick={async () => {
           setPostingProof(true)
           await ProofStore.generate(contractAddress)
@@ -69,8 +73,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
 }
 
 function ContractList() {
-  const originalOwnedContractsWithoutCompletedProofs = useAvaliableProofs()
-
+  const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
   const { account } = useSnapshot(WalletStore)
 
   if (!account) {
@@ -79,10 +82,10 @@ function ContractList() {
 
   return (
     <>
-      {!!originalOwnedContractsWithoutCompletedProofs.length && (
+      {!!proofAddressesAvailableToCreate.length && (
         <ContractListContainer>
-          {originalOwnedContractsWithoutCompletedProofs.map((contract) => (
-            <ZKProof contractAddress={contract.address} />
+          {proofAddressesAvailableToCreate.map((address) => (
+            <ZKProof contractAddress={address} />
           ))}
         </ContractListContainer>
       )}
@@ -95,7 +98,7 @@ export default function ListOfAvailableZKProofs() {
     <Suspense
       fallback={
         <BodyText size="base">
-          Fetching available tokens owned by you...
+          Fetching the supported tokens owned by you...
         </BodyText>
       }
     >

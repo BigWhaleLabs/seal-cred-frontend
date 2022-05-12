@@ -26,6 +26,7 @@
     "plugin:valtio/recommended"
   ],
   "rules": {
+    "valtio/state-snapshot-rule": "off",
     "no-relative-import-paths/no-relative-import-paths": "error",
     "@typescript-eslint/no-floating-promises": "error",
     "require-await": "error",

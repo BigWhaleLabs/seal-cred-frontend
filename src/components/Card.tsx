@@ -1,16 +1,15 @@
 import { FC } from 'react'
 import {
   backgroundColor,
+  borderColor,
   borderRadius,
+  borderWidth,
   boxShadow,
   boxShadowColor,
   classnames,
   height,
   margin,
   maxHeight,
-  outlineColor,
-  outlineStyle,
-  outlineWidth,
   padding,
   position,
   space,
@@ -28,18 +27,17 @@ interface CardProps {
 
 const cardColor = (color?: Color) => {
   return classnames(
-    outlineWidth('outline-1'),
-    outlineStyle('outline'),
-    outlineColor(
+    borderWidth('border-1'),
+    borderColor(
       color === 'yellow'
-        ? 'outline-yellow'
+        ? 'border-yellow'
         : color === 'green'
-        ? 'outline-green'
+        ? 'border-green'
         : color === 'pink'
-        ? 'outline-pink'
+        ? 'border-pink'
         : color === 'blue'
-        ? 'outline-blue-500'
-        : 'outline-blue-900'
+        ? 'border-blue-500'
+        : 'border-blue-900'
     ),
     boxShadow('shadow-2xl'),
     boxShadowColor(
@@ -67,7 +65,7 @@ const cardContainer = (shadow?: boolean, color?: Color, onlyWrap = false) => {
     width('w-mobile-card', 'sm:w-card'),
     margin('mx-4', 'lg:mx-0'),
     height(onlyWrap ? undefined : 'h-fit', onlyWrap ? undefined : 'lg:h-card'),
-    maxHeight('max-h-508')
+    maxHeight(onlyWrap ? undefined : 'max-h-508')
   )
 }
 
