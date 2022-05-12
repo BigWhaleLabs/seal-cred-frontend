@@ -21,7 +21,11 @@ function LandingLearnMoreCard() {
         </BodyText>
       </div>
       <div className={learnMoreText}>
-        <Button colors="tertiary" arrow>
+        <Button
+          colors="tertiary"
+          arrow
+          onClick={() => (window.location.href = 'https://bigwhalelabs.com/')}
+        >
           Learn more about us
         </Button>
       </div>
