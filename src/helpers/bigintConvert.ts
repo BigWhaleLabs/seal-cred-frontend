@@ -56,7 +56,6 @@ export const Uint8ArrayToBigint = (x: Uint8Array) => {
 }
 
 export function parseSignature(sig: string) {
-  console.log('sig', sig)
   const r_hex = sig.slice(2, 66)
   const s_hex = sig.slice(66, 66 + 64)
   const r_bigint = hexStringToBigInt(r_hex)
