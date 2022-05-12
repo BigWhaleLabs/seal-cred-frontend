@@ -17,7 +17,7 @@ const qrCodeContainer = classnames(
   minWidth('min-w-fit')
 )
 
-const QRCodeOptions = {
+const QRCodeOptions: Options = {
   width: 140,
   height: 140,
   type: 'svg',
@@ -36,7 +36,7 @@ const QRCodeOptions = {
   backgroundOptions: {
     color: '#0d0030',
   },
-} as Options
+}
 
 export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
   const ref = useRef<HTMLAnchorElement>(null)
