@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import QRCodeStyling from 'qr-code-styling'
+import QRCodeStyling, { Options } from 'qr-code-styling'
 import classnames, {
   borderRadius,
   minWidth,
@@ -17,7 +17,7 @@ const qrCodeContainer = classnames(
   minWidth('min-w-fit')
 )
 
-const qrCode = new QRCodeStyling({
+const QRCodeOptions: Options = {
   width: 140,
   height: 140,
   type: 'svg',
@@ -36,7 +36,7 @@ const qrCode = new QRCodeStyling({
   backgroundOptions: {
     color: '#0d0030',
   },
-})
+}
 
 export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
   const ref = useRef<HTMLAnchorElement>(null)
@@ -44,7 +44,7 @@ export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
 
   useEffect(() => {
     if (!ref.current) return
-
+    const qrCode = new QRCodeStyling(QRCodeOptions)
     qrCode.append(ref.current)
     qrCode.update({
       data: url,

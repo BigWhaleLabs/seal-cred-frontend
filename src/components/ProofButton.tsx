@@ -52,7 +52,7 @@ const button = (color: ButtonColors, disabled?: boolean) =>
     fontFamily('font-primary'),
     outlineStyle('focus:outline-none'),
     cursor(disabled ? 'cursor-not-allowed' : undefined),
-    opacity(disabled ? 'opacity-50' : undefined),
+    opacity(disabled ? 'opacity-95' : undefined),
     lineHeight('leading-5')
   )
 
