@@ -1,23 +1,21 @@
 import { BodyText } from 'components/Text'
-import { Suspense, useMemo } from 'react'
-import { proxy, useSnapshot } from 'valtio'
+import { Suspense } from 'react'
+import { useSnapshot } from 'valtio'
 import BadgeBlock from 'components/BadgeBlock'
 import BadgesHintCard from 'components/BadgesHintCard'
-import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
 import classnames, {
-  backgroundImage,
   display,
   gap,
-  gradientColorStops,
   gridAutoRows,
   gridTemplateColumns,
   height,
-  inset,
   maxHeight,
   overflow,
   position,
 } from 'classnames/tailwind'
+import useDerivativeTokensOwned from 'helpers/useDerivativeTokensOwned'
+import useProofsAvailableToMint from 'helpers/useProofsAvailableToMint'
 
 const badges = classnames(
   position('relative'),
@@ -25,95 +23,52 @@ const badges = classnames(
   maxHeight('max-h-85'),
   overflow('overflow-y-visible')
 )
-const badgesList = (oneElement?: boolean) =>
-  classnames(
-    display('grid'),
-    gap('gap-2'),
-    gridAutoRows('auto-rows-auto'),
-    gridTemplateColumns(
-      'grid-cols-1',
-      oneElement ? 'lg:grid-cols-1' : 'lg:grid-cols-2'
-    )
-  )
-
-const badgesListOverflow = classnames(
-  position('sticky'),
-  inset('bottom-0', 'right-0', 'left-0'),
-  height('h-8'),
-  backgroundImage('bg-gradient-to-b'),
-  gradientColorStops('from-transparent', 'to-blue-900')
+const badgesList = classnames(
+  display('grid'),
+  gap('gap-2'),
+  gridAutoRows('auto-rows-auto'),
+  gridTemplateColumns('grid-cols-1', 'lg:grid-cols-2')
 )
 
-function BadgeListSuspender() {
-  const { derivativeContracts, ledger, derivativeTokenIds } =
-    useSnapshot(SealCredStore)
-  const { proofsCompleted } = useSnapshot(ProofStore)
-  const completedProofs = proxy(proofsCompleted)
-  const scLedger = proxy(ledger)
-  const derivatives = proxy(derivativeContracts)
-
-  const proofContracts = useMemo(
-    () => new Set(completedProofs.map((p) => p.contract)),
-    [completedProofs]
+function originalAddressFromDerivativeAddress(derivativeAddress: string) {
+  const { ledger } = useSnapshot(SealCredStore)
+  const ledgerRecord = Object.entries(ledger).find(
+    ([, { derivativeContract }]) =>
+      derivativeContract.address === derivativeAddress
   )
+  if (!ledgerRecord) throw new Error('No ledger record found')
+  return ledgerRecord[0]
+}
 
-  const unownedDerivativeToOriginalAddressesMap = {} as {
-    [derivativeAddress: string]: string
-  }
-
-  for (const proofContract of proofContracts) {
-    const derivativeContract = scLedger[proofContract].derivativeContract
-    if (!derivativeContract) continue
-    if (derivativeTokenIds[derivativeContract.address]) continue
-    unownedDerivativeToOriginalAddressesMap[derivativeContract.address] =
-      proofContract
-  }
-
-  const unownedDerivativeRecords = Object.keys(
-    unownedDerivativeToOriginalAddressesMap
-  ).map((address) => scLedger[unownedDerivativeToOriginalAddressesMap[address]])
-
-  const ownedDerivatives = derivatives
-    ? Object.keys(derivativeTokenIds).map((address) =>
-        derivatives.find((contract) => contract.address === address)
-      )
-    : []
-
-  const ownedDerivativesLength = ownedDerivatives.length
-  const unownedLedgerRecordsWithProofs = unownedDerivativeRecords.length
-  const badgesAmount = ownedDerivativesLength + unownedLedgerRecordsWithProofs
-  const isOneBadge = badgesAmount < 2
-  const isEmpty = badgesAmount < 1
+function BadgeListSuspender() {
+  const derivativeTokensOwned = useDerivativeTokensOwned()
+  const proofsAvailableToMint = useProofsAvailableToMint()
+  const isEmpty =
+    !Object.keys(derivativeTokensOwned).length && !proofsAvailableToMint.length
 
   return (
     <>
       {isEmpty && (
-        <BadgesHintCard
-          text="You don't have any unowned derivative contracts that you can mint 
-          or any owned token to share. Generate ZK proof first and then mint token."
-        />
+        <BadgesHintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
       )}
-      <div className={badgesList(isOneBadge)}>
-        {!!ownedDerivativesLength &&
-          ownedDerivatives.map(
-            (derivative) =>
-              derivative && (
-                <BadgeBlock
-                  key={derivative.address}
-                  address={derivative.address}
-                />
-              )
-          )}
-        {!!unownedDerivativeRecords &&
-          unownedDerivativeRecords.map((ledgerRecord) => (
-            <BadgeBlock
-              key={ledgerRecord.originalContract.address}
-              address={ledgerRecord.derivativeContract.address}
-              originalAddress={ledgerRecord.originalContract.address}
-            />
-          ))}
+      <div className={badgesList}>
+        {Object.entries(derivativeTokensOwned)
+          .map(([derivativeAddress, tokenIds]) =>
+            tokenIds.map((tokenId) => (
+              <BadgeBlock
+                key={`${derivativeAddress}-${tokenId}`}
+                contractAddress={originalAddressFromDerivativeAddress(
+                  derivativeAddress
+                )}
+                tokenId={tokenId}
+              />
+            ))
+          )
+          .reduce((acc, curr) => acc.concat(curr), [])}
+        {proofsAvailableToMint.map((proof) => (
+          <BadgeBlock key={proof.contract} contractAddress={proof.contract} />
+        ))}
       </div>
-      {!isOneBadge && <div className={badgesListOverflow}></div>}
     </>
   )
 }

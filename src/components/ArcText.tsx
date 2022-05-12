@@ -46,7 +46,12 @@ const ArcText: FC<{ text: string; radius?: number }> = ({
       <use transform="rotate(90 250 250)" />
       <use transform="rotate(45 250 250)" />
       <use transform="rotate(-45 250 250)" />
-      <text dy={radius} textLength={text.length * 36} className={textStyle}>
+      <text
+        dy={radius}
+        textLength={text.length * 36}
+        className={textStyle}
+        letter-spacing={(radius * 3.14) / 10}
+      >
         <textPath xlinkHref="#textcircle">{text}</textPath>
       </text>
     </svg>
