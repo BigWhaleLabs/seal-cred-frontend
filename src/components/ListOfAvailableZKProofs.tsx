@@ -58,6 +58,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
       <ContractName address={contractAddress} />
       <ProofButton
         color={color}
+        disabled={postingProof || !!proofInProgress}
         onClick={async () => {
           setPostingProof(true)
           await ProofStore.generate(contractAddress)
