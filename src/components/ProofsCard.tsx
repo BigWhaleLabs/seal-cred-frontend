@@ -42,7 +42,7 @@ function ZkProofSavedMessage() {
   )
 }
 
-function Proofs() {
+function Proofs({ maxHeight }: { maxHeight: number }) {
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
   const { proofsCompleted } = useSnapshot(ProofStore)
 
@@ -50,8 +50,6 @@ function Proofs() {
     proofsCompleted.length > 0 && proofAddressesAvailableToCreate.length === 0
   const noWayToGenerate =
     proofsCompleted.length === 0 && proofAddressesAvailableToCreate.length === 0
-
-  const { sm, md } = useBreakpoints()
 
   return (
     <>
@@ -68,7 +66,7 @@ function Proofs() {
       {noWayToGenerate && (
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
-      <Scrollbar maxHeight={md ? 300 : sm ? 240 : 190}>
+      <Scrollbar maxHeight={maxHeight}>
         <div className={innerScrollableBlock}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
@@ -79,13 +77,13 @@ function Proofs() {
   )
 }
 
-function ReadyProofs() {
+function ReadyProofs({ maxHeight }: { maxHeight: number }) {
   return (
     <>
       <div className={titleContainer}>
         <CardHeader color="text-yellow">Your saved ZK Proofs</CardHeader>
       </div>
-      <Scrollbar maxHeight={320}>
+      <Scrollbar maxHeight={maxHeight}>
         <ListOfReadyZKProofs />
       </Scrollbar>
       <ZkProofSavedMessage />
@@ -96,7 +94,9 @@ function ReadyProofs() {
 function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
-  const { lg } = useBreakpoints()
+  const { sm, md, lg } = useBreakpoints()
+
+  const scrollMaxHeight = md ? 300 : sm ? 240 : 190
 
   return (
     <div className={proofCardZKButtonContainer}>
@@ -112,10 +112,10 @@ function ProofsCard() {
               </div>
             }
           >
-            <Proofs />
+            <Proofs maxHeight={scrollMaxHeight} />
           </Suspense>
         ) : proofsCompleted.length > 0 ? (
-          <ReadyProofs />
+          <ReadyProofs maxHeight={scrollMaxHeight} />
         ) : (
           <ConnectAccount />
         )}

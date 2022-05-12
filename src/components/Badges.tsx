@@ -9,12 +9,14 @@ import Card from 'components/Card'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
+import useBreakpoints from 'helpers/useBreakpoints'
 import useDerivativeTokensOwned from 'helpers/useDerivativeTokensOwned'
 
 function Badges() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const derivativeTokensOwned = useDerivativeTokensOwned()
+  const { sm, md } = useBreakpoints()
 
   const noBadges =
     !Object.keys(derivativeTokensOwned).length && !proofsCompleted.length
@@ -32,7 +34,7 @@ function Badges() {
         </CardDescription>
       </div>
       {account ? (
-        <Scrollbar maxHeight={330}>
+        <Scrollbar maxHeight={md ? 330 : sm ? 240 : 190}>
           <BadgesList />
         </Scrollbar>
       ) : (
