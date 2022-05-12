@@ -33,7 +33,7 @@ const badgesList = classnames(
 function originalAddressFromDerivativeAddress(derivativeAddress: string) {
   const { ledger } = useSnapshot(SealCredStore)
   const ledgerRecord = Object.entries(ledger).find(
-    ([_, { derivativeContract }]) =>
+    ([, { derivativeContract }]) =>
       derivativeContract.address === derivativeAddress
   )
   if (!ledgerRecord) throw new Error('No ledger record found')
