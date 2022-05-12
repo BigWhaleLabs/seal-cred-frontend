@@ -64,7 +64,7 @@ function Proofs() {
             : 'Generate your ZK proof'}
         </CardDescription>
       </div>
-      <Scrollbar maxHeight={320}>
+      <Scrollbar maxHeight={280}>
         <div className={innerScrollableBlock}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
