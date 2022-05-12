@@ -14,6 +14,7 @@ import classnames, {
   display,
   flexDirection,
   margin,
+  position,
   space,
   width,
 } from 'classnames/tailwind'
@@ -43,7 +44,12 @@ function Landing() {
         </HighlightedText>
       </div>
       <OrbsInBoxes />
-      <LandingCreatingZKProofCard />
+      <div
+        className={position('absolute')}
+        style={{ transform: 'translateY(1000px)' }}
+      >
+        <LandingCreatingZKProofCard />
+      </div>
       <SuperOrbWithConnectors />
       <div className={identityCards}>
         <IdentityCardOne />
