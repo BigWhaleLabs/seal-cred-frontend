@@ -43,7 +43,9 @@ function useProofContent(
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const [postingProof, setPostingProof] = useState(false)
 
-  const proofInProgress = ProofStore.proofsInProgress.find(
+  const { proofsInProgress } = useSnapshot(ProofStore)
+
+  const proofInProgress = proofsInProgress.find(
     (proof) =>
       proof.account === WalletStore.account &&
       proof.contract === contractAddress

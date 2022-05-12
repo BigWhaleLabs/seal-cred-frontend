@@ -63,6 +63,7 @@ function addListenersToLedgerRecord({
   originalContract.on(
     originalContract.filters.Transfer(),
     async (_, to, tokenId) => {
+      console.log('Transfer (original)', originalContract.address, to, tokenId)
       const originalContractToOwnerMap = await SealCredStore
         .originalContractsToOwnersMaps[originalContract.address]
       originalContractToOwnerMap[tokenId.toNumber()] = to
@@ -71,6 +72,12 @@ function addListenersToLedgerRecord({
   derivativeContract.on(
     derivativeContract.filters.Transfer(),
     async (_, to, tokenId) => {
+      console.log(
+        'Transfer (derivative)',
+        derivativeContract.address,
+        to,
+        tokenId
+      )
       const derivativeContractToOwnerMap = await SealCredStore
         .derivativeContractsToOwnersMaps[derivativeContract.address]
       derivativeContractToOwnerMap[tokenId.toNumber()] = to
