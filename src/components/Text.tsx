@@ -15,10 +15,23 @@ import {
   fontWeight,
   gradientColorStops,
   lineHeight,
+  margin,
+  overflow,
   textAlign,
   textColor,
   textDecoration,
+  textOverflow,
+  whitespace,
+  width,
 } from 'classnames/tailwind'
+
+export const textTruncateStyles = classnames(
+  width('w-fit'),
+  textOverflow('text-ellipsis'),
+  overflow('overflow-hidden'),
+  whitespace('whitespace-nowrap'),
+  margin('mr-1')
+)
 
 const headerText = (size: HeaderSize, leading = 8, bold = true) =>
   classnames(
@@ -58,8 +71,14 @@ export const AccentText: FC<AccentTextProps> = (props) => {
   return <span className={accentText(props)}>{props.children}</span>
 }
 
-const bodyText = (size: BodyTextSize, leading = 6, center?: boolean) =>
+const bodyText = (
+  size: BodyTextSize,
+  leading = 6,
+  center?: boolean,
+  overflow = false
+) =>
   classnames(
+    overflow ? textTruncateStyles : null,
     textColor('text-white'),
     center ? textAlign('text-center') : null,
     fontSize(`text-${size}`),
@@ -69,8 +88,11 @@ export const BodyText: FC<{
   size: BodyTextSize
   leading?: 3 | 4 | 5 | 6
   center?: boolean
-}> = ({ size, center, leading, children }) => {
-  return <div className={bodyText(size, leading, center)}>{children}</div>
+  overflow?: boolean
+}> = ({ size, center, leading, overflow, children }) => {
+  return (
+    <div className={bodyText(size, leading, center, overflow)}>{children}</div>
+  )
 }
 
 const largerText = classnames(textColor('text-blue-900'), fontSize('text-2xl'))

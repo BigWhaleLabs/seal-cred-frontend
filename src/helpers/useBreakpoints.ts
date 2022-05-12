@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+const xsSize = 279
+const smSize = 375
 const mdSize = 600
 const lgSize = 1023
 
@@ -17,5 +19,11 @@ export default function useBreakpoints() {
     }
   }, [])
 
-  return { md: width > mdSize, lg: width > lgSize }
+  return {
+    xs: width > xsSize,
+    sm: width > smSize,
+    md: width > mdSize,
+    lg: width > lgSize,
+    mobile: width > xsSize && width < smSize,
+  }
 }

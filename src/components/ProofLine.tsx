@@ -1,11 +1,11 @@
 import { FC } from 'react'
-
 import classnames, {
   alignItems,
   backgroundColor,
   borderRadius,
   display,
   flexDirection,
+  flexWrap,
   fontSize,
   fontWeight,
   height,
@@ -14,24 +14,29 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
+import useBreakpoints from 'helpers/useBreakpoints'
 
-const contractContainer = classnames(
-  display('flex'),
-  flexDirection('flex-row'),
-  alignItems('items-center'),
-  justifyContent('justify-between'),
-  space('space-x-2'),
-  backgroundColor('bg-blue-700'),
-  borderRadius('rounded-lg'),
-  height('h-8'),
-  padding('px-4', 'py-2'),
-  width('w-full'),
-  fontSize('text-sm'),
-  fontWeight('font-bold')
-)
+const contractContainer = (small?: boolean) =>
+  classnames(
+    display('flex'),
+    flexWrap('flex-wrap'),
+    flexDirection(small ? 'flex-col' : 'flex-row'),
+    alignItems(small ? 'items-start' : 'items-center'),
+    justifyContent('justify-between'),
+    space(small ? 'space-y-1' : null),
+    backgroundColor('bg-blue-700'),
+    borderRadius('rounded-lg'),
+    height('h-fit'),
+    padding('px-4', 'py-2'),
+    width('w-full'),
+    fontSize('text-sm'),
+    fontWeight('font-bold')
+  )
 
 const ProofLine: FC = ({ children }) => {
-  return <div className={contractContainer}>{children}</div>
+  const { mobile } = useBreakpoints()
+
+  return <div className={contractContainer(mobile)}>{children}</div>
 }
 
 export default ProofLine
