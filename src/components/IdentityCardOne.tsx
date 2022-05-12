@@ -41,8 +41,8 @@ function IdentityCardOne() {
         </div>
         <DoubleSmile />
         <div className={zkSpheresLeft}>
-          <ZkSphere color={Colors.green} />
-          <ZkSphere color={Colors.yellow} />
+          <ZkSphere color={Colors.green} text="ZK" />
+          <ZkSphere color={Colors.yellow} text="ZK" />
         </div>
       </div>
     </Card>

@@ -34,7 +34,7 @@ function IdentityCardTwo() {
         </div>
         <Grim />
         <div className={zkSpheresRight}>
-          <ZkSphere color={Colors.pink} />
+          <ZkSphere color={Colors.pink} text="ZK" />
         </div>
       </div>
     </Card>

@@ -31,14 +31,13 @@ const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
 
 const ZkSphere: FC<{
   color: Colors
-}> = ({ color, children }) => {
+  text?: string
+}> = ({ color, children, text }) => {
   const bgColor = colorToTailwindBg(color)
   const shadowColor = colorToDropShadow(color)
 
   return (
-    <div className={sphereStyles(bgColor, shadowColor)}>
-      {children ? children : 'ZK'}
-    </div>
+    <div className={sphereStyles(bgColor, shadowColor)}>{children || text}</div>
   )
 }
 
