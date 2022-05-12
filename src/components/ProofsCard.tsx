@@ -42,7 +42,7 @@ function ZkProofSavedMessage() {
   )
 }
 
-function Proofs({ maxHeight }: { maxHeight: number }) {
+function Proofs() {
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
   const { proofsCompleted } = useSnapshot(ProofStore)
 
@@ -66,7 +66,7 @@ function Proofs({ maxHeight }: { maxHeight: number }) {
       {noWayToGenerate && (
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
-      <Scrollbar maxHeight={maxHeight}>
+      <Scrollbar maxHeight={300}>
         <div className={innerScrollableBlock}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
@@ -77,13 +77,13 @@ function Proofs({ maxHeight }: { maxHeight: number }) {
   )
 }
 
-function ReadyProofs({ maxHeight }: { maxHeight: number }) {
+function ReadyProofs() {
   return (
     <>
       <div className={titleContainer}>
         <CardHeader color="text-yellow">Your saved ZK Proofs</CardHeader>
       </div>
-      <Scrollbar maxHeight={maxHeight}>
+      <Scrollbar maxHeight={300}>
         <ListOfReadyZKProofs />
       </Scrollbar>
       <ZkProofSavedMessage />
@@ -94,9 +94,7 @@ function ReadyProofs({ maxHeight }: { maxHeight: number }) {
 function ProofsCard() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
-  const { sm, md, lg } = useBreakpoints()
-
-  const scrollMaxHeight = md ? 300 : sm ? 240 : 190
+  const { lg } = useBreakpoints()
 
   return (
     <div className={proofCardZKButtonContainer}>
@@ -112,10 +110,10 @@ function ProofsCard() {
               </div>
             }
           >
-            <Proofs maxHeight={scrollMaxHeight} />
+            <Proofs />
           </Suspense>
         ) : proofsCompleted.length > 0 ? (
-          <ReadyProofs maxHeight={scrollMaxHeight} />
+          <ReadyProofs />
         ) : (
           <ConnectAccount />
         )}

@@ -8,6 +8,7 @@ import classnames, {
   position,
   transitionProperty,
 } from 'classnames/tailwind'
+import useBreakpoints from 'helpers/useBreakpoints'
 import useIsOverflow from 'helpers/useIsOverflow'
 
 type FadeType = 'top' | 'bottom' | 'both'
@@ -19,6 +20,9 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
 }) => {
   const wrapRef = useRef() as MutableRefObject<HTMLDivElement>
   const overflows = useIsOverflow(wrapRef)
+  const { sm, md } = useBreakpoints()
+
+  const scrollMaxHeight = md ? maxHeight : sm ? 240 : 190
 
   const [showFade, setShowFade] = useState(false)
 
@@ -28,12 +32,11 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
       transitionProperty('transition-all')
     )
 
-  console.log(overflows)
   useEffect(() => {
     const { current } = wrapRef
     if (!current) return
-    setShowFade(current.offsetHeight > maxHeight)
-  }, [wrapRef, maxHeight])
+    setShowFade(current.offsetHeight > scrollMaxHeight)
+  }, [wrapRef, scrollMaxHeight])
 
   return (
     <div
@@ -43,7 +46,7 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
       )}
     >
       {showFade && (fade === 'both' || fade === 'top') && <Fade />}
-      <SimpleBar style={{ maxHeight }}>
+      <SimpleBar style={{ maxHeight: scrollMaxHeight }}>
         <div ref={wrapRef} className={wrapperStyle(overflows)}>
           {children}
         </div>

@@ -39,7 +39,7 @@ const badgeWrapper = (minted: boolean, small?: boolean) =>
     backgroundColor(minted ? 'bg-blue-700' : 'bg-blue-800'),
     padding('px-4', 'py-4'),
     space(
-      minted ? (!small ? 'space-x-2' : 'space-y-2') : 'space-y-2',
+      minted ? (small ? 'space-y-2' : 'space-x-2') : 'space-y-2',
       minted ? 'lg:space-x-0' : undefined,
       'lg:space-y-2'
     )
