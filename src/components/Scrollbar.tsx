@@ -18,13 +18,17 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
   maxHeight = 350,
   fade = 'both',
 }) => {
+  const scrollRef = useRef() as MutableRefObject<HTMLDivElement>
   const wrapRef = useRef() as MutableRefObject<HTMLDivElement>
   const overflows = useIsOverflow(wrapRef)
   const { sm, md } = useBreakpoints()
 
   const scrollMaxHeight = md ? maxHeight : sm ? 240 : 190
 
-  const [showFade, setShowFade] = useState(false)
+  const [scrollPosition, setScrollPosition] = useState<{
+    top: boolean
+    bottom: boolean
+  }>({ top: false, bottom: true })
 
   const wrapperStyle = (overflows: boolean) =>
     classnames(
@@ -32,11 +36,35 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
       transitionProperty('transition-all')
     )
 
-  useEffect(() => {
-    const { current } = wrapRef
+  const handleScroll = () => {
+    const { current } = scrollRef
     if (!current) return
-    setShowFade(current.offsetHeight > scrollMaxHeight)
-  }, [wrapRef, scrollMaxHeight])
+
+    if (current.scrollTop <= 2 || current.scrollTop === 0) {
+      setScrollPosition({ top: false, bottom: true })
+    } else if (
+      current.scrollTop + current.clientHeight ===
+      current.scrollHeight
+    ) {
+      setScrollPosition({ top: true, bottom: false })
+    } else {
+      setScrollPosition({ top: true, bottom: true })
+    }
+  }
+
+  useEffect(() => {
+    const { current } = scrollRef
+    if (!current) return
+
+    if (current.offsetHeight <= current.scrollHeight) {
+      setScrollPosition({ top: false, bottom: false })
+    }
+
+    current.addEventListener('scroll', handleScroll)
+    return () => {
+      current.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
     <div
@@ -45,13 +73,18 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
         overflow('overflow-x-hidden')
       )}
     >
-      {showFade && (fade === 'both' || fade === 'top') && <Fade />}
-      <SimpleBar style={{ maxHeight: scrollMaxHeight }}>
+      {scrollPosition.top && (fade === 'both' || fade === 'top') && <Fade />}
+      <SimpleBar
+        style={{ maxHeight: scrollMaxHeight }}
+        scrollableNodeProps={{ ref: scrollRef }}
+      >
         <div ref={wrapRef} className={wrapperStyle(overflows)}>
           {children}
         </div>
       </SimpleBar>
-      {showFade && (fade === 'both' || fade === 'bottom') && <Fade bottom />}
+      {scrollPosition.bottom && (fade === 'both' || fade === 'bottom') && (
+        <Fade bottom />
+      )}
     </div>
   )
 }
