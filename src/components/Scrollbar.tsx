@@ -56,7 +56,7 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
     const { current } = scrollRef
     if (!current) return
 
-    if (current.offsetHeight <= current.scrollHeight) {
+    if (current.scrollHeight <= scrollMaxHeight) {
       setScrollPosition({ top: false, bottom: false })
     }
 
@@ -64,7 +64,7 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
     return () => {
       current.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [scrollRef, scrollMaxHeight])
 
   return (
     <div
