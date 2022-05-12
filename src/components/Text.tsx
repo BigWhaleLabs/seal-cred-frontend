@@ -24,7 +24,7 @@ import {
   textDecoration,
   width,
 } from 'classnames/tailwind'
-import Colors from 'types/Colors'
+import Colors, { colorToTailwindBg } from 'types/Colors'
 
 const headerText = (size: HeaderSize, leading = 8, bold = true) =>
   classnames(
@@ -192,17 +192,10 @@ export const HighlightedText: FC<{
   bold?: boolean
   onlyWrap?: boolean
 }> = ({ children, center, color, bold, onlyWrap }) => {
-  const colorToTailwindBg =
-    color === Colors.green
-      ? 'bg-green'
-      : color === Colors.yellow
-      ? 'bg-yellow'
-      : color == Colors.pink
-      ? 'bg-pink'
-      : 'bg-white'
+  const bgColor = colorToTailwindBg(color)
 
   return (
-    <div className={highlightedText(colorToTailwindBg, center, bold, onlyWrap)}>
+    <div className={highlightedText(bgColor, center, bold, onlyWrap)}>
       {children}
     </div>
   )

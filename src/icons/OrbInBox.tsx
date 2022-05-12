@@ -1,21 +1,16 @@
 import { FC } from 'react'
 import { dropShadow } from 'classnames/tailwind'
-import Colors from 'types/Colors'
+import Colors, { colorToDropShadow } from 'types/Colors'
 
 const OrbBox: FC<{ color: Colors }> = ({ color }) => {
-  const colorToDropShadow =
-    color === Colors.pink
-      ? 'drop-shadow-pink'
-      : color === Colors.green
-      ? 'drop-shadow-green'
-      : 'drop-shadow-yellow'
+  const shadowColor = colorToDropShadow(color)
 
   return (
     <div style={{ height: '65px', width: '65px' }}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 66 66"
-        className={dropShadow(colorToDropShadow)}
+        className={dropShadow(shadowColor)}
       >
         <path
           d="M3.77,11.72a8.67,8.67,0,0,1,8.66-8.67H60.1a8.68,8.68,0,0,1,8.67,8.67V59.38a8.68,8.68,0,0,1-8.67,8.67H12.43a8.67,8.67,0,0,1-8.66-8.67Z"

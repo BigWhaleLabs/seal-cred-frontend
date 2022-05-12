@@ -1,5 +1,6 @@
 import { BodyText } from 'components/Text'
 import Card from 'components/Card'
+import Colors from 'types/Colors'
 import DoubleSmile from 'icons/DoubleSmile'
 import NoisyRectangle from 'components/NoisyRectangle'
 import ZkSphere from 'components/ZkSphere'
@@ -40,8 +41,8 @@ function IdentityCardOne() {
         </div>
         <DoubleSmile />
         <div className={zkSpheresLeft}>
-          <ZkSphere bgColor="bg-green" shadowColor="shadow-green" />
-          <ZkSphere bgColor="bg-yellow" shadowColor="shadow-yellow" />
+          <ZkSphere color={Colors.green} />
+          <ZkSphere color={Colors.yellow} />
         </div>
       </div>
     </Card>

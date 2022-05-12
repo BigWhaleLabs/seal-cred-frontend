@@ -1,5 +1,6 @@
 import { BodyText } from 'components/Text'
 import Card from 'components/Card'
+import Colors from 'types/Colors'
 import Grim from 'icons/Grim'
 import NoisyRectangle from 'components/NoisyRectangle'
 import ZkSphere from 'components/ZkSphere'
@@ -33,7 +34,7 @@ function IdentityCardTwo() {
         </div>
         <Grim />
         <div className={zkSpheresRight}>
-          <ZkSphere bgColor="bg-pink" shadowColor="shadow-pink" />
+          <ZkSphere color={Colors.pink} />
         </div>
       </div>
     </Card>

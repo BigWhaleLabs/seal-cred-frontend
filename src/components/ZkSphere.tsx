@@ -1,12 +1,12 @@
 import { FC } from 'react'
+import Colors, { colorToDropShadow, colorToTailwindBg } from 'types/Colors'
 import classnames, {
   TBackgroundColor,
-  TBoxShadowColor,
+  TDropShadow,
   backgroundColor,
   borderRadius,
-  boxShadow,
-  boxShadowColor,
   display,
+  dropShadow,
   fontWeight,
   height,
   padding,
@@ -15,10 +15,7 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 
-const sphereStyles = (
-  bgColor: TBackgroundColor,
-  shadowColor: TBoxShadowColor
-) =>
+const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
   classnames(
     fontWeight('font-bold'),
     textColor('text-blue-900'),
@@ -27,16 +24,17 @@ const sphereStyles = (
     height('h-8'),
     width('w-8'),
     borderRadius('rounded-full'),
-    boxShadow('shadow-2xl'),
-    boxShadowColor(shadowColor),
+    dropShadow(shadowColor),
     textAlign('text-center'),
     padding('pt-1')
   )
 
 const ZkSphere: FC<{
-  bgColor: TBackgroundColor
-  shadowColor: TBoxShadowColor
-}> = ({ bgColor, shadowColor, children }) => {
+  color: Colors
+}> = ({ color, children }) => {
+  const bgColor = colorToTailwindBg(color)
+  const shadowColor = colorToDropShadow(color)
+
   return (
     <div className={sphereStyles(bgColor, shadowColor)}>
       {children ? children : 'ZK'}
