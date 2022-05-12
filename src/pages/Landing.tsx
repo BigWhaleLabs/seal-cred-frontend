@@ -8,7 +8,7 @@ import LandingLearnMoreCard from 'components/LandingLearnMoreCard'
 import OrbsInBoxes from 'components/OrbsInBoxes'
 import ScrollDownButton from 'components/ScrollDownButton'
 import SuperHr from 'components/SuperHr'
-import SuperOrb from 'icons/SuperOrb'
+import SuperOrbWithConnectors from 'icons/SuperOrbWithConnectors'
 import classnames, {
   alignItems,
   display,
@@ -44,7 +44,7 @@ function Landing() {
       </div>
       <OrbsInBoxes />
       <LandingCreatingZKProofCard />
-      <SuperOrb />
+      <SuperOrbWithConnectors />
       <div className={identityCards}>
         <IdentityCardOne />
         <IdentityCardTwo />
