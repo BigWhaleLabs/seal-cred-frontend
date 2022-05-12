@@ -15,7 +15,6 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
-import configuredModal from 'helpers/web3Modal'
 
 const walletContainer = classnames(
   display('flex'),
@@ -53,14 +52,13 @@ export default function ConnectAccount() {
       <div className={contentWrapper}>
         <span className={cardTitle}>First</span>
         <span className={bodyText}>
-          Connect a wallet with NFTs to create ZK proof.
+          Connect a wallet with supported NFTs to create ZK proofs.
         </span>
         <Button
           colors="primary"
           loading={walletLoading}
           onClick={async () => {
-            configuredModal.clearCachedProvider()
-            await WalletStore.connect()
+            await WalletStore.connect(true)
           }}
         >
           <span>Connect a wallet</span>
