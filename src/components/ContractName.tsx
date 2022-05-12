@@ -22,7 +22,7 @@ function TextBlock({
   isFetching,
 }: FetchingContract) {
   const truncatedText =
-    truncate && address.length > 15 ? truncateMiddle(address, 15) : address
+    truncate && address.length > 15 ? truncateMiddle(address, 14) : address
 
   return otherStyle ? (
     <div className={overflow ? textTruncateStyles : undefined}>

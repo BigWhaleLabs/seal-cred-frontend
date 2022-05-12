@@ -24,5 +24,6 @@ export default function useBreakpoints() {
     sm: width > smSize,
     md: width > mdSize,
     lg: width > lgSize,
+    mobile: width > xsSize && width < smSize,
   }
 }

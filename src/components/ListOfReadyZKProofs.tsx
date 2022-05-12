@@ -12,24 +12,31 @@ import classnames, {
   display,
   flexDirection,
   fontFamily,
+  justifyContent,
   lineHeight,
+  maxWidth,
   space,
+  width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'helpers/useBreakpoints'
 
-const proofText = classnames(
-  display('flex'),
-  flexDirection('flex-row'),
-  space('space-x-2'),
-  alignItems('items-center'),
-  fontFamily('font-primary'),
-  lineHeight('leading-5')
-)
+const proofText = (small?: boolean) =>
+  classnames(
+    display('flex'),
+    flexDirection('flex-row'),
+    space('space-x-2'),
+    small ? justifyContent('justify-between') : undefined,
+    width(small ? 'w-full' : 'w-fit'),
+    maxWidth('max-w-fit'),
+    alignItems('items-center'),
+    fontFamily('font-primary'),
+    lineHeight('leading-5')
+  )
 
 function ContractList() {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
-  const { xs, sm } = useBreakpoints()
+  const { xs, mobile } = useBreakpoints()
 
   return (
     <>
@@ -38,12 +45,10 @@ function ContractList() {
           {proofsCompleted.map((proof) => (
             <ProofLine>
               <ContractName address={proof.contract} truncate={xs} overflow />
-              <div className={proofText}>
-                {sm && (
-                  <AccentText bold color="text-yellow">
-                    Proof {proof.account === account ? 'made' : 'saved'}
-                  </AccentText>
-                )}
+              <div className={proofText(mobile)}>
+                <AccentText bold color="text-yellow">
+                  Proof {proof.account === account ? 'made' : 'saved'}
+                </AccentText>
                 <Complete color="yellow" />
               </div>
             </ProofLine>

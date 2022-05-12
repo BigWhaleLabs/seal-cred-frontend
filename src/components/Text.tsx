@@ -15,6 +15,7 @@ import {
   fontWeight,
   gradientColorStops,
   lineHeight,
+  margin,
   overflow,
   textAlign,
   textColor,
@@ -28,7 +29,8 @@ export const textTruncateStyles = classnames(
   width('w-fit'),
   textOverflow('text-ellipsis'),
   overflow('overflow-hidden'),
-  whitespace('whitespace-nowrap')
+  whitespace('whitespace-nowrap'),
+  margin('mr-1')
 )
 
 const headerText = (size: HeaderSize, leading = 8, bold = true) =>
