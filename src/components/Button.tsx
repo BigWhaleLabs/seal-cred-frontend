@@ -39,6 +39,17 @@ export interface ButtonProps {
   fullWidth?: boolean
 }
 
+type ButtonColorClasses = {
+  colors: ButtonColors
+  small?: boolean
+  loading?: boolean
+  disabled?: boolean
+}
+
+interface ButtonClasses extends ButtonColorClasses {
+  fullWidth?: boolean
+}
+
 type ButtonProperties = ButtonProps &
   React.ButtonHTMLAttributes<HTMLButtonElement>
 
@@ -63,16 +74,26 @@ const sharedClassNames = (
     width(!fullWidth ? 'w-fit' : undefined)
   )
 
-const button = (
-  colors: ButtonColors,
-  loading?: boolean,
-  disabled?: boolean,
-  small?: boolean,
-  fullWidth?: boolean
-) =>
+const button = ({
+  colors,
+  loading,
+  disabled,
+  small,
+  fullWidth,
+}: ButtonClasses) =>
   classnames(
     space('space-x-2'),
     sharedClassNames(fullWidth, loading, disabled),
+    colorClasses({ colors, loading, disabled, small })
+  )
+
+const colorClasses = ({
+  colors,
+  loading,
+  disabled,
+  small,
+}: ButtonColorClasses) =>
+  classnames(
     colors === 'primary'
       ? classnames(
           textColor('text-blue-900'),
@@ -113,12 +134,24 @@ const Button: FC<ButtonProperties> = ({
   ...rest
 }) => (
   <button
-    className={button(colors, loading, disabled, small)}
+    className={button({ colors, loading, disabled, small })}
     disabled={loading || disabled}
     {...rest}
   >
     {loading && <Loading small={small} />}
-    {typeof children === 'string' ? <span>{children}</span> : children}
+    {typeof children === 'string' ? (
+      <span
+        className={
+          colors === 'tertiary'
+            ? colorClasses({ colors, loading, disabled, small })
+            : undefined
+        }
+      >
+        {children}
+      </span>
+    ) : (
+      children
+    )}
     {arrow && <Arrow disabled={disabled || loading} />}
   </button>
 )
