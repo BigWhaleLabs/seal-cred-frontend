@@ -46,23 +46,25 @@ const useIsOverflow = (
     }
   }, [scrollRef])
 
+  const scrollRefHeight = scrollRef?.current?.scrollHeight
+
   useEffect(() => {
     const { current } = scrollRef
     if (!current) return
 
-    const isScrollable = current.scrollHeight <= scrollMaxHeight
+    const isScrollable = current.scrollHeight > scrollMaxHeight
     setIsOverflow((prevState) => ({
       ...prevState,
       isOnTop: false,
-      isOnBottom: false,
-      overflows: !isScrollable,
+      isOnBottom: isScrollable,
+      overflows: isScrollable,
     }))
 
     current.addEventListener('scroll', handleScroll)
     return () => {
       current.removeEventListener('scroll', handleScroll)
     }
-  }, [scrollRef, scrollMaxHeight, handleScroll])
+  }, [scrollRef, scrollRefHeight, scrollMaxHeight, handleScroll])
 
   return { ...isOverflow, scrollMaxHeight }
 }
