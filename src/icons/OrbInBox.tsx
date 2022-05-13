@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { dropShadow } from 'classnames/tailwind'
-import Colors, { colorToDropShadow } from 'types/Colors'
+import Colors, { colorToDropShadow } from 'models/Colors'
 
 const OrbBox: FC<{ color: Colors }> = ({ color }) => {
   const shadowColor = colorToDropShadow(color)

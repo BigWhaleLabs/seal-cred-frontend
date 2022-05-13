@@ -1,6 +1,6 @@
 import { BodyText } from 'components/Text'
 import Card from 'components/Card'
-import Colors from 'types/Colors'
+import Colors from 'models/Colors'
 import DoubleSmile from 'icons/DoubleSmile'
 import NoisyRectangle from 'components/NoisyRectangle'
 import ZkSphere from 'components/ZkSphere'

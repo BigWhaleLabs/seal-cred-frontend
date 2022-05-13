@@ -3,7 +3,7 @@ import {
   BodyTextSize,
   HeaderSize,
   LinkTextProps,
-} from 'types/TextProps'
+} from 'models/TextProps'
 import { FC } from 'react'
 import {
   TBackgroundColor,
@@ -28,7 +28,7 @@ import {
   whitespace,
   width,
 } from 'classnames/tailwind'
-import Colors, { colorToTailwindBg } from 'types/Colors'
+import Colors, { colorToTailwindBg } from 'models/Colors'
 
 export const textTruncateStyles = classnames(
   width('w-fit'),

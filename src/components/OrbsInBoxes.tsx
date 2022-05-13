@@ -1,5 +1,5 @@
 import { HighlightedText } from 'components/Text'
-import Colors from 'types/Colors'
+import Colors from 'models/Colors'
 import OrbBox from 'icons/OrbInBox'
 import ZkSphere from 'components/ZkSphere'
 import classnames, {
@@ -31,7 +31,7 @@ export default function OrbsInBoxes() {
       <div className={orbBox('mt-8')}>
         <OrbBox color={Colors.green} />
         <div className="absolute">
-          <ZkSphere color={Colors.green} />
+          <ZkSphere color={Colors.green} animated />
         </div>
         <HighlightedText color={Colors.green} center onlyWrap bold>
           Wallet 01
@@ -40,7 +40,7 @@ export default function OrbsInBoxes() {
       <div className={orbBox()}>
         <OrbBox color={Colors.yellow} />
         <div className="absolute">
-          <ZkSphere color={Colors.yellow} />
+          <ZkSphere color={Colors.yellow} animated />
         </div>
         <HighlightedText color={Colors.yellow} center onlyWrap bold>
           Wallet 02
@@ -49,7 +49,7 @@ export default function OrbsInBoxes() {
       <div className={orbBox('mt-11')}>
         <OrbBox color={Colors.pink} />
         <div className="absolute">
-          <ZkSphere color={Colors.pink} />
+          <ZkSphere color={Colors.pink} animated />
         </div>
         <HighlightedText color={Colors.pink} center onlyWrap bold>
           Wallet 03
