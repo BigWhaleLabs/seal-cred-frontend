@@ -6,6 +6,7 @@ import Card from 'components/Card'
 import CardSeparator from 'components/CardSeparator'
 import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
+import ListOfInProgressZKProofs from 'components/ListOfInProgressZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
@@ -44,12 +45,17 @@ function ZkProofSavedMessage() {
 
 function Proofs() {
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
-  const { proofsCompleted } = useSnapshot(ProofStore)
+  const { proofsCompleted, proofsInProgress } = useSnapshot(ProofStore)
+  const { account } = useSnapshot(WalletStore)
 
   const allGenerated =
-    proofsCompleted.length > 0 && proofAddressesAvailableToCreate.length === 0
+    proofsCompleted.length > 0 &&
+    proofAddressesAvailableToCreate.length === 0 &&
+    proofsInProgress.length === 0
   const noWayToGenerate =
-    proofsCompleted.length === 0 && proofAddressesAvailableToCreate.length === 0
+    proofsCompleted.length === 0 &&
+    proofAddressesAvailableToCreate.length === 0 &&
+    proofsInProgress.length === 0
 
   return (
     <>
@@ -69,7 +75,12 @@ function Proofs() {
       <Scrollbar maxHeight={300}>
         <div className={innerScrollableBlock}>
           <ListOfReadyZKProofs />
-          <ListOfAvailableZKProofs />
+          {account && (
+            <>
+              <ListOfInProgressZKProofs />
+              <ListOfAvailableZKProofs />
+            </>
+          )}
         </div>
       </Scrollbar>
       {proofsCompleted.length > 0 && <ZkProofSavedMessage />}

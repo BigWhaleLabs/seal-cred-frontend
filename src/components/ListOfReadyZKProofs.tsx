@@ -1,58 +1,26 @@
-import { AccentText, BodyText } from 'components/Text'
+import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
-import Complete from 'icons/Complete'
 import ContractListContainer from 'components/ContractListContainer'
-import ContractName from 'components/ContractName'
-import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
-import WalletStore from 'stores/WalletStore'
-import classnames, {
-  alignItems,
-  display,
-  flexDirection,
-  fontFamily,
-  justifyContent,
-  lineHeight,
-  maxWidth,
-  space,
-  width,
-} from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
-
-const proofText = (small?: boolean) =>
-  classnames(
-    display('flex'),
-    flexDirection('flex-row'),
-    space('space-x-2'),
-    small ? justifyContent('justify-between') : undefined,
-    width(small ? 'w-full' : 'w-fit'),
-    maxWidth('max-w-fit'),
-    alignItems('items-center'),
-    fontFamily('font-primary'),
-    lineHeight('leading-5')
-  )
+import ZKProof from 'components/ZKProof'
 
 function ContractList() {
-  const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
-  const { xs, mobile } = useBreakpoints()
 
   return (
     <>
       {!!proofsCompleted?.length && (
         <ContractListContainer>
-          {proofsCompleted.map((proof) => (
-            <ProofLine>
-              <ContractName address={proof.contract} truncate={xs} overflow />
-              <div className={proofText(mobile)}>
-                <AccentText bold color="text-yellow">
-                  Proof {proof.account === account ? 'made' : 'saved'}
-                </AccentText>
-                <Complete color="yellow" />
-              </div>
-            </ProofLine>
-          ))}
+          {Array.from(proofsCompleted)
+            .sort((a, b) => {
+              if (a.account === b.account) return 0
+              if (a.account !== b.account) return -1
+              return 1
+            })
+            .map((proof) => (
+              <ZKProof proof={proof} key={proof.id} />
+            ))}
         </ContractListContainer>
       )}
     </>
