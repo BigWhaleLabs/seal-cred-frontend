@@ -1,5 +1,11 @@
 import { FC } from 'react'
-import classnames, { fill, stroke } from 'classnames/tailwind'
+import classnames, {
+  borderRadius,
+  boxShadow,
+  boxShadowColor,
+  fill,
+  stroke,
+} from 'classnames/tailwind'
 
 type StrokeColor = 'pink' | 'yellow' | 'green'
 
@@ -24,6 +30,11 @@ const BadgeIcon: FC<{ color?: StrokeColor }> = ({ color }) => {
       viewBox="0 0 65 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={classnames(
+        boxShadow('shadow-lg'),
+        boxShadowColor('shadow-pink'),
+        borderRadius('rounded-full')
+      )}
     >
       <circle
         cx="32.5"
