@@ -33,7 +33,7 @@ const badgeWrapper = (minted: boolean, small?: boolean) =>
       minted ? (small ? 'flex-col' : 'flex-row') : 'flex-col',
       'lg:flex-col'
     ),
-    justifyContent('justify-center'),
+    justifyContent(minted ? 'justify-start' : 'justify-center'),
     alignItems('items-center'),
     borderRadius('rounded-lg'),
     backgroundColor(minted ? 'bg-blue-700' : 'bg-blue-800'),
@@ -175,7 +175,7 @@ function BadgeBlock({
   const shortAddress = truncateMiddle(contractAddress)
 
   return (
-    <div className={badgeWrapper(!!tokenId, xs && !sm)}>
+    <div className={badgeWrapper(tokenId !== undefined, xs && !sm)}>
       <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
         <Badge contractAddress={contractAddress} tokenId={tokenId} />
       </Suspense>
