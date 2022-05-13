@@ -1,7 +1,7 @@
 import { BodyText } from 'components/Text'
 import Card from 'components/Card'
 import Colors from 'types/Colors'
-import Grim from 'icons/Grim'
+import Grim from 'icons/Grin'
 import NoisyRectangle from 'components/NoisyRectangle'
 import ZkSphere from 'components/ZkSphere'
 import classnames, {

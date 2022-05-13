@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, MutableRefObject, useRef } from 'react'
 import Colors, { colorToDropShadow, colorToTailwindBg } from 'types/Colors'
 import classnames, {
   TBackgroundColor,
@@ -15,6 +15,7 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
+import useSphereAnimation from 'helpers/useSphereAnimation'
 
 const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
   classnames(
@@ -38,8 +39,17 @@ const ZkSphere: FC<{
   const bgColor = colorToTailwindBg(color)
   const shadowColor = colorToDropShadow(color)
 
+  const sphereRef = useRef() as MutableRefObject<HTMLDivElement>
+  const { x, y } = useSphereAnimation(sphereRef)
+
   return (
-    <div className={sphereStyles(bgColor, shadowColor)}>{children || text}</div>
+    <div
+      style={{ transform: `translate(${x} ${y})` }}
+      className={sphereStyles(bgColor, shadowColor)}
+      ref={sphereRef}
+    >
+      {children || text}
+    </div>
   )
 }
 
