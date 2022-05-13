@@ -31,7 +31,7 @@ export default function Wallet() {
 
   const ensOrAccount =
     account &&
-    (ens && ens.length >= 32
+    (ens && ens.length >= 16
       ? truncateMiddle(ens, 11, -3)
       : ens || truncateMiddle(account, 11, -4))
 
