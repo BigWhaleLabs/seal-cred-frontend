@@ -25,10 +25,17 @@ function TextBlock({
     truncate && address.length > 15 ? truncateMiddle(address, 14) : address
 
   return otherStyle ? (
-    <div className={overflow ? textTruncateStyles : undefined}>
-      {isFetching && <>Fetching </>}
-      {truncatedText}
-    </div>
+    overflow ? (
+      <div className={overflow ? textTruncateStyles : undefined}>
+        {isFetching && <>Fetching </>}
+        {truncatedText}
+      </div>
+    ) : (
+      <>
+        {isFetching && <>Fetching </>}
+        {truncatedText}
+      </>
+    )
   ) : (
     <BodyText size="sm" overflow={overflow}>
       {isFetching && <>Fetching </>}
