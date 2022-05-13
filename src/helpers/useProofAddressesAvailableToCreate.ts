@@ -4,9 +4,12 @@ import useContractAddressesOwned from 'helpers/useContractAddressesOwned'
 
 export default function () {
   const contractAddressesOwned = useContractAddressesOwned('original')
-  const { proofsCompleted } = useSnapshot(ProofStore)
+  const { proofsCompleted, proofsInProgress } = useSnapshot(ProofStore)
 
-  const completedProofAddressesMap = proofsCompleted.reduce(
+  const completedProofAddressesMap = [
+    ...proofsInProgress,
+    ...proofsCompleted,
+  ].reduce(
     (result, proof) => ({
       ...result,
       [proof.contract]: true,
