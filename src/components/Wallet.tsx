@@ -27,7 +27,14 @@ const walletAccount = classnames(
 )
 
 export default function Wallet() {
-  const { account } = useSnapshot(WalletStore)
+  const { account, ens } = useSnapshot(WalletStore)
+
+  const ensOrAccount =
+    account &&
+    (ens && ens.length >= 16
+      ? truncateMiddle(ens, 11, -3)
+      : ens || truncateMiddle(account, 11, -4))
+
   return (
     <div
       className={walletContainer(!!account)}
@@ -38,7 +45,7 @@ export default function Wallet() {
     >
       <div className={walletAccount}>
         <AccentText color={account ? 'text-yellow' : 'text-blue-600'}>
-          {account ? truncateMiddle(account, 11, -4) : 'No wallet connected'}
+          {account ? ensOrAccount : 'No wallet connected'}
         </AccentText>
       </div>
       <div className={classnames(width('w-fit'))}>
