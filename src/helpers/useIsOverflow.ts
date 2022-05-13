@@ -2,7 +2,6 @@ import { MutableRefObject, useCallback, useEffect, useState } from 'react'
 import useBreakpoints from 'helpers/useBreakpoints'
 
 const useIsOverflow = (
-  ref: MutableRefObject<HTMLDivElement>,
   scrollRef: MutableRefObject<HTMLDivElement>,
   maxHeight: number
 ) => {

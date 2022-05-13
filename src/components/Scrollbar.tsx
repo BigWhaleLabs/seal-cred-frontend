@@ -22,7 +22,6 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
   const scrollRef = useRef() as MutableRefObject<HTMLDivElement>
   const wrapRef = useRef() as MutableRefObject<HTMLDivElement>
   const { overflows, isOnTop, isOnBottom, scrollMaxHeight } = useIsOverflow(
-    wrapRef,
     scrollRef,
     maxHeight
   )
