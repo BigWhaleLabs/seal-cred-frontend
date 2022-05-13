@@ -17,7 +17,7 @@ function ENSAddressSuspender({ address }: { address: string }) {
 }
 
 const ENSAddress: FC<{ address: string }> = ({ address }) => {
-  ENSStore.fetchtEnsName(address)
+  ENSStore.fetchEnsName(address)
 
   return (
     <Suspense fallback={<>Looking for ens...</>}>

@@ -4,9 +4,7 @@ import ENSStore from 'stores/ENSStore'
 export default function (address: string) {
   const { ensNames } = useSnapshot(ENSStore)
 
-  if (!ensNames[address]) {
-    ENSStore.fetchtEnsName(address)
-  }
+  if (!ensNames[address]) ENSStore.fetchEnsName(address)
 
   const name = Object.entries(ensNames).find(
     ([ensAddress]) => ensAddress === address
