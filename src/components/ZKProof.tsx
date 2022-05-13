@@ -4,7 +4,9 @@ import { useSnapshot } from 'valtio'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
 import Proof from 'models/Proof'
+import ProofButton from 'components/ProofButton'
 import ProofLine from 'components/ProofLine'
+import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -41,44 +43,76 @@ const textWithIcon = classnames(
 )
 
 function useProofContent(
-  proof: Proof
-): ['text-green' | 'text-yellow' | 'text-pink', JSX.Element | null] {
+  contractAddress: string,
+  proof?: Proof
+): {
+  color: 'text-green' | 'text-yellow' | 'text-pink'
+  content: JSX.Element | null
+} {
   const { account } = useSnapshot(WalletStore)
+
+  if (!proof) {
+    return {
+      color: 'text-green',
+      content: (
+        <ProofButton
+          color="green"
+          onClick={() => {
+            void ProofStore.generate(contractAddress)
+          }}
+        >
+          Create proof
+        </ProofButton>
+      ),
+    }
+  }
+
   if (proof.status === 'running')
-    return [
-      'text-yellow',
-      <span className={textWithIcon}>
-        <span>Generating...</span>
-        <div className={animation('animate-spin')}>
-          <Star />
-        </div>
-      </span>,
-    ]
+    return {
+      color: 'text-yellow',
+      content: (
+        <span className={textWithIcon}>
+          <span>Generating...</span>
+          <div className={animation('animate-spin')}>
+            <Star />
+          </div>
+        </span>
+      ),
+    }
+
   if (proof.status === 'scheduled')
-    return [
-      'text-pink',
-      <>
-        {proof.position !== undefined
-          ? `Queued with position: ${proof?.position + 1}`
-          : 'Queued'}
-      </>,
-    ]
-  return [
-    'text-yellow',
-    <span className={textWithIcon}>
-      <span>Proof {proof.account === account ? 'made' : 'saved'}</span>
-      <Complete color="yellow" />
-    </span>,
-  ]
+    return {
+      color: 'text-pink',
+      content: (
+        <>
+          {proof.position !== undefined
+            ? `Queued with position: ${proof?.position + 1}`
+            : 'Queued'}
+        </>
+      ),
+    }
+
+  return {
+    color: 'text-yellow',
+    content: (
+      <span className={textWithIcon}>
+        <span>Proof {proof.account === account ? 'made' : 'saved'}</span>
+        <Complete color="yellow" />
+      </span>
+    ),
+  }
 }
 
-const ZKProof: FC<{ proof: Proof }> = ({ proof }) => {
+const ZKProof: FC<{ proof?: Proof; contractAddress: string }> = ({
+  proof,
+  contractAddress,
+}) => {
   const { xs, mobile } = useBreakpoints()
-  const [color, content] = useProofContent(proof)
+  const { color, content } = useProofContent(contractAddress, proof)
 
   return (
     <ProofLine>
-      <ContractName address={proof.contract} truncate={xs} overflow />
+      <ContractName address={contractAddress} truncate={xs} overflow />
       <div className={proofText(mobile)}>
         <AccentText bold color={color}>
           {content}

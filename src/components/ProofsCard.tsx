@@ -52,7 +52,7 @@ function Proofs() {
     proofsCompleted.length > 0 &&
     proofAddressesAvailableToCreate.length === 0 &&
     proofsInProgress.length === 0
-  const noWayToGenerate =
+  const nothingToGenerate =
     proofsCompleted.length === 0 &&
     proofAddressesAvailableToCreate.length === 0 &&
     proofsInProgress.length === 0
@@ -69,7 +69,7 @@ function Proofs() {
             : 'Generate ZK proofs'}
         </CardDescription>
       </div>
-      {noWayToGenerate && (
+      {nothingToGenerate && (
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
       <Scrollbar maxHeight={300}>

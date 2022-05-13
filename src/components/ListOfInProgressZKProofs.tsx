@@ -4,33 +4,30 @@ import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
 import ProofStore from 'stores/ProofStore'
-import WalletStore from 'stores/WalletStore'
 import ZKProof from 'components/ZKProof'
 
 function ContractList() {
   const { proofsInProgress } = useSnapshot(ProofStore)
-  const { account } = useSnapshot(WalletStore)
-
-  if (!account) {
-    return null
-  }
 
   return (
     <>
       {!!proofsInProgress.length && (
         <ContractListContainer>
           {Array.from(proofsInProgress)
-            .sort((a, b) => {
-              if (
-                typeof a.position !== undefined &&
-                typeof b.position !== undefined
-              ) {
-                return (a?.position ?? 0) - (b?.position ?? 0)
-              }
-              return ProofOrdering[a.status] - ProofOrdering[b.status]
-            })
+            .sort((a, b) =>
+              a.status !== b.status
+                ? ProofOrdering[a.status] - ProofOrdering[b.status]
+                : typeof a.position !== 'undefined' &&
+                  typeof b.position !== 'undefined'
+                ? a.position - b.position
+                : 0
+            )
             .map((proof) => (
-              <ZKProof proof={proof} key={proof.id} />
+              <ZKProof
+                proof={proof}
+                contractAddress={proof.contract}
+                key={proof.id}
+              />
             ))}
         </ContractListContainer>
       )}

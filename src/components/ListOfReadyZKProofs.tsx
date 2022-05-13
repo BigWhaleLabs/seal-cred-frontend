@@ -13,13 +13,13 @@ function ContractList() {
       {!!proofsCompleted?.length && (
         <ContractListContainer>
           {Array.from(proofsCompleted)
-            .sort((a, b) => {
-              if (a.account === b.account) return 0
-              if (a.account !== b.account) return -1
-              return 1
-            })
+            .sort((a, b) => (a.account === b.account ? 0 : -1))
             .map((proof) => (
-              <ZKProof proof={proof} key={proof.id} />
+              <ZKProof
+                proof={proof}
+                contractAddress={proof.contract}
+                key={proof.id}
+              />
             ))}
         </ContractListContainer>
       )}

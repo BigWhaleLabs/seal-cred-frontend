@@ -1,41 +1,11 @@
 import { BodyText } from 'components/Text'
-import { FC } from 'react'
 import { Suspense } from 'react'
-import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
-import ContractName from 'components/ContractName'
-import ProofButton from 'components/ProofButton'
-import ProofLine from 'components/ProofLine'
-import ProofStore from 'stores/ProofStore'
-import WalletStore from 'stores/WalletStore'
-import useBreakpoints from 'helpers/useBreakpoints'
+import ZKProof from 'components/ZKProof'
 import useProofAddressesAvailableToCreate from 'helpers/useProofAddressesAvailableToCreate'
-
-const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
-  const { xs } = useBreakpoints()
-
-  return (
-    <ProofLine>
-      <ContractName address={contractAddress} truncate={xs} overflow />
-      <ProofButton
-        color="green"
-        onClick={() => {
-          void ProofStore.generate(contractAddress)
-        }}
-      >
-        Create proof
-      </ProofButton>
-    </ProofLine>
-  )
-}
 
 function ContractList() {
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
-  const { account } = useSnapshot(WalletStore)
-
-  if (!account) {
-    return null
-  }
 
   return (
     <>
