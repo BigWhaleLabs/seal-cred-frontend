@@ -102,10 +102,11 @@ const colorClasses = ({
           borderRadius('rounded-full'),
           backgroundColor('bg-green'),
           boxShadowColor(
-            'shadow-green50',
-            'hover:shadow-green50',
-            'active:shadow-green50'
+            'shadow-green',
+            'hover:shadow-green',
+            'active:shadow-green'
           ),
+          boxShadow('shadow-button'),
           brightness(
             loading || disabled ? undefined : 'hover:brightness-75',
             loading || disabled ? undefined : 'active:brightness-50'
