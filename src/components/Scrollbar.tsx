@@ -13,6 +13,8 @@ import useIsOverflow from 'helpers/useIsOverflow'
 
 type FadeType = 'top' | 'bottom' | 'both'
 
+const outerBox = classnames(position('relative'), overflow('overflow-x-hidden'))
+
 const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
   children,
   maxHeight = 350,
@@ -67,12 +69,7 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
   }, [scrollRef, scrollMaxHeight])
 
   return (
-    <div
-      className={classnames(
-        position('relative'),
-        overflow('overflow-x-hidden')
-      )}
-    >
+    <div className={outerBox}>
       {scrollPosition.top && (fade === 'both' || fade === 'top') && <Fade />}
       <SimpleBar
         style={{ maxHeight: scrollMaxHeight }}
