@@ -1,5 +1,6 @@
 import { BigNumber } from 'ethers'
 import { ErrorList, handleError } from 'helpers/handleError'
+import { NotifiedOfNFTownership } from 'models/NotifiedOfNFTownership'
 import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
@@ -13,7 +14,7 @@ class WalletStore {
   account?: string
   ens?: string
   walletLoading = false
-  notifiedOfNFTownershipMap = {} as { [address: string]: boolean }
+  notifiedOfNFTownership: NotifiedOfNFTownership = {}
 
   get cachedProvider() {
     return web3Modal.cachedProvider

@@ -12,13 +12,14 @@ import WalletStore from 'stores/WalletStore'
 import useDerivativeTokensOwned from 'helpers/useDerivativeTokensOwned'
 
 function Badges() {
-  const { account, notifiedOfNFTownershipMap } = useSnapshot(WalletStore)
+  const { account, notifiedOfNFTownership } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const derivativeTokensOwned = useDerivativeTokensOwned()
 
-  const notifiedOfNFTownership = !!account && notifiedOfNFTownershipMap[account]
   const noBadges =
     !Object.keys(derivativeTokensOwned).length && !proofsCompleted.length
+
+  const shouldNotify = !noBadges && account && !notifiedOfNFTownership[account]
 
   return (
     <div className={space('space-y-6')}>
@@ -33,11 +34,7 @@ function Badges() {
         </CardDescription>
       </div>
       {account ? (
-        notifiedOfNFTownership || noBadges ? (
-          <Scrollbar maxHeight={330}>
-            <BadgesList />
-          </Scrollbar>
-        ) : (
+        shouldNotify ? (
           <BadgesHintCard
             text={
               <>
@@ -52,12 +49,16 @@ function Badges() {
               small
               colors="primary"
               onClick={() => {
-                WalletStore.notifiedOfNFTownershipMap[account] = true
+                WalletStore.notifiedOfNFTownership[account] = true
               }}
             >
               I understand, show badges
             </Button>
           </BadgesHintCard>
+        ) : (
+          <Scrollbar maxHeight={330}>
+            <BadgesList />
+          </Scrollbar>
         )
       ) : (
         <BadgesHintCard text="You must switch from your first wallet after ZK proof is made to an anonymous wallet for the magic to work.">
