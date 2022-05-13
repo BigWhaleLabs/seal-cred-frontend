@@ -15,23 +15,28 @@ export default function () {
   }
   const derivativeContractAddressesOwned =
     useContractAddressesOwned('derivative')
-  return derivativeContractAddressesOwned.reduce(
-    (result, derivativeContractAddress) => {
-      const tokenIdToOwnerMap =
-        derivativeContractsToOwnersMaps[derivativeContractAddress]
-      for (const [tokenId, ownerAddress] of Object.entries(tokenIdToOwnerMap)) {
-        if (ownerAddress === account) {
-          if (result[derivativeContractAddress]) {
-            result[derivativeContractAddress].push(Number(tokenId))
-          } else {
-            result[derivativeContractAddress] = [Number(tokenId)]
+
+  return Object.entries(derivativeContractsToOwnersMaps)
+    .filter(([contractAddress]) =>
+      derivativeContractAddressesOwned.includes(contractAddress)
+    )
+    .reduce(
+      (result, [derivativeContractAddress, tokenIdToOwnerMap]) => {
+        for (const [tokenId, ownerAddress] of Object.entries(
+          tokenIdToOwnerMap
+        )) {
+          if (ownerAddress === account) {
+            if (result[derivativeContractAddress]) {
+              result[derivativeContractAddress].push(Number(tokenId))
+            } else {
+              result[derivativeContractAddress] = [Number(tokenId)]
+            }
           }
         }
+        return result
+      },
+      {} as {
+        [contractAddress: string]: number[]
       }
-      return result
-    },
-    {} as {
-      [contractAddress: string]: number[]
-    }
-  )
+    )
 }

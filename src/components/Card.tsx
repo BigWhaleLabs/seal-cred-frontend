@@ -12,6 +12,7 @@ import {
   maxHeight,
   padding,
   position,
+  space,
   width,
 } from 'classnames/tailwind'
 import ArcText from 'components/ArcText'
@@ -79,9 +80,10 @@ const cardContainer = (
     margin(thin ? undefined : 'mx-4', 'lg:mx-0'),
     height(
       onlyWrap ? undefined : thin ? 'h-60' : 'h-fit',
-      onlyWrap ? undefined : thin ? 'h-60' : 'lg:h-card'
+      onlyWrap ? undefined : thin ? undefined : 'lg:h-card'
     ),
-    maxHeight('max-h-508')
+    space('space-y-4'),
+    maxHeight(onlyWrap ? undefined : 'max-h-508')
   )
 }
 

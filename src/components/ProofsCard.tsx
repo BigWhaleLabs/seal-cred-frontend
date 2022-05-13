@@ -15,7 +15,6 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
-  height,
   margin,
   space,
   width,
@@ -25,6 +24,7 @@ import useProofAddressesAvailableToCreate from 'helpers/useProofAddressesAvailab
 
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
+const innerScrollableBlock = space('space-y-2')
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
@@ -41,8 +41,6 @@ function ZkProofSavedMessage() {
     </div>
   )
 }
-
-const proofsStyles = classnames(height('lg:h-72', 'h-min'), space('space-y-2'))
 
 function Proofs() {
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
@@ -68,8 +66,8 @@ function Proofs() {
       {noWayToGenerate && (
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
-      <Scrollbar maxHeight={320}>
-        <div className={proofsStyles}>
+      <Scrollbar maxHeight={300}>
+        <div className={innerScrollableBlock}>
           <ListOfReadyZKProofs />
           <ListOfAvailableZKProofs />
         </div>
@@ -85,7 +83,7 @@ function ReadyProofs() {
       <div className={titleContainer}>
         <CardHeader color="text-yellow">Your saved ZK Proofs</CardHeader>
       </div>
-      <Scrollbar maxHeight={320}>
+      <Scrollbar maxHeight={300}>
         <ListOfReadyZKProofs />
       </Scrollbar>
       <ZkProofSavedMessage />

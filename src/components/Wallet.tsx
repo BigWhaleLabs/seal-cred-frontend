@@ -38,7 +38,7 @@ export default function Wallet() {
     >
       <div className={walletAccount}>
         <AccentText color={account ? 'text-yellow' : 'text-blue-600'}>
-          {account ? truncateMiddle(account) : 'No wallet connected'}
+          {account ? truncateMiddle(account, 11, -4) : 'No wallet connected'}
         </AccentText>
       </div>
       <div className={classnames(width('w-fit'))}>

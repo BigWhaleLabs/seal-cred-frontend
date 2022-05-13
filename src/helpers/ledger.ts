@@ -6,6 +6,7 @@ import {
 import Ledger from 'models/Ledger'
 import LedgerRecord from 'models/LedgerRecord'
 import defaultProvider from 'helpers/defaultProvider'
+import queryBlockLimit from 'helpers/queryBlockLimit'
 
 export async function getLedgerRecord(
   sealCredLedger: SealCredLedger,
@@ -24,7 +25,7 @@ export async function getLedgerRecord(
 
 export default async function getLedger(sealCredLedger: SealCredLedger) {
   const eventsFilter = sealCredLedger.filters.SetMerkleRoot()
-  const events = await sealCredLedger.queryFilter(eventsFilter)
+  const events = await sealCredLedger.queryFilter(eventsFilter, queryBlockLimit)
   const ledger = {} as Ledger
   for (const event of events) {
     const { tokenAddress } = event.args

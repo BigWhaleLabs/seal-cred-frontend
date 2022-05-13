@@ -6,6 +6,7 @@ import classnames, {
   height,
   textTransform,
 } from 'classnames/tailwind'
+import useBreakpoints from 'helpers/useBreakpoints'
 
 const textStyle = classnames(
   fill('fill-pink'),
@@ -19,11 +20,13 @@ const ArcText: FC<{ text: string; radius?: number }> = ({
   text,
   radius = 85,
 }) => {
+  const { xs, md } = useBreakpoints()
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      viewBox="0 0 500 500"
+      viewBox={xs && !md ? '0 0 450 450' : '0 0 500 500'}
       className={svgBox}
     >
       <title>{text}</title>

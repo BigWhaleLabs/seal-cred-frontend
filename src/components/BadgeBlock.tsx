@@ -24,44 +24,58 @@ import classnames, {
 } from 'classnames/tailwind'
 import sealCred from 'helpers/sealCred'
 import truncateMiddle from 'helpers/truncateMiddle'
+import useBreakpoints from 'helpers/useBreakpoints'
 
-const badgeWrapper = (minted: boolean) =>
+const badgeWrapper = (minted: boolean, small?: boolean) =>
   classnames(
     display('flex'),
-    flexDirection(minted ? 'flex-row' : 'flex-col', 'lg:flex-col'),
-    justifyContent('justify-center'),
+    flexDirection(
+      minted ? (small ? 'flex-col' : 'flex-row') : 'flex-col',
+      'lg:flex-col'
+    ),
+    justifyContent(minted ? 'justify-start' : 'justify-center'),
     alignItems('items-center'),
     borderRadius('rounded-lg'),
     backgroundColor(minted ? 'bg-blue-700' : 'bg-blue-800'),
     padding('px-4', 'py-4'),
     space(
-      minted ? 'space-x-2' : 'space-y-2',
+      minted ? (small ? 'space-y-2' : 'space-x-2') : 'space-y-2',
       minted ? 'lg:space-x-0' : undefined,
       'lg:space-y-2'
     )
   )
 
-const badgeBody = (minted?: boolean) =>
+const badgeBody = (minted?: boolean, small?: boolean) =>
   classnames(
     display('flex'),
     flexDirection('flex-col'),
     space('space-y-2'),
-    textAlign(minted ? 'text-left' : 'text-center', 'lg:text-center'),
-    alignItems(minted ? 'items-start' : 'items-center', 'lg:items-center'),
+    textAlign(
+      minted ? (small ? 'text-center' : 'text-left') : 'text-center',
+      'lg:text-center'
+    ),
+    alignItems(
+      minted ? (small ? 'items-center' : 'items-start') : 'items-center',
+      'lg:items-center'
+    ),
     justifyContent(
-      minted ? 'justify-start' : 'justify-center',
+      minted ? (small ? 'justify-center' : 'justify-start') : 'justify-center',
       'lg:justify-center'
     )
   )
 
-const mintPassed = classnames(
-  display('flex'),
-  justifyContent('justify-center'),
-  alignItems('items-center'),
-  justifyContent('justify-start', 'lg:justify-center'),
-  flexDirection('flex-row'),
-  space('space-x-2')
-)
+const mintPassed = (small?: boolean) =>
+  classnames(
+    display('flex'),
+    justifyContent('justify-center'),
+    alignItems('items-center'),
+    justifyContent(
+      small ? 'justify-start' : 'justify-center',
+      'lg:justify-center'
+    ),
+    flexDirection('flex-row'),
+    space('space-x-2')
+  )
 
 function Badge({
   contractAddress,
@@ -74,9 +88,12 @@ function Badge({
   const { ledger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
 
+  const { xs, sm } = useBreakpoints()
+
   const [loading, setLoading] = useState(false)
   const [completed, setCompleted] = useState(false)
 
+  const small = xs && !sm
   const minted = tokenId !== undefined
   const ledgerRecord = ledger[contractAddress]
   const derivativeAddress = ledgerRecord.derivativeContract.address
@@ -88,12 +105,12 @@ function Badge({
       ) : (
         <BadgeIcon color="pink" />
       )}
-      <div className={badgeBody(minted)}>
+      <div className={badgeBody(minted, small)}>
         <BadgeText>
           <ContractName address={derivativeAddress} />
         </BadgeText>
         {minted && (
-          <div className={mintPassed}>
+          <div className={mintPassed(small)}>
             <BoldColoredText color="text-pink">Minted</BoldColoredText>
             <Complete color="pink" />
           </div>
@@ -154,10 +171,11 @@ function BadgeBlock({
   contractAddress: string
   tokenId?: number
 }) {
+  const { xs, sm } = useBreakpoints()
   const shortAddress = truncateMiddle(contractAddress)
 
   return (
-    <div className={badgeWrapper(!!tokenId)}>
+    <div className={badgeWrapper(tokenId !== undefined, xs && !sm)}>
       <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
         <Badge contractAddress={contractAddress} tokenId={tokenId} />
       </Suspense>

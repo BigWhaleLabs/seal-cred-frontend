@@ -5,13 +5,15 @@ import classnames, {
   display,
   flexDirection,
   margin,
+  outlineStyle,
 } from 'classnames/tailwind'
 
 const scrollButton = classnames(
   margin('mt-20'),
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-center')
+  alignItems('items-center'),
+  outlineStyle('focus:outline-none')
 )
 
 export default function ScrollDownButton() {
