@@ -26,7 +26,7 @@ function TextBlock({
 
   return otherStyle ? (
     overflow ? (
-      <div className={overflow ? textTruncateStyles : undefined}>
+      <div className={textTruncateStyles}>
         {isFetching && <>Fetching </>}
         {truncatedText}
       </div>
