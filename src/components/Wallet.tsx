@@ -1,6 +1,6 @@
 import { AccentText } from 'components/Text'
 import { useSnapshot } from 'valtio'
-import ENSAddress from 'components/ENSAddress'
+import EnsAddress from 'components/EnsAddress'
 import SealWallet from 'icons/SealWallet'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -39,7 +39,7 @@ export default function Wallet() {
     >
       <div className={walletAccount}>
         <AccentText color={account ? 'text-yellow' : 'text-blue-600'}>
-          {account ? <ENSAddress address={account} /> : 'No wallet connected'}
+          {account ? <EnsAddress address={account} /> : 'No wallet connected'}
         </AccentText>
       </div>
       <div className={classnames(width('w-fit'))}>

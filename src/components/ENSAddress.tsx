@@ -1,23 +1,17 @@
 import { FC } from 'react'
 import { Suspense } from 'react'
-import ENSStore from 'stores/ENSStore'
-import truncateMiddle from 'helpers/truncateMiddle'
-import useENSName from 'helpers/useENSName'
+import { truncateIfNeeded } from 'helpers/truncateMiddle'
+import EnsStore from 'stores/EnsStore'
+import useEnsNameOrAddress from 'helpers/useEnsNameOrAddress'
 
 function ENSAddressSuspender({ address }: { address: string }) {
-  const ensName = useENSName(address)
+  const ensNameOrAddress = useEnsNameOrAddress(address)
 
-  const nameOrAddress = !ensName
-    ? truncateMiddle(address, 11, -4)
-    : ensName.length > 16
-    ? truncateMiddle(ensName, 11, -3)
-    : ensName
-
-  return <span>{nameOrAddress}</span>
+  return <span>{truncateIfNeeded(ensNameOrAddress, 17)}</span>
 }
 
 const ENSAddress: FC<{ address: string }> = ({ address }) => {
-  ENSStore.fetchEnsName(address)
+  EnsStore.fetchEnsName(address)
 
   return (
     <Suspense fallback={<>Looking for ens...</>}>

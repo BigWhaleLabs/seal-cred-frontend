@@ -1,8 +1,8 @@
 import { FC, Suspense, useEffect, useState } from 'react'
 import { LinkText } from 'components/Text'
+import { truncateMiddle } from 'helpers/truncateMiddle'
 import { useSnapshot } from 'valtio'
 import SealCredStore from 'stores/SealCredStore'
-import truncateMiddle from 'helpers/truncateMiddle'
 import useBreakpoints from 'helpers/useBreakpoints'
 
 function OwnedBadgeAddressSuspender({

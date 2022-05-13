@@ -2,6 +2,7 @@ import { BadgeText, BoldColoredText, SubheaderText } from 'components/Text'
 import { BigNumber } from 'ethers'
 import { Suspense, useState } from 'react'
 import { handleError } from 'helpers/handleError'
+import { truncateMiddle } from 'helpers/truncateMiddle'
 import { useSnapshot } from 'valtio'
 import BadgeIcon from 'icons/BadgeIcon'
 import Button from 'components/Button'
@@ -23,7 +24,6 @@ import classnames, {
   textAlign,
 } from 'classnames/tailwind'
 import sealCred from 'helpers/sealCred'
-import truncateMiddle from 'helpers/truncateMiddle'
 import useBreakpoints from 'helpers/useBreakpoints'
 
 const badgeWrapper = (minted: boolean, small?: boolean) =>
