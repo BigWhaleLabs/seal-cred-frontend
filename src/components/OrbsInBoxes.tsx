@@ -27,7 +27,7 @@ const orbBox = (margins?: TMargin) =>
 
 export default function OrbsInBoxes() {
   return (
-    <div className={orbBoxes} style={{ transform: 'translateY(50px)' }}>
+    <div className={orbBoxes} style={{ transform: 'translateY(90px)' }}>
       <div className={orbBox('mt-8')}>
         <OrbBox color={Colors.green} />
         <div className="absolute">

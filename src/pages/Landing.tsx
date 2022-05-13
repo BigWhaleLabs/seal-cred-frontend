@@ -9,11 +9,14 @@ import OrbsInBoxes from 'components/OrbsInBoxes'
 import ScrollDownButton from 'components/ScrollDownButton'
 import SuperHr from 'components/SuperHr'
 import SuperOrbWithConnectors from 'icons/SuperOrbWithConnectors'
+import TopConnectors from 'icons/TopConnectors'
 import classnames, {
   alignItems,
   display,
   flexDirection,
+  justifyContent,
   margin,
+  padding,
   position,
   space,
   width,
@@ -31,14 +34,29 @@ const identityCards = classnames(
   space('lg:space-x-6', 'space-x-4'),
   margin('mb-6')
 )
-const highlightedBlock = classnames(width('lg:w-fit', 'w-3/4'))
+const highlightedBlock = classnames(
+  display('flex'),
+  flexDirection('flex-row'),
+  justifyContent('justify-center'),
+  width('lg:w-fit', 'w-5/6'),
+  position('absolute')
+)
 
 function Landing() {
   return (
     <div className={pageBox}>
       <LandingInitialCard />
       <ScrollDownButton />
-      <div className={highlightedBlock}>
+      <div
+        className={position('absolute')}
+        style={{ transform: 'translateY(610px)' }}
+      >
+        <TopConnectors />
+      </div>
+      <div
+        className={highlightedBlock}
+        style={{ transform: 'translateY(690px)' }}
+      >
         <HighlightedText center bold>
           It starts with connecting your wallets with NFTs
         </HighlightedText>
@@ -46,7 +64,7 @@ function Landing() {
       <OrbsInBoxes />
       <div
         className={position('absolute')}
-        style={{ transform: 'translateY(1000px)' }}
+        style={{ transform: 'translateY(1100px)' }}
       >
         <LandingCreatingZKProofCard />
       </div>
