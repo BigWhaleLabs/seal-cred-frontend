@@ -87,6 +87,7 @@ module.exports = {
       },
       margin: {
         1.875: '7.5px',
+        2.125: '8.5px',
       },
     },
   },

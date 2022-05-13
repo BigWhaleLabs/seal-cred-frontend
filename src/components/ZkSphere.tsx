@@ -9,6 +9,7 @@ import classnames, {
   dropShadow,
   fontWeight,
   height,
+  margin,
   padding,
   textAlign,
   textColor,
@@ -26,7 +27,8 @@ const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
     borderRadius('rounded-full'),
     dropShadow(shadowColor),
     textAlign('text-center'),
-    padding('pt-1')
+    padding('pt-1'),
+    margin('mt-2.125')
   )
 
 const ZkSphere: FC<{
