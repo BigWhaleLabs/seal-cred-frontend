@@ -13,7 +13,7 @@ const textStyle = classnames(
   fontWeight('font-semibold'),
   fontSize('text-xl')
 )
-const svgBox = classnames(height('md:h-64', 'h-40'))
+const svgBox = classnames(height('md:h-64', 'h-44'))
 
 const ArcText: FC<{ text: string; radius?: number }> = ({
   text,

@@ -16,7 +16,6 @@ import classnames, {
   flexDirection,
   justifyContent,
   margin,
-  padding,
   position,
   space,
   width,
