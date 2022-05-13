@@ -13,6 +13,7 @@ class WalletStore {
   account?: string
   ens?: string
   walletLoading = false
+  notifiedOfNFTownershipMap = {} as { [address: string]: boolean }
 
   get cachedProvider() {
     return web3Modal.cachedProvider
