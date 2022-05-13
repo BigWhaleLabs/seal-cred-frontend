@@ -14,13 +14,14 @@ function ContractList() {
       {!!proofsInProgress.length && (
         <ContractListContainer>
           {Array.from(proofsInProgress)
-            .sort((a, b) =>
-              a.status !== b.status
-                ? ProofOrdering[a.status] - ProofOrdering[b.status]
-                : typeof a.position !== 'undefined' &&
-                  typeof b.position !== 'undefined'
-                ? a.position - b.position
-                : 0
+            .sort(
+              (
+                { position: positionA = 0, status: statusA },
+                { position: positionB = 0, status: statusB }
+              ) =>
+                statusA !== statusB
+                  ? ProofOrdering[statusA] - ProofOrdering[statusB]
+                  : positionA - positionB
             )
             .map((proof) => (
               <ZKProof
