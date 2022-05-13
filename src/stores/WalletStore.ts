@@ -11,6 +11,7 @@ let provider: Web3Provider
 
 class WalletStore {
   account?: string
+  ens?: string
   walletLoading = false
 
   get cachedProvider() {
@@ -104,6 +105,7 @@ class WalletStore {
     this.walletLoading = true
     const accounts = await provider.listAccounts()
     this.account = accounts[0]
+    this.ens = (await provider.lookupAddress(this.account)) || undefined
     this.walletLoading = false
   }
 
