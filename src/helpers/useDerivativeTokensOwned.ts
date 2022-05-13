@@ -17,7 +17,9 @@ export default function () {
     useContractAddressesOwned('derivative')
 
   return Object.entries(derivativeContractsToOwnersMaps)
-    .filter(([key]) => derivativeContractAddressesOwned.includes(key))
+    .filter(([contractAddress]) =>
+      derivativeContractAddressesOwned.includes(contractAddress)
+    )
     .reduce(
       (result, [derivativeContractAddress, tokenIdToOwnerMap]) => {
         for (const [tokenId, ownerAddress] of Object.entries(
