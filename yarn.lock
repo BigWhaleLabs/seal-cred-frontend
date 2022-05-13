@@ -1518,10 +1518,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/seal-cred-ledger-contract@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.0.2"
-  checksum: bb829a2cdb17e7b2dcebc7ca5b8ec22e1e40b306ab15c20963793269fd61ce62b7fbae0cc184da41de9fb55220adf571fb846b6215c6653c0eee932cb589dfc7
+"@big-whale-labs/seal-cred-ledger-contract@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.0.3"
+  checksum: 4f68e3171606f7cb42fc11717f5a251c74d8ab1e9ffdba183171826bed73f9946f70bd6ebfe2b1b9517de5bf7bf4dbec200d6ff5916803eaa53bf0078745d814
   languageName: node
   linkType: hard
 
@@ -1546,9 +1546,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@coinbase/wallet-sdk@npm:^3.0.11":
-  version: 3.0.11
-  resolution: "@coinbase/wallet-sdk@npm:3.0.11"
+"@coinbase/wallet-sdk@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@coinbase/wallet-sdk@npm:3.1.0"
   dependencies:
     "@metamask/safe-event-emitter": 2.0.0
     bind-decorator: ^1.0.11
@@ -1564,7 +1564,7 @@ __metadata:
     qs: ^6.10.3
     rxjs: ^6.6.3
     stream-browserify: ^3.0.0
-  checksum: b660db0b2e81796d36ff707bfeafb433d8dbe7887a0ed0bb6fed8f4d0a444de8c74e0de9706fe520e820f8feebf86b3ea06c47e1ff24d1bd759e225956f62517
+  checksum: 73931336131c274fa792c867116b6617559a5f1a30d4fe1ee9045b19007e23060408d32feac16d052cd78bef53e62b1fb3ff857955fd10446596787199278822
   languageName: node
   linkType: hard
 
@@ -3059,9 +3059,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@toruslabs/torus-embed@npm:^1.22.5":
-  version: 1.22.5
-  resolution: "@toruslabs/torus-embed@npm:1.22.5"
+"@toruslabs/torus-embed@npm:^1.22.6":
+  version: 1.22.6
+  resolution: "@toruslabs/torus-embed@npm:1.22.6"
   dependencies:
     "@metamask/obs-store": ^7.0.0
     "@toruslabs/fetch-node-details": ^5.0.1
@@ -3080,7 +3080,7 @@ __metadata:
     pump: ^3.0.0
   peerDependencies:
     "@babel/runtime": 7.x
-  checksum: ef373fa9c9b2b546b7798a771dfdb4a67ad21fccd05ed4d18f3f4f4b42460780d5d2ce6a543eae7686cebc4b7775b50e795372825d21c74afbb7c4146f1c9be4
+  checksum: 15bf9e954b1e710b9be103141bda444a8d7e4362d1e12669fb2cc3b3941329ae8e01c837235e5e04085ce9f2a1e156087837e7b7959233494092ebfa713faece
   languageName: node
   linkType: hard
 
@@ -8795,10 +8795,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fortmatic@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "fortmatic@npm:2.2.1"
-  checksum: bf31e814dadd2fbfc8da987d88cea9767497c61dd1df5c23bcbb6ba7f78e330ba56f73e1dc56d6bdaa023a1799ea93819c6c7c78a962d7113aa8975113f5272c
+"fortmatic@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "fortmatic@npm:2.3.0"
+  checksum: 99e1d798bb2d63ce83a043cd3909b854cb0e147d7a25c75c8c53439c53b21378d89a2804c77262ef9bbb1faf33a5a9546d5f546fcd61421242d85bafe7fa0bdc
   languageName: node
   linkType: hard
 
@@ -14532,13 +14532,13 @@ __metadata:
   resolution: "seal-cred-frontend@workspace:."
   dependencies:
     "@big-whale-labs/poseidon": ^0.0.4
-    "@big-whale-labs/seal-cred-ledger-contract": ^0.0.2
-    "@coinbase/wallet-sdk": ^3.0.11
+    "@big-whale-labs/seal-cred-ledger-contract": ^0.0.3
+    "@coinbase/wallet-sdk": ^3.1.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@originjs/vite-plugin-commonjs": ^1.0.3
     "@preact/preset-vite": ^2.2.0
     "@rollup/plugin-inject": ^4.0.4
-    "@toruslabs/torus-embed": ^1.22.5
+    "@toruslabs/torus-embed": ^1.22.6
     "@typechain/ethers-v5": ^10.0.0
     "@types/react": ^17.0.43
     "@typescript-eslint/eslint-plugin": ^5.23.0
@@ -14565,7 +14565,7 @@ __metadata:
     eslint-plugin-valtio: ^0.4.4
     eth-rpc-errors: ^4.0.3
     ethers: ^5.6.5
-    fortmatic: ^2.2.1
+    fortmatic: ^2.3.0
     postcss: ^8.4.13
     preact: ^10.7.2
     prettier: ^2.6.2
@@ -14579,10 +14579,10 @@ __metadata:
     secure-ls: ^1.2.6
     simplebar-react: ^2.3.7
     tailwindcss: ^3.0.24
-    tailwindcss-classnames: ^3.0.4
+    tailwindcss-classnames: ^3.0.5
     typescript: ^4.6.4
     valtio: ^1.6.0
-    vite: ^2.9.8
+    vite: ^2.9.9
     vite-tsconfig-paths: ^3.4.1
     web3modal: ^1.9.7
   languageName: unknown
@@ -15463,9 +15463,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss-classnames@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "tailwindcss-classnames@npm:3.0.4"
+"tailwindcss-classnames@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "tailwindcss-classnames@npm:3.0.5"
   dependencies:
     clsx: ^1.1.1
     colors: 1.4.0
@@ -15475,7 +15475,7 @@ __metadata:
     tslib: ^2.0.0
   bin:
     tailwindcss-classnames: lib/cli/index.js
-  checksum: 597e095494e1ed23eb13db3facfc979672d5c7e73d8afaf7067679c974b00eaf5fe5a8bf6d8de3279ec48f9af5f23a85c6d03d39915098259e5055ec45ac45c3
+  checksum: f82ddd8c5dd565db62044d950f203eb1dfe122d5f62bfca13d2aa90eba67d85bc1943698eba795846415fbab87537c305a4f6a78b854f779cc47990421088a2f
   languageName: node
   linkType: hard
 
@@ -16209,9 +16209,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^2.9.8":
-  version: 2.9.8
-  resolution: "vite@npm:2.9.8"
+"vite@npm:^2.9.9":
+  version: 2.9.9
+  resolution: "vite@npm:2.9.9"
   dependencies:
     esbuild: ^0.14.27
     fsevents: ~2.3.2
@@ -16234,7 +16234,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 7de3450bec4caa06f4540d1d252563ef0b7e1bdd167d04abf03db72cfd8c9a93879e18861283bc7d075e1d094b78b71770ca36f9b965bdf28c66665eafdc29dc
+  checksum: 9292b8ba510a393d0c61c407ebfb4eaa818b2d8d106b3476cdc94cb57a0c59348a535936d698db04b35910a1cfdb16aeaf872f0f995b54cf6d7ed31bc7886deb
   languageName: node
   linkType: hard
 
