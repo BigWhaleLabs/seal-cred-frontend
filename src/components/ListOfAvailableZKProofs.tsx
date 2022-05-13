@@ -11,6 +11,7 @@ import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
 import WalletStore from 'stores/WalletStore'
+import useBreakpoints from 'helpers/useBreakpoints'
 import useProofAddressesAvailableToCreate from 'helpers/useProofAddressesAvailableToCreate'
 
 function useProofContent(
@@ -42,8 +43,8 @@ function useProofContent(
 
 const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
   const [postingProof, setPostingProof] = useState(false)
-
   const { proofsInProgress } = useSnapshot(ProofStore)
+  const { xs } = useBreakpoints()
 
   const proofInProgress = proofsInProgress.find(
     (proof) =>
@@ -55,7 +56,7 @@ const ZKProof: FC<{ contractAddress: string }> = ({ contractAddress }) => {
 
   return (
     <ProofLine>
-      <ContractName address={contractAddress} />
+      <ContractName address={contractAddress} truncate={xs} overflow />
       <ProofButton
         color={color}
         disabled={postingProof || !!proofInProgress}
