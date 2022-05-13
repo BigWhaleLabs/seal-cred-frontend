@@ -67,13 +67,7 @@ function addListenersToLedgerRecord({
       const originalContractToOwnerMap = await SealCredStore
         .originalContractsToOwnersMaps[originalContract.address]
 
-      const newOriginalContractToOwnerMap = {
-        ...originalContractToOwnerMap,
-        [Number(tokenId)]: to,
-      }
-
-      SealCredStore.originalContractsToOwnersMaps[originalContract.address] =
-        Promise.resolve(newOriginalContractToOwnerMap)
+      originalContractToOwnerMap[tokenId.toNumber()] = to
     }
   )
   derivativeContract.on(
@@ -88,14 +82,7 @@ function addListenersToLedgerRecord({
       const derivativeContractToOwnerMap = await SealCredStore
         .derivativeContractsToOwnersMaps[derivativeContract.address]
 
-      const newDerivativeContractToOwnerMap = {
-        ...derivativeContractToOwnerMap,
-        [Number(tokenId)]: to,
-      }
-
-      SealCredStore.derivativeContractsToOwnersMaps[
-        derivativeContract.address
-      ] = Promise.resolve(newDerivativeContractToOwnerMap)
+      derivativeContractToOwnerMap[tokenId.toNumber()] = to
     }
   )
 }
