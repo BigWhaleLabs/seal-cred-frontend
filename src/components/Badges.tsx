@@ -38,10 +38,10 @@ function Badges() {
           <BadgesHintCard
             text={
               <>
-                <AccentText color="text-pink">Hold up...</AccentText>this wallet
-                has NFTs (It’s doxxed). You should make sure your anonymous
-                wallet is connected first before creating badges. Unless you
-                plan to build badges on this wallet.
+                <AccentText color="text-pink">Hold up...</AccentText> this
+                wallet has NFTs (It’s doxxed). You should make sure your
+                anonymous wallet is connected first before creating badges.
+                Unless you plan to build badges on this wallet.
               </>
             }
           >

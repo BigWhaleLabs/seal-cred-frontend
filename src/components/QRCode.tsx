@@ -51,5 +51,13 @@ export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
     })
   }, [url])
 
-  return <a href={url} ref={ref} className={qrCodeContainer} />
+  return (
+    <a
+      href={url}
+      ref={ref}
+      className={qrCodeContainer}
+      target="_blank"
+      rel="noopener noreferrer"
+    />
+  )
 }

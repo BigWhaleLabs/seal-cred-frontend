@@ -65,6 +65,7 @@ module.exports = {
         '2xl': '0px 4px 44px 0px rgb(0 0 0 / 0.25)',
         lg: '0px 0px 16px 0px rgb(0 0 0 / 0.25)',
         md: '0px 0px 6px 0px rgb(0 0 0 / 0.25)',
+        button: '0px 0px 26px rgb(0 0 0 / 1)',
       },
       height: {
         card: '508px',
