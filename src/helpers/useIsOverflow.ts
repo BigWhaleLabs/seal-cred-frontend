@@ -1,9 +1,9 @@
-import { MutableRefObject, useLayoutEffect, useState } from 'react'
+import { MutableRefObject, useEffect, useState } from 'react'
 
 const useIsOverflow = (ref: MutableRefObject<HTMLDivElement>) => {
   const [isOverflow, setIsOverflow] = useState(false)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const { current } = ref
     if (!current) return
 
