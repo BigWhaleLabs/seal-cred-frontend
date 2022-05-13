@@ -2,8 +2,10 @@ import { BodyText, textTruncateStyles } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import SealCredStore from 'stores/SealCredStore'
+import getOriginalByDerivative from 'helpers/getOriginalByDerivative'
 import truncateMiddle from 'helpers/truncateMiddle'
 interface ContractNameProps {
+  fromOriginal?: boolean
   truncate?: boolean
   overflow?: boolean
   address: string
@@ -45,14 +47,22 @@ function TextBlock({
 }
 
 function ContractNameComponent({
+  fromOriginal,
   overflow,
   truncate,
   address,
   otherStyle,
 }: ContractNameProps) {
   const { contractNames } = useSnapshot(SealCredStore)
+  let originalAddress = ''
 
-  const nameOrAddress = contractNames[address]
+  if (fromOriginal) {
+    originalAddress = getOriginalByDerivative(address) || ''
+  }
+
+  const nameOrAddress = fromOriginal
+    ? contractNames[originalAddress]
+    : contractNames[address]
     ? contractNames[address]
     : truncateMiddle(address, 4, -4)
 
@@ -67,6 +77,7 @@ function ContractNameComponent({
 }
 
 export default function ContractName({
+  fromOriginal,
   overflow,
   truncate,
   address,
@@ -80,6 +91,7 @@ export default function ContractName({
       }
     >
       <ContractNameComponent
+        fromOriginal={fromOriginal}
         overflow={overflow}
         truncate={truncate}
         address={address}
