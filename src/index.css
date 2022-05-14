@@ -21,14 +21,20 @@ body {
   0% {
     transform: translate(0px, 0px);
   }
-  50% {
+  20% {
+    transform: translate(0px, 0px);
+  }
+  40% {
     transform: translate(0px, 715px);
   }
-  65% {
+  50% {
     transform: translate(84px, 715px);
   }
-  75% {
+  60% {
     transform: translate(84px, 1080px);
+  }
+  65% {
+    transform: translate(-15px, 1210px);
   }
   100% {
     transform: translate(-15px, 1210px);
@@ -38,14 +44,20 @@ body {
   0% {
     transform: translate(0px, 0px);
   }
+  20% {
+    transform: translate(0px, 0px);
+  }
+  40% {
+    transform: translate(0px, 715px);
+  }
   50% {
     transform: translate(0px, 715px);
   }
-  65% {
-    transform: translate(0px, 715px);
-  }
-  75% {
+  60% {
     transform: translate(0px, 1120px);
+  }
+  65% {
+    transform: translate(-90px, 1230px);
   }
   100% {
     transform: translate(-90px, 1230px);
@@ -55,14 +67,20 @@ body {
   0% {
     transform: translate(0px, 0px);
   }
-  50% {
+  20% {
+    transform: translate(0px, 0px);
+  }
+  40% {
     transform: translate(0px, 705px);
   }
-  65% {
+  50% {
     transform: translate(-84px, 705px);
   }
-  75% {
+  60% {
     transform: translate(-84px, 1080px);
+  }
+  65% {
+    transform: translate(30px, 1210px);
   }
   100% {
     transform: translate(30px, 1210px);

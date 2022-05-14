@@ -16,7 +16,7 @@ import classnames, {
   transitionProperty,
   width,
 } from 'classnames/tailwind'
-import useSphereAnimation from 'helpers/useSphereAnimation'
+import useScrollPercent from 'helpers/useScrollPercent'
 
 const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
   classnames(
@@ -31,7 +31,7 @@ const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
     textAlign('text-center'),
     padding('pt-1'),
     margin('mt-2.125'),
-    transitionProperty('transition-transform')
+    transitionProperty('transition-all')
   )
 
 const ZkSphere: FC<{
@@ -42,7 +42,7 @@ const ZkSphere: FC<{
   const bgColor = colorToTailwindBg(color)
   const shadowColor = colorToDropShadow(color)
 
-  const scroll = useSphereAnimation(color)
+  const scroll = useScrollPercent()
 
   return animated ? (
     <div
@@ -54,11 +54,11 @@ const ZkSphere: FC<{
             ? 'yellowSphereAnimation'
             : 'pinkSphereAnimation',
         animationTimingFunction: 'linear',
-        animationDuration: '10s',
+        animationDuration: '1s',
         animationDirection: 'linear',
-        MozAnimationPlayState: 'pause',
-        MozAnimationDelay: `calc(${scroll} * -1s)`,
-        animationIterationCount: 1, // or infinite
+        animationPlayState: 'paused',
+        animationDelay: `calc(${scroll} * -1s)`,
+        animationIterationCount: 1,
         animationFillMode: 'both',
       }}
       className={sphereStyles(bgColor, shadowColor)}
