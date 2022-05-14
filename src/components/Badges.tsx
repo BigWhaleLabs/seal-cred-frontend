@@ -34,32 +34,32 @@ function Badges() {
         </CardDescription>
       </div>
       {account ? (
-        shouldNotify ? (
-          <BadgesHintCard
-            text={
-              <>
-                <AccentText color="text-pink">Hold up...</AccentText> this
-                wallet has NFTs (It’s doxxed). You should make sure your
-                anonymous wallet is connected first before creating badges.
-                Unless you plan to build badges on this wallet.
-              </>
-            }
-          >
-            <Button
-              small
-              colors="primary"
-              onClick={() => {
-                WalletStore.notifiedOfNFTownership[account] = true
-              }}
+        <Scrollbar maxHeight={330}>
+          {shouldNotify ? (
+            <BadgesHintCard
+              text={
+                <>
+                  <AccentText color="text-pink">Hold up...</AccentText> this
+                  wallet has NFTs (It’s doxxed). You should make sure your
+                  anonymous wallet is connected first before creating badges.
+                  Unless you plan to build badges on this wallet.
+                </>
+              }
             >
-              I understand, show badges
-            </Button>
-          </BadgesHintCard>
-        ) : (
-          <Scrollbar maxHeight={330}>
+              <Button
+                small
+                colors="primary"
+                onClick={() => {
+                  WalletStore.notifiedOfNFTownership[account] = true
+                }}
+              >
+                I understand, show badges
+              </Button>
+            </BadgesHintCard>
+          ) : (
             <BadgesList />
-          </Scrollbar>
-        )
+          )}
+        </Scrollbar>
       ) : (
         <BadgesHintCard text="You must switch from your first wallet after ZK proof is made to an anonymous wallet for the magic to work.">
           <div className={fontSize('text-sm', 'lg:text-base')}>

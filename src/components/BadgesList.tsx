@@ -30,17 +30,8 @@ const badgesList = classnames(
   gridTemplateColumns('grid-cols-1', 'lg:grid-cols-2')
 )
 
-function originalAddressFromDerivativeAddress(derivativeAddress: string) {
-  const { ledger } = useSnapshot(SealCredStore)
-  const ledgerRecord = Object.entries(ledger).find(
-    ([, { derivativeContract }]) =>
-      derivativeContract.address === derivativeAddress
-  )
-  if (!ledgerRecord) throw new Error('No ledger record found')
-  return ledgerRecord[0]
-}
-
 function BadgeListSuspender() {
+  const { derivativeLedger } = useSnapshot(SealCredStore)
   const derivativeTokensOwned = useDerivativeTokensOwned()
   const proofsAvailableToMint = useProofsAvailableToMint()
   const isEmpty =
@@ -57,9 +48,9 @@ function BadgeListSuspender() {
             tokenIds.map((tokenId) => (
               <BadgeBlock
                 key={`${derivativeAddress}-${tokenId}`}
-                contractAddress={originalAddressFromDerivativeAddress(
-                  derivativeAddress
-                )}
+                contractAddress={
+                  derivativeLedger[derivativeAddress].originalContract.address
+                }
                 tokenId={tokenId}
               />
             ))
