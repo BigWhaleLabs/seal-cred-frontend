@@ -42,14 +42,28 @@ const ZkSphere: FC<{
   const bgColor = colorToTailwindBg(color)
   const shadowColor = colorToDropShadow(color)
 
-  const { x, y, zkText } = useSphereAnimation(color)
+  const scroll = useSphereAnimation(color)
 
   return animated ? (
     <div
-      style={{ transform: `translate(${x}px, ${y}px)` }}
+      style={{
+        animationName:
+          color === Colors.green
+            ? 'greenSphereAnimation'
+            : color === Colors.yellow
+            ? 'yellowSphereAnimation'
+            : 'pinkSphereAnimation',
+        animationTimingFunction: 'linear',
+        animationDuration: '10s',
+        animationDirection: 'linear',
+        MozAnimationPlayState: 'pause',
+        MozAnimationDelay: `calc(${scroll} * -1s)`,
+        animationIterationCount: 1, // or infinite
+        animationFillMode: 'both',
+      }}
       className={sphereStyles(bgColor, shadowColor)}
     >
-      {zkText}
+      ZK
     </div>
   ) : (
     <div className={sphereStyles(bgColor, shadowColor)}>{children || text}</div>
