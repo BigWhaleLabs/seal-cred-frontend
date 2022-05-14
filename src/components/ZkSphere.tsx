@@ -15,6 +15,7 @@ import classnames, {
   textColor,
   transitionProperty,
   width,
+  zIndex,
 } from 'classnames/tailwind'
 import useScrollPercent from 'helpers/useScrollPercent'
 
@@ -31,7 +32,8 @@ const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
     textAlign('text-center'),
     padding('pt-1'),
     margin('mt-2.125'),
-    transitionProperty('transition-all')
+    transitionProperty('transition-all'),
+    zIndex('z-10')
   )
 
 const ZkSphere: FC<{
@@ -53,7 +55,7 @@ const ZkSphere: FC<{
             : color === Colors.yellow
             ? 'yellowSphereAnimation'
             : 'pinkSphereAnimation',
-        animationTimingFunction: 'linear',
+        animationTimingFunction: 'ease-in-out',
         animationDuration: '1s',
         animationDirection: 'linear',
         animationPlayState: 'paused',
