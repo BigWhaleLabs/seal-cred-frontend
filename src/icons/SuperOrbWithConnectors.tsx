@@ -1,3 +1,5 @@
+import { dropShadow } from 'classnames/tailwind'
+
 export default function SuperOrbWithConnectors() {
   return (
     <>
@@ -40,14 +42,6 @@ export default function SuperOrbWithConnectors() {
               gradientUnits="userSpaceOnUse"
             >
               <stop offset="0" stop-color="#efecd6" />
-              <stop offset="0.03" stop-color="#f1e9be" />
-              <stop offset="0.08" stop-color="#f4e59a" />
-              <stop offset="0.14" stop-color="#f7e27a" />
-              <stop offset="0.2" stop-color="#f9df5e" />
-              <stop offset="0.27" stop-color="#fbdc48" />
-              <stop offset="0.35" stop-color="#fcda37" />
-              <stop offset="0.46" stop-color="#fdd92c" />
-              <stop offset="0.6" stop-color="#fed825" />
               <stop offset="1" stop-color="#fed823" />
             </linearGradient>
             <mask
@@ -197,6 +191,7 @@ export default function SuperOrbWithConnectors() {
             stroke="#efecd6"
             stroke-linecap="round"
             stroke-width="2"
+            className={dropShadow('drop-shadow-white')}
           />
           <g mask="url(#d)">
             <circle cx="101.52" cy="723.08" r="30.5" fill="url(#e)" />
