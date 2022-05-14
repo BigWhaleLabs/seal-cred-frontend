@@ -54,17 +54,18 @@ function ContractNameComponent({
   otherStyle,
 }: ContractNameProps) {
   const { contractNames } = useSnapshot(SealCredStore)
-  let originalAddress = ''
+  let originalAddress
 
   if (fromOriginal) {
-    originalAddress = getOriginalByDerivative(address) || ''
+    originalAddress = getOriginalByDerivative(address)
   }
 
-  const nameOrAddress = fromOriginal
-    ? contractNames[originalAddress]
-    : contractNames[address]
-    ? contractNames[address]
-    : truncateMiddle(address, 4, -4)
+  const nameOrAddress =
+    fromOriginal && originalAddress
+      ? contractNames[originalAddress]
+      : contractNames[address]
+      ? contractNames[address]
+      : truncateMiddle(address, 4, -4)
 
   return (
     <TextBlock

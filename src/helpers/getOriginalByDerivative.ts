@@ -3,9 +3,7 @@ import SealCredStore from 'stores/SealCredStore'
 
 export default function (contractAddress: string, reverse?: boolean) {
   const { ledger } = useSnapshot(SealCredStore)
-  if (!Object.keys(ledger).length) {
-    return ''
-  }
+  if (!Object.keys(ledger).length) return
 
   const record = Object.values(ledger).find(
     ({ derivativeContract, originalContract }) => {
