@@ -14,7 +14,7 @@ const EnsAddress: FC<{ address: string }> = ({ address }) => {
   EnsStore.fetchEnsName(address)
 
   return (
-    <Suspense fallback={<span>{address}</span>}>
+    <Suspense fallback={<span>{truncateMiddleIfNeeded(address, 17)}</span>}>
       <EnsAddressSuspender address={address} />
     </Suspense>
   )

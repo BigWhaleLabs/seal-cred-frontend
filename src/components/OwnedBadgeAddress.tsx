@@ -1,9 +1,8 @@
 import { FC, Suspense, useEffect, useState } from 'react'
 import { LinkText } from 'components/Text'
 import { useSnapshot } from 'valtio'
+import EnsAddress from 'components/EnsAddress'
 import SealCredStore from 'stores/SealCredStore'
-import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
-import useBreakpoints from 'helpers/useBreakpoints'
 
 function OwnedBadgeAddressSuspender({
   derivativeAddress,
@@ -15,7 +14,6 @@ function OwnedBadgeAddressSuspender({
   const { derivativeLedger } = useSnapshot(SealCredStore)
   const record = derivativeLedger[derivativeAddress]
   const [address, setAddress] = useState<string | undefined>(undefined)
-  const { md } = useBreakpoints()
 
   useEffect(() => {
     async function getAddress() {
@@ -35,7 +33,7 @@ function OwnedBadgeAddressSuspender({
           title={address}
           bold
         >
-          {truncateMiddleIfNeeded(address, md ? 13 : 11)}
+          <EnsAddress address={address} />
         </LinkText>
       )}
     </>
