@@ -1,6 +1,6 @@
 export default function TopConnectors() {
   return (
-    <div style={{ width: '202px', height: '400px' }}>
+    <div style={{ width: '202px', height: '420px' }}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"

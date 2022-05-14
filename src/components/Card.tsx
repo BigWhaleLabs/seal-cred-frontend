@@ -14,6 +14,7 @@ import {
   position,
   space,
   width,
+  wordBreak,
 } from 'classnames/tailwind'
 import ArcText from 'components/ArcText'
 
@@ -83,7 +84,8 @@ const cardContainer = (
       onlyWrap ? undefined : thin ? undefined : 'lg:h-card'
     ),
     space('space-y-4'),
-    maxHeight(onlyWrap ? undefined : 'max-h-508')
+    maxHeight(onlyWrap ? undefined : 'max-h-508'),
+    wordBreak('break-words')
   )
 }
 

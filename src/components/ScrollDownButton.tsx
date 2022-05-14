@@ -9,7 +9,7 @@ import classnames, {
 } from 'classnames/tailwind'
 
 const scrollButton = classnames(
-  margin('mt-20'),
+  margin('mt-16'),
   display('flex'),
   flexDirection('flex-col'),
   alignItems('items-center'),
@@ -18,15 +18,9 @@ const scrollButton = classnames(
 
 export default function ScrollDownButton() {
   return (
-    <button
-      onClick={(e) => {
-        e.preventDefault()
-        window.scrollTo(0, 600)
-      }}
-      className={scrollButton}
-    >
+    <div onClick={() => window.scrollTo(0, 600)} className={scrollButton}>
       <AccentText color="text-yellow">How does this work?</AccentText>
       <DownArrows />
-    </button>
+    </div>
   )
 }
