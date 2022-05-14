@@ -40,7 +40,7 @@ const QRCodeOptions: Options = {
 
 export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
   const ref = useRef<HTMLAnchorElement>(null)
-  const url = `https://sealcred.xyz/${derivativeAddress}/${tokenId}`
+  const url = `${window.location.origin}/${derivativeAddress}/${tokenId}`
 
   useEffect(() => {
     if (!ref.current) return

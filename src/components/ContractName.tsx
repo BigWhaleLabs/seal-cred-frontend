@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import SealCredStore from 'stores/SealCredStore'
 import truncateMiddle from 'helpers/truncateMiddle'
+
 interface ContractNameProps {
   truncate?: boolean
   overflow?: boolean
