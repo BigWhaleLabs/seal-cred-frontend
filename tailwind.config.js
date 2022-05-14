@@ -35,6 +35,7 @@ module.exports = {
       },
       screens: {
         fold: '280px',
+        tiny: '360px',
         sm: '450px',
         md: '600px',
       },

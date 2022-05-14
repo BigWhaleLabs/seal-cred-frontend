@@ -6,6 +6,7 @@ import classnames, {
   flexDirection,
   position,
 } from 'classnames/tailwind'
+import useBreakpoints from 'helpers/useBreakpoints'
 
 const wrapperBox = classnames(
   position('relative'),
@@ -15,10 +16,16 @@ const wrapperBox = classnames(
 )
 
 const PrivacyDeath = () => {
+  const { lg } = useBreakpoints()
+
   return (
     <div className={wrapperBox}>
-      <div className="absolute md:-top-1/2 -top-5">
-        <ArcText text="Give me privacy or give me death •" radius={400} />
+      <div
+        className={`absolute scale-150 md:-top-1/2 -top-1/4 ${
+          lg ? undefined : 'right-6 tiny:right-20'
+        }`}
+      >
+        <ArcText text="Give me privacy or give me death •" />
       </div>
       <EyeWhale />
     </div>
