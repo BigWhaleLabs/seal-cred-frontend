@@ -24,10 +24,10 @@ function Badges() {
   const hasUnminted = proofsAvailableToMint.length > 0
 
   const shouldNotify =
-    originalTokensOwned.length > 0 &&
-    hasUnminted &&
     account &&
-    !notifiedOfNFTownership[account]
+    !notifiedOfNFTownership[account] &&
+    originalTokensOwned.length > 0 &&
+    hasUnminted
 
   return (
     <div className={space('space-y-6')}>
@@ -62,9 +62,9 @@ function Badges() {
                 <Button
                   small
                   colors="primary"
-                  onClick={() => {
-                    WalletStore.notifiedOfNFTownership[account] = true
-                  }}
+                  onClick={() =>
+                    (WalletStore.notifiedOfNFTownership[account] = true)
+                  }
                 >
                   I understand, show badges
                 </Button>
