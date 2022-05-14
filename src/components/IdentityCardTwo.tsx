@@ -22,7 +22,7 @@ const zkSpheresRight = classnames(margin('mt-2'))
 
 function IdentityCardTwo() {
   return (
-    <Card color="white" shadow thin small>
+    <Card color="white" shadow thin small onlyWrap>
       <div className={innerId}>
         <div className={pinkRectangle}>
           <NoisyRectangle bgColor="bg-pink" />

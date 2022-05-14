@@ -28,7 +28,7 @@ const zkSpheresLeft = classnames(
 
 function IdentityCardOne() {
   return (
-    <Card color="white" shadow thin small>
+    <Card color="white" shadow thin small onlyWrap>
       <div className={innerId}>
         <div className={greenRectangle}>
           <NoisyRectangle bgColor="bg-green" />
