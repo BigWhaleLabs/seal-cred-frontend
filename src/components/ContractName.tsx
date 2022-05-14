@@ -1,8 +1,9 @@
 import { BodyText, textTruncateStyles } from 'components/Text'
 import { Suspense } from 'react'
-import { truncateMiddle } from 'helpers/truncateMiddle'
 import { useSnapshot } from 'valtio'
 import SealCredStore from 'stores/SealCredStore'
+import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
+
 interface ContractNameProps {
   truncate?: boolean
   overflow?: boolean
@@ -22,7 +23,9 @@ function TextBlock({
   isFetching,
 }: FetchingContract) {
   const truncatedText =
-    truncate && address.length > 15 ? truncateMiddle(address, 14) : address
+    truncate && address.length > 15
+      ? truncateMiddleIfNeeded(address, 11)
+      : address
 
   return otherStyle ? (
     overflow ? (
@@ -54,7 +57,7 @@ function ContractNameComponent({
 
   const nameOrAddress = contractNames[address]
     ? contractNames[address]
-    : truncateMiddle(address, 4, -4)
+    : truncateMiddleIfNeeded(address, 14)
 
   return (
     <TextBlock
@@ -72,7 +75,7 @@ export default function ContractName({
   address,
   otherStyle,
 }: ContractNameProps) {
-  const shortAddress = truncateMiddle(address, 4, -4)
+  const shortAddress = truncateMiddleIfNeeded(address, 14)
   return (
     <Suspense
       fallback={

@@ -1,8 +1,8 @@
 import { FC, Suspense, useEffect, useState } from 'react'
 import { LinkText } from 'components/Text'
-import { truncateMiddle } from 'helpers/truncateMiddle'
 import { useSnapshot } from 'valtio'
 import SealCredStore from 'stores/SealCredStore'
+import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useBreakpoints from 'helpers/useBreakpoints'
 
 function OwnedBadgeAddressSuspender({
@@ -37,7 +37,7 @@ function OwnedBadgeAddressSuspender({
           title={address}
           bold
         >
-          {truncateMiddle(address, !md ? 11 : 13, -(!md ? 11 : 14))}
+          {truncateMiddleIfNeeded(address, md ? 13 : 11)}
         </LinkText>
       )}
     </>
