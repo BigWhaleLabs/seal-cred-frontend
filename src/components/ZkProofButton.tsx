@@ -63,7 +63,7 @@ const ZkProofButton = () => {
         <AccentText color="text-yellow">What's a ZK proof?</AccentText>
         <QuestionMark />
       </div>
-      <ToolTip place="bottom" dataFor={popoverText} clickable />
+      <ToolTip place="top" dataFor={popoverText} clickable />
     </>
   )
 }

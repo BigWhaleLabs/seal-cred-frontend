@@ -11,11 +11,11 @@ import classnames, {
 } from 'classnames/tailwind'
 import useBreakpoints from 'helpers/useBreakpoints'
 
-const tooltipClasses = (xs: boolean) =>
+const tooltipClasses = (mobile: boolean) =>
   classnames(
     backgroundColor('bg-white'),
-    maxWidth(xs ? 'max-w-xs' : 'max-w-sm'),
-    inset(xs ? '!left-0' : undefined),
+    maxWidth('max-w-sm'),
+    mobile ? inset('!left-0', '!right-0') : undefined,
     opacity('!opacity-100'),
     borderRadius('!rounded-lg')
   )
@@ -25,20 +25,19 @@ const ToolTip: FC<{
   dataFor: string
   clickable?: boolean
 }> = ({ place, dataFor, clickable }) => {
-  const { xs, sm } = useBreakpoints()
-  const xsOnly = xs && !sm
+  const { mobile } = useBreakpoints()
 
   return (
     <TooltipText>
       <ReactTooltip
-        place={xsOnly ? 'top' : place}
+        place={place}
         data-for={dataFor}
         effect="solid"
         backgroundColor={backgroundColor('bg-white')}
         textColor={textColor('text-blue-900')}
         arrowColor={backgroundColor('bg-white')}
         clickable={clickable}
-        className={tooltipClasses(xsOnly)}
+        className={tooltipClasses(mobile)}
       />
     </TooltipText>
   )
