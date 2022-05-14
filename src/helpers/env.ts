@@ -1,4 +1,5 @@
 export default {
+  VITE_QRCODE_ORIGIN: import.meta.env.VITE_QRCODE_ORIGIN as string,
   VITE_ENCRYPT_KEY: import.meta.env.VITE_ENCRYPT_KEY as string,
   VITE_FORTMATIC_KEY: import.meta.env.VITE_FORTMATIC_KEY as string,
   VITE_APP_NAME: import.meta.env.VITE_APP_NAME as string,
