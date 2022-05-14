@@ -47,7 +47,7 @@ function Badges() {
         hasMadeProofs && !hasUnminted ? (
           <BadgesHintCard text="You must disconnect your first wallet after ZK proof is made, and then reconnect with a new one for the magic to work." />
         ) : (
-          <Scrollbar maxHeight={330}>
+          <Scrollbar maxHeight={270}>
             {shouldNotify ? (
               <BadgesHintCard
                 text={
