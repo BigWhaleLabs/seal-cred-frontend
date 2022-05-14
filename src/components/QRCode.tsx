@@ -41,7 +41,8 @@ const QRCodeOptions: Options = {
 
 export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
   const ref = useRef<HTMLAnchorElement>(null)
-  const url = `${env.VITE_QRCODE_ORIGIN || ''}/${derivativeAddress}/${tokenId}`
+  const currentOrigin = env.VITE_QRCODE_ORIGIN || ''
+  const url = `${currentOrigin}/${derivativeAddress}/${tokenId}`
 
   useEffect(() => {
     if (!ref.current) return
