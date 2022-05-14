@@ -65,10 +65,10 @@ const SealCredStore = proxyWithComputed<
   },
   {
     derivativeLedger: (state) =>
-      Object.entries(state.ledger).reduce(
-        (result, [_, value]) => ({
+      Object.values(state.ledger).reduce(
+        (result, record) => ({
           ...result,
-          [value.derivativeContract.address]: value,
+          [record.derivativeContract.address]: record,
         }),
         {}
       ),
