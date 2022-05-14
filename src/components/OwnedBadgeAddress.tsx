@@ -12,20 +12,18 @@ function OwnedBadgeAddressSuspender({
   derivativeAddress: string
   tokenId: string
 }) {
-  const { ledger } = useSnapshot(SealCredStore)
-  const contract = Object.values(ledger).find(
-    ({ derivativeContract }) => derivativeAddress === derivativeContract.address
-  )
+  const { derivativeLedger } = useSnapshot(SealCredStore)
+  const record = derivativeLedger[derivativeAddress]
   const [address, setAddress] = useState<string | undefined>(undefined)
   const { md } = useBreakpoints()
 
   useEffect(() => {
     async function getAddress() {
-      setAddress(await contract?.derivativeContract.ownerOf(tokenId))
+      setAddress(await record?.derivativeContract.ownerOf(tokenId))
     }
 
     void getAddress()
-  }, [contract, tokenId])
+  }, [record, tokenId])
 
   return (
     <>
