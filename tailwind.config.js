@@ -76,6 +76,7 @@ module.exports = {
       width: {
         card: '398px',
         'thin-card': '187px',
+        'thin-mobile': '172px',
         'mobile-card': '92%',
       },
       dropShadow: {

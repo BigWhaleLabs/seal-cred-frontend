@@ -6439,6 +6439,7 @@ export type TWidth =
   | 'w-fit'
   | 'w-card'
   | 'w-thin-card'
+  | 'w-thin-mobile'
   | 'w-mobile-card'
   | 'w-3.875'
 
