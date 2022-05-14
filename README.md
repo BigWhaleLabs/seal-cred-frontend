@@ -22,7 +22,6 @@
 | `VITE_ETH_RPC`                    | Ethereum node RPC URI                                                 |
 | `VITE_BITSKI_CLIENT_ID`           | Bitski client ID                                                      |
 | `VITE_SC_LEDGER_CONTRACT_ADDRESS` | SealCred Ledger contract address                                      |
-| `VITE_QRCODE_ORIGIN`              | QR Code url origin                                                    |
 
 Also, please, consider looking at `.env.sample`.
 

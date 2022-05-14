@@ -5,7 +5,6 @@ import classnames, {
   minWidth,
   overflow,
 } from 'classnames/tailwind'
-import env from 'helpers/env'
 
 interface QRCodeProps {
   derivativeAddress: string
@@ -41,8 +40,7 @@ const QRCodeOptions: Options = {
 
 export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
   const ref = useRef<HTMLAnchorElement>(null)
-  const currentOrigin = env.VITE_QRCODE_ORIGIN || ''
-  const url = `${currentOrigin}/${derivativeAddress}/${tokenId}`
+  const url = `${window.location.origin}/${derivativeAddress}/${tokenId}`
 
   useEffect(() => {
     if (!ref.current) return
