@@ -82,7 +82,7 @@ function OwnerInfo({
         This is a zkNFT derivative. It means this person has been verified to
         own at least one ‘
         <AccentText color="text-pink">
-          <ContractName address={derivativeAddress} otherStyle />
+          <ContractName address={record.originalContract.address} otherStyle />
         </AccentText>
         ‘ NFT.
       </BodyText>
