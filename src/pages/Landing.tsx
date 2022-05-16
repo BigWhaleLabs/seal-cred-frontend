@@ -1,6 +1,6 @@
 import { HighlightedText } from 'components/Text'
-import IdentityCardOne from 'components/IdentityCardOne'
-import IdentityCardTwo from 'components/IdentityCardTwo'
+import Colors from 'models/Colors'
+import IdentityCard from 'components/IdentityCardOne'
 import LandingBuildingIdentitiesCard from 'components/LandingBuildingIdentitiesCard'
 import LandingCreatingZKProofCard from 'components/LandingCreatingZKProofCard'
 import LandingInitialCard from 'components/LandingInitialCard'
@@ -10,6 +10,7 @@ import ScrollDownButton from 'components/ScrollDownButton'
 import SuperHr from 'components/SuperHr'
 import SuperOrbWithConnectors from 'icons/SuperOrbWithConnectors'
 import TopConnectors from 'icons/TopConnectors'
+import ZkSphere from 'components/ZkSphere'
 import classnames, {
   alignItems,
   display,
@@ -21,6 +22,7 @@ import classnames, {
   width,
   zIndex,
 } from 'classnames/tailwind'
+import useBreakpoints from 'helpers/useBreakpoints'
 import useScrollPercent from 'helpers/useScrollPercent'
 
 const pageBox = classnames(
@@ -45,7 +47,8 @@ const highlightedBlock = classnames(
 
 function Landing() {
   const scroll = useScrollPercent()
-  const animEnd = scroll > 0.7
+  const { mobile } = useBreakpoints()
+  const animEnd = scroll > 0.645
 
   return (
     <div className={pageBox}>
@@ -74,8 +77,13 @@ function Landing() {
       </div>
       <SuperOrbWithConnectors />
       <div className={identityCards}>
-        <IdentityCardOne reveal={animEnd} />
-        <IdentityCardTwo reveal={animEnd} />
+        <IdentityCard left text="Identity-01" mobile={mobile} reveal={animEnd}>
+          <ZkSphere text="ZK" color={Colors.green} />
+          <ZkSphere text="ZK" color={Colors.yellow} />
+        </IdentityCard>
+        <IdentityCard text="Identity-02" mobile={mobile} reveal={animEnd}>
+          <ZkSphere text="ZK" color={Colors.pink} />
+        </IdentityCard>
       </div>
       <LandingBuildingIdentitiesCard />
       <SuperHr />

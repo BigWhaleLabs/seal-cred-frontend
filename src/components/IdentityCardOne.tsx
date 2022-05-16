@@ -1,26 +1,29 @@
 import { BodyText } from 'components/Text'
 import { FC } from 'react'
 import Card from 'components/Card'
-import Colors from 'models/Colors'
 import DoubleSmile from 'icons/DoubleSmile'
+import Grim from 'icons/Grin'
 import NoisyRectangle from 'components/NoisyRectangle'
-import ZkSphere from 'components/ZkSphere'
 import classnames, {
   alignItems,
   display,
   flexDirection,
   margin,
   opacity,
+  overflow,
   space,
+  transitionDuration,
   transitionProperty,
 } from 'classnames/tailwind'
 
 const innerId = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-center')
+  alignItems('items-center'),
+  overflow('overflow-hidden')
 )
-const greenRectangle = classnames(margin('mb-1'))
+const rectangleMargin = (left: boolean) =>
+  classnames(margin(left ? 'my-1' : 'my-1.875'))
 const identityText = classnames(margin('my-3'))
 const zkSpheresLeft = (reveal?: boolean) =>
   classnames(
@@ -29,27 +32,34 @@ const zkSpheresLeft = (reveal?: boolean) =>
     space('space-x-2'),
     margin('my-2'),
     opacity(reveal ? 'opacity-100' : 'opacity-0'),
-    transitionProperty('transition-all')
+    transitionProperty('transition-opacity'),
+    transitionDuration('duration-300')
   )
 
-const IdentityCardOne: FC<{ reveal?: boolean }> = ({ reveal }) => {
+const IdentityCardOne: FC<{
+  reveal?: boolean
+  left?: boolean
+  text: string
+  mobile?: boolean
+}> = ({ reveal, left = false, text, mobile, children }) => {
   return (
     <Card color="white" shadow thin small onlyWrap>
       <div className={innerId}>
-        <div className={greenRectangle}>
-          <NoisyRectangle bgColor="bg-green" />
+        <div className={rectangleMargin(left)}>
+          {left ? (
+            <NoisyRectangle bgColor="bg-green" />
+          ) : (
+            <NoisyRectangle bgColor="bg-pink" />
+          )}
         </div>
-        <NoisyRectangle bgColor="bg-yellow" />
+        {left && <NoisyRectangle bgColor="bg-yellow" />}
         <div className={identityText}>
-          <BodyText size="base" center>
-            Identity-01
+          <BodyText size={mobile ? 'sm' : 'base'} center>
+            {text}
           </BodyText>
         </div>
-        <DoubleSmile />
-        <div className={zkSpheresLeft(reveal)}>
-          <ZkSphere text="ZK" color={Colors.green} />
-          <ZkSphere text="ZK" color={Colors.yellow} />
-        </div>
+        {left ? <DoubleSmile /> : <Grim />}
+        <div className={zkSpheresLeft(reveal)}>{children}</div>
       </div>
     </Card>
   )
