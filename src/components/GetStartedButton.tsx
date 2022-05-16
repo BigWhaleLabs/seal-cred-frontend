@@ -1,4 +1,3 @@
-import { handleError } from 'helpers/handleError'
 import { useNavigate } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
@@ -16,14 +15,9 @@ const GetStartedButton = () => {
       loading={loading}
       onClick={async () => {
         setLoading(true)
-        try {
-          if (!account) await WalletStore.connect()
-          navigate('/app')
-        } catch (e) {
-          handleError(e)
-        } finally {
-          setLoading(false)
-        }
+        if (!account) await WalletStore.connect()
+        if (account) navigate('/app')
+        setLoading(false)
       }}
     >
       Get started
