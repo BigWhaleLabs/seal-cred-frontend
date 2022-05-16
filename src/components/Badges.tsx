@@ -18,9 +18,6 @@ function Badges() {
   const originalTokensOwned = useContractAddressesOwned('original')
   const proofsAvailableToMint = useProofsAvailableToMint()
 
-  const hasMadeProofs =
-    proofsCompleted.filter((proof) => proof.account === account).length > 0
-
   const hasUnminted = proofsAvailableToMint.length > 0
 
   const shouldNotify =
@@ -44,36 +41,32 @@ function Badges() {
         </CardDescription>
       </div>
       {account ? (
-        hasMadeProofs && !hasUnminted ? (
-          <BadgesHintCard text="You must disconnect your first wallet after ZK proof is made, and then reconnect with a new one for the magic to work." />
-        ) : (
-          <Scrollbar maxHeight={270}>
-            {shouldNotify ? (
-              <BadgesHintCard
-                text={
-                  <>
-                    <AccentText color="text-pink">Hold up...</AccentText> this
-                    wallet has NFTs (It’s doxxed). You should make sure your
-                    anonymous wallet is connected first before creating badges.
-                    Unless you plan to build badges on this wallet.
-                  </>
+        <Scrollbar maxHeight={270}>
+          {shouldNotify ? (
+            <BadgesHintCard
+              text={
+                <>
+                  <AccentText color="text-pink">Hold up...</AccentText> this
+                  wallet has NFTs (It’s doxxed). You should make sure your
+                  anonymous wallet is connected first before creating badges.
+                  Unless you plan to build badges on this wallet.
+                </>
+              }
+            >
+              <Button
+                small
+                colors="primary"
+                onClick={() =>
+                  (WalletStore.notifiedOfNFTownership[account] = true)
                 }
               >
-                <Button
-                  small
-                  colors="primary"
-                  onClick={() =>
-                    (WalletStore.notifiedOfNFTownership[account] = true)
-                  }
-                >
-                  I understand, show badges
-                </Button>
-              </BadgesHintCard>
-            ) : (
-              <BadgesList />
-            )}
-          </Scrollbar>
-        )
+                I understand, show badges
+              </Button>
+            </BadgesHintCard>
+          ) : (
+            <BadgesList />
+          )}
+        </Scrollbar>
       ) : (
         <BadgesHintCard text="You must switch from your first wallet after ZK proof is made to an anonymous wallet for the magic to work.">
           <div className={fontSize('text-sm', 'lg:text-base')}>
