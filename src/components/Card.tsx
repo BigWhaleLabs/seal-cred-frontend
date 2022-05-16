@@ -76,9 +76,9 @@ const cardContainer = (
     cardColor(shadow ? color : undefined),
     padding(small ? 'p-3.875' : 'p-6'),
     width(
-      thin ? 'sm:w-thin-card' : undefined,
-      thin ? 'w-thin-mobile' : 'w-mobile-card',
-      thin ? 'w-32' : 'sm:w-card'
+      thin ? 'sm:!w-thin-card' : 'sm:w-card',
+      thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
+      thin ? 'w-32' : undefined
     ),
     margin(thin ? undefined : 'mx-4', 'lg:mx-0'),
     height(
