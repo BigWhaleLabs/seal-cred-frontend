@@ -13,8 +13,8 @@ const rectangle = (bgColor: TBackgroundColor) =>
     width('w-36', 'fold:w-28')
   )
 
-const NoisyRectangle: FC<{ bgColor: TBackgroundColor }> = ({ bgColor }) => {
+const IdRectangle: FC<{ bgColor: TBackgroundColor }> = ({ bgColor }) => {
   return <div className={rectangle(bgColor)} />
 }
 
-export default NoisyRectangle
+export default IdRectangle

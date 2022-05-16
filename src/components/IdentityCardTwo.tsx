@@ -1,7 +1,7 @@
 import { BodyText } from 'components/Text'
 import Card from 'components/Card'
 import Grim from 'icons/Grin'
-import NoisyRectangle from 'components/NoisyRectangle'
+import IdRectangle from 'components/NoisyRectangle'
 import classnames, {
   alignItems,
   display,
@@ -25,7 +25,7 @@ function IdentityCardTwo() {
     <Card color="white" shadow thin small onlyWrap>
       <div className={innerId}>
         <div className={pinkRectangle}>
-          <NoisyRectangle bgColor="bg-pink" />
+          <IdRectangle bgColor="bg-pink" />
         </div>
         <div className={identityText}>
           <BodyText size="base" center>
