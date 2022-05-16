@@ -12,7 +12,7 @@ export default function useScrollPercent() {
 
     window.addEventListener('scroll', handleScroll, true)
 
-    return () => window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return scroll
