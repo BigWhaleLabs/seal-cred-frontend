@@ -1,9 +1,9 @@
 import { FC, Suspense, useEffect, useState } from 'react'
 import { LinkText } from 'components/Text'
 import { useSnapshot } from 'valtio'
+import EnsAddress from 'components/EnsAddress'
 import SealCredStore from 'stores/SealCredStore'
-import truncateMiddle from 'helpers/truncateMiddle'
-import useBreakpoints from 'helpers/useBreakpoints'
+import env from 'helpers/env'
 
 function OwnedBadgeAddressSuspender({
   derivativeAddress,
@@ -15,8 +15,9 @@ function OwnedBadgeAddressSuspender({
   const { derivativeLedger } = useSnapshot(SealCredStore)
   const record = derivativeLedger[derivativeAddress]
   const [address, setAddress] = useState<string | undefined>(undefined)
-  const { md } = useBreakpoints()
 
+  const network =
+    env.VITE_ETH_NETWORK !== 'mainnet' ? `${env.VITE_ETH_NETWORK}.` : ''
   useEffect(() => {
     async function getAddress() {
       setAddress(await record?.derivativeContract.ownerOf(tokenId))
@@ -29,13 +30,13 @@ function OwnedBadgeAddressSuspender({
     <>
       {address && (
         <LinkText
-          url={`https://etherscan.io/address/${address}`}
+          url={`https://${network}etherscan.io/address/${address}`}
           gradientFrom="from-pink"
           gradientTo="to-yellow"
           title={address}
           bold
         >
-          {truncateMiddle(address, !md ? 11 : 13, -(!md ? 11 : 14))}
+          <EnsAddress address={address} />
         </LinkText>
       )}
     </>
