@@ -3,12 +3,14 @@ import Colors, { colorToDropShadow } from 'models/Colors'
 import classnames, {
   TDropShadow,
   dropShadow,
+  opacity,
   transitionProperty,
 } from 'classnames/tailwind'
 
 const orbBoxStyles = (shadowColor: TDropShadow, shadow?: boolean) =>
   classnames(
-    shadow ? dropShadow(shadowColor) : undefined,
+    dropShadow(shadowColor),
+    opacity(shadow ? 'opacity-100' : 'opacity-90'),
     transitionProperty('transition-all')
   )
 
