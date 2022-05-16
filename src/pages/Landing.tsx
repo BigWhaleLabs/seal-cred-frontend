@@ -21,6 +21,7 @@ import classnames, {
   width,
   zIndex,
 } from 'classnames/tailwind'
+import useScrollPercent from 'helpers/useScrollPercent'
 
 const pageBox = classnames(
   display('flex'),
@@ -43,6 +44,9 @@ const highlightedBlock = classnames(
 )
 
 function Landing() {
+  const scroll = useScrollPercent()
+  const animEnd = scroll > 0.7
+
   return (
     <div className={pageBox}>
       <LandingInitialCard />
@@ -70,8 +74,8 @@ function Landing() {
       </div>
       <SuperOrbWithConnectors />
       <div className={identityCards}>
-        <IdentityCardOne />
-        <IdentityCardTwo />
+        <IdentityCardOne reveal={animEnd} />
+        <IdentityCardTwo reveal={animEnd} />
       </div>
       <LandingBuildingIdentitiesCard />
       <SuperHr />
