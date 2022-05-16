@@ -3,8 +3,10 @@ import classnames, {
   margin,
   position,
   scale,
+  transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
+import useScrollPercent from 'helpers/useScrollPercent'
 
 const SuperOrb = () => (
   <svg
@@ -355,21 +357,27 @@ const BottomConnectors = () => (
   </svg>
 )
 
-const superOrbBox = classnames(
-  position('absolute'),
-  scale('scale-50'),
-  dropShadow('drop-shadow-white'),
-  zIndex('z-40')
-)
+const superOrbBox = (glow?: boolean) =>
+  classnames(
+    position('absolute'),
+    scale('scale-50'),
+    dropShadow(glow ? 'drop-shadow-white' : undefined),
+    transitionProperty('transition-all'),
+    zIndex('z-40')
+  )
 
 export default function SuperOrbWithConnectors() {
+  const scroll = useScrollPercent()
+
+  const glow = scroll > 0.48
+
   return (
     <>
       <div style={{ width: '202px', height: '1180px' }}>
         <div className={position('relative')}>
           <UpperConnectors />
           <div
-            className={superOrbBox}
+            className={superOrbBox(glow)}
             style={{ width: '202px', height: '202px', bottom: '-111px' }}
           >
             <SuperOrb />
