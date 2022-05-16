@@ -64,7 +64,7 @@ function Landing() {
       <OrbsInBoxes />
       <div
         className={classnames(position('absolute'), zIndex('z-40'))}
-        style={{ transform: 'translateY(1100px)' }}
+        style={{ transform: 'translateY(1050px)' }}
       >
         <LandingCreatingZKProofCard />
       </div>
