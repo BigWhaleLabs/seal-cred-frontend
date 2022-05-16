@@ -31,7 +31,7 @@ class WalletStore {
         throw new Error(
           ErrorList.wrongNetwork(userNetwork, env.VITE_ETH_NETWORK)
         )
-      await this.handleAccountChanged()
+      this.account = (await provider.listAccounts())[0]
       this.subscribeProvider(instance)
     } catch (error) {
       if (error !== 'Modal closed by user') {
@@ -116,15 +116,13 @@ class WalletStore {
       handleError(error)
     })
 
-    provider.on('accountsChanged', () => {
-      void this.handleAccountChanged()
+    provider.on('accountsChanged', (accounts: string[]) => {
+      accounts.length ? void this.handleAccountChanged() : this.clearData()
     })
-    provider.on('disconnect', () => {
-      void this.handleAccountChanged()
-    })
-
-    provider.on('stop', () => {
-      void this.handleAccountChanged()
+    provider.on('disconnect', (error: unknown) => {
+      if (provider) provider.removeAllListeners()
+      handleError(error)
+      this.clearData()
     })
     provider.on('chainChanged', async () => {
       this.account = undefined
