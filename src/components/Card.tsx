@@ -15,6 +15,7 @@ import {
   space,
   width,
   wordBreak,
+  zIndex,
 } from 'classnames/tailwind'
 import ArcText from 'components/ArcText'
 
@@ -76,7 +77,7 @@ const cardContainer = (
     padding(small ? 'p-3.875' : 'p-6'),
     width(
       thin ? 'sm:w-thin-card' : undefined,
-      thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
+      thin ? 'w-thin-mobile' : 'w-mobile-card',
       thin ? 'w-32' : 'sm:w-card'
     ),
     margin(thin ? undefined : 'mx-4', 'lg:mx-0'),
@@ -86,7 +87,8 @@ const cardContainer = (
     ),
     space('space-y-4'),
     maxHeight(onlyWrap ? undefined : 'max-h-508'),
-    wordBreak('break-words')
+    wordBreak('break-words'),
+    zIndex('z-30')
   )
 }
 

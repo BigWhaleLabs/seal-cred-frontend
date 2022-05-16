@@ -19,6 +19,7 @@ import classnames, {
   position,
   space,
   width,
+  zIndex,
 } from 'classnames/tailwind'
 
 const pageBox = classnames(
@@ -62,7 +63,7 @@ function Landing() {
       </div>
       <OrbsInBoxes />
       <div
-        className={position('absolute')}
+        className={classnames(position('absolute'), zIndex('z-30'))}
         style={{ transform: 'translateY(1100px)' }}
       >
         <LandingCreatingZKProofCard />

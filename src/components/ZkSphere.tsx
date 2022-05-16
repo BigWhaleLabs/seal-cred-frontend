@@ -19,11 +19,7 @@ import classnames, {
 } from 'classnames/tailwind'
 import useScrollPercent from 'helpers/useScrollPercent'
 
-const sphereStyles = (
-  bgColor: TBackgroundColor,
-  shadowColor: TDropShadow,
-  finished?: boolean
-) =>
+const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
   classnames(
     fontWeight('font-bold'),
     textColor('text-blue-900'),
@@ -37,7 +33,7 @@ const sphereStyles = (
     padding('pt-1'),
     margin('mt-2.125'),
     transitionProperty('transition-all'),
-    zIndex(finished ? 'z-30' : 'z-20')
+    zIndex('z-20')
   )
 
 const ZkSphere: FC<{
@@ -51,7 +47,6 @@ const ZkSphere: FC<{
   const scroll = useScrollPercent()
 
   const zkText = scroll > 0.3 ? 'ZK' : ''
-  const animationFinished = scroll > 0.66
 
   return animated ? (
     <div
@@ -70,7 +65,7 @@ const ZkSphere: FC<{
         animationIterationCount: 1,
         animationFillMode: 'both',
       }}
-      className={sphereStyles(bgColor, shadowColor, animationFinished)}
+      className={sphereStyles(bgColor, shadowColor)}
     >
       {zkText}
     </div>

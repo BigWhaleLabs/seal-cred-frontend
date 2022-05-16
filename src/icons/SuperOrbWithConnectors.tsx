@@ -1,9 +1,12 @@
-import { dropShadow } from 'classnames/tailwind'
+import { dropShadow, zIndex } from 'classnames/tailwind'
 
 export default function SuperOrbWithConnectors() {
   return (
     <>
-      <div style={{ width: '202px', height: '1180px' }}>
+      <div
+        style={{ width: '202px', height: '1180px' }}
+        className={zIndex('z-20')}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
