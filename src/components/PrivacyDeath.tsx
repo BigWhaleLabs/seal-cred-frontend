@@ -22,7 +22,7 @@ const PrivacyDeath = () => {
     <div className={wrapperBox}>
       <div
         className={`absolute scale-150 md:-top-1/2 -top-1/4 ${
-          lg ? undefined : 'right-6 tiny:right-20'
+          lg ? undefined : 'right-6 sm:!right-12 tiny:right-20'
         }`}
       >
         <ArcText text="Give me privacy or give me death •" />
