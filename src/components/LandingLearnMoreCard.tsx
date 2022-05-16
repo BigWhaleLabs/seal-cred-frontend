@@ -25,7 +25,9 @@ function LandingLearnMoreCard() {
           <Button
             colors="tertiary"
             arrow
-            onClick={() => (window.location.href = 'https://bigwhalelabs.com/')}
+            onClick={() =>
+              window.open('https://bigwhalelabs.com/', '_blank')?.focus()
+            }
           >
             Learn more about us
           </Button>

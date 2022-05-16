@@ -27,6 +27,7 @@ import {
   textOverflow,
   whitespace,
   width,
+  zIndex,
 } from 'classnames/tailwind'
 import Colors, { colorToTailwindBg } from 'models/Colors'
 
@@ -205,7 +206,8 @@ const highlightedText = (
     backgroundColor(bgColor),
     width('w-fit'),
     padding(onlyWrap ? 'px-2' : 'px-4', 'py-1'),
-    textAlign(center ? 'text-center' : 'text-left')
+    textAlign(center ? 'text-center' : 'text-left'),
+    zIndex('z-10')
   )
 export const HighlightedText: FC<{
   center?: boolean
