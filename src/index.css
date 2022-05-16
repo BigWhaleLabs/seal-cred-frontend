@@ -34,7 +34,7 @@ body {
     transform: translate(84px, 1080px);
   }
   65% {
-    transform: translate(-15px, 1210px);
+    transform: translate(-10px, 1180px);
   }
   66% {
     transform: translate(-25px, 1383px);
@@ -60,7 +60,7 @@ body {
     transform: translate(0px, 1120px);
   }
   65% {
-    transform: translate(-90px, 1230px);
+    transform: translate(-85px, 1210px);
   }
   66% {
     transform: translate(-85px, 1415px);
@@ -86,7 +86,7 @@ body {
     transform: translate(-84px, 1080px);
   }
   65% {
-    transform: translate(30px, 1210px);
+    transform: translate(0px, 1160px);
   }
   66% {
     transform: translate(6px, 1370px);
