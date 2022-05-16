@@ -9,27 +9,29 @@ const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
 
 function LandingLearnMoreCard() {
   return (
-    <Card color="blue" shadow onlyWrap>
-      <PrivacyDeath />
-      <div className={bigWhaleLabsText}>
-        <BodyText size="base">
-          <LinkText color="text-blue-500" url={`https://bigwhalelabs.com`}>
-            Big Whale Labs{' '}
-          </LinkText>
-          is dedicated to building a pseudonymous world in which privacy and
-          identity are owned by the human, not the corporation.
-        </BodyText>
-      </div>
-      <div className={learnMoreText}>
-        <Button
-          colors="tertiary"
-          arrow
-          onClick={() => (window.location.href = 'https://bigwhalelabs.com/')}
-        >
-          Learn more about us
-        </Button>
-      </div>
-    </Card>
+    <div className={margin('mb-24')}>
+      <Card color="blue" shadow onlyWrap>
+        <PrivacyDeath />
+        <div className={bigWhaleLabsText}>
+          <BodyText size="base">
+            <LinkText color="text-blue-500" url={`https://bigwhalelabs.com`}>
+              Big Whale Labs{' '}
+            </LinkText>
+            is dedicated to building a pseudonymous world in which privacy and
+            identity are owned by the human, not the corporation.
+          </BodyText>
+        </div>
+        <div className={learnMoreText}>
+          <Button
+            colors="tertiary"
+            arrow
+            onClick={() => (window.location.href = 'https://bigwhalelabs.com/')}
+          >
+            Learn more about us
+          </Button>
+        </div>
+      </Card>
+    </div>
   )
 }
 export default LandingLearnMoreCard

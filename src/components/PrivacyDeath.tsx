@@ -21,7 +21,7 @@ const PrivacyDeath = () => {
   return (
     <div className={wrapperBox}>
       <div
-        className={`absolute scale-150 md:-top-1/2 -top-1/4 ${
+        className={`absolute scale-150 md:-top-2/3 -top-1/2 ${
           lg ? undefined : 'right-6 sm:!right-12 tiny:right-20'
         }`}
       >

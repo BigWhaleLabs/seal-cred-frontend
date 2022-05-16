@@ -1,7 +1,3 @@
-import classnames, { margin } from 'classnames/tailwind'
-
-const whale = classnames(margin('mb-12'))
-
 const EyeWhale = () => {
   return (
     <svg
@@ -10,7 +6,7 @@ const EyeWhale = () => {
       viewBox="0 0 130 117"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={whale}
+      className="-mt-5 mb-12"
     >
       <g filter="url(#filter0_d_90_6539)">
         <path
