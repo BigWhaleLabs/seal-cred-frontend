@@ -1,15 +1,15 @@
 import { BodyText } from 'components/Text'
 import Card from 'components/Card'
-import Colors from 'models/Colors'
 import DoubleSmile from 'icons/DoubleSmile'
 import NoisyRectangle from 'components/NoisyRectangle'
-import ZkSphere from 'components/ZkSphere'
 import classnames, {
   alignItems,
   display,
   flexDirection,
+  height,
   margin,
   space,
+  width,
 } from 'classnames/tailwind'
 
 const innerId = classnames(
@@ -23,7 +23,9 @@ const zkSpheresLeft = classnames(
   display('flex'),
   flexDirection('flex-row'),
   space('space-x-2'),
-  margin('mt-2')
+  margin('my-2'),
+  width('w-8'),
+  height('h-8')
 )
 
 function IdentityCardOne() {
@@ -40,10 +42,7 @@ function IdentityCardOne() {
           </BodyText>
         </div>
         <DoubleSmile />
-        <div className={zkSpheresLeft}>
-          <ZkSphere color={Colors.green} text="ZK" />
-          <ZkSphere color={Colors.yellow} text="ZK" />
-        </div>
+        <div className={zkSpheresLeft} />
       </div>
     </Card>
   )

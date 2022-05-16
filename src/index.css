@@ -36,8 +36,11 @@ body {
   65% {
     transform: translate(-15px, 1210px);
   }
+  66% {
+    transform: translate(-25px, 1383px);
+  }
   100% {
-    transform: translate(-15px, 1210px);
+    transform: translate(-25px, 1383px);
   }
 }
 @keyframes yellowSphereAnimation {
@@ -59,8 +62,11 @@ body {
   65% {
     transform: translate(-90px, 1230px);
   }
+  66% {
+    transform: translate(-85px, 1415px);
+  }
   100% {
-    transform: translate(-90px, 1230px);
+    transform: translate(-85px, 1415px);
   }
 }
 @keyframes pinkSphereAnimation {
@@ -82,8 +88,11 @@ body {
   65% {
     transform: translate(30px, 1210px);
   }
+  66% {
+    transform: translate(6px, 1370px);
+  }
   100% {
-    transform: translate(30px, 1210px);
+    transform: translate(6px, 1370px);
   }
 }
 

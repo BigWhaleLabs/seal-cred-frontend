@@ -8,16 +8,26 @@ import classnames, {
   display,
   flexDirection,
   margin,
+  opacity,
   space,
+  transitionDuration,
+  transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
+import useScrollPercent from 'helpers/useScrollPercent'
 
-const orbBoxes = classnames(
-  display('flex'),
-  flexDirection('flex-row'),
-  space('space-x-2'),
-  zIndex('z-40')
-)
+const orbBoxes = (animEnd?: boolean, beforeEnd?: boolean) =>
+  classnames(
+    display('flex'),
+    flexDirection('flex-row'),
+    space('space-x-2'),
+    transitionProperty('transition-all'),
+    opacity(
+      beforeEnd ? (animEnd ? 'opacity-100' : 'opacity-0') : 'opacity-100'
+    ),
+    transitionDuration('duration-1000'),
+    zIndex(animEnd ? 'z-40' : 'z-30')
+  )
 const orbBox = (margins?: TMargin) =>
   classnames(
     display('flex'),
@@ -28,8 +38,16 @@ const orbBox = (margins?: TMargin) =>
   )
 
 export default function OrbsInBoxes() {
+  const scroll = useScrollPercent()
+
+  const beforeEnd = scroll > 0.63
+  const animEnd = scroll > 0.66
+
   return (
-    <div className={orbBoxes} style={{ transform: 'translateY(90px)' }}>
+    <div
+      className={orbBoxes(animEnd, beforeEnd)}
+      style={{ transform: 'translateY(90px)' }}
+    >
       <div className={orbBox('mt-8')}>
         <OrbBox color={Colors.green} />
         <div className="absolute">

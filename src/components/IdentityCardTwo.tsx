@@ -1,14 +1,14 @@
 import { BodyText } from 'components/Text'
 import Card from 'components/Card'
-import Colors from 'models/Colors'
 import Grim from 'icons/Grin'
 import NoisyRectangle from 'components/NoisyRectangle'
-import ZkSphere from 'components/ZkSphere'
 import classnames, {
   alignItems,
   display,
   flexDirection,
+  height,
   margin,
+  width,
 } from 'classnames/tailwind'
 
 const innerId = classnames(
@@ -18,7 +18,7 @@ const innerId = classnames(
 )
 const identityText = classnames(margin('my-3'))
 const pinkRectangle = classnames(margin('my-1.875'))
-const zkSpheresRight = classnames(margin('mt-2'))
+const zkSpheresRight = classnames(margin('my-2'), height('h-8'), width('w-8'))
 
 function IdentityCardTwo() {
   return (
@@ -33,9 +33,7 @@ function IdentityCardTwo() {
           </BodyText>
         </div>
         <Grim />
-        <div className={zkSpheresRight}>
-          <ZkSphere color={Colors.pink} text="ZK" />
-        </div>
+        <div className={zkSpheresRight} />
       </div>
     </Card>
   )
