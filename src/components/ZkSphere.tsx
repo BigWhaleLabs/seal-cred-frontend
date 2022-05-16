@@ -46,6 +46,8 @@ const ZkSphere: FC<{
 
   const scroll = useScrollPercent()
 
+  const zkText = scroll > 0.3 ? 'ZK' : ''
+
   return animated ? (
     <div
       style={{
@@ -65,7 +67,7 @@ const ZkSphere: FC<{
       }}
       className={sphereStyles(bgColor, shadowColor)}
     >
-      ZK
+      {zkText}
     </div>
   ) : (
     <div className={sphereStyles(bgColor, shadowColor)}>{children || text}</div>
