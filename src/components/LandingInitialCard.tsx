@@ -6,13 +6,13 @@ import classnames, { margin } from 'classnames/tailwind'
 const initialHeaderText = classnames(margin('mt-2'), margin('mb-4'))
 const getStartedButton = classnames(margin('mt-6'), margin('mb-2'))
 
-function LandingInitialCard() {
+function LandingInitialCard({ showSpinner }: { showSpinner?: boolean }) {
   return (
     <Card
       shadow
       color="yellow"
       onlyWrap
-      spinner="One Identity to rule them all"
+      spinner={showSpinner ? 'One Identity to rule them all' : undefined}
     >
       <div className={initialHeaderText}>
         <HeaderText size="4xl" leading={11}>

@@ -28,7 +28,8 @@ import useScrollPercent from 'helpers/useScrollPercent'
 const pageBox = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-center')
+  alignItems('items-center'),
+  margin('mt-5', 'sm:mt-10')
 )
 const identityCards = classnames(
   display('flex'),
@@ -52,7 +53,7 @@ function Landing() {
 
   return (
     <div className={pageBox}>
-      <LandingInitialCard />
+      <LandingInitialCard showSpinner={!mobile} />
       <ScrollDownButton />
       <div
         className={position('absolute')}
