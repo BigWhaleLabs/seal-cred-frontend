@@ -26,13 +26,13 @@ class WalletStore {
 
       const instance = await web3Modal.connect()
       provider = new Web3Provider(instance)
-      this.subscribeProvider(instance)
       const userNetwork = (await provider.getNetwork()).name
       if (userNetwork !== env.VITE_ETH_NETWORK && env.VITE_ETH_NETWORK)
         throw new Error(
           ErrorList.wrongNetwork(userNetwork, env.VITE_ETH_NETWORK)
         )
       this.account = (await provider.listAccounts())[0]
+      this.subscribeProvider(instance)
     } catch (error) {
       if (error !== 'Modal closed by user') {
         handleError(error)
@@ -116,14 +116,12 @@ class WalletStore {
       handleError(error)
     })
 
-    provider.on('accountsChanged', () => {
-      void this.handleAccountChanged()
+    provider.on('accountsChanged', (accounts: string[]) => {
+      accounts.length ? void this.handleAccountChanged() : this.clearData()
     })
-    provider.on('disconnect', (accounts: string[]) => {
-      if (this.account && !accounts.includes(this.account)) return
-      if (provider) {
-        provider.removeAllListeners()
-      }
+    provider.on('disconnect', (error: unknown) => {
+      if (provider) provider.removeAllListeners()
+      handleError(error)
       this.clearData()
     })
     provider.on('chainChanged', async () => {
