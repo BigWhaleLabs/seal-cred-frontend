@@ -17,7 +17,7 @@ const GetStartedButton = () => {
       onClick={async () => {
         setLoading(true)
         try {
-          account ? navigate('/app') : await WalletStore.connect()
+          if (!account) await WalletStore.connect()
           navigate('/app')
         } catch (e) {
           handleError(e)
