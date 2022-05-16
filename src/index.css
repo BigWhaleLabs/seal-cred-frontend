@@ -48,10 +48,10 @@ body {
     transform: translate(0px, 0px);
   }
   40% {
-    transform: translate(0px, 715px);
+    transform: translate(0px, 725px);
   }
   50% {
-    transform: translate(0px, 715px);
+    transform: translate(0px, 725px);
   }
   60% {
     transform: translate(0px, 1120px);
