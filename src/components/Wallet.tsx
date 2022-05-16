@@ -1,5 +1,6 @@
 import { AccentText } from 'components/Text'
 import { useSnapshot } from 'valtio'
+import EnsAddress from 'components/EnsAddress'
 import SealWallet from 'icons/SealWallet'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -11,7 +12,6 @@ import classnames, {
   textAlign,
   width,
 } from 'classnames/tailwind'
-import truncateMiddle from 'helpers/truncateMiddle'
 
 const walletContainer = (accountExists: boolean) =>
   classnames(
@@ -27,13 +27,7 @@ const walletAccount = classnames(
 )
 
 export default function Wallet() {
-  const { account, ens } = useSnapshot(WalletStore)
-
-  const ensOrAccount =
-    account &&
-    (ens && ens.length >= 16
-      ? truncateMiddle(ens, 11, -3)
-      : ens || truncateMiddle(account, 11, -4))
+  const { account } = useSnapshot(WalletStore)
 
   return (
     <div
@@ -45,7 +39,7 @@ export default function Wallet() {
     >
       <div className={walletAccount}>
         <AccentText color={account ? 'text-yellow' : 'text-blue-600'}>
-          {account ? ensOrAccount : 'No wallet connected'}
+          {account ? <EnsAddress address={account} /> : 'No wallet connected'}
         </AccentText>
       </div>
       <div className={classnames(width('w-fit'))}>

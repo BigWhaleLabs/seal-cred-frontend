@@ -23,7 +23,7 @@ import classnames, {
   textAlign,
 } from 'classnames/tailwind'
 import sealCred from 'helpers/sealCred'
-import truncateMiddle from 'helpers/truncateMiddle'
+import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useBreakpoints from 'helpers/useBreakpoints'
 
 const badgeWrapper = (minted: boolean, small?: boolean) =>
@@ -172,7 +172,7 @@ function BadgeBlock({
   tokenId?: number
 }) {
   const { xs, sm } = useBreakpoints()
-  const shortAddress = truncateMiddle(contractAddress)
+  const shortAddress = truncateMiddleIfNeeded(contractAddress, 11)
 
   return (
     <div className={badgeWrapper(tokenId !== undefined, xs && !sm)}>
