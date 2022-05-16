@@ -1,8 +1,18 @@
 import { FC } from 'react'
-import { dropShadow } from 'classnames/tailwind'
 import Colors, { colorToDropShadow } from 'models/Colors'
+import classnames, {
+  TDropShadow,
+  dropShadow,
+  transitionProperty,
+} from 'classnames/tailwind'
 
-const OrbBox: FC<{ color: Colors }> = ({ color }) => {
+const orbBoxStyles = (shadowColor: TDropShadow, shadow?: boolean) =>
+  classnames(
+    shadow ? dropShadow(shadowColor) : undefined,
+    transitionProperty('transition-all')
+  )
+
+const OrbBox: FC<{ color: Colors; shadow?: boolean }> = ({ color, shadow }) => {
   const shadowColor = colorToDropShadow(color)
 
   return (
@@ -10,7 +20,7 @@ const OrbBox: FC<{ color: Colors }> = ({ color }) => {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 66 66"
-        className={dropShadow(shadowColor)}
+        className={orbBoxStyles(shadowColor, shadow)}
       >
         <path
           d="M3.77,11.72a8.67,8.67,0,0,1,8.66-8.67H60.1a8.68,8.68,0,0,1,8.67,8.67V59.38a8.68,8.68,0,0,1-8.67,8.67H12.43a8.67,8.67,0,0,1-8.66-8.67Z"

@@ -1,6 +1,6 @@
 import { HighlightedText } from 'components/Text'
 import Colors from 'models/Colors'
-import OrbBox from 'icons/OrbInBox'
+import OrbBox from 'icons/OrbBox'
 import ZkSphere from 'components/ZkSphere'
 import classnames, {
   TMargin,
@@ -12,6 +12,7 @@ import classnames, {
   transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
+import useScrollPercent from 'helpers/useScrollPercent'
 
 const orbBoxes = classnames(
   display('flex'),
@@ -30,10 +31,13 @@ const orbBox = (margins?: TMargin) =>
   )
 
 export default function OrbsInBoxes() {
+  const scroll = useScrollPercent()
+  const animNotStarted = scroll < 0.2
+
   return (
     <div className={orbBoxes} style={{ transform: 'translateY(90px)' }}>
       <div className={orbBox('mt-8')}>
-        <OrbBox color={Colors.green} />
+        <OrbBox color={Colors.green} shadow={animNotStarted} />
         <div className="absolute">
           <ZkSphere color={Colors.green} animated />
         </div>
@@ -42,7 +46,7 @@ export default function OrbsInBoxes() {
         </HighlightedText>
       </div>
       <div className={orbBox()}>
-        <OrbBox color={Colors.yellow} />
+        <OrbBox color={Colors.yellow} shadow={animNotStarted} />
         <div className="absolute">
           <ZkSphere color={Colors.yellow} animated />
         </div>
@@ -51,7 +55,7 @@ export default function OrbsInBoxes() {
         </HighlightedText>
       </div>
       <div className={orbBox('mt-11')}>
-        <OrbBox color={Colors.pink} />
+        <OrbBox color={Colors.pink} shadow={animNotStarted} />
         <div className="absolute">
           <ZkSphere color={Colors.pink} animated />
         </div>
