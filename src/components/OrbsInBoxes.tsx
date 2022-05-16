@@ -9,12 +9,14 @@ import classnames, {
   flexDirection,
   margin,
   space,
+  zIndex,
 } from 'classnames/tailwind'
 
 const orbBoxes = classnames(
   display('flex'),
   flexDirection('flex-row'),
-  space('space-x-2')
+  space('space-x-2'),
+  zIndex('z-40')
 )
 const orbBox = (margins?: TMargin) =>
   classnames(
