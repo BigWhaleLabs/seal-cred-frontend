@@ -22,7 +22,12 @@ const connectiveBlock = (vertical = true) =>
     margin(vertical ? 'mx-auto' : 'mt-12')
   )
 
-const connectiveLine = (from?: Color, to?: Color, vertical = true) =>
+const connectiveLine = (
+  from?: Color,
+  to?: Color,
+  vertical = true,
+  customHeight?: number
+) =>
   classnames(
     gradientColorStops(
       from === 'blue'
@@ -46,7 +51,7 @@ const connectiveLine = (from?: Color, to?: Color, vertical = true) =>
     ),
     backgroundImage('bg-gradient-to-b', 'lg:bg-gradient-to-r'),
     width(vertical ? 'w-px' : 'w-4'),
-    height(vertical ? 'h-4' : 'h-px')
+    height(customHeight ? `h-${customHeight}` : vertical ? 'h-4' : 'h-px')
   )
 
 const CardSeparator: FC<{
@@ -54,11 +59,15 @@ const CardSeparator: FC<{
   from?: Color
   to?: Color
   vertical?: boolean
-}> = ({ to, from, number, vertical }) => {
+  customHeight?: number
+}> = ({ to, from, number, vertical, customHeight }) => {
   return (
     <div className={connectiveBlock(vertical)}>
       {[...Array(number).keys()].map((_, index) => (
-        <div key={index} className={connectiveLine(from, to, vertical)}></div>
+        <div
+          key={index}
+          className={connectiveLine(from, to, vertical, customHeight)}
+        ></div>
       ))}
     </div>
   )

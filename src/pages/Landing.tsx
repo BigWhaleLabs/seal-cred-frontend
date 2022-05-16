@@ -1,51 +1,94 @@
-import { AccentText, BodyText, HeaderText } from 'components/Text'
-import { useNavigate } from 'react-router-dom'
-import { useSnapshot } from 'valtio'
-import { useState } from 'react'
-import Button from 'components/Button'
-import Card from 'components/Card'
-import WalletStore from 'stores/WalletStore'
+import { HighlightedText } from 'components/Text'
+import Colors from 'models/Colors'
+import IdentityCard from 'components/IdentityCardOne'
+import LandingBuildingIdentitiesCard from 'components/LandingBuildingIdentitiesCard'
+import LandingCreatingZKProofCard from 'components/LandingCreatingZKProofCard'
+import LandingInitialCard from 'components/LandingInitialCard'
+import LandingLearnMoreCard from 'components/LandingLearnMoreCard'
+import OrbsInBoxes from 'components/OrbsInBoxes'
+import ScrollDownButton from 'components/ScrollDownButton'
+import SuperHr from 'components/SuperHr'
+import SuperOrbWithConnectors from 'icons/SuperOrbWithConnectors'
+import TopConnectors from 'icons/TopConnectors'
+import ZkSphere from 'components/ZkSphere'
 import classnames, {
   alignItems,
   display,
   flexDirection,
+  justifyContent,
+  margin,
+  position,
+  space,
+  width,
+  zIndex,
 } from 'classnames/tailwind'
+import useBreakpoints from 'helpers/useBreakpoints'
+import useScrollPercent from 'helpers/useScrollPercent'
 
 const pageBox = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-center')
+  alignItems('items-center'),
+  margin('mt-5', 'sm:mt-10')
+)
+const identityCards = classnames(
+  display('flex'),
+  flexDirection('flex-row'),
+  alignItems('items-center'),
+  space('lg:space-x-6', 'space-x-4'),
+  margin('mb-6')
+)
+const highlightedBlock = classnames(
+  display('flex'),
+  flexDirection('flex-row'),
+  justifyContent('justify-center'),
+  width('lg:w-fit', 'w-5/6'),
+  position('absolute')
 )
 
 function Landing() {
-  const navigate = useNavigate()
-  const { account } = useSnapshot(WalletStore)
-  const [loading, setLoading] = useState(false)
+  const scroll = useScrollPercent()
+  const { mobile } = useBreakpoints()
+  const animEnd = scroll > 0.645
 
   return (
     <div className={pageBox}>
-      <Card shadow color="yellow" onlyWrap>
-        <HeaderText size="4xl">
-          Build your pseudonymous identity with ZK badges
-        </HeaderText>
-        <BodyText size="base">
-          <AccentText color="text-yellow">SealCred</AccentText> allows you to
-          experience the world pseudonymously with ZK badges. This means you can
-          prove ownership of an NFT without it tracing back to you.
-        </BodyText>
-        <Button
-          colors="primary"
-          loading={loading}
-          onClick={async () => {
-            setLoading(true)
-            account ? navigate('/app') : await WalletStore.connect()
-            navigate('/app')
-            setLoading(false)
-          }}
-        >
-          Get started
-        </Button>
-      </Card>
+      <LandingInitialCard showSpinner={!mobile} />
+      <ScrollDownButton />
+      <div
+        className={position('absolute')}
+        style={{ transform: 'translateY(610px)' }}
+      >
+        <TopConnectors />
+      </div>
+      <div
+        className={highlightedBlock}
+        style={{ transform: 'translateY(690px)' }}
+      >
+        <HighlightedText center bold>
+          It starts with connecting your wallets with NFTs
+        </HighlightedText>
+      </div>
+      <OrbsInBoxes />
+      <div
+        className={classnames(position('absolute'), zIndex('z-40'))}
+        style={{ transform: 'translateY(1050px)' }}
+      >
+        <LandingCreatingZKProofCard />
+      </div>
+      <SuperOrbWithConnectors />
+      <div className={identityCards}>
+        <IdentityCard left text="Identity-01" mobile={mobile} reveal={animEnd}>
+          <ZkSphere text="ZK" color={Colors.green} />
+          <ZkSphere text="ZK" color={Colors.yellow} />
+        </IdentityCard>
+        <IdentityCard text="Identity-02" mobile={mobile} reveal={animEnd}>
+          <ZkSphere text="ZK" color={Colors.pink} />
+        </IdentityCard>
+      </div>
+      <LandingBuildingIdentitiesCard />
+      <SuperHr />
+      <LandingLearnMoreCard />
     </div>
   )
 }

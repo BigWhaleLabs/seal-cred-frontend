@@ -35,6 +35,7 @@ module.exports = {
       },
       screens: {
         fold: '280px',
+        tiny: '360px',
         sm: '450px',
         md: '600px',
       },
@@ -58,7 +59,7 @@ module.exports = {
         pink50: 'rgba(255, 123, 237, 0.5)',
         yellow50: 'rgba(254, 216, 35, 0.4)',
         blue50: 'rgba(21, 161, 252, 0.5)',
-        white50: 'rgba(239, 236, 214, 0.3)',
+        white50: 'rgba(239, 236, 214, 0.4)',
         green50: 'rgba(1, 254, 182, 0.4)',
       },
       boxShadow: {
@@ -70,13 +71,26 @@ module.exports = {
       height: {
         card: '508px',
         'mobile-card': '365px',
+        2.75: '11px',
       },
       width: {
         card: '398px',
+        'thin-card': '187px',
+        'thin-mobile': '172px',
         'mobile-card': '92%',
       },
       dropShadow: {
         yellow: '0px 0px 10px #fed823',
+        pink: '0px 0px 10px #ff7bed',
+        green: '0px 0px 10px #01fed6',
+        white: '0px 0px 10px #efecd6',
+      },
+      padding: {
+        3.875: '15.5px',
+      },
+      margin: {
+        1.875: '7.5px',
+        2.125: '8.5px',
       },
     },
   },

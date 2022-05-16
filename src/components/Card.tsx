@@ -14,15 +14,19 @@ import {
   position,
   space,
   width,
+  wordBreak,
+  zIndex,
 } from 'classnames/tailwind'
 import ArcText from 'components/ArcText'
 
-type Color = 'pink' | 'yellow' | 'green' | 'blue'
+type Color = 'pink' | 'yellow' | 'green' | 'blue' | 'white'
 interface CardProps {
   shadow?: boolean
   color?: Color
   onlyWrap?: boolean
   spinner?: string
+  thin?: boolean
+  small?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -35,6 +39,8 @@ const cardColor = (color?: Color) => {
         ? 'border-green'
         : color === 'pink'
         ? 'border-pink'
+        : color === 'white'
+        ? 'border-white'
         : color === 'blue'
         ? 'border-blue-500'
         : 'border-blue-900'
@@ -47,6 +53,8 @@ const cardColor = (color?: Color) => {
         ? 'shadow-green50'
         : color === 'pink'
         ? 'shadow-pink50'
+        : color === 'white'
+        ? 'shadow-white50'
         : color === 'blue'
         ? 'shadow-blue50'
         : undefined
@@ -54,18 +62,33 @@ const cardColor = (color?: Color) => {
   )
 }
 
-const cardContainer = (shadow?: boolean, color?: Color, onlyWrap = false) => {
+const cardContainer = (
+  shadow?: boolean,
+  color?: Color,
+  onlyWrap = false,
+  thin = false,
+  small?: boolean
+) => {
   return classnames(
     position('relative'),
     borderRadius('rounded-2xl'),
     backgroundColor('bg-blue-900'),
     cardColor(shadow ? color : undefined),
-    padding('p-6'),
+    padding(small ? 'p-3.875' : 'p-6'),
+    width(
+      thin ? 'sm:!w-thin-card' : 'sm:w-card',
+      thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
+      thin ? 'w-32' : undefined
+    ),
+    margin(thin ? undefined : 'mx-4', 'lg:mx-0'),
+    height(
+      onlyWrap ? undefined : thin ? 'h-60' : 'h-fit',
+      onlyWrap ? undefined : thin ? undefined : 'lg:h-card'
+    ),
     space('space-y-4'),
-    width('w-mobile-card', 'sm:w-card'),
-    margin('mx-4', 'lg:mx-0'),
-    height(onlyWrap ? undefined : 'h-fit', onlyWrap ? undefined : 'lg:h-card'),
-    maxHeight(onlyWrap ? undefined : 'max-h-508')
+    maxHeight(onlyWrap ? undefined : 'max-h-508'),
+    wordBreak('break-words'),
+    zIndex('z-30')
   )
 }
 
@@ -74,10 +97,12 @@ const Card: FC<CardProps> = ({
   shadow,
   onlyWrap,
   spinner,
+  thin,
   children,
+  small,
 }) => {
   return (
-    <div className={cardContainer(shadow, color, onlyWrap)}>
+    <div className={cardContainer(shadow, color, onlyWrap, thin, small)}>
       {!!spinner && (
         <div className="absolute md:-top-28 md:-right-28 -top-24 -right-4">
           <ArcText text={spinner} />

@@ -14,10 +14,11 @@ const textStyle = classnames(
   fontWeight('font-semibold'),
   fontSize('text-xl')
 )
-const svgBox = classnames(height('md:h-64', 'h-40'))
+const svgBox = classnames(height('md:h-64', 'h-44'))
 
-const ArcText: FC<{ text: string; radius?: number }> = ({
+const ArcText: FC<{ text: string; radius?: number; landing?: boolean }> = ({
   text,
+  landing,
   radius = 85,
 }) => {
   const { xs, md } = useBreakpoints()
@@ -26,7 +27,9 @@ const ArcText: FC<{ text: string; radius?: number }> = ({
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      viewBox={xs && !md ? '0 0 450 450' : '0 0 500 500'}
+      viewBox={
+        landing ? '0 0 475 475' : xs && !md ? '0 0 450 450' : '0 0 500 500'
+      }
       className={svgBox}
     >
       <title>{text}</title>

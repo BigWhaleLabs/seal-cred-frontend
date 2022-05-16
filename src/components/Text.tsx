@@ -3,12 +3,15 @@ import {
   BodyTextSize,
   HeaderSize,
   LinkTextProps,
-} from 'types/TextProps'
+} from 'models/TextProps'
 import { FC } from 'react'
 import {
+  TBackgroundColor,
   TTextColor,
   backgroundClip,
+  backgroundColor,
   backgroundImage,
+  borderRadius,
   classnames,
   fontFamily,
   fontSize,
@@ -17,13 +20,16 @@ import {
   lineHeight,
   margin,
   overflow,
+  padding,
   textAlign,
   textColor,
   textDecoration,
   textOverflow,
   whitespace,
   width,
+  zIndex,
 } from 'classnames/tailwind'
+import Colors, { colorToTailwindBg } from 'models/Colors'
 
 export const textTruncateStyles = classnames(
   width('w-fit'),
@@ -37,16 +43,14 @@ const headerText = (size: HeaderSize, leading = 8, bold = true) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize(
-      `lg:text-${size}`,
-      size === '4xl' ? 'text-3xl' : size === '3xl' ? 'text-2xl' : 'text-xl'
-    ),
+    fontSize(`text-${size}`),
     textColor('text-white'),
-    lineHeight(`leading-${leading}`)
+    lineHeight(leading === 11 ? 'leading-11' : 'leading-8')
   )
+
 export const HeaderText: FC<{
   size: HeaderSize
-  leading?: 11
+  leading?: number
   bold?: boolean
 }> = ({ size, bold, leading, children }) => {
   return <h1 className={headerText(size, leading, bold)}>{children}</h1>
@@ -82,7 +86,7 @@ const bodyText = (
     textColor('text-white'),
     center ? textAlign('text-center') : null,
     fontSize(`text-${size}`),
-    lineHeight(`leading-${leading}`)
+    lineHeight(leading === 6 ? 'leading-6' : 'leading-4')
   )
 export const BodyText: FC<{
   size: BodyTextSize
@@ -130,10 +134,16 @@ export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
 
-const linkText = ({ gradientFrom, gradientTo, bold }: LinkTextProps) =>
+const linkText = ({ gradientFrom, gradientTo, bold, color }: LinkTextProps) =>
   classnames(
     textDecoration('no-underline'),
-    textColor(gradientFrom || gradientTo ? 'text-transparent' : 'text-yellow'),
+    textColor(
+      color
+        ? color
+        : gradientFrom || gradientTo
+        ? 'text-transparent'
+        : 'text-yellow'
+    ),
     backgroundImage(
       gradientFrom || gradientTo ? 'bg-gradient-to-r' : undefined
     ),
@@ -180,4 +190,36 @@ const tooltipText = classnames(
 )
 export const TooltipText: FC = ({ children }) => {
   return <div className={tooltipText}>{children}</div>
+}
+
+const highlightedText = (
+  bgColor: TBackgroundColor,
+  center?: boolean,
+  bold?: boolean,
+  onlyWrap?: boolean
+) =>
+  classnames(
+    textColor('text-blue-900'),
+    fontWeight(bold ? 'font-bold' : 'font-medium'),
+    fontSize('text-sm'),
+    borderRadius('rounded-full'),
+    backgroundColor(bgColor),
+    width('w-fit'),
+    padding(onlyWrap ? 'px-2' : 'px-4', 'py-1'),
+    textAlign(center ? 'text-center' : 'text-left'),
+    zIndex('z-10')
+  )
+export const HighlightedText: FC<{
+  center?: boolean
+  color?: Colors
+  bold?: boolean
+  onlyWrap?: boolean
+}> = ({ children, center, color, bold, onlyWrap }) => {
+  const bgColor = colorToTailwindBg(color)
+
+  return (
+    <div className={highlightedText(bgColor, center, bold, onlyWrap)}>
+      {children}
+    </div>
+  )
 }

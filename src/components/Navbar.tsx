@@ -14,6 +14,7 @@ import classnames, {
   padding,
   position,
   space,
+  transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
 
@@ -27,8 +28,9 @@ const navbar = (visible?: boolean, withoutWallet?: boolean) =>
     padding('py-4', 'px-4'),
     margin('mb-2'),
     space('space-x-9', 'lg:space-x-0'),
-    zIndex('z-10'),
-    backgroundColor(visible ? 'bg-blue-900' : 'bg-transparent')
+    zIndex('z-50'),
+    backgroundColor(visible ? 'bg-blue-900' : 'bg-transparent'),
+    transitionProperty('transition-all')
   )
 
 const logoContainer = classnames(
