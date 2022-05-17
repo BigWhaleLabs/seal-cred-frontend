@@ -15,7 +15,7 @@ const SealWallet: FC<{ connected?: boolean }> = ({ connected }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={classnames(
         boxShadow('shadow-lg'),
-        boxShadowColor('shadow-pink'),
+        boxShadowColor('shadow-secondary'),
         borderRadius('rounded-full')
       )}
     >

@@ -11,7 +11,7 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 
-type Color = 'pink' | 'yellow' | 'green' | 'blue' | 'transparent'
+type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'transparent'
 
 const connectiveBlock = (vertical = true) =>
   classnames(
@@ -30,23 +30,23 @@ const connectiveLine = (
 ) =>
   classnames(
     gradientColorStops(
-      from === 'blue'
-        ? 'from-blue-500'
-        : from === 'green'
-        ? 'from-green'
-        : from === 'yellow'
-        ? 'from-yellow'
-        : from === 'pink'
-        ? 'from-pink'
+      from === 'accent'
+        ? 'from-accent'
+        : from === 'tertiary'
+        ? 'from-tertiary'
+        : from === 'primary'
+        ? 'from-primary'
+        : from === 'secondary'
+        ? 'from-secondary'
         : 'from-transparent',
-      to === 'blue'
-        ? 'to-blue-500'
-        : to === 'green'
-        ? 'to-green'
-        : to === 'yellow'
-        ? 'to-yellow'
-        : to === 'pink'
-        ? 'to-pink'
+      to === 'accent'
+        ? 'to-accent'
+        : to === 'tertiary'
+        ? 'to-tertiary'
+        : to === 'primary'
+        ? 'to-primary'
+        : to === 'secondary'
+        ? 'to-secondary'
         : 'to-transparent'
     ),
     backgroundImage('bg-gradient-to-b', 'lg:bg-gradient-to-r'),

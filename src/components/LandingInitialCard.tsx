@@ -10,7 +10,7 @@ function LandingInitialCard({ showSpinner }: { showSpinner?: boolean }) {
   return (
     <Card
       shadow
-      color="yellow"
+      color="accent"
       onlyWrap
       spinner={showSpinner ? 'One Identity to rule them all' : undefined}
     >
@@ -20,7 +20,7 @@ function LandingInitialCard({ showSpinner }: { showSpinner?: boolean }) {
         </HeaderText>
       </div>
       <BodyText size="base" leading={6}>
-        <AccentText color="text-yellow">SealCred</AccentText> allows you to
+        <AccentText color="text-accent">SealCred</AccentText> allows you to
         experience the world pseudonymously with ZK badges. This means you can
         prove ownership of an NFT without it tracing back to you.
       </BodyText>

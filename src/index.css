@@ -16,33 +16,45 @@ body {
   background: conic-gradient(from 90deg at 1px 1px, #0d0030 90deg, #1a0259 0) 0
     0/48px 48px;
 }
+/* Grid for mobiles */
+@media screen and (max-width: 600px) {
+  body {
+    background: conic-gradient(from 90deg at 1px 1px, #0d0030 90deg, #1a0259 0)
+      0 0/32px 32px;
+  }
+}
 
-@keyframes greenSphereAnimation {
+@keyframes tertiarySphereAnimation {
   0% {
     transform: translate(0px, 0px);
   }
   20% {
+    /* Animation starts after 20% of page is scrolled */
     transform: translate(0px, 0px);
   }
   40% {
+    /* Orb before SuperOrb */
     transform: translate(0px, 715px);
   }
   50% {
+    /* Orb going into SuperOrb */
     transform: translate(84px, 715px);
   }
   60% {
+    /* Orb before fork */
     transform: translate(84px, 1080px);
-    opacity: 100;
   }
   65% {
+    /* Orb to the behind the ID Card */
     transform: translate(-10px, 1180px);
-    opacity: 0;
   }
   100% {
+    /* Orb goes and stays behind ID card */
+    /* Reveal animation happens inside IdentityCard */
     transform: translate(-25px, 1383px);
   }
 }
-@keyframes yellowSphereAnimation {
+@keyframes accentSphereAnimation {
   0% {
     transform: translate(0px, 0px);
   }
@@ -67,7 +79,7 @@ body {
     transform: translate(-85px, 1415px);
   }
 }
-@keyframes pinkSphereAnimation {
+@keyframes secondarySphereAnimation {
   0% {
     transform: translate(0px, 0px);
   }
@@ -93,13 +105,7 @@ body {
   }
 }
 
-@media screen and (max-width: 600px) {
-  body {
-    background: conic-gradient(from 90deg at 1px 1px, #0d0030 90deg, #1a0259 0)
-      0 0/32px 32px;
-  }
-}
-
+/* Overwrites SimpleBar config to look like in design doc */
 .simplebar-scrollbar:before {
   background: #fed823 !important;
   filter: drop-shadow(0px 0px 10px #fed823);
@@ -107,10 +113,12 @@ body {
 }
 .simplebar-track {
   width: 11px !important;
+  /* This option created background with less size than thumb size */
   background: url('/img/scrollbarBg.png');
   overflow: visible !important;
 }
 
+/* Wallet select menu for dark and light theme */
 .web3modal-modal-lightbox {
   z-index: 100 !important;
 }

@@ -12,7 +12,7 @@ import classnames, {
 const rectangle = (bgColor: TBackgroundColor) =>
   classnames(
     backgroundColor(bgColor),
-    height('h-2.75'),
+    height('h-noisy-rectangle'),
     width('fold:w-36', 'w-28'),
     opacity('opacity-50')
   )
