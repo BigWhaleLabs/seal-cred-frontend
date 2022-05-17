@@ -3,6 +3,7 @@ import { Suspense, lazy } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
 import SealCredStore from 'stores/SealCredStore'
+
 const ContractName = lazy(() => import('components/ContractName'))
 
 function SupportedContractsComponent() {
