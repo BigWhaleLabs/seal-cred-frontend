@@ -22,7 +22,7 @@ export default function OrbBox({ color, shadow }: OrbBoxProps) {
   const shadowColor = colorToDropShadow(color)
 
   return (
-    <div style={{ height: '65px', width: '65px' }}>
+    <div style={{ height: '4.063rem', width: '4.063rem' }}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 66 66"
