@@ -57,13 +57,13 @@ export default function () {
       <ScrollDownButton />
       <div
         className={position('absolute')}
-        style={{ transform: 'translateY(610px)' }}
+        style={{ transform: 'translateY(38.125rem)' }}
       >
         <TopConnectors />
       </div>
       <div
         className={highlightedBlock}
-        style={{ transform: 'translateY(690px)' }}
+        style={{ transform: 'translateY(43.125rem)' }}
       >
         <HighlightedText center bold>
           It starts with connecting your wallets with NFTs
@@ -72,7 +72,7 @@ export default function () {
       <OrbsInBoxes />
       <div
         className={classnames(position('absolute'), zIndex('z-40'))}
-        style={{ transform: 'translateY(1050px)' }}
+        style={{ transform: 'translateY(65.625rem)' }}
       >
         <CreatingZKProofCard />
       </div>

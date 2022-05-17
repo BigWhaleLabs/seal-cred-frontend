@@ -36,7 +36,7 @@ export default function () {
   const animNotStarted = scroll < 0.2
 
   return (
-    <div className={orbBoxes} style={{ transform: 'translateY(90px)' }}>
+    <div className={orbBoxes} style={{ transform: 'translateY(5.625rem)' }}>
       <div className={orbBox('mt-8')}>
         <OrbBox color={Colors.tertiary} shadow={animNotStarted} />
         <div className={position('absolute')}>
