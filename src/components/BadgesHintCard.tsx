@@ -1,5 +1,5 @@
 import { BadgeText } from 'components/Text'
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import classnames, {
   backgroundColor,
   borderRadius,
@@ -9,7 +9,12 @@ import classnames, {
   space,
 } from 'classnames/tailwind'
 
-const BadgesHintCard: FC<{ text?: ReactNode }> = ({ text, children }) => {
+interface BadgesHintCardProps {
+  children?: ReactNode
+  text?: ReactNode
+}
+
+export default function ({ text, children }: BadgesHintCardProps) {
   return (
     <div
       className={classnames(
@@ -26,5 +31,3 @@ const BadgesHintCard: FC<{ text?: ReactNode }> = ({ text, children }) => {
     </div>
   )
 }
-
-export default BadgesHintCard
