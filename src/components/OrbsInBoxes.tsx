@@ -8,6 +8,7 @@ import classnames, {
   display,
   flexDirection,
   margin,
+  position,
   space,
   transitionProperty,
   zIndex,
@@ -38,7 +39,7 @@ export default function OrbsInBoxes() {
     <div className={orbBoxes} style={{ transform: 'translateY(90px)' }}>
       <div className={orbBox('mt-8')}>
         <OrbBox color={Colors.tertiary} shadow={animNotStarted} />
-        <div className="absolute">
+        <div className={position('absolute')}>
           <ZkSphere color={Colors.tertiary} animated />
         </div>
         <HighlightedText color={Colors.tertiary} center onlyWrap bold>
@@ -47,7 +48,7 @@ export default function OrbsInBoxes() {
       </div>
       <div className={orbBox()}>
         <OrbBox color={Colors.accent} shadow={animNotStarted} />
-        <div className="absolute">
+        <div className={position('absolute')}>
           <ZkSphere color={Colors.accent} animated />
         </div>
         <HighlightedText color={Colors.accent} center onlyWrap bold>
@@ -56,7 +57,7 @@ export default function OrbsInBoxes() {
       </div>
       <div className={orbBox('mt-11')}>
         <OrbBox color={Colors.secondary} shadow={animNotStarted} />
-        <div className="absolute">
+        <div className={position('absolute')}>
           <ZkSphere color={Colors.secondary} animated />
         </div>
         <HighlightedText color={Colors.secondary} center onlyWrap bold>
