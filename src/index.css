@@ -43,10 +43,12 @@ body {
   60% {
     /* Orb before fork */
     transform: translate(84px, 1080px);
+    opacity: 100;
   }
   65% {
     /* Orb to the behind the ID Card */
     transform: translate(-10px, 1180px);
+    opacity: 0;
   }
   100% {
     /* Orb goes and stays behind ID card */
