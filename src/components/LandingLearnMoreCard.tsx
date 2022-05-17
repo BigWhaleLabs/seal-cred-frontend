@@ -10,11 +10,11 @@ const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
 function LandingLearnMoreCard() {
   return (
     <div className={margin('mb-24')}>
-      <Card color="blue" shadow onlyWrap>
+      <Card color="primary" shadow onlyWrap>
         <PrivacyDeath />
         <div className={bigWhaleLabsText}>
           <BodyText size="base">
-            <LinkText color="text-blue-500" url={`https://bigwhalelabs.com`}>
+            <LinkText color="text-primary" url={`https://bigwhalelabs.com`}>
               Big Whale Labs{' '}
             </LinkText>
             is dedicated to building a pseudonymous world in which privacy and

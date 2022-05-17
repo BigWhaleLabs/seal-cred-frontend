@@ -1,6 +1,6 @@
 import { dropShadow } from 'classnames/tailwind'
 
-const starContainer = dropShadow('drop-shadow-yellow')
+const starContainer = dropShadow('drop-shadow-accent')
 
 const Star = () => {
   return (

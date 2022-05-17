@@ -9,7 +9,7 @@ import classnames, {
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const textStyle = classnames(
-  fill('fill-pink'),
+  fill('fill-secondary'),
   textTransform('uppercase'),
   fontWeight('font-semibold'),
   fontSize('text-xl')
