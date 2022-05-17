@@ -33,7 +33,7 @@ const contentWrapper = classnames(
 
 const cardTitle = classnames(
   fontFamily('font-primary'),
-  textColor('text-yellow'),
+  textColor('text-accent'),
   fontSize('text-4xl'),
   fontWeight('font-bold'),
   margin('mb-4')
@@ -55,7 +55,7 @@ export default function ConnectAccount() {
           Connect a wallet with supported NFTs to create ZK proofs.
         </span>
         <Button
-          colors="primary"
+          colors="accent"
           loading={walletLoading}
           onClick={async () => {
             await WalletStore.connect(true)

@@ -29,7 +29,7 @@ import {
 import Arrow from 'components/Arrow'
 import Loading from 'icons/Loading'
 
-type ButtonColors = 'primary' | 'secondary' | 'tertiary'
+type ButtonColors = 'accent' | 'secondary' | 'tertiary'
 
 export interface ButtonProps {
   colors: ButtonColors
@@ -94,17 +94,17 @@ const colorClasses = ({
   small,
 }: ButtonColorClasses) =>
   classnames(
-    colors === 'primary'
+    colors === 'accent'
       ? classnames(
-          textColor('text-blue-900'),
+          textColor('text-primary-dark'),
           fontSize(small ? 'text-sm' : 'text-lg'),
           padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
           borderRadius('rounded-full'),
-          backgroundColor('bg-green'),
+          backgroundColor('bg-tertiary'),
           boxShadowColor(
-            'shadow-green',
-            'hover:shadow-green',
-            'active:shadow-green'
+            'shadow-tertiary',
+            'hover:shadow-tertiary',
+            'active:shadow-tertiary'
           ),
           boxShadow('shadow-button'),
           brightness(
@@ -113,15 +113,15 @@ const colorClasses = ({
           )
         )
       : colors === 'secondary'
-      ? classnames(textColor('text-yellow')) // TBD
+      ? classnames(textColor('text-accent')) // TBD
       : classnames(
           textColor(
             'text-transparent',
-            loading || disabled ? undefined : 'active:text-yellow'
+            loading || disabled ? undefined : 'active:text-accent'
           ),
           backgroundClip('bg-clip-text'),
           backgroundImage('bg-gradient-to-r'),
-          gradientColorStops('from-pink', 'to-yellow')
+          gradientColorStops('from-secondary', 'to-accent')
         )
   )
 

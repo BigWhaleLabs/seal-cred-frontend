@@ -24,7 +24,7 @@ body {
   }
 }
 
-@keyframes greenSphereAnimation {
+@keyframes tertiarySphereAnimation {
   0% {
     transform: translate(0px, 0px);
   }
@@ -54,7 +54,7 @@ body {
     transform: translate(-25px, 1383px);
   }
 }
-@keyframes yellowSphereAnimation {
+@keyframes accentSphereAnimation {
   0% {
     transform: translate(0px, 0px);
   }
@@ -79,7 +79,7 @@ body {
     transform: translate(-85px, 1415px);
   }
 }
-@keyframes pinkSphereAnimation {
+@keyframes secondarySphereAnimation {
   0% {
     transform: translate(0px, 0px);
   }

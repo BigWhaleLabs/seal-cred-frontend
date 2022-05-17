@@ -23,7 +23,7 @@ const innerId = classnames(
   overflow('overflow-hidden')
 )
 const rectangleMargin = (left: boolean) =>
-  classnames(margin(left ? 'my-1' : 'my-1.875'))
+  classnames(margin(left ? 'my-1' : 'my-7.5'))
 const identityText = classnames(margin('my-3'))
 const zkSpheresLeft = (reveal?: boolean) =>
   classnames(
@@ -47,12 +47,12 @@ const IdentityCardOne: FC<{
       <div className={innerId}>
         <div className={rectangleMargin(left)}>
           {left ? (
-            <NoisyRectangle bgColor="bg-green" />
+            <NoisyRectangle bgColor="bg-tertiary" />
           ) : (
-            <NoisyRectangle bgColor="bg-pink" />
+            <NoisyRectangle bgColor="bg-secondary" />
           )}
         </div>
-        {left && <NoisyRectangle bgColor="bg-yellow" />}
+        {left && <NoisyRectangle bgColor="bg-accent" />}
         <div className={identityText}>
           <BodyText size={mobile ? 'sm' : 'base'} center>
             {text}
