@@ -7,7 +7,7 @@ import classnames, {
   position,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const wrapperBox = classnames(
   position('relative'),
@@ -18,12 +18,15 @@ const wrapperBox = classnames(
 )
 
 const PrivacyDeath = () => {
-  const { xs, sm } = useBreakpoints()
+  const { xxs, sm } = useBreakpoints()
 
   return (
     <div className={wrapperBox}>
       <div className={'absolute scale-150 md:-top-2/3 -top-1/2'}>
-        <ArcText landing={xs || sm} text="Give me privacy or give me death •" />
+        <ArcText
+          landing={xxs || sm}
+          text="Give me privacy or give me death •"
+        />
       </div>
       <EyeWhale />
     </div>

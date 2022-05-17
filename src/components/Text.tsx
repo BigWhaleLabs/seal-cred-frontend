@@ -1,12 +1,9 @@
-import {
-  AccentTextProps,
-  BodyTextSize,
-  HeaderSize,
-  LinkTextProps,
-} from 'models/TextProps'
+import {} from 'classnames/tailwind'
 import { FC } from 'react'
 import {
   TBackgroundColor,
+  TGradientColorStops,
+  TTextAlign,
   TTextColor,
   backgroundClip,
   backgroundColor,
@@ -31,14 +28,7 @@ import {
 } from 'classnames/tailwind'
 import Colors, { colorToTailwindBg } from 'models/Colors'
 
-export const textTruncateStyles = classnames(
-  width('w-fit'),
-  textOverflow('text-ellipsis'),
-  overflow('overflow-hidden'),
-  whitespace('whitespace-nowrap'),
-  margin('mr-1')
-)
-
+type HeaderSize = '4xl' | '3xl' | '2xl'
 const headerText = (size: HeaderSize, leading = 8, bold = true) =>
   classnames(
     fontFamily('font-primary'),
@@ -57,13 +47,19 @@ export const HeaderText: FC<{
 }
 
 const subheaderText = classnames(
-  textColor('text-blue-500'),
+  textColor('text-primary'),
   fontFamily('font-primary')
 )
 export const SubheaderText: FC = ({ children }) => {
   return <h2 className={subheaderText}>{children}</h2>
 }
 
+interface AccentTextProps {
+  color: TTextColor
+  align?: TTextAlign
+  bold?: boolean
+  small?: boolean
+}
 const accentText = ({ color, align, bold, small }: AccentTextProps) =>
   classnames(
     textColor(color),
@@ -75,6 +71,14 @@ export const AccentText: FC<AccentTextProps> = (props) => {
   return <span className={accentText(props)}>{props.children}</span>
 }
 
+export const textTruncateStyles = classnames(
+  width('w-fit'),
+  textOverflow('text-ellipsis'),
+  overflow('overflow-hidden'),
+  whitespace('whitespace-nowrap'),
+  margin('mr-1')
+)
+type BodyTextSize = 'lg' | 'base' | 'sm' | 'xs'
 const bodyText = (
   size: BodyTextSize,
   leading = 6,
@@ -99,7 +103,10 @@ export const BodyText: FC<{
   )
 }
 
-const largerText = classnames(textColor('text-blue-900'), fontSize('text-2xl'))
+const largerText = classnames(
+  textColor('text-primary-dark'),
+  fontSize('text-2xl')
+)
 export const LargerText: FC = ({ children }) => {
   return <div className={largerText}>{children}</div>
 }
@@ -121,7 +128,7 @@ export const CardDescription: FC = ({ children }) => {
 }
 
 const logoText = classnames(
-  textColor('text-yellow'),
+  textColor('text-accent'),
   fontWeight('font-bold'),
   fontSize('text-xl')
 )
@@ -134,6 +141,15 @@ export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
 
+interface LinkTextProps {
+  url: string
+  gradientFrom?: TGradientColorStops
+  gradientTo?: TGradientColorStops
+  color?: TTextColor
+  title?: string
+  bold?: boolean
+  onClick?: () => void
+}
 const linkText = ({ gradientFrom, gradientTo, bold, color }: LinkTextProps) =>
   classnames(
     textDecoration('no-underline'),
@@ -142,7 +158,7 @@ const linkText = ({ gradientFrom, gradientTo, bold, color }: LinkTextProps) =>
         ? color
         : gradientFrom || gradientTo
         ? 'text-transparent'
-        : 'text-yellow'
+        : 'text-accent'
     ),
     backgroundImage(
       gradientFrom || gradientTo ? 'bg-gradient-to-r' : undefined
@@ -165,16 +181,19 @@ export const LinkText: FC<LinkTextProps> = (props) => {
   )
 }
 
-const subBadgeText = classnames(textColor('text-pink'), fontSize('text-sm'))
+const subBadgeText = classnames(
+  textColor('text-secondary'),
+  fontSize('text-sm')
+)
 export const SubBadgeText: FC = ({ children }) => {
   return <span className={subBadgeText}>{children}</span>
 }
 
 const boldColoredText = (color?: TTextColor) =>
   classnames(
-    textColor('text-pink'),
+    textColor('text-secondary'),
     fontSize('text-sm'),
-    textColor(color || 'text-blue-900')
+    textColor(color || 'text-primary-dark')
   )
 export const BoldColoredText: FC<{ color?: TTextColor }> = ({
   color,
@@ -185,7 +204,7 @@ export const BoldColoredText: FC<{ color?: TTextColor }> = ({
 
 const tooltipText = classnames(
   fontWeight('font-bold'),
-  textColor('text-blue-900'),
+  textColor('text-primary-dark'),
   fontFamily('font-primary')
 )
 export const TooltipText: FC = ({ children }) => {
@@ -199,7 +218,7 @@ const highlightedText = (
   onlyWrap?: boolean
 ) =>
   classnames(
-    textColor('text-blue-900'),
+    textColor('text-primary-dark'),
     fontWeight(bold ? 'font-bold' : 'font-medium'),
     fontSize('text-sm'),
     borderRadius('rounded-full'),

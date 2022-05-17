@@ -8,7 +8,7 @@ import classnames, {
   flexDirection,
   justifyContent,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const mainBlock = classnames(
   display('flex'),
@@ -24,11 +24,11 @@ function Main() {
     <>
       <div className={mainBlock}>
         <ProofsCard />
-        <CardSeparator number={3} from="yellow" to="pink" vertical={!lg} />
+        <CardSeparator number={3} from="accent" to="secondary" vertical={!lg} />
         <Badges />
         {!lg && (
           <>
-            <CardSeparator number={1} from="pink" vertical />
+            <CardSeparator number={1} from="secondary" vertical />
             <ZkProofButton />
           </>
         )}

@@ -24,7 +24,7 @@ import classnames, {
 } from 'classnames/tailwind'
 import sealCred from 'helpers/sealCred'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const badgeWrapper = (minted: boolean, small?: boolean) =>
   classnames(
@@ -36,7 +36,7 @@ const badgeWrapper = (minted: boolean, small?: boolean) =>
     justifyContent(minted ? 'justify-start' : 'justify-center'),
     alignItems('items-center'),
     borderRadius('rounded-lg'),
-    backgroundColor(minted ? 'bg-blue-700' : 'bg-blue-800'),
+    backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
     padding('px-4', 'py-4'),
     space(
       minted ? (small ? 'space-y-2' : 'space-x-2') : 'space-y-2',
@@ -88,12 +88,12 @@ function Badge({
   const { ledger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
 
-  const { xs, sm } = useBreakpoints()
+  const { xxs, sm } = useBreakpoints()
 
   const [loading, setLoading] = useState(false)
   const [completed, setCompleted] = useState(false)
 
-  const small = xs && !sm
+  const small = xxs && !sm
   const minted = tokenId !== undefined
   const ledgerRecord = ledger[contractAddress]
   const derivativeAddress = ledgerRecord.derivativeContract.address
@@ -103,7 +103,7 @@ function Badge({
       {minted ? (
         <QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />
       ) : (
-        <BadgeIcon color="pink" />
+        <BadgeIcon color="secondary" />
       )}
       <div className={badgeBody(minted, small)}>
         <BadgeText>
@@ -111,14 +111,14 @@ function Badge({
         </BadgeText>
         {minted && (
           <div className={mintPassed(small)}>
-            <BoldColoredText color="text-pink">Minted</BoldColoredText>
-            <Complete color="pink" />
+            <BoldColoredText color="text-secondary">Minted</BoldColoredText>
+            <Complete color="secondary" />
           </div>
         )}
         {!minted && (
           <Button
             small
-            colors="primary"
+            colors="accent"
             loading={!!loading}
             disabled={completed}
             onClick={async () => {
@@ -171,11 +171,11 @@ function BadgeBlock({
   contractAddress: string
   tokenId?: number
 }) {
-  const { xs, sm } = useBreakpoints()
+  const { xxs, sm } = useBreakpoints()
   const shortAddress = truncateMiddleIfNeeded(contractAddress, 11)
 
   return (
-    <div className={badgeWrapper(tokenId !== undefined, xs && !sm)}>
+    <div className={badgeWrapper(tokenId !== undefined, xxs && !sm)}>
       <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
         <Badge contractAddress={contractAddress} tokenId={tokenId} />
       </Suspense>

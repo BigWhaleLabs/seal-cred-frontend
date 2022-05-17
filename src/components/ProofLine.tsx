@@ -14,7 +14,7 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const contractContainer = (small?: boolean) =>
   classnames(
@@ -24,7 +24,7 @@ const contractContainer = (small?: boolean) =>
     alignItems(small ? 'items-start' : 'items-center'),
     justifyContent('justify-between'),
     space(small ? 'space-y-1' : null),
-    backgroundColor('bg-blue-700'),
+    backgroundColor('bg-primary-dimmed'),
     borderRadius('rounded-lg'),
     height('h-fit'),
     padding('px-4', 'py-2'),
@@ -34,9 +34,9 @@ const contractContainer = (small?: boolean) =>
   )
 
 const ProofLine: FC = ({ children }) => {
-  const { mobile } = useBreakpoints()
+  const { xs } = useBreakpoints()
 
-  return <div className={contractContainer(mobile)}>{children}</div>
+  return <div className={contractContainer(xs)}>{children}</div>
 }
 
 export default ProofLine

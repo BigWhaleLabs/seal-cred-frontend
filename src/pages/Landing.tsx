@@ -22,8 +22,8 @@ import classnames, {
   width,
   zIndex,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
-import useScrollPercent from 'helpers/useScrollPercent'
+import useBreakpoints from 'hooks/useBreakpoints'
+import useScrollPercent from 'hooks/useScrollPercent'
 
 const pageBox = classnames(
   display('flex'),
@@ -48,12 +48,12 @@ const highlightedBlock = classnames(
 
 function Landing() {
   const scroll = useScrollPercent()
-  const { mobile } = useBreakpoints()
+  const { xs } = useBreakpoints()
   const animEnd = scroll > 0.645
 
   return (
     <div className={pageBox}>
-      <LandingInitialCard showSpinner={!mobile} />
+      <LandingInitialCard showSpinner={!xs} />
       <ScrollDownButton />
       <div
         className={position('absolute')}
@@ -78,12 +78,12 @@ function Landing() {
       </div>
       <SuperOrbWithConnectors />
       <div className={identityCards}>
-        <IdentityCard left text="Identity-01" mobile={mobile} reveal={animEnd}>
-          <ZkSphere text="ZK" color={Colors.green} />
-          <ZkSphere text="ZK" color={Colors.yellow} />
+        <IdentityCard left text="Identity-01" mobile={xs} reveal={animEnd}>
+          <ZkSphere text="ZK" color={Colors.tertiary} />
+          <ZkSphere text="ZK" color={Colors.accent} />
         </IdentityCard>
-        <IdentityCard text="Identity-02" mobile={mobile} reveal={animEnd}>
-          <ZkSphere text="ZK" color={Colors.pink} />
+        <IdentityCard text="Identity-02" mobile={xs} reveal={animEnd}>
+          <ZkSphere text="ZK" color={Colors.secondary} />
         </IdentityCard>
       </div>
       <LandingBuildingIdentitiesCard />

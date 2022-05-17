@@ -8,11 +8,12 @@ import classnames, {
   display,
   flexDirection,
   margin,
+  position,
   space,
   transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
-import useScrollPercent from 'helpers/useScrollPercent'
+import useScrollPercent from 'hooks/useScrollPercent'
 
 const orbBoxes = classnames(
   display('flex'),
@@ -37,29 +38,29 @@ export default function OrbsInBoxes() {
   return (
     <div className={orbBoxes} style={{ transform: 'translateY(90px)' }}>
       <div className={orbBox('mt-8')}>
-        <OrbBox color={Colors.green} shadow={animNotStarted} />
-        <div className="absolute">
-          <ZkSphere color={Colors.green} animated />
+        <OrbBox color={Colors.tertiary} shadow={animNotStarted} />
+        <div className={position('absolute')}>
+          <ZkSphere color={Colors.tertiary} animated />
         </div>
-        <HighlightedText color={Colors.green} center onlyWrap bold>
+        <HighlightedText color={Colors.tertiary} center onlyWrap bold>
           Wallet 01
         </HighlightedText>
       </div>
       <div className={orbBox()}>
-        <OrbBox color={Colors.yellow} shadow={animNotStarted} />
-        <div className="absolute">
-          <ZkSphere color={Colors.yellow} animated />
+        <OrbBox color={Colors.accent} shadow={animNotStarted} />
+        <div className={position('absolute')}>
+          <ZkSphere color={Colors.accent} animated />
         </div>
-        <HighlightedText color={Colors.yellow} center onlyWrap bold>
+        <HighlightedText color={Colors.accent} center onlyWrap bold>
           Wallet 02
         </HighlightedText>
       </div>
       <div className={orbBox('mt-11')}>
-        <OrbBox color={Colors.pink} shadow={animNotStarted} />
-        <div className="absolute">
-          <ZkSphere color={Colors.pink} animated />
+        <OrbBox color={Colors.secondary} shadow={animNotStarted} />
+        <div className={position('absolute')}>
+          <ZkSphere color={Colors.secondary} animated />
         </div>
-        <HighlightedText color={Colors.pink} center onlyWrap bold>
+        <HighlightedText color={Colors.secondary} center onlyWrap bold>
           Wallet 03
         </HighlightedText>
       </div>

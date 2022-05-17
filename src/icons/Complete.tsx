@@ -7,18 +7,24 @@ import classnames, {
   stroke,
 } from 'classnames/tailwind'
 
-type Color = 'pink' | 'yellow'
+type Color = 'accent' | 'secondary'
 
 const svgClasses = (color?: Color) =>
   classnames(
     borderRadius('rounded-3xl'),
     boxShadow('shadow-lg'),
-    boxShadowColor(color === 'yellow' ? 'shadow-yellow' : 'shadow-pink')
+    boxShadowColor(color === 'accent' ? 'shadow-accent' : 'shadow-secondary')
   )
 const circleClasses = (color?: Color) =>
-  classnames(fill(color === 'yellow' ? 'fill-yellow' : 'fill-pink'))
+  classnames(fill(color === 'accent' ? 'fill-accent' : 'fill-secondary'))
 const pathClasses = (color?: Color) =>
-  classnames(stroke(color === 'yellow' ? 'stroke-blue-700' : 'stroke-blue-600'))
+  classnames(
+    stroke(
+      color === 'accent'
+        ? 'stroke-primary-dimmed'
+        : 'stroke-primary-semi-dimmed'
+    )
+  )
 
 const Complete: FC<{ color: Color }> = ({ color }) => {
   return (

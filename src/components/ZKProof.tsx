@@ -21,7 +21,7 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const proofText = (small?: boolean) =>
   classnames(
@@ -46,17 +46,17 @@ function useProofContent(
   contractAddress: string,
   proof?: Proof
 ): {
-  color: 'text-green' | 'text-yellow' | 'text-pink'
+  color: 'text-accent' | 'text-secondary' | 'text-tertiary'
   content: JSX.Element | null
 } {
   const { account } = useSnapshot(WalletStore)
 
   if (!proof) {
     return {
-      color: 'text-green',
+      color: 'text-tertiary',
       content: (
         <ProofButton
-          color="green"
+          color="tertiary"
           onClick={() => {
             void ProofStore.generate(contractAddress)
           }}
@@ -69,7 +69,7 @@ function useProofContent(
 
   if (proof.status === 'running')
     return {
-      color: 'text-yellow',
+      color: 'text-accent',
       content: (
         <span className={textWithIcon}>
           <span>Generating...</span>
@@ -82,7 +82,7 @@ function useProofContent(
 
   if (proof.status === 'scheduled')
     return {
-      color: 'text-pink',
+      color: 'text-secondary',
       content: (
         <>
           {proof.position !== undefined
@@ -93,11 +93,11 @@ function useProofContent(
     }
 
   return {
-    color: 'text-yellow',
+    color: 'text-accent',
     content: (
       <span className={textWithIcon}>
         <span>Proof {proof.account === account ? 'made' : 'saved'}</span>
-        <Complete color="yellow" />
+        <Complete color="accent" />
       </span>
     ),
   }
@@ -107,13 +107,13 @@ const ZKProof: FC<{ proof?: Proof; contractAddress: string }> = ({
   proof,
   contractAddress,
 }) => {
-  const { xs, mobile } = useBreakpoints()
+  const { xxs, xs } = useBreakpoints()
   const { color, content } = useProofContent(contractAddress, proof)
 
   return (
     <ProofLine>
-      <ContractName address={contractAddress} truncate={xs} overflow />
-      <div className={proofText(mobile)}>
+      <ContractName address={contractAddress} truncate={xxs} overflow />
+      <div className={proofText(xs)}>
         <AccentText bold color={color}>
           {content}
         </AccentText>

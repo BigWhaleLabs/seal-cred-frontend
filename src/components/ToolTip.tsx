@@ -9,7 +9,7 @@ import classnames, {
   opacity,
   textColor,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const tooltipClasses = (mobile: boolean) =>
   classnames(
@@ -25,7 +25,7 @@ const ToolTip: FC<{
   dataFor: string
   clickable?: boolean
 }> = ({ place, dataFor, clickable }) => {
-  const { mobile } = useBreakpoints()
+  const { xs } = useBreakpoints()
 
   return (
     <TooltipText>
@@ -34,10 +34,10 @@ const ToolTip: FC<{
         data-for={dataFor}
         effect="solid"
         backgroundColor={backgroundColor('bg-white')}
-        textColor={textColor('text-blue-900')}
+        textColor={textColor('text-primary-dark')}
         arrowColor={backgroundColor('bg-white')}
         clickable={clickable}
-        className={tooltipClasses(mobile)}
+        className={tooltipClasses(xs)}
       />
     </TooltipText>
   )

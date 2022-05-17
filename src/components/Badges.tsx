@@ -9,8 +9,8 @@ import Card from 'components/Card'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
-import useContractAddressesOwned from 'helpers/useContractAddressesOwned'
-import useProofsAvailableToMint from 'helpers/useProofsAvailableToMint'
+import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
+import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function Badges() {
   const { account, notifiedOfNFTownership } = useSnapshot(WalletStore)
@@ -29,7 +29,7 @@ function Badges() {
   return (
     <div className={space('space-y-6')}>
       <div className={space('space-y-2')}>
-        <CardHeader color="text-pink">
+        <CardHeader color="text-secondary">
           {!account ? 'Then' : 'Create ZK badges'}
         </CardHeader>
         <CardDescription>
@@ -46,8 +46,8 @@ function Badges() {
             <BadgesHintCard
               text={
                 <>
-                  <AccentText color="text-pink">Hold up...</AccentText> this
-                  wallet has NFTs (It’s doxxed). You should make sure your
+                  <AccentText color="text-secondary">Hold up...</AccentText>{' '}
+                  this wallet has NFTs (It’s doxxed). You should make sure your
                   anonymous wallet is connected first before creating badges.
                   Unless you plan to build badges on this wallet.
                 </>
@@ -55,7 +55,7 @@ function Badges() {
             >
               <Button
                 small
-                colors="primary"
+                colors="accent"
                 onClick={() =>
                   (WalletStore.notifiedOfNFTownership[account] = true)
                 }
@@ -89,11 +89,11 @@ function Badges() {
 const titleContainer = space('space-y-2')
 function BadgesSuspense() {
   return (
-    <Card shadow color="pink">
+    <Card shadow color="secondary">
       <Suspense
         fallback={
           <div className={titleContainer}>
-            <CardHeader color="text-yellow">Also loading...</CardHeader>
+            <CardHeader color="text-accent">Also loading...</CardHeader>
             <CardDescription>
               Please, be patient, I can be slow at times
             </CardDescription>

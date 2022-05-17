@@ -14,13 +14,13 @@ import classnames, {
   overflow,
   position,
 } from 'classnames/tailwind'
-import useDerivativeTokensOwned from 'helpers/useDerivativeTokensOwned'
-import useProofsAvailableToMint from 'helpers/useProofsAvailableToMint'
+import useDerivativeTokensOwned from 'hooks/useDerivativeTokensOwned'
+import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 const badges = classnames(
   position('relative'),
   height('h-fit'),
-  maxHeight('max-h-85'),
+  maxHeight('max-h-badges-list'),
   overflow('overflow-y-visible')
 )
 const badgesList = classnames(

@@ -25,7 +25,7 @@ const zkProofButton = classnames(
   display('flex'),
   flexDirection('flex-row'),
   justifyContent('justify-center'),
-  backgroundColor('bg-blue-800'),
+  backgroundColor('bg-primary-background'),
   space('space-x-2'),
   padding('py-4'),
   width('w-mobile-card', 'sm:w-card'),
@@ -37,16 +37,16 @@ const zkProofButton = classnames(
 const questionStyles = classnames(
   fontFamily('font-primary'),
   fontSize('text-sm'),
-  fill('fill-yellow'),
+  fill('fill-accent'),
   width('w-6'),
   height('h-6'),
   borderRadius('rounded-full'),
-  borderWidth('border-1'),
-  borderColor('border-yellow'),
+  borderWidth('border'),
+  borderColor('border-accent'),
   display('flex'),
   justifyContent('justify-center'),
   alignItems('items-center'),
-  textColor('text-yellow')
+  textColor('text-accent')
 )
 
 const QuestionMark = () => {
@@ -60,7 +60,7 @@ const ZkProofButton = () => {
   return (
     <>
       <div className={zkProofButton} data-tip={popoverText}>
-        <AccentText color="text-yellow">What's a ZK proof?</AccentText>
+        <AccentText color="text-accent">What's a ZK proof?</AccentText>
         <QuestionMark />
       </div>
       <ToolTip place="top" dataFor={popoverText} clickable />
