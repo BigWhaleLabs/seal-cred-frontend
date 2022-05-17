@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Suspense } from 'react'
 import EnsStore from 'stores/EnsStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
-import useEnsNameOrAddress from 'helpers/useEnsNameOrAddress'
+import useEnsNameOrAddress from 'hooks/useEnsNameOrAddress'
 
 function EnsAddressSuspender({ address }: { address: string }) {
   const ensNameOrAddress = useEnsNameOrAddress(address)
