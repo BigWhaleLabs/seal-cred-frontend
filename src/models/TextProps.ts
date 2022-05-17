@@ -21,6 +21,6 @@ export interface LinkTextProps {
   onClick?: () => void
 }
 
-export type BodyTextSize = 'lg' | 'base' | 'sm' | 'xs'
+export type BodyTextSize = 'lg' | 'base' | 'sm' | 'xxs'
 
 export type HeaderSize = '4xl' | '3xl' | '2xl'

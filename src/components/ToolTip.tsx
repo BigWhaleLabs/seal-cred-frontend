@@ -25,7 +25,7 @@ const ToolTip: FC<{
   dataFor: string
   clickable?: boolean
 }> = ({ place, dataFor, clickable }) => {
-  const { mobile } = useBreakpoints()
+  const { xs } = useBreakpoints()
 
   return (
     <TooltipText>
@@ -37,7 +37,7 @@ const ToolTip: FC<{
         textColor={textColor('text-primary-dark')}
         arrowColor={backgroundColor('bg-white')}
         clickable={clickable}
-        className={tooltipClasses(mobile)}
+        className={tooltipClasses(xs)}
       />
     </TooltipText>
   )

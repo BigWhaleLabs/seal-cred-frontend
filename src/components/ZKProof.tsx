@@ -107,13 +107,13 @@ const ZKProof: FC<{ proof?: Proof; contractAddress: string }> = ({
   proof,
   contractAddress,
 }) => {
-  const { xs, mobile } = useBreakpoints()
+  const { xxs, xs } = useBreakpoints()
   const { color, content } = useProofContent(contractAddress, proof)
 
   return (
     <ProofLine>
-      <ContractName address={contractAddress} truncate={xs} overflow />
-      <div className={proofText(mobile)}>
+      <ContractName address={contractAddress} truncate={xxs} overflow />
+      <div className={proofText(xs)}>
         <AccentText bold color={color}>
           {content}
         </AccentText>
