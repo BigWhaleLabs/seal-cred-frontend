@@ -26,7 +26,7 @@ import {
   transitionTimingFunction,
   width,
 } from 'classnames/tailwind'
-import Arrow from 'components/Arrow'
+import Arrow from 'icons/Arrow'
 import Loading from 'icons/Loading'
 
 type ButtonColors = 'accent' | 'secondary' | 'tertiary'
