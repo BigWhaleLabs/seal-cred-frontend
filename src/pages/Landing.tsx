@@ -1,6 +1,6 @@
 import { HighlightedText } from 'components/Text'
 import Colors from 'models/Colors'
-import IdentityCard from 'components/IdentityCardOne'
+import IdentityCard from 'components/IdentityCard'
 import LandingBuildingIdentitiesCard from 'components/LandingBuildingIdentitiesCard'
 import LandingCreatingZKProofCard from 'components/LandingCreatingZKProofCard'
 import LandingInitialCard from 'components/LandingInitialCard'
@@ -20,7 +20,6 @@ import classnames, {
   position,
   space,
   width,
-  zIndex,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 import useScrollPercent from 'hooks/useScrollPercent'
@@ -70,12 +69,7 @@ function Landing() {
         </HighlightedText>
       </div>
       <OrbsInBoxes />
-      <div
-        className={classnames(position('absolute'), zIndex('z-40'))}
-        style={{ transform: 'translateY(1050px)' }}
-      >
-        <LandingCreatingZKProofCard />
-      </div>
+      <LandingCreatingZKProofCard />
       <SuperOrbWithConnectors />
       <div className={identityCards}>
         <IdentityCard left text="Identity-01" mobile={xs} reveal={animEnd}>

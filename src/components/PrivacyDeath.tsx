@@ -4,6 +4,7 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
+  margin,
   position,
   width,
 } from 'classnames/tailwind'
@@ -28,7 +29,9 @@ const PrivacyDeath = () => {
           text="Give me privacy or give me death •"
         />
       </div>
-      <EyeWhale />
+      <div className={margin('-mt-5', 'mb-12')}>
+        <EyeWhale />
+      </div>
     </div>
   )
 }

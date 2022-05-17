@@ -6,7 +6,6 @@ import classnames, {
   gradientColorStops,
   height,
   justifyContent,
-  margin,
   space,
   width,
 } from 'classnames/tailwind'
@@ -18,8 +17,7 @@ const connectiveBlock = (vertical = true) =>
     display('flex'),
     justifyContent(vertical ? 'justify-center' : 'justify-start'),
     flexDirection(vertical ? 'flex-row' : 'flex-col'),
-    space(vertical ? 'space-x-2' : 'space-y-2'),
-    margin(vertical ? 'mx-auto' : 'mt-12')
+    space(vertical ? 'space-x-2' : 'space-y-2')
   )
 
 const connectiveLine = (

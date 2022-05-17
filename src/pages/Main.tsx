@@ -7,6 +7,7 @@ import classnames, {
   display,
   flexDirection,
   justifyContent,
+  margin,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -16,6 +17,8 @@ const mainBlock = classnames(
   alignItems('items-center', 'lg:items-stretch'),
   justifyContent('lg:justify-center')
 )
+const marginSeparator = (vertical?: boolean) =>
+  classnames(margin(vertical ? 'mx-auto' : 'mt-12'))
 
 function Main() {
   const { lg } = useBreakpoints()
@@ -24,7 +27,15 @@ function Main() {
     <>
       <div className={mainBlock}>
         <ProofsCard />
-        <CardSeparator number={3} from="accent" to="secondary" vertical={!lg} />
+        <div className={marginSeparator(!lg)}>
+          <CardSeparator
+            number={3}
+            from="accent"
+            to="secondary"
+            vertical={!lg}
+          />
+        </div>
+
         <Badges />
         {!lg && (
           <>
