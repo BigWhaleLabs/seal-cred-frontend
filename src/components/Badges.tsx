@@ -13,7 +13,7 @@ import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function Badges() {
-  const { account, knowsCurrentWalletHoldsNFTs } = useSnapshot(WalletStore)
+  const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const originalTokensOwned = useContractAddressesOwned('original')
   const proofsAvailableToMint = useProofsAvailableToMint()
@@ -22,7 +22,7 @@ function Badges() {
 
   const shouldNotify =
     account &&
-    !knowsCurrentWalletHoldsNFTs[account] &&
+    !walletsToNotifiedOfBeingDoxxed[account] &&
     originalTokensOwned.length > 0 &&
     hasUnminted
 
@@ -57,7 +57,7 @@ function Badges() {
                 small
                 colors="accent"
                 onClick={() =>
-                  (WalletStore.knowsCurrentWalletHoldsNFTs[account] = true)
+                  (WalletStore.walletsToNotifiedOfBeingDoxxed[account] = true)
                 }
               >
                 I understand, show badges
