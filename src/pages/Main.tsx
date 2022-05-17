@@ -17,7 +17,7 @@ const mainBlock = classnames(
   justifyContent('lg:justify-center')
 )
 
-function Main() {
+export default function () {
   const { lg } = useBreakpoints()
 
   return (
@@ -36,5 +36,3 @@ function Main() {
     </>
   )
 }
-
-export default Main

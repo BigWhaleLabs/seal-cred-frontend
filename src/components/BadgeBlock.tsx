@@ -164,7 +164,7 @@ function Badge({
   )
 }
 
-function BadgeBlock({
+export default function ({
   contractAddress,
   tokenId,
 }: {
@@ -182,5 +182,3 @@ function BadgeBlock({
     </div>
   )
 }
-
-export default BadgeBlock

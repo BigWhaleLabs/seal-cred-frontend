@@ -2,7 +2,7 @@ import { dropShadow } from 'classnames/tailwind'
 
 const starContainer = dropShadow('drop-shadow-accent')
 
-const Star = () => {
+export default function () {
   return (
     <svg
       width="18"
@@ -19,5 +19,3 @@ const Star = () => {
     </svg>
   )
 }
-
-export default Star

@@ -1,7 +1,7 @@
 import { IncrementalMerkleTree } from '@zk-kit/incremental-merkle-tree'
 import { poseidon } from '@big-whale-labs/poseidon'
 
-export default function createTreeProof(tokenId: number, addresses: string[]) {
+export default function (tokenId: number, addresses: string[]) {
   const tree = new IncrementalMerkleTree(poseidon, 20, BigInt(0), 2)
 
   for (const address of addresses) {

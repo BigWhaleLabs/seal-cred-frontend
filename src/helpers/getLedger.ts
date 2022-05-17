@@ -23,7 +23,7 @@ export async function getLedgerRecord(
   } as LedgerRecord
 }
 
-export default async function getLedger(sealCredLedger: SealCredLedger) {
+export default async function (sealCredLedger: SealCredLedger) {
   const eventsFilter = sealCredLedger.filters.SetMerkleRoot()
   const events = await sealCredLedger.queryFilter(eventsFilter, queryBlockLimit)
   const ledger = {} as Ledger

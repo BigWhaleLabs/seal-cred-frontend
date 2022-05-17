@@ -103,7 +103,7 @@ function useProofContent(
   }
 }
 
-const ZKProof: FC<{ proof?: Proof; contractAddress: string }> = ({
+const ZkProof: FC<{ proof?: Proof; contractAddress: string }> = ({
   proof,
   contractAddress,
 }) => {
@@ -122,4 +122,4 @@ const ZKProof: FC<{ proof?: Proof; contractAddress: string }> = ({
   )
 }
 
-export default ZKProof
+export default ZkProof

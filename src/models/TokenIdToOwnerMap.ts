@@ -1,3 +1,3 @@
-type TokenIdToOwnerMap = { [tokenId: number]: string }
-
-export default TokenIdToOwnerMap
+export default interface TokenIdToOwnerMap {
+  [tokenId: number]: string
+}

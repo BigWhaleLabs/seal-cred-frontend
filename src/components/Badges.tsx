@@ -87,7 +87,7 @@ function Badges() {
 }
 
 const titleContainer = space('space-y-2')
-function BadgesSuspense() {
+export default function () {
   return (
     <Card shadow color="secondary">
       <Suspense
@@ -105,5 +105,3 @@ function BadgesSuspense() {
     </Card>
   )
 }
-
-export default BadgesSuspense

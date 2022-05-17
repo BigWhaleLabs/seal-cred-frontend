@@ -103,7 +103,7 @@ function OwnerInfo({
   )
 }
 
-export default function OwnedBadge() {
+export default function () {
   const { derivativeAddress, tokenId } = useParams()
 
   const navigate = useNavigate()

@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
 import ProofStore from 'stores/ProofStore'
-import ZKProof from 'components/ZKProof'
+import ZKProof from 'components/ZkProof'
 
 function ContractList() {
   const { proofsCompleted } = useSnapshot(ProofStore)
@@ -27,7 +27,7 @@ function ContractList() {
   )
 }
 
-export default function ListOfReadyZKProofs() {
+export default function () {
   return (
     <Suspense
       fallback={

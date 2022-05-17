@@ -20,7 +20,7 @@ function SupportedContractsComponent() {
   )
 }
 
-export default function SupportedContracts() {
+export default function () {
   return (
     <Suspense
       fallback={<SubheaderText>Fetching avaliable tokens...</SubheaderText>}

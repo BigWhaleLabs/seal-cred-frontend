@@ -14,7 +14,12 @@ const orbBoxStyles = (shadowColor: TDropShadow, shadow?: boolean) =>
     transitionProperty('transition-all')
   )
 
-const OrbBox: FC<{ color: Colors; shadow?: boolean }> = ({ color, shadow }) => {
+interface OrbBoxProps {
+  color: Colors
+  shadow?: boolean
+}
+
+const OrbBox: FC<OrbBoxProps> = ({ color, shadow }) => {
   const shadowColor = colorToDropShadow(color)
 
   return (
