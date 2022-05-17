@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers'
 import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
-import NotifiedOfNFTownership from 'models/NotifiedOfNFTownership'
+import KnowsCurrentWalletHoldsNFTs from 'models/KnowsCurrentWalletHoldsNFTs'
 import ProofResponse from 'models/ProofResponse'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
@@ -13,7 +13,7 @@ let provider: Web3Provider
 class WalletStore {
   account?: string
   walletLoading = false
-  notifiedOfNFTownership: NotifiedOfNFTownership = {}
+  knowsCurrentWalletHoldsNFTs: KnowsCurrentWalletHoldsNFTs = {}
 
   get cachedProvider() {
     return web3Modal.cachedProvider
