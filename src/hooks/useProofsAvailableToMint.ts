@@ -1,7 +1,7 @@
 import { useSnapshot } from 'valtio'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
-import useDerivativeTokensOwned from 'helpers/useDerivativeTokensOwned'
+import useDerivativeTokensOwned from 'hooks/useDerivativeTokensOwned'
 
 export default function () {
   const derivativeTokensOwned = useDerivativeTokensOwned()

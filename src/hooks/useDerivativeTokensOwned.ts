@@ -1,7 +1,7 @@
 import { useSnapshot } from 'valtio'
 import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
-import useContractAddressesOwned from 'helpers/useContractAddressesOwned'
+import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
 
 export default function () {
   const { derivativeContractsToOwnersMaps } = useSnapshot(SealCredStore)
