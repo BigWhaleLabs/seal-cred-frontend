@@ -2,8 +2,8 @@ import { BigNumber } from 'ethers'
 import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
-import NotifiedOfNFTownership from 'models/NotifiedOfNFTownership'
 import ProofResponse from 'models/ProofResponse'
+import WalletsToNotifiedOfBeingDoxxed from 'models/WalletsToNotifiedOfBeingDoxxed'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
 import web3Modal from 'helpers/web3Modal'
@@ -13,7 +13,7 @@ let provider: Web3Provider
 class WalletStore {
   account?: string
   walletLoading = false
-  notifiedOfNFTownership: NotifiedOfNFTownership = {}
+  walletsToNotifiedOfBeingDoxxed: WalletsToNotifiedOfBeingDoxxed = {}
 
   get cachedProvider() {
     return web3Modal.cachedProvider
