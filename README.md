@@ -22,6 +22,7 @@
 | `VITE_ETH_RPC`                    | Ethereum node RPC URI                                                 |
 | `VITE_BITSKI_CLIENT_ID`           | Bitski client ID                                                      |
 | `VITE_SC_LEDGER_CONTRACT_ADDRESS` | SealCred Ledger contract address                                      |
+| `VITE_VERIFY_URL`                 | Proof verification URL                                                |
 
 Also, please, consider looking at `.env.sample`.
 
