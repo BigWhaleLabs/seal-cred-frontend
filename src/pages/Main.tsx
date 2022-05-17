@@ -24,12 +24,7 @@ function Main() {
     <>
       <div className={mainBlock}>
         <ProofsCard />
-        <CardSeparator
-          number={3}
-          from="primary"
-          to="secondary"
-          vertical={!lg}
-        />
+        <CardSeparator number={3} from="accent" to="secondary" vertical={!lg} />
         <Badges />
         {!lg && (
           <>

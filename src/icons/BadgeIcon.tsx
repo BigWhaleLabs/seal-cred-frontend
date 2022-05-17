@@ -7,15 +7,15 @@ import classnames, {
   stroke,
 } from 'classnames/tailwind'
 
-type StrokeColor = 'primary' | 'secondary' | 'tertiary'
+type StrokeColor = 'accent' | 'secondary' | 'tertiary'
 
 const strokeColor = (color?: StrokeColor) =>
   classnames(
     stroke(
       color === 'secondary'
         ? 'stroke-secondary'
-        : color === 'primary'
-        ? 'stroke-primary'
+        : color === 'accent'
+        ? 'stroke-accent'
         : color === 'tertiary'
         ? 'stroke-tertiary'
         : 'stroke-white'
@@ -42,7 +42,7 @@ const BadgeIcon: FC<{ color?: StrokeColor }> = ({ color }) => {
         r="31"
         stroke-width="2"
         stroke-linecap="round"
-        className={classnames(strokeColor(color), fill('fill-accent-dark'))}
+        className={classnames(strokeColor(color), fill('fill-primary-dark'))}
       />
       <path
         d="M56.5 51.5V32C56.5 18.7452 45.7548 8 32.5 8C19.2452 8 8.5 18.7452 8.5 32V51.5"

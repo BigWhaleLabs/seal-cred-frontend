@@ -11,7 +11,7 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 
-type Color = 'primary' | 'secondary' | 'tertiary' | 'accent' | 'transparent'
+type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'transparent'
 
 const connectiveBlock = (vertical = true) =>
   classnames(

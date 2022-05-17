@@ -39,7 +39,7 @@ export default function Wallet() {
     >
       <div className={walletAccount}>
         <AccentText
-          color={account ? 'text-primary' : 'text-accent-semi-dimmed'}
+          color={account ? 'text-accent' : 'text-primary-semi-dimmed'}
         >
           {account ? <EnsAddress address={account} /> : 'No wallet connected'}
         </AccentText>

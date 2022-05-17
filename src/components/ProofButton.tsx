@@ -28,7 +28,7 @@ type ButtonProperties = ButtonProps &
   React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const tertiaryGradient = classnames(
-  gradientColorStops('from-accent-light', 'via-tertiary', 'to-tertiary'),
+  gradientColorStops('from-primary-light', 'via-tertiary', 'to-tertiary'),
   backgroundClip('bg-clip-text'),
   backgroundImage('bg-gradient-to-t')
 )
@@ -46,7 +46,7 @@ const button = (color: ButtonColors, disabled?: boolean) =>
         ? 'text-transparent'
         : color === 'secondary'
         ? `text-secondary`
-        : `text-primary`
+        : `text-accent`
     ),
     color === 'tertiary' ? tertiaryGradient : undefined,
     fontFamily('font-primary'),

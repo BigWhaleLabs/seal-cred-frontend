@@ -33,7 +33,7 @@ export default function NotFound() {
   const navigate = useNavigate()
   return (
     <div className={container}>
-      <Card shadow onlyWrap color="primary">
+      <Card shadow onlyWrap color="accent">
         <div className={textAlign('text-center')}>
           <HeaderText size="4xl" bold>
             404
@@ -41,7 +41,7 @@ export default function NotFound() {
           <SubheaderText>Not found</SubheaderText>
         </div>
         <div className={wrapperBody}>
-          <Button colors="primary" small onClick={() => navigate('/')}>
+          <Button colors="accent" small onClick={() => navigate('/')}>
             Go to the main page
           </Button>
         </div>

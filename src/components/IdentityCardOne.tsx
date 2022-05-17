@@ -52,7 +52,7 @@ const IdentityCardOne: FC<{
             <NoisyRectangle bgColor="bg-secondary" />
           )}
         </div>
-        {left && <NoisyRectangle bgColor="bg-primary" />}
+        {left && <NoisyRectangle bgColor="bg-accent" />}
         <div className={identityText}>
           <BodyText size={mobile ? 'sm' : 'base'} center>
             {text}

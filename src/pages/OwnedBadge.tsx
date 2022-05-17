@@ -57,7 +57,7 @@ function OwnerInfo({
     return (
       <Card color="secondary" shadow onlyWrap>
         <div className={space('space-y-2')}>
-          <CardHeader color="text-primary">Unsupported NFT</CardHeader>
+          <CardHeader color="text-accent">Unsupported NFT</CardHeader>
           <CardDescription>This NFT is not supported</CardDescription>
         </div>
       </Card>
@@ -87,7 +87,7 @@ function OwnerInfo({
         ‘ NFT.
       </BodyText>
 
-      <hr className={borderColor('border-accent-semi-dimmed')} />
+      <hr className={borderColor('border-primary-semi-dimmed')} />
 
       <div className={walletBox}>
         <Smile />
@@ -114,7 +114,7 @@ export default function OwnedBadge() {
         fallback={
           <Card color="secondary" shadow onlyWrap>
             <div className={space('space-y-2')}>
-              <CardHeader color="text-primary">Loading...</CardHeader>
+              <CardHeader color="text-accent">Loading...</CardHeader>
               <CardDescription>
                 Please, wait until I load supported NFTs, it can take a minute
               </CardDescription>
@@ -130,7 +130,7 @@ export default function OwnedBadge() {
           <AccentText color="text-tertiary">
             Create your own zkNFT with SealCred.
           </AccentText>
-          <Button colors="primary" small onClick={() => navigate('/')}>
+          <Button colors="accent" small onClick={() => navigate('/')}>
             Get started
           </Button>
         </Card>

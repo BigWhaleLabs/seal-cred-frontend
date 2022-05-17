@@ -32,7 +32,7 @@ function OwnedBadgeAddressSuspender({
         <LinkText
           url={`https://${network}etherscan.io/address/${address}`}
           gradientFrom="from-secondary"
-          gradientTo="to-primary"
+          gradientTo="to-accent"
           title={address}
           bold
         >

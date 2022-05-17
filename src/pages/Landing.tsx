@@ -80,7 +80,7 @@ function Landing() {
       <div className={identityCards}>
         <IdentityCard left text="Identity-01" mobile={mobile} reveal={animEnd}>
           <ZkSphere text="ZK" color={Colors.tertiary} />
-          <ZkSphere text="ZK" color={Colors.primary} />
+          <ZkSphere text="ZK" color={Colors.accent} />
         </IdentityCard>
         <IdentityCard text="Identity-02" mobile={mobile} reveal={animEnd}>
           <ZkSphere text="ZK" color={Colors.secondary} />

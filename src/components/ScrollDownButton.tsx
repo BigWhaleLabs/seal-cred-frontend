@@ -19,7 +19,7 @@ const scrollButton = classnames(
 export default function ScrollDownButton() {
   return (
     <div onClick={() => window.scrollTo(0, 600)} className={scrollButton}>
-      <AccentText color="text-primary">How does this work?</AccentText>
+      <AccentText color="text-accent">How does this work?</AccentText>
       <DownArrows />
     </div>
   )

@@ -16,7 +16,7 @@ const BadgesHintCard: FC<{ text?: ReactNode }> = ({ text, children }) => {
         display('flex'),
         flexDirection('flex-col'),
         borderRadius('rounded-lg'),
-        backgroundColor('bg-accent-background'),
+        backgroundColor('bg-primary-background'),
         padding('px-4', 'py-4'),
         space('space-y-4')
       )}

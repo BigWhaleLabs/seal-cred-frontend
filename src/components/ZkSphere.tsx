@@ -21,7 +21,7 @@ import useScrollPercent from 'helpers/useScrollPercent'
 const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
   classnames(
     fontWeight('font-bold'),
-    textColor('text-accent-dark'),
+    textColor('text-primary-dark'),
     display('inline-block'),
     backgroundColor(bgColor),
     height('h-8'),
@@ -52,8 +52,8 @@ const ZkSphere: FC<{
         animationName:
           color === Colors.tertiary
             ? 'tertiarySphereAnimation'
-            : color === Colors.primary
-            ? 'primarySphereAnimation'
+            : color === Colors.accent
+            ? 'accentSphereAnimation'
             : 'secondarySphereAnimation',
         animationTimingFunction: 'ease-in-out',
         animationDuration: '1s',

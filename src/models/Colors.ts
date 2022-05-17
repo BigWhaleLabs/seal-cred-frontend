@@ -1,5 +1,5 @@
 enum Colors {
-  primary = '#fed823',
+  accent = '#fed823',
   secondary = '#ff7bed',
   tertiary = '#01feb6',
 }
@@ -7,8 +7,8 @@ enum Colors {
 export const colorToTailwindBg = (color?: Colors) =>
   color === Colors.tertiary
     ? 'bg-tertiary'
-    : color === Colors.primary
-    ? 'bg-primary'
+    : color === Colors.accent
+    ? 'bg-accent'
     : color == Colors.secondary
     ? 'bg-secondary'
     : 'bg-white'
@@ -18,6 +18,6 @@ export const colorToDropShadow = (color?: Colors) =>
     ? 'drop-shadow-secondary'
     : color === Colors.tertiary
     ? 'drop-shadow-tertiary'
-    : 'drop-shadow-primary'
+    : 'drop-shadow-accent'
 
 export default Colors

@@ -42,7 +42,7 @@ body {
     transform: translate(-25px, 1383px);
   }
 }
-@keyframes primarySphereAnimation {
+@keyframes accentSphereAnimation {
   0% {
     transform: translate(0px, 0px);
   }

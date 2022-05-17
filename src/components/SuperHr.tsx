@@ -22,7 +22,7 @@ const longLine = classnames(
   inset('top-1/2'),
   width('w-full'),
   height('h-px'),
-  backgroundColor('bg-primary'),
+  backgroundColor('bg-accent'),
   zIndex('z-10')
 )
 

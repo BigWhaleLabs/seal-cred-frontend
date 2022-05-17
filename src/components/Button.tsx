@@ -29,7 +29,7 @@ import {
 import Arrow from 'components/Arrow'
 import Loading from 'icons/Loading'
 
-type ButtonColors = 'primary' | 'secondary' | 'tertiary'
+type ButtonColors = 'accent' | 'secondary' | 'tertiary'
 
 export interface ButtonProps {
   colors: ButtonColors
@@ -94,9 +94,9 @@ const colorClasses = ({
   small,
 }: ButtonColorClasses) =>
   classnames(
-    colors === 'primary'
+    colors === 'accent'
       ? classnames(
-          textColor('text-accent-dark'),
+          textColor('text-primary-dark'),
           fontSize(small ? 'text-sm' : 'text-lg'),
           padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
           borderRadius('rounded-full'),
@@ -113,15 +113,15 @@ const colorClasses = ({
           )
         )
       : colors === 'secondary'
-      ? classnames(textColor('text-primary')) // TBD
+      ? classnames(textColor('text-accent')) // TBD
       : classnames(
           textColor(
             'text-transparent',
-            loading || disabled ? undefined : 'active:text-primary'
+            loading || disabled ? undefined : 'active:text-accent'
           ),
           backgroundClip('bg-clip-text'),
           backgroundImage('bg-gradient-to-r'),
-          gradientColorStops('from-secondary', 'to-primary')
+          gradientColorStops('from-secondary', 'to-accent')
         )
   )
 

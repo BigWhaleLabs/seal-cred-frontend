@@ -46,11 +46,11 @@ export default function OrbsInBoxes() {
         </HighlightedText>
       </div>
       <div className={orbBox()}>
-        <OrbBox color={Colors.primary} shadow={animNotStarted} />
+        <OrbBox color={Colors.accent} shadow={animNotStarted} />
         <div className="absolute">
-          <ZkSphere color={Colors.primary} animated />
+          <ZkSphere color={Colors.accent} animated />
         </div>
-        <HighlightedText color={Colors.primary} center onlyWrap bold>
+        <HighlightedText color={Colors.accent} center onlyWrap bold>
           Wallet 02
         </HighlightedText>
       </div>

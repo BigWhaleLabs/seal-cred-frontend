@@ -19,7 +19,7 @@ import {
 } from 'classnames/tailwind'
 import ArcText from 'components/ArcText'
 
-type Color = 'secondary' | 'primary' | 'tertiary' | 'accent' | 'white'
+type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'white'
 interface CardProps {
   shadow?: boolean
   color?: Color
@@ -33,30 +33,30 @@ const cardColor = (color?: Color) => {
   return classnames(
     borderWidth('border-1'),
     borderColor(
-      color === 'primary'
-        ? 'border-primary'
+      color === 'accent'
+        ? 'border-accent'
         : color === 'tertiary'
         ? 'border-tertiary'
         : color === 'secondary'
         ? 'border-secondary'
         : color === 'white'
         ? 'border-white'
-        : color === 'accent'
-        ? 'border-accent'
-        : 'border-accent-dark'
+        : color === 'primary'
+        ? 'border-primary'
+        : 'border-primary-dark'
     ),
     boxShadow('shadow-2xl'),
     boxShadowColor(
-      color === 'primary'
-        ? 'shadow-primary-50'
+      color === 'accent'
+        ? 'shadow-accent-50'
         : color === 'tertiary'
         ? 'shadow-tertiary-50'
         : color === 'secondary'
         ? 'shadow-secondary-50'
         : color === 'white'
         ? 'shadow-white-50'
-        : color === 'accent'
-        ? 'shadow-accent-semi-transparent'
+        : color === 'primary'
+        ? 'shadow-primary-semi-transparent'
         : undefined
     )
   )
@@ -72,7 +72,7 @@ const cardContainer = (
   return classnames(
     position('relative'),
     borderRadius('rounded-2xl'),
-    backgroundColor('bg-accent-dark'),
+    backgroundColor('bg-primary-dark'),
     cardColor(shadow ? color : undefined),
     padding(small ? 'p-3.875' : 'p-6'),
     width(

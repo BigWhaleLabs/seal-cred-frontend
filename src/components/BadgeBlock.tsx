@@ -36,7 +36,7 @@ const badgeWrapper = (minted: boolean, small?: boolean) =>
     justifyContent(minted ? 'justify-start' : 'justify-center'),
     alignItems('items-center'),
     borderRadius('rounded-lg'),
-    backgroundColor(minted ? 'bg-accent-dimmed' : 'bg-accent-background'),
+    backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
     padding('px-4', 'py-4'),
     space(
       minted ? (small ? 'space-y-2' : 'space-x-2') : 'space-y-2',
@@ -118,7 +118,7 @@ function Badge({
         {!minted && (
           <Button
             small
-            colors="primary"
+            colors="accent"
             loading={!!loading}
             disabled={completed}
             onClick={async () => {

@@ -55,7 +55,7 @@ function Badges() {
             >
               <Button
                 small
-                colors="primary"
+                colors="accent"
                 onClick={() =>
                   (WalletStore.notifiedOfNFTownership[account] = true)
                 }
@@ -93,7 +93,7 @@ function BadgesSuspense() {
       <Suspense
         fallback={
           <div className={titleContainer}>
-            <CardHeader color="text-primary">Also loading...</CardHeader>
+            <CardHeader color="text-accent">Also loading...</CardHeader>
             <CardDescription>
               Please, be patient, I can be slow at times
             </CardDescription>

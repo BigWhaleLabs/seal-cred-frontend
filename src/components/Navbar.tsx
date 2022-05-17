@@ -29,7 +29,7 @@ const navbar = (visible?: boolean, withoutWallet?: boolean) =>
     margin('mb-2'),
     space('space-x-9', 'lg:space-x-0'),
     zIndex('z-50'),
-    backgroundColor(visible ? 'bg-accent-dark' : 'bg-transparent'),
+    backgroundColor(visible ? 'bg-primary-dark' : 'bg-transparent'),
     transitionProperty('transition-all')
   )
 

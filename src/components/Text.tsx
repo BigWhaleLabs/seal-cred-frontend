@@ -57,7 +57,7 @@ export const HeaderText: FC<{
 }
 
 const subheaderText = classnames(
-  textColor('text-accent'),
+  textColor('text-primary'),
   fontFamily('font-primary')
 )
 export const SubheaderText: FC = ({ children }) => {
@@ -100,7 +100,7 @@ export const BodyText: FC<{
 }
 
 const largerText = classnames(
-  textColor('text-accent-dark'),
+  textColor('text-primary-dark'),
   fontSize('text-2xl')
 )
 export const LargerText: FC = ({ children }) => {
@@ -124,7 +124,7 @@ export const CardDescription: FC = ({ children }) => {
 }
 
 const logoText = classnames(
-  textColor('text-primary'),
+  textColor('text-accent'),
   fontWeight('font-bold'),
   fontSize('text-xl')
 )
@@ -145,7 +145,7 @@ const linkText = ({ gradientFrom, gradientTo, bold, color }: LinkTextProps) =>
         ? color
         : gradientFrom || gradientTo
         ? 'text-transparent'
-        : 'text-primary'
+        : 'text-accent'
     ),
     backgroundImage(
       gradientFrom || gradientTo ? 'bg-gradient-to-r' : undefined
@@ -180,7 +180,7 @@ const boldColoredText = (color?: TTextColor) =>
   classnames(
     textColor('text-secondary'),
     fontSize('text-sm'),
-    textColor(color || 'text-accent-dark')
+    textColor(color || 'text-primary-dark')
   )
 export const BoldColoredText: FC<{ color?: TTextColor }> = ({
   color,
@@ -191,7 +191,7 @@ export const BoldColoredText: FC<{ color?: TTextColor }> = ({
 
 const tooltipText = classnames(
   fontWeight('font-bold'),
-  textColor('text-accent-dark'),
+  textColor('text-primary-dark'),
   fontFamily('font-primary')
 )
 export const TooltipText: FC = ({ children }) => {
@@ -205,7 +205,7 @@ const highlightedText = (
   onlyWrap?: boolean
 ) =>
   classnames(
-    textColor('text-accent-dark'),
+    textColor('text-primary-dark'),
     fontWeight(bold ? 'font-bold' : 'font-medium'),
     fontSize('text-sm'),
     borderRadius('rounded-full'),
