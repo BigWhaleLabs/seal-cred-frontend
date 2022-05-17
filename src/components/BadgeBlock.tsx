@@ -88,12 +88,12 @@ function Badge({
   const { ledger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
 
-  const { xs, sm } = useBreakpoints()
+  const { xxs, sm } = useBreakpoints()
 
   const [loading, setLoading] = useState(false)
   const [completed, setCompleted] = useState(false)
 
-  const small = xs && !sm
+  const small = xxs && !sm
   const minted = tokenId !== undefined
   const ledgerRecord = ledger[contractAddress]
   const derivativeAddress = ledgerRecord.derivativeContract.address
@@ -171,11 +171,11 @@ function BadgeBlock({
   contractAddress: string
   tokenId?: number
 }) {
-  const { xs, sm } = useBreakpoints()
+  const { xxs, sm } = useBreakpoints()
   const shortAddress = truncateMiddleIfNeeded(contractAddress, 11)
 
   return (
-    <div className={badgeWrapper(tokenId !== undefined, xs && !sm)}>
+    <div className={badgeWrapper(tokenId !== undefined, xxs && !sm)}>
       <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
         <Badge contractAddress={contractAddress} tokenId={tokenId} />
       </Suspense>

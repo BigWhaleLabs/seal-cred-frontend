@@ -34,9 +34,9 @@ const contractContainer = (small?: boolean) =>
   )
 
 const ProofLine: FC = ({ children }) => {
-  const { mobile } = useBreakpoints()
+  const { xs } = useBreakpoints()
 
-  return <div className={contractContainer(mobile)}>{children}</div>
+  return <div className={contractContainer(xs)}>{children}</div>
 }
 
 export default ProofLine

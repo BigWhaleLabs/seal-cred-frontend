@@ -20,10 +20,10 @@ export default function useBreakpoints() {
   }, [])
 
   return {
-    xs: width > xsSize,
+    xxs: width > xsSize,
+    xs: width > xsSize && width < smSize,
     sm: width > smSize,
     md: width > mdSize,
     lg: width > lgSize,
-    mobile: width > xsSize && width < smSize,
   }
 }
