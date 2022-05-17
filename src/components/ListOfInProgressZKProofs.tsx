@@ -1,5 +1,4 @@
 import { BodyText } from 'components/Text'
-import { ProofOrdering } from 'models/Proof'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
