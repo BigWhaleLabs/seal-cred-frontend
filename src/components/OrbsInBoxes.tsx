@@ -42,7 +42,7 @@ export default function OrbsInBoxes() {
         <div className={position('absolute')}>
           <ZkSphere color={Colors.green} animated />
         </div>
-        <HighlightedText color={Colors.green} center onlyWrap bold>
+        <HighlightedText color={Colors.tertiary} center onlyWrap bold>
           Wallet 01
         </HighlightedText>
       </div>
@@ -51,7 +51,7 @@ export default function OrbsInBoxes() {
         <div className={position('absolute')}>
           <ZkSphere color={Colors.yellow} animated />
         </div>
-        <HighlightedText color={Colors.yellow} center onlyWrap bold>
+        <HighlightedText color={Colors.accent} center onlyWrap bold>
           Wallet 02
         </HighlightedText>
       </div>
@@ -60,7 +60,7 @@ export default function OrbsInBoxes() {
         <div className={position('absolute')}>
           <ZkSphere color={Colors.pink} animated />
         </div>
-        <HighlightedText color={Colors.pink} center onlyWrap bold>
+        <HighlightedText color={Colors.secondary} center onlyWrap bold>
           Wallet 03
         </HighlightedText>
       </div>

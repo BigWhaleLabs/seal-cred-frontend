@@ -11,7 +11,7 @@ const GetStartedButton = () => {
 
   return (
     <Button
-      colors="primary"
+      colors="accent"
       loading={loading}
       onClick={async () => {
         setLoading(true)

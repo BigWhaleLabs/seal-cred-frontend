@@ -57,7 +57,7 @@ export const HeaderText: FC<{
 }
 
 const subheaderText = classnames(
-  textColor('text-blue-500'),
+  textColor('text-primary'),
   fontFamily('font-primary')
 )
 export const SubheaderText: FC = ({ children }) => {
@@ -99,7 +99,10 @@ export const BodyText: FC<{
   )
 }
 
-const largerText = classnames(textColor('text-blue-900'), fontSize('text-2xl'))
+const largerText = classnames(
+  textColor('text-primary-dark'),
+  fontSize('text-2xl')
+)
 export const LargerText: FC = ({ children }) => {
   return <div className={largerText}>{children}</div>
 }
@@ -121,7 +124,7 @@ export const CardDescription: FC = ({ children }) => {
 }
 
 const logoText = classnames(
-  textColor('text-yellow'),
+  textColor('text-accent'),
   fontWeight('font-bold'),
   fontSize('text-xl')
 )
@@ -142,7 +145,7 @@ const linkText = ({ gradientFrom, gradientTo, bold, color }: LinkTextProps) =>
         ? color
         : gradientFrom || gradientTo
         ? 'text-transparent'
-        : 'text-yellow'
+        : 'text-accent'
     ),
     backgroundImage(
       gradientFrom || gradientTo ? 'bg-gradient-to-r' : undefined
@@ -165,16 +168,19 @@ export const LinkText: FC<LinkTextProps> = (props) => {
   )
 }
 
-const subBadgeText = classnames(textColor('text-pink'), fontSize('text-sm'))
+const subBadgeText = classnames(
+  textColor('text-secondary'),
+  fontSize('text-sm')
+)
 export const SubBadgeText: FC = ({ children }) => {
   return <span className={subBadgeText}>{children}</span>
 }
 
 const boldColoredText = (color?: TTextColor) =>
   classnames(
-    textColor('text-pink'),
+    textColor('text-secondary'),
     fontSize('text-sm'),
-    textColor(color || 'text-blue-900')
+    textColor(color || 'text-primary-dark')
   )
 export const BoldColoredText: FC<{ color?: TTextColor }> = ({
   color,
@@ -185,7 +191,7 @@ export const BoldColoredText: FC<{ color?: TTextColor }> = ({
 
 const tooltipText = classnames(
   fontWeight('font-bold'),
-  textColor('text-blue-900'),
+  textColor('text-primary-dark'),
   fontFamily('font-primary')
 )
 export const TooltipText: FC = ({ children }) => {
@@ -199,7 +205,7 @@ const highlightedText = (
   onlyWrap?: boolean
 ) =>
   classnames(
-    textColor('text-blue-900'),
+    textColor('text-primary-dark'),
     fontWeight(bold ? 'font-bold' : 'font-medium'),
     fontSize('text-sm'),
     borderRadius('rounded-full'),

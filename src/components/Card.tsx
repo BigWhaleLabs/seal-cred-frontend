@@ -20,7 +20,7 @@ import {
 } from 'classnames/tailwind'
 import ArcText from 'components/ArcText'
 
-type Color = 'pink' | 'yellow' | 'green' | 'blue' | 'white'
+type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'white'
 interface CardProps {
   shadow?: boolean
   color?: Color
@@ -32,32 +32,32 @@ interface CardProps {
 
 const cardColor = (color?: Color) => {
   return classnames(
-    borderWidth('border-1'),
+    borderWidth('border'),
     borderColor(
-      color === 'yellow'
-        ? 'border-yellow'
-        : color === 'green'
-        ? 'border-green'
-        : color === 'pink'
-        ? 'border-pink'
+      color === 'accent'
+        ? 'border-accent'
+        : color === 'tertiary'
+        ? 'border-tertiary'
+        : color === 'secondary'
+        ? 'border-secondary'
         : color === 'white'
         ? 'border-white'
-        : color === 'blue'
-        ? 'border-blue-500'
-        : 'border-blue-900'
+        : color === 'primary'
+        ? 'border-primary'
+        : 'border-primary-dark'
     ),
     boxShadow('shadow-2xl'),
     boxShadowColor(
-      color === 'yellow'
-        ? 'shadow-yellow50'
-        : color === 'green'
-        ? 'shadow-green50'
-        : color === 'pink'
-        ? 'shadow-pink50'
+      color === 'accent'
+        ? 'shadow-accent-semi-transparent'
+        : color === 'tertiary'
+        ? 'shadow-tertiary-semi-transparent'
+        : color === 'secondary'
+        ? 'shadow-secondary-semi-transparent'
         : color === 'white'
-        ? 'shadow-white50'
-        : color === 'blue'
-        ? 'shadow-blue50'
+        ? 'shadow-white-semi-transparent'
+        : color === 'primary'
+        ? 'shadow-primary-semi-transparent'
         : undefined
     )
   )
@@ -73,9 +73,9 @@ const cardContainer = (
   return classnames(
     position('relative'),
     borderRadius('rounded-2xl'),
-    backgroundColor('bg-blue-900'),
+    backgroundColor('bg-primary-dark'),
     cardColor(shadow ? color : undefined),
-    padding(small ? 'p-3.875' : 'p-6'),
+    padding(small ? 'p-small' : 'p-6'),
     width(
       thin ? 'sm:!w-thin-card' : 'sm:w-card',
       thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
@@ -87,7 +87,7 @@ const cardContainer = (
       onlyWrap ? undefined : thin ? undefined : 'lg:h-card'
     ),
     space('space-y-4'),
-    maxHeight(onlyWrap ? undefined : 'max-h-508'),
+    maxHeight(onlyWrap ? undefined : 'max-h-card'),
     wordBreak('break-words'),
     zIndex('z-30')
   )
