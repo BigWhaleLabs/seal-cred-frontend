@@ -7,7 +7,7 @@ import classnames, {
   position,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const wrapperBox = classnames(
   position('relative'),

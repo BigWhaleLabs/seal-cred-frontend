@@ -16,7 +16,7 @@ import classnames, {
   transitionProperty,
   width,
 } from 'classnames/tailwind'
-import useScrollPercent from 'helpers/useScrollPercent'
+import useScrollPercent from 'hooks/useScrollPercent'
 
 const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
   classnames(
