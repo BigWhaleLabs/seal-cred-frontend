@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
 import ProofStore from 'stores/ProofStore'
-import ZKProof from 'components/ZkProof'
+import ZkProof from 'components/ZkProof'
 
 function ContractList() {
   const { proofsCompleted } = useSnapshot(ProofStore)
@@ -15,7 +15,7 @@ function ContractList() {
           {Array.from(proofsCompleted)
             .sort((a, b) => (a.account === b.account ? 0 : -1))
             .map((proof) => (
-              <ZKProof
+              <ZkProof
                 proof={proof}
                 contractAddress={proof.contract}
                 key={proof.id}

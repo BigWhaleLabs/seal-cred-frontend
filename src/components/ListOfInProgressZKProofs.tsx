@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
 import ProofStore from 'stores/ProofStore'
-import ZKProof from 'components/ZkProof'
+import ZkProof from 'components/ZkProof'
 
 function ContractList() {
   const { proofsInProgress } = useSnapshot(ProofStore)
@@ -24,7 +24,7 @@ function ContractList() {
                   : positionA - positionB
             )
             .map((proof) => (
-              <ZKProof
+              <ZkProof
                 proof={proof}
                 contractAddress={proof.contract}
                 key={proof.id}

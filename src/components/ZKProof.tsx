@@ -103,10 +103,11 @@ function useProofContent(
   }
 }
 
-const ZkProof: FC<{ proof?: Proof; contractAddress: string }> = ({
-  proof,
-  contractAddress,
-}) => {
+interface ZkProofProps {
+  proof?: Proof
+  contractAddress: string
+}
+export default function ({ proof, contractAddress }: ZkProofProps) {
   const { xxs, xs } = useBreakpoints()
   const { color, content } = useProofContent(contractAddress, proof)
 
@@ -121,5 +122,3 @@ const ZkProof: FC<{ proof?: Proof; contractAddress: string }> = ({
     </ProofLine>
   )
 }
-
-export default ZkProof
