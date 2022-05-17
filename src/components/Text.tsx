@@ -28,35 +28,7 @@ import {
 } from 'classnames/tailwind'
 import Colors, { colorToTailwindBg } from 'models/Colors'
 
-interface AccentTextProps {
-  color: TTextColor
-  align?: TTextAlign
-  bold?: boolean
-  small?: boolean
-}
-
-interface LinkTextProps {
-  url: string
-  gradientFrom?: TGradientColorStops
-  gradientTo?: TGradientColorStops
-  color?: TTextColor
-  title?: string
-  bold?: boolean
-  onClick?: () => void
-}
-
-type BodyTextSize = 'lg' | 'base' | 'sm' | 'xs'
-
 type HeaderSize = '4xl' | '3xl' | '2xl'
-
-export const textTruncateStyles = classnames(
-  width('w-fit'),
-  textOverflow('text-ellipsis'),
-  overflow('overflow-hidden'),
-  whitespace('whitespace-nowrap'),
-  margin('mr-1')
-)
-
 const headerText = (size: HeaderSize, leading = 8, bold = true) =>
   classnames(
     fontFamily('font-primary'),
@@ -82,6 +54,12 @@ export const SubheaderText: FC = ({ children }) => {
   return <h2 className={subheaderText}>{children}</h2>
 }
 
+interface AccentTextProps {
+  color: TTextColor
+  align?: TTextAlign
+  bold?: boolean
+  small?: boolean
+}
 const accentText = ({ color, align, bold, small }: AccentTextProps) =>
   classnames(
     textColor(color),
@@ -93,6 +71,14 @@ export const AccentText: FC<AccentTextProps> = (props) => {
   return <span className={accentText(props)}>{props.children}</span>
 }
 
+export const textTruncateStyles = classnames(
+  width('w-fit'),
+  textOverflow('text-ellipsis'),
+  overflow('overflow-hidden'),
+  whitespace('whitespace-nowrap'),
+  margin('mr-1')
+)
+type BodyTextSize = 'lg' | 'base' | 'sm' | 'xs'
 const bodyText = (
   size: BodyTextSize,
   leading = 6,
@@ -155,6 +141,15 @@ export const BadgeText: FC = ({ children }) => {
   return <span className={badgeText}>{children}</span>
 }
 
+interface LinkTextProps {
+  url: string
+  gradientFrom?: TGradientColorStops
+  gradientTo?: TGradientColorStops
+  color?: TTextColor
+  title?: string
+  bold?: boolean
+  onClick?: () => void
+}
 const linkText = ({ gradientFrom, gradientTo, bold, color }: LinkTextProps) =>
   classnames(
     textDecoration('no-underline'),
