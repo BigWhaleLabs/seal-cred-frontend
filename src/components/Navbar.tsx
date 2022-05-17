@@ -40,7 +40,7 @@ const logoContainer = classnames(
   margin('mt-2')
 )
 
-export default function Navbar() {
+export default function () {
   const { pathname } = useLocation()
   const withoutWallet = pathname.split('/').length >= 3
 

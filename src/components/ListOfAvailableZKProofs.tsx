@@ -1,7 +1,7 @@
 import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import ContractListContainer from 'components/ContractListContainer'
-import ZKProof from 'components/ZKProof'
+import ZkProof from 'components/ZkProof'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 function ContractList() {
@@ -12,7 +12,7 @@ function ContractList() {
       {!!proofAddressesAvailableToCreate.length && (
         <ContractListContainer>
           {proofAddressesAvailableToCreate.map((address) => (
-            <ZKProof contractAddress={address} key={address} />
+            <ZkProof contractAddress={address} key={address} />
           ))}
         </ContractListContainer>
       )}
@@ -20,7 +20,7 @@ function ContractList() {
   )
 }
 
-export default function ListOfAvailableZKProofs() {
+export default function () {
   return (
     <Suspense
       fallback={

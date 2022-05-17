@@ -45,7 +45,7 @@ const bodyText = classnames(
   margin('mb-8')
 )
 
-export default function ConnectAccount() {
+export default function () {
   const { walletLoading } = useSnapshot(WalletStore)
   return (
     <div className={walletContainer}>

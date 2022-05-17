@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { ReactNode } from 'react'
 import classnames, { display, flexDirection, space } from 'classnames/tailwind'
 
 const container = classnames(
@@ -7,8 +7,6 @@ const container = classnames(
   space('space-y-2')
 )
 
-const ContractListContainer: FC = ({ children }) => {
+export default function ({ children }: { children: ReactNode }) {
   return <div className={container}>{children}</div>
 }
-
-export default ContractListContainer

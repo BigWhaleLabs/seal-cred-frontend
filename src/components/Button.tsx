@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { ReactNode } from 'react'
 import {
   alignItems,
   backgroundClip,
@@ -31,8 +31,9 @@ import Loading from 'icons/Loading'
 
 type ButtonColors = 'accent' | 'secondary' | 'tertiary'
 
-export interface ButtonProps {
+interface ButtonProps {
   colors: ButtonColors
+  children: ReactNode
   loading?: boolean
   small?: boolean
   arrow?: boolean
@@ -125,7 +126,7 @@ const colorClasses = ({
         )
   )
 
-const Button: FC<ButtonProperties> = ({
+export default function ({
   colors,
   small,
   arrow,
@@ -133,28 +134,28 @@ const Button: FC<ButtonProperties> = ({
   loading,
   disabled,
   ...rest
-}) => (
-  <button
-    className={button({ colors, loading, disabled, small })}
-    disabled={loading || disabled}
-    {...rest}
-  >
-    {loading && <Loading small={small} />}
-    {typeof children === 'string' ? (
-      <span
-        className={
-          colors === 'tertiary'
-            ? colorClasses({ colors, loading, disabled, small })
-            : undefined
-        }
-      >
-        {children}
-      </span>
-    ) : (
-      children
-    )}
-    {arrow && <Arrow disabled={disabled || loading} />}
-  </button>
-)
-
-export default Button
+}: ButtonProperties) {
+  return (
+    <button
+      className={button({ colors, loading, disabled, small })}
+      disabled={loading || disabled}
+      {...rest}
+    >
+      {loading && <Loading small={small} />}
+      {typeof children === 'string' ? (
+        <span
+          className={
+            colors === 'tertiary'
+              ? colorClasses({ colors, loading, disabled, small })
+              : undefined
+          }
+        >
+          {children}
+        </span>
+      ) : (
+        children
+      )}
+      {arrow && <Arrow disabled={disabled || loading} />}
+    </button>
+  )
+}

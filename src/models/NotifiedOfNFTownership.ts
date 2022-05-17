@@ -1,1 +1,3 @@
-export type NotifiedOfNFTownership = { [address: string]: boolean }
+export default interface NotifiedOfNFTownership {
+  [address: string]: boolean
+}

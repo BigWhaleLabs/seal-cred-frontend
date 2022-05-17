@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export default function useScrollPercent() {
+export default function () {
   const [scroll, setScroll] = useState(0)
 
   useEffect(() => {

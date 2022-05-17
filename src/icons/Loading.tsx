@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import {
   animation,
   classnames,
@@ -17,7 +16,11 @@ const icon = (small?: boolean) =>
   )
 const iconPath = classnames(opacity('opacity-100'))
 
-const Loading: FC<{ small?: boolean }> = ({ small }) => {
+interface LoadingProps {
+  small?: boolean
+}
+
+export default function ({ small }: LoadingProps) {
   return (
     <svg className={icon(small)} viewBox="0 0 24 24">
       <path
@@ -28,5 +31,3 @@ const Loading: FC<{ small?: boolean }> = ({ small }) => {
     </svg>
   )
 }
-
-export default Loading

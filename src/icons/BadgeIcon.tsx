@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import classnames, {
   borderRadius,
   boxShadow,
@@ -22,7 +21,11 @@ const strokeColor = (color?: StrokeColor) =>
     )
   )
 
-const BadgeIcon: FC<{ color?: StrokeColor }> = ({ color }) => {
+interface BadgeIconProps {
+  color?: StrokeColor
+}
+
+export default function ({ color }: BadgeIconProps) {
   return (
     <svg
       width="65"
@@ -101,5 +104,3 @@ const BadgeIcon: FC<{ color?: StrokeColor }> = ({ color }) => {
     </svg>
   )
 }
-
-export default BadgeIcon

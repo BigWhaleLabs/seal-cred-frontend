@@ -1,4 +1,4 @@
-export default function TopConnectors() {
+export default function () {
   return (
     <div style={{ width: '202px', height: '420px' }}>
       <svg

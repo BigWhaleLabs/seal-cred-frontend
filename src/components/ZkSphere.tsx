@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import Colors, { colorToDropShadow, colorToTailwindBg } from 'models/Colors'
 import classnames, {
   TBackgroundColor,
@@ -34,11 +33,13 @@ const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
     transitionProperty('transition-all')
   )
 
-const ZkSphere: FC<{
+interface ZkSphereProps {
   color: Colors
   animated?: boolean
   text?: string
-}> = ({ color, children, animated, text }) => {
+}
+
+export default function ({ color, animated, text }: ZkSphereProps) {
   const bgColor = colorToTailwindBg(color)
   const shadowColor = colorToDropShadow(color)
 
@@ -68,8 +69,6 @@ const ZkSphere: FC<{
       {zkText}
     </div>
   ) : (
-    <div className={sphereStyles(bgColor, shadowColor)}>{children || text}</div>
+    <div className={sphereStyles(bgColor, shadowColor)}>{text}</div>
   )
 }
-
-export default ZkSphere

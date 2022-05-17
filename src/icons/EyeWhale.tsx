@@ -2,7 +2,7 @@ import { margin } from 'classnames/tailwind'
 
 const eyeWhaleBox = margin('-mt-5', 'mb-12')
 
-const EyeWhale = () => {
+export default function () {
   return (
     <svg
       width="130"
@@ -160,5 +160,3 @@ const EyeWhale = () => {
     </svg>
   )
 }
-
-export default EyeWhale

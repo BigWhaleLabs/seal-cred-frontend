@@ -7,7 +7,7 @@ import classnames, { margin } from 'classnames/tailwind'
 const bigWhaleLabsText = classnames(margin('mt-6'))
 const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
 
-function LandingLearnMoreCard() {
+export default function () {
   return (
     <div className={margin('mb-24')}>
       <Card color="primary" shadow onlyWrap>
@@ -36,4 +36,3 @@ function LandingLearnMoreCard() {
     </div>
   )
 }
-export default LandingLearnMoreCard
