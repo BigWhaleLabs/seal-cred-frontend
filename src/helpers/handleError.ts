@@ -16,7 +16,7 @@ export const ErrorList = {
     'Server has reloaded while the proof was being generated, please, try again later',
 }
 
-export function handleError(error: unknown) {
+export default function (error: unknown) {
   console.error(error)
 
   let displayedError: string | undefined

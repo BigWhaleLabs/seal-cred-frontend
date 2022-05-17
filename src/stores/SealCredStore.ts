@@ -2,7 +2,7 @@ import { proxyWithComputed } from 'valtio/utils'
 import Ledger from 'models/Ledger'
 import LedgerRecord from 'models/LedgerRecord'
 import TokenIdToOwnerMap from 'models/TokenIdToOwnerMap'
-import getLedger, { getLedgerRecord } from 'helpers/ledger'
+import getLedger, { getLedgerRecord } from 'helpers/getLedger'
 import getMapOfOwners from 'helpers/getTokenIdToOwnerMap'
 import sealCred from 'helpers/sealCred'
 

@@ -5,7 +5,7 @@ const smSize = 375
 const mdSize = 600
 const lgSize = 1023
 
-export default function useBreakpoints() {
+export default function () {
   const [width, setWidth] = useState(window.innerWidth)
 
   useEffect(() => {

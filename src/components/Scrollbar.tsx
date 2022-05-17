@@ -1,5 +1,5 @@
 import 'simplebar/dist/simplebar.min.css'
-import { FC, MutableRefObject, useRef } from 'react'
+import { MutableRefObject, ReactNode, useRef } from 'react'
 import Fade from 'components/Fade'
 import SimpleBar from 'simplebar-react'
 import classnames, {
@@ -14,11 +14,17 @@ type FadeType = 'top' | 'bottom' | 'both'
 
 const outerBox = classnames(position('relative'), overflow('overflow-x-hidden'))
 
-const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
+interface ScrollbarProps {
+  children: ReactNode
+  maxHeight?: number
+  fade?: FadeType
+}
+
+export default function ({
   children,
   maxHeight = 350,
   fade = 'both',
-}) => {
+}: ScrollbarProps) {
   const scrollRef = useRef() as MutableRefObject<HTMLDivElement>
   const wrapRef = useRef() as MutableRefObject<HTMLDivElement>
   const { overflows, isOnTop, isOnBottom, scrollMaxHeight } = useIsOverflow(
@@ -47,5 +53,3 @@ const Scrollbar: FC<{ maxHeight?: number; fade?: FadeType }> = ({
     </div>
   )
 }
-
-export default Scrollbar

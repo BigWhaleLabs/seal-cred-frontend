@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import classnames, {
   TBackgroundColor,
   backgroundColor,
@@ -23,12 +22,10 @@ const noise = classnames(
   backgroundImage('bg-noise')
 )
 
-const NoisyRectangle: FC<{ bgColor: TBackgroundColor }> = ({ bgColor }) => {
+export default function ({ bgColor }: { bgColor: TBackgroundColor }) {
   return (
     <div className={rectangle(bgColor)}>
       <div className={noise} />
     </div>
   )
 }
-
-export default NoisyRectangle

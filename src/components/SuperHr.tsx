@@ -26,7 +26,7 @@ const longLine = classnames(
   zIndex('z-10')
 )
 
-export default function SuperHr() {
+export default function () {
   return (
     <div className={svgBox}>
       <div className={longLine} />

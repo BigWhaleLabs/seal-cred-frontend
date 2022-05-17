@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import Colors, { colorToDropShadow } from 'models/Colors'
 import classnames, {
   TDropShadow,
@@ -14,7 +13,12 @@ const orbBoxStyles = (shadowColor: TDropShadow, shadow?: boolean) =>
     transitionProperty('transition-all')
   )
 
-const OrbBox: FC<{ color: Colors; shadow?: boolean }> = ({ color, shadow }) => {
+interface OrbBoxProps {
+  color: Colors
+  shadow?: boolean
+}
+
+export default function OrbBox({ color, shadow }: OrbBoxProps) {
   const shadowColor = colorToDropShadow(color)
 
   return (
@@ -81,5 +85,3 @@ const OrbBox: FC<{ color: Colors; shadow?: boolean }> = ({ color, shadow }) => {
     </div>
   )
 }
-
-export default OrbBox

@@ -1,4 +1,4 @@
-const Grin = () => {
+export default function () {
   return (
     <svg
       width="91"
@@ -106,5 +106,3 @@ const Grin = () => {
     </svg>
   )
 }
-
-export default Grin

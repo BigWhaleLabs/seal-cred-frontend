@@ -1,4 +1,4 @@
-const DoubleSmile = () => {
+export default function () {
   return (
     <svg
       width="91"
@@ -397,5 +397,3 @@ const DoubleSmile = () => {
     </svg>
   )
 }
-
-export default DoubleSmile

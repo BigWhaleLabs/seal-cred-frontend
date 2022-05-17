@@ -72,7 +72,7 @@ function ContractNameComponent({
   )
 }
 
-export default function ContractName({
+export default function ({
   overflow,
   truncate,
   address,

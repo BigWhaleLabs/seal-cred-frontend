@@ -46,7 +46,7 @@ const highlightedBlock = classnames(
   position('absolute')
 )
 
-function Landing() {
+export default function () {
   const scroll = useScrollPercent()
   const { xs } = useBreakpoints()
   const animEnd = scroll > 0.645
@@ -92,5 +92,3 @@ function Landing() {
     </div>
   )
 }
-
-export default Landing
