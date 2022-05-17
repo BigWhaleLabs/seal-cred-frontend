@@ -13,7 +13,7 @@ module.exports = {
       keyframes: {
         'pulse-horizontal': {
           '0%, 100%': { transform: 'translateX(0.5rem)' },
-          '50%': { transform: 'translateX(0px)' },
+          '50%': { transform: 'translateX(0rem)' },
         },
       },
       fontSize: {
@@ -55,10 +55,10 @@ module.exports = {
         'white-semi-transparent': 'rgba(239, 236, 214, 0.4)',
       },
       boxShadow: {
-        '2xl': '0px 0.25rem 2.75rem 0px rgb(0 0 0 / 0.25)',
-        lg: '0px 0px 1rem 0px rgb(0 0 0 / 0.25)',
-        md: '0px 0px 0.375rem 0px rgb(0 0 0 / 0.25)',
-        button: '0px 0px 1.625rem rgb(0 0 0 / 1)',
+        '2xl': '0rem 0.25rem 2.75rem 0rem rgb(0 0 0 / 0.25)',
+        lg: '0rem 0rem 1rem 0rem rgb(0 0 0 / 0.25)',
+        md: '0rem 0rem 0.375rem 0rem rgb(0 0 0 / 0.25)',
+        button: '0rem 0rem 1.625rem rgb(0 0 0 / 1)',
       },
       height: {
         'noisy-rectangle': '0.688rem',
@@ -81,10 +81,10 @@ module.exports = {
         '-4': '-1rem',
       },
       dropShadow: {
-        accent: '0px 0px 0.625rem #fed823',
-        secondary: '0px 0px 0.625rem #ff7bed',
-        tertiary: '0px 0px 0.625rem #01fed6',
-        white: '0px 0px 0.625rem #efecd6',
+        accent: '0rem 0rem 0.625rem #fed823',
+        secondary: '0rem 0rem 0.625rem #ff7bed',
+        tertiary: '0rem 0rem 0.625rem #01fed6',
+        white: '0rem 0rem 0.625rem #efecd6',
       },
       padding: {
         small: '0.969rem',
