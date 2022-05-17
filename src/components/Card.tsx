@@ -74,7 +74,7 @@ const cardContainer = (
     borderRadius('rounded-2xl'),
     backgroundColor('bg-primary-dark'),
     cardColor(shadow ? color : undefined),
-    padding(small ? 'p-3.875' : 'p-6'),
+    padding(small ? 'p-small' : 'p-6'),
     width(
       thin ? 'sm:!w-thin-card' : 'sm:w-card',
       thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
