@@ -31,7 +31,7 @@ interface CardProps {
 
 const cardColor = (color?: Color) => {
   return classnames(
-    borderWidth('border-1'),
+    borderWidth('border-px'),
     borderColor(
       color === 'accent'
         ? 'border-accent'
@@ -86,7 +86,7 @@ const cardContainer = (
       onlyWrap ? undefined : thin ? undefined : 'lg:h-card'
     ),
     space('space-y-4'),
-    maxHeight(onlyWrap ? undefined : 'max-h-508'),
+    maxHeight(onlyWrap ? undefined : 'max-h-card'),
     wordBreak('break-words'),
     zIndex('z-30')
   )

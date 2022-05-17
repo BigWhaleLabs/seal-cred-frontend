@@ -7,14 +7,11 @@ module.exports = {
     },
     extend: {
       borderWidth: {
-        1: '1px',
+        px: '1px',
       },
       maxHeight: {
-        508: '508px',
-        85: '21.25rem',
-      },
-      maxWidth: {
-        400: '400px',
+        card: '508px',
+        'badges-list': '21.25rem',
       },
       keyframes: {
         'pulse-horizontal': {
@@ -27,7 +24,6 @@ module.exports = {
         '4xl': '2.5rem',
       },
       lineHeight: {
-        3: '14px',
         5: '18px',
         6: '21px',
         8: '31px',
@@ -70,7 +66,7 @@ module.exports = {
       height: {
         card: '508px',
         'mobile-card': '365px',
-        2.75: '11px',
+        'noisy-rectangle': '11px',
       },
       width: {
         card: '398px',

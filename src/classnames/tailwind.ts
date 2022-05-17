@@ -2814,13 +2814,6 @@ export type TBorderWidth =
   | 'border-x-0'
   | 'border-y-0'
   | 'border-0'
-  | 'border-t-1'
-  | 'border-r-1'
-  | 'border-b-1'
-  | 'border-l-1'
-  | 'border-x-1'
-  | 'border-y-1'
-  | 'border-1'
   | 'border-t-2'
   | 'border-r-2'
   | 'border-b-2'
@@ -2849,6 +2842,13 @@ export type TBorderWidth =
   | 'border-x'
   | 'border-y'
   | 'border'
+  | 'border-t-px'
+  | 'border-r-px'
+  | 'border-b-px'
+  | 'border-l-px'
+  | 'border-x-px'
+  | 'border-y-px'
+  | 'border-px'
 
 export type TDivideColor =
   | 'divide-inherit'
@@ -3097,8 +3097,6 @@ export type TDivideOpacity =
 export type TDivideWidth =
   | 'divide-x-0'
   | 'divide-y-0'
-  | 'divide-x-1'
-  | 'divide-y-1'
   | 'divide-x-2'
   | 'divide-y-2'
   | 'divide-x-4'
@@ -3107,6 +3105,8 @@ export type TDivideWidth =
   | 'divide-y-8'
   | 'divide-x'
   | 'divide-y'
+  | 'divide-x-px'
+  | 'divide-y-px'
   | 'divide-x-reverse'
   | 'divide-y-reverse'
 
@@ -7117,7 +7117,6 @@ export type TMinWidth =
 
 export type TMaxWidth =
   | 'max-w-0'
-  | 'max-w-400'
   | 'max-w-none'
   | 'max-w-xs'
   | 'max-w-sm'
@@ -7202,7 +7201,7 @@ export type THeight =
   | 'h-fit'
   | 'h-card'
   | 'h-mobile-card'
-  | 'h-2.75'
+  | 'h-noisy-rectangle'
   | 'h-3.875'
 
 export type TMinHeight =
@@ -7243,9 +7242,7 @@ export type TMaxHeight =
   | 'max-h-64'
   | 'max-h-72'
   | 'max-h-80'
-  | 'max-h-85'
   | 'max-h-96'
-  | 'max-h-508'
   | 'max-h-px'
   | 'max-h-0.5'
   | 'max-h-1.5'
@@ -7256,6 +7253,8 @@ export type TMaxHeight =
   | 'max-h-min'
   | 'max-h-max'
   | 'max-h-fit'
+  | 'max-h-card'
+  | 'max-h-badges-list'
   | 'max-h-3.875'
 
 export type TSizing =

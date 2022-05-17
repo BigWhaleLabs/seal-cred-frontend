@@ -41,7 +41,7 @@ const questionStyles = classnames(
   width('w-6'),
   height('h-6'),
   borderRadius('rounded-full'),
-  borderWidth('border-1'),
+  borderWidth('border-px'),
   borderColor('border-accent'),
   display('flex'),
   justifyContent('justify-center'),
