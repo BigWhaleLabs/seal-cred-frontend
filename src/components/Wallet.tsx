@@ -26,7 +26,7 @@ const walletAccount = classnames(
   display('sm:flex', 'hidden')
 )
 
-export default function Wallet() {
+export default function () {
   const { account } = useSnapshot(WalletStore)
 
   return (

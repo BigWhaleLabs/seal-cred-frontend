@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { ReactNode } from 'react'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -14,7 +14,7 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const contractContainer = (small?: boolean) =>
   classnames(
@@ -33,10 +33,8 @@ const contractContainer = (small?: boolean) =>
     fontWeight('font-bold')
   )
 
-const ProofLine: FC = ({ children }) => {
-  const { mobile } = useBreakpoints()
+export default function ({ children }: { children: ReactNode }) {
+  const { xs } = useBreakpoints()
 
-  return <div className={contractContainer(mobile)}>{children}</div>
+  return <div className={contractContainer(xs)}>{children}</div>
 }
-
-export default ProofLine

@@ -8,7 +8,7 @@ const rpc = env.VITE_ETH_RPC as string
 const network = env.VITE_ETH_NETWORK as string
 const appName = env.VITE_APP_NAME as string
 
-const web3Modal = new Web3Modal({
+export default new Web3Modal({
   cacheProvider: true,
   theme: 'dark',
   disableInjectedProvider: false,
@@ -51,5 +51,3 @@ const web3Modal = new Web3Modal({
     // },
   },
 })
-
-export default web3Modal

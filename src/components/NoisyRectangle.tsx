@@ -1,7 +1,7 @@
-import { FC } from 'react'
 import classnames, {
   TBackgroundColor,
   backgroundColor,
+  backgroundImage,
   backgroundRepeat,
   height,
   opacity,
@@ -18,18 +18,14 @@ const rectangle = (bgColor: TBackgroundColor) =>
 const noise = classnames(
   width('w-full'),
   height('h-full'),
-  backgroundRepeat('bg-repeat')
+  backgroundRepeat('bg-repeat'),
+  backgroundImage('bg-noise')
 )
 
-const NoisyRectangle: FC<{ bgColor: TBackgroundColor }> = ({ bgColor }) => {
+export default function ({ bgColor }: { bgColor: TBackgroundColor }) {
   return (
     <div className={rectangle(bgColor)}>
-      <div
-        style={{ backgroundImage: 'url("/img/noise50.png")' }}
-        className={noise}
-      />
+      <div className={noise} />
     </div>
   )
 }
-
-export default NoisyRectangle

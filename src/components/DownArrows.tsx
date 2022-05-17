@@ -1,13 +1,24 @@
 import Arrow from 'components/Arrow'
+import classnames, {
+  animation,
+  margin,
+  space,
+  transitionProperty,
+} from 'classnames/tailwind'
 
-const DownArrows = () => {
+const arrowsBox = classnames(
+  transitionProperty('transition-all'),
+  animation('animate-bounce'),
+  space('-space-y-4'),
+  margin('my-6')
+)
+
+export default function () {
   return (
-    <div className="transition-all animate-bounce -space-y-4 my-6">
+    <div className={arrowsBox}>
       <Arrow flip disabled />
       <Arrow flip disabled />
       <Arrow flip disabled />
     </div>
   )
 }
-
-export default DownArrows

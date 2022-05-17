@@ -1,11 +1,14 @@
-import { FC } from 'react'
 import classnames, {
   borderRadius,
   boxShadow,
   boxShadowColor,
 } from 'classnames/tailwind'
 
-const SealWallet: FC<{ connected?: boolean }> = ({ connected }) => {
+interface SealWalletProps {
+  connected?: boolean
+}
+
+export default function ({ connected }: SealWalletProps) {
   return connected ? (
     <svg
       width="42"
@@ -145,5 +148,3 @@ const SealWallet: FC<{ connected?: boolean }> = ({ connected }) => {
     </svg>
   )
 }
-
-export default SealWallet

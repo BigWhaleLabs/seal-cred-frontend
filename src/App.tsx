@@ -7,7 +7,7 @@ import NotFound from 'pages/NotFound'
 import OwnedBadge from 'pages/OwnedBadge'
 import Root from 'components/Root'
 
-export default function App() {
+export default function () {
   return (
     <Root>
       <Router>

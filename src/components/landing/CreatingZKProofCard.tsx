@@ -5,7 +5,7 @@ import classnames, { margin } from 'classnames/tailwind'
 const cardHeader = classnames(margin('mb-6'))
 const bottomBodyText = classnames(margin('mt-6'))
 
-function LandingCreatingZKProofCard() {
+export default function () {
   return (
     <Card color="white" onlyWrap shadow>
       <div className={cardHeader}>
@@ -27,5 +27,3 @@ function LandingCreatingZKProofCard() {
     </Card>
   )
 }
-
-export default LandingCreatingZKProofCard

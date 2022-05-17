@@ -38,7 +38,7 @@ const QRCodeOptions: Options = {
   },
 }
 
-export default function QRCode({ derivativeAddress, tokenId }: QRCodeProps) {
+export default function ({ derivativeAddress, tokenId }: QRCodeProps) {
   const ref = useRef<HTMLAnchorElement>(null)
   const url = `${window.location.origin}/${derivativeAddress}/${tokenId}`
 

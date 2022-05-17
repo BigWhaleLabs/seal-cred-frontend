@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import {
   alignItems,
   backgroundClip,
@@ -20,7 +19,7 @@ import {
 
 type ButtonColors = 'primary' | 'secondary' | 'tertiary'
 
-export interface ButtonProps {
+interface ButtonProps {
   color: ButtonColors
 }
 
@@ -56,17 +55,15 @@ const button = (color: ButtonColors, disabled?: boolean) =>
     lineHeight('leading-5')
   )
 
-const ProofButton: FC<ButtonProperties> = ({
+export default function ({
   color,
   children,
   disabled,
   ...rest
-}) => {
+}: ButtonProperties) {
   return (
     <button className={button(color, disabled)} disabled={disabled} {...rest}>
       {typeof children === 'string' ? <span>{children}</span> : children}
     </button>
   )
 }
-
-export default ProofButton

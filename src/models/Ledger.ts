@@ -1,7 +1,5 @@
 import LedgerRecord from 'models/LedgerRecord'
 
-type Ledger = {
+export default interface Ledger {
   [key: string]: LedgerRecord
 }
-
-export default Ledger

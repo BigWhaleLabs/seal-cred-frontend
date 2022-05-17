@@ -71,6 +71,15 @@ module.exports = {
         card: '24.875rem',
         'mobile-card': '92%',
       },
+      inset: {
+        '-28': '-7rem',
+        '-24': '-6rem',
+        '-28': '-7rem',
+        '-4': '-1rem',
+      },
+      space: {
+        '-4': '-1rem',
+      },
       dropShadow: {
         accent: '0px 0px 0.625rem #fed823',
         secondary: '0px 0px 0.625rem #ff7bed',
@@ -81,8 +90,12 @@ module.exports = {
         small: '0.969rem',
       },
       margin: {
+        '-5': '-1.25rem',
         7.5: '0.469rem',
         8.5: '0.531rem',
+      },
+      backgroundImage: {
+        noise: 'url("/img/noise50.png")',
       },
     },
   },

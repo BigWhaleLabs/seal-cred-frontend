@@ -14,8 +14,8 @@ import classnames, {
   overflow,
   position,
 } from 'classnames/tailwind'
-import useDerivativeTokensOwned from 'helpers/useDerivativeTokensOwned'
-import useProofsAvailableToMint from 'helpers/useProofsAvailableToMint'
+import useDerivativeTokensOwned from 'hooks/useDerivativeTokensOwned'
+import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 const badges = classnames(
   position('relative'),
@@ -64,7 +64,7 @@ function BadgeListSuspender() {
   )
 }
 
-function BadgesList() {
+export default function () {
   return (
     <div className={badges}>
       <Suspense
@@ -75,5 +75,3 @@ function BadgesList() {
     </div>
   )
 }
-
-export default BadgesList

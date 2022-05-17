@@ -1,5 +1,4 @@
 import { checkJobStatus, scheduleProofGeneration } from 'helpers/callProof'
-import { handleError } from 'helpers/handleError'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import Proof from 'models/Proof'
@@ -10,6 +9,7 @@ import axios from 'axios'
 import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
 import getMapOfOriginalContractOwners from 'helpers/getMapOfOriginalContractOwners'
+import handleError from 'helpers/handleError'
 import isAddressOwner from 'helpers/isAddressOwner'
 
 class ProofStore extends PersistableStore {

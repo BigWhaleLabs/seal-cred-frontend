@@ -6,7 +6,7 @@ import classnames, { margin } from 'classnames/tailwind'
 const cardHeader = classnames(margin('mb-6'))
 const bottomBodyText = classnames(margin('mt-6'))
 
-function LandingBuildingIdentitiesCard() {
+export default function () {
   return (
     <Card color="white" onlyWrap shadow>
       <div className={cardHeader}>
@@ -25,4 +25,3 @@ function LandingBuildingIdentitiesCard() {
     </Card>
   )
 }
-export default LandingBuildingIdentitiesCard

@@ -16,7 +16,7 @@ const scrollButton = classnames(
   outlineStyle('focus:outline-none')
 )
 
-export default function ScrollDownButton() {
+export default function () {
   return (
     <div onClick={() => window.scrollTo(0, 600)} className={scrollButton}>
       <AccentText color="text-accent">How does this work?</AccentText>

@@ -20,8 +20,8 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
-import useProofAddressesAvailableToCreate from 'helpers/useProofAddressesAvailableToCreate'
+import useBreakpoints from 'hooks/useBreakpoints'
+import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
@@ -102,7 +102,7 @@ function ReadyProofs() {
   )
 }
 
-function ProofsCard() {
+export default function () {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { lg } = useBreakpoints()
@@ -138,5 +138,3 @@ function ProofsCard() {
     </div>
   )
 }
-
-export default ProofsCard

@@ -6,7 +6,7 @@ import classnames, {
   transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
-import useScrollPercent from 'helpers/useScrollPercent'
+import useScrollPercent from 'hooks/useScrollPercent'
 
 const SuperOrb = () => (
   <svg
@@ -366,7 +366,7 @@ const superOrbBox = (glow?: boolean) =>
     zIndex('z-40')
   )
 
-export default function SuperOrbWithConnectors() {
+export default function () {
   const scroll = useScrollPercent()
 
   const glow = scroll > 0.48

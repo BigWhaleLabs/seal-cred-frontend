@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import classnames, {
   fill,
   fontSize,
@@ -6,7 +5,7 @@ import classnames, {
   height,
   textTransform,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const textStyle = classnames(
   fill('fill-secondary'),
@@ -16,19 +15,21 @@ const textStyle = classnames(
 )
 const svgBox = classnames(height('md:h-64', 'h-44'))
 
-const ArcText: FC<{ text: string; radius?: number; landing?: boolean }> = ({
-  text,
-  landing,
-  radius = 85,
-}) => {
-  const { xs, md } = useBreakpoints()
+interface ArcTextProps {
+  text: string
+  radius?: number
+  landing?: boolean
+}
+
+export default function ({ text, landing, radius = 85 }: ArcTextProps) {
+  const { xxs, md } = useBreakpoints()
 
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox={
-        landing ? '0 0 475 475' : xs && !md ? '0 0 450 450' : '0 0 500 500'
+        landing ? '0 0 475 475' : xxs && !md ? '0 0 450 450' : '0 0 500 500'
       }
       className={svgBox}
     >
@@ -63,5 +64,3 @@ const ArcText: FC<{ text: string; radius?: number; landing?: boolean }> = ({
     </svg>
   )
 }
-
-export default ArcText

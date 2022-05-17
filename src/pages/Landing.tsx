@@ -1,10 +1,10 @@
 import { HighlightedText } from 'components/Text'
+import BuildingIdentitiesCard from 'components/landing/BuildingIdentitiesCard'
 import Colors from 'models/Colors'
+import CreatingZKProofCard from 'components/landing/CreatingZKProofCard'
 import IdentityCard from 'components/IdentityCardOne'
-import LandingBuildingIdentitiesCard from 'components/LandingBuildingIdentitiesCard'
-import LandingCreatingZKProofCard from 'components/LandingCreatingZKProofCard'
-import LandingInitialCard from 'components/LandingInitialCard'
-import LandingLearnMoreCard from 'components/LandingLearnMoreCard'
+import InitialCard from 'components/landing/InitialCard'
+import LearnMoreCard from 'components/landing/LearnMoreCard'
 import OrbsInBoxes from 'components/OrbsInBoxes'
 import ScrollDownButton from 'components/ScrollDownButton'
 import SuperHr from 'components/SuperHr'
@@ -22,8 +22,8 @@ import classnames, {
   width,
   zIndex,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
-import useScrollPercent from 'helpers/useScrollPercent'
+import useBreakpoints from 'hooks/useBreakpoints'
+import useScrollPercent from 'hooks/useScrollPercent'
 
 const pageBox = classnames(
   display('flex'),
@@ -46,14 +46,14 @@ const highlightedBlock = classnames(
   position('absolute')
 )
 
-function Landing() {
+export default function () {
   const scroll = useScrollPercent()
-  const { mobile } = useBreakpoints()
+  const { xs } = useBreakpoints()
   const animEnd = scroll > 0.645
 
   return (
     <div className={pageBox}>
-      <LandingInitialCard showSpinner={!mobile} />
+      <InitialCard showSpinner={!xs} />
       <ScrollDownButton />
       <div
         className={position('absolute')}
@@ -74,23 +74,21 @@ function Landing() {
         className={classnames(position('absolute'), zIndex('z-40'))}
         style={{ transform: 'translateY(1050px)' }}
       >
-        <LandingCreatingZKProofCard />
+        <CreatingZKProofCard />
       </div>
       <SuperOrbWithConnectors />
       <div className={identityCards}>
-        <IdentityCard left text="Identity-01" mobile={mobile} reveal={animEnd}>
+        <IdentityCard left text="Identity-01" mobile={xs} reveal={animEnd}>
           <ZkSphere text="ZK" color={Colors.tertiary} />
           <ZkSphere text="ZK" color={Colors.accent} />
         </IdentityCard>
-        <IdentityCard text="Identity-02" mobile={mobile} reveal={animEnd}>
+        <IdentityCard text="Identity-02" mobile={xs} reveal={animEnd}>
           <ZkSphere text="ZK" color={Colors.secondary} />
         </IdentityCard>
       </div>
-      <LandingBuildingIdentitiesCard />
+      <BuildingIdentitiesCard />
       <SuperHr />
-      <LandingLearnMoreCard />
+      <LearnMoreCard />
     </div>
   )
 }
-
-export default Landing

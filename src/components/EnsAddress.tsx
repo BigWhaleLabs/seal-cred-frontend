@@ -1,8 +1,7 @@
-import { FC } from 'react'
 import { Suspense } from 'react'
 import EnsStore from 'stores/EnsStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
-import useEnsNameOrAddress from 'helpers/useEnsNameOrAddress'
+import useEnsNameOrAddress from 'hooks/useEnsNameOrAddress'
 
 function EnsAddressSuspender({ address }: { address: string }) {
   const ensNameOrAddress = useEnsNameOrAddress(address)
@@ -10,7 +9,7 @@ function EnsAddressSuspender({ address }: { address: string }) {
   return <span>{truncateMiddleIfNeeded(ensNameOrAddress, 17)}</span>
 }
 
-const EnsAddress: FC<{ address: string }> = ({ address }) => {
+export default function ({ address }: { address: string }) {
   EnsStore.fetchEnsName(address)
 
   return (
@@ -19,5 +18,3 @@ const EnsAddress: FC<{ address: string }> = ({ address }) => {
     </Suspense>
   )
 }
-
-export default EnsAddress

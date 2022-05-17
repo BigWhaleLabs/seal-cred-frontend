@@ -8,7 +8,7 @@ import classnames, {
   flexDirection,
   justifyContent,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const mainBlock = classnames(
   display('flex'),
@@ -17,7 +17,7 @@ const mainBlock = classnames(
   justifyContent('lg:justify-center')
 )
 
-function Main() {
+export default function () {
   const { lg } = useBreakpoints()
 
   return (
@@ -36,5 +36,3 @@ function Main() {
     </>
   )
 }
-
-export default Main
