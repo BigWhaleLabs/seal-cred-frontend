@@ -8,6 +8,7 @@ import {
   boxShadowColor,
   classnames,
   height,
+  inset,
   margin,
   maxHeight,
   padding,
@@ -91,6 +92,10 @@ const cardContainer = (
     zIndex('z-30')
   )
 }
+const spinnerBox = classnames(
+  position('absolute'),
+  inset('-top-24', '-right-4', 'md:-top-28', 'md:-right-28')
+)
 
 const Card: FC<CardProps> = ({
   color,
@@ -104,7 +109,7 @@ const Card: FC<CardProps> = ({
   return (
     <div className={cardContainer(shadow, color, onlyWrap, thin, small)}>
       {!!spinner && (
-        <div className="absolute md:-top-28 md:-right-28 -top-24 -right-4">
+        <div className={spinnerBox}>
           <ArcText text={spinner} />
         </div>
       )}

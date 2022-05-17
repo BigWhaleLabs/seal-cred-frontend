@@ -79,6 +79,15 @@ module.exports = {
         'thin-mobile': '172px',
         'mobile-card': '92%',
       },
+      inset: {
+        '-28': '-7rem',
+        '-24': '-6rem',
+        '-28': '-7rem',
+        '-4': '-1rem',
+      },
+      space: {
+        '-4': '-1rem',
+      },
       dropShadow: {
         yellow: '0px 0px 10px #fed823',
         pink: '0px 0px 10px #ff7bed',
@@ -89,6 +98,7 @@ module.exports = {
         3.875: '15.5px',
       },
       margin: {
+        '-5': '-1.25rem',
         1.875: '7.5px',
         2.125: '8.5px',
       },
