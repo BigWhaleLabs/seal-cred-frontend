@@ -1,5 +1,4 @@
 import { AccentText } from 'components/Text'
-import { FC } from 'react'
 import { useSnapshot } from 'valtio'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
