@@ -314,6 +314,7 @@ export type TBackgroundImage =
   | 'bg-gradient-to-bl'
   | 'bg-gradient-to-l'
   | 'bg-gradient-to-tl'
+  | 'bg-noise'
 
 export type TGradientColorStops =
   | 'from-inherit'

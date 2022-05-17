@@ -84,6 +84,9 @@ module.exports = {
         7.5: '7.5px',
         8.5: '8.5px',
       },
+      backgroundImage: {
+        noise: 'url("/img/noise50.png")',
+      },
     },
   },
 }
