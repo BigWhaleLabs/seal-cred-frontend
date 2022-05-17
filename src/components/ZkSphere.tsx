@@ -30,7 +30,7 @@ const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
     dropShadow(shadowColor),
     textAlign('text-center'),
     padding('pt-1'),
-    margin('mt-2.125'),
+    margin('mt-8.5'),
     transitionProperty('transition-all')
   )
 

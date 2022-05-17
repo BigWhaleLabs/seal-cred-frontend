@@ -31,7 +31,7 @@ interface CardProps {
 
 const cardColor = (color?: Color) => {
   return classnames(
-    borderWidth('border-px'),
+    borderWidth('border'),
     borderColor(
       color === 'accent'
         ? 'border-accent'
@@ -48,13 +48,13 @@ const cardColor = (color?: Color) => {
     boxShadow('shadow-2xl'),
     boxShadowColor(
       color === 'accent'
-        ? 'shadow-accent-50'
+        ? 'shadow-accent-semi-transparent'
         : color === 'tertiary'
-        ? 'shadow-tertiary-50'
+        ? 'shadow-tertiary-semi-transparent'
         : color === 'secondary'
-        ? 'shadow-secondary-50'
+        ? 'shadow-secondary-semi-transparent'
         : color === 'white'
-        ? 'shadow-white-50'
+        ? 'shadow-white-semi-transparent'
         : color === 'primary'
         ? 'shadow-primary-semi-transparent'
         : undefined
@@ -74,7 +74,7 @@ const cardContainer = (
     borderRadius('rounded-2xl'),
     backgroundColor('bg-primary-dark'),
     cardColor(shadow ? color : undefined),
-    padding(small ? 'p-3.875' : 'p-6'),
+    padding(small ? 'p-small' : 'p-6'),
     width(
       thin ? 'sm:!w-thin-card' : 'sm:w-card',
       thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',

@@ -20,7 +20,7 @@ const innerId = classnames(
   alignItems('items-center')
 )
 const identityText = classnames(margin('my-3'))
-const secondaryRectangle = classnames(margin('my-1.875'))
+const secondaryRectangle = classnames(margin('my-7.5'))
 const zkSpheresRight = (reveal?: boolean) =>
   classnames(
     margin('my-2'),
