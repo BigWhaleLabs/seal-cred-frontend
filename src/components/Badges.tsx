@@ -9,8 +9,8 @@ import Card from 'components/Card'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
-import useContractAddressesOwned from 'helpers/useContractAddressesOwned'
-import useProofsAvailableToMint from 'helpers/useProofsAvailableToMint'
+import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
+import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function Badges() {
   const { account, notifiedOfNFTownership } = useSnapshot(WalletStore)

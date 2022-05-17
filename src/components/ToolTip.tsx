@@ -9,7 +9,7 @@ import classnames, {
   opacity,
   textColor,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const tooltipClasses = (mobile: boolean) =>
   classnames(

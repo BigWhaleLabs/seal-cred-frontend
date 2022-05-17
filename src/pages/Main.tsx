@@ -8,7 +8,7 @@ import classnames, {
   flexDirection,
   justifyContent,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const mainBlock = classnames(
   display('flex'),

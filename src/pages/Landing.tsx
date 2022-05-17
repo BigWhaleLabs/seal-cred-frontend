@@ -22,8 +22,8 @@ import classnames, {
   width,
   zIndex,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
-import useScrollPercent from 'helpers/useScrollPercent'
+import useBreakpoints from 'hooks/useBreakpoints'
+import useScrollPercent from 'hooks/useScrollPercent'
 
 const pageBox = classnames(
   display('flex'),

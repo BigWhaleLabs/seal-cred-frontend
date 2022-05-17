@@ -21,7 +21,7 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const proofText = (small?: boolean) =>
   classnames(
