@@ -33,7 +33,7 @@ export default function NotFound() {
   const navigate = useNavigate()
   return (
     <div className={container}>
-      <Card shadow onlyWrap color="yellow">
+      <Card shadow onlyWrap color="primary">
         <div className={textAlign('text-center')}>
           <HeaderText size="4xl" bold>
             404

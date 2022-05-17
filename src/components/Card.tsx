@@ -19,7 +19,7 @@ import {
 } from 'classnames/tailwind'
 import ArcText from 'components/ArcText'
 
-type Color = 'pink' | 'yellow' | 'green' | 'blue' | 'white'
+type Color = 'secondary' | 'primary' | 'tertiary' | 'accent' | 'white'
 interface CardProps {
   shadow?: boolean
   color?: Color
@@ -33,30 +33,30 @@ const cardColor = (color?: Color) => {
   return classnames(
     borderWidth('border-1'),
     borderColor(
-      color === 'yellow'
-        ? 'border-yellow'
-        : color === 'green'
-        ? 'border-green'
-        : color === 'pink'
-        ? 'border-pink'
+      color === 'primary'
+        ? 'border-primary'
+        : color === 'tertiary'
+        ? 'border-tertiary'
+        : color === 'secondary'
+        ? 'border-secondary'
         : color === 'white'
         ? 'border-white'
-        : color === 'blue'
-        ? 'border-blue-500'
-        : 'border-blue-900'
+        : color === 'accent'
+        ? 'border-accent'
+        : 'border-accent-dark'
     ),
     boxShadow('shadow-2xl'),
     boxShadowColor(
-      color === 'yellow'
-        ? 'shadow-yellow50'
-        : color === 'green'
-        ? 'shadow-green50'
-        : color === 'pink'
-        ? 'shadow-pink50'
+      color === 'primary'
+        ? 'shadow-primary-50'
+        : color === 'tertiary'
+        ? 'shadow-tertiary-50'
+        : color === 'secondary'
+        ? 'shadow-secondary-50'
         : color === 'white'
-        ? 'shadow-white50'
-        : color === 'blue'
-        ? 'shadow-blue50'
+        ? 'shadow-white-50'
+        : color === 'accent'
+        ? 'shadow-accent-semi-transparent'
         : undefined
     )
   )
@@ -72,7 +72,7 @@ const cardContainer = (
   return classnames(
     position('relative'),
     borderRadius('rounded-2xl'),
-    backgroundColor('bg-blue-900'),
+    backgroundColor('bg-accent-dark'),
     cardColor(shadow ? color : undefined),
     padding(small ? 'p-3.875' : 'p-6'),
     width(

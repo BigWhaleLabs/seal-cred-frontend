@@ -12,8 +12,8 @@ const fade = (bottom = true) =>
   classnames(
     backgroundImage('bg-gradient-to-b'),
     gradientColorStops(
-      bottom ? 'from-transparent' : 'from-blue-900',
-      bottom ? 'to-blue-900' : 'to-transparent'
+      bottom ? 'from-transparent' : 'from-accent-dark',
+      bottom ? 'to-accent-dark' : 'to-transparent'
     ),
     position('absolute'),
     inset(bottom ? 'bottom-0' : 'top-0', 'left-0', 'right-0'),

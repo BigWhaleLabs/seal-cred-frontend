@@ -24,7 +24,7 @@ const contractContainer = (small?: boolean) =>
     alignItems(small ? 'items-start' : 'items-center'),
     justifyContent('justify-between'),
     space(small ? 'space-y-1' : null),
-    backgroundColor('bg-blue-700'),
+    backgroundColor('bg-accent-dimmed'),
     borderRadius('rounded-lg'),
     height('h-fit'),
     padding('px-4', 'py-2'),

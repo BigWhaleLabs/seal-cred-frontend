@@ -96,15 +96,15 @@ const colorClasses = ({
   classnames(
     colors === 'primary'
       ? classnames(
-          textColor('text-blue-900'),
+          textColor('text-accent-dark'),
           fontSize(small ? 'text-sm' : 'text-lg'),
           padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
           borderRadius('rounded-full'),
-          backgroundColor('bg-green'),
+          backgroundColor('bg-tertiary'),
           boxShadowColor(
-            'shadow-green',
-            'hover:shadow-green',
-            'active:shadow-green'
+            'shadow-tertiary',
+            'hover:shadow-tertiary',
+            'active:shadow-tertiary'
           ),
           boxShadow('shadow-button'),
           brightness(
@@ -113,15 +113,15 @@ const colorClasses = ({
           )
         )
       : colors === 'secondary'
-      ? classnames(textColor('text-yellow')) // TBD
+      ? classnames(textColor('text-primary')) // TBD
       : classnames(
           textColor(
             'text-transparent',
-            loading || disabled ? undefined : 'active:text-yellow'
+            loading || disabled ? undefined : 'active:text-primary'
           ),
           backgroundClip('bg-clip-text'),
           backgroundImage('bg-gradient-to-r'),
-          gradientColorStops('from-pink', 'to-yellow')
+          gradientColorStops('from-secondary', 'to-primary')
         )
   )
 

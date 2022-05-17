@@ -18,7 +18,7 @@ import {
   transitionProperty,
 } from 'classnames/tailwind'
 
-type ButtonColors = 'yellow' | 'pink' | 'green'
+type ButtonColors = 'primary' | 'secondary' | 'tertiary'
 
 export interface ButtonProps {
   color: ButtonColors
@@ -27,8 +27,8 @@ export interface ButtonProps {
 type ButtonProperties = ButtonProps &
   React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const greenGradient = classnames(
-  gradientColorStops('from-blue-400', 'via-green', 'to-green'),
+const tertiaryGradient = classnames(
+  gradientColorStops('from-accent-light', 'via-tertiary', 'to-tertiary'),
   backgroundClip('bg-clip-text'),
   backgroundImage('bg-gradient-to-t')
 )
@@ -42,13 +42,13 @@ const button = (color: ButtonColors, disabled?: boolean) =>
     fontWeight('font-bold'),
     transitionProperty('transition-colors'),
     textColor(
-      color === 'green'
+      color === 'tertiary'
         ? 'text-transparent'
-        : color === 'pink'
-        ? `text-pink`
-        : `text-yellow`
+        : color === 'secondary'
+        ? `text-secondary`
+        : `text-primary`
     ),
-    color === 'green' ? greenGradient : undefined,
+    color === 'tertiary' ? tertiaryGradient : undefined,
     fontFamily('font-primary'),
     outlineStyle('focus:outline-none'),
     cursor(disabled ? 'cursor-not-allowed' : undefined),

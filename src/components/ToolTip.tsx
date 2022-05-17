@@ -34,7 +34,7 @@ const ToolTip: FC<{
         data-for={dataFor}
         effect="solid"
         backgroundColor={backgroundColor('bg-white')}
-        textColor={textColor('text-blue-900')}
+        textColor={textColor('text-accent-dark')}
         arrowColor={backgroundColor('bg-white')}
         clickable={clickable}
         className={tooltipClasses(mobile)}

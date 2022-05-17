@@ -36,7 +36,7 @@ const proofCardZKButtonContainer = classnames(
 function ZkProofSavedMessage() {
   return (
     <div className={hintContainer}>
-      <AccentText small color="text-blue-500">
+      <AccentText small color="text-accent">
         Created ZK proofs are saved in the browser even if you switch wallets.
       </AccentText>
     </div>
@@ -60,7 +60,7 @@ function Proofs() {
   return (
     <>
       <div className={titleContainer}>
-        <CardHeader color="text-yellow">
+        <CardHeader color="text-primary">
           {allGenerated ? 'All proofed out' : 'Start proofing!'}
         </CardHeader>
         <CardDescription>
@@ -92,7 +92,7 @@ function ReadyProofs() {
   return (
     <>
       <div className={titleContainer}>
-        <CardHeader color="text-yellow">Your saved ZK Proofs</CardHeader>
+        <CardHeader color="text-primary">Your saved ZK Proofs</CardHeader>
       </div>
       <Scrollbar maxHeight={300}>
         <ListOfReadyZKProofs />
@@ -109,12 +109,12 @@ function ProofsCard() {
 
   return (
     <div className={proofCardZKButtonContainer}>
-      <Card color="yellow" shadow>
+      <Card color="primary" shadow>
         {account ? (
           <Suspense
             fallback={
               <div className={titleContainer}>
-                <CardHeader color="text-yellow">Loading...</CardHeader>
+                <CardHeader color="text-primary">Loading...</CardHeader>
                 <CardDescription>
                   Please, wait until I load supported NFTs, it can take a minute
                 </CardDescription>
@@ -131,7 +131,7 @@ function ProofsCard() {
       </Card>
       {lg && (
         <>
-          <CardSeparator number={1} from="yellow" vertical />
+          <CardSeparator number={1} from="primary" vertical />
           <ZkProofButton />
         </>
       )}

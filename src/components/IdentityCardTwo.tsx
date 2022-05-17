@@ -20,7 +20,7 @@ const innerId = classnames(
   alignItems('items-center')
 )
 const identityText = classnames(margin('my-3'))
-const pinkRectangle = classnames(margin('my-1.875'))
+const secondaryRectangle = classnames(margin('my-1.875'))
 const zkSpheresRight = (reveal?: boolean) =>
   classnames(
     margin('my-2'),
@@ -32,8 +32,8 @@ const IdentityCardTwo: FC<{ reveal?: boolean }> = ({ reveal }) => {
   return (
     <Card color="white" shadow thin small onlyWrap>
       <div className={innerId}>
-        <div className={pinkRectangle}>
-          <NoisyRectangle bgColor="bg-pink" />
+        <div className={secondaryRectangle}>
+          <NoisyRectangle bgColor="bg-secondary" />
         </div>
         <div className={identityText}>
           <BodyText size="base" center>
@@ -42,7 +42,7 @@ const IdentityCardTwo: FC<{ reveal?: boolean }> = ({ reveal }) => {
         </div>
         <Grim />
         <div className={zkSpheresRight(reveal)}>
-          <ZkSphere text="ZK" color={Colors.pink} />
+          <ZkSphere text="ZK" color={Colors.secondary} />
         </div>
       </div>
     </Card>

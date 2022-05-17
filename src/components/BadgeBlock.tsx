@@ -36,7 +36,7 @@ const badgeWrapper = (minted: boolean, small?: boolean) =>
     justifyContent(minted ? 'justify-start' : 'justify-center'),
     alignItems('items-center'),
     borderRadius('rounded-lg'),
-    backgroundColor(minted ? 'bg-blue-700' : 'bg-blue-800'),
+    backgroundColor(minted ? 'bg-accent-dimmed' : 'bg-accent-background'),
     padding('px-4', 'py-4'),
     space(
       minted ? (small ? 'space-y-2' : 'space-x-2') : 'space-y-2',
@@ -103,7 +103,7 @@ function Badge({
       {minted ? (
         <QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />
       ) : (
-        <BadgeIcon color="pink" />
+        <BadgeIcon color="secondary" />
       )}
       <div className={badgeBody(minted, small)}>
         <BadgeText>
@@ -111,8 +111,8 @@ function Badge({
         </BadgeText>
         {minted && (
           <div className={mintPassed(small)}>
-            <BoldColoredText color="text-pink">Minted</BoldColoredText>
-            <Complete color="pink" />
+            <BoldColoredText color="text-secondary">Minted</BoldColoredText>
+            <Complete color="secondary" />
           </div>
         )}
         {!minted && (

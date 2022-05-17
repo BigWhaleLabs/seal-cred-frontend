@@ -33,7 +33,7 @@ const contentWrapper = classnames(
 
 const cardTitle = classnames(
   fontFamily('font-primary'),
-  textColor('text-yellow'),
+  textColor('text-primary'),
   fontSize('text-4xl'),
   fontWeight('font-bold'),
   margin('mb-4')

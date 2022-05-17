@@ -46,17 +46,17 @@ function useProofContent(
   contractAddress: string,
   proof?: Proof
 ): {
-  color: 'text-green' | 'text-yellow' | 'text-pink'
+  color: 'text-primary' | 'text-secondary' | 'text-tertiary'
   content: JSX.Element | null
 } {
   const { account } = useSnapshot(WalletStore)
 
   if (!proof) {
     return {
-      color: 'text-green',
+      color: 'text-tertiary',
       content: (
         <ProofButton
-          color="green"
+          color="tertiary"
           onClick={() => {
             void ProofStore.generate(contractAddress)
           }}
@@ -69,7 +69,7 @@ function useProofContent(
 
   if (proof.status === 'running')
     return {
-      color: 'text-yellow',
+      color: 'text-primary',
       content: (
         <span className={textWithIcon}>
           <span>Generating...</span>
@@ -82,7 +82,7 @@ function useProofContent(
 
   if (proof.status === 'scheduled')
     return {
-      color: 'text-pink',
+      color: 'text-secondary',
       content: (
         <>
           {proof.position !== undefined
@@ -93,11 +93,11 @@ function useProofContent(
     }
 
   return {
-    color: 'text-yellow',
+    color: 'text-primary',
     content: (
       <span className={textWithIcon}>
         <span>Proof {proof.account === account ? 'made' : 'saved'}</span>
-        <Complete color="yellow" />
+        <Complete color="primary" />
       </span>
     ),
   }

@@ -7,17 +7,17 @@ import classnames, {
   stroke,
 } from 'classnames/tailwind'
 
-type StrokeColor = 'pink' | 'yellow' | 'green'
+type StrokeColor = 'primary' | 'secondary' | 'tertiary'
 
 const strokeColor = (color?: StrokeColor) =>
   classnames(
     stroke(
-      color === 'pink'
-        ? 'stroke-pink'
-        : color === 'yellow'
-        ? 'stroke-yellow'
-        : color === 'green'
-        ? 'stroke-green'
+      color === 'secondary'
+        ? 'stroke-secondary'
+        : color === 'primary'
+        ? 'stroke-primary'
+        : color === 'tertiary'
+        ? 'stroke-tertiary'
         : 'stroke-white'
     )
   )
@@ -32,7 +32,7 @@ const BadgeIcon: FC<{ color?: StrokeColor }> = ({ color }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={classnames(
         boxShadow('shadow-lg'),
-        boxShadowColor('shadow-pink'),
+        boxShadowColor('shadow-secondary'),
         borderRadius('rounded-full')
       )}
     >
@@ -42,7 +42,7 @@ const BadgeIcon: FC<{ color?: StrokeColor }> = ({ color }) => {
         r="31"
         stroke-width="2"
         stroke-linecap="round"
-        className={classnames(strokeColor(color), fill('fill-blue-900'))}
+        className={classnames(strokeColor(color), fill('fill-accent-dark'))}
       />
       <path
         d="M56.5 51.5V32C56.5 18.7452 45.7548 8 32.5 8C19.2452 8 8.5 18.7452 8.5 32V51.5"

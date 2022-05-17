@@ -47,12 +47,12 @@ const IdentityCardOne: FC<{
       <div className={innerId}>
         <div className={rectangleMargin(left)}>
           {left ? (
-            <NoisyRectangle bgColor="bg-green" />
+            <NoisyRectangle bgColor="bg-tertiary" />
           ) : (
-            <NoisyRectangle bgColor="bg-pink" />
+            <NoisyRectangle bgColor="bg-secondary" />
           )}
         </div>
-        {left && <NoisyRectangle bgColor="bg-yellow" />}
+        {left && <NoisyRectangle bgColor="bg-primary" />}
         <div className={identityText}>
           <BodyText size={mobile ? 'sm' : 'base'} center>
             {text}
