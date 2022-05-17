@@ -20,15 +20,10 @@
 | `VITE_ETH_NETWORK`                | Eth network for your providers and contract                           |
 | `VITE_ETH_WS`                     | Ethereum node websocket URI                                           |
 | `VITE_ETH_RPC`                    | Ethereum node RPC URI                                                 |
-| `VITE_BITSKI_CLIENT_ID`           | Bitski client ID                                                      |
 | `VITE_SC_LEDGER_CONTRACT_ADDRESS` | SealCred Ledger contract address                                      |
 | `VITE_VERIFY_URL`                 | Proof verification URL                                                |
 
 Also, please, consider looking at `.env.sample`.
-
-## Obtain Bitski client ID
-
-[Register a wallet](https://wallet.bitski.com/), confirm your email and [create a project](https://developer.bitski.com/). Use `localhost` as homepage in your app + redirect to `localhost/callback.html` in auth section.
 
 ## CD
 
