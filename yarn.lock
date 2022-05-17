@@ -14472,7 +14472,6 @@ __metadata:
     axios: ^0.27.2
     bitski: ^0.14.1
     buffer: ^6.0.3
-    copy-to-clipboard: ^3.3.1
     cross-env: ^7.0.3
     eslint: ^8.15.0
     eslint-config-prettier: ^8.5.0
