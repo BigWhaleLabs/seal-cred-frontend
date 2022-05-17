@@ -13,108 +13,116 @@ body {
   font-family: 'JetBrains Mono', monospace;
   color: #efecd6;
   /* Grid */
-  background: conic-gradient(from 90deg at 1px 1px, #0d0030 90deg, #1a0259 0) 0
-    0/48px 48px;
+  background: conic-gradient(
+      from 90deg at 0.06rem 0.06rem,
+      #0d0030 90deg,
+      #1a0259 0
+    )
+    0 0/3rem 3rem;
 }
 /* Grid for mobiles */
 @media screen and (max-width: 600px) {
   body {
-    background: conic-gradient(from 90deg at 1px 1px, #0d0030 90deg, #1a0259 0)
-      0 0/32px 32px;
+    background: conic-gradient(
+        from 90deg at 0.06rem 0.06rem,
+        #0d0030 90deg,
+        #1a0259 0
+      )
+      0 0/2rem 2rem;
   }
 }
 
 @keyframes tertiarySphereAnimation {
   0% {
-    transform: translate(0px, 0px);
+    transform: translate(0rem, 0rem);
   }
   20% {
     /* Animation starts after 20% of page is scrolled */
-    transform: translate(0px, 0px);
+    transform: translate(0rem, 0rem);
   }
   40% {
     /* Orb before SuperOrb */
-    transform: translate(0px, 715px);
+    transform: translate(0rem, 44.688rem);
   }
   50% {
     /* Orb going into SuperOrb */
-    transform: translate(84px, 715px);
+    transform: translate(5.25rem, 44.688rem);
   }
   60% {
     /* Orb before fork */
-    transform: translate(84px, 1080px);
+    transform: translate(5.25rem, 67.5rem);
     opacity: 100;
   }
   65% {
     /* Orb to the behind the ID Card */
-    transform: translate(-10px, 1180px);
+    transform: translate(-0.625rem, 73.75rem);
     opacity: 0;
   }
   100% {
     /* Orb goes and stays behind ID card */
     /* Reveal animation happens inside IdentityCard */
-    transform: translate(-25px, 1383px);
+    transform: translate(-1.563rem, 86.438rem);
   }
 }
 @keyframes accentSphereAnimation {
   0% {
-    transform: translate(0px, 0px);
+    transform: translate(0rem, 0rem);
   }
   20% {
-    transform: translate(0px, 0px);
+    transform: translate(0rem, 0rem);
   }
   40% {
-    transform: translate(0px, 725px);
+    transform: translate(0rem, 45.313rem);
   }
   50% {
-    transform: translate(0px, 725px);
+    transform: translate(0rem, 45.313rem);
   }
   60% {
-    transform: translate(0px, 1120px);
+    transform: translate(0rem, 70rem);
     opacity: 100;
   }
   65% {
-    transform: translate(-85px, 1210px);
+    transform: translate(-5.313rem, 75.625rem);
     opacity: 0;
   }
   100% {
-    transform: translate(-85px, 1415px);
+    transform: translate(-5.313rem, 88.438rem);
   }
 }
 @keyframes secondarySphereAnimation {
   0% {
-    transform: translate(0px, 0px);
+    transform: translate(0rem, 0rem);
   }
   20% {
-    transform: translate(0px, 0px);
+    transform: translate(0rem, 0rem);
   }
   40% {
-    transform: translate(0px, 705px);
+    transform: translate(0rem, 44.063rem);
   }
   50% {
-    transform: translate(-84px, 705px);
+    transform: translate(-5.25rem, 44.063rem);
   }
   60% {
-    transform: translate(-84px, 1080px);
+    transform: translate(-5.25rem, 67.5rem);
     opacity: 100;
   }
   65% {
-    transform: translate(0px, 1160px);
+    transform: translate(0rem, 72.5rem);
     opacity: 0;
   }
   100% {
-    transform: translate(6px, 1370px);
+    transform: translate(0.375rem, 85.625rem);
   }
 }
 
 /* Overwrites SimpleBar config to look like in design doc */
 .simplebar-scrollbar:before {
   background: #fed823 !important;
-  filter: drop-shadow(0px 0px 10px #fed823);
+  filter: drop-shadow(0rem 0rem 0.625rem #fed823);
   opacity: 100% !important;
 }
 .simplebar-track {
-  width: 11px !important;
+  width: 0.688rem !important;
   /* This option created background with less size than thumb size */
   background: url('/img/scrollbarBg.png');
   overflow: visible !important;
