@@ -97,7 +97,10 @@ const colorClasses = ({
     colors === 'accent'
       ? classnames(
           textColor('text-primary-dark'),
-          fontSize(small ? 'text-sm' : 'text-lg'),
+          fontSize(
+            small ? 'text-sm' : 'text-lg',
+            small ? 'lg:text-base' : undefined
+          ),
           padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
           borderRadius('rounded-full'),
           backgroundColor('bg-tertiary'),
