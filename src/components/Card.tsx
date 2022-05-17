@@ -17,7 +17,7 @@ import {
   wordBreak,
   zIndex,
 } from 'classnames/tailwind'
-import ArcText from 'components/ArcText'
+import ArcText from 'icons/ArcText'
 
 type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'white'
 interface CardProps {

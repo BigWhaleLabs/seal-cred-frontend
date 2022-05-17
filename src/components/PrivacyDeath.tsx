@@ -1,4 +1,4 @@
-import ArcText from 'components/ArcText'
+import ArcText from 'icons/ArcText'
 import EyeWhale from 'icons/EyeWhale'
 import classnames, {
   alignItems,
