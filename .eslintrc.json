@@ -28,6 +28,7 @@
   "rules": {
     "valtio/state-snapshot-rule": "off",
     "no-relative-import-paths/no-relative-import-paths": "error",
+    "import/newline-after-import": ["error"],
     "@typescript-eslint/no-floating-promises": "error",
     "require-await": "error",
     "react-hooks/exhaustive-deps": "error",
