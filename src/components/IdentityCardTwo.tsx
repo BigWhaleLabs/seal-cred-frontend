@@ -1,5 +1,4 @@
 import { BodyText } from 'components/Text'
-import { FC } from 'react'
 import Card from 'components/Card'
 import Colors from 'models/Colors'
 import Grim from 'icons/Grin'
@@ -28,7 +27,7 @@ const zkSpheresRight = (reveal?: boolean) =>
     transitionProperty('transition-all')
   )
 
-const IdentityCardTwo: FC<{ reveal?: boolean }> = ({ reveal }) => {
+export default function IdentityCardTwo({ reveal }: { reveal?: boolean }) {
   return (
     <Card color="white" shadow thin small onlyWrap>
       <div className={innerId}>
@@ -48,5 +47,3 @@ const IdentityCardTwo: FC<{ reveal?: boolean }> = ({ reveal }) => {
     </Card>
   )
 }
-
-export default IdentityCardTwo

@@ -1,7 +1,6 @@
 import { BadgeText, BoldColoredText, SubheaderText } from 'components/Text'
 import { BigNumber } from 'ethers'
 import { Suspense, useState } from 'react'
-import { handleError } from 'helpers/handleError'
 import { useSnapshot } from 'valtio'
 import BadgeIcon from 'icons/BadgeIcon'
 import Button from 'components/Button'
@@ -22,6 +21,7 @@ import classnames, {
   space,
   textAlign,
 } from 'classnames/tailwind'
+import handleError from 'helpers/handleError'
 import sealCred from 'helpers/sealCred'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useBreakpoints from 'hooks/useBreakpoints'

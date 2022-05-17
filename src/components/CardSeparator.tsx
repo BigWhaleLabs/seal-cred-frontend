@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import classnames, {
   backgroundImage,
   display,
@@ -54,13 +53,21 @@ const connectiveLine = (
     height(customHeight ? `h-${customHeight}` : vertical ? 'h-4' : 'h-px')
   )
 
-const CardSeparator: FC<{
+interface CardSeparatorProps {
   number: number
   from?: Color
   to?: Color
   vertical?: boolean
   customHeight?: number
-}> = ({ to, from, number, vertical, customHeight }) => {
+}
+
+export default function ({
+  to,
+  from,
+  number,
+  vertical,
+  customHeight,
+}: CardSeparatorProps) {
   return (
     <div className={connectiveBlock(vertical)}>
       {[...Array(number).keys()].map((_, index) => (
@@ -72,5 +79,3 @@ const CardSeparator: FC<{
     </div>
   )
 }
-
-export default CardSeparator
