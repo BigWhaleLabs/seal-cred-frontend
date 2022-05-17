@@ -8,7 +8,7 @@ import classnames, {
   position,
   transitionProperty,
 } from 'classnames/tailwind'
-import useIsOverflow from 'helpers/useIsOverflow'
+import useIsOverflow from 'hooks/useIsOverflow'
 
 type FadeType = 'top' | 'bottom' | 'both'
 

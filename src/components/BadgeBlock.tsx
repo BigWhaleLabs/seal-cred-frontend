@@ -24,7 +24,7 @@ import classnames, {
 } from 'classnames/tailwind'
 import sealCred from 'helpers/sealCred'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const badgeWrapper = (minted: boolean, small?: boolean) =>
   classnames(

@@ -6,7 +6,7 @@ import classnames, {
   height,
   textTransform,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const textStyle = classnames(
   fill('fill-secondary'),

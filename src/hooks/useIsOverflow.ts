@@ -1,5 +1,5 @@
 import { MutableRefObject, useCallback, useEffect, useState } from 'react'
-import useBreakpoints from 'helpers/useBreakpoints'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const useIsOverflow = (
   scrollRef: MutableRefObject<HTMLDivElement>,
