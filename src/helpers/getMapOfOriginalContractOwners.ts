@@ -1,6 +1,6 @@
 import SealCredStore from 'stores/SealCredStore'
 
-export default async function getMapOfOriginalContractOwners(address: string) {
+export default async function (address: string) {
   const originalContractTokenIdToOwnerMap = await SealCredStore
     .originalContractsToOwnersMaps[address]
   const owners = new Set<string>()

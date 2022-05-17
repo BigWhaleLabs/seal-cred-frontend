@@ -102,7 +102,7 @@ function ReadyProofs() {
   )
 }
 
-function ProofsCard() {
+export default function () {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { lg } = useBreakpoints()
@@ -138,5 +138,3 @@ function ProofsCard() {
     </div>
   )
 }
-
-export default ProofsCard

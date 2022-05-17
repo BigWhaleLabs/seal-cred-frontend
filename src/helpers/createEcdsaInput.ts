@@ -8,7 +8,7 @@ import { ethers } from 'ethers'
 import EcdsaInput from 'models/EcdsaInput'
 import WalletStore from 'stores/WalletStore'
 
-export default function createEcdsaInput(signature: string) {
+export default function (signature: string) {
   if (!WalletStore.account) {
     throw new Error('No account found')
   }

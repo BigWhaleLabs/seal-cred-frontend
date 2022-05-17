@@ -1,11 +1,11 @@
 import { BigNumber } from 'ethers'
-import { ErrorList, handleError } from 'helpers/handleError'
-import { NotifiedOfNFTownership } from 'models/NotifiedOfNFTownership'
 import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
+import NotifiedOfNFTownership from 'models/NotifiedOfNFTownership'
 import ProofResponse from 'models/ProofResponse'
 import env from 'helpers/env'
+import handleError, { ErrorList } from 'helpers/handleError'
 import web3Modal from 'helpers/web3Modal'
 
 let provider: Web3Provider

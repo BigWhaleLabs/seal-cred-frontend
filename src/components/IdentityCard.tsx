@@ -1,5 +1,5 @@
 import { BodyText } from 'components/Text'
-import { FC } from 'react'
+import { ReactNode } from 'react'
 import Card from 'components/Card'
 import DoubleSmile from 'icons/DoubleSmile'
 import Grim from 'icons/Grin'
@@ -36,12 +36,21 @@ const zkSpheresLeft = (reveal?: boolean) =>
     transitionDuration('duration-300')
   )
 
-const IdentityCardOne: FC<{
+interface IdentityCardOneProps {
+  children: ReactNode
   reveal?: boolean
   left?: boolean
   text: string
   mobile?: boolean
-}> = ({ reveal, left = false, text, mobile, children }) => {
+}
+
+export default function ({
+  reveal,
+  left = false,
+  text,
+  mobile,
+  children,
+}: IdentityCardOneProps) {
   return (
     <Card color="white" shadow thin small onlyWrap>
       <div className={innerId}>
@@ -64,5 +73,3 @@ const IdentityCardOne: FC<{
     </Card>
   )
 }
-
-export default IdentityCardOne

@@ -20,7 +20,7 @@ const mainBlock = classnames(
 const marginSeparator = (vertical?: boolean) =>
   classnames(margin(vertical ? 'mx-auto' : 'mt-12'))
 
-function Main() {
+export default function () {
   const { lg } = useBreakpoints()
 
   return (
@@ -47,5 +47,3 @@ function Main() {
     </>
   )
 }
-
-export default Main

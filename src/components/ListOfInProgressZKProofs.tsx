@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
 import ProofStore from 'stores/ProofStore'
-import ZKProof from 'components/ZKProof'
+import ZkProof from 'components/ZkProof'
 import sortProofs from 'helpers/sortProofs'
 
 function ContractList() {
@@ -14,7 +14,7 @@ function ContractList() {
       {!!proofsInProgress.length && (
         <ContractListContainer>
           {sortProofs(proofsInProgress).map((proof) => (
-            <ZKProof
+            <ZkProof
               proof={proof}
               contractAddress={proof.contract}
               key={proof.id}
@@ -26,7 +26,7 @@ function ContractList() {
   )
 }
 
-export default function ListOfInProgressZKProofs() {
+export default function () {
   return (
     <Suspense
       fallback={

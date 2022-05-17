@@ -13,7 +13,7 @@ const arrowsBox = classnames(
   margin('my-6')
 )
 
-const DownArrows = () => {
+export default function () {
   return (
     <div className={arrowsBox}>
       <Arrow flip disabled />
@@ -22,5 +22,3 @@ const DownArrows = () => {
     </div>
   )
 }
-
-export default DownArrows

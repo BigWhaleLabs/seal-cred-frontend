@@ -1,5 +1,4 @@
 import { AccentText } from 'components/Text'
-import { FC } from 'react'
 import { useSnapshot } from 'valtio'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
@@ -103,10 +102,11 @@ function useProofContent(
   }
 }
 
-const ZKProof: FC<{ proof?: Proof; contractAddress: string }> = ({
-  proof,
-  contractAddress,
-}) => {
+interface ZkProofProps {
+  proof?: Proof
+  contractAddress: string
+}
+export default function ({ proof, contractAddress }: ZkProofProps) {
   const { xxs, xs } = useBreakpoints()
   const { color, content } = useProofContent(contractAddress, proof)
 
@@ -121,5 +121,3 @@ const ZKProof: FC<{ proof?: Proof; contractAddress: string }> = ({
     </ProofLine>
   )
 }
-
-export default ZKProof

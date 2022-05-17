@@ -6,7 +6,6 @@ import {
   HeaderText,
 } from 'components/Text'
 import { Suspense } from 'react'
-import { handleError } from 'helpers/handleError'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
@@ -26,6 +25,7 @@ import classnames, {
   space,
   textOverflow,
 } from 'classnames/tailwind'
+import handleError from 'helpers/handleError'
 
 const mainBox = classnames(
   display('flex'),
@@ -103,7 +103,7 @@ function OwnerInfo({
   )
 }
 
-export default function OwnedBadge() {
+export default function () {
   const { derivativeAddress, tokenId } = useParams()
 
   const navigate = useNavigate()

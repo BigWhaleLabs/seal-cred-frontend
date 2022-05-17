@@ -17,6 +17,6 @@ const fade = (bottom = true) =>
     zIndex('z-10')
   )
 
-export default function Fade({ bottom }: { bottom?: boolean }) {
+export default function ({ bottom }: { bottom?: boolean }) {
   return <div className={fade(bottom || false)} />
 }

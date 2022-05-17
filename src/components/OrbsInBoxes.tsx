@@ -31,7 +31,7 @@ const orbBox = (margins?: TMargin) =>
     margin(margins)
   )
 
-export default function OrbsInBoxes() {
+export default function () {
   const scroll = useScrollPercent()
   const animNotStarted = scroll < 0.2
 

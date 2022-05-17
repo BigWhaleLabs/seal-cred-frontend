@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import classnames, {
   borderRadius,
   boxShadow,
@@ -26,7 +25,11 @@ const pathClasses = (color?: Color) =>
     )
   )
 
-const Complete: FC<{ color: Color }> = ({ color }) => {
+interface CompleteProps {
+  color: Color
+}
+
+export default function ({ color }: CompleteProps) {
   return (
     <svg
       width="18"
@@ -47,5 +50,3 @@ const Complete: FC<{ color: Color }> = ({ color }) => {
     </svg>
   )
 }
-
-export default Complete

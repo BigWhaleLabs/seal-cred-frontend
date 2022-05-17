@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Button from 'components/Button'
 import WalletStore from 'stores/WalletStore'
 
-const GetStartedButton = () => {
+export default function () {
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -24,5 +24,3 @@ const GetStartedButton = () => {
     </Button>
   )
 }
-
-export default GetStartedButton

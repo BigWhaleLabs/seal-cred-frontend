@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import classnames, {
   fill,
   fontSize,
@@ -16,11 +15,13 @@ const textStyle = classnames(
 )
 const svgBox = classnames(height('md:h-64', 'h-44'))
 
-const ArcText: FC<{ text: string; radius?: number; landing?: boolean }> = ({
-  text,
-  landing,
-  radius = 85,
-}) => {
+interface ArcTextProps {
+  text: string
+  radius?: number
+  landing?: boolean
+}
+
+export default function ({ text, landing, radius = 85 }: ArcTextProps) {
   const { xxs, md } = useBreakpoints()
 
   return (
@@ -63,5 +64,3 @@ const ArcText: FC<{ text: string; radius?: number; landing?: boolean }> = ({
     </svg>
   )
 }
-
-export default ArcText

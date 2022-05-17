@@ -6,7 +6,7 @@ const cardHeader = classnames(margin('mb-6'))
 const bottomBodyText = classnames(margin('mt-6'))
 const cardWrapper = classnames(position('absolute'), zIndex('z-40'))
 
-function LandingCreatingZKProofCard() {
+export default function () {
   return (
     <div className={cardWrapper} style={{ transform: 'translateY(1050px)' }}>
       <Card color="white" onlyWrap shadow>
@@ -30,5 +30,3 @@ function LandingCreatingZKProofCard() {
     </div>
   )
 }
-
-export default LandingCreatingZKProofCard

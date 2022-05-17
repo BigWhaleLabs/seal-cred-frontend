@@ -1,4 +1,4 @@
-const EyeWhale = () => {
+export default function () {
   return (
     <svg
       width="130"
@@ -155,5 +155,3 @@ const EyeWhale = () => {
     </svg>
   )
 }
-
-export default EyeWhale

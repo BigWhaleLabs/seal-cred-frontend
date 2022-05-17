@@ -10,7 +10,7 @@ const smileGlow = classnames(
   borderRadius('rounded-full')
 )
 
-const Smile = () => {
+export default function () {
   return (
     <svg
       width="42"
@@ -39,5 +39,3 @@ const Smile = () => {
     </svg>
   )
 }
-
-export default Smile

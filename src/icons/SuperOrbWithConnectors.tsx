@@ -366,7 +366,7 @@ const superOrbBox = (glow?: boolean) =>
     zIndex('z-40')
   )
 
-export default function SuperOrbWithConnectors() {
+export default function () {
   const scroll = useScrollPercent()
 
   const glow = scroll > 0.48

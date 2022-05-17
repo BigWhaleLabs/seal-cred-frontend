@@ -53,7 +53,7 @@ const QuestionMark = () => {
   return <div className={questionStyles}>?</div>
 }
 
-const ZkProofButton = () => {
+export default function () {
   const popoverText =
     'In your wallet(s), you have NFTs that can point back to your identity (aka, getting doxxed). But with ZK proof, you can verify ownership of NFTs while staying pseudonymous.'
 
@@ -67,5 +67,3 @@ const ZkProofButton = () => {
     </>
   )
 }
-
-export default ZkProofButton

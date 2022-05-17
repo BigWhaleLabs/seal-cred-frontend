@@ -18,7 +18,7 @@ const wrapperBox = classnames(
   width('w-full')
 )
 
-const PrivacyDeath = () => {
+export default function () {
   const { xxs, sm } = useBreakpoints()
 
   return (
@@ -35,5 +35,3 @@ const PrivacyDeath = () => {
     </div>
   )
 }
-
-export default PrivacyDeath

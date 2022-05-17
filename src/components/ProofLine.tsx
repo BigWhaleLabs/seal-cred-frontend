@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { ReactNode } from 'react'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -33,10 +33,8 @@ const contractContainer = (small?: boolean) =>
     fontWeight('font-bold')
   )
 
-const ProofLine: FC = ({ children }) => {
+export default function ({ children }: { children: ReactNode }) {
   const { xs } = useBreakpoints()
 
   return <div className={contractContainer(xs)}>{children}</div>
 }
-
-export default ProofLine
