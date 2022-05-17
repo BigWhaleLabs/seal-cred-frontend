@@ -1,12 +1,9 @@
-import {
-  AccentTextProps,
-  BodyTextSize,
-  HeaderSize,
-  LinkTextProps,
-} from 'models/TextProps'
+import {} from 'classnames/tailwind'
 import { FC } from 'react'
 import {
   TBackgroundColor,
+  TGradientColorStops,
+  TTextAlign,
   TTextColor,
   backgroundClip,
   backgroundColor,
@@ -30,6 +27,27 @@ import {
   zIndex,
 } from 'classnames/tailwind'
 import Colors, { colorToTailwindBg } from 'models/Colors'
+
+interface AccentTextProps {
+  color: TTextColor
+  align?: TTextAlign
+  bold?: boolean
+  small?: boolean
+}
+
+interface LinkTextProps {
+  url: string
+  gradientFrom?: TGradientColorStops
+  gradientTo?: TGradientColorStops
+  color?: TTextColor
+  title?: string
+  bold?: boolean
+  onClick?: () => void
+}
+
+type BodyTextSize = 'lg' | 'base' | 'sm' | 'xs'
+
+type HeaderSize = '4xl' | '3xl' | '2xl'
 
 export const textTruncateStyles = classnames(
   width('w-fit'),
