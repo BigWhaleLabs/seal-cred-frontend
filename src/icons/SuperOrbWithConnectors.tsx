@@ -6,7 +6,7 @@ import classnames, {
   transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
-import useScrollPercent from 'helpers/useScrollPercent'
+import useScrollPercent from 'hooks/useScrollPercent'
 
 const SuperOrb = () => (
   <svg

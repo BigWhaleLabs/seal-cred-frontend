@@ -1,6 +1,6 @@
 import { useSnapshot } from 'valtio'
 import ProofStore from 'stores/ProofStore'
-import useContractAddressesOwned from 'helpers/useContractAddressesOwned'
+import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
 
 export default function () {
   const contractAddressesOwned = useContractAddressesOwned('original')

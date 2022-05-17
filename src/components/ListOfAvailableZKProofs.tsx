@@ -2,7 +2,7 @@ import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import ContractListContainer from 'components/ContractListContainer'
 import ZKProof from 'components/ZKProof'
-import useProofAddressesAvailableToCreate from 'helpers/useProofAddressesAvailableToCreate'
+import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 function ContractList() {
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()

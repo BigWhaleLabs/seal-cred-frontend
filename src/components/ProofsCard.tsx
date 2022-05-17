@@ -20,8 +20,8 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'helpers/useBreakpoints'
-import useProofAddressesAvailableToCreate from 'helpers/useProofAddressesAvailableToCreate'
+import useBreakpoints from 'hooks/useBreakpoints'
+import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
