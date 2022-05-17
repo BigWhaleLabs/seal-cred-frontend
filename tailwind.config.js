@@ -6,16 +6,13 @@ module.exports = {
       primary: ['"Space Grotesk"', 'sans-serif'],
     },
     extend: {
-      borderWidth: {
-        px: '1px',
-      },
       maxHeight: {
         card: '31.75rem',
         'badges-list': '21.25rem',
       },
       keyframes: {
         'pulse-horizontal': {
-          '0%, 100%': { transform: 'translateX(8px)' },
+          '0%, 100%': { transform: 'translateX(0.5rem)' },
           '50%': { transform: 'translateX(0px)' },
         },
       },
@@ -51,11 +48,11 @@ module.exports = {
         'primary-semi-dimmed': '#4b61d5',
         'primary-background': '#1a0259',
 
-        'accent-50': 'rgba(254, 216, 35, 0.4)',
+        'accent-semi-transparent': 'rgba(254, 216, 35, 0.4)',
         'primary-semi-transparent': 'rgba(21, 161, 252, 0.5)',
-        'secondary-50': 'rgba(255, 123, 237, 0.5)',
-        'tertiary-50': 'rgba(1, 254, 182, 0.4)',
-        'white-50': 'rgba(239, 236, 214, 0.4)',
+        'secondary-semi-transparent': 'rgba(255, 123, 237, 0.5)',
+        'tertiary-semi-transparent': 'rgba(1, 254, 182, 0.4)',
+        'white-semi-transparent': 'rgba(239, 236, 214, 0.4)',
       },
       boxShadow: {
         '2xl': '0px 0.25rem 2.75rem 0px rgb(0 0 0 / 0.25)',

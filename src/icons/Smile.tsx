@@ -6,7 +6,7 @@ import classnames, {
 
 const smileGlow = classnames(
   boxShadow('shadow-lg'),
-  boxShadowColor('shadow-secondary-50'),
+  boxShadowColor('shadow-secondary-semi-transparent'),
   borderRadius('rounded-full')
 )
 
