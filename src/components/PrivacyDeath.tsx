@@ -25,7 +25,7 @@ export default function () {
   return (
     <div className={wrapperBox}>
       <div className={'absolute scale-150 md:-top-2/3 -top-1/2'}>
-        <ArcText modile={xxs || sm} text="Give me privacy or give me death •" />
+        <ArcText mobile={xxs || sm} text="Give me privacy or give me death •" />
       </div>
       <div className={eyeBoxMargin}>
         <EyeWhale />

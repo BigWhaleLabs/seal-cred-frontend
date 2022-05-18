@@ -17,10 +17,10 @@ const svgBox = classnames(height('md:h-64', 'h-44'))
 
 interface ArcTextProps {
   text: string
-  modile?: boolean
+  mobile?: boolean
 }
 
-export default function ({ text, modile }: ArcTextProps) {
+export default function ({ text, mobile }: ArcTextProps) {
   const { xxs, md } = useBreakpoints()
   const radius = 85
 
@@ -29,7 +29,7 @@ export default function ({ text, modile }: ArcTextProps) {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox={
-        modile ? '0 0 475 475' : xxs && !md ? '0 0 450 450' : '0 0 500 500'
+        mobile ? '0 0 475 475' : xxs && !md ? '0 0 450 450' : '0 0 500 500'
       }
       className={svgBox}
     >
