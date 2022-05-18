@@ -1,4 +1,4 @@
-import Arrow from 'components/Arrow'
+import Arrow from 'icons/Arrow'
 import classnames, {
   animation,
   margin,
