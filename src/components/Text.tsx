@@ -25,7 +25,7 @@ const headerText = (extraLeading = false) =>
     fontFamily('font-primary'),
     fontWeight('font-bold'),
     fontSize('text-4xl'),
-    textColor('text-white'),
+    textColor('text-pantone'),
     lineHeight(extraLeading ? 'leading-11' : 'leading-8')
   )
 export function HeaderText({
@@ -76,7 +76,7 @@ export function AccentText({
 
 const bodyText = (small?: boolean, center?: boolean) =>
   classnames(
-    textColor('text-white'),
+    textColor('text-pantone'),
     textAlign(center ? 'text-center' : undefined),
     fontSize(small ? 'text-sm' : 'text-base'),
     lineHeight('leading-6')
@@ -93,7 +93,7 @@ export function BodyText({
 }
 
 const cardHeader = (color?: TTextColor) =>
-  classnames(textColor(color || 'text-white'))
+  classnames(textColor(color || 'text-pantone'))
 export function CardHeader({
   color,
   children,
@@ -104,7 +104,7 @@ export function CardHeader({
 }
 
 const cardDescription = classnames(
-  textColor('text-white'),
+  textColor('text-pantone'),
   fontSize('text-2xl'),
   fontFamily('font-primary'),
   fontWeight('font-bold')
@@ -122,7 +122,7 @@ export function LogoText({ children }: ChildrenProp) {
   return <span className={logoText}>{children}</span>
 }
 
-const badgeText = textColor('text-white')
+const badgeText = textColor('text-pantone')
 export function BadgeText({ children }: ChildrenProp) {
   return <span className={badgeText}>{children}</span>
 }

@@ -280,7 +280,7 @@ export type TBackgroundColor =
   | 'bg-primary'
   | 'bg-secondary'
   | 'bg-tertiary'
-  | 'bg-pure-white'
+  | 'bg-pantone'
   | 'bg-primary-dark'
   | 'bg-primary-light'
   | 'bg-primary-dimmed'
@@ -290,7 +290,7 @@ export type TBackgroundColor =
   | 'bg-primary-semi-transparent'
   | 'bg-secondary-semi-transparent'
   | 'bg-tertiary-semi-transparent'
-  | 'bg-white-semi-transparent'
+  | 'bg-pantone-semi-transparent'
 
 export type TBackgroundPosition =
   | 'bg-bottom'
@@ -1005,9 +1005,9 @@ export type TGradientColorStops =
   | 'from-tertiary'
   | 'via-tertiary'
   | 'to-tertiary'
-  | 'from-pure-white'
-  | 'via-pure-white'
-  | 'to-pure-white'
+  | 'from-pantone'
+  | 'via-pantone'
+  | 'to-pantone'
   | 'from-primary-dark'
   | 'via-primary-dark'
   | 'to-primary-dark'
@@ -1035,9 +1035,9 @@ export type TGradientColorStops =
   | 'from-tertiary-semi-transparent'
   | 'via-tertiary-semi-transparent'
   | 'to-tertiary-semi-transparent'
-  | 'from-white-semi-transparent'
-  | 'via-white-semi-transparent'
-  | 'to-white-semi-transparent'
+  | 'from-pantone-semi-transparent'
+  | 'via-pantone-semi-transparent'
+  | 'to-pantone-semi-transparent'
 
 export type TBackgrounds =
   | TBackgroundAttachment
@@ -2660,11 +2660,11 @@ export type TBorderColor =
   | 'border-r-tertiary'
   | 'border-b-tertiary'
   | 'border-l-tertiary'
-  | 'border-pure-white'
-  | 'border-t-pure-white'
-  | 'border-r-pure-white'
-  | 'border-b-pure-white'
-  | 'border-l-pure-white'
+  | 'border-pantone'
+  | 'border-t-pantone'
+  | 'border-r-pantone'
+  | 'border-b-pantone'
+  | 'border-l-pantone'
   | 'border-primary-dark'
   | 'border-t-primary-dark'
   | 'border-r-primary-dark'
@@ -2710,11 +2710,11 @@ export type TBorderColor =
   | 'border-r-tertiary-semi-transparent'
   | 'border-b-tertiary-semi-transparent'
   | 'border-l-tertiary-semi-transparent'
-  | 'border-white-semi-transparent'
-  | 'border-t-white-semi-transparent'
-  | 'border-r-white-semi-transparent'
-  | 'border-b-white-semi-transparent'
-  | 'border-l-white-semi-transparent'
+  | 'border-pantone-semi-transparent'
+  | 'border-t-pantone-semi-transparent'
+  | 'border-r-pantone-semi-transparent'
+  | 'border-b-pantone-semi-transparent'
+  | 'border-l-pantone-semi-transparent'
 
 export type TBorderOpacity =
   | 'border-opacity-0'
@@ -3341,7 +3341,7 @@ export type TRingColor =
   | 'ring-primary'
   | 'ring-secondary'
   | 'ring-tertiary'
-  | 'ring-pure-white'
+  | 'ring-pantone'
   | 'ring-primary-dark'
   | 'ring-primary-light'
   | 'ring-primary-dimmed'
@@ -3351,7 +3351,7 @@ export type TRingColor =
   | 'ring-primary-semi-transparent'
   | 'ring-secondary-semi-transparent'
   | 'ring-tertiary-semi-transparent'
-  | 'ring-white-semi-transparent'
+  | 'ring-pantone-semi-transparent'
 
 export type TRingWidth =
   | 'ring-0'
@@ -3610,7 +3610,7 @@ export type TRingOffsetColor =
   | 'ring-offset-primary'
   | 'ring-offset-secondary'
   | 'ring-offset-tertiary'
-  | 'ring-offset-pure-white'
+  | 'ring-offset-pantone'
   | 'ring-offset-primary-dark'
   | 'ring-offset-primary-light'
   | 'ring-offset-primary-dimmed'
@@ -3620,7 +3620,7 @@ export type TRingOffsetColor =
   | 'ring-offset-primary-semi-transparent'
   | 'ring-offset-secondary-semi-transparent'
   | 'ring-offset-tertiary-semi-transparent'
-  | 'ring-offset-white-semi-transparent'
+  | 'ring-offset-pantone-semi-transparent'
 
 export type TRingOffsetWidth =
   | 'ring-offset-0'
@@ -3873,7 +3873,7 @@ export type TOutlineColor =
   | 'outline-primary'
   | 'outline-secondary'
   | 'outline-tertiary'
-  | 'outline-pure-white'
+  | 'outline-pantone'
   | 'outline-primary-dark'
   | 'outline-primary-light'
   | 'outline-primary-dimmed'
@@ -3883,7 +3883,7 @@ export type TOutlineColor =
   | 'outline-primary-semi-transparent'
   | 'outline-secondary-semi-transparent'
   | 'outline-tertiary-semi-transparent'
-  | 'outline-white-semi-transparent'
+  | 'outline-pantone-semi-transparent'
 
 export type TBorders =
   | TBorderStyle
@@ -4188,7 +4188,7 @@ export type TBoxShadowColor =
   | 'shadow-primary'
   | 'shadow-secondary'
   | 'shadow-tertiary'
-  | 'shadow-pure-white'
+  | 'shadow-pantone'
   | 'shadow-primary-dark'
   | 'shadow-primary-light'
   | 'shadow-primary-dimmed'
@@ -4198,7 +4198,7 @@ export type TBoxShadowColor =
   | 'shadow-primary-semi-transparent'
   | 'shadow-secondary-semi-transparent'
   | 'shadow-tertiary-semi-transparent'
-  | 'shadow-white-semi-transparent'
+  | 'shadow-pantone-semi-transparent'
 
 export type TOpacity =
   | 'opacity-0'
@@ -4323,7 +4323,7 @@ export type TDropShadow =
   | 'drop-shadow-accent'
   | 'drop-shadow-secondary'
   | 'drop-shadow-tertiary'
-  | 'drop-shadow-white'
+  | 'drop-shadow-pantone'
 
 export type TGrayscale = 'grayscale-0' | 'grayscale'
 
@@ -5789,7 +5789,7 @@ export type TCaretColor =
   | 'caret-primary'
   | 'caret-secondary'
   | 'caret-tertiary'
-  | 'caret-pure-white'
+  | 'caret-pantone'
   | 'caret-primary-dark'
   | 'caret-primary-light'
   | 'caret-primary-dimmed'
@@ -5799,7 +5799,7 @@ export type TCaretColor =
   | 'caret-primary-semi-transparent'
   | 'caret-secondary-semi-transparent'
   | 'caret-tertiary-semi-transparent'
-  | 'caret-white-semi-transparent'
+  | 'caret-pantone-semi-transparent'
 
 export type TWillChange =
   | 'will-change-auto'
@@ -6038,7 +6038,7 @@ export type TAccentColor =
   | 'accent-primary'
   | 'accent-secondary'
   | 'accent-tertiary'
-  | 'accent-pure-white'
+  | 'accent-pantone'
   | 'accent-primary-dark'
   | 'accent-primary-light'
   | 'accent-primary-dimmed'
@@ -6048,7 +6048,7 @@ export type TAccentColor =
   | 'accent-primary-semi-transparent'
   | 'accent-secondary-semi-transparent'
   | 'accent-tertiary-semi-transparent'
-  | 'accent-white-semi-transparent'
+  | 'accent-pantone-semi-transparent'
 
 export type TScrollPadding =
   | 'scroll-p-0'
@@ -7334,7 +7334,7 @@ export type TFill =
   | 'fill-primary'
   | 'fill-secondary'
   | 'fill-tertiary'
-  | 'fill-pure-white'
+  | 'fill-pantone'
   | 'fill-primary-dark'
   | 'fill-primary-light'
   | 'fill-primary-dimmed'
@@ -7344,7 +7344,7 @@ export type TFill =
   | 'fill-primary-semi-transparent'
   | 'fill-secondary-semi-transparent'
   | 'fill-tertiary-semi-transparent'
-  | 'fill-white-semi-transparent'
+  | 'fill-pantone-semi-transparent'
 
 export type TStroke =
   | 'stroke-inherit'
@@ -7378,7 +7378,7 @@ export type TStroke =
   | 'stroke-primary'
   | 'stroke-secondary'
   | 'stroke-tertiary'
-  | 'stroke-pure-white'
+  | 'stroke-pantone'
   | 'stroke-primary-dark'
   | 'stroke-primary-light'
   | 'stroke-primary-dimmed'
@@ -7388,7 +7388,7 @@ export type TStroke =
   | 'stroke-primary-semi-transparent'
   | 'stroke-secondary-semi-transparent'
   | 'stroke-tertiary-semi-transparent'
-  | 'stroke-white-semi-transparent'
+  | 'stroke-pantone-semi-transparent'
 
 export type TStrokeWidth = 'stroke-0' | 'stroke-1' | 'stroke-2'
 
@@ -7904,7 +7904,7 @@ export type TPlaceholderColor =
   | 'placeholder-primary'
   | 'placeholder-secondary'
   | 'placeholder-tertiary'
-  | 'placeholder-pure-white'
+  | 'placeholder-pantone'
   | 'placeholder-primary-dark'
   | 'placeholder-primary-light'
   | 'placeholder-primary-dimmed'
@@ -7914,7 +7914,7 @@ export type TPlaceholderColor =
   | 'placeholder-primary-semi-transparent'
   | 'placeholder-secondary-semi-transparent'
   | 'placeholder-tertiary-semi-transparent'
-  | 'placeholder-white-semi-transparent'
+  | 'placeholder-pantone-semi-transparent'
 
 export type TPlaceholderOpacity =
   | 'placeholder-opacity-0'
@@ -8163,7 +8163,7 @@ export type TTextColor =
   | 'text-primary'
   | 'text-secondary'
   | 'text-tertiary'
-  | 'text-pure-white'
+  | 'text-pantone'
   | 'text-primary-dark'
   | 'text-primary-light'
   | 'text-primary-dimmed'
@@ -8173,7 +8173,7 @@ export type TTextColor =
   | 'text-primary-semi-transparent'
   | 'text-secondary-semi-transparent'
   | 'text-tertiary-semi-transparent'
-  | 'text-white-semi-transparent'
+  | 'text-pantone-semi-transparent'
 
 export type TTextOpacity =
   | 'text-opacity-0'
@@ -8462,7 +8462,7 @@ export type TTextDecorationColor =
   | 'decoration-primary'
   | 'decoration-secondary'
   | 'decoration-tertiary'
-  | 'decoration-pure-white'
+  | 'decoration-pantone'
   | 'decoration-primary-dark'
   | 'decoration-primary-light'
   | 'decoration-primary-dimmed'
@@ -8472,7 +8472,7 @@ export type TTextDecorationColor =
   | 'decoration-primary-semi-transparent'
   | 'decoration-secondary-semi-transparent'
   | 'decoration-tertiary-semi-transparent'
-  | 'decoration-white-semi-transparent'
+  | 'decoration-pantone-semi-transparent'
 
 export type TTextDecorationThickness =
   | 'decoration-0'

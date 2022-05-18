@@ -15,10 +15,10 @@ const strokeSecondary = stroke('stroke-secondary')
 const strokeTertiary = stroke('stroke-tertiary')
 const strokeWhite = (isFill?: boolean) =>
   classnames(
-    stroke('stroke-white'),
+    stroke('stroke-pantone'),
     fill(isFill ? 'fill-primary-dark' : undefined)
   )
-const fillPureWhite = fill('fill-pure-white')
+const fillWhite = fill('fill-white')
 const fillGray = fill('fill-gray')
 
 const SuperOrb = () => (
@@ -102,7 +102,7 @@ const SuperOrb = () => (
         maskUnits="userSpaceOnUse"
       >
         <g transform="translate(-48.02 -4.86)">
-          <circle cx="101.52" cy="46.36" r="30.5" className={fillPureWhite} />
+          <circle cx="101.52" cy="46.36" r="30.5" className={fillWhite} />
         </g>
       </mask>
       <radialGradient
@@ -373,7 +373,7 @@ const superOrbBox = (glow?: boolean) =>
   classnames(
     position('absolute'),
     scale('scale-50'),
-    dropShadow(glow ? 'drop-shadow-white' : undefined),
+    dropShadow(glow ? 'drop-shadow-pantone' : undefined),
     transitionProperty('transition-all'),
     zIndex('z-40')
   )
