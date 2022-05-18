@@ -1,13 +1,16 @@
 import { HighlightedText } from 'components/Text'
-import Colors from 'models/Colors'
+import Colors, { colorToTailwindBg } from 'models/Colors'
 import OrbBox from 'icons/OrbBox'
 import ZkSphere from 'components/ZkSphere'
 import classnames, {
   TMargin,
   alignItems,
+  backgroundColor,
+  borderRadius,
   display,
   flexDirection,
   margin,
+  padding,
   position,
   space,
   transitionProperty,
@@ -30,6 +33,13 @@ const orbBox = (margins?: TMargin) =>
     space('space-y-2'),
     margin(margins)
   )
+const highlightedWrapper = (color: Colors) =>
+  classnames(
+    padding('px-2', 'py-1'),
+    borderRadius('rounded-full'),
+    backgroundColor(colorToTailwindBg(color)),
+    zIndex('z-10')
+  )
 
 export default function () {
   const scroll = useScrollPercent()
@@ -42,27 +52,27 @@ export default function () {
         <div className={position('absolute')}>
           <ZkSphere color={Colors.tertiary} animated />
         </div>
-        <HighlightedText color={Colors.tertiary} center onlyWrap bold>
-          Wallet 01
-        </HighlightedText>
+        <div className={highlightedWrapper(Colors.tertiary)}>
+          <HighlightedText center>Wallet 01</HighlightedText>
+        </div>
       </div>
       <div className={orbBox()}>
         <OrbBox color={Colors.accent} shadow={animNotStarted} />
         <div className={position('absolute')}>
           <ZkSphere color={Colors.accent} animated />
         </div>
-        <HighlightedText color={Colors.accent} center onlyWrap bold>
-          Wallet 02
-        </HighlightedText>
+        <div className={highlightedWrapper(Colors.accent)}>
+          <HighlightedText center>Wallet 02</HighlightedText>
+        </div>
       </div>
       <div className={orbBox('mt-11')}>
         <OrbBox color={Colors.secondary} shadow={animNotStarted} />
         <div className={position('absolute')}>
           <ZkSphere color={Colors.secondary} animated />
         </div>
-        <HighlightedText color={Colors.secondary} center onlyWrap bold>
-          Wallet 03
-        </HighlightedText>
+        <div className={highlightedWrapper(Colors.secondary)}>
+          <HighlightedText center>Wallet 03</HighlightedText>
+        </div>
       </div>
     </div>
   )

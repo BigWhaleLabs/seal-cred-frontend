@@ -30,9 +30,7 @@ export default function () {
   return (
     <Suspense
       fallback={
-        <BodyText size="base">
-          Fetching the supported tokens owned by you...
-        </BodyText>
+        <BodyText>Fetching the supported tokens owned by you...</BodyText>
       }
     >
       <ContractList />
