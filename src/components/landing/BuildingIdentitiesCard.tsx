@@ -8,7 +8,7 @@ const bottomBodyText = classnames(margin('mt-6'))
 
 export default function () {
   return (
-    <Card color="white" onlyWrap shadow>
+    <Card color="pantone" onlyWrap shadow>
       <div className={cardHeader}>
         <HeaderText extraLeading>
           Building your identities with ZK Badges
