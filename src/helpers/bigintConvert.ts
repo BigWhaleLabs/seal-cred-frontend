@@ -98,7 +98,7 @@ export function bnToHex(stringNum: string) {
   return '0x' + hex
 }
 
-function bitnot(bigIntNum: BigInt) {
+function bitnot(bigIntNum: bigint) {
   const bn = -bigIntNum
   let bin = bn.toString(2)
   let prefix = ''

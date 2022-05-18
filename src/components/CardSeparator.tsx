@@ -10,7 +10,21 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 
-type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'transparent'
+type Gradient =
+  | 'secondary-to-transparent'
+  | 'accent-to-secondary'
+  | 'accent-to-transparent'
+
+const getTailwindGradient = (gradient: Gradient) =>
+  gradientColorStops(
+    gradient === 'secondary-to-transparent'
+      ? 'from-secondary'
+      : gradient === 'accent-to-secondary'
+      ? { 'from-accent': true, 'to-secondary': true }
+      : gradient === 'accent-to-transparent'
+      ? 'from-accent'
+      : undefined
+  )
 
 const connectiveBlock = (vertical = true) =>
   classnames(
@@ -21,61 +35,28 @@ const connectiveBlock = (vertical = true) =>
     margin(vertical ? 'mx-auto' : 'mt-12')
   )
 
-const connectiveLine = (
-  from?: Color,
-  to?: Color,
-  vertical = true,
-  customHeight?: number
-) =>
-  classnames(
-    gradientColorStops(
-      from === 'accent'
-        ? 'from-accent'
-        : from === 'tertiary'
-        ? 'from-tertiary'
-        : from === 'primary'
-        ? 'from-primary'
-        : from === 'secondary'
-        ? 'from-secondary'
-        : 'from-transparent',
-      to === 'accent'
-        ? 'to-accent'
-        : to === 'tertiary'
-        ? 'to-tertiary'
-        : to === 'primary'
-        ? 'to-primary'
-        : to === 'secondary'
-        ? 'to-secondary'
-        : 'to-transparent'
-    ),
-    backgroundImage('bg-gradient-to-b', 'lg:bg-gradient-to-r'),
-    width(vertical ? 'w-px' : 'w-4'),
-    height(customHeight ? `h-${customHeight}` : vertical ? 'h-4' : 'h-px')
-  )
-
 interface CardSeparatorProps {
-  number: number
-  from?: Color
-  to?: Color
+  numberOfLines: number
+  gradient: Gradient
   vertical?: boolean
-  customHeight?: number
 }
 
-export default function ({
-  to,
-  from,
-  number,
-  vertical,
-  customHeight,
-}: CardSeparatorProps) {
+const connectiveLine = ({ gradient, vertical }: CardSeparatorProps) =>
+  classnames(
+    getTailwindGradient(gradient),
+    backgroundImage('bg-gradient-to-b', 'lg:bg-gradient-to-r'),
+    width(vertical ? 'w-px' : 'w-4'),
+    height(vertical ? 'h-4' : 'h-px')
+  )
+
+export default function (props: CardSeparatorProps) {
   return (
-    <div className={connectiveBlock(vertical)}>
-      {[...Array(number).keys()].map((_, index) => (
-        <div
-          key={index}
-          className={connectiveLine(from, to, vertical, customHeight)}
-        ></div>
-      ))}
+    <div className={connectiveBlock(props.vertical)}>
+      {Array(props.numberOfLines)
+        .fill(null)
+        .map((_, index) => (
+          <div key={index} className={connectiveLine(props)}></div>
+        ))}
     </div>
   )
 }
