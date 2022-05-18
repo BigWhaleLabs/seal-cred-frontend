@@ -20,20 +20,20 @@ interface OnlyChildrenProp {
   children: ReactNode
 }
 
-const headerText = (leading = false) =>
+const headerText = (extraLeading = false) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight('font-bold'),
     fontSize('text-4xl'),
     textColor('text-white'),
-    lineHeight(leading ? 'leading-11' : 'leading-8')
+    lineHeight(extraLeading ? 'leading-11' : 'leading-8')
   )
 interface HeaderTextProps extends OnlyChildrenProp {
-  leading?: boolean
+  extraLeading?: boolean
 }
 
-export function HeaderText({ leading, children }: HeaderTextProps) {
-  return <h1 className={headerText(leading)}>{children}</h1>
+export function HeaderText({ extraLeading, children }: HeaderTextProps) {
+  return <h1 className={headerText(extraLeading)}>{children}</h1>
 }
 
 const subheaderText = classnames(

@@ -10,7 +10,9 @@ export default function () {
   return (
     <Card color="white" onlyWrap shadow>
       <div className={cardHeader}>
-        <HeaderText leading>Building your identities with ZK Badges</HeaderText>
+        <HeaderText extraLeading>
+          Building your identities with ZK Badges
+        </HeaderText>
       </div>
       <BodyText>
         Once you have ZK proof, you can add create ZK badges for an anonymous

@@ -9,7 +9,7 @@ export default function () {
   return (
     <Card color="white" onlyWrap shadow>
       <div className={cardHeader}>
-        <HeaderText leading>Creating ZK Proof</HeaderText>
+        <HeaderText extraLeading>Creating ZK Proof</HeaderText>
       </div>
       <BodyText>
         In your wallet(s), you have NFTs that can point back to your identity

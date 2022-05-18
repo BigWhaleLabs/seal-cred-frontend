@@ -71,7 +71,7 @@ function OwnerInfo({
       onlyWrap
       spinner="Certified with SealCred ZK Proof"
     >
-      <HeaderText leading>
+      <HeaderText extraLeading>
         This wallet owns a{' '}
         <AccentText bold color="text-secondary">
           <ContractName address={derivativeAddress} truncatedStyle />

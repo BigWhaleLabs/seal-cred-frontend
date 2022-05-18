@@ -15,7 +15,7 @@ export default function ({ showSpinner }: { showSpinner?: boolean }) {
       spinner={showSpinner ? 'One Identity to rule them all' : undefined}
     >
       <div className={initialHeaderText}>
-        <HeaderText leading>
+        <HeaderText extraLeading>
           Build your pseudonymous identity with ZK badges
         </HeaderText>
       </div>
