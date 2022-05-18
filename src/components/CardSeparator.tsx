@@ -1,5 +1,4 @@
 import classnames, {
-  THeight,
   backgroundImage,
   display,
   flexDirection,
@@ -17,16 +16,14 @@ type Gradient =
   | 'accent-to-transparent'
 
 const getTailwindGradient = (gradient: Gradient) =>
-  classnames(
-    gradientColorStops(
-      gradient === 'secondary-to-transparent'
-        ? 'from-secondary'
-        : gradient === 'accent-to-secondary'
-        ? { 'from-accent': true, 'to-secondary': true }
-        : gradient === 'accent-to-transparent'
-        ? 'from-accent'
-        : undefined
-    )
+  gradientColorStops(
+    gradient === 'secondary-to-transparent'
+      ? 'from-secondary'
+      : gradient === 'accent-to-secondary'
+      ? { 'from-accent': true, 'to-secondary': true }
+      : gradient === 'accent-to-transparent'
+      ? 'from-accent'
+      : undefined
   )
 
 const connectiveBlock = (vertical = true) =>
@@ -42,7 +39,6 @@ interface CardSeparatorProps {
   numberOfLines: number
   gradient: Gradient
   vertical?: boolean
-  customHeight?: THeight
 }
 
 const connectiveLine = ({ gradient, vertical }: CardSeparatorProps) =>
