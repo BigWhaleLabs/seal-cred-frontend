@@ -101,7 +101,7 @@ function useProofContent(
     content: (
       <span className={textWithIcon}>
         <span>Proof {proof.account === account ? 'made' : 'saved'}</span>
-        <Complete color="accent" />
+        <Complete accent />
       </span>
     ),
   }

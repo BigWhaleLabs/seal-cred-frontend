@@ -42,6 +42,8 @@ module.exports = {
         tertiary: '#01feb6',
         white: '#efecd6',
 
+        'pure-white': '#ffffff',
+
         'primary-dark': '#0d0030',
         'primary-light': '#bff5fa',
         'primary-dimmed': '#3a00d6',

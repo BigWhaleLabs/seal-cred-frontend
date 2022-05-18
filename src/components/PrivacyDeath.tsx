@@ -4,6 +4,7 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
+  margin,
   position,
   width,
 } from 'classnames/tailwind'
@@ -16,6 +17,7 @@ const wrapperBox = classnames(
   flexDirection('flex-col'),
   width('w-full')
 )
+const eyeBoxMargin = margin('-mt-5', 'mb-12')
 
 export default function () {
   const { xxs, sm } = useBreakpoints()
@@ -28,7 +30,9 @@ export default function () {
           text="Give me privacy or give me death •"
         />
       </div>
-      <EyeWhale />
+      <div className={eyeBoxMargin}>
+        <EyeWhale />
+      </div>
     </div>
   )
 }
