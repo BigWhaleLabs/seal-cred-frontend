@@ -24,11 +24,16 @@ export default function () {
     <>
       <div className={mainBlock}>
         <ProofsCard />
-        <CardSeparator number={3} from="accent" to="secondary" vertical={!lg} />
+        <CardSeparator
+          number={3}
+          from="from-accent"
+          to="to-secondary"
+          vertical={!lg}
+        />
         <Badges />
         {!lg && (
           <>
-            <CardSeparator number={1} from="secondary" vertical />
+            <CardSeparator number={1} from="from-secondary" vertical />
             <ZkProofButton />
           </>
         )}

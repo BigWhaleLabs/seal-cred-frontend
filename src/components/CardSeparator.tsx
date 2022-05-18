@@ -1,4 +1,5 @@
 import classnames, {
+  THeight,
   backgroundImage,
   display,
   flexDirection,
@@ -10,7 +11,15 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 
-type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'transparent'
+type FromColor = 'from-accent' | 'from-secondary'
+type ToColor = 'to-secondary'
+interface CardSeparatorProps {
+  number: number
+  from?: FromColor
+  to?: ToColor
+  vertical?: boolean
+  customHeight?: THeight
+}
 
 const connectiveBlock = (vertical = true) =>
   classnames(
@@ -21,60 +30,27 @@ const connectiveBlock = (vertical = true) =>
     margin(vertical ? 'mx-auto' : 'mt-12')
   )
 
-const connectiveLine = (
-  from?: Color,
-  to?: Color,
-  vertical = true,
-  customHeight?: number
-) =>
+const connectiveLine = ({
+  from,
+  to,
+  vertical,
+  customHeight,
+}: CardSeparatorProps) =>
   classnames(
     gradientColorStops(
-      from === 'accent'
-        ? 'from-accent'
-        : from === 'tertiary'
-        ? 'from-tertiary'
-        : from === 'primary'
-        ? 'from-primary'
-        : from === 'secondary'
-        ? 'from-secondary'
-        : 'from-transparent',
-      to === 'accent'
-        ? 'to-accent'
-        : to === 'tertiary'
-        ? 'to-tertiary'
-        : to === 'primary'
-        ? 'to-primary'
-        : to === 'secondary'
-        ? 'to-secondary'
-        : 'to-transparent'
+      from ? from : 'from-transparent',
+      to ? to : 'to-transparent'
     ),
     backgroundImage('bg-gradient-to-b', 'lg:bg-gradient-to-r'),
     width(vertical ? 'w-px' : 'w-4'),
-    height(customHeight ? `h-${customHeight}` : vertical ? 'h-4' : 'h-px')
+    height(customHeight ? customHeight : vertical ? 'h-4' : 'h-px')
   )
 
-interface CardSeparatorProps {
-  number: number
-  from?: Color
-  to?: Color
-  vertical?: boolean
-  customHeight?: number
-}
-
-export default function ({
-  to,
-  from,
-  number,
-  vertical,
-  customHeight,
-}: CardSeparatorProps) {
+export default function (props: CardSeparatorProps) {
   return (
-    <div className={connectiveBlock(vertical)}>
-      {[...Array(number).keys()].map((_, index) => (
-        <div
-          key={index}
-          className={connectiveLine(from, to, vertical, customHeight)}
-        ></div>
+    <div className={connectiveBlock(props.vertical)}>
+      {[...Array(props.number).keys()].map((_, index) => (
+        <div key={index} className={connectiveLine(props)}></div>
       ))}
     </div>
   )
