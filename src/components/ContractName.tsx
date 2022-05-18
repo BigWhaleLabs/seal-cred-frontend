@@ -1,4 +1,4 @@
-import { BodyText, textTruncateStyles } from 'components/Text'
+import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import EnsAddress from 'components/EnsAddress'
@@ -17,7 +17,6 @@ interface FetchingContract extends ContractNameProps {
 }
 
 function TextBlock({
-  overflow,
   truncate,
   address,
   truncatedStyle,
@@ -29,19 +28,12 @@ function TextBlock({
       : address
 
   return truncatedStyle ? (
-    overflow ? (
-      <div className={textTruncateStyles}>
-        {isFetching && <>Fetching </>}
-        {truncatedText}
-      </div>
-    ) : (
-      <>
-        {isFetching && <>Fetching </>}
-        {truncatedText}
-      </>
-    )
+    <>
+      {isFetching && <>Fetching </>}
+      {truncatedText}
+    </>
   ) : (
-    <BodyText size="sm" overflow={overflow}>
+    <BodyText small>
       {isFetching && <>Fetching </>}
       {truncatedText}
     </BodyText>
@@ -49,7 +41,6 @@ function TextBlock({
 }
 
 function ContractNameComponent({
-  overflow,
   truncate,
   address,
   truncatedStyle,
@@ -63,7 +54,6 @@ function ContractNameComponent({
           address={contractNames[address] || ''}
           truncatedStyle={truncatedStyle}
           truncate={truncate}
-          overflow={overflow}
         />
       ) : (
         <EnsAddress address={address} />
@@ -73,7 +63,6 @@ function ContractNameComponent({
 }
 
 export default function ({
-  overflow,
   truncate,
   address,
   truncatedStyle,
@@ -90,7 +79,6 @@ export default function ({
       }
     >
       <ContractNameComponent
-        overflow={overflow}
         truncate={truncate}
         address={address}
         truncatedStyle={truncatedStyle}

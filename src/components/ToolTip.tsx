@@ -1,4 +1,4 @@
-import { TooltipText } from 'components/Text'
+import { HighlightedText } from 'components/Text'
 import ReactTooltip, { Place } from 'react-tooltip'
 import classnames, {
   backgroundColor,
@@ -29,7 +29,7 @@ export default function ({ place, dataFor, clickable }: ToolTipProps) {
   const { xs } = useBreakpoints()
 
   return (
-    <TooltipText>
+    <HighlightedText bold>
       <ReactTooltip
         place={place}
         data-for={dataFor}
@@ -40,6 +40,6 @@ export default function ({ place, dataFor, clickable }: ToolTipProps) {
         clickable={clickable}
         className={tooltipClasses(xs)}
       />
-    </TooltipText>
+    </HighlightedText>
   )
 }
