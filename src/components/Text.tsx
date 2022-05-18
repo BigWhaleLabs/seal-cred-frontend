@@ -16,7 +16,7 @@ import {
   width,
 } from 'classnames/tailwind'
 
-interface OnlyChildrenProp {
+interface ChildrenProp {
   children: ReactNode
 }
 
@@ -28,11 +28,12 @@ const headerText = (extraLeading = false) =>
     textColor('text-white'),
     lineHeight(extraLeading ? 'leading-11' : 'leading-8')
   )
-interface HeaderTextProps extends OnlyChildrenProp {
+export function HeaderText({
+  extraLeading,
+  children,
+}: ChildrenProp & {
   extraLeading?: boolean
-}
-
-export function HeaderText({ extraLeading, children }: HeaderTextProps) {
+}) {
   return <h1 className={headerText(extraLeading)}>{children}</h1>
 }
 
@@ -40,16 +41,10 @@ const subheaderText = classnames(
   textColor('text-primary'),
   fontFamily('font-primary')
 )
-export function SubheaderText({ children }: OnlyChildrenProp) {
+export function SubheaderText({ children }: ChildrenProp) {
   return <h2 className={subheaderText}>{children}</h2>
 }
 
-interface AccentTextProps extends OnlyChildrenProp {
-  color: TTextColor
-  bold?: boolean
-  small?: boolean
-  primary?: boolean
-}
 const accentText = (
   color: TTextColor,
   bold?: boolean,
@@ -68,16 +63,17 @@ export function AccentText({
   small,
   primary,
   children,
-}: AccentTextProps) {
+}: ChildrenProp & {
+  color: TTextColor
+  bold?: boolean
+  small?: boolean
+  primary?: boolean
+}) {
   return (
     <span className={accentText(color, bold, small, primary)}>{children}</span>
   )
 }
 
-interface BodyTextProps extends OnlyChildrenProp {
-  small?: boolean
-  center?: boolean
-}
 const bodyText = (small?: boolean, center?: boolean) =>
   classnames(
     textColor('text-white'),
@@ -85,16 +81,25 @@ const bodyText = (small?: boolean, center?: boolean) =>
     fontSize(small ? 'text-sm' : 'text-base'),
     lineHeight('leading-6')
   )
-export function BodyText({ small, center, children }: BodyTextProps) {
+export function BodyText({
+  small,
+  center,
+  children,
+}: ChildrenProp & {
+  small?: boolean
+  center?: boolean
+}) {
   return <p className={bodyText(small, center)}>{children}</p>
 }
 
-interface CardHeaderProps extends OnlyChildrenProp {
-  color?: TTextColor
-}
 const cardHeader = (color?: TTextColor) =>
   classnames(textColor(color || 'text-white'))
-export function CardHeader({ color, children }: CardHeaderProps) {
+export function CardHeader({
+  color,
+  children,
+}: ChildrenProp & {
+  color?: TTextColor
+}) {
   return <h3 className={cardHeader(color)}>{children}</h3>
 }
 
@@ -104,7 +109,7 @@ const cardDescription = classnames(
   fontFamily('font-primary'),
   fontWeight('font-bold')
 )
-export function CardDescription({ children }: OnlyChildrenProp) {
+export function CardDescription({ children }: ChildrenProp) {
   return <p className={cardDescription}>{children}</p>
 }
 
@@ -113,23 +118,15 @@ const logoText = classnames(
   fontWeight('font-bold'),
   fontSize('text-xl')
 )
-export function LogoText({ children }: OnlyChildrenProp) {
+export function LogoText({ children }: ChildrenProp) {
   return <span className={logoText}>{children}</span>
 }
 
 const badgeText = textColor('text-white')
-export function BadgeText({ children }: OnlyChildrenProp) {
+export function BadgeText({ children }: ChildrenProp) {
   return <span className={badgeText}>{children}</span>
 }
 
-interface LinkTextProps extends OnlyChildrenProp {
-  url: string
-  bold?: boolean
-  title?: string
-  color?: TTextColor
-  gradientFrom?: TGradientColorStops
-  gradientTo?: TGradientColorStops
-}
 const linkText = (
   bold?: boolean,
   color?: TTextColor,
@@ -156,7 +153,14 @@ export function LinkText({
   gradientFrom,
   gradientTo,
   children,
-}: LinkTextProps) {
+}: ChildrenProp & {
+  url: string
+  bold?: boolean
+  title?: string
+  color?: TTextColor
+  gradientFrom?: TGradientColorStops
+  gradientTo?: TGradientColorStops
+}) {
   return (
     <a
       className={linkText(bold, color, gradientFrom, gradientTo)}
@@ -170,10 +174,6 @@ export function LinkText({
   )
 }
 
-interface HighlightedTextProps extends OnlyChildrenProp {
-  bold?: boolean
-  center?: boolean
-}
 const highlightedText = (center?: boolean, bold?: boolean) =>
   classnames(
     width('w-fit'),
@@ -188,6 +188,9 @@ export function HighlightedText({
   bold,
   center,
   children,
-}: HighlightedTextProps) {
+}: ChildrenProp & {
+  bold?: boolean
+  center?: boolean
+}) {
   return <div className={highlightedText(bold, center)}>{children}</div>
 }
