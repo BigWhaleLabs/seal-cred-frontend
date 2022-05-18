@@ -1,7 +1,7 @@
 import ProofResponse from 'models/ProofResponse'
 import ProofStatus from 'models/ProofStatus'
 
-type Proof = {
+export default interface Proof {
   id: string
   contract: string
   account: string
@@ -17,5 +17,3 @@ export const ProofOrdering = {
   [ProofStatus.cancelled]: 3,
   [ProofStatus.failed]: 4,
 }
-
-export default Proof

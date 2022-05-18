@@ -1,5 +1,5 @@
-import { FC, Suspense, useEffect, useState } from 'react'
 import { LinkText } from 'components/Text'
+import { Suspense, useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import EnsAddress from 'components/EnsAddress'
 import SealCredStore from 'stores/SealCredStore'
@@ -43,10 +43,15 @@ function OwnedBadgeAddressSuspender({
   )
 }
 
-const OwnedBadgeAddress: FC<{ derivativeAddress: string; tokenId: string }> = ({
+interface OwnedBadgeAddressProps {
+  derivativeAddress: string
+  tokenId: string
+}
+
+export default function ({
   derivativeAddress,
   tokenId,
-}) => {
+}: OwnedBadgeAddressProps) {
   return (
     <Suspense fallback={<>Fetching owner address...</>}>
       <OwnedBadgeAddressSuspender
@@ -56,5 +61,3 @@ const OwnedBadgeAddress: FC<{ derivativeAddress: string; tokenId: string }> = ({
     </Suspense>
   )
 }
-
-export default OwnedBadgeAddress

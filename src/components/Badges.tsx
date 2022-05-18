@@ -13,7 +13,7 @@ import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function Badges() {
-  const { account, notifiedOfNFTownership } = useSnapshot(WalletStore)
+  const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const originalTokensOwned = useContractAddressesOwned('original')
   const proofsAvailableToMint = useProofsAvailableToMint()
@@ -22,7 +22,7 @@ function Badges() {
 
   const shouldNotify =
     account &&
-    !notifiedOfNFTownership[account] &&
+    !walletsToNotifiedOfBeingDoxxed[account] &&
     originalTokensOwned.length > 0 &&
     hasUnminted
 
@@ -57,7 +57,7 @@ function Badges() {
                 small
                 colors="accent"
                 onClick={() =>
-                  (WalletStore.notifiedOfNFTownership[account] = true)
+                  (WalletStore.walletsToNotifiedOfBeingDoxxed[account] = true)
                 }
               >
                 I understand, show badges
@@ -87,7 +87,7 @@ function Badges() {
 }
 
 const titleContainer = space('space-y-2')
-function BadgesSuspense() {
+export default function () {
   return (
     <Card shadow color="secondary">
       <Suspense
@@ -105,5 +105,3 @@ function BadgesSuspense() {
     </Card>
   )
 }
-
-export default BadgesSuspense

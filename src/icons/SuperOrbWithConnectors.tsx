@@ -366,19 +366,23 @@ const superOrbBox = (glow?: boolean) =>
     zIndex('z-40')
   )
 
-export default function SuperOrbWithConnectors() {
+export default function () {
   const scroll = useScrollPercent()
 
   const glow = scroll > 0.48
 
   return (
     <>
-      <div style={{ width: '202px', height: '1180px' }}>
+      <div style={{ width: '12.625rem', height: '73.75rem' }}>
         <div className={position('relative')}>
           <UpperConnectors />
           <div
             className={superOrbBox(glow)}
-            style={{ width: '202px', height: '202px', bottom: '-111px' }}
+            style={{
+              width: '12.625rem',
+              height: '12.625rem',
+              bottom: '-6.938rem',
+            }}
           >
             <SuperOrb />
           </div>

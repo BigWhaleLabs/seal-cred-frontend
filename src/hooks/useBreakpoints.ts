@@ -5,7 +5,7 @@ const smSize = 375
 const mdSize = 600
 const lgSize = 1023
 
-export default function useBreakpoints() {
+export default function () {
   const [width, setWidth] = useState(window.innerWidth)
 
   useEffect(() => {
@@ -20,10 +20,10 @@ export default function useBreakpoints() {
   }, [])
 
   return {
-    xs: width > xsSize,
+    xxs: width > xsSize,
+    xs: width > xsSize && width < smSize,
     sm: width > smSize,
     md: width > mdSize,
     lg: width > lgSize,
-    mobile: width > xsSize && width < smSize,
   }
 }

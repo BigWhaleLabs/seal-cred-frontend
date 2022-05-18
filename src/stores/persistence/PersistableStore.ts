@@ -9,7 +9,7 @@ const ls = new SequreLS({
   isCompression: false,
   encryptionSecret: env.VITE_ENCRYPT_KEY as string,
 })
-export default class PersistableStore {
+export default class {
   reviver = (_: string, value: unknown) => value
   replacer = (_: string, value: unknown) => value
 

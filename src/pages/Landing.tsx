@@ -1,10 +1,10 @@
 import { HighlightedText } from 'components/Text'
+import BuildingIdentitiesCard from 'components/landing/BuildingIdentitiesCard'
 import Colors from 'models/Colors'
+import CreatingZKProofCard from 'components/landing/CreatingZKProofCard'
 import IdentityCard from 'components/IdentityCardOne'
-import LandingBuildingIdentitiesCard from 'components/LandingBuildingIdentitiesCard'
-import LandingCreatingZKProofCard from 'components/LandingCreatingZKProofCard'
-import LandingInitialCard from 'components/LandingInitialCard'
-import LandingLearnMoreCard from 'components/LandingLearnMoreCard'
+import InitialCard from 'components/landing/InitialCard'
+import LearnMoreCard from 'components/landing/LearnMoreCard'
 import OrbsInBoxes from 'components/OrbsInBoxes'
 import ScrollDownButton from 'components/ScrollDownButton'
 import SuperHr from 'icons/SuperHr'
@@ -46,24 +46,24 @@ const highlightedBlock = classnames(
   position('absolute')
 )
 
-function Landing() {
+export default function () {
   const scroll = useScrollPercent()
-  const { mobile } = useBreakpoints()
+  const { xs } = useBreakpoints()
   const animEnd = scroll > 0.645
 
   return (
     <div className={pageBox}>
-      <LandingInitialCard showSpinner={!mobile} />
+      <InitialCard showSpinner={!xs} />
       <ScrollDownButton />
       <div
         className={position('absolute')}
-        style={{ transform: 'translateY(610px)' }}
+        style={{ transform: 'translateY(38.125rem)' }}
       >
         <TopConnectors />
       </div>
       <div
         className={highlightedBlock}
-        style={{ transform: 'translateY(690px)' }}
+        style={{ transform: 'translateY(43.125rem)' }}
       >
         <HighlightedText center bold>
           It starts with connecting your wallets with NFTs
@@ -72,25 +72,23 @@ function Landing() {
       <OrbsInBoxes />
       <div
         className={classnames(position('absolute'), zIndex('z-40'))}
-        style={{ transform: 'translateY(1050px)' }}
+        style={{ transform: 'translateY(65.625rem)' }}
       >
-        <LandingCreatingZKProofCard />
+        <CreatingZKProofCard />
       </div>
       <SuperOrbWithConnectors />
       <div className={identityCards}>
-        <IdentityCard left text="Identity-01" mobile={mobile} reveal={animEnd}>
+        <IdentityCard left text="Identity-01" mobile={xs} reveal={animEnd}>
           <ZkSphere text="ZK" color={Colors.tertiary} />
           <ZkSphere text="ZK" color={Colors.accent} />
         </IdentityCard>
-        <IdentityCard text="Identity-02" mobile={mobile} reveal={animEnd}>
+        <IdentityCard text="Identity-02" mobile={xs} reveal={animEnd}>
           <ZkSphere text="ZK" color={Colors.secondary} />
         </IdentityCard>
       </div>
-      <LandingBuildingIdentitiesCard />
+      <BuildingIdentitiesCard />
       <SuperHr />
-      <LandingLearnMoreCard />
+      <LearnMoreCard />
     </div>
   )
 }
-
-export default Landing

@@ -10,7 +10,7 @@ const qrCodeContainer = classnames(
   minWidth('min-w-fit')
 )
 
-export default function QRLoading() {
+export default function () {
   return (
     <svg width="140" height="140" className={qrCodeContainer}>
       <rect x="0" y="0" height="140" width="140" fill="#0d0030"></rect>

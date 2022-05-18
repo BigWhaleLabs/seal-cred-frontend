@@ -6,7 +6,7 @@ import classnames, { margin } from 'classnames/tailwind'
 const initialHeaderText = classnames(margin('mt-2'), margin('mb-4'))
 const getStartedButton = classnames(margin('mt-6'), margin('mb-2'))
 
-function LandingInitialCard({ showSpinner }: { showSpinner?: boolean }) {
+export default function ({ showSpinner }: { showSpinner?: boolean }) {
   return (
     <Card
       shadow
@@ -30,5 +30,3 @@ function LandingInitialCard({ showSpinner }: { showSpinner?: boolean }) {
     </Card>
   )
 }
-
-export default LandingInitialCard

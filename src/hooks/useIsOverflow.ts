@@ -1,10 +1,10 @@
 import { MutableRefObject, useCallback, useEffect, useState } from 'react'
 import useBreakpoints from 'hooks/useBreakpoints'
 
-const useIsOverflow = (
+export default function (
   scrollRef: MutableRefObject<HTMLDivElement>,
   maxHeight: number
-) => {
+) {
   const { sm, md } = useBreakpoints()
   const scrollMaxHeight = md ? maxHeight : sm ? 240 : 190
   const [isOverflow, setIsOverflow] = useState<{
@@ -67,5 +67,3 @@ const useIsOverflow = (
 
   return { ...isOverflow, scrollMaxHeight }
 }
-
-export default useIsOverflow

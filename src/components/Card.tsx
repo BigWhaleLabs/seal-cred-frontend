@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { ReactNode } from 'react'
 import {
   backgroundColor,
   borderColor,
@@ -22,6 +22,7 @@ import ArcText from 'icons/ArcText'
 
 type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'white'
 interface CardProps {
+  children: ReactNode
   shadow?: boolean
   color?: Color
   onlyWrap?: boolean
@@ -97,7 +98,7 @@ const spinnerBox = classnames(
   inset('-top-24', '-right-4', 'md:-top-28', 'md:-right-28')
 )
 
-const Card: FC<CardProps> = ({
+export default function ({
   color,
   shadow,
   onlyWrap,
@@ -105,7 +106,7 @@ const Card: FC<CardProps> = ({
   thin,
   children,
   small,
-}) => {
+}: CardProps) {
   return (
     <div className={cardContainer(shadow, color, onlyWrap, thin, small)}>
       {!!spinner && (
@@ -117,5 +118,3 @@ const Card: FC<CardProps> = ({
     </div>
   )
 }
-
-export default Card

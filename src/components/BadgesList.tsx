@@ -64,7 +64,7 @@ function BadgeListSuspender() {
   )
 }
 
-function BadgesList() {
+export default function () {
   return (
     <div className={badges}>
       <Suspense
@@ -75,5 +75,3 @@ function BadgesList() {
     </div>
   )
 }
-
-export default BadgesList

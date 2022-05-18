@@ -29,7 +29,7 @@ const wrapperBody = classnames(
   margin('mt-10')
 )
 
-export default function NotFound() {
+export default function () {
   const navigate = useNavigate()
   return (
     <div className={container}>

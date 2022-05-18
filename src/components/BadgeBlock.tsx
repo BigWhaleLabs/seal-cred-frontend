@@ -1,7 +1,6 @@
 import { BadgeText, BoldColoredText, SubheaderText } from 'components/Text'
 import { BigNumber } from 'ethers'
 import { Suspense, useState } from 'react'
-import { handleError } from 'helpers/handleError'
 import { useSnapshot } from 'valtio'
 import BadgeIcon from 'icons/BadgeIcon'
 import Button from 'components/Button'
@@ -22,6 +21,7 @@ import classnames, {
   space,
   textAlign,
 } from 'classnames/tailwind'
+import handleError from 'helpers/handleError'
 import sealCred from 'helpers/sealCred'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useBreakpoints from 'hooks/useBreakpoints'
@@ -88,12 +88,12 @@ function Badge({
   const { ledger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
 
-  const { xs, sm } = useBreakpoints()
+  const { xxs, sm } = useBreakpoints()
 
   const [loading, setLoading] = useState(false)
   const [completed, setCompleted] = useState(false)
 
-  const small = xs && !sm
+  const small = xxs && !sm
   const minted = tokenId !== undefined
   const ledgerRecord = ledger[contractAddress]
   const derivativeAddress = ledgerRecord.derivativeContract.address
@@ -164,23 +164,21 @@ function Badge({
   )
 }
 
-function BadgeBlock({
+export default function ({
   contractAddress,
   tokenId,
 }: {
   contractAddress: string
   tokenId?: number
 }) {
-  const { xs, sm } = useBreakpoints()
+  const { xxs, sm } = useBreakpoints()
   const shortAddress = truncateMiddleIfNeeded(contractAddress, 11)
 
   return (
-    <div className={badgeWrapper(tokenId !== undefined, xs && !sm)}>
+    <div className={badgeWrapper(tokenId !== undefined, xxs && !sm)}>
       <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
         <Badge contractAddress={contractAddress} tokenId={tokenId} />
       </Suspense>
     </div>
   )
 }
-
-export default BadgeBlock

@@ -3,8 +3,9 @@ import EcdsaInput from 'models/EcdsaInput'
 import ProofBody from 'models/ProofBody'
 import ProofCheck from 'models/ProofCheck'
 import axios from 'axios'
+import env from 'helpers/env'
 
-const baseURL = 'https://verify.sealcred.xyz'
+const baseURL = env.VITE_VERIFY_URL
 
 export async function scheduleProofGeneration(
   proof: MerkleProof,

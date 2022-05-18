@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { TooltipText } from 'components/Text'
 import ReactTooltip, { Place } from 'react-tooltip'
 import classnames, {
@@ -20,12 +19,14 @@ const tooltipClasses = (mobile: boolean) =>
     borderRadius('!rounded-lg')
   )
 
-const ToolTip: FC<{
+interface ToolTipProps {
   place: Place
   dataFor: string
   clickable?: boolean
-}> = ({ place, dataFor, clickable }) => {
-  const { mobile } = useBreakpoints()
+}
+
+export default function ({ place, dataFor, clickable }: ToolTipProps) {
+  const { xs } = useBreakpoints()
 
   return (
     <TooltipText>
@@ -37,10 +38,8 @@ const ToolTip: FC<{
         textColor={textColor('text-primary-dark')}
         arrowColor={backgroundColor('bg-white')}
         clickable={clickable}
-        className={tooltipClasses(mobile)}
+        className={tooltipClasses(xs)}
       />
     </TooltipText>
   )
 }
-
-export default ToolTip
