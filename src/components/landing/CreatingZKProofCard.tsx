@@ -9,17 +9,15 @@ export default function () {
   return (
     <Card color="white" onlyWrap shadow>
       <div className={cardHeader}>
-        <HeaderText size="4xl" leading={11}>
-          Creating ZK Proof
-        </HeaderText>
+        <HeaderText extraLeading>Creating ZK Proof</HeaderText>
       </div>
-      <BodyText size="base">
+      <BodyText>
         In your wallet(s), you have NFTs that can point back to your identity
         (aka, getting doxxed). But what if you can verify ownership of NFTs
         while staying pseudonymous?
       </BodyText>
       <div className={bottomBodyText}>
-        <BodyText size="base">
+        <BodyText>
           When you connect your wallet(s), we verify your NFTs. Then, we create
           ZK badges out of them.
         </BodyText>
