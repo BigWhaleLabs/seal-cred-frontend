@@ -1,10 +1,10 @@
 import { HighlightedText } from 'components/Text'
+import BuildingIdentitiesCard from 'components/landing/BuildingIdentitiesCard'
 import Colors from 'models/Colors'
+import CreatingZKProofCard from 'components/landing/CreatingZKProofCard'
 import IdentityCard from 'components/IdentityCardOne'
-import LandingBuildingIdentitiesCard from 'components/LandingBuildingIdentitiesCard'
-import LandingCreatingZKProofCard from 'components/LandingCreatingZKProofCard'
-import LandingInitialCard from 'components/LandingInitialCard'
-import LandingLearnMoreCard from 'components/LandingLearnMoreCard'
+import InitialCard from 'components/landing/InitialCard'
+import LearnMoreCard from 'components/landing/LearnMoreCard'
 import OrbsInBoxes from 'components/OrbsInBoxes'
 import ScrollDownButton from 'components/ScrollDownButton'
 import SuperHr from 'components/SuperHr'
@@ -53,17 +53,17 @@ export default function () {
 
   return (
     <div className={pageBox}>
-      <LandingInitialCard showSpinner={!xs} />
+      <InitialCard showSpinner={!xs} />
       <ScrollDownButton />
       <div
         className={position('absolute')}
-        style={{ transform: 'translateY(610px)' }}
+        style={{ transform: 'translateY(38.125rem)' }}
       >
         <TopConnectors />
       </div>
       <div
         className={highlightedBlock}
-        style={{ transform: 'translateY(690px)' }}
+        style={{ transform: 'translateY(43.125rem)' }}
       >
         <HighlightedText center bold>
           It starts with connecting your wallets with NFTs
@@ -72,9 +72,9 @@ export default function () {
       <OrbsInBoxes />
       <div
         className={classnames(position('absolute'), zIndex('z-40'))}
-        style={{ transform: 'translateY(1050px)' }}
+        style={{ transform: 'translateY(65.625rem)' }}
       >
-        <LandingCreatingZKProofCard />
+        <CreatingZKProofCard />
       </div>
       <SuperOrbWithConnectors />
       <div className={identityCards}>
@@ -86,9 +86,9 @@ export default function () {
           <ZkSphere text="ZK" color={Colors.secondary} />
         </IdentityCard>
       </div>
-      <LandingBuildingIdentitiesCard />
+      <BuildingIdentitiesCard />
       <SuperHr />
-      <LandingLearnMoreCard />
+      <LearnMoreCard />
     </div>
   )
 }
