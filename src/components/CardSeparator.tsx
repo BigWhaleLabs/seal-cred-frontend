@@ -56,9 +56,11 @@ const connectiveLine = ({ gradient, vertical }: CardSeparatorProps) =>
 export default function (props: CardSeparatorProps) {
   return (
     <div className={connectiveBlock(props.vertical)}>
-      {[Array(props.numberOfLines).keys()].map((_, index) => (
-        <div key={index} className={connectiveLine(props)}></div>
-      ))}
+      {Array(props.numberOfLines)
+        .fill(null)
+        .map((_, index) => (
+          <div key={index} className={connectiveLine(props)}></div>
+        ))}
     </div>
   )
 }
