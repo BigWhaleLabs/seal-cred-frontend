@@ -34,47 +34,46 @@ const badgeWrapper = (minted: boolean, small?: boolean) =>
       'lg:flex-col'
     ),
     justifyContent(minted ? 'justify-start' : 'justify-center'),
-    alignItems('items-center'),
-    borderRadius('rounded-lg'),
-    backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
-    padding('px-4', 'py-4'),
     space(
       minted ? (small ? 'space-y-2' : 'space-x-2') : 'space-y-2',
       minted ? 'lg:space-x-0' : undefined,
       'lg:space-y-2'
-    )
+    ),
+    alignItems('items-center'),
+    borderRadius('rounded-lg'),
+    backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
+    padding('px-4', 'py-4')
   )
 
 const badgeBody = (minted?: boolean, small?: boolean) =>
   classnames(
     display('flex'),
     flexDirection('flex-col'),
-    space('space-y-2'),
-    textAlign(
-      minted ? (small ? 'text-center' : 'text-left') : 'text-center',
-      'lg:text-center'
+    justifyContent(
+      minted ? (small ? 'justify-center' : 'justify-start') : 'justify-center',
+      'lg:justify-center'
     ),
+    space('space-y-2'),
     alignItems(
       minted ? (small ? 'items-center' : 'items-start') : 'items-center',
       'lg:items-center'
     ),
-    justifyContent(
-      minted ? (small ? 'justify-center' : 'justify-start') : 'justify-center',
-      'lg:justify-center'
+    textAlign(
+      minted ? (small ? 'text-center' : 'text-left') : 'text-center',
+      'lg:text-center'
     )
   )
 
 const mintPassed = (small?: boolean) =>
   classnames(
     display('flex'),
-    justifyContent('justify-center'),
-    alignItems('items-center'),
+    flexDirection('flex-row'),
     justifyContent(
       small ? 'justify-start' : 'justify-center',
       'lg:justify-center'
     ),
-    flexDirection('flex-row'),
-    space('space-x-2')
+    space('space-x-2'),
+    alignItems('items-center')
   )
 
 function Badge({
@@ -98,6 +97,36 @@ function Badge({
   const ledgerRecord = ledger[contractAddress]
   const derivativeAddress = ledgerRecord.derivativeContract.address
 
+  const checkProofAndMint = async () => {
+    setLoading(true)
+    try {
+      if (!account) throw new Error('No account found')
+      const proof = proofsCompleted.find(
+        (proof) => proof.contract === contractAddress
+      )
+      if (!proof || !proof.result) throw new Error('No proof found')
+      const ledgerMerkleTree = await sealCred.getRoot(contractAddress)
+      if (
+        !BigNumber.from(ledgerMerkleTree).eq(
+          BigNumber.from(proof.result.publicSignals[1])
+        )
+      ) {
+        const index = ProofStore.proofsCompleted.findIndex(
+          (p) => p.contract === proof.contract
+        )
+        if (index > -1) ProofStore.proofsCompleted.splice(index, 1)
+
+        throw new Error('This proof is outdated, please, generate a new one')
+      }
+      await WalletStore.mintDerivative(derivativeAddress, proof.result)
+      setCompleted(true)
+    } catch (error) {
+      handleError(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <>
       {minted ? (
@@ -109,54 +138,20 @@ function Badge({
         <BadgeText>
           <ContractName address={derivativeAddress} />
         </BadgeText>
-        {minted && (
+        {minted ? (
           <div className={mintPassed(small)}>
             <AccentText bold small font="font-primary" color="text-secondary">
               Minted
             </AccentText>
             <Complete color="secondary" />
           </div>
-        )}
-        {!minted && (
+        ) : (
           <Button
             small
             colors="accent"
             loading={!!loading}
             disabled={completed}
-            onClick={async () => {
-              setLoading(true)
-              try {
-                if (!account) throw new Error('No account found')
-                const proof = proofsCompleted.find(
-                  (proof) => proof.contract === contractAddress
-                )
-                if (!proof || !proof.result) throw new Error('No proof found')
-                const ledgerMerkleTree = await sealCred.getRoot(contractAddress)
-                if (
-                  !BigNumber.from(ledgerMerkleTree).eq(
-                    BigNumber.from(proof.result.publicSignals[1])
-                  )
-                ) {
-                  const index = ProofStore.proofsCompleted.findIndex(
-                    (p) => p.contract === proof.contract
-                  )
-                  if (index > -1) ProofStore.proofsCompleted.splice(index, 1)
-
-                  throw new Error(
-                    'This proof is outdated, please, generate a new one'
-                  )
-                }
-                await WalletStore.mintDerivative(
-                  derivativeAddress,
-                  proof.result
-                )
-                setCompleted(true)
-              } catch (error) {
-                handleError(error)
-              } finally {
-                setLoading(false)
-              }
-            }}
+            onClick={checkProofAndMint}
           >
             {completed ? 'Minted!' : 'Mint badge'}
           </Button>
