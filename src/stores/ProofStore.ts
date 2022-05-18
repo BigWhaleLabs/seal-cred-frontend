@@ -10,7 +10,6 @@ import createEcdsaInput from 'helpers/createEcdsaInput'
 import createTreeProof from 'helpers/createTreeProof'
 import getMapOfOriginalContractOwners from 'helpers/getMapOfOriginalContractOwners'
 import handleError from 'helpers/handleError'
-import isAddressOwner from 'helpers/isAddressOwner'
 
 class ProofStore extends PersistableStore {
   proofsInProgress: Proof[] = []
@@ -29,7 +28,9 @@ class ProofStore extends PersistableStore {
 
       const { originalContract } = record
 
-      const isOwner = isAddressOwner(originalContract, account)
+      const isOwner = Object.values(
+        await SealCredStore.originalContractsToOwnersMaps[contract]
+      ).includes(account)
       if (!isOwner) throw new Error('Account is not owner of contract')
 
       const owners = await getMapOfOriginalContractOwners(
