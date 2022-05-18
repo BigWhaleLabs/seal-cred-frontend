@@ -11,7 +11,7 @@ export const colorToTailwindBg = (color?: Colors) =>
     ? 'bg-accent'
     : color == Colors.secondary
     ? 'bg-secondary'
-    : 'bg-pantone'
+    : 'bg-formal-accent'
 
 export const colorToDropShadow = (color?: Colors) =>
   color === Colors.secondary

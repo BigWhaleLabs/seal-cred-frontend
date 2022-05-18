@@ -20,7 +20,7 @@ import {
 } from 'classnames/tailwind'
 import ArcText from 'icons/ArcText'
 
-type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'pantone'
+type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'formal-accent'
 interface CardProps {
   children: ReactNode
   shadow?: boolean
@@ -41,8 +41,8 @@ const cardColor = (color?: Color) => {
         ? 'border-tertiary'
         : color === 'secondary'
         ? 'border-secondary'
-        : color === 'pantone'
-        ? 'border-pantone'
+        : color === 'formal-accent'
+        ? 'border-formal-accent'
         : color === 'primary'
         ? 'border-primary'
         : 'border-primary-dark'
@@ -55,8 +55,8 @@ const cardColor = (color?: Color) => {
         ? 'shadow-tertiary-semi-transparent'
         : color === 'secondary'
         ? 'shadow-secondary-semi-transparent'
-        : color === 'pantone'
-        ? 'shadow-pantone-semi-transparent'
+        : color === 'formal-accent'
+        ? 'shadow-formal-accent-semi-transparent'
         : color === 'primary'
         ? 'shadow-primary-semi-transparent'
         : undefined

@@ -50,7 +50,7 @@ export default function ({
   children,
 }: IdentityCardOneProps) {
   return (
-    <Card color="pantone" shadow thin small onlyWrap>
+    <Card color="formal-accent" shadow thin small onlyWrap>
       <div className={innerId}>
         <div className={rectangleMargin(left)}>
           {left ? (

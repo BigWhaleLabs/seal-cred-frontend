@@ -40,7 +40,7 @@ const cardTitle = classnames(
 )
 
 const bodyText = classnames(
-  textColor('text-pantone'),
+  textColor('text-formal-accent'),
   textAlign('text-center'),
   margin('mb-8')
 )

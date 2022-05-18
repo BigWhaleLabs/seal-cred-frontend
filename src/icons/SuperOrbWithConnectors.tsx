@@ -15,11 +15,11 @@ const strokeSecondary = stroke('stroke-secondary')
 const strokeTertiary = stroke('stroke-tertiary')
 const strokeWhite = (isFill?: boolean) =>
   classnames(
-    stroke('stroke-pantone'),
+    stroke('stroke-formal-accent'),
     fill(isFill ? 'fill-primary-dark' : undefined)
   )
-const fillWhite = fill('fill-white')
-const fillGray = fill('fill-gray')
+const fillOrb = fill('fill-orb')
+const fillCircle = fill('fill-gray')
 
 const SuperOrb = () => (
   <svg
@@ -57,7 +57,7 @@ const SuperOrb = () => (
         maskUnits="userSpaceOnUse"
       >
         <g transform="translate(-48.02 -4.86)">
-          <circle cx="101.52" cy="46.36" r="30.5" className={fillGray} />
+          <circle cx="101.52" cy="46.36" r="30.5" className={fillCircle} />
         </g>
       </mask>
       <radialGradient
@@ -102,7 +102,7 @@ const SuperOrb = () => (
         maskUnits="userSpaceOnUse"
       >
         <g transform="translate(-48.02 -4.86)">
-          <circle cx="101.52" cy="46.36" r="30.5" className={fillWhite} />
+          <circle cx="101.52" cy="46.36" r="30.5" className={fillOrb} />
         </g>
       </mask>
       <radialGradient
@@ -373,7 +373,7 @@ const superOrbBox = (glow?: boolean) =>
   classnames(
     position('absolute'),
     scale('scale-50'),
-    dropShadow(glow ? 'drop-shadow-pantone' : undefined),
+    dropShadow(glow ? 'drop-shadow-formal-accent' : undefined),
     transitionProperty('transition-all'),
     zIndex('z-40')
   )

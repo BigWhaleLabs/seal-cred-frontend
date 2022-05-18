@@ -12,7 +12,7 @@ import useBreakpoints from 'hooks/useBreakpoints'
 
 const tooltipClasses = (mobile: boolean) =>
   classnames(
-    backgroundColor('bg-pantone'),
+    backgroundColor('bg-formal-accent'),
     maxWidth('max-w-sm'),
     mobile ? inset('!left-0', '!right-0') : undefined,
     opacity('!opacity-100'),
@@ -34,9 +34,9 @@ export default function ({ place, dataFor, clickable }: ToolTipProps) {
         place={place}
         data-for={dataFor}
         effect="solid"
-        backgroundColor={backgroundColor('bg-pantone')}
+        backgroundColor={backgroundColor('bg-formal-accent')}
         textColor={textColor('text-primary-dark')}
-        arrowColor={backgroundColor('bg-pantone')}
+        arrowColor={backgroundColor('bg-formal-accent')}
         clickable={clickable}
         className={tooltipClasses(xs)}
       />
