@@ -11,14 +11,26 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 
-type FromColor = 'from-accent' | 'from-secondary'
-type ToColor = 'to-secondary'
+type Gradient =
+  | 'secondary-to-transparent'
+  | 'accent-to-secondary'
+  | 'accent-to-transparent'
 interface CardSeparatorProps {
   number: number
-  from?: FromColor
-  to?: ToColor
+  gradient: Gradient
   vertical?: boolean
   customHeight?: THeight
+}
+
+function getTailwindClassnames(gradient: Gradient) {
+  switch (gradient) {
+    case 'secondary-to-transparent':
+      return 'from-secondary'
+    case 'accent-to-secondary':
+      return { 'from-accent': true, 'to-secondary': true }
+    case 'accent-to-transparent':
+      return 'from-accent'
+  }
 }
 
 const connectiveBlock = (vertical = true) =>
@@ -30,12 +42,9 @@ const connectiveBlock = (vertical = true) =>
     margin(vertical ? 'mx-auto' : 'mt-12')
   )
 
-const connectiveLine = ({ from, to, vertical }: CardSeparatorProps) =>
+const connectiveLine = ({ gradient, vertical }: CardSeparatorProps) =>
   classnames(
-    gradientColorStops(
-      from ? from : 'from-transparent',
-      to ? to : 'to-transparent'
-    ),
+    gradientColorStops(getTailwindClassnames(gradient)),
     backgroundImage('bg-gradient-to-b', 'lg:bg-gradient-to-r'),
     width(vertical ? 'w-px' : 'w-4'),
     height(vertical ? 'h-4' : 'h-px')

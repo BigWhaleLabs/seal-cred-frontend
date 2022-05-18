@@ -131,7 +131,7 @@ export default function () {
       </Card>
       {lg && (
         <>
-          <CardSeparator number={1} from="from-accent" vertical />
+          <CardSeparator number={1} gradient="accent-to-transparent" vertical />
           <ZkProofButton />
         </>
       )}

@@ -26,14 +26,17 @@ export default function () {
         <ProofsCard />
         <CardSeparator
           number={3}
-          from="from-accent"
-          to="to-secondary"
+          gradient="accent-to-secondary"
           vertical={!lg}
         />
         <Badges />
         {!lg && (
           <>
-            <CardSeparator number={1} from="from-secondary" vertical />
+            <CardSeparator
+              number={1}
+              gradient="secondary-to-transparent"
+              vertical
+            />
             <ZkProofButton />
           </>
         )}
