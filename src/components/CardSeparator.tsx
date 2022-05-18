@@ -15,23 +15,19 @@ type Gradient =
   | 'secondary-to-transparent'
   | 'accent-to-secondary'
   | 'accent-to-transparent'
-interface CardSeparatorProps {
-  number: number
-  gradient: Gradient
-  vertical?: boolean
-  customHeight?: THeight
-}
 
-function getTailwindClassnames(gradient: Gradient) {
-  switch (gradient) {
-    case 'secondary-to-transparent':
-      return 'from-secondary'
-    case 'accent-to-secondary':
-      return { 'from-accent': true, 'to-secondary': true }
-    case 'accent-to-transparent':
-      return 'from-accent'
-  }
-}
+const getTailwindGradient = (gradient: Gradient) =>
+  classnames(
+    gradientColorStops(
+      gradient === 'secondary-to-transparent'
+        ? 'from-secondary'
+        : gradient === 'accent-to-secondary'
+        ? { 'from-accent': true, 'to-secondary': true }
+        : gradient === 'accent-to-transparent'
+        ? 'from-accent'
+        : undefined
+    )
+  )
 
 const connectiveBlock = (vertical = true) =>
   classnames(
@@ -42,9 +38,16 @@ const connectiveBlock = (vertical = true) =>
     margin(vertical ? 'mx-auto' : 'mt-12')
   )
 
+interface CardSeparatorProps {
+  numberOfLines: number
+  gradient: Gradient
+  vertical?: boolean
+  customHeight?: THeight
+}
+
 const connectiveLine = ({ gradient, vertical }: CardSeparatorProps) =>
   classnames(
-    gradientColorStops(getTailwindClassnames(gradient)),
+    getTailwindGradient(gradient),
     backgroundImage('bg-gradient-to-b', 'lg:bg-gradient-to-r'),
     width(vertical ? 'w-px' : 'w-4'),
     height(vertical ? 'h-4' : 'h-px')
@@ -53,7 +56,7 @@ const connectiveLine = ({ gradient, vertical }: CardSeparatorProps) =>
 export default function (props: CardSeparatorProps) {
   return (
     <div className={connectiveBlock(props.vertical)}>
-      {[...Array(props.number).keys()].map((_, index) => (
+      {[Array(props.numberOfLines).keys()].map((_, index) => (
         <div key={index} className={connectiveLine(props)}></div>
       ))}
     </div>

@@ -25,7 +25,7 @@ export default function () {
       <div className={mainBlock}>
         <ProofsCard />
         <CardSeparator
-          number={3}
+          numberOfLines={3}
           gradient="accent-to-secondary"
           vertical={!lg}
         />
@@ -33,7 +33,7 @@ export default function () {
         {!lg && (
           <>
             <CardSeparator
-              number={1}
+              numberOfLines={1}
               gradient="secondary-to-transparent"
               vertical
             />
