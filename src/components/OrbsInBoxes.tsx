@@ -1,6 +1,5 @@
 import { HighlightedText } from 'components/Text'
 import Colors, { colorToTailwindBg } from 'models/Colors'
-// import Colors from 'models/Colors'
 import OrbBox from 'icons/OrbBox'
 import ZkSphere from 'components/ZkSphere'
 import classnames, {
