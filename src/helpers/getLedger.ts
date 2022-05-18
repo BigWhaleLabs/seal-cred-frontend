@@ -3,10 +3,10 @@ import {
   SCERC721Derivative__factory,
   SealCredLedger,
 } from '@big-whale-labs/seal-cred-ledger-contract'
+import { QUERY_BLOCK_LIMIT } from '@big-whale-labs/constants'
 import Ledger from 'models/Ledger'
 import LedgerRecord from 'models/LedgerRecord'
 import defaultProvider from 'helpers/defaultProvider'
-import queryBlockLimit from 'helpers/queryBlockLimit'
 
 export async function getLedgerRecord(
   sealCredLedger: SealCredLedger,
@@ -25,7 +25,10 @@ export async function getLedgerRecord(
 
 export default async function (sealCredLedger: SealCredLedger) {
   const eventsFilter = sealCredLedger.filters.SetMerkleRoot()
-  const events = await sealCredLedger.queryFilter(eventsFilter, queryBlockLimit)
+  const events = await sealCredLedger.queryFilter(
+    eventsFilter,
+    QUERY_BLOCK_LIMIT
+  )
   const ledger = {} as Ledger
   for (const event of events) {
     const { tokenAddress } = event.args
