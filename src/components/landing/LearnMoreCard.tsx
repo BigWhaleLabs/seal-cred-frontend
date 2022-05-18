@@ -13,7 +13,7 @@ export default function () {
       <Card color="primary" shadow onlyWrap>
         <PrivacyDeath />
         <div className={bigWhaleLabsText}>
-          <BodyText size="base">
+          <BodyText>
             <LinkText color="text-primary" url={`https://bigwhalelabs.com`}>
               Big Whale Labs{' '}
             </LinkText>

@@ -71,14 +71,14 @@ function OwnerInfo({
       onlyWrap
       spinner="Certified with SealCred ZK Proof"
     >
-      <HeaderText size="4xl" leading={11}>
+      <HeaderText extraLeading>
         This wallet owns a{' '}
-        <AccentText color="text-secondary" bold>
+        <AccentText bold color="text-secondary">
           <ContractName address={derivativeAddress} truncatedStyle />
         </AccentText>
       </HeaderText>
 
-      <BodyText size="base">
+      <BodyText>
         This is a zkNFT derivative. It means this person has been verified to
         own at least one ‘
         <AccentText color="text-secondary">
@@ -95,7 +95,7 @@ function OwnerInfo({
       <div className={walletBox}>
         <Smile />
         <div className={walletAddress}>
-          <BodyText size="sm">Wallet address</BodyText>
+          <BodyText small>Wallet address</BodyText>
           <OwnedBadgeAddress
             tokenId={tokenId}
             derivativeAddress={derivativeAddress}

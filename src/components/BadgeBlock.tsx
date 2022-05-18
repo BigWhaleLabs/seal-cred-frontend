@@ -140,7 +140,7 @@ function Badge({
         </BadgeText>
         {minted ? (
           <div className={mintPassed(small)}>
-            <AccentText bold small font="font-primary" color="text-secondary">
+            <AccentText bold small primary color="text-secondary">
               Minted
             </AccentText>
             <Complete color="secondary" />

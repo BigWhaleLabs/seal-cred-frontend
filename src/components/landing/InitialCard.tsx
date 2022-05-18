@@ -15,11 +15,11 @@ export default function ({ showSpinner }: { showSpinner?: boolean }) {
       spinner={showSpinner ? 'One Identity to rule them all' : undefined}
     >
       <div className={initialHeaderText}>
-        <HeaderText size="4xl" leading={11}>
+        <HeaderText extraLeading>
           Build your pseudonymous identity with ZK badges
         </HeaderText>
       </div>
-      <BodyText size="base" leading={6}>
+      <BodyText>
         <AccentText color="text-accent">SealCred</AccentText> allows you to
         experience the world pseudonymously with ZK badges. This means you can
         prove ownership of an NFT without it tracing back to you.

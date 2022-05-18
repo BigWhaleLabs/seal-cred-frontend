@@ -35,9 +35,7 @@ export default function () {
     <div className={container}>
       <Card shadow onlyWrap color="accent">
         <div className={textAlign('text-center')}>
-          <HeaderText size="4xl" bold>
-            404
-          </HeaderText>
+          <HeaderText>404</HeaderText>
           <SubheaderText>Not found</SubheaderText>
         </div>
         <div className={wrapperBody}>
