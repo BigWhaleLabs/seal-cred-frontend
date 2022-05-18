@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import {
   TBackgroundColor,
+  TFontFamily,
   TGradientColorStops,
   TTextAlign,
   TTextColor,
@@ -62,14 +63,16 @@ export function SubheaderText({ children }: { children: ReactNode }) {
 interface AccentTextProps {
   color: TTextColor
   children: ReactNode
+  font?: TFontFamily
   align?: TTextAlign
   bold?: boolean
   small?: boolean
 }
-const accentText = ({ color, align, bold, small }: AccentTextProps) =>
+const accentText = ({ color, align, bold, small, font }: AccentTextProps) =>
   classnames(
     textColor(color),
     textAlign(align),
+    fontFamily(font),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
     fontSize(small ? 'text-sm' : undefined)
   )
@@ -115,14 +118,6 @@ export function BodyText({
   return (
     <div className={bodyText(size, leading, center, overflow)}>{children}</div>
   )
-}
-
-const largerText = classnames(
-  textColor('text-primary-dark'),
-  fontSize('text-2xl')
-)
-export function LargerText({ children }: OnlyChildrenProp) {
-  return <div className={largerText}>{children}</div>
 }
 
 const cardHeader = (color?: TTextColor) =>
@@ -198,28 +193,6 @@ export function LinkText(props: LinkTextProps) {
       {props.children}
     </a>
   )
-}
-
-const subBadgeText = classnames(
-  textColor('text-secondary'),
-  fontSize('text-sm')
-)
-export function SubBadgeText({ children }: OnlyChildrenProp) {
-  return <span className={subBadgeText}>{children}</span>
-}
-
-const boldColoredText = (color?: TTextColor) =>
-  classnames(
-    textColor('text-secondary'),
-    fontSize('text-sm'),
-    textColor(color || 'text-primary-dark')
-  )
-interface BoldColoredTextProps {
-  children: ReactNode
-  color?: TTextColor
-}
-export function BoldColoredText({ color, children }: BoldColoredTextProps) {
-  return <span className={boldColoredText(color)}>{children}</span>
 }
 
 const tooltipText = classnames(

@@ -1,4 +1,4 @@
-import { BadgeText, BoldColoredText, SubheaderText } from 'components/Text'
+import { AccentText, BadgeText, SubheaderText } from 'components/Text'
 import { BigNumber } from 'ethers'
 import { Suspense, useState } from 'react'
 import { useSnapshot } from 'valtio'
@@ -111,7 +111,9 @@ function Badge({
         </BadgeText>
         {minted && (
           <div className={mintPassed(small)}>
-            <BoldColoredText color="text-secondary">Minted</BoldColoredText>
+            <AccentText bold small font="font-primary" color="text-secondary">
+              Minted
+            </AccentText>
             <Complete color="secondary" />
           </div>
         )}
