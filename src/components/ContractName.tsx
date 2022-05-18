@@ -9,7 +9,7 @@ interface ContractNameProps {
   truncate?: boolean
   overflow?: boolean
   address: string
-  otherStyle?: boolean
+  truncatedStyle?: boolean
 }
 
 interface FetchingContract extends ContractNameProps {
@@ -19,7 +19,7 @@ interface FetchingContract extends ContractNameProps {
 function TextBlock({
   truncate,
   address,
-  otherStyle,
+  truncatedStyle,
   isFetching,
 }: FetchingContract) {
   const truncatedText =
@@ -27,7 +27,7 @@ function TextBlock({
       ? truncateMiddleIfNeeded(address, 11)
       : address
 
-  return otherStyle ? (
+  return truncatedStyle ? (
     <>
       {isFetching && <>Fetching </>}
       {truncatedText}
@@ -43,7 +43,7 @@ function TextBlock({
 function ContractNameComponent({
   truncate,
   address,
-  otherStyle,
+  truncatedStyle,
 }: ContractNameProps) {
   const { contractNames } = useSnapshot(SealCredStore)
 
@@ -52,7 +52,7 @@ function ContractNameComponent({
       {contractNames[address] ? (
         <TextBlock
           address={contractNames[address] || ''}
-          otherStyle={otherStyle}
+          truncatedStyle={truncatedStyle}
           truncate={truncate}
         />
       ) : (
@@ -62,18 +62,26 @@ function ContractNameComponent({
   )
 }
 
-export default function ({ truncate, address, otherStyle }: ContractNameProps) {
+export default function ({
+  truncate,
+  address,
+  truncatedStyle,
+}: ContractNameProps) {
   const shortAddress = truncateMiddleIfNeeded(address, 14)
   return (
     <Suspense
       fallback={
-        <TextBlock isFetching address={shortAddress} otherStyle={otherStyle} />
+        <TextBlock
+          isFetching
+          address={shortAddress}
+          truncatedStyle={truncatedStyle}
+        />
       }
     >
       <ContractNameComponent
         truncate={truncate}
         address={address}
-        otherStyle={otherStyle}
+        truncatedStyle={truncatedStyle}
       />
     </Suspense>
   )

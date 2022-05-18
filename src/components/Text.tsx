@@ -15,7 +15,6 @@ import {
   textDecoration,
   width,
 } from 'classnames/tailwind'
-import Colors from 'models/Colors'
 
 interface OnlyChildrenProp {
   children: ReactNode
@@ -174,8 +173,6 @@ export function LinkText({
 interface HighlightedTextProps extends OnlyChildrenProp {
   bold?: boolean
   center?: boolean
-  onlyWrap?: boolean
-  color?: Colors
 }
 const highlightedText = (center?: boolean, bold?: boolean) =>
   classnames(
