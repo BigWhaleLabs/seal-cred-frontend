@@ -34,47 +34,46 @@ const badgeWrapper = (minted: boolean, small?: boolean) =>
       'lg:flex-col'
     ),
     justifyContent(minted ? 'justify-start' : 'justify-center'),
-    alignItems('items-center'),
-    borderRadius('rounded-lg'),
-    backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
-    padding('px-4', 'py-4'),
     space(
       minted ? (small ? 'space-y-2' : 'space-x-2') : 'space-y-2',
       minted ? 'lg:space-x-0' : undefined,
       'lg:space-y-2'
-    )
+    ),
+    alignItems('items-center'),
+    borderRadius('rounded-lg'),
+    backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
+    padding('px-4', 'py-4')
   )
 
 const badgeBody = (minted?: boolean, small?: boolean) =>
   classnames(
     display('flex'),
     flexDirection('flex-col'),
-    space('space-y-2'),
-    textAlign(
-      minted ? (small ? 'text-center' : 'text-left') : 'text-center',
-      'lg:text-center'
+    justifyContent(
+      minted ? (small ? 'justify-center' : 'justify-start') : 'justify-center',
+      'lg:justify-center'
     ),
+    space('space-y-2'),
     alignItems(
       minted ? (small ? 'items-center' : 'items-start') : 'items-center',
       'lg:items-center'
     ),
-    justifyContent(
-      minted ? (small ? 'justify-center' : 'justify-start') : 'justify-center',
-      'lg:justify-center'
+    textAlign(
+      minted ? (small ? 'text-center' : 'text-left') : 'text-center',
+      'lg:text-center'
     )
   )
 
 const mintPassed = (small?: boolean) =>
   classnames(
     display('flex'),
-    justifyContent('justify-center'),
-    alignItems('items-center'),
+    flexDirection('flex-row'),
     justifyContent(
       small ? 'justify-start' : 'justify-center',
       'lg:justify-center'
     ),
-    flexDirection('flex-row'),
-    space('space-x-2')
+    space('space-x-2'),
+    alignItems('items-center')
   )
 
 function Badge({
