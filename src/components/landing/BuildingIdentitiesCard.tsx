@@ -10,11 +10,9 @@ export default function () {
   return (
     <Card color="white" onlyWrap shadow>
       <div className={cardHeader}>
-        <HeaderText size="4xl" leading={11}>
-          Building your identities with ZK Badges
-        </HeaderText>
+        <HeaderText leading>Building your identities with ZK Badges</HeaderText>
       </div>
-      <BodyText size="base">
+      <BodyText>
         Once you have ZK proof, you can add create ZK badges for an anonymous
         wallet. Zk badges verify you own an NFT but leaves no bread crumbs back
         to your personal wallets.
