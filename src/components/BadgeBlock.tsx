@@ -132,7 +132,7 @@ function Badge({
       {minted ? (
         <QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />
       ) : (
-        <BadgeIcon color="secondary" />
+        <BadgeIcon />
       )}
       <div className={badgeBody(minted, small)}>
         <BadgeText>
@@ -143,7 +143,7 @@ function Badge({
             <AccentText bold small primary color="text-secondary">
               Minted
             </AccentText>
-            <Complete color="secondary" />
+            <Complete />
           </div>
         ) : (
           <Button

@@ -16,9 +16,9 @@ const arrowsBox = classnames(
 export default function () {
   return (
     <div className={arrowsBox}>
-      <Arrow flip disabled />
-      <Arrow flip disabled />
-      <Arrow flip disabled />
+      <Arrow turnDown disabled />
+      <Arrow turnDown disabled />
+      <Arrow turnDown disabled />
     </div>
   )
 }

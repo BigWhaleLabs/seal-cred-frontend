@@ -2,6 +2,7 @@ import Colors, { colorToDropShadow } from 'models/Colors'
 import classnames, {
   TDropShadow,
   dropShadow,
+  fill,
   opacity,
   transitionProperty,
 } from 'classnames/tailwind'
@@ -12,6 +13,7 @@ const orbBoxStyles = (shadowColor: TDropShadow, shadow?: boolean) =>
     opacity(shadow ? 'opacity-100' : 'opacity-90'),
     transitionProperty('transition-all')
   )
+const fillPath = fill('fill-primary-dark')
 
 interface OrbBoxProps {
   color: Colors
@@ -31,7 +33,7 @@ export default function OrbBox({ color, shadow }: OrbBoxProps) {
         <path
           d="M3.77,11.72a8.67,8.67,0,0,1,8.66-8.67H60.1a8.68,8.68,0,0,1,8.67,8.67V59.38a8.68,8.68,0,0,1-8.67,8.67H12.43a8.67,8.67,0,0,1-8.66-8.67Z"
           transform="translate(-3.27 -2.55)"
-          fill="#0d0030"
+          className={fillPath}
         />
         <path
           d="M3.77,11.72a8.67,8.67,0,0,1,8.66-8.67H60.1a8.68,8.68,0,0,1,8.67,8.67V59.38a8.68,8.68,0,0,1-8.67,8.67H12.43a8.67,8.67,0,0,1-8.66-8.67Z"

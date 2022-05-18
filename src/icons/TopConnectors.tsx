@@ -1,3 +1,8 @@
+import { stroke } from 'classnames/tailwind'
+
+const strokeTertiary = stroke('stroke-tertiary')
+const strokeSecondary = stroke('stroke-secondary')
+
 export default function () {
   return (
     <div style={{ width: '12.625rem', height: '26.25rem' }}>
@@ -12,7 +17,7 @@ export default function () {
           x2="0.5"
           y2="400"
           fill="none"
-          stroke="#01feb6"
+          className={strokeTertiary}
           stroke-linecap="round"
         />
         <line
@@ -21,7 +26,7 @@ export default function () {
           x2="201.5"
           y2="400"
           fill="none"
-          stroke="#ff7bed"
+          className={strokeSecondary}
           stroke-linecap="round"
         />
         <line
