@@ -21,9 +21,6 @@ export default new Web3Modal({
         network,
       },
     },
-    // torus: {
-    //   package: Torus,
-    // },
     walletconnect: {
       package: WalletConnect,
       options: {
@@ -42,12 +39,5 @@ export default new Web3Modal({
         darkMode: true,
       },
     },
-    // bitski: {
-    //   package: Bitski,
-    //   options: {
-    //     clientId: env.VITE_BITSKI_CLIENT_ID as string,
-    //     callbackUrl: `${window.location.origin}/callback.html`,
-    //   },
-    // },
   },
 })
