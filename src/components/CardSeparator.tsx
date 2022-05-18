@@ -30,12 +30,7 @@ const connectiveBlock = (vertical = true) =>
     margin(vertical ? 'mx-auto' : 'mt-12')
   )
 
-const connectiveLine = ({
-  from,
-  to,
-  vertical,
-  customHeight,
-}: CardSeparatorProps) =>
+const connectiveLine = ({ from, to, vertical }: CardSeparatorProps) =>
   classnames(
     gradientColorStops(
       from ? from : 'from-transparent',
@@ -43,7 +38,7 @@ const connectiveLine = ({
     ),
     backgroundImage('bg-gradient-to-b', 'lg:bg-gradient-to-r'),
     width(vertical ? 'w-px' : 'w-4'),
-    height(customHeight ? customHeight : vertical ? 'h-4' : 'h-px')
+    height(vertical ? 'h-4' : 'h-px')
   )
 
 export default function (props: CardSeparatorProps) {
