@@ -3,18 +3,31 @@ import EnsStore from 'stores/EnsStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useEnsNameOrAddress from 'hooks/useEnsNameOrAddress'
 
-function EnsAddressSuspender({ address }: { address: string }) {
-  const ensNameOrAddress = useEnsNameOrAddress(address)
-
-  return <>{truncateMiddleIfNeeded(ensNameOrAddress, 17)}</>
+interface EnsAddressProps {
+  address: string
+  truncate?: boolean
 }
 
-export default function ({ address }: { address: string }) {
+function EnsAddressSuspender({ address, truncate }: EnsAddressProps) {
+  const ensNameOrAddress = useEnsNameOrAddress(address)
+
+  return (
+    <>
+      {truncate
+        ? truncateMiddleIfNeeded(ensNameOrAddress, 17)
+        : ensNameOrAddress}
+    </>
+  )
+}
+
+export default function ({ address, truncate }: EnsAddressProps) {
   EnsStore.fetchEnsName(address)
 
   return (
-    <Suspense fallback={truncateMiddleIfNeeded(address, 17)}>
-      <EnsAddressSuspender address={address} />
+    <Suspense
+      fallback={<>{truncate ? truncateMiddleIfNeeded(address, 17) : address}</>}
+    >
+      <EnsAddressSuspender address={address} truncate={truncate} />
     </Suspense>
   )
 }
