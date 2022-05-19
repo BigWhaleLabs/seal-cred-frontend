@@ -10,14 +10,11 @@ import classnames, {
   display,
   fill,
   flexDirection,
-  fontFamily,
-  fontSize,
   height,
   justifyContent,
   margin,
   padding,
   space,
-  textColor,
   width,
 } from 'classnames/tailwind'
 
@@ -35,8 +32,6 @@ const zkProofButton = classnames(
 )
 
 const questionStyles = classnames(
-  fontFamily('font-primary'),
-  fontSize('text-sm'),
   fill('fill-accent'),
   width('w-6'),
   height('h-6'),
@@ -45,8 +40,7 @@ const questionStyles = classnames(
   borderColor('border-accent'),
   display('flex'),
   justifyContent('justify-center'),
-  alignItems('items-center'),
-  textColor('text-accent')
+  alignItems('items-center')
 )
 
 const QuestionMark = () => {
@@ -61,7 +55,9 @@ export default function () {
     <>
       <div className={zkProofButton} data-tip={popoverText}>
         <AccentText color="text-accent">What's a ZK proof?</AccentText>
-        <QuestionMark />
+        <AccentText small primary color="text-accent">
+          <QuestionMark />
+        </AccentText>
       </div>
       <ToolTip place="top" dataFor={popoverText} clickable />
     </>

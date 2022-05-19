@@ -24,7 +24,6 @@ import classnames, {
   justifyContent,
   margin,
   space,
-  textOverflow,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
@@ -39,8 +38,7 @@ const walletBox = classnames(display('flex'), flexDirection('flex-row'))
 const walletAddress = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  margin('ml-4'),
-  textOverflow('truncate')
+  margin('ml-4')
 )
 const getStartedCard = classnames(margin('mt-6'))
 
@@ -138,7 +136,7 @@ export default function () {
           <AccentText color="text-tertiary">
             Create your own zkNFT with SealCred.
           </AccentText>
-          <Button colors="accent" small onClick={() => navigate('/')}>
+          <Button primary small onClick={() => navigate('/')}>
             Get started
           </Button>
         </Card>
