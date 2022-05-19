@@ -1,41 +1,41 @@
-import { SphereText } from 'components/Text'
-import Colors, { colorToDropShadow, colorToTailwindBg } from 'models/Colors'
+import Color from 'models/Color'
 import classnames, {
-  TBackgroundColor,
-  TDropShadow,
-  backgroundColor,
   borderRadius,
   display,
-  dropShadow,
+  fontWeight,
   height,
   margin,
   padding,
+  textAlign,
+  textColor,
   transitionProperty,
   width,
 } from 'classnames/tailwind'
+import colorToDropShadow from 'helpers/colorToDropShadow'
+import colorToTailwindBackground from 'helpers/colorToTailwindBackground'
 import useScrollPercent from 'hooks/useScrollPercent'
 
-const sphereStyles = (bgColor: TBackgroundColor, shadowColor: TDropShadow) =>
-  classnames(
-    display('inline-block'),
-    backgroundColor(bgColor),
-    height('h-8'),
-    width('w-8'),
-    borderRadius('rounded-full'),
-    dropShadow(shadowColor),
-    padding('pt-1'),
-    margin('mt-8.5'),
-    transitionProperty('transition-all')
-  )
+const sphereStyles = classnames(
+  fontWeight('font-bold'),
+  textColor('text-primary-dark'),
+  display('inline-block'),
+  height('h-8'),
+  width('w-8'),
+  borderRadius('rounded-full'),
+  textAlign('text-center'),
+  padding('pt-1'),
+  margin('mt-8.5'),
+  transitionProperty('transition-all')
+)
 
 interface ZkSphereProps {
-  color: Colors
+  color: Color
   animated?: boolean
   text?: string
 }
 
 export default function ({ color, animated, text }: ZkSphereProps) {
-  const bgColor = colorToTailwindBg(color)
+  const bgColor = colorToTailwindBackground(color)
   const shadowColor = colorToDropShadow(color)
 
   const scroll = useScrollPercent()
@@ -46,9 +46,9 @@ export default function ({ color, animated, text }: ZkSphereProps) {
     <div
       style={{
         animationName:
-          color === Colors.tertiary
+          color === 'tertiary'
             ? 'tertiarySphereAnimation'
-            : color === Colors.accent
+            : color === 'accent'
             ? 'accentSphereAnimation'
             : 'secondarySphereAnimation',
         animationTimingFunction: 'ease-in-out',
@@ -59,13 +59,11 @@ export default function ({ color, animated, text }: ZkSphereProps) {
         animationIterationCount: 1,
         animationFillMode: 'both',
       }}
-      className={sphereStyles(bgColor, shadowColor)}
+      className={classnames(sphereStyles, bgColor, shadowColor)}
     >
-      <SphereText>{zkText}</SphereText>
+      {zkText}
     </div>
   ) : (
-    <div className={sphereStyles(bgColor, shadowColor)}>
-      <SphereText>{text}</SphereText>
-    </div>
+    <div className={classnames(sphereStyles, bgColor, shadowColor)}>{text}</div>
   )
 }
