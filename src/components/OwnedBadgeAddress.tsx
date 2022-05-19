@@ -1,5 +1,5 @@
 import { LinkText } from 'components/Text'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import EnsAddress from 'components/EnsAddress'
 import SealCredStore from 'stores/SealCredStore'

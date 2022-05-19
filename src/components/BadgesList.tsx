@@ -1,5 +1,5 @@
 import { BodyText } from 'components/Text'
-import { Suspense } from 'react'
+import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import BadgeBlock from 'components/BadgeBlock'
 import BadgesHintCard from 'components/BadgesHintCard'

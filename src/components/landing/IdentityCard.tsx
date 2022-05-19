@@ -1,6 +1,6 @@
 import { BodyText } from 'components/Text'
-import { ReactNode } from 'react'
 import Card from 'components/Card'
+import ChildrenProp from 'models/ChildrenProp'
 import DoubleSmile from 'icons/DoubleSmile'
 import Grim from 'icons/Grin'
 import NoisyRectangle from 'components/NoisyRectangle'
@@ -35,7 +35,6 @@ const zkSpheresLeft = (reveal?: boolean) =>
   )
 
 interface IdentityCardProps {
-  children: ReactNode
   reveal?: boolean
   left?: boolean
   text: string
@@ -48,7 +47,7 @@ export default function ({
   text,
   mobile,
   children,
-}: IdentityCardProps) {
+}: IdentityCardProps & ChildrenProp) {
   return (
     <Card color="formal-accent" shadow thin small onlyWrap>
       <div className={innerId}>

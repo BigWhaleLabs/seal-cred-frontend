@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import { wordBreak } from 'classnames/tailwind'
 import SealCredStore from 'stores/SealCredStore'

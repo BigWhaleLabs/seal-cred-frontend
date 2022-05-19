@@ -1,6 +1,6 @@
 import { AccentText, BadgeText, SubheaderText } from 'components/Text'
 import { BigNumber } from 'ethers'
-import { Suspense, useState } from 'react'
+import { Suspense, useState } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import BadgeIcon from 'icons/BadgeIcon'
 import Button from 'components/Button'

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'preact/compat'
 
 const xsSize = 279
 const smSize = 375

@@ -1,8 +1,9 @@
-import { MutableRefObject, useCallback, useEffect, useState } from 'react'
+import { MutableRef } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'preact/compat'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 export default function (
-  scrollRef: MutableRefObject<HTMLDivElement>,
+  scrollRef: MutableRef<HTMLDivElement>,
   maxHeight: number
 ) {
   const { sm, md } = useBreakpoints()

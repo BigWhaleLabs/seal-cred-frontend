@@ -1,5 +1,5 @@
 import { BodyText } from 'components/Text'
-import { Suspense } from 'react'
+import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
 import ProofStore from 'stores/ProofStore'

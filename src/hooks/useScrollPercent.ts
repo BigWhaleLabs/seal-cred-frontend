@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'preact/compat'
 
 export default function () {
   const [scroll, setScroll] = useState(0)

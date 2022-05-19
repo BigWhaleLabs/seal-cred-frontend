@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import ChildrenProp from 'models/ChildrenProp'
 import classnames, { display, flexDirection, space } from 'classnames/tailwind'
 
 const container = classnames(
@@ -7,6 +7,6 @@ const container = classnames(
   space('space-y-2')
 )
 
-export default function ({ children }: { children: ReactNode }) {
+export default function ({ children }: ChildrenProp) {
   return <div className={container}>{children}</div>
 }

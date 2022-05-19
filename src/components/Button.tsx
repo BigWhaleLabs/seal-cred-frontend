@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import {
   alignItems,
   backgroundClip,
@@ -28,17 +27,9 @@ import {
 } from 'classnames/tailwind'
 import Arrow from 'icons/Arrow'
 import Loading from 'icons/Loading'
+import React from 'preact/compat'
 
 type ButtonColors = 'accent' | 'secondary' | 'tertiary'
-
-interface ButtonProps {
-  colors: ButtonColors
-  children: ReactNode
-  loading?: boolean
-  small?: boolean
-  arrow?: boolean
-  fullWidth?: boolean
-}
 
 type ButtonColorClasses = {
   colors: ButtonColors
@@ -50,9 +41,6 @@ type ButtonColorClasses = {
 interface ButtonClasses extends ButtonColorClasses {
   fullWidth?: boolean
 }
-
-type ButtonProperties = ButtonProps &
-  React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const sharedClassNames = (
   fullWidth?: boolean,
@@ -126,6 +114,14 @@ const colorClasses = ({
         )
   )
 
+interface ButtonProps {
+  colors: ButtonColors
+  loading?: boolean
+  small?: boolean
+  arrow?: boolean
+  fullWidth?: boolean
+}
+
 export default function ({
   colors,
   small,
@@ -134,7 +130,7 @@ export default function ({
   loading,
   disabled,
   ...rest
-}: ButtonProperties) {
+}: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   return (
     <button
       className={button({ colors, loading, disabled, small })}

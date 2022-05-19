@@ -5,7 +5,7 @@ import {
   CardHeader,
   HeaderText,
 } from 'components/Text'
-import { Suspense } from 'react'
+import { Suspense } from 'preact/compat'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'

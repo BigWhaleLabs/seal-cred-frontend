@@ -1,5 +1,5 @@
 import { BodyText } from 'components/Text'
-import { Suspense } from 'react'
+import { Suspense } from 'preact/compat'
 import ContractListContainer from 'components/ContractListContainer'
 import ZkProof from 'components/ZkProof'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'

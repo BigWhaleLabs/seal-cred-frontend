@@ -23,8 +23,7 @@ interface ButtonProps {
   color: ButtonColors
 }
 
-type ButtonProperties = ButtonProps &
-  React.ButtonHTMLAttributes<HTMLButtonElement>
+type ButtonProperties = React.HTMLAttributes<HTMLButtonElement> & ButtonProps
 
 const tertiaryGradient = classnames(
   gradientColorStops('from-primary-light', 'via-tertiary', 'to-tertiary'),
