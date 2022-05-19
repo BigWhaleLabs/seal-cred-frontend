@@ -11,7 +11,7 @@ export default function () {
 
   return (
     <Button
-      colors="accent"
+      primary
       loading={loading}
       onClick={async () => {
         setLoading(true)

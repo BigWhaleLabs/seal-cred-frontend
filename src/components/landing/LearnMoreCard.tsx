@@ -23,8 +23,7 @@ export default function () {
         </div>
         <div className={learnMoreText}>
           <Button
-            colors="tertiary"
-            arrow
+            withArrow
             onClick={() =>
               window.open('https://bigwhalelabs.com/', '_blank')?.focus()
             }

@@ -57,7 +57,6 @@ function useProofContent(
       color: 'text-tertiary',
       content: (
         <ProofButton
-          color="tertiary"
           disabled={isGenerating}
           onClick={async () => {
             setIsGenerating(true)
@@ -119,7 +118,7 @@ export default function ({
 
   return (
     <ProofLine>
-      <BodyText small>
+      <BodyText bold small>
         <ContractName address={contractAddress} />
       </BodyText>
 

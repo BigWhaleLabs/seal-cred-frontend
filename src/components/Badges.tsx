@@ -1,6 +1,6 @@
 import { AccentText, CardDescription, CardHeader } from 'components/Text'
 import { Suspense } from 'react'
-import { fontSize, space } from 'classnames/tailwind'
+import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
@@ -55,7 +55,7 @@ function Badges() {
             >
               <Button
                 small
-                colors="accent"
+                primary
                 onClick={() =>
                   (WalletStore.walletsToNotifiedOfBeingDoxxed[account] = true)
                 }
@@ -69,17 +69,14 @@ function Badges() {
         </Scrollbar>
       ) : (
         <BadgesHintCard text="You must switch from your first wallet after ZK proof is made to an anonymous wallet for the magic to work.">
-          <div className={fontSize('text-sm', 'lg:text-base')}>
-            <Button
-              colors="tertiary"
-              arrow
-              onClick={async () => {
-                await WalletStore.connect(true)
-              }}
-            >
-              Connect your anonymous wallet
-            </Button>
-          </div>
+          <Button
+            withArrow
+            onClick={async () => {
+              await WalletStore.connect(true)
+            }}
+          >
+            Connect your anonymous wallet
+          </Button>
         </BadgesHintCard>
       )}
     </div>
