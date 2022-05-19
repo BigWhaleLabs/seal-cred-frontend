@@ -1,12 +1,25 @@
 import classnames, {
   dropShadow,
+  fill,
   margin,
   position,
   scale,
+  stroke,
   transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
 import useScrollPercent from 'hooks/useScrollPercent'
+
+const strokeAccent = stroke('stroke-accent')
+const strokeSecondary = stroke('stroke-secondary')
+const strokeTertiary = stroke('stroke-tertiary')
+const strokeWhite = (isFill?: boolean) =>
+  classnames(
+    stroke('stroke-formal-accent'),
+    fill(isFill ? 'fill-primary-dark' : undefined)
+  )
+const fillOrb = fill('fill-orb')
+const fillCircle = fill('fill-gray')
 
 const SuperOrb = () => (
   <svg
@@ -44,7 +57,7 @@ const SuperOrb = () => (
         maskUnits="userSpaceOnUse"
       >
         <g transform="translate(-48.02 -4.86)">
-          <circle cx="101.52" cy="46.36" r="30.5" fill="#c4c4c4" />
+          <circle cx="101.52" cy="46.36" r="30.5" className={fillCircle} />
         </g>
       </mask>
       <radialGradient
@@ -89,7 +102,7 @@ const SuperOrb = () => (
         maskUnits="userSpaceOnUse"
       >
         <g transform="translate(-48.02 -4.86)">
-          <circle cx="101.52" cy="46.36" r="30.5" fill="#fff" />
+          <circle cx="101.52" cy="46.36" r="30.5" className={fillOrb} />
         </g>
       </mask>
       <radialGradient
@@ -134,8 +147,7 @@ const SuperOrb = () => (
       cx="53"
       cy="41"
       r="40"
-      fill="#0d0030"
-      stroke="#efecd6"
+      className={strokeWhite(true)}
       stroke-linecap="round"
       stroke-width="2"
     />
@@ -161,7 +173,7 @@ const SuperOrb = () => (
       d="M102,68.86A23,23,0,0,1,85.65,29.7M102,22.86A23,23,0,0,1,118.39,62"
       transform="translate(-48.02 -4.86)"
       fill="none"
-      stroke="#efecd6"
+      className={strokeWhite()}
       stroke-linecap="round"
       stroke-width="2"
     />
@@ -169,7 +181,7 @@ const SuperOrb = () => (
       d="M87,45.86a15,15,0,0,1,25.54-10.67M117,45.86A15,15,0,0,1,91.48,56.53"
       transform="translate(-48.02 -4.86)"
       fill="none"
-      stroke="#efecd6"
+      className={strokeWhite()}
       stroke-linecap="round"
       stroke-width="2"
     />
@@ -177,7 +189,7 @@ const SuperOrb = () => (
       d="M102,38.86a7,7,0,0,1,5,11.92m-5,2.08a7,7,0,0,1-5-11.92"
       transform="translate(-48.02 -4.86)"
       fill="none"
-      stroke="#efecd6"
+      className={strokeWhite()}
       stroke-linecap="round"
       stroke-width="2"
     />
@@ -187,7 +199,7 @@ const SuperOrb = () => (
       x2="25.5"
       y2="46.5"
       fill="none"
-      stroke="#efecd6"
+      className={strokeWhite()}
       stroke-linecap="round"
     />
     <line
@@ -196,7 +208,7 @@ const SuperOrb = () => (
       x2="105.5"
       y2="46.5"
       fill="none"
-      stroke="#efecd6"
+      className={strokeWhite()}
       stroke-linecap="round"
     />
     <line
@@ -205,7 +217,7 @@ const SuperOrb = () => (
       x2="25.5"
       y2="38.5"
       fill="none"
-      stroke="#efecd6"
+      className={strokeWhite()}
       stroke-linecap="round"
     />
     <line
@@ -214,14 +226,14 @@ const SuperOrb = () => (
       x2="105.5"
       y2="38.5"
       fill="none"
-      stroke="#efecd6"
+      className={strokeWhite()}
       stroke-linecap="round"
     />
     <path
       d="M109.35-364.21"
       transform="translate(-48.02 -4.86)"
       fill="none"
-      stroke="#fed823"
+      className={strokeAccent}
     />
   </svg>
 )
@@ -284,7 +296,7 @@ const UpperConnectors = () => (
       x2="0.5"
       y2="724.5"
       fill="none"
-      stroke="#01feb6"
+      className={strokeTertiary}
       stroke-linecap="round"
     />
     <line
@@ -311,11 +323,11 @@ const UpperConnectors = () => (
       x2="201.5"
       y2="724.5"
       fill="none"
-      stroke="#ff7bed"
+      className={strokeSecondary}
       stroke-linecap="round"
     />
     <line x1="101.5" x2="101.5" y2="683" fill="none" stroke="url(#c)" />
-    <path d="M109.35,312.51" fill="none" stroke="#fed823" />
+    <path d="M109.35,312.51" fill="none" className={strokeAccent} />
   </svg>
 )
 
@@ -325,34 +337,34 @@ const BottomConnectors = () => (
       d="M86.25,0V343L4.75,424.5"
       transform="translate(-4.25 0.5)"
       fill="none"
-      stroke="#01feb6"
+      className={strokeTertiary}
       stroke-linecap="round"
     />
     <path
       d="M102.25,0V343l-81.5,81.5"
       transform="translate(-4.25 0.5)"
       fill="none"
-      stroke="#fed823"
+      className={strokeAccent}
       stroke-linecap="round"
     />
     <path
       d="M118.25,0V343l81.5,81.5"
       transform="translate(-4.25 0.5)"
       fill="none"
-      stroke="#ff7bed"
+      className={strokeSecondary}
       stroke-linecap="round"
     />
     <path
       d="M109.35,235.28"
       transform="translate(-4.25 0.5)"
       fill="none"
-      stroke="#fed823"
+      className={strokeAccent}
     />
     <path
       d="M109.35-447.72"
       transform="translate(-4.25 0.5)"
       fill="none"
-      stroke="#fed823"
+      className={strokeAccent}
     />
   </svg>
 )
@@ -361,7 +373,7 @@ const superOrbBox = (glow?: boolean) =>
   classnames(
     position('absolute'),
     scale('scale-50'),
-    dropShadow(glow ? 'drop-shadow-white' : undefined),
+    dropShadow(glow ? 'drop-shadow-formal-accent' : undefined),
     transitionProperty('transition-all'),
     zIndex('z-40')
   )
