@@ -5,6 +5,15 @@ import {
   SCLEDGER_CONTRACT_ADDRESS,
 } from '@big-whale-labs/constants'
 
+function cleanEnv<T>(
+  environment: unknown,
+  specs: { [K in keyof T]: ValidatorSpec<T[K]> },
+  options: CleanOptions<T> = {}
+): Readonly<T & CleanedEnvAccessors> {
+  const cleaned = getSanitizedEnv(environment, specs, options)
+  return Object.freeze(applyDefaultMiddleware(cleaned, environment))
+}
+
 const env = {
   VITE_ENCRYPT_KEY: import.meta.env.VITE_ENCRYPT_KEY as string,
   VITE_FORTMATIC_KEY:
