@@ -9,15 +9,13 @@ interface ContractNameProps {
 
 function ContractNameSuspender({ address }: ContractNameProps) {
   const { contractNames } = useSnapshot(SealCredStore)
-
   const contractName = contractNames[address]
-
   return <>{truncateMiddleIfNeeded(contractName || address, 17)}</>
 }
 
 export default function ({ address }: ContractNameProps) {
   return (
-    <Suspense fallback={truncateMiddleIfNeeded(address, 17)}>
+    <Suspense fallback={<>truncateMiddleIfNeeded(address, 17)</>}>
       <ContractNameSuspender address={address} />
     </Suspense>
   )
