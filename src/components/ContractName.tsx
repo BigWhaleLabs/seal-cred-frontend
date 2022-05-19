@@ -13,19 +13,13 @@ function ContractNameSuspender({ address, isFetching }: ContractName) {
   const { contractNames } = useSnapshot(SealCredStore)
 
   const contractName = contractNames[address]
-  const truncatedContractName = contractName
-    ? contractName.length > 15
-      ? truncateMiddleIfNeeded(contractName, 11)
-      : contractName
-    : truncateMiddleIfNeeded(address, 11)
 
   return (
     <>
-      {contractName ? (
-        <>
-          {isFetching && <>Fetching </>}
-          {truncatedContractName}
-        </>
+      {isFetching ? (
+        `Fetching ${truncateMiddleIfNeeded(address, 11)}`
+      ) : contractName ? (
+        truncateMiddleIfNeeded(contractName, 17)
       ) : (
         <EnsAddress address={address} />
       )}
