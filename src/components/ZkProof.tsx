@@ -57,7 +57,6 @@ function useProofContent(
       color: 'text-tertiary',
       content: (
         <ProofButton
-          color="tertiary"
           disabled={isGenerating}
           onClick={async () => {
             setIsGenerating(true)
