@@ -15,7 +15,7 @@ function ContractNameSuspender({ address }: ContractNameProps) {
 
 export default function ({ address }: ContractNameProps) {
   return (
-    <Suspense fallback={<>truncateMiddleIfNeeded(address, 17)</>}>
+    <Suspense fallback={<>{truncateMiddleIfNeeded(address, 17)}</>}>
       <ContractNameSuspender address={address} />
     </Suspense>
   )
