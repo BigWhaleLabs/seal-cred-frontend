@@ -1,6 +1,5 @@
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
-import EnsAddress from 'components/EnsAddress'
 import SealCredStore from 'stores/SealCredStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
@@ -15,11 +14,9 @@ function ContractNameSuspender({ address }: ContractNameProps) {
 
   return (
     <>
-      {contractName ? (
-        truncateMiddleIfNeeded(contractName, 17)
-      ) : (
-        <EnsAddress address={address} />
-      )}
+      {contractName
+        ? truncateMiddleIfNeeded(contractName, 17)
+        : truncateMiddleIfNeeded(address, 11)}
     </>
   )
 }
