@@ -12,18 +12,12 @@ function ContractNameSuspender({ address }: ContractNameProps) {
 
   const contractName = contractNames[address]
 
-  return (
-    <>
-      {contractName
-        ? truncateMiddleIfNeeded(contractName, 17)
-        : truncateMiddleIfNeeded(address, 11)}
-    </>
-  )
+  return <>{truncateMiddleIfNeeded(contractName || address, 17)}</>
 }
 
 export default function ({ address }: ContractNameProps) {
   return (
-    <Suspense fallback={truncateMiddleIfNeeded(address, 11)}>
+    <Suspense fallback={truncateMiddleIfNeeded(address, 17)}>
       <ContractNameSuspender address={address} />
     </Suspense>
   )
