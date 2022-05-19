@@ -4,8 +4,7 @@ import {
   FORTMATIC_KEY,
   SCLEDGER_CONTRACT_ADDRESS,
 } from '@big-whale-labs/constants'
-import { str } from 'helpers/envalid/validators'
-import cleanEnv from 'helpers/envalid/envalid'
+import { cleanEnv, str } from 'helpers/envalid'
 import handleError from 'helpers/handleError'
 
 export default cleanEnv(
