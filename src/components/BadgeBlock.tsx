@@ -23,7 +23,6 @@ import classnames, {
 } from 'classnames/tailwind'
 import handleError from 'helpers/handleError'
 import sealCred from 'helpers/sealCred'
-import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const badgeWrapper = (minted: boolean, small?: boolean) =>
@@ -169,11 +168,17 @@ export default function ({
   tokenId?: number
 }) {
   const { xxs, sm } = useBreakpoints()
-  const shortAddress = truncateMiddleIfNeeded(contractAddress, 11)
 
   return (
     <div className={badgeWrapper(tokenId !== undefined, xxs && !sm)}>
-      <Suspense fallback={<SubheaderText>{shortAddress}...</SubheaderText>}>
+      <Suspense
+        fallback={
+          <SubheaderText>
+            <ContractName address={contractAddress} />
+            ...
+          </SubheaderText>
+        }
+      >
         <Badge contractAddress={contractAddress} tokenId={tokenId} />
       </Suspense>
     </div>

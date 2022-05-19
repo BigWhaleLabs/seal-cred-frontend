@@ -14,11 +14,13 @@ function OwnedBadgeAddressSuspender({
 }) {
   const { derivativeLedger } = useSnapshot(SealCredStore)
   const record = derivativeLedger[derivativeAddress]
-  const [address, setAddress] = useState<string | undefined>(undefined)
+  const [ownerAddress, setOwnerAddress] = useState<string | undefined>(
+    undefined
+  )
 
   useEffect(() => {
     async function getAddress() {
-      setAddress(await record?.derivativeContract.ownerOf(tokenId))
+      setOwnerAddress(await record?.derivativeContract.ownerOf(tokenId))
     }
 
     void getAddress()
@@ -26,15 +28,15 @@ function OwnedBadgeAddressSuspender({
 
   return (
     <>
-      {address && (
+      {ownerAddress && (
         <LinkText
-          url={getEtherscanAddressUrl(address)}
+          url={getEtherscanAddressUrl(ownerAddress)}
           gradientFrom="from-secondary"
           gradientTo="to-accent"
-          title={address}
+          title={ownerAddress}
           bold
         >
-          <EnsAddress address={address} truncate />
+          <EnsAddress address={ownerAddress} />
         </LinkText>
       )}
     </>
