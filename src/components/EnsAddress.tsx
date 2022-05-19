@@ -13,7 +13,7 @@ export default function ({ address }: { address: string }) {
   EnsStore.fetchEnsName(address)
 
   return (
-    <Suspense fallback={<>{truncateMiddleIfNeeded(address, 17)}</>}>
+    <Suspense fallback={truncateMiddleIfNeeded(address, 17)}>
       <EnsAddressSuspender address={address} />
     </Suspense>
   )
