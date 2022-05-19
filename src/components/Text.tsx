@@ -122,11 +122,7 @@ export function LogoText({ children }: ChildrenProp) {
   return <span className={logoText}>{children}</span>
 }
 
-const badgeText = classnames(
-  textColor('text-formal-accent'),
-  fontSize('text-sm'),
-  lineHeight('leading-6')
-)
+const badgeText = textColor('text-formal-accent')
 export function BadgeText({ children }: ChildrenProp) {
   return <span className={badgeText}>{children}</span>
 }
