@@ -54,13 +54,12 @@ body {
     transform: translate(5.25rem, 67.5rem);
   }
   64% {
-    /* Orb going behind the ID Card */
+    /* Orb to the ID Card */
     transform: translate(-0.63rem, 73.75rem);
   }
   65% {
     /* Orb goes and stays behind ID card */
     /* Reveal animation happens inside IdentityCard */
-
     transform: translate(-1.563rem, 86.438rem);
   }
 
