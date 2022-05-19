@@ -1,5 +1,5 @@
 import { HighlightedText } from 'components/Text'
-import Colors, { colorToTailwindBg } from 'models/Colors'
+import Color from 'models/Color'
 import OrbBox from 'icons/OrbBox'
 import ZkSphere from 'components/landing/ZkSphere'
 import classnames, {
@@ -16,6 +16,7 @@ import classnames, {
   transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
+import colorToTailwindBackground from 'helpers/colorToTailwindBackground'
 import useScrollPercent from 'hooks/useScrollPercent'
 
 const orbBoxes = classnames(
@@ -33,11 +34,11 @@ const orbBox = (margins?: TMargin) =>
     space('space-y-2'),
     margin(margins)
   )
-const highlightedWrapper = (color: Colors) =>
+const highlightedWrapper = (color: Color) =>
   classnames(
     padding('px-2', 'py-1'),
     borderRadius('rounded-full'),
-    backgroundColor(colorToTailwindBg(color)),
+    backgroundColor(colorToTailwindBackground(color)),
     zIndex('z-10')
   )
 
@@ -48,29 +49,29 @@ export default function () {
   return (
     <div className={orbBoxes} style={{ transform: 'translateY(5.625rem)' }}>
       <div className={orbBox('mt-8')}>
-        <OrbBox color={Colors.tertiary} shadow={animNotStarted} />
+        <OrbBox color="tertiary" shadow={animNotStarted} />
         <div className={position('absolute')}>
-          <ZkSphere color={Colors.tertiary} animated />
+          <ZkSphere color="tertiary" animated />
         </div>
-        <div className={highlightedWrapper(Colors.tertiary)}>
+        <div className={highlightedWrapper('tertiary')}>
           <HighlightedText center>Wallet 01</HighlightedText>
         </div>
       </div>
       <div className={orbBox()}>
-        <OrbBox color={Colors.accent} shadow={animNotStarted} />
+        <OrbBox color="accent" shadow={animNotStarted} />
         <div className={position('absolute')}>
-          <ZkSphere color={Colors.accent} animated />
+          <ZkSphere color="accent" animated />
         </div>
-        <div className={highlightedWrapper(Colors.accent)}>
+        <div className={highlightedWrapper('accent')}>
           <HighlightedText center>Wallet 02</HighlightedText>
         </div>
       </div>
       <div className={orbBox('mt-11')}>
-        <OrbBox color={Colors.secondary} shadow={animNotStarted} />
+        <OrbBox color={'secondary'} shadow={animNotStarted} />
         <div className={position('absolute')}>
-          <ZkSphere color={Colors.secondary} animated />
+          <ZkSphere color={'secondary'} animated />
         </div>
-        <div className={highlightedWrapper(Colors.secondary)}>
+        <div className={highlightedWrapper('secondary')}>
           <HighlightedText center>Wallet 03</HighlightedText>
         </div>
       </div>
