@@ -6,19 +6,16 @@ import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
 interface ContractName {
   address: string
-  isFetching?: boolean
 }
 
-function ContractNameSuspender({ address, isFetching }: ContractName) {
+function ContractNameSuspender({ address }: ContractName) {
   const { contractNames } = useSnapshot(SealCredStore)
 
   const contractName = contractNames[address]
 
   return (
     <>
-      {isFetching ? (
-        `Fetching ${truncateMiddleIfNeeded(address, 11)}`
-      ) : contractName ? (
+      {contractName ? (
         truncateMiddleIfNeeded(contractName, 17)
       ) : (
         <EnsAddress address={address} />
@@ -29,7 +26,7 @@ function ContractNameSuspender({ address, isFetching }: ContractName) {
 
 export default function ({ address }: ContractName) {
   return (
-    <Suspense fallback={<ContractNameSuspender isFetching address={address} />}>
+    <Suspense fallback={truncateMiddleIfNeeded(address, 11)}>
       <ContractNameSuspender address={address} />
     </Suspense>
   )
