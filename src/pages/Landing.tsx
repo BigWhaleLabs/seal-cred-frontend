@@ -1,16 +1,15 @@
 import { HighlightedText } from 'components/Text'
 import BuildingIdentitiesCard from 'components/landing/BuildingIdentitiesCard'
-import Colors, { colorToTailwindBg } from 'models/Colors'
 import CreatingZKProofCard from 'components/landing/CreatingZKProofCard'
-import IdentityCard from 'components/IdentityCardOne'
+import IdentityCard from 'components/landing/IdentityCard'
 import InitialCard from 'components/landing/InitialCard'
 import LearnMoreCard from 'components/landing/LearnMoreCard'
-import OrbsInBoxes from 'components/OrbsInBoxes'
-import ScrollDownButton from 'components/ScrollDownButton'
+import OrbsInBoxes from 'components/landing/OrbsInBoxes'
+import ScrollDownButton from 'components/landing/ScrollDownButton'
 import SuperHr from 'icons/SuperHr'
 import SuperOrbWithConnectors from 'icons/SuperOrbWithConnectors'
 import TopConnectors from 'icons/TopConnectors'
-import ZkSphere from 'components/ZkSphere'
+import ZkSphere from 'components/landing/ZkSphere'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -51,7 +50,7 @@ const highlightedBlock = classnames(
 const highlightedWrapper = classnames(
   padding('px-4', 'py-1'),
   borderRadius('rounded-full'),
-  backgroundColor(colorToTailwindBg())
+  backgroundColor('bg-formal-accent')
 )
 
 export default function () {
@@ -89,11 +88,11 @@ export default function () {
       <SuperOrbWithConnectors />
       <div className={identityCards}>
         <IdentityCard left text="Identity-01" mobile={xs} reveal={animEnd}>
-          <ZkSphere text="ZK" color={Colors.tertiary} />
-          <ZkSphere text="ZK" color={Colors.accent} />
+          <ZkSphere text="ZK" color="tertiary" />
+          <ZkSphere text="ZK" color="accent" />
         </IdentityCard>
         <IdentityCard text="Identity-02" mobile={xs} reveal={animEnd}>
-          <ZkSphere text="ZK" color={Colors.secondary} />
+          <ZkSphere text="ZK" color="secondary" />
         </IdentityCard>
       </div>
       <BuildingIdentitiesCard />

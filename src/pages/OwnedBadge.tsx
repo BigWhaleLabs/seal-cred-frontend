@@ -11,6 +11,7 @@ import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import ContractName from 'components/ContractName'
+import ExternalLink from 'components/ExternalLink'
 import NotFound from 'pages/NotFound'
 import OwnedBadgeAddress from 'components/OwnedBadgeAddress'
 import SealCredStore from 'stores/SealCredStore'
@@ -23,8 +24,8 @@ import classnames, {
   justifyContent,
   margin,
   space,
-  textOverflow,
 } from 'classnames/tailwind'
+import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
 
 const mainBox = classnames(
@@ -37,8 +38,7 @@ const walletBox = classnames(display('flex'), flexDirection('flex-row'))
 const walletAddress = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  margin('ml-4'),
-  textOverflow('truncate')
+  margin('ml-4')
 )
 const getStartedCard = classnames(margin('mt-6'))
 
@@ -73,17 +73,23 @@ function OwnerInfo({
     >
       <HeaderText extraLeading>
         This wallet owns a{' '}
-        <AccentText bold color="text-secondary">
-          <ContractName address={derivativeAddress} />
-        </AccentText>
+        <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
+          <AccentText bold color="text-secondary">
+            <ContractName address={derivativeAddress} />
+          </AccentText>
+        </ExternalLink>
       </HeaderText>
 
       <BodyText>
         This is a zkNFT derivative. It means this person has been verified to
         own at least one ‘
-        <AccentText color="text-secondary">
-          <ContractName address={record.originalContract.address} />
-        </AccentText>
+        <ExternalLink
+          url={getEtherscanAddressUrl(record.originalContract.address)}
+        >
+          <AccentText color="text-secondary">
+            <ContractName address={record.originalContract.address} />
+          </AccentText>
+        </ExternalLink>
         ‘ NFT.
       </BodyText>
 

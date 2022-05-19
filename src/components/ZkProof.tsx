@@ -118,7 +118,7 @@ export default function ({
 
   return (
     <ProofLine>
-      <BodyText small>
+      <BodyText bold small>
         <ContractName address={contractAddress} />
       </BodyText>
 

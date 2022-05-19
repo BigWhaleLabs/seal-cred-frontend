@@ -6,8 +6,6 @@ import classnames, {
   display,
   flexDirection,
   flexWrap,
-  fontSize,
-  fontWeight,
   height,
   justifyContent,
   padding,
@@ -28,9 +26,7 @@ const contractContainer = (small?: boolean) =>
     borderRadius('rounded-lg'),
     height('h-fit'),
     padding('px-4', 'py-2'),
-    width('w-full'),
-    fontSize('text-sm'),
-    fontWeight('font-bold')
+    width('w-full')
   )
 
 export default function ({ children }: { children: ReactNode }) {

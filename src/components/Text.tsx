@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import {
   TGradientColorStops,
   TTextColor,
@@ -15,26 +14,25 @@ import {
   textDecoration,
   width,
 } from 'classnames/tailwind'
+import ChildrenProp from 'models/ChildrenProp'
 
-interface ChildrenProp {
-  children: ReactNode
-}
-
-const headerText = (extraLeading = false) =>
+const headerText = (accent = false, extraLeading = false) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight('font-bold'),
     fontSize('text-4xl'),
-    textColor('text-formal-accent'),
+    textColor(accent ? 'text-accent' : 'text-formal-accent'),
     lineHeight(extraLeading ? 'leading-11' : 'leading-8')
   )
 export function HeaderText({
+  accent,
   extraLeading,
   children,
 }: ChildrenProp & {
+  accent?: boolean
   extraLeading?: boolean
 }) {
-  return <h1 className={headerText(extraLeading)}>{children}</h1>
+  return <h1 className={headerText(accent, extraLeading)}>{children}</h1>
 }
 
 const subheaderText = classnames(
@@ -74,22 +72,25 @@ export function AccentText({
   )
 }
 
-const bodyText = (small?: boolean, center?: boolean) =>
+const bodyText = (bold?: boolean, small?: boolean, center?: boolean) =>
   classnames(
     textColor('text-formal-accent'),
     textAlign(center ? 'text-center' : undefined),
+    fontWeight(bold ? 'font-bold' : 'font-normal'),
     fontSize(small ? 'text-sm' : 'text-base'),
     lineHeight('leading-6')
   )
 export function BodyText({
+  bold,
   small,
   center,
   children,
 }: ChildrenProp & {
+  bold?: boolean
   small?: boolean
   center?: boolean
 }) {
-  return <p className={bodyText(small, center)}>{children}</p>
+  return <p className={bodyText(bold, small, center)}>{children}</p>
 }
 
 const cardHeader = (color?: TTextColor) =>
@@ -167,7 +168,7 @@ export function LinkText({
       href={url}
       title={title}
       rel="noopener noreferrer"
-      target={'_blank'}
+      target="_blank"
     >
       {children}
     </a>
@@ -193,4 +194,13 @@ export function HighlightedText({
   center?: boolean
 }) {
   return <div className={highlightedText(bold, center)}>{children}</div>
+}
+
+const sphereText = classnames(
+  fontWeight('font-bold'),
+  textColor('text-primary-dark'),
+  textAlign('text-center')
+)
+export function SphereText({ children }: ChildrenProp) {
+  return <p className={sphereText}>{children}</p>
 }

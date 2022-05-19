@@ -36,7 +36,7 @@ function OwnedBadgeAddressSuspender({
           title={ownerAddress}
           bold
         >
-          <EnsAddress address={ownerAddress} />
+          <EnsAddress address={ownerAddress} truncate />
         </LinkText>
       )}
     </>
