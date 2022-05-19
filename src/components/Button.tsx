@@ -29,24 +29,7 @@ import Arrow from 'icons/Arrow'
 import Loading from 'icons/Loading'
 import React from 'preact/compat'
 
-type ButtonColors = 'accent' | 'secondary' | 'tertiary'
-
-type ButtonColorClasses = {
-  colors: ButtonColors
-  small?: boolean
-  loading?: boolean
-  disabled?: boolean
-}
-
-interface ButtonClasses extends ButtonColorClasses {
-  fullWidth?: boolean
-}
-
-const sharedClassNames = (
-  fullWidth?: boolean,
-  loading?: boolean,
-  disabled?: boolean
-) =>
+const commonClasses = (loading?: boolean, disabled?: boolean) =>
   classnames(
     display('flex'),
     flexDirection('flex-row'),
@@ -60,30 +43,19 @@ const sharedClassNames = (
     outlineStyle('focus:outline-none'),
     opacity(loading || disabled ? 'opacity-50' : undefined),
     boxShadow('shadow-2xl', 'hover:shadow-lg', 'active:shadow-md'),
-    width(!fullWidth ? 'w-fit' : undefined)
+    width('w-fit'),
+    space('space-x-2')
   )
 
-const button = ({
-  colors,
-  loading,
-  disabled,
-  small,
-  fullWidth,
-}: ButtonClasses) =>
+const button = ({ primary, loading, disabled, small }: ButtonProps) =>
   classnames(
-    space('space-x-2'),
-    sharedClassNames(fullWidth, loading, disabled),
-    colorClasses({ colors, loading, disabled, small })
+    commonClasses(loading, disabled),
+    colorClasses({ primary, loading, disabled, small })
   )
 
-const colorClasses = ({
-  colors,
-  loading,
-  disabled,
-  small,
-}: ButtonColorClasses) =>
+const colorClasses = ({ primary, loading, disabled, small }: ButtonProps) =>
   classnames(
-    colors === 'accent'
+    primary
       ? classnames(
           textColor('text-primary-dark'),
           fontSize(small ? 'text-sm' : 'text-lg'),
@@ -101,8 +73,6 @@ const colorClasses = ({
             loading || disabled ? undefined : 'active:brightness-50'
           )
         )
-      : colors === 'secondary'
-      ? classnames(textColor('text-accent')) // TBD
       : classnames(
           textColor(
             'text-transparent',
@@ -115,43 +85,31 @@ const colorClasses = ({
   )
 
 interface ButtonProps {
-  colors: ButtonColors
+  primary?: boolean
+  disabled?: boolean
   loading?: boolean
   small?: boolean
-  arrow?: boolean
-  fullWidth?: boolean
+  withArrow?: boolean
 }
 
 export default function ({
-  colors,
   small,
-  arrow,
-  children,
+  withArrow,
+  primary,
   loading,
   disabled,
+  children,
   ...rest
 }: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   return (
     <button
-      className={button({ colors, loading, disabled, small })}
+      className={button({ primary, loading, disabled, small })}
       disabled={loading || disabled}
       {...rest}
     >
       {loading && <Loading small={small} />}
-      {typeof children === 'string' ? (
-        <span
-          className={
-            colors === 'tertiary'
-              ? colorClasses({ colors, loading, disabled, small })
-              : undefined
-          }
-        >
-          {children}
-        </span>
-      ) : (
-        children
-      )}
-      {arrow && <Arrow disabled={disabled || loading} />}
+      {typeof children === 'string' ? <span>{children}</span> : children}
+      {withArrow && <Arrow disabled={disabled || loading} />}
     </button>
   )
 }

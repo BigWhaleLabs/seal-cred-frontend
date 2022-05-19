@@ -137,7 +137,7 @@ function Badge({
         <BadgeText>
           <ContractName address={derivativeAddress} />
         </BadgeText>
-        {minted ? (
+        {!minted ? (
           <div className={mintPassed(small)}>
             <AccentText bold small primary color="text-secondary">
               Minted
@@ -147,7 +147,7 @@ function Badge({
         ) : (
           <Button
             small
-            colors="accent"
+            primary
             loading={!!loading}
             disabled={completed}
             onClick={checkProofAndMint}
