@@ -34,7 +34,7 @@ const zkSpheresLeft = (reveal?: boolean) =>
     transitionDuration('duration-300')
   )
 
-interface IdentityCardOneProps {
+interface IdentityCardProps {
   children: ReactNode
   reveal?: boolean
   left?: boolean
@@ -48,7 +48,7 @@ export default function ({
   text,
   mobile,
   children,
-}: IdentityCardOneProps) {
+}: IdentityCardProps) {
   return (
     <Card color="formal-accent" shadow thin small onlyWrap>
       <div className={innerId}>
