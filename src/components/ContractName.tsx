@@ -6,29 +6,25 @@ import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
 interface ContractName {
   address: string
-  truncate?: boolean
-  overflow?: boolean
   isFetching?: boolean
 }
 
-function ContractNameSuspender({
-  truncate,
-  address,
-  isFetching,
-}: ContractName) {
+function ContractNameSuspender({ address, isFetching }: ContractName) {
   const { contractNames } = useSnapshot(SealCredStore)
 
-  const truncatedContractAddress =
-    truncate && address.length > 15
-      ? truncateMiddleIfNeeded(address, 11)
-      : address
+  const contractName = contractNames[address]
+  const truncatedContractName = contractName
+    ? contractName.length > 15
+      ? truncateMiddleIfNeeded(contractName, 11)
+      : contractName
+    : truncateMiddleIfNeeded(address, 11)
 
   return (
     <>
-      {contractNames[address] ? (
+      {contractName ? (
         <>
           {isFetching && <>Fetching </>}
-          {truncatedContractAddress}
+          {truncatedContractName}
         </>
       ) : (
         <EnsAddress address={address} />
@@ -37,10 +33,10 @@ function ContractNameSuspender({
   )
 }
 
-export default function ({ truncate, address }: ContractName) {
+export default function ({ address }: ContractName) {
   return (
     <Suspense fallback={<ContractNameSuspender isFetching address={address} />}>
-      <ContractNameSuspender truncate={truncate} address={address} />
+      <ContractNameSuspender address={address} />
     </Suspense>
   )
 }
