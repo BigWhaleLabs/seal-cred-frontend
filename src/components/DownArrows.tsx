@@ -1,4 +1,4 @@
-import Arrow from 'components/Arrow'
+import Arrow from 'icons/Arrow'
 import classnames, {
   animation,
   margin,
@@ -16,9 +16,9 @@ const arrowsBox = classnames(
 export default function () {
   return (
     <div className={arrowsBox}>
-      <Arrow flip disabled />
-      <Arrow flip disabled />
-      <Arrow flip disabled />
+      <Arrow turnDown disabled />
+      <Arrow turnDown disabled />
+      <Arrow turnDown disabled />
     </div>
   )
 }

@@ -5,10 +5,10 @@ const arrowAnimation = (disabled?: boolean) =>
 
 interface ArrowProps {
   disabled?: boolean
-  flip?: boolean
+  turnDown?: boolean
 }
 
-export default function ({ disabled, flip }: ArrowProps) {
+export default function ({ disabled, turnDown }: ArrowProps) {
   return (
     <svg
       width="21"
@@ -20,7 +20,7 @@ export default function ({ disabled, flip }: ArrowProps) {
     >
       <g
         filter="url(#filter0_d_97_51757)"
-        transform={flip ? 'rotate(90 10 10)' : undefined}
+        transform={turnDown ? 'rotate(90 10 10)' : undefined}
       >
         <path
           d="M8 8L12.5 12.5L8 17"

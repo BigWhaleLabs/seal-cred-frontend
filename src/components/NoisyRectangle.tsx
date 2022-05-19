@@ -12,7 +12,7 @@ const rectangle = (bgColor: TBackgroundColor) =>
   classnames(
     backgroundColor(bgColor),
     height('h-noisy-rectangle'),
-    width('fold:w-36', 'w-28'),
+    width('fold:w-24', 'w-28'),
     opacity('opacity-50')
   )
 const noise = classnames(

@@ -1,6 +1,7 @@
-import { dropShadow } from 'classnames/tailwind'
+import { dropShadow, fill } from 'classnames/tailwind'
 
 const starContainer = dropShadow('drop-shadow-accent')
+const starPath = fill('fill-accent')
 
 export default function () {
   return (
@@ -14,7 +15,7 @@ export default function () {
     >
       <path
         d="m8.5595,0l1.9246,3.0768l3.3655,-1.358l-0.2515,3.6205l3.5209,0.8795l-2.3315,2.7812l2.3315,2.7812l-3.5209,0.8795l0.2515,3.6205l-3.3655,-1.358l-1.9246,3.0768l-1.9246,-3.0768l-3.3655,1.358l0.2515,-3.6205l-3.5209,-0.8795l2.3315,-2.7812l-2.3315,-2.7812l3.5209,-0.8795l-0.2515,-3.6205l3.3655,1.358l1.9246,-3.0768z"
-        fill="#FED823"
+        className={starPath}
       />
     </svg>
   )

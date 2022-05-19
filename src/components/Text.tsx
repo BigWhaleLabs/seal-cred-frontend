@@ -1,148 +1,116 @@
 import { ReactNode } from 'react'
 import {
-  TBackgroundColor,
   TGradientColorStops,
-  TTextAlign,
   TTextColor,
   backgroundClip,
-  backgroundColor,
   backgroundImage,
-  borderRadius,
   classnames,
   fontFamily,
   fontSize,
   fontWeight,
   gradientColorStops,
   lineHeight,
-  margin,
-  overflow,
-  padding,
   textAlign,
   textColor,
   textDecoration,
-  textOverflow,
-  whitespace,
   width,
-  zIndex,
 } from 'classnames/tailwind'
-import Colors, { colorToTailwindBg } from 'models/Colors'
 
-interface OnlyChildrenProp {
+interface ChildrenProp {
   children: ReactNode
 }
 
-type HeaderSize = '4xl' | '3xl' | '2xl'
-const headerText = (size: HeaderSize, leading = 8, bold = true) =>
+const headerText = (extraLeading = false) =>
   classnames(
     fontFamily('font-primary'),
-    fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize(`text-${size}`),
-    textColor('text-white'),
-    lineHeight(leading === 11 ? 'leading-11' : 'leading-8')
+    fontWeight('font-bold'),
+    fontSize('text-4xl'),
+    textColor('text-formal-accent'),
+    lineHeight(extraLeading ? 'leading-11' : 'leading-8')
   )
-interface HeaderTextProps {
-  size: HeaderSize
-  children: ReactNode
-  leading?: number
-  bold?: boolean
-}
-
-export function HeaderText({ size, bold, leading, children }: HeaderTextProps) {
-  return <h1 className={headerText(size, leading, bold)}>{children}</h1>
+export function HeaderText({
+  extraLeading,
+  children,
+}: ChildrenProp & {
+  extraLeading?: boolean
+}) {
+  return <h1 className={headerText(extraLeading)}>{children}</h1>
 }
 
 const subheaderText = classnames(
   textColor('text-primary'),
   fontFamily('font-primary')
 )
-export function SubheaderText({ children }: { children: ReactNode }) {
+export function SubheaderText({ children }: ChildrenProp) {
   return <h2 className={subheaderText}>{children}</h2>
 }
 
-interface AccentTextProps {
-  color: TTextColor
-  children: ReactNode
-  align?: TTextAlign
-  bold?: boolean
-  small?: boolean
-}
-const accentText = ({ color, align, bold, small }: AccentTextProps) =>
+const accentText = (
+  color: TTextColor,
+  bold?: boolean,
+  small?: boolean,
+  primary?: boolean
+) =>
   classnames(
     textColor(color),
-    textAlign(align),
+    fontFamily(primary ? 'font-primary' : undefined),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
     fontSize(small ? 'text-sm' : undefined)
   )
-export function AccentText(props: AccentTextProps) {
-  return <span className={accentText(props)}>{props.children}</span>
-}
-
-export const textTruncateStyles = classnames(
-  width('w-fit'),
-  textOverflow('text-ellipsis'),
-  overflow('overflow-hidden'),
-  whitespace('whitespace-nowrap'),
-  margin('mr-1')
-)
-type BodyTextSize = 'lg' | 'base' | 'sm' | 'xs'
-const bodyText = (
-  size: BodyTextSize,
-  leading = 6,
-  center?: boolean,
-  overflow = false
-) =>
-  classnames(
-    overflow ? textTruncateStyles : null,
-    textColor('text-white'),
-    center ? textAlign('text-center') : null,
-    fontSize(`text-${size}`),
-    lineHeight(leading === 6 ? 'leading-6' : 'leading-4')
-  )
-interface BodyTextProps {
-  size: BodyTextSize
-  children: ReactNode
-  leading?: 3 | 4 | 5 | 6
-  center?: boolean
-  overflow?: boolean
-}
-export function BodyText({
-  size,
-  center,
-  leading,
-  overflow,
+export function AccentText({
+  color,
+  bold,
+  small,
+  primary,
   children,
-}: BodyTextProps) {
+}: ChildrenProp & {
+  color: TTextColor
+  bold?: boolean
+  small?: boolean
+  primary?: boolean
+}) {
   return (
-    <div className={bodyText(size, leading, center, overflow)}>{children}</div>
+    <span className={accentText(color, bold, small, primary)}>{children}</span>
   )
 }
 
-const largerText = classnames(
-  textColor('text-primary-dark'),
-  fontSize('text-2xl')
-)
-export function LargerText({ children }: OnlyChildrenProp) {
-  return <div className={largerText}>{children}</div>
+const bodyText = (small?: boolean, center?: boolean) =>
+  classnames(
+    textColor('text-formal-accent'),
+    textAlign(center ? 'text-center' : undefined),
+    fontSize(small ? 'text-sm' : 'text-base'),
+    lineHeight('leading-6')
+  )
+export function BodyText({
+  small,
+  center,
+  children,
+}: ChildrenProp & {
+  small?: boolean
+  center?: boolean
+}) {
+  return <p className={bodyText(small, center)}>{children}</p>
 }
 
 const cardHeader = (color?: TTextColor) =>
-  classnames(textColor(color || 'text-white'))
-interface CardHeaderProps {
-  children: ReactNode
+  classnames(textColor(color || 'text-formal-accent'))
+export function CardHeader({
+  color,
+  children,
+}: ChildrenProp & {
   color?: TTextColor
-}
-export function CardHeader({ color, children }: CardHeaderProps) {
-  return <div className={cardHeader(color)}>{children}</div>
+}) {
+  return <h3 className={cardHeader(color)}>{children}</h3>
 }
 
 const cardDescription = classnames(
-  textColor('text-white'),
+  textColor('text-formal-accent'),
   fontSize('text-2xl'),
   fontFamily('font-primary'),
   fontWeight('font-bold')
 )
-export function CardDescription({ children }: OnlyChildrenProp) {
-  return <div className={cardDescription}>{children}</div>
+export function CardDescription({ children }: ChildrenProp) {
+  return <p className={cardDescription}>{children}</p>
 }
 
 const logoText = classnames(
@@ -150,123 +118,79 @@ const logoText = classnames(
   fontWeight('font-bold'),
   fontSize('text-xl')
 )
-export function LogoText({ children }: OnlyChildrenProp) {
+export function LogoText({ children }: ChildrenProp) {
   return <span className={logoText}>{children}</span>
 }
 
-const badgeText = textColor('text-white')
-export function BadgeText({ children }: OnlyChildrenProp) {
+const badgeText = textColor('text-formal-accent')
+export function BadgeText({ children }: ChildrenProp) {
   return <span className={badgeText}>{children}</span>
 }
 
-interface LinkTextProps {
-  url: string
-  children: ReactNode
-  gradientFrom?: TGradientColorStops
+const linkText = (
+  bold?: boolean,
+  color?: TTextColor,
+  gradientFrom?: TGradientColorStops,
   gradientTo?: TGradientColorStops
-  color?: TTextColor
-  title?: string
-  bold?: boolean
-  onClick?: () => void
-}
-const linkText = ({ gradientFrom, gradientTo, bold, color }: LinkTextProps) =>
+) =>
   classnames(
     textDecoration('no-underline'),
     textColor(
-      color
-        ? color
-        : gradientFrom || gradientTo
-        ? 'text-transparent'
-        : 'text-accent'
+      gradientFrom && gradientTo ? 'text-transparent' : color || 'text-accent'
     ),
     backgroundImage(
-      gradientFrom || gradientTo ? 'bg-gradient-to-r' : undefined
+      gradientFrom && gradientTo ? 'bg-gradient-to-r' : undefined
     ),
-    backgroundClip(gradientFrom || gradientTo ? 'bg-clip-text' : undefined),
+    backgroundClip(gradientFrom && gradientTo ? 'bg-clip-text' : undefined),
     gradientColorStops(gradientFrom, gradientTo),
     fontWeight(bold ? 'font-semibold' : 'font-normal')
   )
-export function LinkText(props: LinkTextProps) {
+export function LinkText({
+  url,
+  bold,
+  title,
+  color,
+  gradientFrom,
+  gradientTo,
+  children,
+}: ChildrenProp & {
+  url: string
+  bold?: boolean
+  title?: string
+  color?: TTextColor
+  gradientFrom?: TGradientColorStops
+  gradientTo?: TGradientColorStops
+}) {
   return (
     <a
-      className={linkText(props)}
-      href={props.url}
-      title={props.title}
+      className={linkText(bold, color, gradientFrom, gradientTo)}
+      href={url}
+      title={title}
       rel="noopener noreferrer"
       target={'_blank'}
     >
-      {props.children}
+      {children}
     </a>
   )
 }
 
-const subBadgeText = classnames(
-  textColor('text-secondary'),
-  fontSize('text-sm')
-)
-export function SubBadgeText({ children }: OnlyChildrenProp) {
-  return <span className={subBadgeText}>{children}</span>
-}
-
-const boldColoredText = (color?: TTextColor) =>
+const highlightedText = (center?: boolean, bold?: boolean) =>
   classnames(
-    textColor('text-secondary'),
-    fontSize('text-sm'),
-    textColor(color || 'text-primary-dark')
-  )
-interface BoldColoredTextProps {
-  children: ReactNode
-  color?: TTextColor
-}
-export function BoldColoredText({ color, children }: BoldColoredTextProps) {
-  return <span className={boldColoredText(color)}>{children}</span>
-}
-
-const tooltipText = classnames(
-  fontWeight('font-bold'),
-  textColor('text-primary-dark'),
-  fontFamily('font-primary')
-)
-export function TooltipText({ children }: OnlyChildrenProp) {
-  return <div className={tooltipText}>{children}</div>
-}
-
-const highlightedText = (
-  bgColor: TBackgroundColor,
-  center?: boolean,
-  bold?: boolean,
-  onlyWrap?: boolean
-) =>
-  classnames(
-    textColor('text-primary-dark'),
-    fontWeight(bold ? 'font-bold' : 'font-medium'),
-    fontSize('text-sm'),
-    borderRadius('rounded-full'),
-    backgroundColor(bgColor),
     width('w-fit'),
-    padding(onlyWrap ? 'px-2' : 'px-4', 'py-1'),
-    textAlign(center ? 'text-center' : 'text-left'),
-    zIndex('z-10')
+    textColor('text-primary-dark'),
+    fontWeight(bold ? 'font-bold' : 'font-semibold'),
+    fontFamily(bold ? 'font-primary' : undefined),
+    fontSize(bold ? 'text-base' : 'text-sm'),
+    lineHeight(bold ? 'leading-6' : 'leading-5'),
+    textAlign(center ? 'text-center' : 'text-left')
   )
-interface HighlightedTextProps {
-  children: ReactNode
-  center?: boolean
-  color?: Colors
-  bold?: boolean
-  onlyWrap?: boolean
-}
 export function HighlightedText({
-  children,
-  center,
-  color,
   bold,
-  onlyWrap,
-}: HighlightedTextProps) {
-  const bgColor = colorToTailwindBg(color)
-
-  return (
-    <div className={highlightedText(bgColor, center, bold, onlyWrap)}>
-      {children}
-    </div>
-  )
+  center,
+  children,
+}: ChildrenProp & {
+  bold?: boolean
+  center?: boolean
+}) {
+  return <div className={highlightedText(bold, center)}>{children}</div>
 }

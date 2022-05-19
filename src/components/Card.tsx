@@ -18,9 +18,9 @@ import {
   wordBreak,
   zIndex,
 } from 'classnames/tailwind'
-import ArcText from 'components/ArcText'
+import ArcText from 'icons/ArcText'
 
-type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'white'
+type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'formal-accent'
 interface CardProps {
   children: ReactNode
   shadow?: boolean
@@ -41,8 +41,8 @@ const cardColor = (color?: Color) => {
         ? 'border-tertiary'
         : color === 'secondary'
         ? 'border-secondary'
-        : color === 'white'
-        ? 'border-white'
+        : color === 'formal-accent'
+        ? 'border-formal-accent'
         : color === 'primary'
         ? 'border-primary'
         : 'border-primary-dark'
@@ -55,8 +55,8 @@ const cardColor = (color?: Color) => {
         ? 'shadow-tertiary-semi-transparent'
         : color === 'secondary'
         ? 'shadow-secondary-semi-transparent'
-        : color === 'white'
-        ? 'shadow-white-semi-transparent'
+        : color === 'formal-accent'
+        ? 'shadow-formal-accent-semi-transparent'
         : color === 'primary'
         ? 'shadow-primary-semi-transparent'
         : undefined

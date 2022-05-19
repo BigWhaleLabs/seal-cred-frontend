@@ -36,11 +36,12 @@ module.exports = {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
       },
       colors: {
+        orb: '#ffffff',
         accent: '#fed823',
         primary: '#15a1fc',
         secondary: '#ff7bed',
         tertiary: '#01feb6',
-        white: '#efecd6',
+        'formal-accent': '#efecd6',
 
         'primary-dark': '#0d0030',
         'primary-light': '#bff5fa',
@@ -52,7 +53,7 @@ module.exports = {
         'primary-semi-transparent': 'rgba(21, 161, 252, 0.5)',
         'secondary-semi-transparent': 'rgba(255, 123, 237, 0.5)',
         'tertiary-semi-transparent': 'rgba(1, 254, 182, 0.4)',
-        'white-semi-transparent': 'rgba(239, 236, 214, 0.4)',
+        'formal-accent-semi-transparent': 'rgba(239, 236, 214, 0.4)',
       },
       boxShadow: {
         '2xl': '0rem 0.25rem 2.75rem 0rem rgb(0 0 0 / 0.25)',
@@ -84,7 +85,7 @@ module.exports = {
         accent: '0rem 0rem 0.625rem #fed823',
         secondary: '0rem 0rem 0.625rem #ff7bed',
         tertiary: '0rem 0rem 0.625rem #01fed6',
-        white: '0rem 0rem 0.625rem #efecd6',
+        'formal-accent': '0rem 0rem 0.625rem #efecd6',
       },
       padding: {
         small: '0.969rem',

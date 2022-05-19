@@ -10,7 +10,6 @@ import classnames, {
   flexDirection,
   margin,
   opacity,
-  overflow,
   space,
   transitionDuration,
   transitionProperty,
@@ -19,8 +18,7 @@ import classnames, {
 const innerId = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-center'),
-  overflow('overflow-hidden')
+  alignItems('items-center')
 )
 const rectangleMargin = (left: boolean) =>
   classnames(margin(left ? 'my-1' : 'my-7.5'))
@@ -52,7 +50,7 @@ export default function ({
   children,
 }: IdentityCardOneProps) {
   return (
-    <Card color="white" shadow thin small onlyWrap>
+    <Card color="formal-accent" shadow thin small onlyWrap>
       <div className={innerId}>
         <div className={rectangleMargin(left)}>
           {left ? (
@@ -63,7 +61,7 @@ export default function ({
         </div>
         {left && <NoisyRectangle bgColor="bg-accent" />}
         <div className={identityText}>
-          <BodyText size={mobile ? 'sm' : 'base'} center>
+          <BodyText small={mobile} center>
             {text}
           </BodyText>
         </div>

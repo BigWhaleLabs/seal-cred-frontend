@@ -1,22 +1,25 @@
 import { HighlightedText } from 'components/Text'
 import BuildingIdentitiesCard from 'components/landing/BuildingIdentitiesCard'
-import Colors from 'models/Colors'
+import Colors, { colorToTailwindBg } from 'models/Colors'
 import CreatingZKProofCard from 'components/landing/CreatingZKProofCard'
 import IdentityCard from 'components/IdentityCardOne'
 import InitialCard from 'components/landing/InitialCard'
 import LearnMoreCard from 'components/landing/LearnMoreCard'
 import OrbsInBoxes from 'components/OrbsInBoxes'
 import ScrollDownButton from 'components/ScrollDownButton'
-import SuperHr from 'components/SuperHr'
+import SuperHr from 'icons/SuperHr'
 import SuperOrbWithConnectors from 'icons/SuperOrbWithConnectors'
 import TopConnectors from 'icons/TopConnectors'
 import ZkSphere from 'components/ZkSphere'
 import classnames, {
   alignItems,
+  backgroundColor,
+  borderRadius,
   display,
   flexDirection,
   justifyContent,
   margin,
+  padding,
   position,
   space,
   width,
@@ -45,6 +48,11 @@ const highlightedBlock = classnames(
   width('lg:w-fit', 'w-5/6'),
   position('absolute')
 )
+const highlightedWrapper = classnames(
+  padding('px-4', 'py-1'),
+  borderRadius('rounded-full'),
+  backgroundColor(colorToTailwindBg())
+)
 
 export default function () {
   const scroll = useScrollPercent()
@@ -65,9 +73,11 @@ export default function () {
         className={highlightedBlock}
         style={{ transform: 'translateY(43.125rem)' }}
       >
-        <HighlightedText center bold>
-          It starts with connecting your wallets with NFTs
-        </HighlightedText>
+        <div className={highlightedWrapper}>
+          <HighlightedText center>
+            It starts with connecting your wallets with NFTs
+          </HighlightedText>
+        </div>
       </div>
       <OrbsInBoxes />
       <div
