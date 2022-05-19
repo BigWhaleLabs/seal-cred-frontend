@@ -112,13 +112,13 @@ interface ZkProofProps {
   contractAddress: string
 }
 export default function ({ proof, contractAddress }: ZkProofProps) {
-  const { xxs, xs } = useBreakpoints()
+  const { xs } = useBreakpoints()
   const { color, content } = useProofContent(contractAddress, proof)
 
   return (
     <ProofLine>
       <BodyText small>
-        <ContractName address={contractAddress} truncate={xxs} overflow />
+        <ContractName address={contractAddress} />
       </BodyText>
       <div className={proofText(xs)}>
         <AccentText bold color={color}>
