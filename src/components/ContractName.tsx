@@ -4,11 +4,11 @@ import EnsAddress from 'components/EnsAddress'
 import SealCredStore from 'stores/SealCredStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
-interface ContractName {
+interface ContractNameProps {
   address: string
 }
 
-function ContractNameSuspender({ address }: ContractName) {
+function ContractNameSuspender({ address }: ContractNameProps) {
   const { contractNames } = useSnapshot(SealCredStore)
 
   const contractName = contractNames[address]
@@ -24,7 +24,7 @@ function ContractNameSuspender({ address }: ContractName) {
   )
 }
 
-export default function ({ address }: ContractName) {
+export default function ({ address }: ContractNameProps) {
   return (
     <Suspense fallback={truncateMiddleIfNeeded(address, 11)}>
       <ContractNameSuspender address={address} />
