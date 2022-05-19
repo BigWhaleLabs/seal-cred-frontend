@@ -1,4 +1,4 @@
-import { AccentText } from 'components/Text'
+import { AccentText, BodyText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Complete from 'icons/Complete'
@@ -107,17 +107,22 @@ function useProofContent(
   }
 }
 
-interface ZkProofProps {
+export default function ({
+  proof,
+  contractAddress,
+}: {
   proof?: Proof
   contractAddress: string
-}
-export default function ({ proof, contractAddress }: ZkProofProps) {
-  const { xxs, xs } = useBreakpoints()
+}) {
+  const { xs } = useBreakpoints()
   const { color, content } = useProofContent(contractAddress, proof)
 
   return (
     <ProofLine>
-      <ContractName address={contractAddress} truncate={xxs} overflow />
+      <BodyText small>
+        <ContractName address={contractAddress} />
+      </BodyText>
+
       <div className={proofText(xs)}>
         <AccentText bold color={color}>
           {content}

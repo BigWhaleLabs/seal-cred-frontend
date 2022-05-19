@@ -1,88 +1,38 @@
-import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
-import EnsAddress from 'components/EnsAddress'
+import { wordBreak } from 'classnames/tailwind'
 import SealCredStore from 'stores/SealCredStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
+const addressText = wordBreak('break-all')
+
 interface ContractNameProps {
-  truncate?: boolean
-  overflow?: boolean
   address: string
-  truncatedStyle?: boolean
+  truncate?: boolean
 }
 
-interface FetchingContract extends ContractNameProps {
-  isFetching?: boolean
-}
-
-function TextBlock({
-  truncate,
-  address,
-  truncatedStyle,
-  isFetching,
-}: FetchingContract) {
-  const truncatedText =
-    truncate && address.length > 15
-      ? truncateMiddleIfNeeded(address, 11)
-      : address
-
-  return truncatedStyle ? (
-    <>
-      {isFetching && <>Fetching </>}
-      {truncatedText}
-    </>
-  ) : (
-    <BodyText small>
-      {isFetching && <>Fetching </>}
-      {truncatedText}
-    </BodyText>
-  )
-}
-
-function ContractNameComponent({
-  truncate,
-  address,
-  truncatedStyle,
-}: ContractNameProps) {
+function ContractNameSuspender({ address, truncate }: ContractNameProps) {
   const { contractNames } = useSnapshot(SealCredStore)
-
+  const contractName = contractNames[address]
   return (
-    <>
-      {contractNames[address] ? (
-        <TextBlock
-          address={contractNames[address] || ''}
-          truncatedStyle={truncatedStyle}
-          truncate={truncate}
-        />
-      ) : (
-        <EnsAddress address={address} />
-      )}
-    </>
+    <span className={contractName ? undefined : addressText}>
+      {truncate
+        ? truncateMiddleIfNeeded(contractName || address, 17)
+        : contractName || address}
+    </span>
   )
 }
 
-export default function ({
-  truncate,
-  address,
-  truncatedStyle,
-}: ContractNameProps) {
-  const shortAddress = truncateMiddleIfNeeded(address, 14)
+export default function ({ address, truncate }: ContractNameProps) {
   return (
     <Suspense
       fallback={
-        <TextBlock
-          isFetching
-          address={shortAddress}
-          truncatedStyle={truncatedStyle}
-        />
+        <span className={addressText}>
+          {truncate ? truncateMiddleIfNeeded(address, 17) : address}
+        </span>
       }
     >
-      <ContractNameComponent
-        truncate={truncate}
-        address={address}
-        truncatedStyle={truncatedStyle}
-      />
+      <ContractNameSuspender address={address} truncate={truncate} />
     </Suspense>
   )
 }

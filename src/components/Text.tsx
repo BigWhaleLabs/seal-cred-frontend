@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import {
   TGradientColorStops,
   TTextColor,
@@ -15,10 +14,7 @@ import {
   textDecoration,
   width,
 } from 'classnames/tailwind'
-
-interface ChildrenProp {
-  children: ReactNode
-}
+import ChildrenProp from 'models/ChildrenProp'
 
 const headerText = (extraLeading = false) =>
   classnames(
@@ -167,7 +163,7 @@ export function LinkText({
       href={url}
       title={title}
       rel="noopener noreferrer"
-      target={'_blank'}
+      target="_blank"
     >
       {children}
     </a>
