@@ -3,7 +3,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import EnsAddress from 'components/EnsAddress'
 import SealCredStore from 'stores/SealCredStore'
-import env from 'helpers/env'
+import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 
 function OwnedBadgeAddressSuspender({
   derivativeAddress,
@@ -16,8 +16,6 @@ function OwnedBadgeAddressSuspender({
   const record = derivativeLedger[derivativeAddress]
   const [address, setAddress] = useState<string | undefined>(undefined)
 
-  const network =
-    env.VITE_ETH_NETWORK !== 'mainnet' ? `${env.VITE_ETH_NETWORK}.` : ''
   useEffect(() => {
     async function getAddress() {
       setAddress(await record?.derivativeContract.ownerOf(tokenId))
@@ -30,13 +28,13 @@ function OwnedBadgeAddressSuspender({
     <>
       {address && (
         <LinkText
-          url={`https://${network}etherscan.io/address/${address}`}
+          url={getEtherscanAddressUrl(address)}
           gradientFrom="from-secondary"
           gradientTo="to-accent"
           title={address}
           bold
         >
-          <EnsAddress address={address} />
+          <EnsAddress address={address} truncate />
         </LinkText>
       )}
     </>

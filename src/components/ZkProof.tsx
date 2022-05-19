@@ -107,11 +107,13 @@ function useProofContent(
   }
 }
 
-interface ZkProofProps {
+export default function ({
+  proof,
+  contractAddress,
+}: {
   proof?: Proof
   contractAddress: string
-}
-export default function ({ proof, contractAddress }: ZkProofProps) {
+}) {
   const { xs } = useBreakpoints()
   const { color, content } = useProofContent(contractAddress, proof)
 
@@ -120,6 +122,7 @@ export default function ({ proof, contractAddress }: ZkProofProps) {
       <BodyText small>
         <ContractName address={contractAddress} />
       </BodyText>
+
       <div className={proofText(xs)}>
         <AccentText bold color={color}>
           {content}
