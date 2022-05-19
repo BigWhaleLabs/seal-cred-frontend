@@ -1,60 +1,35 @@
-import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import EnsAddress from 'components/EnsAddress'
 import SealCredStore from 'stores/SealCredStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
-interface ContractNameProps {
+interface ContractName {
+  address: string
   truncate?: boolean
   overflow?: boolean
-  address: string
-  truncatedStyle?: boolean
-}
-
-interface FetchingContract extends ContractNameProps {
   isFetching?: boolean
 }
 
-function TextBlock({
+function ContractNameSuspender({
   truncate,
   address,
-  truncatedStyle,
   isFetching,
-}: FetchingContract) {
-  const truncatedText =
+}: ContractName) {
+  const { contractNames } = useSnapshot(SealCredStore)
+
+  const truncatedContractAddress =
     truncate && address.length > 15
       ? truncateMiddleIfNeeded(address, 11)
       : address
 
-  return truncatedStyle ? (
-    <>
-      {isFetching && <>Fetching </>}
-      {truncatedText}
-    </>
-  ) : (
-    <BodyText small>
-      {isFetching && <>Fetching </>}
-      {truncatedText}
-    </BodyText>
-  )
-}
-
-function ContractNameComponent({
-  truncate,
-  address,
-  truncatedStyle,
-}: ContractNameProps) {
-  const { contractNames } = useSnapshot(SealCredStore)
-
   return (
     <>
       {contractNames[address] ? (
-        <TextBlock
-          address={contractNames[address] || ''}
-          truncatedStyle={truncatedStyle}
-          truncate={truncate}
-        />
+        <>
+          {isFetching && <>Fetching </>}
+          {truncatedContractAddress}
+        </>
       ) : (
         <EnsAddress address={address} />
       )}
@@ -62,27 +37,10 @@ function ContractNameComponent({
   )
 }
 
-export default function ({
-  truncate,
-  address,
-  truncatedStyle,
-}: ContractNameProps) {
-  const shortAddress = truncateMiddleIfNeeded(address, 14)
+export default function ({ truncate, address }: ContractName) {
   return (
-    <Suspense
-      fallback={
-        <TextBlock
-          isFetching
-          address={shortAddress}
-          truncatedStyle={truncatedStyle}
-        />
-      }
-    >
-      <ContractNameComponent
-        truncate={truncate}
-        address={address}
-        truncatedStyle={truncatedStyle}
-      />
+    <Suspense fallback={<ContractNameSuspender isFetching address={address} />}>
+      <ContractNameSuspender truncate={truncate} address={address} />
     </Suspense>
   )
 }
