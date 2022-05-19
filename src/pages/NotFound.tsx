@@ -39,7 +39,7 @@ export default function () {
           <SubheaderText>Not found</SubheaderText>
         </div>
         <div className={wrapperBody}>
-          <Button colors="accent" small onClick={() => navigate('/')}>
+          <Button primary small onClick={() => navigate('/')}>
             Go to the main page
           </Button>
         </div>

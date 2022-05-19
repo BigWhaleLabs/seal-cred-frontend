@@ -55,7 +55,7 @@ export default function () {
           Connect a wallet with supported NFTs to create ZK proofs.
         </span>
         <Button
-          colors="accent"
+          primary
           loading={walletLoading}
           onClick={async () => {
             await WalletStore.connect(true)

@@ -130,7 +130,7 @@ export default function () {
           <AccentText color="text-tertiary">
             Create your own zkNFT with SealCred.
           </AccentText>
-          <Button colors="accent" small onClick={() => navigate('/')}>
+          <Button primary small onClick={() => navigate('/')}>
             Get started
           </Button>
         </Card>
