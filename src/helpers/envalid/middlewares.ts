@@ -1,4 +1,4 @@
-export const strictProxyMiddleware = <T extends object>(
+const strictProxyMiddleware = <T extends object>(
   envObj: T,
   rawEnv: unknown
 ) => {
@@ -34,11 +34,13 @@ export const strictProxyMiddleware = <T extends object>(
         return target[name]
       }
 
-      // eslint-disable-next-line no-prototype-builtins
-      const varExists = target.hasOwnProperty(name)
+      const varExists = Object.prototype.hasOwnProperty.call(target, name)
       if (!varExists) {
-        // eslint-disable-next-line no-prototype-builtins
-        if (typeof rawEnv === 'object' && rawEnv?.hasOwnProperty?.(name)) {
+        if (
+          typeof rawEnv === 'object' &&
+          rawEnv !== null &&
+          Object.prototype.hasOwnProperty.call(rawEnv, name)
+        ) {
           throw new ReferenceError(
             `[envalid] Env var ${name} was accessed but not validated. This var is set in the environment; please add an envalid validator for it.`
           )
@@ -58,6 +60,4 @@ export const strictProxyMiddleware = <T extends object>(
   })
 }
 
-export const accessorMiddleware = <T>(envObj: T) => {
-  return envObj as T
-}
+export default strictProxyMiddleware

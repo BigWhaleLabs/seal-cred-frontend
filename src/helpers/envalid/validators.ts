@@ -1,5 +1,4 @@
 import { Spec, ValidatorSpec } from 'helpers/envalid/types'
-import handleError from 'helpers/handleError'
 
 export const makeValidator = <T>(parseFn: (input: string) => T) => {
   return function (spec?: Spec<T>): ValidatorSpec<T> {
@@ -7,18 +6,27 @@ export const makeValidator = <T>(parseFn: (input: string) => T) => {
   }
 }
 
-export function num<T extends number = number>(spec?: Spec<T>) {
+export function num<T extends number>(
+  spec?: Spec<T>,
+  errorHandler?: (errorMessage: string) => void
+) {
   return makeValidator((input: string) => {
     const reduced = parseFloat(input)
-    if (Number.isNaN(reduced))
-      return handleError(`Invalid number input: "${input}"`)
-    return reduced as T
+    if (!Number.isNaN(reduced)) return reduced as T
+
+    const errorMessage = `Invalid number input: "${input}"`
+    throw errorHandler ? errorHandler(errorMessage) : new Error(errorMessage)
   })(spec)
 }
 
-export function str<T extends string = string>(spec?: Spec<T>) {
+export function str<T extends string>(
+  spec?: Spec<T>,
+  errorHandler?: (errorMessage: string) => void
+) {
   return makeValidator((input: string) => {
     if (typeof input === 'string') return input as T
-    return handleError(`Not a string: "${input}"`)
+
+    const errorMessage = `Not a string: "${input}"`
+    throw errorHandler ? errorHandler(errorMessage) : new Error(errorMessage)
   })(spec)
 }
