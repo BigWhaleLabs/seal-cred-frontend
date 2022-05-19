@@ -22,7 +22,7 @@ interface ArcTextProps {
 
 export default function ({ text, mobile }: ArcTextProps) {
   const { xxs, md } = useBreakpoints()
-  const radius = 85
+  const radius = mobile ? 85 : 110
 
   return (
     <svg
