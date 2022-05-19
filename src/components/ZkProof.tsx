@@ -15,6 +15,7 @@ import classnames, {
   display,
   flexDirection,
   fontFamily,
+  fontSize,
   justifyContent,
   lineHeight,
   maxWidth,
@@ -33,7 +34,8 @@ const proofText = (small?: boolean) =>
     maxWidth('max-w-fit'),
     alignItems('items-center'),
     fontFamily('font-primary'),
-    lineHeight('leading-5')
+    lineHeight('leading-5'),
+    fontSize('text-sm')
   )
 
 const textWithIcon = classnames(

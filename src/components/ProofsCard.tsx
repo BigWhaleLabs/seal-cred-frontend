@@ -24,7 +24,7 @@ import useBreakpoints from 'hooks/useBreakpoints'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 const titleContainer = space('space-y-2')
-const hintContainer = margin('mt-2')
+const hintContainer = classnames(margin('mt-2'))
 const innerScrollableBlock = space('space-y-2')
 
 const proofCardZKButtonContainer = classnames(
@@ -36,7 +36,7 @@ const proofCardZKButtonContainer = classnames(
 function ZkProofSavedMessage() {
   return (
     <div className={hintContainer}>
-      <AccentText small color="text-primary">
+      <AccentText small primary color="text-primary">
         Created ZK proofs are saved in the browser even if you switch wallets.
       </AccentText>
     </div>
