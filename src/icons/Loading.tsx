@@ -7,10 +7,10 @@ import {
   width,
 } from 'classnames/tailwind'
 
-const loader = classnames(animation('animate-spin'), textColor('text-inherit'))
 const icon = (small?: boolean) =>
   classnames(
-    loader,
+    animation('animate-spin'),
+    textColor('text-inherit'),
     width(small ? 'w-3' : 'w-5'),
     height(small ? 'h-3' : 'h-5')
   )
