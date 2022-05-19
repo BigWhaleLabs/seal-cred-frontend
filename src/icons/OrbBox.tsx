@@ -5,6 +5,7 @@ import classnames, {
   transitionProperty,
 } from 'classnames/tailwind'
 import colorToDropShadow from 'helpers/colorToDropShadow'
+import colorToFillColor from 'helpers/colorToFillColor'
 import colorToStrokeColor from 'helpers/colorToStrokeColor'
 
 const orbBoxStyles = (shadow?: boolean) =>
@@ -16,12 +17,13 @@ const fillPath = fill('fill-primary-dark')
 
 interface OrbBoxProps {
   color: Color
-  shadow?: boolean
+  isShadowOpaque?: boolean
 }
 
-export default function OrbBox({ color, shadow }: OrbBoxProps) {
+export default function OrbBox({ color, isShadowOpaque: shadow }: OrbBoxProps) {
   const shadowColor = colorToDropShadow(color)
   const strokeColor = colorToStrokeColor(color)
+  const fillColor = colorToFillColor(color)
 
   return (
     <div style={{ height: '4.063rem', width: '4.063rem' }}>
@@ -45,20 +47,18 @@ export default function OrbBox({ color, shadow }: OrbBoxProps) {
           d="M63.35,8.47V58.3A4.33,4.33,0,0,1,59,62.63H36.27m-27.09,0V12.8a4.33,4.33,0,0,1,4.34-4.33H36.27"
           transform="translate(-3.27 -2.55)"
           fill="none"
-          stroke={strokeColor}
           className={strokeColor}
         />
-        <circle cx="33" cy="60.08" r="1.08" fill={strokeColor} />
-        <circle cx="5.92" cy="60.08" r="1.08" fill={strokeColor} />
-        <circle cx="33" cy="5.92" r="1.08" fill={strokeColor} />
-        <circle cx="60.08" cy="5.92" r="1.08" fill={strokeColor} />
+        <circle cx="33" cy="60.08" r="1.08" className={fillColor} />
+        <circle cx="5.92" cy="60.08" r="1.08" className={fillColor} />
+        <circle cx="33" cy="5.92" r="1.08" className={fillColor} />
+        <circle cx="60.08" cy="5.92" r="1.08" className={fillColor} />
         <line
           x1="60.08"
           y1="29.21"
           x2="65.5"
           y2="29.21"
           fill="none"
-          stroke={strokeColor}
           className={strokeColor}
         />
         <line
@@ -67,7 +67,6 @@ export default function OrbBox({ color, shadow }: OrbBoxProps) {
           x2="5.92"
           y2="29.21"
           fill="none"
-          stroke={strokeColor}
           className={strokeColor}
         />
         <line
@@ -76,7 +75,6 @@ export default function OrbBox({ color, shadow }: OrbBoxProps) {
           x2="16.21"
           y2="5.92"
           fill="none"
-          stroke={strokeColor}
           className={strokeColor}
         />
         <line
@@ -85,7 +83,6 @@ export default function OrbBox({ color, shadow }: OrbBoxProps) {
           x2="50.87"
           y2="65.5"
           fill="none"
-          stroke={strokeColor}
           className={strokeColor}
         />
       </svg>

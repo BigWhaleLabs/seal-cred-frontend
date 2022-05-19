@@ -1,3 +1,4 @@
+import { BodyText, HeaderText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import WalletStore from 'stores/WalletStore'
@@ -5,14 +6,9 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
-  fontFamily,
-  fontSize,
-  fontWeight,
   height,
   justifyContent,
-  margin,
-  textAlign,
-  textColor,
+  space,
   width,
 } from 'classnames/tailwind'
 
@@ -28,21 +24,16 @@ const contentWrapper = classnames(
   width('w-11/12', 'lg:w-9/12'),
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-center')
+  alignItems('items-center'),
+  space('space-y-4')
 )
 
-const cardTitle = classnames(
-  fontFamily('font-primary'),
-  textColor('text-accent'),
-  fontSize('text-4xl'),
-  fontWeight('font-bold'),
-  margin('mb-4')
-)
-
-const bodyText = classnames(
-  textColor('text-formal-accent'),
-  textAlign('text-center'),
-  margin('mb-8')
+const bottomWrapper = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  alignItems('items-center'),
+  space('space-y-8'),
+  width('w-full')
 )
 
 export default function () {
@@ -50,19 +41,21 @@ export default function () {
   return (
     <div className={walletContainer}>
       <div className={contentWrapper}>
-        <span className={cardTitle}>First</span>
-        <span className={bodyText}>
-          Connect a wallet with supported NFTs to create ZK proofs.
-        </span>
-        <Button
-          colors="accent"
-          loading={walletLoading}
-          onClick={async () => {
-            await WalletStore.connect(true)
-          }}
-        >
-          <span>Connect a wallet</span>
-        </Button>
+        <HeaderText accent>First</HeaderText>
+        <div className={bottomWrapper}>
+          <BodyText center>
+            Connect a wallet with supported NFTs to create ZK proofs.
+          </BodyText>
+          <Button
+            colors="accent"
+            loading={walletLoading}
+            onClick={async () => {
+              await WalletStore.connect(true)
+            }}
+          >
+            <span>Connect a wallet</span>
+          </Button>
+        </div>
       </div>
     </div>
   )

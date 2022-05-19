@@ -5,7 +5,6 @@ import ZkSphere from 'components/landing/ZkSphere'
 import classnames, {
   TMargin,
   alignItems,
-  backgroundColor,
   borderRadius,
   display,
   flexDirection,
@@ -38,7 +37,7 @@ const highlightedWrapper = (color: Color) =>
   classnames(
     padding('px-2', 'py-1'),
     borderRadius('rounded-full'),
-    backgroundColor(colorToTailwindBackground(color)),
+    colorToTailwindBackground(color),
     zIndex('z-10')
   )
 
@@ -49,7 +48,7 @@ export default function () {
   return (
     <div className={orbBoxes} style={{ transform: 'translateY(5.625rem)' }}>
       <div className={orbBox('mt-8')}>
-        <OrbBox color="tertiary" shadow={animNotStarted} />
+        <OrbBox color="tertiary" isShadowOpaque={animNotStarted} />
         <div className={position('absolute')}>
           <ZkSphere color="tertiary" animated />
         </div>
@@ -58,7 +57,7 @@ export default function () {
         </div>
       </div>
       <div className={orbBox()}>
-        <OrbBox color="accent" shadow={animNotStarted} />
+        <OrbBox color="accent" isShadowOpaque={animNotStarted} />
         <div className={position('absolute')}>
           <ZkSphere color="accent" animated />
         </div>
@@ -67,9 +66,9 @@ export default function () {
         </div>
       </div>
       <div className={orbBox('mt-11')}>
-        <OrbBox color={'secondary'} shadow={animNotStarted} />
+        <OrbBox color="secondary" isShadowOpaque={animNotStarted} />
         <div className={position('absolute')}>
-          <ZkSphere color={'secondary'} animated />
+          <ZkSphere color="secondary" animated />
         </div>
         <div className={highlightedWrapper('secondary')}>
           <HighlightedText center>Wallet 03</HighlightedText>
