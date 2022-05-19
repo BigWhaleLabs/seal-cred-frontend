@@ -85,6 +85,7 @@ module.exports = {
         accent: '0rem 0rem 0.625rem #fed823',
         secondary: '0rem 0rem 0.625rem #ff7bed',
         tertiary: '0rem 0rem 0.625rem #01fed6',
+        primary: '0rem 0rem 1.313rem #0A84FF',
         'formal-accent': '0rem 0rem 0.625rem #efecd6',
       },
       padding: {
@@ -94,6 +95,7 @@ module.exports = {
         '-5': '-1.25rem',
         7.5: '0.469rem',
         8.5: '0.531rem',
+        '-10': '-0.625rem',
       },
       backgroundImage: {
         noise: 'url("/img/noise50.png")',
