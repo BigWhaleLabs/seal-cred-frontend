@@ -74,7 +74,7 @@ function OwnerInfo({
       <HeaderText extraLeading>
         This wallet owns a{' '}
         <AccentText bold color="text-secondary">
-          <ContractName address={derivativeAddress} truncatedStyle />
+          <ContractName address={derivativeAddress} />
         </AccentText>
       </HeaderText>
 
@@ -82,10 +82,7 @@ function OwnerInfo({
         This is a zkNFT derivative. It means this person has been verified to
         own at least one ‘
         <AccentText color="text-secondary">
-          <ContractName
-            address={record.originalContract.address}
-            truncatedStyle
-          />
+          <ContractName address={record.originalContract.address} />
         </AccentText>
         ‘ NFT.
       </BodyText>

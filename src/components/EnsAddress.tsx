@@ -6,14 +6,14 @@ import useEnsNameOrAddress from 'hooks/useEnsNameOrAddress'
 function EnsAddressSuspender({ address }: { address: string }) {
   const ensNameOrAddress = useEnsNameOrAddress(address)
 
-  return <span>{truncateMiddleIfNeeded(ensNameOrAddress, 17)}</span>
+  return <>{truncateMiddleIfNeeded(ensNameOrAddress, 17)}</>
 }
 
 export default function ({ address }: { address: string }) {
   EnsStore.fetchEnsName(address)
 
   return (
-    <Suspense fallback={<span>{truncateMiddleIfNeeded(address, 17)}</span>}>
+    <Suspense fallback={truncateMiddleIfNeeded(address, 17)}>
       <EnsAddressSuspender address={address} />
     </Suspense>
   )
