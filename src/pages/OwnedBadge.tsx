@@ -22,7 +22,6 @@ import classnames, {
   display,
   flexDirection,
   justifyContent,
-  margin,
   space,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
@@ -32,15 +31,15 @@ const mainBox = classnames(
   display('flex'),
   flexDirection('flex-col'),
   justifyContent('justify-center'),
-  alignItems('items-center')
+  alignItems('items-center'),
+  space('space-y-6')
 )
-const walletBox = classnames(display('flex'), flexDirection('flex-row'))
-const walletAddress = classnames(
+const walletBox = classnames(
   display('flex'),
-  flexDirection('flex-col'),
-  margin('ml-4')
+  flexDirection('flex-row'),
+  space('space-x-4')
 )
-const getStartedCard = classnames(margin('mt-6'))
+const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
 
 function OwnerInfo({
   derivativeAddress,
@@ -131,16 +130,14 @@ export default function () {
         <OwnerInfo derivativeAddress={derivativeAddress} tokenId={tokenId} />
       </Suspense>
 
-      <div className={getStartedCard}>
-        <Card color="tertiary" shadow onlyWrap>
-          <AccentText color="text-tertiary">
-            Create your own zkNFT with SealCred.
-          </AccentText>
-          <Button primary small onClick={() => navigate('/')}>
-            Get started
-          </Button>
-        </Card>
-      </div>
+      <Card color="tertiary" shadow onlyWrap>
+        <AccentText color="text-tertiary">
+          Create your own zkNFT with SealCred.
+        </AccentText>
+        <Button primary small onClick={() => navigate('/')}>
+          Get started
+        </Button>
+      </Card>
     </div>
   ) : (
     <NotFound />

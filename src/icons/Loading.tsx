@@ -2,27 +2,32 @@ import {
   animation,
   classnames,
   height,
+  inset,
   opacity,
+  position,
   textColor,
   width,
 } from 'classnames/tailwind'
 
-const icon = (small?: boolean) =>
+const icon = (small?: boolean, screenCentre?: boolean) =>
   classnames(
     animation('animate-spin'),
     textColor('text-inherit'),
     width(small ? 'w-3' : 'w-5'),
-    height(small ? 'h-3' : 'h-5')
+    height(small ? 'h-3' : 'h-5'),
+    inset(screenCentre ? { 'top-1/2': true, 'left-1/2': true } : undefined),
+    position(screenCentre ? 'absolute' : undefined)
   )
 const iconPath = classnames(opacity('opacity-100'))
 
 interface LoadingProps {
+  screenCentre?: boolean
   small?: boolean
 }
 
-export default function ({ small }: LoadingProps) {
+export default function ({ small, screenCentre }: LoadingProps) {
   return (
-    <svg className={icon(small)} viewBox="0 0 24 24">
+    <svg className={icon(small, screenCentre)} viewBox="0 0 24 24">
       <path
         className={iconPath}
         fill="currentColor"

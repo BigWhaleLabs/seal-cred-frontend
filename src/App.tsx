@@ -1,11 +1,14 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import Landing from 'pages/Landing'
-import Main from 'pages/Main'
+import { lazy } from 'react'
+import LazyComponent from 'components/LazyComponent'
 import Navbar from 'components/Navbar'
-import NotFound from 'pages/NotFound'
-import OwnedBadge from 'pages/OwnedBadge'
 import Root from 'components/Root'
+
+const NotFound = lazy(() => import('pages/NotFound'))
+const OwnedBadge = lazy(() => import('pages/OwnedBadge'))
+const Landing = lazy(() => import('pages/Landing'))
+const Main = lazy(() => import('pages/Main'))
 
 export default function () {
   return (
@@ -14,10 +17,22 @@ export default function () {
         <Navbar />
         <ToastContainer position="bottom-right" theme="dark" />
         <Routes>
-          <Route path="/:derivativeAddress/:tokenId" element={<OwnedBadge />} />
-          <Route path="/" element={<Landing />} />
-          <Route path="/app" element={<Main />} />
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="/:derivativeAddress/:tokenId"
+            element={<LazyComponent lazyImported={<OwnedBadge />} />}
+          />
+          <Route
+            path="/"
+            element={<LazyComponent lazyImported={<Landing />} />}
+          />
+          <Route
+            path="/app"
+            element={<LazyComponent lazyImported={<Main />} />}
+          />
+          <Route
+            path="*"
+            element={<LazyComponent lazyImported={<NotFound />} />}
+          />
         </Routes>
       </Router>
     </Root>

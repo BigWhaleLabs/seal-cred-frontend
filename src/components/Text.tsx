@@ -94,7 +94,7 @@ export function BodyText({
 }
 
 const cardHeader = (color?: TTextColor) =>
-  classnames(textColor(color || 'text-formal-accent'))
+  textColor(color || 'text-formal-accent')
 export function CardHeader({
   color,
   children,
@@ -182,7 +182,7 @@ export function LinkText({
   )
 }
 
-const highlightedText = (center?: boolean, bold?: boolean) =>
+const highlightedText = (bold?: boolean, center?: boolean) =>
   classnames(
     width('w-fit'),
     textColor('text-primary-dark'),
