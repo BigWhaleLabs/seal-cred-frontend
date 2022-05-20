@@ -1,6 +1,6 @@
 import { AccentText, CardDescription, CardHeader } from 'components/Text'
 import { Suspense } from 'react'
-import { space } from 'classnames/tailwind'
+import { lineHeight, space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
@@ -45,12 +45,12 @@ function Badges() {
           {shouldNotify ? (
             <BadgesHintCard
               text={
-                <>
+                <div className={lineHeight('leading-6')}>
                   <AccentText color="text-secondary">Hold up...</AccentText>{' '}
                   this wallet has NFTs (It’s doxxed). You should make sure your
                   anonymous wallet is connected first before creating badges.
                   Unless you plan to build badges on this wallet.
-                </>
+                </div>
               }
             >
               <Button
