@@ -138,10 +138,6 @@ export default function () {
           Get started
         </Button>
       </Card>
-
-      {/* <div className={getStartedCard}>
-        
-      </div> */}
     </div>
   ) : (
     <NotFound />
