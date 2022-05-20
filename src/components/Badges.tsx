@@ -12,6 +12,79 @@ import WalletStore from 'stores/WalletStore'
 import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
+const DoxNotification = ({ account }: { account: string }) => (
+  <BadgesHintCard
+    text={
+      <>
+        <AccentText color="text-secondary">Hold up...</AccentText> this wallet
+        has NFTs (It’s doxxed). You should make sure your anonymous wallet is
+        connected first before creating badges. Unless you plan to build badges
+        on this wallet.
+      </>
+    }
+  >
+    <Button
+      small
+      primary
+      onClick={() =>
+        (WalletStore.walletsToNotifiedOfBeingDoxxed[account] = true)
+      }
+    >
+      I understand, show badges
+    </Button>
+  </BadgesHintCard>
+)
+
+interface ZkBadgesTitleProps {
+  hasAccount: boolean
+  hasUnminted: boolean
+  allProofsCompleted: boolean
+}
+const ZkBadgesTitle = ({
+  hasAccount,
+  hasUnminted,
+  allProofsCompleted,
+}: ZkBadgesTitleProps) => (
+  <div className={space('space-y-2')}>
+    <CardHeader color="text-secondary">
+      {hasAccount ? 'Create ZK badges' : 'Then'}
+    </CardHeader>
+    <CardDescription>
+      {hasAccount && hasUnminted
+        ? 'Looks like you can create ZK badges for this wallet'
+        : allProofsCompleted
+        ? 'You generated all available ZK badges for this wallet'
+        : 'Once you’ve created a ZK proof, you will be able to mint ZK badges for your anonymous wallets'}
+    </CardDescription>
+  </div>
+)
+
+const ConnectAnonymousWallet = () => (
+  <BadgesHintCard text="You must switch from your first wallet after ZK proof is made to an anonymous wallet for the magic to work.">
+    <Button
+      withArrow
+      onClick={async () => {
+        await WalletStore.connect(true)
+      }}
+    >
+      Connect your anonymous wallet
+    </Button>
+  </BadgesHintCard>
+)
+
+interface DoxNotificationOrBadgesProps {
+  account: string
+  shouldNotify: boolean
+}
+const DoxNotificationOrBadges = ({
+  shouldNotify,
+  account,
+}: DoxNotificationOrBadgesProps) => (
+  <Scrollbar maxHeight={270}>
+    {shouldNotify ? <DoxNotification account={account} /> : <BadgesList />}
+  </Scrollbar>
+)
+
 function Badges() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
@@ -21,82 +94,45 @@ function Badges() {
   const hasUnminted = proofsAvailableToMint.length > 0
 
   const shouldNotify =
-    account &&
+    !!account &&
     !walletsToNotifiedOfBeingDoxxed[account] &&
     originalTokensOwned.length > 0 &&
     hasUnminted
 
   return (
     <div className={space('space-y-6')}>
-      <div className={space('space-y-2')}>
-        <CardHeader color="text-secondary">
-          {!account ? 'Then' : 'Create ZK badges'}
-        </CardHeader>
-        <CardDescription>
-          {account && hasUnminted
-            ? 'Looks like you can create ZK badges for this wallet'
-            : !proofsCompleted.length
-            ? 'Once you’ve created a ZK proof, you will be able to mint ZK badges for your anonymous wallets'
-            : 'You generated all available ZK badges for this wallet'}
-        </CardDescription>
-      </div>
+      <ZkBadgesTitle
+        hasAccount={!!account}
+        hasUnminted={hasUnminted}
+        allProofsCompleted={!!proofsCompleted.length}
+      />
+
       {account ? (
-        <Scrollbar maxHeight={270}>
-          {shouldNotify ? (
-            <BadgesHintCard
-              text={
-                <>
-                  <AccentText color="text-secondary">Hold up...</AccentText>{' '}
-                  this wallet has NFTs (It’s doxxed). You should make sure your
-                  anonymous wallet is connected first before creating badges.
-                  Unless you plan to build badges on this wallet.
-                </>
-              }
-            >
-              <Button
-                small
-                primary
-                onClick={() =>
-                  (WalletStore.walletsToNotifiedOfBeingDoxxed[account] = true)
-                }
-              >
-                I understand, show badges
-              </Button>
-            </BadgesHintCard>
-          ) : (
-            <BadgesList />
-          )}
-        </Scrollbar>
+        <DoxNotificationOrBadges
+          shouldNotify={shouldNotify}
+          account={account}
+        />
       ) : (
-        <BadgesHintCard text="You must switch from your first wallet after ZK proof is made to an anonymous wallet for the magic to work.">
-          <Button
-            withArrow
-            onClick={async () => {
-              await WalletStore.connect(true)
-            }}
-          >
-            Connect your anonymous wallet
-          </Button>
-        </BadgesHintCard>
+        <ConnectAnonymousWallet />
       )}
     </div>
   )
 }
 
 const titleContainer = space('space-y-2')
+const BadgesFallback = () => (
+  <div className={titleContainer}>
+    <CardHeader color="text-accent">Also loading...</CardHeader>
+    <CardDescription>
+      Please, be patient, I can be slow at times
+    </CardDescription>
+  </div>
+)
+
 export default function () {
   return (
     <Card shadow color="secondary">
-      <Suspense
-        fallback={
-          <div className={titleContainer}>
-            <CardHeader color="text-accent">Also loading...</CardHeader>
-            <CardDescription>
-              Please, be patient, I can be slow at times
-            </CardDescription>
-          </div>
-        }
-      >
+      <Suspense fallback={<BadgesFallback />}>
         <Badges />
       </Suspense>
     </Card>
