@@ -17,7 +17,7 @@ const wrapperBox = classnames(
   flexDirection('flex-col'),
   width('w-full')
 )
-const eyeBoxMargin = margin('-mt-10', 'mb-12', 'ml-3', 'md:ml-0')
+const eyeBoxMargin = margin('-mt-10', 'mb-12', 'mx-auto')
 
 export default function () {
   const { xxs, sm, md } = useBreakpoints()
