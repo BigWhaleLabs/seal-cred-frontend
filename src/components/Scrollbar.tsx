@@ -1,4 +1,6 @@
-import { MutableRefObject, ReactNode, lazy, useRef } from 'react'
+import { MutableRef } from 'preact/hooks'
+import { lazy, useRef } from 'react'
+import ChildrenProp from 'models/ChildrenProp'
 import classnames, { overflow, position } from 'classnames/tailwind'
 import useIsOverflow from 'hooks/useIsOverflow'
 
@@ -10,7 +12,6 @@ type FadeType = 'top' | 'bottom' | 'both'
 const outerBox = classnames(position('relative'), overflow('overflow-x-hidden'))
 
 interface ScrollbarProps {
-  children: ReactNode
   maxHeight?: number
   fade?: FadeType
 }
@@ -19,8 +20,8 @@ export default function ({
   children,
   maxHeight = 350,
   fade = 'both',
-}: ScrollbarProps) {
-  const scrollRef = useRef() as MutableRefObject<HTMLDivElement>
+}: ChildrenProp & ScrollbarProps) {
+  const scrollRef = useRef() as MutableRef<HTMLDivElement>
   const { isOnTop, isOnBottom } = useIsOverflow(scrollRef, maxHeight)
 
   return (

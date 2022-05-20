@@ -134,7 +134,7 @@ function Badge({
         <BadgeIcon />
       )}
       <div className={badgeBody(minted, small)}>
-        <BadgeText>
+        <BadgeText small>
           <ContractName address={derivativeAddress} />
         </BadgeText>
         {minted ? (

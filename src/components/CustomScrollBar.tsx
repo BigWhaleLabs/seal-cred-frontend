@@ -1,13 +1,14 @@
 import 'simplebar/dist/simplebar.min.css'
-import { MutableRefObject, ReactNode, lazy, useRef } from 'react'
+import { MutableRef } from 'preact/hooks'
+import { lazy, useRef } from 'react'
+import ChildrenProp from 'models/ChildrenProp'
 import classnames, { margin, transitionProperty } from 'classnames/tailwind'
 import useIsOverflow from 'hooks/useIsOverflow'
 
 const SimpleBar = lazy(() => import('simplebar-react'))
 
 interface CustomScrollBarProps {
-  children: ReactNode
-  scrollRef: MutableRefObject<HTMLDivElement>
+  scrollRef: MutableRef<HTMLDivElement>
   maxHeight: number
 }
 
@@ -15,8 +16,8 @@ export default function ({
   children,
   scrollRef,
   maxHeight,
-}: CustomScrollBarProps) {
-  const wrapRef = useRef() as MutableRefObject<HTMLDivElement>
+}: ChildrenProp & CustomScrollBarProps) {
+  const wrapRef = useRef() as MutableRef<HTMLDivElement>
 
   const { overflows, scrollMaxHeight } = useIsOverflow(scrollRef, maxHeight)
 

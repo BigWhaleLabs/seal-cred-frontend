@@ -7,7 +7,7 @@ const bottomBodyText = classnames(margin('mt-6'))
 
 export default function () {
   return (
-    <Card color="formal-accent" onlyWrap shadow>
+    <Card color="formal-accent" onlyWrap shadow nospace>
       <div className={cardHeader}>
         <HeaderText extraLeading>Creating ZK Proof</HeaderText>
       </div>
