@@ -40,6 +40,7 @@ const highlightedWrapper = (color: Color) =>
     colorToTailwindBackground(color),
     zIndex('z-10')
   )
+const orbBoxClasses = classnames(position('absolute'), padding('pt-2'))
 
 export default function () {
   const scroll = useScrollPercent()
@@ -49,7 +50,7 @@ export default function () {
     <div className={orbBoxes} style={{ transform: 'translateY(5.625rem)' }}>
       <div className={orbBox('mt-8')}>
         <OrbBox color="tertiary" isShadowOpaque={animNotStarted} />
-        <div className={position('absolute')}>
+        <div className={orbBoxClasses}>
           <ZkSphere color="tertiary" animated />
         </div>
         <div className={highlightedWrapper('tertiary')}>
@@ -58,7 +59,7 @@ export default function () {
       </div>
       <div className={orbBox()}>
         <OrbBox color="accent" isShadowOpaque={animNotStarted} />
-        <div className={position('absolute')}>
+        <div className={orbBoxClasses}>
           <ZkSphere color="accent" animated />
         </div>
         <div className={highlightedWrapper('accent')}>
@@ -67,7 +68,7 @@ export default function () {
       </div>
       <div className={orbBox('mt-11')}>
         <OrbBox color="secondary" isShadowOpaque={animNotStarted} />
-        <div className={position('absolute')}>
+        <div className={orbBoxClasses}>
           <ZkSphere color="secondary" animated />
         </div>
         <div className={highlightedWrapper('secondary')}>

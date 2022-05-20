@@ -26,7 +26,6 @@ const navbar = (visible?: boolean, withoutWallet?: boolean) =>
     alignItems('items-center'),
     justifyContent(withoutWallet ? 'sm:justify-center' : 'justify-between'),
     padding('py-4', 'px-4'),
-    margin('mb-2'),
     space('space-x-9', 'lg:space-x-0'),
     zIndex('z-50'),
     backgroundColor(visible ? 'bg-primary-dark' : 'bg-transparent'),

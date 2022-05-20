@@ -1,18 +1,18 @@
 import { BodyText, LinkText } from 'components/Text'
+import { margin, space } from 'classnames/tailwind'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import PrivacyDeath from 'components/PrivacyDeath'
-import classnames, { margin } from 'classnames/tailwind'
 
-const bigWhaleLabsText = classnames(margin('mt-6'))
-const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
+const bottomExtraSpace = margin('mb-24')
+const learnMoreCardWrapper = space('space-y-6')
 
 export default function () {
   return (
-    <div className={margin('mb-24')}>
+    <div className={bottomExtraSpace}>
       <Card color="primary" shadow onlyWrap>
-        <PrivacyDeath />
-        <div className={bigWhaleLabsText}>
+        <div className={learnMoreCardWrapper}>
+          <PrivacyDeath />
           <BodyText>
             <LinkText color="text-primary" url={`https://bigwhalelabs.com`}>
               Big Whale Labs{' '}
@@ -20,8 +20,6 @@ export default function () {
             is dedicated to building a pseudonymous world in which privacy and
             identity are owned by the human, not the corporation.
           </BodyText>
-        </div>
-        <div className={learnMoreText}>
           <Button
             withArrow
             onClick={() =>
