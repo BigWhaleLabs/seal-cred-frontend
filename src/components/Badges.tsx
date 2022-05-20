@@ -45,12 +45,12 @@ function Badges() {
           {shouldNotify ? (
             <BadgesHintCard
               text={
-                <div>
+                <>
                   <AccentText color="text-secondary">Hold up...</AccentText>{' '}
                   this wallet has NFTs (It’s doxxed). You should make sure your
                   anonymous wallet is connected first before creating badges.
                   Unless you plan to build badges on this wallet.
-                </div>
+                </>
               }
             >
               <Button
