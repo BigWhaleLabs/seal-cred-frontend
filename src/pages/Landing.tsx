@@ -64,13 +64,13 @@ export default function () {
       <ScrollDownButton />
       <div
         className={position('absolute')}
-        style={{ transform: 'translateY(38.125rem)' }}
+        style={{ transform: 'translateY(35.5rem)' }}
       >
         <TopConnectors />
       </div>
       <div
         className={highlightedBlock}
-        style={{ transform: 'translateY(43.125rem)' }}
+        style={{ transform: 'translateY(40rem)' }}
       >
         <div className={highlightedWrapper}>
           <HighlightedText center>
