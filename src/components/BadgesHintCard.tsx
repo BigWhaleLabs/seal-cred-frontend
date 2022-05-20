@@ -1,5 +1,6 @@
 import { BadgeText } from 'components/Text'
-import { ReactNode } from 'react'
+import { ComponentChildren } from 'preact'
+import ChildrenProp from 'models/ChildrenProp'
 import classnames, {
   backgroundColor,
   borderRadius,
@@ -9,12 +10,12 @@ import classnames, {
   space,
 } from 'classnames/tailwind'
 
-interface BadgesHintCardProps {
-  children?: ReactNode
-  text?: ReactNode
-}
-
-export default function ({ text, children }: BadgesHintCardProps) {
+export default function ({
+  children,
+  text,
+}: ChildrenProp & {
+  text?: ComponentChildren
+}) {
   return (
     <div
       className={classnames(

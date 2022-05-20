@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import ChildrenProp from 'models/ChildrenProp'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -29,7 +29,7 @@ const contractContainer = (small?: boolean) =>
     width('w-full')
   )
 
-export default function ({ children }: { children: ReactNode }) {
+export default function ({ children }: ChildrenProp) {
   const { xs } = useBreakpoints()
 
   return <div className={contractContainer(xs)}>{children}</div>
