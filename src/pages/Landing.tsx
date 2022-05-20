@@ -31,7 +31,8 @@ const pageBox = classnames(
   display('flex'),
   flexDirection('flex-col'),
   alignItems('items-center'),
-  margin('mt-5', 'sm:mt-10')
+  margin('mt-5', 'sm:mt-10'),
+  margin('mb-24')
 )
 const identityCards = classnames(
   display('flex'),

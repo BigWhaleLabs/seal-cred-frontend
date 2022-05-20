@@ -20,7 +20,7 @@ const headerText = (accent = false, extraLeading = false) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight('font-bold'),
-    fontSize('text-4xl'),
+    fontSize('text-3xl', 'sm:text-4xl'),
     textColor(accent ? 'text-accent' : 'text-formal-accent'),
     lineHeight(extraLeading ? 'leading-11' : 'leading-8')
   )
