@@ -200,7 +200,7 @@ export function HighlightedText({
   bold?: boolean
   center?: boolean
 }) {
-  return <div className={highlightedText(center, bold)}>{children}</div>
+  return <div className={highlightedText(bold, center)}>{children}</div>
 }
 
 const sphereText = classnames(
