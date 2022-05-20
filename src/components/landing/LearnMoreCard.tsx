@@ -2,7 +2,7 @@ import { BodyText, LinkText } from 'components/Text'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import PrivacyDeath from 'components/PrivacyDeath'
-import classnames, { margin } from 'classnames/tailwind'
+import classnames, { fontSize, margin } from 'classnames/tailwind'
 
 const bigWhaleLabsText = classnames(margin('mt-6'))
 const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
@@ -24,6 +24,7 @@ export default function () {
         <div className={learnMoreText}>
           <Button
             withArrow
+            fontSmall
             onClick={() =>
               window.open('https://bigwhalelabs.com/', '_blank')?.focus()
             }

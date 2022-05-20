@@ -58,7 +58,7 @@ function Proofs() {
     proofsInProgress.length === 0
 
   return (
-    <>
+    <div className={space('space-y-6')}>
       <div className={titleContainer}>
         <CardHeader color="text-accent">
           {allGenerated ? 'All proofed out' : 'Start proofing!'}
@@ -86,7 +86,7 @@ function Proofs() {
         </Scrollbar>
         {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
       </div>
-    </>
+    </div>
   )
 }
 

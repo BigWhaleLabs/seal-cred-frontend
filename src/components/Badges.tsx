@@ -45,7 +45,7 @@ function Badges() {
           {shouldNotify ? (
             <BadgesHintCard
               text={
-                <div className={lineHeight('leading-6')}>
+                <div>
                   <AccentText color="text-secondary">Hold up...</AccentText>{' '}
                   this wallet has NFTs (It’s doxxed). You should make sure your
                   anonymous wallet is connected first before creating badges.
@@ -71,6 +71,7 @@ function Badges() {
         <BadgesHintCard text="You must switch from your first wallet after ZK proof is made to an anonymous wallet for the magic to work.">
           <Button
             withArrow
+            fontSmall
             onClick={async () => {
               await WalletStore.connect(true)
             }}

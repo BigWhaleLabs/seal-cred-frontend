@@ -5,6 +5,8 @@ import classnames, {
   borderRadius,
   display,
   flexDirection,
+  fontSize,
+  lineHeight,
   padding,
   space,
 } from 'classnames/tailwind'
@@ -23,7 +25,9 @@ export default function ({ text, children }: BadgesHintCardProps) {
         borderRadius('rounded-lg'),
         backgroundColor('bg-primary-background'),
         padding('px-4', 'py-4'),
-        space('space-y-4')
+        space('space-y-4'),
+        fontSize('text-base'),
+        lineHeight('leading-6')
       )}
     >
       <BadgeText>{text}</BadgeText>
