@@ -1,5 +1,5 @@
 import { LinkText } from 'components/Text'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import EnsAddress from 'components/EnsAddress'
 import SealCredStore from 'stores/SealCredStore'
@@ -12,31 +12,21 @@ function OwnedBadgeAddressSuspender({
   derivativeAddress: string
   tokenId: string
 }) {
-  const { derivativeLedger } = useSnapshot(SealCredStore)
-  const record = derivativeLedger[derivativeAddress]
-  const [ownerAddress, setOwnerAddress] = useState<string | undefined>(
-    undefined
-  )
-
-  useEffect(() => {
-    async function getAddress() {
-      setOwnerAddress(await record?.derivativeContract.ownerOf(tokenId))
-    }
-
-    void getAddress()
-  }, [record, tokenId])
+  const { derivativeContractsToOwnersMaps } = useSnapshot(SealCredStore)
+  const owner =
+    derivativeContractsToOwnersMaps[derivativeAddress][Number(tokenId)]
 
   return (
     <>
-      {ownerAddress && (
+      {owner && (
         <LinkText
-          url={getEtherscanAddressUrl(ownerAddress)}
+          url={getEtherscanAddressUrl(owner)}
           gradientFrom="from-secondary"
           gradientTo="to-accent"
-          title={ownerAddress}
+          title={owner}
           bold
         >
-          <EnsAddress address={ownerAddress} truncate />
+          <EnsAddress address={owner} truncate />
         </LinkText>
       )}
     </>
