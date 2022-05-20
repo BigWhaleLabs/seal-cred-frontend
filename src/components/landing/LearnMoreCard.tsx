@@ -22,6 +22,7 @@ export default function () {
           </BodyText>
           <Button
             withArrow
+            fontSmall
             onClick={() =>
               window.open('https://bigwhalelabs.com/', '_blank')?.focus()
             }

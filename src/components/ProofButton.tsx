@@ -17,8 +17,6 @@ import {
   transitionProperty,
 } from 'classnames/tailwind'
 
-type ButtonProperties = React.ButtonHTMLAttributes<HTMLButtonElement>
-
 const proofButtonGradient = classnames(
   textColor('text-transparent'),
   gradientColorStops('from-primary-light', 'via-tertiary', 'to-tertiary'),
@@ -42,10 +40,14 @@ const button = (disabled?: boolean) =>
     proofButtonGradient
   )
 
-export default function ({ children, disabled, ...rest }: ButtonProperties) {
+export default function ({
+  children,
+  disabled,
+  ...rest
+}: React.HTMLAttributes<HTMLButtonElement>) {
   return (
     <button className={button(disabled)} disabled={disabled} {...rest}>
-      {typeof children === 'string' ? <span>{children}</span> : children}
+      {typeof children === 'string' ? <>{children}</> : children}
     </button>
   )
 }

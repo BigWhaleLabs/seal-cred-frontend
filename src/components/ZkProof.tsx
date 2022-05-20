@@ -1,4 +1,5 @@
 import { AccentText, BodyText } from 'components/Text'
+import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Complete from 'icons/Complete'
@@ -15,6 +16,7 @@ import classnames, {
   display,
   flexDirection,
   fontFamily,
+  fontSize,
   justifyContent,
   lineHeight,
   maxWidth,
@@ -33,7 +35,8 @@ const proofText = (small?: boolean) =>
     maxWidth('max-w-fit'),
     alignItems('items-center'),
     fontFamily('font-primary'),
-    lineHeight('leading-5')
+    lineHeight('leading-5'),
+    fontSize('text-sm')
   )
 
 const textWithIcon = classnames(

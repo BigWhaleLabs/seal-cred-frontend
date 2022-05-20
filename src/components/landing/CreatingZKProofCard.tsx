@@ -6,7 +6,7 @@ const creatingZkCard = space('space-y-6')
 
 export default function () {
   return (
-    <Card color="formal-accent" onlyWrap shadow>
+    <Card color="formal-accent" onlyWrap shadow nospace>
       <div className={creatingZkCard}>
         <HeaderText extraLeading>Creating ZK Proof</HeaderText>
 

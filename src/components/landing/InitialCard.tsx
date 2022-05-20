@@ -11,6 +11,7 @@ export default function ({ showSpinner }: { showSpinner?: boolean }) {
       shadow
       color="accent"
       onlyWrap
+      nospace
       spinner={showSpinner ? 'One Identity to rule them all' : undefined}
     >
       <div className={initialCardWrapper}>
