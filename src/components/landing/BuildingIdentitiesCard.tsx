@@ -1,7 +1,6 @@
 import { BodyText, HeaderText } from 'components/Text'
 import Card from 'components/Card'
 import GetStartedButton from 'components/GetStartedButton'
-import classnames, { margin } from 'classnames/tailwind'
 
 export default function () {
   return (

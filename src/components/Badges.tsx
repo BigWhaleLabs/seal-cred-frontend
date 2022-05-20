@@ -1,6 +1,6 @@
 import { AccentText, CardDescription, CardHeader } from 'components/Text'
 import { Suspense } from 'react'
-import { lineHeight, space } from 'classnames/tailwind'
+import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
