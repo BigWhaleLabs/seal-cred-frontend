@@ -1,7 +1,7 @@
 import { AccentText, BodyText } from 'components/Text'
 import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
-import { useState } from 'preact/compat'
+import { useState } from 'react'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
 import Proof from 'models/Proof'

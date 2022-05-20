@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { LogoText } from 'components/Text'
-import { useEffect, useState } from 'preact/compat'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Logo from 'icons/Logo'
 import Wallet from 'components/Wallet'

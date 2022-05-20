@@ -1,5 +1,5 @@
 import { AccentText, CardDescription, CardHeader } from 'components/Text'
-import { Suspense } from 'preact/compat'
+import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import BadgesHintCard from 'components/BadgesHintCard'
 import Card from 'components/Card'

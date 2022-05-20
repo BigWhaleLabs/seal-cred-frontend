@@ -1,6 +1,6 @@
 import 'simplebar/dist/simplebar.min.css'
 import { MutableRef } from 'preact/hooks'
-import { useRef } from 'preact/compat'
+import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
 import Fade from 'components/Fade'
 import SimpleBar from 'simplebar-react'

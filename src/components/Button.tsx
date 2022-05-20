@@ -27,7 +27,7 @@ import {
 } from 'classnames/tailwind'
 import Arrow from 'icons/Arrow'
 import Loading from 'icons/Loading'
-import React from 'preact/compat'
+import React from 'react'
 
 const commonClasses = (loading?: boolean, disabled?: boolean) =>
   classnames(

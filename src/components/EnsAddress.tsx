@@ -1,4 +1,4 @@
-import { Suspense } from 'preact/compat'
+import { Suspense } from 'react'
 import EnsStore from 'stores/EnsStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useEnsNameOrAddress from 'hooks/useEnsNameOrAddress'

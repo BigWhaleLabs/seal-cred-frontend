@@ -1,5 +1,5 @@
 import { MutableRef } from 'preact/hooks'
-import { useCallback, useEffect, useState } from 'preact/compat'
+import { useCallback, useEffect, useState } from 'react'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 export default function (

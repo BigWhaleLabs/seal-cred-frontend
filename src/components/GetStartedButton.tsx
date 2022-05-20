@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
-import { useState } from 'preact/compat'
+import { useState } from 'react'
 import Button from 'components/Button'
 import WalletStore from 'stores/WalletStore'
 

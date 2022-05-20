@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'preact/compat'
+import { useEffect, useRef } from 'react'
 import QRCodeStyling, { Options } from 'qr-code-styling'
 import classnames, {
   borderRadius,
