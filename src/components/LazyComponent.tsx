@@ -1,3 +1,4 @@
+import { JSX } from 'preact'
 import { Suspense } from 'react'
 import Loading from 'icons/Loading'
 
