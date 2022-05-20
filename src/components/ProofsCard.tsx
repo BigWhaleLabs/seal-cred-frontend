@@ -24,8 +24,9 @@ import useBreakpoints from 'hooks/useBreakpoints'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 const titleContainer = space('space-y-2')
-const hintContainer = classnames(margin('mt-2'))
+const hintContainer = margin('mt-2')
 const innerScrollableBlock = space('space-y-2')
+const proofContainer = space('space-y-6')
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
@@ -58,7 +59,7 @@ function Proofs() {
     proofsInProgress.length === 0
 
   return (
-    <div className={space('space-y-6')}>
+    <div className={proofContainer}>
       <div className={titleContainer}>
         <CardHeader color="text-accent">
           {allGenerated ? 'All proofed out' : 'Start proofing!'}
