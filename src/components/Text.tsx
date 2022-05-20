@@ -94,7 +94,7 @@ export function BodyText({
 }
 
 const cardHeader = (color?: TTextColor) =>
-  classnames(textColor(color || 'text-formal-accent'))
+  textColor(color || 'text-formal-accent')
 export function CardHeader({
   color,
   children,
