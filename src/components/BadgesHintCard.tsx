@@ -5,6 +5,7 @@ import classnames, {
   borderRadius,
   display,
   flexDirection,
+  fontSize,
   lineHeight,
   padding,
   space,
@@ -25,6 +26,7 @@ export default function ({ text, children }: BadgesHintCardProps) {
         backgroundColor('bg-primary-background'),
         padding('px-4', 'py-4'),
         space('space-y-4'),
+        fontSize('text-base'),
         lineHeight('leading-6')
       )}
     >
