@@ -90,6 +90,7 @@ module.exports = {
       },
       padding: {
         small: '0.969rem',
+        25: '6.25rem',
       },
       margin: {
         '-5': '-1.25rem',

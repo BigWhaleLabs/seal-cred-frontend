@@ -26,6 +26,7 @@ import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailable
 const titleContainer = space('space-y-2')
 const hintContainer = margin('mt-2')
 const innerScrollableBlock = space('space-y-2')
+const proofContainer = space('space-y-6')
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
@@ -36,7 +37,7 @@ const proofCardZKButtonContainer = classnames(
 function ZkProofSavedMessage() {
   return (
     <div className={hintContainer}>
-      <AccentText small color="text-primary">
+      <AccentText small primary color="text-primary">
         Created ZK proofs are saved in the browser even if you switch wallets.
       </AccentText>
     </div>
@@ -58,7 +59,7 @@ function Proofs() {
     proofsInProgress.length === 0
 
   return (
-    <>
+    <div className={proofContainer}>
       <div className={titleContainer}>
         <CardHeader color="text-accent">
           {allGenerated ? 'All proofed out' : 'Start proofing!'}
@@ -72,19 +73,21 @@ function Proofs() {
       {nothingToGenerate && (
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
-      <Scrollbar maxHeight={300}>
-        <div className={innerScrollableBlock}>
-          <ListOfReadyZKProofs />
-          {account && (
-            <>
-              <ListOfInProgressZKProofs />
-              <ListOfAvailableZKProofs />
-            </>
-          )}
-        </div>
-      </Scrollbar>
-      {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
-    </>
+      <div>
+        <Scrollbar maxHeight={300}>
+          <div className={innerScrollableBlock}>
+            <ListOfReadyZKProofs />
+            {account && (
+              <>
+                <ListOfInProgressZKProofs />
+                <ListOfAvailableZKProofs />
+              </>
+            )}
+          </div>
+        </Scrollbar>
+        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
+      </div>
+    </div>
   )
 }
 
@@ -94,10 +97,12 @@ function ReadyProofs() {
       <div className={titleContainer}>
         <CardHeader color="text-accent">Your saved ZK Proofs</CardHeader>
       </div>
-      <Scrollbar maxHeight={300}>
-        <ListOfReadyZKProofs />
-      </Scrollbar>
-      <ZkProofSavedMessage />
+      <div>
+        <Scrollbar maxHeight={300}>
+          <ListOfReadyZKProofs />
+        </Scrollbar>
+        <ZkProofSavedMessage />
+      </div>
     </>
   )
 }
