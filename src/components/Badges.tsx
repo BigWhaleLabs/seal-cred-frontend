@@ -72,19 +72,6 @@ const ConnectAnonymousWallet = () => (
   </BadgesHintCard>
 )
 
-interface DoxNotificationOrBadgesProps {
-  account: string
-  shouldNotify: boolean
-}
-const DoxNotificationOrBadges = ({
-  shouldNotify,
-  account,
-}: DoxNotificationOrBadgesProps) => (
-  <Scrollbar maxHeight={270}>
-    {shouldNotify ? <DoxNotification account={account} /> : <BadgesList />}
-  </Scrollbar>
-)
-
 function Badges() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
@@ -108,10 +95,13 @@ function Badges() {
       />
 
       {account ? (
-        <DoxNotificationOrBadges
-          shouldNotify={shouldNotify}
-          account={account}
-        />
+        <Scrollbar maxHeight={270}>
+          {shouldNotify ? (
+            <DoxNotification account={account} />
+          ) : (
+            <BadgesList />
+          )}
+        </Scrollbar>
       ) : (
         <ConnectAnonymousWallet />
       )}
