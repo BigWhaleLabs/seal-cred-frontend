@@ -9,7 +9,6 @@ export default function () {
     <Card color="formal-accent" onlyWrap shadow nospace>
       <div className={creatingZkCard}>
         <HeaderText extraLeading>Creating ZK Proof</HeaderText>
-
         <BodyText>
           In your wallet(s), you have NFTs that can point back to your identity
           (aka, getting doxxed). But what if you can verify ownership of NFTs
