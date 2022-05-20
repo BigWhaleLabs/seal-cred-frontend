@@ -14,7 +14,7 @@ export default function () {
   useMemo(() => {
     window.addEventListener('scroll', throttledCallback, true)
 
-    return () => window.removeEventListener('scroll', throttledCallback)
+    return () => window.removeEventListener('scroll', throttledCallback, true)
   }, [throttledCallback])
 
   return scroll
