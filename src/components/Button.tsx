@@ -27,18 +27,7 @@ import {
 } from 'classnames/tailwind'
 import Arrow from 'icons/Arrow'
 import Loading from 'icons/Loading'
-
-interface ButtonProps {
-  primary?: boolean
-  disabled?: boolean
-  loading?: boolean
-  small?: boolean
-  withArrow?: boolean
-  fontSmall?: boolean
-}
-
-type ButtonProperties = ButtonProps &
-  React.ButtonHTMLAttributes<HTMLButtonElement>
+import React from 'react'
 
 const commonClasses = (loading?: boolean, disabled?: boolean) =>
   classnames(
@@ -108,6 +97,15 @@ const colorClasses = ({
         )
   )
 
+interface ButtonProps {
+  primary?: boolean
+  disabled?: boolean
+  loading?: boolean
+  small?: boolean
+  withArrow?: boolean
+  fontSmall?: boolean
+}
+
 export default function ({
   small,
   withArrow,
@@ -117,7 +115,7 @@ export default function ({
   children,
   fontSmall,
   ...rest
-}: ButtonProperties) {
+}: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   return (
     <button
       className={button({ primary, loading, disabled, small, fontSmall })}

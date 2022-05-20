@@ -1,4 +1,5 @@
 import { AccentText, BodyText } from 'components/Text'
+import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Complete from 'icons/Complete'

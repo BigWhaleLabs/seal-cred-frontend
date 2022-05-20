@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import {
   backgroundColor,
   borderColor,
@@ -19,10 +18,10 @@ import {
   zIndex,
 } from 'classnames/tailwind'
 import ArcText from 'icons/ArcText'
+import ChildrenProp from 'models/ChildrenProp'
 
 type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'formal-accent'
 interface CardProps {
-  children: ReactNode
   shadow?: boolean
   color?: Color
   onlyWrap?: boolean
@@ -109,7 +108,7 @@ export default function ({
   children,
   small,
   nospace,
-}: CardProps) {
+}: ChildrenProp & CardProps) {
   return (
     <div
       className={cardContainer(shadow, color, onlyWrap, thin, small, nospace)}

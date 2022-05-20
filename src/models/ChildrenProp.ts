@@ -1,5 +1,5 @@
-import { ReactNode } from 'react'
+import { ComponentChildren } from 'preact'
 
 export default interface ChildrenProp {
-  children: ReactNode
+  children?: ComponentChildren
 }
