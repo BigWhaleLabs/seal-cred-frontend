@@ -24,6 +24,7 @@ export default function () {
         <div className={learnMoreText}>
           <Button
             withArrow
+            fontSmall
             onClick={() =>
               window.open('https://bigwhalelabs.com/', '_blank')?.focus()
             }

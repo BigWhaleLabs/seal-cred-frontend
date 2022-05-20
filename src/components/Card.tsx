@@ -28,6 +28,7 @@ interface CardProps {
   spinner?: string
   thin?: boolean
   small?: boolean
+  nospace?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -68,7 +69,8 @@ const cardContainer = (
   color?: Color,
   onlyWrap = false,
   thin = false,
-  small?: boolean
+  small?: boolean,
+  nospace?: boolean
 ) => {
   return classnames(
     position('relative'),
@@ -86,7 +88,7 @@ const cardContainer = (
       onlyWrap ? undefined : thin ? 'h-60' : 'h-fit',
       onlyWrap ? undefined : thin ? undefined : 'lg:h-card'
     ),
-    space('space-y-4'),
+    space(nospace ? undefined : 'space-y-4'),
     maxHeight(onlyWrap ? undefined : 'max-h-card'),
     wordBreak('break-words'),
     zIndex('z-30')
@@ -105,9 +107,12 @@ export default function ({
   thin,
   children,
   small,
+  nospace,
 }: ChildrenProp & CardProps) {
   return (
-    <div className={cardContainer(shadow, color, onlyWrap, thin, small)}>
+    <div
+      className={cardContainer(shadow, color, onlyWrap, thin, small, nospace)}
+    >
       {!!spinner && (
         <div className={spinnerBox}>
           <ArcText text={spinner} />

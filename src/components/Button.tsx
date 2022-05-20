@@ -47,13 +47,25 @@ const commonClasses = (loading?: boolean, disabled?: boolean) =>
     space('space-x-2')
   )
 
-const button = ({ primary, loading, disabled, small }: ButtonProps) =>
+const button = ({
+  primary,
+  loading,
+  disabled,
+  small,
+  fontSmall,
+}: ButtonProps) =>
   classnames(
     commonClasses(loading, disabled),
-    colorClasses({ primary, loading, disabled, small })
+    colorClasses({ primary, loading, disabled, small, fontSmall })
   )
 
-const colorClasses = ({ primary, loading, disabled, small }: ButtonProps) =>
+const colorClasses = ({
+  primary,
+  loading,
+  disabled,
+  small,
+  fontSmall,
+}: ButtonProps) =>
   classnames(
     primary
       ? classnames(
@@ -80,7 +92,8 @@ const colorClasses = ({ primary, loading, disabled, small }: ButtonProps) =>
           ),
           backgroundClip('bg-clip-text'),
           backgroundImage('bg-gradient-to-r'),
-          gradientColorStops('from-secondary', 'to-accent')
+          gradientColorStops('from-secondary', 'to-accent'),
+          fontSize(fontSmall ? 'text-sm' : undefined)
         )
   )
 
@@ -90,6 +103,7 @@ interface ButtonProps {
   loading?: boolean
   small?: boolean
   withArrow?: boolean
+  fontSmall?: boolean
 }
 
 export default function ({
@@ -99,11 +113,12 @@ export default function ({
   loading,
   disabled,
   children,
+  fontSmall,
   ...rest
 }: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   return (
     <button
-      className={button({ primary, loading, disabled, small })}
+      className={button({ primary, loading, disabled, small, fontSmall })}
       disabled={loading || disabled}
       {...rest}
     >

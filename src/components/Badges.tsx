@@ -71,6 +71,7 @@ function Badges() {
         <BadgesHintCard text="You must switch from your first wallet after ZK proof is made to an anonymous wallet for the magic to work.">
           <Button
             withArrow
+            fontSmall
             onClick={async () => {
               await WalletStore.connect(true)
             }}
