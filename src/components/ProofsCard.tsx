@@ -72,18 +72,20 @@ function Proofs() {
       {nothingToGenerate && (
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
-      <Scrollbar maxHeight={300}>
-        <div className={innerScrollableBlock}>
-          <ListOfReadyZKProofs />
-          {account && (
-            <>
-              <ListOfInProgressZKProofs />
-              <ListOfAvailableZKProofs />
-            </>
-          )}
-        </div>
-      </Scrollbar>
-      {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
+      <div>
+        <Scrollbar maxHeight={300}>
+          <div className={innerScrollableBlock}>
+            <ListOfReadyZKProofs />
+            {account && (
+              <>
+                <ListOfInProgressZKProofs />
+                <ListOfAvailableZKProofs />
+              </>
+            )}
+          </div>
+        </Scrollbar>
+        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
+      </div>
     </>
   )
 }
@@ -94,10 +96,12 @@ function ReadyProofs() {
       <div className={titleContainer}>
         <CardHeader color="text-accent">Your saved ZK Proofs</CardHeader>
       </div>
-      <Scrollbar maxHeight={300}>
-        <ListOfReadyZKProofs />
-      </Scrollbar>
-      <ZkProofSavedMessage />
+      <div>
+        <Scrollbar maxHeight={300}>
+          <ListOfReadyZKProofs />
+        </Scrollbar>
+        <ZkProofSavedMessage />
+      </div>
     </>
   )
 }
