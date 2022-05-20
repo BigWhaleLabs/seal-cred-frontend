@@ -1,11 +1,12 @@
+import { SphereText } from 'components/Text'
 import Color from 'models/Color'
 import classnames, {
+  alignItems,
   borderRadius,
   display,
   fontWeight,
   height,
-  margin,
-  padding,
+  justifyContent,
   textAlign,
   textColor,
   transitionProperty,
@@ -16,6 +17,9 @@ import colorToTailwindBackground from 'helpers/colorToTailwindBackground'
 import useScrollPercent from 'hooks/useScrollPercent'
 
 const sphereStyles = classnames(
+  display('flex'),
+  alignItems('items-center'),
+  justifyContent('justify-center'),
   fontWeight('font-bold'),
   textColor('text-primary-dark'),
   display('inline-block'),
@@ -23,8 +27,6 @@ const sphereStyles = classnames(
   width('w-8'),
   borderRadius('rounded-full'),
   textAlign('text-center'),
-  padding('pt-1'),
-  margin('mt-8.5'),
   transitionProperty('transition-all')
 )
 
@@ -61,9 +63,11 @@ export default function ({ color, animated, text }: ZkSphereProps) {
       }}
       className={classnames(sphereStyles, bgColor, shadowColor)}
     >
-      {zkText}
+      <SphereText>{zkText}</SphereText>
     </div>
   ) : (
-    <div className={classnames(sphereStyles, bgColor, shadowColor)}>{text}</div>
+    <div className={classnames(sphereStyles, bgColor, shadowColor)}>
+      <SphereText>{text}</SphereText>
+    </div>
   )
 }

@@ -18,17 +18,16 @@ import classnames, {
 const innerId = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-center')
+  alignItems('items-center'),
+  space('space-y-3')
 )
 const rectangleMargin = (left: boolean) =>
-  classnames(margin(left ? 'mb-1' : 'my-7.5'))
-const identityText = classnames(margin('my-3'))
+  classnames(left ? space('space-y-1') : margin('my-7.5'))
 const zkSpheresLeft = (reveal?: boolean) =>
   classnames(
     display('flex'),
     flexDirection('flex-row'),
     space('space-x-2'),
-    margin('my-2'),
     opacity(reveal ? 'opacity-100' : 'opacity-0'),
     transitionProperty('transition-opacity'),
     transitionDuration('duration-300')
@@ -57,13 +56,11 @@ export default function ({
           ) : (
             <NoisyRectangle bgColor="bg-secondary" />
           )}
+          {left && <NoisyRectangle bgColor="bg-accent" />}
         </div>
-        {left && <NoisyRectangle bgColor="bg-accent" />}
-        <div className={identityText}>
-          <BodyText small={mobile} center>
-            {text}
-          </BodyText>
-        </div>
+        <BodyText small={mobile} center>
+          {text}
+        </BodyText>
         {left ? <DoubleSmile /> : <Grim />}
         <div className={zkSpheresLeft(reveal)}>{children}</div>
       </div>
