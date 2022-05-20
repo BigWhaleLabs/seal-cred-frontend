@@ -21,7 +21,6 @@ import classnames, {
   padding,
   position,
   space,
-  textAlign,
   width,
   zIndex,
 } from 'classnames/tailwind'
