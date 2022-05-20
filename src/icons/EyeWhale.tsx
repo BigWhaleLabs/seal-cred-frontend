@@ -1,4 +1,9 @@
-import classnames, { fill, stroke, strokeWidth } from 'classnames/tailwind'
+import classnames, {
+  dropShadow,
+  fill,
+  stroke,
+  strokeWidth,
+} from 'classnames/tailwind'
 
 const mainStroke = classnames(stroke('stroke-primary'), strokeWidth('stroke-2'))
 const fillPrimary = fill('fill-primary')
@@ -6,148 +11,111 @@ const strokeEye = classnames(
   stroke('stroke-secondary'),
   strokeWidth('stroke-2')
 )
+const svgShadow = dropShadow('drop-shadow-primary')
 
 export default function () {
   return (
     <svg
-      width="130"
-      height="117"
-      viewBox="0 0 130 117"
+      width="88"
+      height="78"
+      viewBox="0 0 88 78"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={svgShadow}
     >
-      <g filter="url(#filter0_d_90_6539)">
-        <path
-          d="M71.4961 83.6909C74.5854 87.398 87.3667 100.776 104.172 91.8785C101.083 89.2012 95.2639 82.1332 95.2639 78.179"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M22.6172 57.2756C27.3541 56.2458 38.4342 56.0399 44.8599 63.4541C52.8919 72.7219 69.2567 95.8004 96.4422 76.6468"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M78.5668 90.2407C73.8691 92.0919 68.7514 93.1088 63.3961 93.1088C40.5337 93.1088 22 74.5752 22 51.7128C38.5037 40.8409 47.5054 41.6638 54.6969 45.6917"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <circle
-          cx="78.9965"
-          cy="48.9215"
-          r="4.1996"
-          className={strokeEye}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <circle cx="45.113" cy="53.7217" r="2.10133" className={fillPrimary} />
-        <path
-          d="M64 53.7184C67.5789 57.2771 74.4042 59.7232 78.7498 59.7232C84.8594 59.7232 96.3969 54.8883 96.3969 48.9242C96.3969 43.1857 85.2488 38.4926 78.9986 38.1458"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M76.5971 83.9943C93.4954 83.9943 107.194 70.2955 107.194 53.3972C107.194 36.4988 93.4954 22.8 76.5971 22.8C70.6484 22.8 65.0961 24.4977 60.3984 27.4349"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M60.4003 27.3046C50.1293 21.4622 42.197 27.0989 39.0415 30.262C40.1129 30.5248 42.6857 31.0781 44.4052 31.189C46.5546 31.3276 47.0996 34.4619 49.6046 36.8095C51.6086 38.6875 54.6856 38.9727 55.9737 38.8805C52.8368 41.6113 54.6095 45.8765 55.9108 49.7234C56.9518 52.801 55.7848 56.5409 55.0711 58.0262C69.9292 52.8968 67.4682 42.8069 66.9997 40.2033C66.7407 38.7644 68.1279 38.0252 69.9994 37.2111"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M79 38.095L79 34.1953"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <line
-          x1="79.1953"
-          y1="64.9934"
-          x2="79.1953"
-          y2="60.394"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <line
-          x1="85.5938"
-          y1="38.1808"
-          x2="87.1793"
-          y2="36.5953"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M72.3964 37.8957L71.496 37.1933C70.5961 36.5933 69.1551 37.6132 68.1952 38.0931"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <line
-          x1="72.3945"
-          y1="59.6068"
-          x2="70.809"
-          y2="61.1923"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <line
-          x1="87.1756"
-          y1="61.1907"
-          x2="85.5901"
-          y2="59.6052"
-          className={mainStroke}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </g>
-      <defs>
-        <filter
-          id="filter0_d_90_6539"
-          x="0"
-          y="0.800049"
-          width="129.194"
-          height="116.077"
-          filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
-        >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset />
-          <feGaussianBlur stdDeviation="10.5" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.0392157 0 0 0 0 0.517647 0 0 0 0 1 0 0 0 1 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_90_6539"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_90_6539"
-            result="shape"
-          />
-        </filter>
-      </defs>
+      <path
+        d="M50.4961 65.6909C53.5854 69.398 66.3667 82.7756 83.1722 73.8785C80.083 71.2012 74.2639 64.1332 74.2639 60.179"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M1.61719 39.2756C6.35405 38.2458 17.4342 38.0399 23.8599 45.4541C31.8919 54.7219 48.2567 77.8004 75.4422 58.6468"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M57.5668 72.2407C52.8691 74.0919 47.7514 75.1088 42.3961 75.1088C19.5337 75.1088 1 56.5752 1 33.7128C17.5037 22.8409 26.5054 23.6638 33.6969 27.6917"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <circle
+        cx="57.9965"
+        cy="30.9215"
+        r="4.1996"
+        className={strokeEye}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <circle cx="24.113" cy="35.7217" r="2.10133" className={fillPrimary} />
+      <path
+        d="M43 35.7184C46.5789 39.2771 53.4042 41.7232 57.7498 41.7232C63.8594 41.7232 75.3969 36.8883 75.3969 30.9242C75.3969 25.1857 64.2488 20.4926 57.9986 20.1458"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M55.5971 65.9943C72.4954 65.9943 86.1942 52.2955 86.1942 35.3972C86.1942 18.4988 72.4954 4.80005 55.5971 4.80005C49.6484 4.80005 44.0961 6.49769 39.3984 9.43493"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M39.4003 9.30456C29.1293 3.46215 21.197 9.09886 18.0415 12.262C19.1129 12.5248 21.6857 13.0781 23.4052 13.189C25.5546 13.3276 26.0996 16.4619 28.6046 18.8095C30.6086 20.6875 33.6856 20.9727 34.9737 20.8805C31.8368 23.6113 33.6095 27.8765 34.9108 31.7234C35.9518 34.801 34.7848 38.5409 34.0711 40.0262C48.9292 34.8968 46.4682 24.8069 45.9997 22.2033C45.7407 20.7644 47.1279 20.0252 48.9994 19.2111"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M58 20.095L58 16.1953"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <line
+        x1="58.1953"
+        y1="46.9934"
+        x2="58.1953"
+        y2="42.394"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <line
+        x1="64.5938"
+        y1="20.1808"
+        x2="66.1793"
+        y2="18.5953"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M51.3964 19.8957L50.496 19.1933C49.5961 18.5933 48.1551 19.6132 47.1952 20.0931"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <line
+        x1="51.3945"
+        y1="41.6068"
+        x2="49.809"
+        y2="43.1923"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <line
+        x1="66.1756"
+        y1="43.1907"
+        x2="64.5901"
+        y2="41.6052"
+        className={mainStroke}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
     </svg>
   )
 }

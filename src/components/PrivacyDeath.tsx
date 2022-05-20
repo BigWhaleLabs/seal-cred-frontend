@@ -17,15 +17,18 @@ const wrapperBox = classnames(
   flexDirection('flex-col'),
   width('w-full')
 )
-const eyeBoxMargin = margin('-mt-5', 'mb-12')
+const eyeBoxMargin = margin('-mt-10', 'mb-12', 'ml-3', 'md:ml-0')
 
 export default function () {
-  const { xxs, sm } = useBreakpoints()
+  const { xxs, sm, md } = useBreakpoints()
 
   return (
     <div className={wrapperBox}>
-      <div className={'absolute scale-150 md:-top-2/3 -top-1/2'}>
-        <ArcText mobile={xxs || sm} text="Give me privacy or give me death •" />
+      <div className={'absolute scale-150 md:-top-24 -top-16'}>
+        <ArcText
+          mobile={(xxs || sm) && !md}
+          text="Give me privacy or give me death •"
+        />
       </div>
       <div className={eyeBoxMargin}>
         <EyeWhale />
