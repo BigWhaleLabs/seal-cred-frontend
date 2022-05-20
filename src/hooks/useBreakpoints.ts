@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+import useThrottle from 'hooks/useThrottle'
 
 const xsSize = 279
 const smSize = 375
@@ -8,16 +9,15 @@ const lgSize = 1023
 export default function () {
   const [width, setWidth] = useState(window.innerWidth)
 
-  useEffect(() => {
-    function resizer() {
-      setWidth(window.innerWidth)
-    }
+  const resizer = useCallback(() => setWidth(window.innerWidth), [])
+  const throttledResizer = useThrottle(resizer, 1000)
 
-    window.addEventListener('resize', resizer)
+  useMemo(() => {
+    window.addEventListener('resize', throttledResizer, { passive: true })
     return () => {
-      window.removeEventListener('resize', resizer)
+      window.removeEventListener('resize', throttledResizer)
     }
-  }, [])
+  }, [throttledResizer])
 
   return {
     xxs: width > xsSize,

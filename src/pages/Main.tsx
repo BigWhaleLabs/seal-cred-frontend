@@ -1,6 +1,6 @@
-import Badges from 'components/Badges'
+import { lazy } from 'react'
 import CardSeparator from 'components/CardSeparator'
-import ProofsCard from 'components/ProofsCard'
+import LazyComponent from 'components/LazyComponent'
 import ZkProofButton from 'components/ZkProofButton'
 import classnames, {
   alignItems,
@@ -17,19 +17,22 @@ const mainBlock = classnames(
   justifyContent('lg:justify-center')
 )
 
+const ProofsCard = lazy(() => import('components/ProofsCard'))
+const Badges = lazy(() => import('components/Badges'))
+
 export default function () {
   const { lg } = useBreakpoints()
 
   return (
     <>
       <div className={mainBlock}>
-        <ProofsCard />
+        <LazyComponent lazyImported={<ProofsCard />} />
         <CardSeparator
           numberOfLines={3}
           gradient="accent-to-secondary"
           vertical={!lg}
         />
-        <Badges />
+        <LazyComponent lazyImported={<Badges />} />
         {!lg && (
           <>
             <CardSeparator
