@@ -182,7 +182,7 @@ export function LinkText({
   )
 }
 
-const highlightedText = (center?: boolean, bold?: boolean) =>
+const highlightedText = (bold?: boolean, center?: boolean) =>
   classnames(
     width('w-fit'),
     textColor('text-primary-dark'),
