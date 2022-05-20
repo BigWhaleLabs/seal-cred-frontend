@@ -123,16 +123,9 @@ export function LogoText({ children }: ChildrenProp) {
   return <span className={logoText}>{children}</span>
 }
 
-const badgeText = (small?: boolean) =>
-  classnames(
-    textColor('text-formal-accent'),
-    fontSize(small ? 'text-sm' : undefined)
-  )
-export function BadgeText({
-  small,
-  children,
-}: ChildrenProp & { small?: boolean }) {
-  return <span className={badgeText(small)}>{children}</span>
+const badgeText = textColor('text-formal-accent')
+export function BadgeText({ children }: ChildrenProp) {
+  return <span className={badgeText}>{children}</span>
 }
 
 const linkText = (
@@ -182,7 +175,7 @@ export function LinkText({
   )
 }
 
-const highlightedText = (center?: boolean, bold?: boolean) =>
+const highlightedText = (bold?: boolean, center?: boolean) =>
   classnames(
     width('w-fit'),
     textColor('text-primary-dark'),
