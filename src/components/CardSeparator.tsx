@@ -45,7 +45,7 @@ const connectiveLine = ({ gradient, vertical }: CardSeparatorProps) =>
   classnames(
     getTailwindGradient(gradient),
     backgroundImage('bg-gradient-to-b', 'lg:bg-gradient-to-r'),
-    width(vertical ? 'w-px' : 'w-4'),
+    width(vertical ? 'w-px' : 'w-6'),
     height(vertical ? 'h-4' : 'h-px')
   )
 
