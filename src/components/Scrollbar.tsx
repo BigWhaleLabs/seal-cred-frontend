@@ -38,7 +38,7 @@ export default function ({
     thumbRef.current.style.top = scroll + 'px'
   }
 
-  // Listens if something inside the box has changed
+  // Listens if something inside the wrapBox has changed
   const refCallback = useCallback(<T extends HTMLElement>(node: T | null) => {
     if (!node) return
     const numberOfViews = node.scrollHeight / node.clientHeight
