@@ -16,23 +16,25 @@ import {
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
 
-const headerText = (accent = false, extraLeading = false) =>
+const headerText = (accent = false, extraLeading = false, small = false) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight('font-bold'),
-    fontSize('text-4xl'),
+    fontSize(small ? 'text-2xl' : 'text-3xl', 'sm:text-4xl'),
     textColor(accent ? 'text-accent' : 'text-formal-accent'),
     lineHeight(extraLeading ? 'leading-11' : 'leading-8')
   )
 export function HeaderText({
+  small,
   accent,
   extraLeading,
   children,
 }: ChildrenProp & {
+  small?: boolean
   accent?: boolean
   extraLeading?: boolean
 }) {
-  return <h1 className={headerText(accent, extraLeading)}>{children}</h1>
+  return <h1 className={headerText(accent, extraLeading, small)}>{children}</h1>
 }
 
 const subheaderText = classnames(

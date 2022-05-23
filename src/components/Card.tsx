@@ -83,7 +83,7 @@ const cardContainer = (
       thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
       thin ? 'w-32' : undefined
     ),
-    margin(thin ? undefined : 'mx-4', 'lg:mx-0'),
+    margin(thin ? undefined : 'mx-auto', 'lg:mx-0'),
     height(
       onlyWrap ? undefined : thin ? 'h-60' : 'h-fit',
       onlyWrap ? undefined : thin ? undefined : 'lg:h-card'
