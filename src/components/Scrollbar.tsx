@@ -30,7 +30,7 @@ export default function ({
     const wrapCurrent = wrapRef.current
 
     // .scrollTop counts whole box, not only visible
-    // that's why we should divide it by the visible to get, how many visible boxes in scrollable one
+    // we should divide whole box by the visible to get how many visible boxes are in scrollable container
     const numberOfViews = wrapCurrent.scrollHeight / wrapCurrent.clientHeight
     const scroll = wrapCurrent.scrollTop / numberOfViews
 
