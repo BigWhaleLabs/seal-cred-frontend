@@ -63,7 +63,7 @@ export default function ({
             <div
               class="custom-scrollbar-thumb"
               ref={thumbRef}
-              style={{ height: thumbHeight ? `${thumbHeight}%` : undefined }}
+              style={{ height: thumbHeight }}
             />
           </div>
         )}
