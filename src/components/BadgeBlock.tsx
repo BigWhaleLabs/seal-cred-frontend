@@ -6,6 +6,7 @@ import BadgeIcon from 'icons/BadgeIcon'
 import Button from 'components/Button'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
+import ExternalLink from 'components/ExternalLink'
 import ProofStore from 'stores/ProofStore'
 import QRCode from 'components/QRCode'
 import SealCredStore from 'stores/SealCredStore'
@@ -21,6 +22,7 @@ import classnames, {
   space,
   textAlign,
 } from 'classnames/tailwind'
+import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
 import sealCred from 'helpers/sealCred'
 import useBreakpoints from 'hooks/useBreakpoints'
@@ -135,7 +137,9 @@ function Badge({
       )}
       <div className={badgeBody(minted, small)}>
         <BadgeText small>
-          <ContractName address={derivativeAddress} />
+          <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
+            <ContractName address={derivativeAddress} />
+          </ExternalLink>
         </BadgeText>
         {minted ? (
           <div className={mintPassed(small)}>
