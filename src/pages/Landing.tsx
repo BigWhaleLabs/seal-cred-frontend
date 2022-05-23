@@ -1,11 +1,13 @@
 import { HighlightedText } from 'components/Text'
 import BuildingIdentitiesCard from 'components/landing/BuildingIdentitiesCard'
+import Card from 'components/Card'
 import CreatingZKProofCard from 'components/landing/CreatingZKProofCard'
 import IdentityCard from 'components/landing/IdentityCard'
 import InitialCard from 'components/landing/InitialCard'
 import LearnMoreCard from 'components/landing/LearnMoreCard'
 import OrbsInBoxes from 'components/landing/OrbsInBoxes'
 import ScrollDownButton from 'components/landing/ScrollDownButton'
+import Scrollbar from 'components/Scrollbar'
 import SuperHr from 'icons/SuperHr'
 import SuperOrbWithConnectors from 'icons/SuperOrbWithConnectors'
 import TopConnectors from 'icons/TopConnectors'
@@ -60,6 +62,45 @@ export default function () {
 
   return (
     <div className={pageBox}>
+      <Card shadow color="accent" onlyWrap>
+        <Scrollbar maxHeight={100}>
+          <ul>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+          </ul>
+        </Scrollbar>
+      </Card>
       <InitialCard showSpinner={!xs} />
       <ScrollDownButton />
       <div

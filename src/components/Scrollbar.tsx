@@ -1,7 +1,7 @@
 import { MutableRef } from 'preact/hooks'
 import { lazy, useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
-import classnames, { overflow, position } from 'classnames/tailwind'
+import classnames, { position } from 'classnames/tailwind'
 import useIsOverflow from 'hooks/useIsOverflow'
 
 const Fade = lazy(() => import('components/Fade'))
@@ -9,7 +9,7 @@ const CustomScrollBar = lazy(() => import('components/CustomScrollBar'))
 
 type FadeType = 'top' | 'bottom' | 'both'
 
-const outerBox = classnames(position('relative'), overflow('overflow-x-hidden'))
+const outerBox = classnames(position('relative'))
 
 interface ScrollbarProps {
   maxHeight?: number

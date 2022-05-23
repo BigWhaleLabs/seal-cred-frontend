@@ -1,11 +1,7 @@
-import 'simplebar/dist/simplebar.min.css'
 import { MutableRef } from 'preact/hooks'
-import { lazy, useRef } from 'react'
+import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
-import classnames, { margin, transitionProperty } from 'classnames/tailwind'
 import useIsOverflow from 'hooks/useIsOverflow'
-
-const SimpleBar = lazy(() => import('simplebar-react'))
 
 interface CustomScrollBarProps {
   scrollRef: MutableRef<HTMLDivElement>
@@ -18,23 +14,39 @@ export default function ({
   maxHeight,
 }: ChildrenProp & CustomScrollBarProps) {
   const wrapRef = useRef() as MutableRef<HTMLDivElement>
+  const thumbRef = useRef() as MutableRef<HTMLDivElement>
+
+  const handleScroll = () => {
+    if (!thumbRef.current || !wrapRef.current) return
+    const wrapCurrent = wrapRef.current
+
+    // .scrollTop counts whole box, not only visible
+    // that's why we should divide it by the number of how many boxes are in the long one
+    const numberOfViews = wrapCurrent.scrollHeight / wrapCurrent.clientHeight
+    const scroll = wrapCurrent.scrollTop / numberOfViews
+
+    thumbRef.current.style.top = scroll + 'px'
+  }
 
   const { overflows, scrollMaxHeight } = useIsOverflow(scrollRef, maxHeight)
 
-  const wrapperStyle = (overflows: boolean) =>
-    classnames(
-      overflows ? margin('mr-5') : undefined,
-      transitionProperty('transition-all')
-    )
-
   return (
-    <SimpleBar
-      style={{ maxHeight: scrollMaxHeight }}
-      scrollableNodeProps={{ ref: scrollRef }}
+    <div
+      ref={wrapRef}
+      class="scrollable-wrapper"
+      style={{
+        maxHeight: scrollMaxHeight,
+        marginLeft: overflows ? '5rem' : undefined,
+      }}
+      onScroll={handleScroll}
     >
-      <div ref={wrapRef} className={wrapperStyle(overflows)}>
-        {children}
+      {/* {overflows ? ( */}
+      <div class="custom-scrollbar-body">
+        <div class="custom-scrollbar-thumb" ref={thumbRef} />
       </div>
-    </SimpleBar>
+      {/* ) : undefined} */}
+
+      {children}
+    </div>
   )
 }
