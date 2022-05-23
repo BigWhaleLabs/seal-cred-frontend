@@ -16,7 +16,6 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
-  margin,
   space,
   width,
 } from 'classnames/tailwind'
@@ -24,9 +23,9 @@ import useBreakpoints from 'hooks/useBreakpoints'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 const titleContainer = space('space-y-2')
-const hintContainer = margin('mt-2')
 const innerScrollableBlock = space('space-y-2')
 const proofContainer = space('space-y-6')
+const proofBlockSpacing = space('space-y-2')
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
@@ -36,11 +35,9 @@ const proofCardZKButtonContainer = classnames(
 )
 function ZkProofSavedMessage() {
   return (
-    <div className={hintContainer}>
-      <AccentText small primary color="text-primary">
-        Created ZK proofs are saved in the browser even if you switch wallets.
-      </AccentText>
-    </div>
+    <AccentText small primary color="text-primary">
+      Created ZK proofs are saved in the browser even if you switch wallets.
+    </AccentText>
   )
 }
 
@@ -73,7 +70,7 @@ function Proofs() {
       {nothingToGenerate && (
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
-      <div>
+      <div className={proofBlockSpacing}>
         <Scrollbar maxHeight={300}>
           <div className={innerScrollableBlock}>
             <ListOfReadyZKProofs />
@@ -97,7 +94,7 @@ function ReadyProofs() {
       <div className={titleContainer}>
         <CardHeader color="text-accent">Your saved ZK Proofs</CardHeader>
       </div>
-      <div>
+      <div className={proofBlockSpacing}>
         <Scrollbar maxHeight={300}>
           <ListOfReadyZKProofs />
         </Scrollbar>

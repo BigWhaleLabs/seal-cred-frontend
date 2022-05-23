@@ -30,8 +30,7 @@ import useScrollPercent from 'hooks/useScrollPercent'
 const pageBox = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-center'),
-  margin('mt-5', 'sm:mt-10')
+  alignItems('items-center')
 )
 const identityCards = classnames(
   display('flex'),
