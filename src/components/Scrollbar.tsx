@@ -1,15 +1,12 @@
 import { MutableRef } from 'preact/hooks'
-import { lazy, useRef } from 'react'
+import { position } from 'classnames/tailwind'
+import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
-import classnames, { position } from 'classnames/tailwind'
+import CustomScrollBar from 'components/CustomScrollBar'
+import Fade from 'components/Fade'
 import useIsOverflow from 'hooks/useIsOverflow'
 
-const Fade = lazy(() => import('components/Fade'))
-const CustomScrollBar = lazy(() => import('components/CustomScrollBar'))
-
 type FadeType = 'top' | 'bottom' | 'both'
-
-const outerBox = classnames(position('relative'))
 
 interface ScrollbarProps {
   maxHeight?: number
@@ -25,12 +22,14 @@ export default function ({
   const { isOnTop, isOnBottom } = useIsOverflow(scrollRef, maxHeight)
 
   return (
-    <div className={outerBox}>
-      {isOnTop && (fade === 'both' || fade === 'top') && <Fade />}
-      <CustomScrollBar maxHeight={maxHeight} scrollRef={scrollRef}>
+    <div className={position('relative')}>
+      <CustomScrollBar maxHeight={maxHeight}>
+        {isOnTop && (fade === 'both' || fade === 'top') && <Fade />}
         {children}
+        {isOnBottom && (fade === 'both' || fade === 'bottom') && (
+          <Fade bottom />
+        )}
       </CustomScrollBar>
-      {isOnBottom && (fade === 'both' || fade === 'bottom') && <Fade bottom />}
     </div>
   )
 }

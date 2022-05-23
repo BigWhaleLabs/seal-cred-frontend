@@ -4,13 +4,11 @@ import ChildrenProp from 'models/ChildrenProp'
 import useIsOverflow from 'hooks/useIsOverflow'
 
 interface CustomScrollBarProps {
-  scrollRef: MutableRef<HTMLDivElement>
   maxHeight: number
 }
 
 export default function ({
   children,
-  scrollRef,
   maxHeight,
 }: ChildrenProp & CustomScrollBarProps) {
   const wrapRef = useRef() as MutableRef<HTMLDivElement>
@@ -21,14 +19,14 @@ export default function ({
     const wrapCurrent = wrapRef.current
 
     // .scrollTop counts whole box, not only visible
-    // that's why we should divide it by the number of how many boxes are in the long one
+    // that's why we should divide it by the visible to get, how many visible boxes in scrollable one
     const numberOfViews = wrapCurrent.scrollHeight / wrapCurrent.clientHeight
     const scroll = wrapCurrent.scrollTop / numberOfViews
 
     thumbRef.current.style.top = scroll + 'px'
   }
 
-  const { overflows, scrollMaxHeight } = useIsOverflow(scrollRef, maxHeight)
+  const { overflows, scrollMaxHeight } = useIsOverflow(wrapRef, maxHeight)
 
   return (
     <div
@@ -36,15 +34,15 @@ export default function ({
       class="scrollable-wrapper"
       style={{
         maxHeight: scrollMaxHeight,
-        marginLeft: overflows ? '5rem' : undefined,
+        marginRight: overflows ? '1rem' : undefined,
       }}
       onScroll={handleScroll}
     >
-      {/* {overflows ? ( */}
-      <div class="custom-scrollbar-body">
-        <div class="custom-scrollbar-thumb" ref={thumbRef} />
-      </div>
-      {/* ) : undefined} */}
+      {overflows ? (
+        <div class="custom-scrollbar-body">
+          <div class="custom-scrollbar-thumb" ref={thumbRef} />
+        </div>
+      ) : undefined}
 
       {children}
     </div>

@@ -65,30 +65,7 @@ export default function () {
       <Card shadow color="accent" onlyWrap>
         <Scrollbar maxHeight={100}>
           <ul>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
+            <li>11111111111111111111111111111111111111111</li>
             <li>1</li>
             <li>1</li>
             <li>1</li>
