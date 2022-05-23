@@ -4,6 +4,7 @@ import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
+import ExternalLink from 'components/ExternalLink'
 import Proof from 'models/Proof'
 import ProofButton from 'components/ProofButton'
 import ProofLine from 'components/ProofLine'
@@ -23,6 +24,7 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
+import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const proofText = (small?: boolean) =>
@@ -122,7 +124,9 @@ export default function ({
   return (
     <ProofLine>
       <BodyText bold small>
-        <ContractName address={contractAddress} />
+        <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
+          <ContractName address={contractAddress} />
+        </ExternalLink>
       </BodyText>
 
       <div className={proofText(xs)}>
