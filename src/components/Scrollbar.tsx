@@ -1,11 +1,10 @@
 import { MutableRef } from 'preact/hooks'
-import { lazy, useRef } from 'react'
+import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
+import CustomScrollBar from 'components/CustomScrollBar'
+import Fade from 'components/Fade'
 import classnames, { overflow, position } from 'classnames/tailwind'
 import useIsOverflow from 'hooks/useIsOverflow'
-
-const Fade = lazy(() => import('components/Fade'))
-const CustomScrollBar = lazy(() => import('components/CustomScrollBar'))
 
 type FadeType = 'top' | 'bottom' | 'both'
 
