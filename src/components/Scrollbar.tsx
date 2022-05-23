@@ -50,8 +50,6 @@ export default function ({
 
   return (
     <div className={position('relative')}>
-      {isOnTop && (fade === 'both' || fade === 'top') && <Fade />}
-
       <div
         ref={wrapRef}
         class="scrollable-wrapper"
@@ -66,14 +64,16 @@ export default function ({
             <div
               class="custom-scrollbar-thumb"
               ref={thumbRef}
-              style={{ height: thumbHeight }}
+              style={{ height: thumbHeight + '%' }}
             />
           </div>
         )}
-
+        {isOnTop && (fade === 'both' || fade === 'top') && <Fade />}
         {children}
+        {isOnBottom && (fade === 'both' || fade === 'bottom') && (
+          <Fade bottom />
+        )}
       </div>
-      {isOnBottom && (fade === 'both' || fade === 'bottom') && <Fade bottom />}
     </div>
   )
 }
