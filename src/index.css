@@ -121,11 +121,12 @@ body {
   }
 }
 
-/* Removes plain scrollbar */
+/* Removes plain scrollbar from Ff*/
 .scrollable-wrapper {
   scrollbar-width: 0;
   overflow: auto;
 }
+/* from other browsers */
 .scrollable-wrapper::-webkit-scrollbar {
   width: 0;
 }
@@ -134,7 +135,7 @@ body {
 .custom-scrollbar-thumb {
   position: absolute;
   top: 0;
-  right: 0;
+  left: 1.5px;
   background: #fed823;
   height: 2rem;
   width: 0.5rem;
