@@ -1,4 +1,4 @@
-import { MutableRef, useEffect, useState } from 'preact/hooks'
+import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
 import { position } from 'classnames/tailwind'
 import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
@@ -38,12 +38,15 @@ export default function ({
     thumbRef.current.style.top = scroll + 'px'
   }
 
-  useEffect(() => {
-    const numberOfViews =
-      wrapRef.current.scrollHeight / wrapRef.current.clientHeight
-
+  // Listens if something inside the box has changed
+  const refCallback = useCallback(<T extends HTMLElement>(node: T | null) => {
+    if (!node) return
+    const numberOfViews = node.scrollHeight / node.clientHeight
     setThumbHeight(100 / numberOfViews)
   }, [])
+  useEffect(() => {
+    refCallback(wrapRef.current)
+  })
 
   return (
     <div className={position('relative')}>
