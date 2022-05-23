@@ -1,4 +1,4 @@
-import { MutableRef } from 'preact/hooks'
+import { MutableRef, useEffect, useState } from 'preact/hooks'
 import { position } from 'classnames/tailwind'
 import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
@@ -19,6 +19,7 @@ export default function ({
 }: ChildrenProp & ScrollbarProps) {
   const wrapRef = useRef() as MutableRef<HTMLDivElement>
   const thumbRef = useRef() as MutableRef<HTMLDivElement>
+  const [thumbHeight, setThumbHeight] = useState(100)
 
   const { overflows, scrollMaxHeight, isOnTop, isOnBottom } = useIsOverflow(
     wrapRef,
@@ -37,6 +38,13 @@ export default function ({
     thumbRef.current.style.top = scroll + 'px'
   }
 
+  useEffect(() => {
+    const numberOfViews =
+      wrapRef.current.scrollHeight / wrapRef.current.clientHeight
+
+    setThumbHeight(100 / numberOfViews)
+  }, [])
+
   return (
     <div className={position('relative')}>
       {isOnTop && (fade === 'both' || fade === 'top') && <Fade />}
@@ -52,7 +60,11 @@ export default function ({
       >
         {overflows && (
           <div class="custom-scrollbar-body">
-            <div class="custom-scrollbar-thumb" ref={thumbRef} />
+            <div
+              class="custom-scrollbar-thumb"
+              ref={thumbRef}
+              style={{ height: thumbHeight ? `${thumbHeight}%` : undefined }}
+            />
           </div>
         )}
 

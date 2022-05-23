@@ -133,11 +133,9 @@ body {
 
 .custom-scrollbar-thumb {
   position: absolute;
-  top: 0;
   left: 1.5px;
   background: #fed823;
   width: 0.5rem;
-  height: 2rem;
   border-radius: 10rem;
   filter: drop-shadow(0rem 0rem 0.625rem #fed823);
 }
