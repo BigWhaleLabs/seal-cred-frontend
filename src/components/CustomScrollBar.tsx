@@ -1,11 +1,10 @@
 import 'simplebar/dist/simplebar.min.css'
 import { MutableRef } from 'preact/hooks'
-import { lazy, useRef } from 'react'
+import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
+import SimpleBar from 'simplebar-react'
 import classnames, { margin, transitionProperty } from 'classnames/tailwind'
 import useIsOverflow from 'hooks/useIsOverflow'
-
-const SimpleBar = lazy(() => import('simplebar-react'))
 
 interface CustomScrollBarProps {
   scrollRef: MutableRef<HTMLDivElement>
