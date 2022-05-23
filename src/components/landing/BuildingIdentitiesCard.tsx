@@ -2,10 +2,10 @@ import { BodyText, HeaderText } from 'components/Text'
 import Card from 'components/Card'
 import GetStartedButton from 'components/GetStartedButton'
 
-export default function () {
+export default function ({ mobile }: { mobile?: boolean }) {
   return (
     <Card color="formal-accent" onlyWrap shadow>
-      <HeaderText extraLeading>
+      <HeaderText extraLeading small={mobile}>
         Building your identities with ZK Badges
       </HeaderText>
       <BodyText>
