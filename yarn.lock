@@ -1477,15 +1477,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.7.6":
-  version: 7.18.0
-  resolution: "@babel/runtime@npm:7.18.0"
-  dependencies:
-    regenerator-runtime: ^0.13.4
-  checksum: 9d0caa5fe690623fb6c5df6fb3b3581d227b55ef9f7c35eba0da83d10aa756669a81fe521ac4dbc007e5790716bac40ebe71ff098e2d1a9599dd696a282a3e95
-  languageName: node
-  linkType: hard
-
 "@babel/template@npm:^7.16.7, @babel/template@npm:^7.3.3":
   version: 7.16.7
   resolution: "@babel/template@npm:7.16.7"
@@ -4844,9 +4835,9 @@ __metadata:
   linkType: hard
 
 "bn.js@npm:^5.1.1, bn.js@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "bn.js@npm:5.2.0"
-  checksum: 6117170393200f68b35a061ecbf55d01dd989302e7b3c798a3012354fa638d124f0b2f79e63f77be5556be80322a09c40339eda6413ba7468524c0b6d4b4cb7a
+  version: 5.2.1
+  resolution: "bn.js@npm:5.2.1"
+  checksum: 3dd8c8d38055fedfa95c1d5fc3c99f8dd547b36287b37768db0abab3c239711f88ff58d18d155dd8ad902b0b0cee973747b7ae20ea12a09473272b0201c9edd3
   languageName: node
   linkType: hard
 
@@ -5641,26 +5632,26 @@ __metadata:
   linkType: hard
 
 "core-js-compat@npm:^3.21.0, core-js-compat@npm:^3.22.1":
-  version: 3.22.6
-  resolution: "core-js-compat@npm:3.22.6"
+  version: 3.22.7
+  resolution: "core-js-compat@npm:3.22.7"
   dependencies:
     browserslist: ^4.20.3
     semver: 7.0.0
-  checksum: 6b83b87abeb04c08b54bdc6a6756ad6d1503aeadebc598a162bfe1044a31183864bb3016f16c839d40235545c009dc8aea6421ada0d2e18b5fdf93c6059eb380
+  checksum: 036148c150ae6dec864cf175100d56ba0fa2ee9e43b94e6e3d9605d39d53c367aa2409aa1affc485a3135fd73bcab7a4f5f3ab2707420923f7f144ac1997eccf
   languageName: node
   linkType: hard
 
 "core-js-pure@npm:^3.20.2, core-js-pure@npm:^3.8.1":
-  version: 3.22.6
-  resolution: "core-js-pure@npm:3.22.6"
-  checksum: 90737229b00fb26b0896bf5d22351702e595db7c60258f76d58cbd6a0dcef37a45017c97dc91632d168e2242e6dfff3f442ebcea1090e6154462fac5f119bc2d
+  version: 3.22.7
+  resolution: "core-js-pure@npm:3.22.7"
+  checksum: 6358882377e1f0433efc1c492cc5d764d664f7651a72e534b1c9d989fe82b9986b7602b735fee03f368187fb17c3829047a949c41078c710c92b3557d889042b
   languageName: node
   linkType: hard
 
 "core-js@npm:^3.19.2":
-  version: 3.22.6
-  resolution: "core-js@npm:3.22.6"
-  checksum: 3600235a29cae4c066fbbca595b17f33707b3827f9c2e838ec1bd34f450b62f438da271717bd8de19a2a0d4e382b3d3310a048ee1c22617d09fbfeaf67faaf7e
+  version: 3.22.7
+  resolution: "core-js@npm:3.22.7"
+  checksum: c5f1d8a96b6d1828d02583603d9df1fcbf45f95454585ff9d49ba7ea1470bf1422d00561044939bf4952465ae4ae2bf30a39b4874da8ed2741a3f3996bd175ab
   languageName: node
   linkType: hard
 
@@ -11173,9 +11164,9 @@ __metadata:
   linkType: hard
 
 "node-releases@npm:^2.0.3":
-  version: 2.0.4
-  resolution: "node-releases@npm:2.0.4"
-  checksum: b32d6c2032c7b169ae3938b416fc50f123f5bd577d54a79b2ae201febf27b22846b01c803dd35ac8689afe840f8ba4e5f7154723db629b80f359836b6707b92f
+  version: 2.0.5
+  resolution: "node-releases@npm:2.0.5"
+  checksum: e85d949addd19f8827f32569d2be5751e7812ccf6cc47879d49f79b5234ff4982225e39a3929315f96370823b070640fb04d79fc0ddec8b515a969a03493a42f
   languageName: node
   linkType: hard
 
@@ -12596,7 +12587,7 @@ __metadata:
 "preact@https://github.com/preactjs/preact#43d79c0e8f727e9ac745a50c3a61868adb2dcfe7":
   version: 10.7.2
   resolution: "preact@https://github.com/preactjs/preact.git#commit=43d79c0e8f727e9ac745a50c3a61868adb2dcfe7"
-  checksum: cd865be53326b37378de1c520c0736dbc06d6208911f578c6af3f3d7fa51d79e3704a03dc697875dc2c8f7913cbf068a665a38b0973ad9df7ff76e9efa4da3e1
+  checksum: 208e285b602e685e26b5c4b6939bf631eedc82b53184eccd5ed3736fa57986afbc7b1897729cd3a0aff13dbc463cbc3c29fccf483b527524add2b64cf66fa4f8
   languageName: node
   linkType: hard
 
