@@ -86,8 +86,7 @@ function Proofs() {
             )}
           </div>
         </Scrollbar>
-        {/* {proofsCompleted.length > 0 && <ZkProofSavedMessage />} */}
-        <ZkProofSavedMessage />
+        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
       </div>
     </div>
   )
