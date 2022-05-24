@@ -138,6 +138,7 @@ body {
   width: 0.5rem;
   border-radius: 10rem;
   filter: drop-shadow(0rem 0rem 0.625rem #fed823);
+  z-index: 20;
 }
 .custom-scrollbar-body {
   position: absolute;
