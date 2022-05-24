@@ -16,6 +16,7 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
+  margin,
   space,
   width,
 } from 'classnames/tailwind'
@@ -35,9 +36,11 @@ const proofCardZKButtonContainer = classnames(
 )
 function ZkProofSavedMessage() {
   return (
-    <AccentText small primary color="text-primary">
-      Created ZK proofs are saved in the browser even if you switch wallets.
-    </AccentText>
+    <div className={margin('mt-2')}>
+      <AccentText small primary color="text-primary">
+        Created ZK proofs are saved in the browser even if you switch wallets.
+      </AccentText>
+    </div>
   )
 }
 

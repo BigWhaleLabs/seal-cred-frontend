@@ -12855,13 +12855,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@https://github.com/preactjs/preact":
-  version: 10.7.2
-  resolution: "preact@https://github.com/preactjs/preact.git#commit=43d79c0e8f727e9ac745a50c3a61868adb2dcfe7"
-  checksum: 208e285b602e685e26b5c4b6939bf631eedc82b53184eccd5ed3736fa57986afbc7b1897729cd3a0aff13dbc463cbc3c29fccf483b527524add2b64cf66fa4f8
-  languageName: node
-  linkType: hard
-
 "preact@npm:10.4.1":
   version: 10.4.1
   resolution: "preact@npm:10.4.1"
@@ -12873,6 +12866,13 @@ __metadata:
   version: 10.7.1
   resolution: "preact@npm:10.7.1"
   checksum: e99d08bd38372e78ce1c84e68685cad66adf076bd95069bc8bcd32c9903a4df09c01d5b04aad849527362b67cc2c09446b647f72de4e67d0578fdea0f904f28f
+  languageName: node
+  linkType: hard
+
+"preact@npm:^10.7.2":
+  version: 10.7.2
+  resolution: "preact@npm:10.7.2"
+  checksum: 2f0655e0430f1c6927b40cb4abffb2c0ee4fe63e3201d44e37d0992c0ab534346f206cf23c0405572b70908e3eba2f7f60ab8e4531f409ebcbc35af06920cd60
   languageName: node
   linkType: hard
 
@@ -14107,7 +14107,7 @@ __metadata:
     ethers: ^5.6.6
     fortmatic: ^2.3.0
     postcss: ^8.4.14
-    preact: "https://github.com/preactjs/preact"
+    preact: ^10.7.2
     prettier: ^2.6.2
     qr-code-styling: ^1.6.0-rc.1
     react-router-dom: ^6.3.0
