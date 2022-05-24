@@ -20,7 +20,7 @@ export default function () {
   }, [])
 
   return {
-    badgeNameSize: width > smSize && width < 400,
+    iPhoneSizes: width > smSize && width < 400,
     xxs: width > xsSize,
     xs: width > xsSize && width < smSize,
     sm: width > smSize,

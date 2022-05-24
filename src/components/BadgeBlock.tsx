@@ -77,7 +77,7 @@ const mintPassed = (small?: boolean) =>
     alignItems('items-center')
   )
 const badgeBlockName = (small?: boolean) =>
-  small ? 'badgeBlockName' : undefined
+  small ? 'max-w-100 line-clamp-2' : undefined
 
 function Badge({
   contractAddress,
@@ -90,7 +90,7 @@ function Badge({
   const { ledger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
 
-  const { xxs, sm, badgeNameSize } = useBreakpoints()
+  const { xxs, sm, iPhoneSizes } = useBreakpoints()
 
   const [loading, setLoading] = useState(false)
   const [completed, setCompleted] = useState(false)
@@ -138,7 +138,7 @@ function Badge({
         <BadgeIcon />
       )}
       <div className={badgeBody(minted, small)}>
-        <div className={badgeBlockName(badgeNameSize)}>
+        <div className={badgeBlockName(iPhoneSizes)}>
           <BadgeText small>
             <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
               <ContractName address={derivativeAddress} />
