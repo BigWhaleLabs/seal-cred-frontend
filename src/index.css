@@ -121,17 +121,33 @@ body {
   }
 }
 
-/* Overwrites SimpleBar config to look like in design doc */
-.simplebar-scrollbar:before {
-  background: #fed823 !important;
-  filter: drop-shadow(0rem 0rem 0.625rem #fed823);
-  opacity: 100% !important;
+/* Removes plain scrollbar from Ff*/
+.scrollable-wrapper {
+  scrollbar-width: 0;
+  overflow: auto;
 }
-.simplebar-track {
-  width: 0.688rem !important;
-  /* This option created background with less size than thumb size */
+/* from other browsers */
+.scrollable-wrapper::-webkit-scrollbar {
+  width: 0;
+}
+
+.custom-scrollbar-thumb {
+  position: absolute;
+  left: 1.5px;
+  background: #fed823;
+  width: 0.5rem;
+  border-radius: 10rem;
+  filter: drop-shadow(0rem 0rem 0.625rem #fed823);
+  z-index: 20;
+}
+.custom-scrollbar-body {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0.5rem;
+  height: 100%;
+  /* Creates background with less than thumb width */
   background: url('/img/scrollbarBg.png');
-  overflow: visible !important;
 }
 
 /* Wallet select menu for dark and light theme */
