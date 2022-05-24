@@ -121,6 +121,16 @@ body {
   }
 }
 
+.badgeBlockName {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 6.25rem;
+  height: 2.75rem;
+}
+
 /* Overwrites SimpleBar config to look like in design doc */
 .simplebar-scrollbar:before {
   background: #fed823 !important;
