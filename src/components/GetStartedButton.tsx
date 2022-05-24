@@ -4,19 +4,20 @@ import { useState } from 'react'
 import Button from 'components/Button'
 import ChildrenProp from 'models/ChildrenProp'
 import WalletStore from 'stores/WalletStore'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 export default function ({
-  mobile,
   children = 'Get started',
 }: ChildrenProp & { mobile?: boolean }) {
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const { xs } = useBreakpoints()
 
   return (
     <Button
       primary
-      small={mobile}
+      small={xs}
       loading={loading}
       onClick={async () => {
         setLoading(true)
