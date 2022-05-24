@@ -60,12 +60,12 @@ body {
   65% {
     /* Orb goes and stays behind ID card */
     /* Reveal animation happens inside IdentityCard */
-    transform: translate(-1.563rem, 86.438rem);
+    transform: translate(-0.563rem, 86.438rem);
   }
 
   100% {
     /* Orbs stays behind ID card if user scroll to the end of the page */
-    transform: translate(-1.563rem, 86.438rem);
+    transform: translate(-0.563rem, 86.438rem);
   }
 }
 @keyframes accentSphereAnimation {

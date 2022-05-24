@@ -60,10 +60,10 @@ export default function () {
   return (
     <div className={pageBox}>
       <InitialCard showSpinner={!xs} />
-      <ScrollDownButton />
+      <ScrollDownButton mobile={xs} />
       <div
         className={position('absolute')}
-        style={{ transform: 'translateY(35.5rem)' }}
+        style={{ transform: `translateY(${xs ? '36.5' : '35.5'}rem)` }}
       >
         <TopConnectors />
       </div>
@@ -80,9 +80,9 @@ export default function () {
       <OrbsInBoxes />
       <div
         className={classnames(position('absolute'), zIndex('z-40'))}
-        style={{ transform: 'translateY(65.625rem)' }}
+        style={{ transform: `translateY(${xs ? '63.625' : '65.625'}rem)` }}
       >
-        <CreatingZKProofCard />
+        <CreatingZKProofCard mobile={xs} />
       </div>
       <SuperOrbWithConnectors />
       <div className={identityCards}>
@@ -94,7 +94,7 @@ export default function () {
           <ZkSphere text="ZK" color="secondary" />
         </IdentityCard>
       </div>
-      <BuildingIdentitiesCard />
+      <BuildingIdentitiesCard mobile={xs} />
       <SuperHr />
       <LearnMoreCard />
     </div>
