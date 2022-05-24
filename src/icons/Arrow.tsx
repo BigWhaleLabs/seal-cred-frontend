@@ -11,9 +11,9 @@ interface ArrowProps {
 export default function ({ disabled, turnDown }: ArrowProps) {
   return (
     <svg
-      width="21"
+      width="20"
       height="25"
-      viewBox="-4 0 21 25"
+      viewBox="-4 0 22 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={arrowAnimation(disabled)}
@@ -23,7 +23,7 @@ export default function ({ disabled, turnDown }: ArrowProps) {
         transform={turnDown ? 'rotate(90 10 10)' : undefined}
       >
         <path
-          d="M8 8L12.5 12.5L8 17"
+          d="M8 8L12.5 12.5L8 16.5"
           stroke="url(#paint0_linear_97_51757)"
           stroke-width="2"
           stroke-linecap="round"
