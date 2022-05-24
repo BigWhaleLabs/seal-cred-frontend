@@ -50,6 +50,7 @@
     "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@preact/preset-vite": "^2.2.0",
     "@rollup/plugin-inject": "^4.0.4",
+    "@tailwindcss/line-clamp": "^0.4.0",
     "@typechain/ethers-v5": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",

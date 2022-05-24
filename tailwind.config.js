@@ -1,6 +1,7 @@
 /** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
 module.exports = {
   content: ['./public/index.html', './src/**/!(tailwind).{ts,tsx}'],
+  plugins: [require('@tailwindcss/line-clamp')],
   theme: {
     fontFamily: {
       primary: ['"Space Grotesk"', 'sans-serif'],
@@ -9,6 +10,9 @@ module.exports = {
       maxHeight: {
         card: '31.75rem',
         'badges-list': '21.25rem',
+      },
+      maxWidth: {
+        100: '6.25rem',
       },
       keyframes: {
         'pulse-horizontal': {
@@ -94,6 +98,7 @@ module.exports = {
       },
       margin: {
         '-5': '-1.25rem',
+        '-6': '-0.375rem',
         7.5: '0.469rem',
         8.5: '0.531rem',
         '-10': '-0.625rem',
