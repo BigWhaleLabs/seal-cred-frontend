@@ -6,9 +6,7 @@ import ChildrenProp from 'models/ChildrenProp'
 import WalletStore from 'stores/WalletStore'
 import useBreakpoints from 'hooks/useBreakpoints'
 
-export default function ({
-  children = 'Get started',
-}: ChildrenProp & { mobile?: boolean }) {
+export default function ({ children = 'Get started' }: ChildrenProp) {
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()

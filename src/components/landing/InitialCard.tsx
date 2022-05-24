@@ -23,7 +23,7 @@ export default function ({ showSpinner }: { showSpinner?: boolean }) {
           experience the world pseudonymously with ZK badges. This means you can
           prove ownership of an NFT without it tracing back to you.
         </BodyText>
-        <GetStartedButton mobile={!showSpinner} />
+        <GetStartedButton />
       </div>
     </Card>
   )
