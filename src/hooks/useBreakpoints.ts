@@ -20,6 +20,7 @@ export default function () {
   }, [])
 
   return {
+    iPhoneSizes: width > smSize && width < 400,
     xxs: width > xsSize,
     xs: width > xsSize && width < smSize,
     sm: width > smSize,
