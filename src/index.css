@@ -121,14 +121,8 @@ body {
   }
 }
 
-/* Removes plain scrollbar from Ff*/
 .scrollable-wrapper {
-  scrollbar-width: 0;
   overflow: auto;
-}
-/* from other browsers */
-.scrollable-wrapper::-webkit-scrollbar {
-  width: 0;
 }
 
 .custom-scrollbar-thumb {

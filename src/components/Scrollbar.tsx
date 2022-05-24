@@ -1,5 +1,4 @@
 import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
-import { position } from 'classnames/tailwind'
 import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
 import Fade from 'components/Fade'
@@ -49,7 +48,7 @@ export default function ({
   })
 
   return (
-    <div className={position('relative')}>
+    <div className="relative scrollbar-hide">
       <div
         ref={wrapRef}
         class="scrollable-wrapper"
