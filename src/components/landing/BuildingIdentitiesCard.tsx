@@ -16,7 +16,9 @@ export default function ({ mobile }: { mobile?: boolean }) {
         Zk badges verify you own an NFT but leaves no bread crumbs back to your
         personal wallets.
       </BodyText>
-      <GetStartedButton />
+      <GetStartedButton mobile={mobile}>
+        Connect wallet to start
+      </GetStartedButton>
     </Card>
   )
 }

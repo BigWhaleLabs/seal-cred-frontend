@@ -2,9 +2,13 @@ import { useNavigate } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Button from 'components/Button'
+import ChildrenProp from 'models/ChildrenProp'
 import WalletStore from 'stores/WalletStore'
 
-export default function () {
+export default function ({
+  mobile,
+  children = 'Get started',
+}: ChildrenProp & { mobile?: boolean }) {
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -12,6 +16,7 @@ export default function () {
   return (
     <Button
       primary
+      small={mobile}
       loading={loading}
       onClick={async () => {
         setLoading(true)
@@ -20,7 +25,7 @@ export default function () {
         setLoading(false)
       }}
     >
-      Get started
+      {children}
     </Button>
   )
 }
