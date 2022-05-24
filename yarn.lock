@@ -1477,6 +1477,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.7.6":
+  version: 7.18.0
+  resolution: "@babel/runtime@npm:7.18.0"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 9d0caa5fe690623fb6c5df6fb3b3581d227b55ef9f7c35eba0da83d10aa756669a81fe521ac4dbc007e5790716bac40ebe71ff098e2d1a9599dd696a282a3e95
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.16.7, @babel/template@npm:^7.3.3":
   version: 7.16.7
   resolution: "@babel/template@npm:7.16.7"
@@ -12584,7 +12593,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@https://github.com/preactjs/preact":
+"preact@https://github.com/preactjs/preact#43d79c0e8f727e9ac745a50c3a61868adb2dcfe7":
   version: 10.7.2
   resolution: "preact@https://github.com/preactjs/preact.git#commit=43d79c0e8f727e9ac745a50c3a61868adb2dcfe7"
   checksum: cd865be53326b37378de1c520c0736dbc06d6208911f578c6af3f3d7fa51d79e3704a03dc697875dc2c8f7913cbf068a665a38b0973ad9df7ff76e9efa4da3e1
@@ -13837,7 +13846,7 @@ __metadata:
     ethers: ^5.6.6
     fortmatic: ^2.3.0
     postcss: ^8.4.14
-    preact: "https://github.com/preactjs/preact"
+    preact: "https://github.com/preactjs/preact#43d79c0e8f727e9ac745a50c3a61868adb2dcfe7"
     prettier: ^2.6.2
     qr-code-styling: ^1.6.0-rc.1
     react-router-dom: ^6.3.0
