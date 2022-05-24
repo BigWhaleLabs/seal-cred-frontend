@@ -16,7 +16,6 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
-  margin,
   space,
   width,
 } from 'classnames/tailwind'
@@ -26,7 +25,11 @@ import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailable
 const titleContainer = space('space-y-2')
 const innerScrollableBlock = space('space-y-2')
 const proofContainer = space('space-y-6')
-const proofBlockSpacing = space('space-y-2')
+const proofBlockSpacing = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  space('space-y-4')
+)
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
@@ -36,11 +39,9 @@ const proofCardZKButtonContainer = classnames(
 )
 function ZkProofSavedMessage() {
   return (
-    <div className={margin('mt-2')}>
-      <AccentText small primary color="text-primary">
-        Created ZK proofs are saved in the browser even if you switch wallets.
-      </AccentText>
-    </div>
+    <AccentText small primary color="text-primary">
+      Created ZK proofs are saved in the browser even if you switch wallets.
+    </AccentText>
   )
 }
 
@@ -85,7 +86,8 @@ function Proofs() {
             )}
           </div>
         </Scrollbar>
-        {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
+        {/* {proofsCompleted.length > 0 && <ZkProofSavedMessage />} */}
+        <ZkProofSavedMessage />
       </div>
     </div>
   )
