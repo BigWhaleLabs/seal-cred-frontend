@@ -1,14 +1,11 @@
-import { MutableRef } from 'preact/hooks'
+import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
+import { position } from 'classnames/tailwind'
 import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
-import CustomScrollBar from 'components/CustomScrollBar'
 import Fade from 'components/Fade'
-import classnames, { overflow, position } from 'classnames/tailwind'
 import useIsOverflow from 'hooks/useIsOverflow'
 
 type FadeType = 'top' | 'bottom' | 'both'
-
-const outerBox = classnames(position('relative'), overflow('overflow-x-hidden'))
 
 interface ScrollbarProps {
   maxHeight?: number
@@ -20,16 +17,63 @@ export default function ({
   maxHeight = 350,
   fade = 'both',
 }: ChildrenProp & ScrollbarProps) {
-  const scrollRef = useRef() as MutableRef<HTMLDivElement>
-  const { isOnTop, isOnBottom } = useIsOverflow(scrollRef, maxHeight)
+  const wrapRef = useRef() as MutableRef<HTMLDivElement>
+  const thumbRef = useRef() as MutableRef<HTMLDivElement>
+  const [thumbHeight, setThumbHeight] = useState(100)
+
+  const { overflows, scrollMaxHeight, isOnTop, isOnBottom } = useIsOverflow(
+    wrapRef,
+    maxHeight
+  )
+
+  const handleScroll = () => {
+    if (!thumbRef.current || !wrapRef.current) return
+    const wrapCurrent = wrapRef.current
+
+    // .scrollTop counts whole box, not only visible
+    // we should divide whole box by the visible to get how many visible boxes are in scrollable container
+    const numberOfViews = wrapCurrent.scrollHeight / wrapCurrent.clientHeight
+    const scroll = wrapCurrent.scrollTop / numberOfViews
+
+    thumbRef.current.style.top = scroll + 'px'
+  }
+
+  // Listens if something inside the wrapBox has changed
+  const refCallback = useCallback(<T extends HTMLElement>(node: T | null) => {
+    if (!node) return
+    const numberOfViews = node.scrollHeight / node.clientHeight
+    setThumbHeight(100 / numberOfViews)
+  }, [])
+  useEffect(() => {
+    refCallback(wrapRef.current)
+  })
 
   return (
-    <div className={outerBox}>
-      {isOnTop && (fade === 'both' || fade === 'top') && <Fade />}
-      <CustomScrollBar maxHeight={maxHeight} scrollRef={scrollRef}>
+    <div className={position('relative')}>
+      <div
+        ref={wrapRef}
+        class="scrollable-wrapper"
+        style={{
+          maxHeight: scrollMaxHeight,
+          marginRight: overflows ? '1rem' : undefined,
+        }}
+        onScroll={handleScroll}
+      >
+        {overflows && (
+          <div class="custom-scrollbar-body">
+            <div
+              class="custom-scrollbar-thumb"
+              ref={thumbRef}
+              style={{ height: thumbHeight + '%' }}
+            />
+          </div>
+        )}
+        {isOnTop && (fade === 'both' || fade === 'top') && <Fade />}
         {children}
-      </CustomScrollBar>
-      {isOnBottom && (fade === 'both' || fade === 'bottom') && <Fade bottom />}
+        {isOnBottom && (fade === 'both' || fade === 'bottom') && (
+          <Fade bottom />
+        )}
+      </div>
     </div>
   )
 }
