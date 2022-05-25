@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
 import Fade from 'components/Fade'
 import useIsOverflow from 'hooks/useIsOverflow'
+import { position } from 'classnames/tailwind'
 
 type FadeType = 'top' | 'bottom' | 'both'
 
@@ -48,7 +49,7 @@ export default function ({
   })
 
   return (
-    <div className="relative scrollbar-hide">
+    <div className={position('relative'), "scrollbar-hide"}>
       <div
         ref={wrapRef}
         class="scrollable-wrapper"
