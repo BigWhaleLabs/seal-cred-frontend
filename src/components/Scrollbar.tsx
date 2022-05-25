@@ -3,6 +3,7 @@ import { overflow, position } from 'classnames/tailwind'
 import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
 import Fade from 'components/Fade'
+import classNamesToString from 'helpers/classNamesToString'
 import useIsOverflow from 'hooks/useIsOverflow'
 
 type FadeType = 'top' | 'bottom' | 'both'
@@ -52,7 +53,10 @@ export default function ({
     <div className={position('relative')}>
       <div
         ref={wrapRef}
-        className={overflow('overflow-auto') + ' scrollbar-hide'}
+        className={classNamesToString(
+          overflow('overflow-auto'),
+          'scrollbar-hide'
+        )}
         style={{
           maxHeight: scrollMaxHeight,
           marginRight: overflows ? '1rem' : undefined,

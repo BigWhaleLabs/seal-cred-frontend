@@ -12585,7 +12585,7 @@ __metadata:
 "preact@https://github.com/preactjs/preact#43d79c0e8f727e9ac745a50c3a61868adb2dcfe7":
   version: 10.7.2
   resolution: "preact@https://github.com/preactjs/preact.git#commit=43d79c0e8f727e9ac745a50c3a61868adb2dcfe7"
-  checksum: cd865be53326b37378de1c520c0736dbc06d6208911f578c6af3f3d7fa51d79e3704a03dc697875dc2c8f7913cbf068a665a38b0973ad9df7ff76e9efa4da3e1
+  checksum: 208e285b602e685e26b5c4b6939bf631eedc82b53184eccd5ed3736fa57986afbc7b1897729cd3a0aff13dbc463cbc3c29fccf483b527524add2b64cf66fa4f8
   languageName: node
   linkType: hard
 
