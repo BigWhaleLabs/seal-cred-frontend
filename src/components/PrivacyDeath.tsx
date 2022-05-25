@@ -1,14 +1,16 @@
 import ArcText from 'icons/ArcText'
 import EyeWhale from 'icons/EyeWhale'
+import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   alignItems,
   display,
   flexDirection,
+  inset,
   margin,
   position,
+  scale,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const wrapperBox = classnames(
   position('relative'),
@@ -18,17 +20,16 @@ const wrapperBox = classnames(
   width('w-full')
 )
 const eyeBoxMargin = margin('-mt-10', 'mb-12', 'mx-auto')
+const arcText = classNamesToString(
+  classnames(position('absolute'), scale('scale-150'), inset('md:-top-24')),
+  '-top-16'
+)
 
 export default function () {
-  const { xxs, sm, md } = useBreakpoints()
-
   return (
     <div className={wrapperBox}>
-      <div className={'absolute scale-150 md:-top-24 -top-16'}>
-        <ArcText
-          mobile={(xxs || sm) && !md}
-          text="Give me privacy or give me death •"
-        />
+      <div className={arcText}>
+        <ArcText text="Give me privacy or give me death •" />
       </div>
       <div className={eyeBoxMargin}>
         <EyeWhale />

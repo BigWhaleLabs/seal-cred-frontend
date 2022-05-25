@@ -15,26 +15,26 @@ import {
   width,
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
+import useBreakpoints from 'hooks/useBreakpoints'
 
-const headerText = (accent = false, extraLeading = false, small = false) =>
+const headerText = (accent = false, extraLeading = false, xs = false) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight('font-bold'),
-    fontSize(small ? 'text-2xl' : 'text-3xl', 'sm:text-4xl'),
+    fontSize(xs ? 'text-2xl' : 'text-3xl', 'sm:text-4xl'),
     textColor(accent ? 'text-accent' : 'text-formal-accent'),
     lineHeight(extraLeading ? 'leading-11' : 'leading-8')
   )
 export function HeaderText({
-  small,
   accent,
   extraLeading,
   children,
 }: ChildrenProp & {
-  small?: boolean
   accent?: boolean
   extraLeading?: boolean
 }) {
-  return <h1 className={headerText(accent, extraLeading, small)}>{children}</h1>
+  const { xs } = useBreakpoints()
+  return <h1 className={headerText(accent, extraLeading, xs)}>{children}</h1>
 }
 
 const subheaderText = classnames(

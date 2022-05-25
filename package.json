@@ -41,6 +41,7 @@
     "react-toastify": "^9.0.1",
     "react-tooltip": "^4.2.21",
     "secure-ls": "^1.2.6",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "valtio": "^1.6.0",
     "web3modal": "^1.9.7"
   },
