@@ -121,10 +121,6 @@ body {
   }
 }
 
-.scrollable-wrapper {
-  overflow: auto;
-}
-
 .custom-scrollbar-thumb {
   position: absolute;
   left: 1.5px;
@@ -133,6 +129,7 @@ body {
   border-radius: 10rem;
   filter: drop-shadow(0rem 0rem 0.625rem #fed823);
   z-index: 20;
+  transition: all;
 }
 .custom-scrollbar-body {
   position: absolute;

@@ -1,9 +1,9 @@
 import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
+import { overflow, position } from 'classnames/tailwind'
 import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
 import Fade from 'components/Fade'
 import useIsOverflow from 'hooks/useIsOverflow'
-import { position } from 'classnames/tailwind'
 
 type FadeType = 'top' | 'bottom' | 'both'
 
@@ -49,10 +49,10 @@ export default function ({
   })
 
   return (
-    <div className={position('relative'), "scrollbar-hide"}>
+    <div className={position('relative')}>
       <div
         ref={wrapRef}
-        class="scrollable-wrapper"
+        className={overflow('overflow-auto') + ' scrollbar-hide'}
         style={{
           maxHeight: scrollMaxHeight,
           marginRight: overflows ? '1rem' : undefined,
@@ -62,8 +62,8 @@ export default function ({
         {overflows && (
           <div class="custom-scrollbar-body">
             <div
-              class="custom-scrollbar-thumb"
               ref={thumbRef}
+              class="custom-scrollbar-thumb"
               style={{ height: thumbHeight + '%' }}
             />
           </div>
