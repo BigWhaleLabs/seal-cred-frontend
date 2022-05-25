@@ -82,7 +82,7 @@ export default function () {
         className={classnames(position('absolute'), zIndex('z-40'))}
         style={{ transform: `translateY(${xs ? '63.625' : '65.625'}rem)` }}
       >
-        <CreatingZKProofCard mobile={xs} />
+        <CreatingZKProofCard />
       </div>
       <SuperOrbWithConnectors />
       <div className={identityCards}>
@@ -94,7 +94,7 @@ export default function () {
           <ZkSphere text="ZK" color="secondary" />
         </IdentityCard>
       </div>
-      <BuildingIdentitiesCard mobile={xs} />
+      <BuildingIdentitiesCard />
       <SuperHr />
       <LearnMoreCard />
     </div>
