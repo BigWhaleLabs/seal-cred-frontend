@@ -13,7 +13,6 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const walletContainer = classnames(
   display('inline-flex'),
@@ -29,7 +28,6 @@ const walletAccount = classnames(
 
 export default function () {
   const { account } = useSnapshot(WalletStore)
-  const { lg } = useBreakpoints()
 
   return (
     <div
@@ -46,11 +44,7 @@ export default function () {
         <AccentText
           color={account ? 'text-accent' : 'text-primary-semi-dimmed'}
         >
-          {account ? (
-            <EnsAddress address={account} truncate={!lg} />
-          ) : (
-            'No wallet connected'
-          )}
+          {account ? <EnsAddress address={account} /> : 'No wallet connected'}
         </AccentText>
       </div>
       <div className={width('w-fit')}>

@@ -8,6 +8,7 @@ import classnames, {
   margin,
   outlineStyle,
 } from 'classnames/tailwind'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const scrollButton = (mobile?: boolean) =>
   classnames(
@@ -21,14 +22,15 @@ const scrollButton = (mobile?: boolean) =>
 const arrowBlock = (mobile?: boolean) =>
   classnames(margin(mobile ? '-mt-6' : undefined))
 
-export default function ({ mobile }: { mobile?: boolean }) {
+export default function () {
+  const { xs } = useBreakpoints()
   return (
     <div
       onClick={() => window.scroll({ top: 600, behavior: 'smooth' })}
-      className={scrollButton(mobile)}
+      className={scrollButton(xs)}
     >
       <AccentText color="text-accent">How does this work?</AccentText>
-      <div className={arrowBlock(mobile)}>
+      <div className={arrowBlock(xs)}>
         <DownArrows />
       </div>
     </div>

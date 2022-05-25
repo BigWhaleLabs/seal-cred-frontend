@@ -8,7 +8,6 @@ import classnames, {
   position,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const wrapperBox = classnames(
   position('relative'),
@@ -20,15 +19,10 @@ const wrapperBox = classnames(
 const eyeBoxMargin = margin('-mt-10', 'mb-12', 'mx-auto')
 
 export default function () {
-  const { xxs, sm, md } = useBreakpoints()
-
   return (
     <div className={wrapperBox}>
       <div className={'absolute scale-150 md:-top-24 -top-16'}>
-        <ArcText
-          mobile={(xxs || sm) && !md}
-          text="Give me privacy or give me death •"
-        />
+        <ArcText text="Give me privacy or give me death •" />
       </div>
       <div className={eyeBoxMargin}>
         <EyeWhale />

@@ -59,8 +59,8 @@ export default function () {
 
   return (
     <div className={pageBox}>
-      <InitialCard showSpinner={!xs} />
-      <ScrollDownButton mobile={xs} />
+      <InitialCard />
+      <ScrollDownButton />
       <div
         className={position('absolute')}
         style={{ transform: `translateY(${xs ? '36.5' : '35.5'}rem)` }}
@@ -86,11 +86,11 @@ export default function () {
       </div>
       <SuperOrbWithConnectors />
       <div className={identityCards}>
-        <IdentityCard left text="Identity-01" mobile={xs} reveal={animEnd}>
+        <IdentityCard left text="Identity-01" reveal={animEnd}>
           <ZkSphere text="ZK" color="tertiary" />
           <ZkSphere text="ZK" color="accent" />
         </IdentityCard>
-        <IdentityCard text="Identity-02" mobile={xs} reveal={animEnd}>
+        <IdentityCard text="Identity-02" reveal={animEnd}>
           <ZkSphere text="ZK" color="secondary" />
         </IdentityCard>
       </div>

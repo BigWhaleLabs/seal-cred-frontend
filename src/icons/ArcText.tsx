@@ -24,11 +24,11 @@ const svgBox = (mobile?: boolean) =>
 
 interface ArcTextProps {
   text: string
-  mobile?: boolean
 }
 
-export default function ({ text, mobile }: ArcTextProps) {
-  const { xxs, md } = useBreakpoints()
+export default function ({ text }: ArcTextProps) {
+  const { xxs, sm, md } = useBreakpoints()
+  const mobile = (xxs || sm) && !md
   const radius = mobile ? 85 : 110
 
   return (
