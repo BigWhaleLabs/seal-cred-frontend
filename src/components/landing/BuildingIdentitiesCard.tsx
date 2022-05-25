@@ -2,10 +2,10 @@ import { BodyText, HeaderText } from 'components/Text'
 import Card from 'components/Card'
 import GetStartedButton from 'components/GetStartedButton'
 
-export default function ({ mobile }: { mobile?: boolean }) {
+export default function () {
   return (
     <Card color="formal-accent" onlyWrap shadow>
-      <HeaderText extraLeading small={mobile}>
+      <HeaderText extraLeading>
         Building your identities with ZK Badges
       </HeaderText>
       <BodyText>
@@ -16,7 +16,7 @@ export default function ({ mobile }: { mobile?: boolean }) {
         Zk badges verify you own an NFT but leaves no bread crumbs back to your
         personal wallets.
       </BodyText>
-      <GetStartedButton />
+      <GetStartedButton>Connect wallet to start</GetStartedButton>
     </Card>
   )
 }

@@ -14,6 +14,7 @@ import classnames, {
   transitionDuration,
   transitionProperty,
 } from 'classnames/tailwind'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const innerId = classnames(
   display('flex'),
@@ -37,16 +38,15 @@ interface IdentityCardProps {
   reveal?: boolean
   left?: boolean
   text: string
-  mobile?: boolean
 }
 
 export default function ({
   reveal,
   left = false,
   text,
-  mobile,
   children,
 }: IdentityCardProps & ChildrenProp) {
+  const { xs } = useBreakpoints()
   return (
     <Card color="formal-accent" shadow thin small onlyWrap>
       <div className={innerId}>
@@ -58,7 +58,7 @@ export default function ({
           )}
           {left && <NoisyRectangle bgColor="bg-accent" />}
         </div>
-        <BodyText small={mobile} center>
+        <BodyText small={xs} center>
           {text}
         </BodyText>
         {left ? <DoubleSmile /> : <Grim />}

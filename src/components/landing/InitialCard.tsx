@@ -2,17 +2,20 @@ import { AccentText, BodyText, HeaderText } from 'components/Text'
 import { space } from 'classnames/tailwind'
 import Card from 'components/Card'
 import GetStartedButton from 'components/GetStartedButton'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const initialCardWrapper = space('space-y-4')
 
-export default function ({ showSpinner }: { showSpinner?: boolean }) {
+export default function () {
+  const { xs } = useBreakpoints()
+
   return (
     <Card
       shadow
       color="accent"
       onlyWrap
       nospace
-      spinner={showSpinner ? 'One Identity to rule them all' : undefined}
+      spinner={!xs ? 'One Identity to rule them all' : undefined}
     >
       <div className={initialCardWrapper}>
         <HeaderText extraLeading>

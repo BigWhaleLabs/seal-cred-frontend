@@ -25,7 +25,11 @@ import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailable
 const titleContainer = space('space-y-2')
 const innerScrollableBlock = space('space-y-2')
 const proofContainer = space('space-y-6')
-const proofBlockSpacing = space('space-y-2')
+const proofContentBlock = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  space('space-y-4')
+)
 
 const proofCardZKButtonContainer = classnames(
   display('flex'),
@@ -70,7 +74,7 @@ function Proofs() {
       {nothingToGenerate && (
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
-      <div className={proofBlockSpacing}>
+      <div className={proofContentBlock}>
         <Scrollbar maxHeight={300}>
           <div className={innerScrollableBlock}>
             <ListOfReadyZKProofs />
@@ -94,7 +98,7 @@ function ReadyProofs() {
       <div className={titleContainer}>
         <CardHeader color="text-accent">Your saved ZK Proofs</CardHeader>
       </div>
-      <div className={proofBlockSpacing}>
+      <div className={proofContentBlock}>
         <Scrollbar maxHeight={300}>
           <ListOfReadyZKProofs />
         </Scrollbar>
