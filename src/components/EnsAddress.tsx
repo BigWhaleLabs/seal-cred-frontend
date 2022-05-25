@@ -1,14 +1,17 @@
 import { Suspense } from 'react'
 import EnsStore from 'stores/EnsStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
+import useBreakpoints from 'hooks/useBreakpoints'
 import useEnsNameOrAddress from 'hooks/useEnsNameOrAddress'
 
 interface EnsAddressProps {
   address: string
-  truncate?: boolean
 }
 
-function EnsAddressSuspender({ address, truncate }: EnsAddressProps) {
+function EnsAddressSuspender({
+  address,
+  truncate,
+}: EnsAddressProps & { truncate?: boolean }) {
   const ensNameOrAddress = useEnsNameOrAddress(address)
 
   return (
@@ -20,14 +23,15 @@ function EnsAddressSuspender({ address, truncate }: EnsAddressProps) {
   )
 }
 
-export default function ({ address, truncate }: EnsAddressProps) {
+export default function ({ address }: EnsAddressProps) {
+  const { lg } = useBreakpoints()
   EnsStore.fetchEnsName(address)
 
   return (
     <Suspense
-      fallback={<>{truncate ? truncateMiddleIfNeeded(address, 17) : address}</>}
+      fallback={<>{!lg ? truncateMiddleIfNeeded(address, 17) : address}</>}
     >
-      <EnsAddressSuspender address={address} truncate={truncate} />
+      <EnsAddressSuspender address={address} truncate={!lg} />
     </Suspense>
   )
 }
