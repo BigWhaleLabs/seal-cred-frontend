@@ -12,6 +12,16 @@ import classnames, {
   space,
 } from 'classnames/tailwind'
 
+const container = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  borderRadius('rounded-lg'),
+  backgroundColor('bg-primary-background'),
+  padding('px-4', 'py-4'),
+  space('space-y-4'),
+  fontSize('text-base'),
+  lineHeight('leading-6')
+)
 export default function ({
   children,
   text,
@@ -19,18 +29,7 @@ export default function ({
   text?: ComponentChildren
 }) {
   return (
-    <div
-      className={classnames(
-        display('flex'),
-        flexDirection('flex-col'),
-        borderRadius('rounded-lg'),
-        backgroundColor('bg-primary-background'),
-        padding('px-4', 'py-4'),
-        space('space-y-4'),
-        fontSize('text-base'),
-        lineHeight('leading-6')
-      )}
-    >
+    <div className={container}>
       <BadgeText>{text}</BadgeText>
       {children}
     </div>

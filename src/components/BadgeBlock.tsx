@@ -11,6 +11,7 @@ import ProofStore from 'stores/ProofStore'
 import QRCode from 'components/QRCode'
 import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
+import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -18,6 +19,7 @@ import classnames, {
   display,
   flexDirection,
   justifyContent,
+  maxWidth,
   padding,
   space,
   textAlign,
@@ -77,7 +79,7 @@ const mintPassed = (small?: boolean) =>
     alignItems('items-center')
   )
 const badgeBlockName = (small?: boolean) =>
-  small ? 'max-w-100 line-clamp-2' : undefined
+  small ? classNamesToString(maxWidth('max-w-100'), 'line-clamp-2') : undefined
 
 function Badge({
   contractAddress,
