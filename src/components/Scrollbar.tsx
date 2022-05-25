@@ -64,10 +64,10 @@ export default function ({
         onScroll={handleScroll}
       >
         {overflows && (
-          <div class="custom-scrollbar-body">
+          <div className={classNamesToString('custom-scrollbar-body')}>
             <div
               ref={thumbRef}
-              class="custom-scrollbar-thumb"
+              className={classNamesToString('custom-scrollbar-thumb')}
               style={{ height: thumbHeight + '%' }}
             />
           </div>
