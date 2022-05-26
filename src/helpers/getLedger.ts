@@ -26,8 +26,6 @@ export async function getLedgerRecord(
 export default async function (sealCredLedger: SealCredLedger) {
   const { events, deleteTopic } = await getAllEvents(sealCredLedger)
 
-  console.log(events)
-
   const ledger = {} as Ledger
   const addressToMerkle: { [address: string]: string } = {}
 
