@@ -31,7 +31,7 @@ export default async function (sealCredLedger: SealCredLedger) {
       },
       QUERY_BLOCK_LIMIT
     )
-  ).map(sealCredLedger.interface.parseLog)
+  ).map((event) => sealCredLedger.interface.parseLog(event))
 
   return {
     deleteTopic,
