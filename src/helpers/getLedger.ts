@@ -3,10 +3,10 @@ import {
   SCERC721Derivative__factory,
   SealCredLedger,
 } from '@big-whale-labs/seal-cred-ledger-contract'
-import { QUERY_BLOCK_LIMIT } from '@big-whale-labs/constants'
 import Ledger from 'models/Ledger'
 import LedgerRecord from 'models/LedgerRecord'
 import defaultProvider from 'helpers/defaultProvider'
+import getAllEvents from 'helpers/getAllEvents'
 
 export async function getLedgerRecord(
   sealCredLedger: SealCredLedger,
@@ -24,16 +24,21 @@ export async function getLedgerRecord(
 }
 
 export default async function (sealCredLedger: SealCredLedger) {
-  const eventsFilter = sealCredLedger.filters.SetMerkleRoot()
-  const events = await sealCredLedger.queryFilter(
-    eventsFilter,
-    QUERY_BLOCK_LIMIT
-  )
+  const { events, deleteTopic } = await getAllEvents(sealCredLedger)
+
   const ledger = {} as Ledger
   const addressToMerkle: { [address: string]: string } = {}
 
   for (const event of events) {
-    const { tokenAddress, merkleRoot } = event.args
+    const {
+      args: { tokenAddress, merkleRoot },
+      topic,
+    } = sealCredLedger.interface.parseLog(event)
+
+    if (topic === deleteTopic) {
+      delete addressToMerkle[tokenAddress]
+      continue
+    }
     addressToMerkle[tokenAddress] = merkleRoot
   }
 

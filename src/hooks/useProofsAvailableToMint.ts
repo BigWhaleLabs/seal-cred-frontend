@@ -18,6 +18,7 @@ export default function () {
   )
   return proofsCompleted.filter(
     (proof) =>
+      ledger[proof.contract] &&
       !derivativeTokensOwnedMap[
         ledger[proof.contract].derivativeContract.address
       ]
