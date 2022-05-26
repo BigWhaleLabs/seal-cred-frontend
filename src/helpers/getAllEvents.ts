@@ -24,12 +24,14 @@ export default async function (sealCredLedger: SealCredLedger) {
     topics.push(setTopic)
   }
 
-  const events = await sealCredLedger.queryFilter(
-    {
-      topics: [topics],
-    },
-    QUERY_BLOCK_LIMIT
-  )
+  const events = (
+    await sealCredLedger.queryFilter(
+      {
+        topics: [topics],
+      },
+      QUERY_BLOCK_LIMIT
+    )
+  ).map(sealCredLedger.interface.parseLog)
 
   return {
     deleteTopic,
