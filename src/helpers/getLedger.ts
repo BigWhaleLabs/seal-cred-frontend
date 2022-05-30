@@ -3,10 +3,10 @@ import {
   SCERC721Derivative__factory,
   SealCredLedger,
 } from '@big-whale-labs/seal-cred-ledger-contract'
+import { getAddressesToMerkleRoot } from '@big-whale-labs/frontend-utils'
 import Ledger from 'models/Ledger'
 import LedgerRecord from 'models/LedgerRecord'
 import defaultProvider from 'helpers/defaultProvider'
-import getAllEvents from 'helpers/getAllEvents'
 
 export async function getLedgerRecord(
   sealCredLedger: SealCredLedger,
@@ -24,23 +24,8 @@ export async function getLedgerRecord(
 }
 
 export default async function (sealCredLedger: SealCredLedger) {
-  const { events, deleteTopic } = await getAllEvents(sealCredLedger)
-
+  const addressToMerkle = await getAddressesToMerkleRoot(sealCredLedger)
   const ledger = {} as Ledger
-  const addressToMerkle: { [address: string]: string } = {}
-
-  for (const event of events) {
-    const {
-      args: { tokenAddress, merkleRoot },
-      topic,
-    } = event
-
-    if (topic === deleteTopic) {
-      delete addressToMerkle[tokenAddress]
-      continue
-    }
-    addressToMerkle[tokenAddress] = merkleRoot
-  }
 
   for (const tokenAddress in addressToMerkle) {
     ledger[tokenAddress] = await getLedgerRecord(
