@@ -1,10 +1,12 @@
 import { LinkText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
+import { wordBreak } from 'classnames/tailwind'
 import EnsAddress from 'components/EnsAddress'
 import SealCredStore from 'stores/SealCredStore'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 
+const container = wordBreak('break-all')
 function OwnedBadgeAddressSuspender({
   derivativeAddress,
   tokenId,
@@ -17,7 +19,7 @@ function OwnedBadgeAddressSuspender({
     derivativeContractsToOwnersMaps[derivativeAddress][Number(tokenId)]
 
   return (
-    <>
+    <span className={container}>
       {owner && (
         <LinkText
           url={getEtherscanAddressUrl(owner)}
@@ -29,7 +31,7 @@ function OwnedBadgeAddressSuspender({
           <EnsAddress address={owner} />
         </LinkText>
       )}
-    </>
+    </span>
   )
 }
 
