@@ -21,7 +21,7 @@ import useScrollPercent from 'hooks/useScrollPercent'
 const orbBoxes = classnames(
   display('flex'),
   flexDirection('flex-row'),
-  space('space-x-3.5'),
+  space('space-x-2'),
   transitionProperty('transition-all'),
   zIndex('z-30')
 )
