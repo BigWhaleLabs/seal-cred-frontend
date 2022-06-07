@@ -53,10 +53,16 @@ body {
   64% {
     /* Orb to the ID Card */
     transform: translate(-0.63rem, 73.75rem);
+    opacity: 1;
   }
   65% {
     /* Orb goes and stays behind ID card */
     /* Reveal animation happens inside IdentityCard */
+    transform: translate(-0.563rem, 86.438rem);
+    opacity: 0;
+  }
+  100% {
+    /* Stay behing the card always*/
     transform: translate(-0.563rem, 86.438rem);
     opacity: 0;
   }
@@ -76,8 +82,13 @@ body {
   }
   64% {
     transform: translate(-5.313rem, 75.625rem);
+    opacity: 1;
   }
   65% {
+    transform: translate(-5.313rem, 88.438rem);
+    opacity: 0;
+  }
+  100% {
     transform: translate(-5.313rem, 88.438rem);
     opacity: 0;
   }
@@ -97,8 +108,13 @@ body {
   }
   64% {
     transform: translate(0rem, 72.5rem);
+    opacity: 1;
   }
   65% {
+    transform: translate(0.375rem, 85.625rem);
+    opacity: 0;
+  }
+  100% {
     transform: translate(0.375rem, 85.625rem);
     opacity: 0;
   }
