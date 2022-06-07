@@ -5,7 +5,7 @@ const strokeSecondary = stroke('stroke-secondary')
 
 export default function () {
   return (
-    <div style={{ width: '12.625rem', height: '26.25rem' }}>
+    <div style={{ width: '13.2rem', height: '26.25rem' }}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"

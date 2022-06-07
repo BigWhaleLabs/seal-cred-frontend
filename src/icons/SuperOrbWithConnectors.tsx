@@ -385,13 +385,13 @@ export default function () {
 
   return (
     <>
-      <div style={{ width: '12.625rem', height: '73.75rem' }}>
+      <div style={{ width: '13.2rem', height: '73.75rem' }}>
         <div className={position('relative')}>
           <UpperConnectors />
           <div
             className={superOrbBox(glow)}
             style={{
-              width: '12.625rem',
+              width: '13.2rem',
               height: '12.625rem',
               bottom: '-6.938rem',
             }}
