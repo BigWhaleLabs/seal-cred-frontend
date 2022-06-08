@@ -1,14 +1,22 @@
 import { AccentText, CardDescription, CardHeader } from 'components/Text'
 import { Suspense } from 'react'
-import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
 import Button from 'components/Button'
 import Card from 'components/Card'
+import Measure from 'components/Measure'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
+import classnames, {
+  alignItems,
+  display,
+  flexDirection,
+  flexGrow,
+  height,
+  space,
+} from 'classnames/tailwind'
 import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
@@ -72,6 +80,16 @@ const ConnectAnonymousWallet = () => (
   </BadgesHintCard>
 )
 
+const badgesContainer = classnames(
+  space('space-y-6'),
+  display('flex'),
+  flexDirection('flex-col'),
+  alignItems('items-stretch'),
+  height('h-full')
+)
+
+const badgeListContainer = classnames(display('flex'), flexGrow('grow'))
+
 function Badges() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
@@ -87,7 +105,7 @@ function Badges() {
     hasUnminted
 
   return (
-    <div className={space('space-y-6')}>
+    <div className={badgesContainer}>
       <ZkBadgesTitle
         hasAccount={!!account}
         hasUnminted={hasUnminted}
@@ -95,13 +113,17 @@ function Badges() {
       />
 
       {account ? (
-        <Scrollbar maxHeight={270}>
-          {shouldNotify ? (
-            <DoxNotification account={account} />
-          ) : (
-            <BadgesList />
+        <Measure defaultHeight={270} className={badgeListContainer}>
+          {({ height = 270 }) => (
+            <Scrollbar maxHeight={height}>
+              {shouldNotify ? (
+                <DoxNotification account={account} />
+              ) : (
+                <BadgesList />
+              )}
+            </Scrollbar>
           )}
-        </Scrollbar>
+        </Measure>
       ) : (
         <ConnectAnonymousWallet />
       )}

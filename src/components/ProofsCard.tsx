@@ -8,6 +8,7 @@ import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfInProgressZKProofs from 'components/ListOfInProgressZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
+import Measure from 'components/Measure'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
@@ -16,6 +17,8 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
+  flexGrow,
+  height,
   space,
   width,
 } from 'classnames/tailwind'
@@ -24,11 +27,19 @@ import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailable
 
 const titleContainer = space('space-y-2')
 const innerScrollableBlock = space('space-y-2')
-const proofContainer = space('space-y-6')
+const proofContainer = classnames(
+  space('space-y-6'),
+  display('flex'),
+  flexDirection('flex-col'),
+  height('h-full'),
+  alignItems('items-stretch')
+)
+
 const proofContentBlock = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  space('space-y-4')
+  space('space-y-4'),
+  flexGrow('grow')
 )
 
 const proofCardZKButtonContainer = classnames(
@@ -44,6 +55,12 @@ function ZkProofSavedMessage() {
     </AccentText>
   )
 }
+
+const proofsListContainer = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  flexGrow('grow')
+)
 
 function Proofs() {
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
@@ -75,17 +92,21 @@ function Proofs() {
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
       <div className={proofContentBlock}>
-        <Scrollbar maxHeight={300}>
-          <div className={innerScrollableBlock}>
-            <ListOfReadyZKProofs />
-            {account && (
-              <>
-                <ListOfInProgressZKProofs />
-                <ListOfAvailableZKProofs />
-              </>
-            )}
-          </div>
-        </Scrollbar>
+        <Measure defaultHeight={300} className={proofsListContainer}>
+          {({ height = 300 }) => (
+            <Scrollbar maxHeight={height}>
+              <div className={innerScrollableBlock}>
+                <ListOfReadyZKProofs />
+                {account && (
+                  <>
+                    <ListOfInProgressZKProofs />
+                    <ListOfAvailableZKProofs />
+                  </>
+                )}
+              </div>
+            </Scrollbar>
+          )}
+        </Measure>
         {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
       </div>
     </div>
@@ -99,9 +120,13 @@ function ReadyProofs() {
         <CardHeader color="text-accent">Your saved ZK Proofs</CardHeader>
       </div>
       <div className={proofContentBlock}>
-        <Scrollbar maxHeight={300}>
-          <ListOfReadyZKProofs />
-        </Scrollbar>
+        <Measure defaultHeight={300} className={proofsListContainer}>
+          {({ height = 300 }) => (
+            <Scrollbar maxHeight={height}>
+              <ListOfReadyZKProofs />
+            </Scrollbar>
+          )}
+        </Measure>
         <ZkProofSavedMessage />
       </div>
     </>
