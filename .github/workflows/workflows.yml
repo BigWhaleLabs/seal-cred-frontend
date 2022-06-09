@@ -1,2 +1,6 @@
-- name: Build and lint code
-  uses: Borodutch/build-and-lint-code@v1.0.0
+name: Build and lint code
+jobs:
+  build-and-lint-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Borodutch/build-and-lint-code@v1.0.0
