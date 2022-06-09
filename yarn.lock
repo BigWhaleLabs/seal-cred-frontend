@@ -1521,10 +1521,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/constants@npm:^0.0.8":
-  version: 0.0.8
-  resolution: "@big-whale-labs/constants@npm:0.0.8"
-  checksum: 66c8c7ef17ca17db68dd5acc529108720664122cebec792c360ca3be9650f2b37c8cfadd12d87337402e56de7890a1f881233b8c95072a89538d2426cd6578bd
+"@big-whale-labs/constants@npm:^0.0.9-0":
+  version: 0.0.9-0
+  resolution: "@big-whale-labs/constants@npm:0.0.9-0"
+  checksum: f70fecc6081e792e31c07322aa0dfecfad1e69565aa9744694a822a9875a4db195bfdd2cb4db5d60bf5cf876482f24ea22d75e52b1c94f616eaea34fea925984
   languageName: node
   linkType: hard
 
@@ -13801,7 +13801,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "seal-cred-frontend@workspace:."
   dependencies:
-    "@big-whale-labs/constants": ^0.0.8
+    "@big-whale-labs/constants": ^0.0.9-0
     "@big-whale-labs/poseidon": ^0.0.4
     "@big-whale-labs/seal-cred-ledger-contract": ^0.0.3
     "@coinbase/wallet-sdk": ^3.1.0
