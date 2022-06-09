@@ -109,7 +109,7 @@ function Badges() {
       />
 
       {account ? (
-        <Scrollbar maxHeight={270}>
+        <Scrollbar>
           {shouldNotify ? (
             <DoxNotification account={account} />
           ) : (

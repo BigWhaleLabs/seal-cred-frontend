@@ -21,7 +21,6 @@ import useIsOverflow from 'hooks/useIsOverflow'
 type FadeType = 'top' | 'bottom' | 'both'
 
 interface ScrollbarProps {
-  maxHeight?: number
   fade?: FadeType
 }
 
@@ -34,11 +33,10 @@ const scrollContainer = classnames(
 
 export default function ({
   children,
-  maxHeight = 350,
   fade = 'both',
 }: ChildrenProp & ScrollbarProps) {
   const container = useRef<HTMLDivElement>(null)
-  const [height, setHeight] = useState(maxHeight)
+  const [height, setHeight] = useState(0)
 
   useLayoutEffect(() => {
     if (container.current) {

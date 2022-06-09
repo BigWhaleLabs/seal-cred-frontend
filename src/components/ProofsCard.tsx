@@ -85,7 +85,7 @@ function Proofs() {
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
       <div className={proofContentBlock}>
-        <Scrollbar maxHeight={300}>
+        <Scrollbar>
           <div className={innerScrollableBlock}>
             <ListOfReadyZKProofs />
             {account && (
@@ -109,7 +109,7 @@ function ReadyProofs() {
         <CardHeader color="text-accent">Your saved ZK Proofs</CardHeader>
       </div>
       <div className={proofContentBlock}>
-        <Scrollbar maxHeight={300}>
+        <Scrollbar>
           <ListOfReadyZKProofs />
         </Scrollbar>
         <ZkProofSavedMessage />
