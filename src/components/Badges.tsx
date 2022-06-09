@@ -5,7 +5,6 @@ import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
 import Button from 'components/Button'
 import Card from 'components/Card'
-import Measure from 'components/Measure'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
@@ -13,7 +12,6 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
-  flexGrow,
   height,
   space,
 } from 'classnames/tailwind'
@@ -88,8 +86,6 @@ const badgesContainer = classnames(
   height('h-full')
 )
 
-const badgeListContainer = classnames(display('flex'), flexGrow('grow'))
-
 function Badges() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
@@ -113,17 +109,13 @@ function Badges() {
       />
 
       {account ? (
-        <Measure defaultHeight={270} className={badgeListContainer}>
-          {({ height = 270 }) => (
-            <Scrollbar maxHeight={height}>
-              {shouldNotify ? (
-                <DoxNotification account={account} />
-              ) : (
-                <BadgesList />
-              )}
-            </Scrollbar>
+        <Scrollbar maxHeight={270}>
+          {shouldNotify ? (
+            <DoxNotification account={account} />
+          ) : (
+            <BadgesList />
           )}
-        </Measure>
+        </Scrollbar>
       ) : (
         <ConnectAnonymousWallet />
       )}

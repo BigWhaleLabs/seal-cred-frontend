@@ -1,9 +1,21 @@
-import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
-import { overflow, position } from 'classnames/tailwind'
+import {
+  MutableRef,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'preact/hooks'
 import { useRef } from 'react'
 import ChildrenProp from 'models/ChildrenProp'
 import Fade from 'components/Fade'
 import classNamesToString from 'helpers/classNamesToString'
+import classnames, {
+  display,
+  flexDirection,
+  flexGrow,
+  overflow,
+  position,
+} from 'classnames/tailwind'
 import useIsOverflow from 'hooks/useIsOverflow'
 
 type FadeType = 'top' | 'bottom' | 'both'
@@ -13,18 +25,34 @@ interface ScrollbarProps {
   fade?: FadeType
 }
 
+const scrollContainer = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  flexGrow('grow'),
+  position('relative')
+)
+
 export default function ({
   children,
   maxHeight = 350,
   fade = 'both',
 }: ChildrenProp & ScrollbarProps) {
+  const container = useRef<HTMLDivElement>(null)
+  const [height, setHeight] = useState(maxHeight)
+
+  useLayoutEffect(() => {
+    if (container.current) {
+      setHeight(container.current.offsetHeight)
+    }
+  }, [])
+
   const wrapRef = useRef() as MutableRef<HTMLDivElement>
   const thumbRef = useRef() as MutableRef<HTMLDivElement>
   const [thumbHeight, setThumbHeight] = useState(100)
 
   const { overflows, scrollMaxHeight, isOnTop, isOnBottom } = useIsOverflow(
     wrapRef,
-    maxHeight
+    height
   )
 
   const handleScroll = () => {
@@ -45,12 +73,13 @@ export default function ({
     const numberOfViews = node.scrollHeight / node.clientHeight
     setThumbHeight(100 / numberOfViews)
   }, [])
+
   useEffect(() => {
     refCallback(wrapRef.current)
   })
 
   return (
-    <div className={position('relative')}>
+    <div ref={container} className={scrollContainer}>
       <div
         ref={wrapRef}
         className={classNamesToString(

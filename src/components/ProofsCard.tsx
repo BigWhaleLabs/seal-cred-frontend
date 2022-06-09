@@ -8,7 +8,6 @@ import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfInProgressZKProofs from 'components/ListOfInProgressZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
-import Measure from 'components/Measure'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
@@ -56,12 +55,6 @@ function ZkProofSavedMessage() {
   )
 }
 
-const proofsListContainer = classnames(
-  display('flex'),
-  flexDirection('flex-col'),
-  flexGrow('grow')
-)
-
 function Proofs() {
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
   const { proofsCompleted, proofsInProgress } = useSnapshot(ProofStore)
@@ -92,21 +85,17 @@ function Proofs() {
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
       <div className={proofContentBlock}>
-        <Measure defaultHeight={300} className={proofsListContainer}>
-          {({ height = 300 }) => (
-            <Scrollbar maxHeight={height}>
-              <div className={innerScrollableBlock}>
-                <ListOfReadyZKProofs />
-                {account && (
-                  <>
-                    <ListOfInProgressZKProofs />
-                    <ListOfAvailableZKProofs />
-                  </>
-                )}
-              </div>
-            </Scrollbar>
-          )}
-        </Measure>
+        <Scrollbar maxHeight={300}>
+          <div className={innerScrollableBlock}>
+            <ListOfReadyZKProofs />
+            {account && (
+              <>
+                <ListOfInProgressZKProofs />
+                <ListOfAvailableZKProofs />
+              </>
+            )}
+          </div>
+        </Scrollbar>
         {proofsCompleted.length > 0 && <ZkProofSavedMessage />}
       </div>
     </div>
@@ -120,13 +109,9 @@ function ReadyProofs() {
         <CardHeader color="text-accent">Your saved ZK Proofs</CardHeader>
       </div>
       <div className={proofContentBlock}>
-        <Measure defaultHeight={300} className={proofsListContainer}>
-          {({ height = 300 }) => (
-            <Scrollbar maxHeight={height}>
-              <ListOfReadyZKProofs />
-            </Scrollbar>
-          )}
-        </Measure>
+        <Scrollbar maxHeight={300}>
+          <ListOfReadyZKProofs />
+        </Scrollbar>
         <ZkProofSavedMessage />
       </div>
     </>
