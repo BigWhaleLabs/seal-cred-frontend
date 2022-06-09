@@ -79,7 +79,7 @@ const bodyText = (bold?: boolean, small?: boolean, center?: boolean) =>
     textColor('text-formal-accent'),
     textAlign(center ? 'text-center' : undefined),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize(small ? 'text-sm' : 'text-base'),
+    fontSize(small ? 'text-sm' : 'text-sm', 'sm:text-base'),
     lineHeight('leading-6')
   )
 export function BodyText({
