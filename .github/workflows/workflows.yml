@@ -7,11 +7,23 @@ on:
 jobs:
   compile-code:
     runs-on: ubuntu-latest
-    env:
-      NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v2
+
+      - name: Cache node modules
+        id: cache-nodemodules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: Install modules
+        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: yarn
       - name: Compile code
         run: yarn tsc --skipLibCheck
