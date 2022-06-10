@@ -30,7 +30,7 @@ export default function ({
 }) {
   return (
     <div className={container}>
-      <BadgeText>{text}</BadgeText>
+      {text && <BadgeText>{text}</BadgeText>}
       {children}
     </div>
   )
