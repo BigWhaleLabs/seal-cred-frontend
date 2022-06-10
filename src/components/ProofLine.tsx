@@ -1,11 +1,15 @@
 import ChildrenProp from 'models/ChildrenProp'
+import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
+  TTailwindString,
   alignItems,
   backgroundColor,
   borderRadius,
   display,
   flexDirection,
   flexWrap,
+  fontSize,
+  fontWeight,
   height,
   justifyContent,
   padding,
@@ -26,11 +30,20 @@ const contractContainer = (small?: boolean) =>
     borderRadius('rounded-lg'),
     height('h-fit'),
     padding('px-4', 'py-2'),
-    width('w-full')
+    width('w-full'),
+    fontSize('text-sm'),
+    fontWeight('font-bold')
   )
 
-export default function ({ children }: ChildrenProp) {
+export default function ({
+  children,
+  className,
+}: ChildrenProp & { className?: TTailwindString }) {
   const { xs } = useBreakpoints()
 
-  return <div className={contractContainer(xs)}>{children}</div>
+  return (
+    <div className={classNamesToString(contractContainer(xs), className)}>
+      {children}
+    </div>
+  )
 }

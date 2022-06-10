@@ -9,6 +9,7 @@ import {
   fontWeight,
   gradientColorStops,
   lineHeight,
+  margin,
   textAlign,
   textColor,
   textDecoration,
@@ -212,4 +213,13 @@ const sphereText = classnames(
 )
 export function SphereText({ children }: ChildrenProp) {
   return <p className={sphereText}>{children}</p>
+}
+
+const proofSectionTitle = classnames(
+  fontWeight('font-bold'),
+  margin('mb-2'),
+  fontSize('text-sm')
+)
+export function ProofSectionTitle({ children }: ChildrenProp) {
+  return <p className={proofSectionTitle}>{children}</p>
 }

@@ -8,9 +8,11 @@ import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
 import ListOfInProgressZKProofs from 'components/ListOfInProgressZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
+import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
+import WorkProof from 'components/WorkProof'
 import ZkProofButton from 'components/ZkProofButton'
 import classnames, {
   alignItems,
@@ -71,9 +73,7 @@ function Proofs() {
             : 'Generate ZK proofs'}
         </CardDescription>
       </div>
-      {nothingToGenerate && (
-        <BadgesHintCard text="You don't have any supported tokens." />
-      )}
+      {nothingToGenerate && <BadgesHintCard text="No NFts to proof" />}
       <div className={proofContentBlock}>
         <Scrollbar maxHeight={300}>
           <div className={innerScrollableBlock}>
@@ -84,6 +84,18 @@ function Proofs() {
                 <ListOfAvailableZKProofs />
               </>
             )}
+            <ProofSection
+              title={
+                <>
+                  Additional proofs{' '}
+                  <AccentText color="text-tertiary" bold>
+                    New!
+                  </AccentText>
+                </>
+              }
+            >
+              <WorkProof />
+            </ProofSection>
           </div>
         </Scrollbar>
         {proofsCompleted.length > 0 && <ZkProofSavedMessage />}

@@ -15,6 +15,7 @@ import {
   fontSize,
   fontWeight,
   gradientColorStops,
+  justifyContent,
   opacity,
   outlineStyle,
   padding,
@@ -29,10 +30,16 @@ import Arrow from 'icons/Arrow'
 import Loading from 'icons/Loading'
 import React from 'react'
 
-const commonClasses = (loading?: boolean, disabled?: boolean) =>
+const commonClasses = (
+  fullWidth?: boolean,
+  center?: boolean,
+  loading?: boolean,
+  disabled?: boolean
+) =>
   classnames(
     display('flex'),
     flexDirection('flex-row'),
+    justifyContent(center ? 'justify-center' : undefined),
     alignItems('items-center'),
     fontWeight('font-bold'),
     fontFamily('font-primary'),
@@ -43,11 +50,13 @@ const commonClasses = (loading?: boolean, disabled?: boolean) =>
     outlineStyle('focus:outline-none'),
     opacity(loading || disabled ? 'opacity-50' : undefined),
     boxShadow('shadow-2xl', 'hover:shadow-lg', 'active:shadow-md'),
-    width('w-fit'),
+    width(fullWidth ? 'w-full' : 'w-fit'),
     space('space-x-2')
   )
 
 const button = ({
+  fullWidth,
+  center,
   primary,
   loading,
   disabled,
@@ -55,7 +64,7 @@ const button = ({
   fontSmall,
 }: ButtonProps) =>
   classnames(
-    commonClasses(loading, disabled),
+    commonClasses(fullWidth, center, loading, disabled),
     colorClasses({ primary, loading, disabled, small, fontSmall })
   )
 
@@ -98,6 +107,8 @@ const colorClasses = ({
   )
 
 interface ButtonProps {
+  fullWidth?: boolean
+  center?: boolean
   primary?: boolean
   disabled?: boolean
   loading?: boolean
@@ -107,6 +118,8 @@ interface ButtonProps {
 }
 
 export default function ({
+  fullWidth,
+  center,
   small,
   withArrow,
   primary,
@@ -118,7 +131,15 @@ export default function ({
 }: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   return (
     <button
-      className={button({ primary, loading, disabled, small, fontSmall })}
+      className={button({
+        fullWidth,
+        center,
+        primary,
+        loading,
+        disabled,
+        small,
+        fontSmall,
+      })}
       disabled={loading || disabled}
       {...rest}
     >
