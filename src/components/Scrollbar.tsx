@@ -41,8 +41,6 @@ export default function ({
     height
   )
 
-  console.log('height', height, 'scrollMaxHeight', scrollMaxHeight)
-
   const handleScroll = () => {
     if (!thumbRef.current || !wrapRef.current) return
     const wrapCurrent = wrapRef.current
