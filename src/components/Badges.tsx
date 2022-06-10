@@ -66,7 +66,19 @@ const ZkBadgesTitle = ({
 )
 
 const ConnectAnonymousWallet = () => (
-  <BadgesHintCard text="You must switch from your first wallet after ZK proof is made to an anonymous wallet for the magic to work.">
+  <BadgesHintCard>
+    <p>
+      <AccentText color="text-secondary">1.</AccentText> Create proof with any
+      NFTs in your wallet.
+    </p>
+    <p>
+      <AccentText color="text-secondary">2.</AccentText> Create or use a new
+      wallet (anonymous wallet) and connect to SealCred again.
+    </p>
+    <p>
+      <AccentText color="text-secondary">3.</AccentText> Mint badges using the
+      anonymous wallet.
+    </p>
     <Button
       withArrow
       onClick={async () => {

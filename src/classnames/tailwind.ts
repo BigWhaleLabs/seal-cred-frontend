@@ -7366,6 +7366,7 @@ export type TMaxHeight =
   | 'max-h-max'
   | 'max-h-fit'
   | 'max-h-card'
+  | 'max-h-mobile-card'
   | 'max-h-badges-list'
   | 'max-h-small'
 

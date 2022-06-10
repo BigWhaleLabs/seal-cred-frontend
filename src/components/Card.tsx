@@ -89,7 +89,10 @@ const cardContainer = (
       onlyWrap ? undefined : thin ? undefined : 'lg:h-card'
     ),
     space(nospace ? undefined : 'space-y-4'),
-    maxHeight(onlyWrap ? undefined : 'max-h-card'),
+    maxHeight(
+      onlyWrap ? undefined : 'sm:max-h-card',
+      onlyWrap ? undefined : 'max-h-mobile-card'
+    ),
     wordBreak('break-words'),
     zIndex('z-30')
   )
