@@ -1,11 +1,6 @@
-import {
-  MutableRef,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'preact/hooks'
+import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
 import { useRef } from 'react'
+import { useResizeDetector } from 'react-resize-detector'
 import ChildrenProp from 'models/ChildrenProp'
 import Fade from 'components/Fade'
 import classNamesToString from 'helpers/classNamesToString'
@@ -35,14 +30,7 @@ export default function ({
   children,
   fade = 'both',
 }: ChildrenProp & ScrollbarProps) {
-  const container = useRef<HTMLDivElement>(null)
-  const [height, setHeight] = useState(0)
-
-  useLayoutEffect(() => {
-    if (container.current) {
-      setHeight(container.current.offsetHeight)
-    }
-  }, [])
+  const { height = 0, ref } = useResizeDetector({ handleWidth: false })
 
   const wrapRef = useRef() as MutableRef<HTMLDivElement>
   const thumbRef = useRef() as MutableRef<HTMLDivElement>
@@ -52,6 +40,8 @@ export default function ({
     wrapRef,
     height
   )
+
+  console.log('height', height, 'scrollMaxHeight', scrollMaxHeight)
 
   const handleScroll = () => {
     if (!thumbRef.current || !wrapRef.current) return
@@ -77,7 +67,7 @@ export default function ({
   })
 
   return (
-    <div ref={container} className={scrollContainer}>
+    <div ref={ref} className={scrollContainer}>
       <div
         ref={wrapRef}
         className={classNamesToString(

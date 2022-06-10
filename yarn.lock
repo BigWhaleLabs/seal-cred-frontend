@@ -13225,6 +13225,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-resize-detector@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "react-resize-detector@npm:7.1.1"
+  dependencies:
+    lodash: ^4.17.21
+  peerDependencies:
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 8065ba7531f57409ddb47824d737e79d80952b91152a63a2a1e0dab8e8f2c899fceaac10d873d22f3262b023a0e1e5a5ae6d7a45fe392c60b270928af9051276
+  languageName: node
+  linkType: hard
+
 "react-router-dom@npm:^6.3.0":
   version: 6.3.0
   resolution: "react-router-dom@npm:6.3.0"
@@ -14061,6 +14073,7 @@ __metadata:
     preact: ^10.7.3
     prettier: ^2.6.2
     qr-code-styling: ^1.6.0-rc.1
+    react-resize-detector: ^7.1.1
     react-router-dom: ^6.3.0
     react-scripts: ^5.0.1
     react-toastify: ^9.0.4

@@ -37,6 +37,7 @@
     "fortmatic": "^2.4.0",
     "preact": "^10.7.3",
     "qr-code-styling": "^1.6.0-rc.1",
+    "react-resize-detector": "^7.1.1",
     "react-router-dom": "^6.3.0",
     "react-toastify": "^9.0.4",
     "react-tooltip": "^4.2.21",
