@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       maxHeight: {
         card: '31.75rem',
+        'mobile-card': '41rem',
         'badges-list': '21.25rem',
       },
       maxWidth: {
