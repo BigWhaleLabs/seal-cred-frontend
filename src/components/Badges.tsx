@@ -1,6 +1,5 @@
 import { AccentText, CardDescription, CardHeader } from 'components/Text'
 import { Suspense } from 'react'
-import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
@@ -9,6 +8,13 @@ import Card from 'components/Card'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
+import classnames, {
+  alignItems,
+  display,
+  flexDirection,
+  height,
+  space,
+} from 'classnames/tailwind'
 import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
@@ -84,6 +90,14 @@ const ConnectAnonymousWallet = () => (
   </BadgesHintCard>
 )
 
+const badgesContainer = classnames(
+  space('space-y-6'),
+  display('flex'),
+  flexDirection('flex-col'),
+  alignItems('items-stretch'),
+  height('h-full')
+)
+
 function Badges() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
@@ -99,7 +113,7 @@ function Badges() {
     hasUnminted
 
   return (
-    <div className={space('space-y-6')}>
+    <div className={badgesContainer}>
       <ZkBadgesTitle
         hasAccount={!!account}
         hasUnminted={hasUnminted}
@@ -107,7 +121,7 @@ function Badges() {
       />
 
       {account ? (
-        <Scrollbar maxHeight={270}>
+        <Scrollbar>
           {shouldNotify ? (
             <DoxNotification account={account} />
           ) : (

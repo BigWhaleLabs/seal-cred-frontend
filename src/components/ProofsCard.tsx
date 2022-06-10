@@ -16,6 +16,8 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
+  flexGrow,
+  height,
   space,
   width,
 } from 'classnames/tailwind'
@@ -24,11 +26,19 @@ import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailable
 
 const titleContainer = space('space-y-2')
 const innerScrollableBlock = space('space-y-2')
-const proofContainer = space('space-y-6')
+const proofContainer = classnames(
+  space('space-y-6'),
+  display('flex'),
+  flexDirection('flex-col'),
+  height('h-full'),
+  alignItems('items-stretch')
+)
+
 const proofContentBlock = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  space('space-y-4')
+  space('space-y-4'),
+  flexGrow('grow')
 )
 
 const proofCardZKButtonContainer = classnames(
@@ -75,7 +85,7 @@ function Proofs() {
         <BadgesHintCard text="You don't have any supported tokens." />
       )}
       <div className={proofContentBlock}>
-        <Scrollbar maxHeight={300}>
+        <Scrollbar>
           <div className={innerScrollableBlock}>
             <ListOfReadyZKProofs />
             {account && (
@@ -99,7 +109,7 @@ function ReadyProofs() {
         <CardHeader color="text-accent">Your saved ZK Proofs</CardHeader>
       </div>
       <div className={proofContentBlock}>
-        <Scrollbar maxHeight={300}>
+        <Scrollbar>
           <ListOfReadyZKProofs />
         </Scrollbar>
         <ZkProofSavedMessage />
