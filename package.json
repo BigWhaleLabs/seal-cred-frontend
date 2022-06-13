@@ -24,9 +24,9 @@
     ]
   },
   "dependencies": {
-    "@big-whale-labs/constants": "^0.0.11",
+    "@big-whale-labs/constants": "^0.0.14",
     "@big-whale-labs/poseidon": "^0.0.5",
-    "@big-whale-labs/seal-cred-ledger-contract": "^0.0.4",
+    "@big-whale-labs/seal-cred-ledger-contract": "^0.0.5",
     "@coinbase/wallet-sdk": "^3.2.0",
     "@walletconnect/web3-provider": "^1.7.8",
     "@zk-kit/incremental-merkle-tree": "^0.4.3",
@@ -44,7 +44,7 @@
     "secure-ls": "^1.2.6",
     "tailwind-scrollbar-hide": "^1.1.7",
     "valtio": "^1.6.1",
-    "web3modal": "^1.9.7"
+    "web3modal": "^1.9.8"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
@@ -52,9 +52,9 @@
     "@preact/preset-vite": "^2.2.0",
     "@rollup/plugin-inject": "^4.0.4",
     "@tailwindcss/line-clamp": "^0.4.0",
-    "@typechain/ethers-v5": "^10.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.27.1",
-    "@typescript-eslint/parser": "^5.27.1",
+    "@typechain/ethers-v5": "^10.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
     "@vitejs/plugin-react": "^1.3.2",
     "assert-browserify": "^2.0.0",
     "autoprefixer": "^10.4.7",
@@ -74,10 +74,10 @@
     "react-scripts": "^5.0.1",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "rollup-plugin-visualizer": "^5.6.0",
-    "tailwindcss": "^3.1.0",
+    "tailwindcss": "^3.1.2",
     "tailwindcss-classnames": "^3.0.5",
     "typescript": "^4.7.3",
-    "vite": "^2.9.10",
+    "vite": "^2.9.12",
     "vite-tsconfig-paths": "^3.5.0"
   },
   "packageManager": "yarn@3.2.1"
