@@ -26,11 +26,10 @@ export default async function (account: string) {
     })
   )
     .map((log) => {
-      console.log(log)
       if (log.topics[0] !== sigHash) return null
-      if (log.topics.length <= 3) return null
       const data = log.data
       const topics = log.topics
+      if (topics.length <= 3) return null
       const result = iface.parseLog({ data, topics })
       return {
         contract: log.address,
