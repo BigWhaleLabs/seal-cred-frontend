@@ -43,15 +43,13 @@ class WalletStore {
     }
   }
 
-  async signMessage(forAddress?: string) {
+  async signMessage(message: string) {
     if (!provider) throw new Error('No provider')
 
     this.walletLoading = true
     try {
       const signer = provider.getSigner()
-      const signature = await signer.signMessage(
-        forAddress ? forAddress : await signer.getAddress()
-      )
+      const signature = await signer.signMessage(message)
       return signature
     } finally {
       this.walletLoading = false
