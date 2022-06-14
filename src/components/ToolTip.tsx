@@ -1,4 +1,8 @@
 import { HighlightedText } from 'components/Text'
+import { MutableRef } from 'preact/hooks'
+import { useRef } from 'react'
+import { useState } from 'preact/hooks'
+import ChildrenProp from 'models/ChildrenProp'
 import classnames, {
   backgroundColor,
   borderRadius,
@@ -17,6 +21,18 @@ import classnames, {
   zIndex,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
+import useClickOutside from 'hooks/useClickOutside'
+
+const zkProofButtonTooltip = classnames(
+  position('relative'),
+  width('w-full', 'sm:w-card')
+)
+const tooltipWrapper = classnames(
+  position('relative'),
+  height('h-px'),
+  width('w-full'),
+  margin('mx-auto')
+)
 
 const tooltipClasses = (mobile: boolean, show: boolean) => {
   return classnames(
@@ -44,21 +60,32 @@ const triangle = classnames(
   transformOrigin('origin-bottom-left')
 )
 
-interface ToolTipProps {
-  text: string
-  show: boolean
-}
-
-export default function ({ text, show }: ToolTipProps) {
+export default function ({ text, children }: ChildrenProp & { text: string }) {
+  const [isShow, setIsShow] = useState(false)
+  const childrenRef = useRef() as MutableRef<HTMLDivElement>
   const { xs } = useBreakpoints()
+  useClickOutside(childrenRef, () => setIsShow(false))
 
   return (
-    <div
-      className={tooltipClasses(xs, show)}
-      style={{ visibility: show ? 'visible' : 'collapse' }}
-    >
-      <HighlightedText>{text}</HighlightedText>
-      <div className={triangle}></div>
+    <div className={zkProofButtonTooltip}>
+      <div className={tooltipWrapper}>
+        <div
+          className={tooltipClasses(xs, isShow)}
+          style={{ visibility: isShow ? 'visible' : 'collapse' }}
+        >
+          <HighlightedText>{text}</HighlightedText>
+          <div className={triangle}></div>
+        </div>
+      </div>
+      <div
+        ref={childrenRef}
+        className={width('w-full')}
+        onMouseEnter={() => setIsShow(true)}
+        onMouseLeave={() => setIsShow(false)}
+        onClick={() => setIsShow(true)}
+      >
+        {children}
+      </div>
     </div>
   )
 }
