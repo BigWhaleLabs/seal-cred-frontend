@@ -1,4 +1,3 @@
-import ProofResponse from 'models/ProofResponse'
 import ProofStatus from 'models/ProofStatus'
 
 export default interface Proof {
@@ -6,14 +5,9 @@ export default interface Proof {
   contract: string
   account: string
   status: ProofStatus
-  position?: number
-  result?: ProofResponse
 }
 
 export const ProofOrdering = {
   [ProofStatus.completed]: 0,
   [ProofStatus.running]: 1,
-  [ProofStatus.scheduled]: 2,
-  [ProofStatus.cancelled]: 3,
-  [ProofStatus.failed]: 4,
 }

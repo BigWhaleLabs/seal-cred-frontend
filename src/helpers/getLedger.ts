@@ -3,46 +3,39 @@ import {
   SCERC721Derivative__factory,
   SealCredLedger,
 } from '@big-whale-labs/seal-cred-ledger-contract'
-import { QUERY_BLOCK_LIMIT } from '@big-whale-labs/constants'
 import Ledger from 'models/Ledger'
 import LedgerRecord from 'models/LedgerRecord'
 import defaultProvider from 'helpers/defaultProvider'
 
 export async function getLedgerRecord(
   sealCredLedger: SealCredLedger,
-  tokenAddress: string,
-  merkleRoot: string
+  originalContract: string
 ) {
   return {
-    merkleRoot,
-    originalContract: ERC721__factory.connect(tokenAddress, defaultProvider),
+    originalContract: ERC721__factory.connect(
+      originalContract,
+      defaultProvider
+    ),
     derivativeContract: SCERC721Derivative__factory.connect(
-      await sealCredLedger.getDerivativeAddress(tokenAddress),
+      await sealCredLedger.getDerivativeContract(originalContract),
       defaultProvider
     ),
   } as LedgerRecord
 }
 
 export default async function (sealCredLedger: SealCredLedger) {
-  const eventsFilter = sealCredLedger.filters.SetMerkleRoot()
-  const events = await sealCredLedger.queryFilter(
-    eventsFilter,
-    QUERY_BLOCK_LIMIT
-  )
+  const eventsFilter = sealCredLedger.filters.CreateDerivativeContract()
+  const events = await sealCredLedger.queryFilter(eventsFilter)
   const ledger = {} as Ledger
   const addressToMerkle: { [address: string]: string } = {}
 
   for (const event of events) {
-    const { tokenAddress, merkleRoot } = event.args
-    addressToMerkle[tokenAddress] = merkleRoot
+    const { originalContract, derivativeContract } = event.args
+    addressToMerkle[originalContract] = derivativeContract
   }
 
   for (const tokenAddress in addressToMerkle) {
-    ledger[tokenAddress] = await getLedgerRecord(
-      sealCredLedger,
-      tokenAddress,
-      addressToMerkle[tokenAddress]
-    )
+    ledger[tokenAddress] = await getLedgerRecord(sealCredLedger, tokenAddress)
   }
   return ledger
 }
