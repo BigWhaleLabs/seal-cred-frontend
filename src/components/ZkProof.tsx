@@ -88,18 +88,6 @@ function useProofContent(
       ),
     }
 
-  if (proof.status === 'scheduled')
-    return {
-      color: 'text-secondary',
-      content: (
-        <>
-          {proof.position !== undefined
-            ? `Queued with position: ${proof?.position + 1}`
-            : 'Queued'}
-        </>
-      ),
-    }
-
   return {
     color: 'text-accent',
     content: (

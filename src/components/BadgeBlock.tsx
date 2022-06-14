@@ -109,21 +109,8 @@ function Badge({
       const proof = proofsCompleted.find(
         (proof) => proof.contract === contractAddress
       )
-      if (!proof || !proof.result) throw new Error('No proof found')
-      const ledgerMerkleTree = await sealCred.getRoot(contractAddress)
-      if (
-        !BigNumber.from(ledgerMerkleTree).eq(
-          BigNumber.from(proof.result.publicSignals[1])
-        )
-      ) {
-        const index = ProofStore.proofsCompleted.findIndex(
-          (p) => p.contract === proof.contract
-        )
-        if (index > -1) ProofStore.proofsCompleted.splice(index, 1)
-
-        throw new Error('This proof is outdated, please, generate a new one')
-      }
-      await WalletStore.mintDerivative(derivativeAddress, proof.result)
+      if (!proof) throw new Error('No proof found')
+      // await WalletStore.mintDerivative(derivativeAddress, proof.result)
       setCompleted(true)
     } catch (error) {
       handleError(error)

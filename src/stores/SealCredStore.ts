@@ -1,4 +1,5 @@
 import { proxyWithComputed } from 'valtio/utils'
+import ContractNamesStore from 'stores/ContractNamesStore'
 import Ledger from 'models/Ledger'
 import LedgerRecord from 'models/LedgerRecord'
 import TokenIdToOwnerMap from 'models/TokenIdToOwnerMap'
@@ -8,7 +9,6 @@ import sealCred from 'helpers/sealCred'
 
 interface SealCredStoreType {
   ledger: Promise<Ledger>
-  contractNames: { [contractAddress: string]: Promise<string | undefined> }
   originalContractsToOwnersMaps: {
     [contractAddress: string]: Promise<TokenIdToOwnerMap>
   }
@@ -37,7 +37,6 @@ const SealCredStore = proxyWithComputed<
       }
       return ledger
     }),
-    contractNames: {},
     originalContractsToOwnersMaps: {},
     derivativeContractsToOwnersMaps: {},
 
@@ -45,10 +44,8 @@ const SealCredStore = proxyWithComputed<
       for (const { originalContract, derivativeContract } of Object.values(
         ledger
       )) {
-        SealCredStore.contractNames[originalContract.address] =
-          originalContract.name()
-        SealCredStore.contractNames[derivativeContract.address] =
-          derivativeContract.name()
+        ContractNamesStore.fetchContractName(originalContract.address)
+        ContractNamesStore.fetchContractName(derivativeContract.address)
       }
     },
     fetchContractsToOwnerMaps(ledger: Ledger) {
