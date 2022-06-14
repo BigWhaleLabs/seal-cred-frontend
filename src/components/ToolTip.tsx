@@ -1,45 +1,63 @@
 import { HighlightedText } from 'components/Text'
-import ReactTooltip, { Place } from 'react-tooltip'
 import classnames, {
   backgroundColor,
   borderRadius,
+  height,
   inset,
+  margin,
   maxWidth,
   opacity,
-  textColor,
+  padding,
+  position,
+  rotate,
+  transformOrigin,
+  transitionDuration,
+  transitionProperty,
+  translate,
+  width,
+  zIndex,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
-const tooltipClasses = (mobile: boolean) =>
-  classnames(
+const tooltipClasses = (mobile: boolean, show: boolean) => {
+  return classnames(
+    position('absolute'),
     backgroundColor('bg-formal-accent'),
     maxWidth('max-w-sm'),
     mobile ? inset('!left-0', '!right-0') : undefined,
-    opacity('!opacity-100'),
-    borderRadius('!rounded-lg')
+    inset('-top-28'),
+    padding('py-2', 'px-5'),
+    margin('-mt-6', '!ml-0'),
+    zIndex('z-50'),
+    borderRadius('!rounded-lg'),
+    opacity(show ? 'opacity-100' : 'opacity-0'),
+    transitionDuration('duration-500'),
+    transitionProperty('transition-opacity')
   )
+}
+const triangle = classnames(
+  position('absolute'),
+  height('h-2'),
+  width('w-2'),
+  rotate('rotate-45'),
+  translate('-translate-x-5.5'),
+  inset('bottom-0', 'inset-x-1/2'),
+  backgroundColor('bg-formal-accent'),
+  transformOrigin('origin-bottom-left')
+)
 
 interface ToolTipProps {
-  place: Place
-  dataFor: string
-  clickable?: boolean
+  text: string
+  show: boolean
 }
 
-export default function ({ place, dataFor, clickable }: ToolTipProps) {
+export default function ({ text, show }: ToolTipProps) {
   const { xs } = useBreakpoints()
 
   return (
-    <HighlightedText bold>
-      <ReactTooltip
-        place={place}
-        data-for={dataFor}
-        effect="solid"
-        backgroundColor={backgroundColor('bg-formal-accent')}
-        textColor={textColor('text-primary-dark')}
-        arrowColor={backgroundColor('bg-formal-accent')}
-        clickable={clickable}
-        className={tooltipClasses(xs)}
-      />
-    </HighlightedText>
+    <div className={tooltipClasses(xs, show)}>
+      <HighlightedText>{text}</HighlightedText>
+      <div className={triangle}></div>
+    </div>
   )
 }

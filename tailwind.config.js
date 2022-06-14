@@ -83,7 +83,6 @@ module.exports = {
       inset: {
         '-28': '-7rem',
         '-24': '-6rem',
-        '-28': '-7rem',
         '-4': '-1rem',
       },
       space: {
@@ -106,6 +105,9 @@ module.exports = {
         7.5: '0.469rem',
         8.5: '0.531rem',
         '-10': '-0.625rem',
+      },
+      translate: {
+        '-5.5': '-0.35rem',
       },
       backgroundImage: {
         noise: 'url("/img/noise50.png")',

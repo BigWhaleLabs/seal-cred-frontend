@@ -40,7 +40,6 @@
     "react-resize-detector": "^7.1.1",
     "react-router-dom": "^6.3.0",
     "react-toastify": "^9.0.4",
-    "react-tooltip": "^4.2.21",
     "secure-ls": "^1.2.6",
     "tailwind-scrollbar-hide": "^1.1.7",
     "valtio": "^1.6.1",
