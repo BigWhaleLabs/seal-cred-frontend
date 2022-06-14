@@ -69,7 +69,7 @@ export default async function (account: string) {
 
   const contractMap = parsedLogs.reduce(
     (resultMap, info) =>
-      info && info.contract
+      info && info.contract && info.from !== info.to
         ? {
             ...resultMap,
             [info.contract]:
