@@ -23,15 +23,24 @@ import classnames, {
 } from 'classnames/tailwind'
 import useClickOutside from 'hooks/useClickOutside'
 
+const zkProofButtonTooltip = classnames(
+  position('relative'),
+  width('w-mobile-card', 'sm:w-card')
+)
+const tooltipWrapper = classnames(
+  position('relative'),
+  height('h-px'),
+  width('w-full'),
+  margin('mx-auto')
+)
+
 const zkProofButton = classnames(
   display('flex'),
-  position('relative'),
   flexDirection('flex-row'),
   justifyContent('justify-center'),
   backgroundColor('bg-primary-background'),
   space('space-x-2'),
   padding('py-4'),
-  width('w-mobile-card', 'sm:w-card'),
   margin('mx-auto'),
   cursor('cursor-pointer'),
   borderRadius('rounded-2xl')
@@ -63,18 +72,22 @@ export default function () {
   useClickOutside(zkProofButtonRef, () => setIsShow(false))
 
   return (
-    <div
-      ref={zkProofButtonRef}
-      className={zkProofButton}
-      onMouseEnter={() => setIsShow(true)}
-      onMouseLeave={() => setIsShow(false)}
-      onClick={() => setIsShow(true)}
-    >
-      <AccentText color="text-accent">What's a ZK proof?</AccentText>
-      <AccentText small primary color="text-accent">
-        <QuestionMark />
-      </AccentText>
-      <ToolTip text={popoverText} show={isShow} />
+    <div className={zkProofButtonTooltip}>
+      <div className={tooltipWrapper}>
+        <ToolTip text={popoverText} show={isShow} />
+      </div>
+      <div
+        ref={zkProofButtonRef}
+        className={zkProofButton}
+        onMouseEnter={() => setIsShow(true)}
+        onMouseLeave={() => setIsShow(false)}
+        onClick={() => setIsShow(true)}
+      >
+        <AccentText color="text-accent">What's a ZK proof?</AccentText>
+        <AccentText small primary color="text-accent">
+          <QuestionMark />
+        </AccentText>
+      </div>
     </div>
   )
 }

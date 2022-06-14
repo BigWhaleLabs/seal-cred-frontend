@@ -5,7 +5,6 @@ import classnames, {
   height,
   inset,
   margin,
-  maxWidth,
   opacity,
   padding,
   position,
@@ -23,11 +22,10 @@ const tooltipClasses = (mobile: boolean, show: boolean) => {
   return classnames(
     position('absolute'),
     backgroundColor('bg-formal-accent'),
-    maxWidth('max-w-sm'),
-    mobile ? inset('!left-0', '!right-0') : undefined,
-    inset('-top-28'),
+    inset(mobile ? 'left-0' : 'left-3', mobile ? 'right-0' : 'right-3'),
+    inset('bottom-4'),
     padding('py-2', 'px-5'),
-    margin('-mt-6', '!ml-0'),
+    margin('!ml-0'),
     zIndex('z-50'),
     borderRadius('!rounded-lg'),
     opacity(show ? 'opacity-100' : 'opacity-0'),
@@ -55,7 +53,10 @@ export default function ({ text, show }: ToolTipProps) {
   const { xs } = useBreakpoints()
 
   return (
-    <div className={tooltipClasses(xs, show)}>
+    <div
+      className={tooltipClasses(xs, show)}
+      style={{ visibility: show ? 'visible' : 'collapse' }}
+    >
       <HighlightedText>{text}</HighlightedText>
       <div className={triangle}></div>
     </div>
