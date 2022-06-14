@@ -5,7 +5,6 @@ import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
 import Button from 'components/Button'
 import Card from 'components/Card'
-import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -16,6 +15,7 @@ import classnames, {
   space,
 } from 'classnames/tailwind'
 import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
+import useDerivativeTokensOwned from 'hooks/useDerivativeTokensOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 const DoxNotification = ({ account }: { account: string }) => (
@@ -44,12 +44,12 @@ const DoxNotification = ({ account }: { account: string }) => (
 interface ZkBadgesTitleProps {
   hasAccount: boolean
   hasUnminted: boolean
-  allProofsCompleted: boolean
+  hasDerivatives: boolean
 }
 const ZkBadgesTitle = ({
   hasAccount,
   hasUnminted,
-  allProofsCompleted,
+  hasDerivatives,
 }: ZkBadgesTitleProps) => (
   <div className={space('space-y-2')}>
     <CardHeader color="text-secondary">
@@ -58,8 +58,8 @@ const ZkBadgesTitle = ({
     <CardDescription>
       {hasAccount && hasUnminted
         ? 'Looks like you can create ZK badges for this wallet'
-        : allProofsCompleted
-        ? 'You generated all available ZK badges for this wallet'
+        : hasDerivatives
+        ? 'You’ve minted all of your available badges'
         : 'Once you’ve created a ZK proof, you will be able to mint ZK badges for your anonymous wallets'}
     </CardDescription>
   </div>
@@ -100,11 +100,12 @@ const badgesContainer = classnames(
 
 function Badges() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(WalletStore)
-  const { proofsCompleted } = useSnapshot(ProofStore)
+  const derivativeTokensOwned = useDerivativeTokensOwned()
   const originalTokensOwned = useContractAddressesOwned('original')
   const proofsAvailableToMint = useProofsAvailableToMint()
 
   const hasUnminted = proofsAvailableToMint.length > 0
+  const hasDerivativeTokens = Object.keys(derivativeTokensOwned).length
 
   const shouldNotify =
     !!account &&
@@ -116,8 +117,8 @@ function Badges() {
     <div className={badgesContainer}>
       <ZkBadgesTitle
         hasAccount={!!account}
+        hasDerivatives={!!hasDerivativeTokens}
         hasUnminted={hasUnminted}
-        allProofsCompleted={!!proofsCompleted.length}
       />
 
       {account ? (
