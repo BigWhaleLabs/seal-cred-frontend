@@ -1528,10 +1528,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/constants@npm:^0.0.14":
-  version: 0.0.14
-  resolution: "@big-whale-labs/constants@npm:0.0.14"
-  checksum: 99ca815f30d887896e4d2df6801c1877d12e7c13c4301ce206e64b9e0c9fa0ed3861bd872e445e394a5b389a9f689390099c0abf4c64a6e9ed28171b22cc4db3
+"@big-whale-labs/constants@npm:^0.0.15":
+  version: 0.0.15
+  resolution: "@big-whale-labs/constants@npm:0.0.15"
+  checksum: 3a044d2e8519b6ffaabf52aa2a1cf70053af93176acc3227ecd02e01d9b363b6ab29f16dc0cc20830cdb48ee332ba4a544959af1d88240b84c2a1ebaeabfa7a7
   languageName: node
   linkType: hard
 
@@ -7277,12 +7277,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^4.3.0, eslint-plugin-react-hooks@npm:^4.5.0":
+"eslint-plugin-react-hooks@npm:^4.3.0":
   version: 4.5.0
   resolution: "eslint-plugin-react-hooks@npm:4.5.0"
   peerDependencies:
     eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
   checksum: 0389377de635dd9b769f6f52e2c9e6ab857a0cdfecc3734c95ce81676a752e781bb5c44fd180e01953a03a77278323d90729776438815557b069ceb988ab1f9f
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-react-hooks@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "eslint-plugin-react-hooks@npm:4.6.0"
+  peerDependencies:
+    eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
+  checksum: 23001801f14c1d16bf0a837ca7970d9dd94e7b560384b41db378b49b6e32dc43d6e2790de1bd737a652a86f81a08d6a91f402525061b47719328f586a57e86c3
   languageName: node
   linkType: hard
 
@@ -14038,7 +14047,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "seal-cred-frontend@workspace:."
   dependencies:
-    "@big-whale-labs/constants": ^0.0.14
+    "@big-whale-labs/constants": ^0.0.15
     "@big-whale-labs/poseidon": ^0.0.5
     "@big-whale-labs/seal-cred-ledger-contract": ^0.0.5
     "@coinbase/wallet-sdk": ^3.2.0
@@ -14063,7 +14072,7 @@ __metadata:
     eslint-plugin-no-relative-import-paths: ^1.3.3
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.30.0
-    eslint-plugin-react-hooks: ^4.5.0
+    eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-sort-imports-es6-autofix: ^0.6.0
     eslint-plugin-valtio: ^0.4.4
     eth-rpc-errors: ^4.0.3
