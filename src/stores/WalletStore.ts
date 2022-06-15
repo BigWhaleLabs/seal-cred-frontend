@@ -66,35 +66,40 @@ class WalletStore {
     if (!this.account) {
       throw new Error('No account found')
     }
-    const sealCredWithSigner = SealCredLedger__factory.connect(
-      env.VITE_SCLEDGER_CONTRACT_ADDRESS,
-      provider.getSigner(0)
-    )
-    // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
-    // Also pay attention to array indexes
-    const tx = await sealCredWithSigner.mint(
-      originalContractAddress,
-      [
-        BigNumber.from(proofResult.proof.pi_a[0]),
-        BigNumber.from(proofResult.proof.pi_a[1]),
-      ],
-      [
+
+    try {
+      const sealCredWithSigner = SealCredLedger__factory.connect(
+        env.VITE_SCLEDGER_CONTRACT_ADDRESS,
+        provider.getSigner(0)
+      )
+      // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
+      // Also pay attention to array indexes
+      const tx = await sealCredWithSigner.mint(
+        originalContractAddress,
         [
-          BigNumber.from(proofResult.proof.pi_b[0][1]),
-          BigNumber.from(proofResult.proof.pi_b[0][0]),
+          BigNumber.from(proofResult.proof.pi_a[0]),
+          BigNumber.from(proofResult.proof.pi_a[1]),
         ],
         [
-          BigNumber.from(proofResult.proof.pi_b[1][1]),
-          BigNumber.from(proofResult.proof.pi_b[1][0]),
+          [
+            BigNumber.from(proofResult.proof.pi_b[0][1]),
+            BigNumber.from(proofResult.proof.pi_b[0][0]),
+          ],
+          [
+            BigNumber.from(proofResult.proof.pi_b[1][1]),
+            BigNumber.from(proofResult.proof.pi_b[1][0]),
+          ],
         ],
-      ],
-      [
-        BigNumber.from(proofResult.proof.pi_c[0]),
-        BigNumber.from(proofResult.proof.pi_c[1]),
-      ],
-      proofResult.publicSignals.map(BigNumber.from)
-    )
-    await tx.wait()
+        [
+          BigNumber.from(proofResult.proof.pi_c[0]),
+          BigNumber.from(proofResult.proof.pi_c[1]),
+        ],
+        proofResult.publicSignals.map(BigNumber.from)
+      )
+      await tx.wait()
+    } catch (error) {
+      handleError(error)
+    }
   }
 
   private async handleAccountChanged() {
