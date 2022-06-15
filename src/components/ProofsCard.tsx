@@ -6,7 +6,6 @@ import Card from 'components/Card'
 import CardSeparator from 'components/CardSeparator'
 import ConnectAccount from 'components/ConnectAccount'
 import ListOfAvailableZKProofs from 'components/ListOfAvailableZKProofs'
-import ListOfInProgressZKProofs from 'components/ListOfInProgressZKProofs'
 import ListOfReadyZKProofs from 'components/ListOfReadyZKProofs'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
@@ -57,17 +56,13 @@ function ZkProofSavedMessage() {
 
 function Proofs() {
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
-  const { proofsCompleted, proofsInProgress } = useSnapshot(ProofStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
 
   const allGenerated =
-    proofsCompleted.length > 0 &&
-    proofAddressesAvailableToCreate.length === 0 &&
-    proofsInProgress.length === 0
+    proofsCompleted.length > 0 && proofAddressesAvailableToCreate.length === 0
   const nothingToGenerate =
-    proofsCompleted.length === 0 &&
-    proofAddressesAvailableToCreate.length === 0 &&
-    proofsInProgress.length === 0
+    proofsCompleted.length === 0 && proofAddressesAvailableToCreate.length === 0
 
   return (
     <div className={proofContainer}>
@@ -90,7 +85,6 @@ function Proofs() {
             <ListOfReadyZKProofs />
             {account && (
               <>
-                <ListOfInProgressZKProofs />
                 <ListOfAvailableZKProofs />
               </>
             )}

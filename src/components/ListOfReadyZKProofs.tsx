@@ -18,7 +18,7 @@ function ContractList() {
               <ZkProof
                 proof={proof}
                 contractAddress={proof.contract}
-                key={proof.id}
+                key={`${proof.contract}-${proof.account}`}
               />
             ))}
         </ContractListContainer>

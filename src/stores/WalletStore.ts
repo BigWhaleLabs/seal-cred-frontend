@@ -1,8 +1,8 @@
 import { BigNumber } from 'ethers'
-import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
+import { SealCredLedger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
-import ProofResponse from 'models/ProofResponse'
+import ProofResult from 'models/ProofResult'
 import WalletsToNotifiedOfBeingDoxxed from 'models/WalletsToNotifiedOfBeingDoxxed'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
@@ -43,15 +43,13 @@ class WalletStore {
     }
   }
 
-  async signMessage(forAddress?: string) {
+  async signMessage(message: string) {
     if (!provider) throw new Error('No provider')
 
     this.walletLoading = true
     try {
       const signer = provider.getSigner()
-      const signature = await signer.signMessage(
-        forAddress ? forAddress : await signer.getAddress()
-      )
+      const signature = await signer.signMessage(message)
       return signature
     } finally {
       this.walletLoading = false
@@ -59,8 +57,8 @@ class WalletStore {
   }
 
   async mintDerivative(
-    derivativeContractAddress: string,
-    proofResult: ProofResponse
+    originalContractAddress: string,
+    proofResult: ProofResult
   ) {
     if (!provider) {
       throw new Error('No provider found')
@@ -68,12 +66,14 @@ class WalletStore {
     if (!this.account) {
       throw new Error('No account found')
     }
-    const derivativeContract = SCERC721Derivative__factory.connect(
-      derivativeContractAddress,
+    const sealCredWithSigner = SealCredLedger__factory.connect(
+      env.VITE_SCLEDGER_CONTRACT_ADDRESS,
       provider.getSigner(0)
     )
     // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
-    const tx = await derivativeContract.mint(
+    // Also pay attention to array indexes
+    const tx = await sealCredWithSigner.mint(
+      originalContractAddress,
       [
         BigNumber.from(proofResult.proof.pi_a[0]),
         BigNumber.from(proofResult.proof.pi_a[1]),
@@ -92,10 +92,7 @@ class WalletStore {
         BigNumber.from(proofResult.proof.pi_c[0]),
         BigNumber.from(proofResult.proof.pi_c[1]),
       ],
-      [
-        BigNumber.from(proofResult.publicSignals[0]),
-        BigNumber.from(proofResult.publicSignals[1]),
-      ]
+      proofResult.publicSignals.map(BigNumber.from)
     )
     await tx.wait()
   }
