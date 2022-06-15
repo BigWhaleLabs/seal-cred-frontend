@@ -27,14 +27,14 @@ export default async function (sealCredLedger: SealCredLedger) {
   const eventsFilter = sealCredLedger.filters.CreateDerivativeContract()
   const events = await sealCredLedger.queryFilter(eventsFilter)
   const ledger = {} as Ledger
-  const addressToMerkle: { [address: string]: string } = {}
+  const addressToDerivative: { [address: string]: string } = {}
 
   for (const event of events) {
     const { originalContract, derivativeContract } = event.args
-    addressToMerkle[originalContract] = derivativeContract
+    addressToDerivative[originalContract] = derivativeContract
   }
 
-  for (const tokenAddress in addressToMerkle) {
+  for (const tokenAddress in addressToDerivative) {
     ledger[tokenAddress] = await getLedgerRecord(sealCredLedger, tokenAddress)
   }
   return ledger

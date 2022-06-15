@@ -1,5 +1,4 @@
 import { AccentText, BadgeText, SubheaderText } from 'components/Text'
-import { BigNumber } from 'ethers'
 import { Suspense, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import BadgeIcon from 'icons/BadgeIcon'
@@ -26,7 +25,6 @@ import classnames, {
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
-import sealCred from 'helpers/sealCred'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const badgeWrapper = (minted: boolean, small?: boolean) =>
@@ -98,9 +96,9 @@ function Badge({
   const [completed, setCompleted] = useState(false)
 
   const small = xxs && !sm
-  const minted = tokenId !== undefined
   const ledgerRecord = ledger[contractAddress]
-  const derivativeAddress = ledgerRecord.derivativeContract.address
+  const derivativeAddress = ledgerRecord?.derivativeContract.address
+  const minted = !!derivativeAddress && tokenId !== undefined
 
   const checkProofAndMint = async () => {
     setLoading(true)
@@ -109,8 +107,11 @@ function Badge({
       const proof = proofsCompleted.find(
         (proof) => proof.contract === contractAddress
       )
-      if (!proof) throw new Error('No proof found')
-      // await WalletStore.mintDerivative(derivativeAddress, proof.result)
+      if (!proof?.result) throw new Error('No proof found')
+      await WalletStore.mintDerivative(contractAddress, proof.result)
+      ProofStore.proofsCompleted = proofsCompleted.filter(
+        (p) => p.contract !== proof.contract && p.result !== proof.result
+      )
       setCompleted(true)
     } catch (error) {
       handleError(error)
@@ -129,9 +130,15 @@ function Badge({
       <div className={badgeBody(minted, small)}>
         <div className={badgeBlockName(iPhoneSizes)}>
           <BadgeText small>
-            <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
-              <ContractName address={derivativeAddress} />
-            </ExternalLink>
+            {derivativeAddress ? (
+              <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
+                <ContractName address={derivativeAddress} />
+              </ExternalLink>
+            ) : (
+              <>
+                <ContractName address={contractAddress} /> (derivative)
+              </>
+            )}
           </BadgeText>
         </div>
         {minted ? (

@@ -124,6 +124,8 @@ sealCred.on(
       const record = await getLedgerRecord(sealCred, originalContract)
       ledger[originalContract] = record
       addListenersToLedgerRecord(record)
+      ContractNamesStore.fetchContractName(originalContract)
+      ContractNamesStore.fetchContractName(record.derivativeContract.address)
     }
   }
 )
