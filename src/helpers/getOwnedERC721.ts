@@ -43,5 +43,5 @@ export default async function (
     }
   }
 
-  return Object.keys(ownedTokens)
+  return ownedTokens
 }
