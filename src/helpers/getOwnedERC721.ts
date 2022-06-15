@@ -24,21 +24,21 @@ export default async function (account: string) {
   const ownedTokens: { [token: string]: number } = {}
 
   for (const { topics, data, address } of receivedLogs.concat(sentLogs)) {
-    if (topics[0] === sigHash && topics.length > 3) {
-      const {
-        args: { from, to, tokenId },
-      } = iface.parseLog({ data, topics })
+    if (topics[0] !== sigHash || topics.length <= 3) continue
 
-      if (from === to) continue
+    const {
+      args: { from, to, tokenId },
+    } = iface.parseLog({ data, topics })
 
-      const value = (tokenId + 1).toString()
+    if (from === to) continue
 
-      if (ownedTokens[address]) {
-        ownedTokens[address] ^= value
-        if (!ownedTokens[address]) delete ownedTokens[address]
-      } else {
-        ownedTokens[address] = value
-      }
+    const value = (tokenId + 1).toString()
+
+    if (ownedTokens[address]) {
+      ownedTokens[address] ^= value
+      if (!ownedTokens[address]) delete ownedTokens[address]
+    } else {
+      ownedTokens[address] = value
     }
   }
 
