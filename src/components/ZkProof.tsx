@@ -57,7 +57,20 @@ function useProofContent(
   const { account } = useSnapshot(WalletStore)
   const [isGenerating, setIsGenerating] = useState(false)
 
-  if (!proof) {
+  if (isGenerating)
+    return {
+      color: 'text-accent',
+      content: (
+        <span className={textWithIcon}>
+          <span>Generating...</span>
+          <div className={animation('animate-spin')}>
+            <Star />
+          </div>
+        </span>
+      ),
+    }
+
+  if (!proof)
     return {
       color: 'text-tertiary',
       content: (
@@ -71,20 +84,6 @@ function useProofContent(
         >
           Create proof
         </ProofButton>
-      ),
-    }
-  }
-
-  if (proof.status === 'running')
-    return {
-      color: 'text-accent',
-      content: (
-        <span className={textWithIcon}>
-          <span>Generating...</span>
-          <div className={animation('animate-spin')}>
-            <Star />
-          </div>
-        </span>
       ),
     }
 

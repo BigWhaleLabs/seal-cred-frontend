@@ -1,13 +1,8 @@
-import ProofStatus from 'models/ProofStatus'
+import ProofResult from 'models/ProofResult'
 
 export default interface Proof {
   id: string
   contract: string
   account: string
-  status: ProofStatus
-}
-
-export const ProofOrdering = {
-  [ProofStatus.completed]: 0,
-  [ProofStatus.running]: 1,
+  result?: ProofResult
 }

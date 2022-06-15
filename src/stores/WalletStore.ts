@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers'
 import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
-import ProofResponse from 'models/ProofResponse'
+import ProofResult from 'models/ProofResult'
 import WalletsToNotifiedOfBeingDoxxed from 'models/WalletsToNotifiedOfBeingDoxxed'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
@@ -58,7 +58,7 @@ class WalletStore {
 
   async mintDerivative(
     derivativeContractAddress: string,
-    proofResult: ProofResponse
+    proofResult: ProofResult
   ) {
     if (!provider) {
       throw new Error('No provider found')
@@ -71,6 +71,7 @@ class WalletStore {
       provider.getSigner(0)
     )
     // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
+    // Also pay attention to array indexes
     const tx = await derivativeContract.mint(
       [
         BigNumber.from(proofResult.proof.pi_a[0]),
@@ -90,10 +91,7 @@ class WalletStore {
         BigNumber.from(proofResult.proof.pi_c[0]),
         BigNumber.from(proofResult.proof.pi_c[1]),
       ],
-      [
-        BigNumber.from(proofResult.publicSignals[0]),
-        BigNumber.from(proofResult.publicSignals[1]),
-      ]
+      proofResult.publicSignals.map(BigNumber.from)
     )
     await tx.wait()
   }
