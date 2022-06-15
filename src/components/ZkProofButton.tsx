@@ -52,7 +52,7 @@ export default function () {
     'In your wallet(s), you have NFTs that can point back to your identity (aka, getting doxxed). But with ZK proof, you can verify ownership of NFTs while staying pseudonymous.'
 
   return (
-    <ToolTip text={popoverText}>
+    <ToolTip arrow position="top" text={popoverText}>
       <div className={zkProofButton}>
         <AccentText color="text-accent">What's a ZK proof?</AccentText>
         <AccentText small primary color="text-accent">

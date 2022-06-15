@@ -108,6 +108,7 @@ module.exports = {
       },
       translate: {
         '-5.5': '-0.35rem',
+        '-7': '-0.45rem',
       },
       backgroundImage: {
         noise: 'url("/img/noise50.png")',
