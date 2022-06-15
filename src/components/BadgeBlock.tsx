@@ -96,9 +96,9 @@ function Badge({
   const [completed, setCompleted] = useState(false)
 
   const small = xxs && !sm
-  const minted = tokenId !== undefined
   const ledgerRecord = ledger[contractAddress]
-  const derivativeAddress = ledgerRecord.derivativeContract.address
+  const derivativeAddress = ledgerRecord?.derivativeContract.address
+  const minted = !!derivativeAddress && tokenId !== undefined
 
   const checkProofAndMint = async () => {
     setLoading(true)
@@ -108,7 +108,7 @@ function Badge({
         (proof) => proof.contract === contractAddress
       )
       if (!proof?.result) throw new Error('No proof found')
-      await WalletStore.mintDerivative(derivativeAddress, proof.result)
+      await WalletStore.mintDerivative(contractAddress, proof.result)
       ProofStore.proofsCompleted = proofsCompleted.filter(
         (p) => p.contract !== proof.contract && p.result !== proof.result
       )
@@ -130,9 +130,15 @@ function Badge({
       <div className={badgeBody(minted, small)}>
         <div className={badgeBlockName(iPhoneSizes)}>
           <BadgeText small>
-            <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
-              <ContractName address={derivativeAddress} />
-            </ExternalLink>
+            {derivativeAddress ? (
+              <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
+                <ContractName address={derivativeAddress} />
+              </ExternalLink>
+            ) : (
+              <>
+                <ContractName address={contractAddress} /> (derivative)
+              </>
+            )}
           </BadgeText>
         </div>
         {minted ? (

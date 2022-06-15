@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
+import { SealCredLedger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import ProofResult from 'models/ProofResult'
@@ -57,7 +57,7 @@ class WalletStore {
   }
 
   async mintDerivative(
-    derivativeContractAddress: string,
+    originalContractAddress: string,
     proofResult: ProofResult
   ) {
     if (!provider) {
@@ -66,13 +66,14 @@ class WalletStore {
     if (!this.account) {
       throw new Error('No account found')
     }
-    const derivativeContract = SCERC721Derivative__factory.connect(
-      derivativeContractAddress,
+    const sealCredWithSigner = SealCredLedger__factory.connect(
+      env.VITE_SCLEDGER_CONTRACT_ADDRESS,
       provider.getSigner(0)
     )
     // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
     // Also pay attention to array indexes
-    const tx = await derivativeContract.mint(
+    const tx = await sealCredWithSigner.mint(
+      originalContractAddress,
       [
         BigNumber.from(proofResult.proof.pi_a[0]),
         BigNumber.from(proofResult.proof.pi_a[1]),
