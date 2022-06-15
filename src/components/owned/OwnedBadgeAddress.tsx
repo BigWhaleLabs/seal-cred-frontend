@@ -2,8 +2,8 @@ import { LinkText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import { wordBreak } from 'classnames/tailwind'
+import DerivativeContractsStore from 'stores/DerivativeContractsStore'
 import EnsAddress from 'components/EnsAddress'
-import SealCredStore from 'stores/SealCredStore'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 
 const container = wordBreak('break-all')
@@ -14,9 +14,8 @@ function OwnedBadgeAddressSuspender({
   derivativeAddress: string
   tokenId: string
 }) {
-  const { derivativeContractsToOwnersMaps } = useSnapshot(SealCredStore)
-  const owner =
-    derivativeContractsToOwnersMaps[derivativeAddress][Number(tokenId)]
+  const { contractsToOwnersMaps } = useSnapshot(DerivativeContractsStore)
+  const owner = contractsToOwnersMaps[derivativeAddress][Number(tokenId)]
 
   return (
     <span className={container}>

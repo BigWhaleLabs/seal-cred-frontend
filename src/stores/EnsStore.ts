@@ -2,18 +2,14 @@ import { proxy } from 'valtio'
 import defaultProvider from 'helpers/defaultProvider'
 
 interface EnsStoreInterface {
-  ensNames: { [address: string]: Promise<string | null> }
-
+  ensNames: { [address: string]: Promise<string | null> | undefined }
   fetchEnsName: (address: string) => void
 }
 
 const EnsStore = proxy<EnsStoreInterface>({
   ensNames: {},
-
   fetchEnsName(address: string) {
-    if (!EnsStore.ensNames[address]) {
-      EnsStore.ensNames[address] = defaultProvider.lookupAddress(address)
-    }
+    EnsStore.ensNames[address] = defaultProvider.lookupAddress(address)
   },
 })
 

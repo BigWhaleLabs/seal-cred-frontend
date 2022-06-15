@@ -5,6 +5,7 @@ import BadgesHintCard from 'components/BadgesHintCard'
 import BadgesList from 'components/BadgesList'
 import Button from 'components/Button'
 import Card from 'components/Card'
+import OriginalContractsStore from 'stores/OriginalContractsStore'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
@@ -15,7 +16,6 @@ import classnames, {
   height,
   space,
 } from 'classnames/tailwind'
-import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 const DoxNotification = ({ account }: { account: string }) => (
@@ -101,7 +101,8 @@ const badgesContainer = classnames(
 function Badges() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
-  const originalTokensOwned = useContractAddressesOwned('original')
+  const { contractsOwned } = useSnapshot(OriginalContractsStore)
+  const originalTokensOwned = contractsOwned
   const proofsAvailableToMint = useProofsAvailableToMint()
 
   const hasUnminted = proofsAvailableToMint.length > 0

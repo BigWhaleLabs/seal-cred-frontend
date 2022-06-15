@@ -2,8 +2,8 @@ import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import ContractListContainer from 'components/ContractListContainer'
+import Proof from 'components/proofs/Proof'
 import ProofStore from 'stores/ProofStore'
-import ZkProof from 'components/ZkProof'
 
 function ContractList() {
   const { proofsCompleted } = useSnapshot(ProofStore)
@@ -15,7 +15,7 @@ function ContractList() {
           {Array.from(proofsCompleted)
             .sort((a, b) => (a.account === b.account ? 0 : -1))
             .map((proof) => (
-              <ZkProof
+              <Proof
                 proof={proof}
                 contractAddress={proof.contract}
                 key={`${proof.contract}-${proof.account}`}

@@ -3,7 +3,7 @@ import { LogoText } from 'components/Text'
 import { useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Logo from 'icons/Logo'
-import Wallet from 'components/Wallet'
+import Wallet from 'components/navbar/Wallet'
 import classnames, {
   alignItems,
   backgroundColor,
