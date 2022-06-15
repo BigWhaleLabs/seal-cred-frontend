@@ -1,5 +1,4 @@
 import { AccentText, BadgeText, SubheaderText } from 'components/Text'
-import { BigNumber } from 'ethers'
 import { Suspense, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import BadgeIcon from 'icons/BadgeIcon'
@@ -26,7 +25,6 @@ import classnames, {
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
-import sealCred from 'helpers/sealCred'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const badgeWrapper = (minted: boolean, small?: boolean) =>
@@ -109,8 +107,11 @@ function Badge({
       const proof = proofsCompleted.find(
         (proof) => proof.contract === contractAddress
       )
-      if (!proof) throw new Error('No proof found')
-      // await WalletStore.mintDerivative(derivativeAddress, proof.result)
+      if (!proof?.result) throw new Error('No proof found')
+      await WalletStore.mintDerivative(derivativeAddress, proof.result)
+      ProofStore.proofsCompleted = proofsCompleted.filter(
+        (p) => p.contract !== proof.contract && p.result !== proof.result
+      )
       setCompleted(true)
     } catch (error) {
       handleError(error)
