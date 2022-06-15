@@ -33,7 +33,6 @@ class ProofStore extends PersistableStore {
       )
       // Get the message in bytes and its hash
       const messageUInt8 = utils.toUtf8Bytes(message)
-      console.log(messageUInt8.length)
       const mimc7 = await buildMimc7()
       const M = mimc7.multiHash(messageUInt8)
       // Create BabyJub
@@ -65,9 +64,6 @@ class ProofStore extends PersistableStore {
         'zk/circuit_final.zkey'
       )
       console.log(proof, publicSignals)
-      // TODO: show zkp as being generated
-      // TODO: generate the zkp
-      // TODO: move zkp to completed zkps
     } catch (e) {
       handleError(e)
     }
