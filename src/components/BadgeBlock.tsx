@@ -1,6 +1,6 @@
-import { AccentText, SubheaderText } from 'components/Text'
-import { Suspense, useState } from 'react'
+import { AccentText } from 'components/Text'
 import { useSnapshot } from 'valtio'
+import { useState } from 'react'
 import BadgeCard from 'components/BadgeCard'
 import BadgeIcon from 'icons/BadgeIcon'
 import BadgeWrapper from 'components/BadgeWrapper'
