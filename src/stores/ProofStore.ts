@@ -49,7 +49,7 @@ class ProofStore extends PersistableStore {
       // Generate the proof
       const input = {
         message: Array.from(messageUInt8),
-        tokenAddress: Array.from(utils.toUtf8Bytes(contract)),
+        tokenAddress: Array.from(utils.toUtf8Bytes(contract.toLowerCase())),
         M: F.toObject(M).toString(),
         R8x: F.toObject(unpackedSignature.R8[0]).toString(),
         R8y: F.toObject(unpackedSignature.R8[1]).toString(),
