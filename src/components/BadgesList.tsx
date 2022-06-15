@@ -5,11 +5,11 @@ import BadgeBlock from 'components/BadgeBlock'
 import BadgeCard from 'components/BadgeCard'
 import BadgeIcon from 'icons/BadgeIcon'
 import BadgeWrapper from 'components/BadgeWrapper'
-import BadgesHintCard from 'components/BadgesHintCard'
 import Button from 'components/Button'
 import ContractName from 'components/ContractName'
 import DerivativeContractsStore from 'stores/DerivativeContractsStore'
 import ExternalLink from 'components/ExternalLink'
+import HintCard from 'components/badges/HintCard'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   display,
@@ -35,7 +35,7 @@ const badgesList = classnames(
   gridTemplateColumns('grid-cols-1', 'lg:grid-cols-2')
 )
 
-function BadgesOwnedForContractSuspender({
+function BadgesOwnedForContractSuspended({
   contractAddress,
 }: {
   contractAddress: string
@@ -95,12 +95,12 @@ function BadgesOwnedForContract({
         <BadgesOwnedForContractLoading contractAddress={contractAddress} />
       }
     >
-      <BadgesOwnedForContractSuspender contractAddress={contractAddress} />
+      <BadgesOwnedForContractSuspended contractAddress={contractAddress} />
     </Suspense>
   )
 }
 
-function BadgeListSuspender() {
+function BadgeListSuspended() {
   const { contractsToIsOwnedMap } = useSnapshot(DerivativeContractsStore)
   const derivativeTokensOwned = Object.keys(contractsToIsOwnedMap).filter(
     (contractAddress) => contractsToIsOwnedMap[contractAddress]
@@ -111,7 +111,7 @@ function BadgeListSuspender() {
 
   if (isEmpty)
     return (
-      <BadgesHintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
+      <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
     )
 
   return (
@@ -133,7 +133,7 @@ export default function () {
   return (
     <div className={badges}>
       <Suspense fallback={<BodyText>Fetching derivative NFTs...</BodyText>}>
-        <BadgeListSuspender />
+        <BadgeListSuspended />
       </Suspense>
     </div>
   )

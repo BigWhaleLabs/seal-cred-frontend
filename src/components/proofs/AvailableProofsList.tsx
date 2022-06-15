@@ -5,7 +5,7 @@ import ContractListContainer from 'components/ContractListContainer'
 import Proof from 'components/proofs/Proof'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-function AvailableProofsListSuspender() {
+function AvailableProofsListSuspended() {
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
   return (
     <>
@@ -30,7 +30,7 @@ export default function () {
         </div>
       }
     >
-      <AvailableProofsListSuspender />
+      <AvailableProofsListSuspended />
     </Suspense>
   )
 }

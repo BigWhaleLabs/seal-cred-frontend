@@ -1,4 +1,4 @@
-import Badges from 'components/Badges'
+import Badges from 'components/badges/Badges'
 import CardSeparator from 'components/CardSeparator'
 import ProofsCard from 'components/proofs/Card'
 import ZkProofHint from 'components/ZkProofHint'

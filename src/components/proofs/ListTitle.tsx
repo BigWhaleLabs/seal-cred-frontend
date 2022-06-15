@@ -1,5 +1,5 @@
 import { useSnapshot } from 'valtio'
-import BadgesHintCard from 'components/BadgesHintCard'
+import HintCard from 'components/badges/HintCard'
 import ProofStore from 'stores/ProofStore'
 import Title from 'components/Title'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
@@ -24,7 +24,7 @@ export default function () {
         }
       />
       {nothingToGenerate && (
-        <BadgesHintCard text="You don't have any supported tokens." />
+        <HintCard text="You don't have any supported tokens." />
       )}
     </>
   )

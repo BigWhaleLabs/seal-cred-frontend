@@ -8,7 +8,7 @@ interface EnsAddressProps {
   address: string
 }
 
-function EnsAddressSuspender({
+function EnsAddressSuspended({
   address,
   truncate,
 }: EnsAddressProps & { truncate?: boolean }) {
@@ -31,7 +31,7 @@ export default function ({ address }: EnsAddressProps) {
     <Suspense
       fallback={<>{!lg ? truncateMiddleIfNeeded(address, 17) : address}</>}
     >
-      <EnsAddressSuspender address={address} truncate={!lg} />
+      <EnsAddressSuspended address={address} truncate={!lg} />
     </Suspense>
   )
 }

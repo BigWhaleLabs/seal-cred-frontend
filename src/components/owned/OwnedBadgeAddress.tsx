@@ -7,7 +7,7 @@ import EnsAddress from 'components/EnsAddress'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 
 const container = wordBreak('break-all')
-function OwnedBadgeAddressSuspender({
+function OwnedBadgeAddressSuspended({
   derivativeAddress,
   tokenId,
 }: {
@@ -45,7 +45,7 @@ export default function ({
 }: OwnedBadgeAddressProps) {
   return (
     <Suspense fallback={<>Fetching owner address...</>}>
-      <OwnedBadgeAddressSuspender
+      <OwnedBadgeAddressSuspended
         derivativeAddress={derivativeAddress}
         tokenId={tokenId}
       />

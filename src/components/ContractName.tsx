@@ -11,7 +11,7 @@ interface ContractNameProps {
   truncate?: boolean
 }
 
-function ContractNameSuspender({ address, truncate }: ContractNameProps) {
+function ContractNameSuspended({ address, truncate }: ContractNameProps) {
   const { contractNames } = useSnapshot(ContractNamesStore)
   const contractName = contractNames[address]
   if (!contractNames[address]) ContractNamesStore.fetchContractName(address)
@@ -34,7 +34,7 @@ export default function ({ address, truncate }: ContractNameProps) {
         </span>
       }
     >
-      <ContractNameSuspender address={address} truncate={truncate} />
+      <ContractNameSuspended address={address} truncate={truncate} />
     </Suspense>
   )
 }
