@@ -19,7 +19,9 @@ export default function () {
   return (
     contractAddressesOwned.filter(
       (address) =>
-        !derivativeLedger[address] && !completedProofAddressesMap[address]
+        derivativeLedger &&
+        !derivativeLedger[address] &&
+        !completedProofAddressesMap[address]
     ) || []
   )
 }
