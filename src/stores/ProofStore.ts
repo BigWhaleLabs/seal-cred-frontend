@@ -58,13 +58,15 @@ class ProofStore extends PersistableStore {
         pubKeyY: y,
       }
       // return
-      proofStore.proofsCompleted.push(
-        await snarkjs.groth16.fullProve(
+      proofStore.proofsCompleted.push({
+        contract,
+        account,
+        result: await snarkjs.groth16.fullProve(
           input,
           'zk/circuit.wasm',
           'zk/circuit_final.zkey'
-        )
-      )
+        ),
+      })
     } catch (e) {
       handleError(e)
     }
