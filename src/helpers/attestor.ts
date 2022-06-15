@@ -29,6 +29,16 @@ export async function requestERC721Attestation(
   return data
 }
 
-export function requestEmailAttestation(email: string) {
-  console.log(email)
+export async function getPublicKey() {
+  const { data } = await axios.get<{
+    x: string
+    y: string
+  }>(`${baseURL}/verify/eddsa-public-key`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  })
+
+  return data
 }
