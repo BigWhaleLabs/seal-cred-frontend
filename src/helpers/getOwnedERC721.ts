@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 import defaultProvider from 'helpers/defaultProvider'
 
-const iface = new utils.Interface([
+const transferEventInterface = new utils.Interface([
   'event Transfer(address indexed from, address indexed to, uint indexed tokenId)',
 ])
 
@@ -28,7 +28,7 @@ export default async function (account: string) {
 
     const {
       args: { from, to, tokenId },
-    } = iface.parseLog({ data, topics })
+    } = transferEventInterface.parseLog({ data, topics })
 
     if (from === to) continue
 
