@@ -2,8 +2,15 @@ import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import BadgeBlock from 'components/BadgeBlock'
+import BadgeCard from 'components/BadgeCard'
+import BadgeIcon from 'icons/BadgeIcon'
+import BadgeWrapper from 'components/BadgeWrapper'
 import BadgesHintCard from 'components/BadgesHintCard'
-import SealCredStore from 'stores/SealCredStore'
+import Button from 'components/Button'
+import ContractName from 'components/ContractName'
+import DerivativeContractsStore from 'stores/DerivativeContractsStore'
+import ExternalLink from 'components/ExternalLink'
+import WalletStore from 'stores/WalletStore'
 import classnames, {
   display,
   gap,
@@ -13,7 +20,7 @@ import classnames, {
   overflow,
   position,
 } from 'classnames/tailwind'
-import useDerivativeTokensOwned from 'hooks/useDerivativeTokensOwned'
+import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 const badges = classnames(
@@ -28,37 +35,97 @@ const badgesList = classnames(
   gridTemplateColumns('grid-cols-1', 'lg:grid-cols-2')
 )
 
+function BadgesOwnedForContractSuspender({
+  contractAddress,
+}: {
+  contractAddress: string
+}) {
+  const { contractsToOwnersMaps } = useSnapshot(DerivativeContractsStore)
+  const contractToOwnersMap = contractsToOwnersMaps[contractAddress]
+  const { account } = useSnapshot(WalletStore)
+  const ownedIds = Object.keys(contractToOwnersMap)
+    .map((v) => +v)
+    .filter((tokenId) => contractToOwnersMap[tokenId] === account)
+  return (
+    <>
+      {ownedIds.map((tokenId) => (
+        <BadgeBlock
+          key={`${contractAddress}-${tokenId}`}
+          contractAddress={contractAddress}
+          tokenId={tokenId}
+        />
+      ))}
+    </>
+  )
+}
+
+function BadgesOwnedForContractLoading({
+  contractAddress,
+}: {
+  contractAddress: string
+}) {
+  return (
+    <BadgeWrapper minted={false}>
+      <BadgeCard
+        top={<BadgeIcon />}
+        leanLeft
+        text={
+          <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
+            <ContractName address={contractAddress} />
+          </ExternalLink>
+        }
+        bottom={
+          <Button small primary loading>
+            Fetching...
+          </Button>
+        }
+      />
+    </BadgeWrapper>
+  )
+}
+
+function BadgesOwnedForContract({
+  contractAddress,
+}: {
+  contractAddress: string
+}) {
+  return (
+    <Suspense
+      fallback={
+        <BadgesOwnedForContractLoading contractAddress={contractAddress} />
+      }
+    >
+      <BadgesOwnedForContractSuspender contractAddress={contractAddress} />
+    </Suspense>
+  )
+}
+
 function BadgeListSuspender() {
-  const { derivativeLedger } = useSnapshot(SealCredStore)
-  const derivativeTokensOwned = useDerivativeTokensOwned()
+  const { contractsToIsOwnedMap } = useSnapshot(DerivativeContractsStore)
+  const derivativeTokensOwned = Object.keys(contractsToIsOwnedMap).filter(
+    (contractAddress) => contractsToIsOwnedMap[contractAddress]
+  )
   const proofsAvailableToMint = useProofsAvailableToMint()
   const isEmpty =
     !Object.keys(derivativeTokensOwned).length && !proofsAvailableToMint.length
 
+  if (isEmpty)
+    return (
+      <BadgesHintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
+    )
+
   return (
-    <>
-      {isEmpty && (
-        <BadgesHintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
-      )}
-      <div className={badgesList}>
-        {Object.entries(derivativeTokensOwned)
-          .map(([derivativeAddress, tokenIds]) =>
-            tokenIds.map((tokenId) => (
-              <BadgeBlock
-                key={`${derivativeAddress}-${tokenId}`}
-                contractAddress={
-                  derivativeLedger[derivativeAddress].originalContract.address
-                }
-                tokenId={tokenId}
-              />
-            ))
-          )
-          .reduce((acc, curr) => acc.concat(curr), [])}
-        {proofsAvailableToMint.map((proof) => (
-          <BadgeBlock key={proof.contract} contractAddress={proof.contract} />
-        ))}
-      </div>
-    </>
+    <div className={badgesList}>
+      {derivativeTokensOwned.map((contractAddress) => (
+        <BadgesOwnedForContract
+          key={contractAddress}
+          contractAddress={contractAddress}
+        />
+      ))}
+      {proofsAvailableToMint.map((proof) => (
+        <BadgeBlock key={proof.contract} contractAddress={proof.contract} />
+      ))}
+    </div>
   )
 }
 
