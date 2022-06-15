@@ -7561,6 +7561,8 @@ export type TTranslate =
   | 'translate-x-2/4'
   | 'translate-x-3/4'
   | 'translate-x-full'
+  | '-translate-x-5.5'
+  | '-translate-x-7'
   | 'translate-x-small'
   | 'translate-y-0'
   | 'translate-y-1'
@@ -7605,6 +7607,8 @@ export type TTranslate =
   | 'translate-y-2/4'
   | 'translate-y-3/4'
   | 'translate-y-full'
+  | '-translate-y-5.5'
+  | '-translate-y-7'
   | 'translate-y-small'
 
 export type TSkew =
