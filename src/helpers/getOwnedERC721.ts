@@ -27,10 +27,8 @@ export default async function (account: string) {
     if (topics[0] !== sigHash || topics.length <= 3) continue
 
     const {
-      args: { from, to, tokenId },
+      args: { tokenId },
     } = transferEventInterface.parseLog({ data, topics })
-
-    if (from === to) continue
 
     const value = (tokenId + 1).toString()
 
