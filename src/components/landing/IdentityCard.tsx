@@ -3,7 +3,7 @@ import Card from 'components/Card'
 import ChildrenProp from 'models/ChildrenProp'
 import DoubleSmile from 'icons/DoubleSmile'
 import Grim from 'icons/Grin'
-import NoisyRectangle from 'components/NoisyRectangle'
+import NoisyRectangle from 'components/landing/NoisyRectangle'
 import classnames, {
   alignItems,
   display,

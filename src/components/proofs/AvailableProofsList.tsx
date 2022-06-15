@@ -1,7 +1,7 @@
 import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { padding } from 'classnames/tailwind'
-import ContractListContainer from 'components/ContractListContainer'
+import ContractListContainer from 'components/proofs/ContractListContainer'
 import Proof from 'components/proofs/Proof'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 

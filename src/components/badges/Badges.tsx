@@ -1,9 +1,9 @@
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
-import BadgesList from 'components/BadgesList'
 import Card from 'components/Card'
 import ConnectAccount from 'components/badges/ConnectAccount'
 import DoxNotification from 'components/badges/DoxNotification'
+import List from 'components/badges/List'
 import LoadingTitle from 'components/badges/LoadingTitle'
 import OriginalContractsStore from 'stores/OriginalContractsStore'
 import ProofStore from 'stores/ProofStore'
@@ -55,7 +55,7 @@ function BadgesSuspended() {
         }
       />
       <Scrollbar>
-        {shouldNotify ? <DoxNotification account={account} /> : <BadgesList />}
+        {shouldNotify ? <DoxNotification account={account} /> : <List />}
       </Scrollbar>
     </div>
   )

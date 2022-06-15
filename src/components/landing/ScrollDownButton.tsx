@@ -1,5 +1,5 @@
 import { AccentText } from 'components/Text'
-import DownArrows from 'components/DownArrows'
+import DownArrows from 'components/landing/DownArrows'
 import classnames, {
   alignItems,
   cursor,
