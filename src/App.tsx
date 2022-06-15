@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { lazy } from 'react'
 import LazyComponent from 'components/LazyComponent'
-import Navbar from 'components/Navbar'
+import Navbar from 'components/navbar/Navbar'
 import Root from 'components/Root'
 
 const NotFound = lazy(() => import('pages/NotFound'))

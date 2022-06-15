@@ -14,6 +14,8 @@ interface ContractNameProps {
 function ContractNameSuspender({ address, truncate }: ContractNameProps) {
   const { contractNames } = useSnapshot(ContractNamesStore)
   const contractName = contractNames[address]
+  if (!contractNames[address]) ContractNamesStore.fetchContractName(address)
+
   return (
     <span className={contractName ? undefined : addressText}>
       {truncate
