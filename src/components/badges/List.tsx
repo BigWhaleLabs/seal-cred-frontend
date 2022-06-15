@@ -1,16 +1,10 @@
 import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
-import BadgeBlock from 'components/BadgeBlock'
-import BadgeCard from 'components/BadgeCard'
-import BadgeIcon from 'icons/BadgeIcon'
-import BadgeWrapper from 'components/BadgeWrapper'
-import Button from 'components/Button'
-import ContractName from 'components/ContractName'
+import BadgeBlock from 'components/badges/BadgeBlock'
+import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
 import DerivativeContractsStore from 'stores/DerivativeContractsStore'
-import ExternalLink from 'components/ExternalLink'
 import HintCard from 'components/badges/HintCard'
-import WalletStore from 'stores/WalletStore'
 import classnames, {
   display,
   gap,
@@ -20,7 +14,6 @@ import classnames, {
   overflow,
   position,
 } from 'classnames/tailwind'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 const badges = classnames(
@@ -34,72 +27,6 @@ const badgesList = classnames(
   gridAutoRows('auto-rows-auto'),
   gridTemplateColumns('grid-cols-1', 'lg:grid-cols-2')
 )
-
-function BadgesOwnedForContractSuspended({
-  contractAddress,
-}: {
-  contractAddress: string
-}) {
-  const { contractsToOwnersMaps } = useSnapshot(DerivativeContractsStore)
-  const contractToOwnersMap = contractsToOwnersMaps[contractAddress]
-  const { account } = useSnapshot(WalletStore)
-  const ownedIds = Object.keys(contractToOwnersMap)
-    .map((v) => +v)
-    .filter((tokenId) => contractToOwnersMap[tokenId] === account)
-  return (
-    <>
-      {ownedIds.map((tokenId) => (
-        <BadgeBlock
-          key={`${contractAddress}-${tokenId}`}
-          contractAddress={contractAddress}
-          tokenId={tokenId}
-        />
-      ))}
-    </>
-  )
-}
-
-function BadgesOwnedForContractLoading({
-  contractAddress,
-}: {
-  contractAddress: string
-}) {
-  return (
-    <BadgeWrapper minted={false}>
-      <BadgeCard
-        top={<BadgeIcon />}
-        leanLeft
-        text={
-          <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
-            <ContractName address={contractAddress} />
-          </ExternalLink>
-        }
-        bottom={
-          <Button small primary loading>
-            Fetching...
-          </Button>
-        }
-      />
-    </BadgeWrapper>
-  )
-}
-
-function BadgesOwnedForContract({
-  contractAddress,
-}: {
-  contractAddress: string
-}) {
-  return (
-    <Suspense
-      fallback={
-        <BadgesOwnedForContractLoading contractAddress={contractAddress} />
-      }
-    >
-      <BadgesOwnedForContractSuspended contractAddress={contractAddress} />
-    </Suspense>
-  )
-}
-
 function BadgeListSuspended() {
   const { contractsToIsOwnedMap } = useSnapshot(DerivativeContractsStore)
   const derivativeTokensOwned = Object.keys(contractsToIsOwnedMap).filter(
