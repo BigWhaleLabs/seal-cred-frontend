@@ -9,80 +9,58 @@ const sig = 'Transfer(address,address,uint256)'
 const sigHash = utils.keccak256(utils.toUtf8Bytes(sig))
 
 export default async function (account: string) {
-  const eventsTo = await defaultProvider.getLogs({
+  const receivedLogs = await defaultProvider.getLogs({
     fromBlock: 0,
     toBlock: 'latest',
     topics: [utils.id(sig), null, utils.hexZeroPad(account, 32)],
   })
 
-  const eventsFrom = await defaultProvider.getLogs({
+  const sentLogs = await defaultProvider.getLogs({
     fromBlock: 0,
     toBlock: 'latest',
     topics: [utils.id(sig), utils.hexZeroPad(account, 32)],
   })
 
-  const events = []
-  while (eventsTo.length > 0 || eventsFrom.length > 0) {
-    if (eventsTo.length === 0) {
-      events.push(eventsFrom.pop())
-      continue
+  let receivedLog = receivedLogs.pop()
+  let sentLog = sentLogs.pop()
+  let current = null
+
+  const ownedTokens: { [token: string]: number } = {}
+
+  while (receivedLog || sentLog) {
+    const isLastToBefore = !sentLog
+      ? true
+      : receivedLog && receivedLog.blockNumber === sentLog.blockNumber
+      ? receivedLog.logIndex < sentLog.logIndex
+      : receivedLog && receivedLog.blockNumber > sentLog.blockNumber
+
+    if (isLastToBefore) {
+      current = receivedLog
+      receivedLog = receivedLogs.pop()
+    } else {
+      current = sentLog
+      sentLog = sentLogs.pop()
     }
 
-    if (eventsFrom.length === 0) {
-      events.push(eventsTo.pop())
-      continue
-    }
+    if (current && current.topics[0] === sigHash && current.topics.length > 3) {
+      const data = current.data
+      const topics = current.topics
+      const result = iface.parseLog({ data, topics })
 
-    const lastTo = eventsTo[eventsTo.length - 1]
-    const lastFrom = eventsFrom[eventsFrom.length - 1]
+      if (result.args.from === result.args.to) continue
 
-    if (lastTo.blockNumber > lastFrom.blockNumber) {
-      events.push(eventsTo.pop())
-      continue
-    }
-    if (lastTo.blockNumber < lastFrom.blockNumber) {
-      events.push(eventsFrom.pop())
-      continue
-    }
+      const tokenId = (result.args.tokenId + 1).toString()
 
-    events.push(
-      lastTo.logIndex > lastFrom.logIndex ? eventsTo.pop() : eventsFrom.pop()
-    )
+      if (typeof ownedTokens[current.address] === 'undefined') {
+        ownedTokens[current.address] = tokenId
+      } else {
+        ownedTokens[current.address] ^= tokenId
+      }
+
+      if (ownedTokens[current.address] === 0)
+        delete ownedTokens[current.address]
+    }
   }
 
-  const parsedLogs = events.reverse().map((log) => {
-    if (!log) return null
-    if (log.topics[0] !== sigHash) return null
-    const data = log.data
-    const topics = log.topics
-    if (topics.length <= 3) return null
-    const result = iface.parseLog({ data, topics })
-
-    return {
-      contract: log.address,
-      transaction: log.transactionHash,
-      to: result.args.to,
-      from: result.args.from,
-      tokenId: result.args.tokenId.toString(),
-    }
-  })
-
-  const contractMap = parsedLogs.reduce(
-    (resultMap, info) =>
-      info && info.contract && info.from !== info.to
-        ? {
-            ...resultMap,
-            [info.contract]:
-              typeof resultMap[info.contract] !== 'undefined'
-                ? resultMap[info.contract] ^ (info.tokenId + 1)
-                : info.tokenId + 1,
-          }
-        : resultMap,
-    {} as { [tokenAddress: string]: number }
-  )
-
-  return Object.entries(contractMap).reduce(
-    (chain, [key, value]) => (value > 0 ? [...chain, key] : chain),
-    [] as string[]
-  )
+  return Object.keys(ownedTokens)
 }
