@@ -21,44 +21,25 @@ export default async function (account: string) {
     topics: [utils.id(sig), utils.hexZeroPad(account, 32)],
   })
 
-  let receivedLog = receivedLogs.pop()
-  let sentLog = sentLogs.pop()
-  let current = null
-
   const ownedTokens: { [token: string]: number } = {}
 
-  while (receivedLog || sentLog) {
-    const isLastToBefore = !sentLog
-      ? true
-      : receivedLog && receivedLog.blockNumber === sentLog.blockNumber
-      ? receivedLog.logIndex < sentLog.logIndex
-      : receivedLog && receivedLog.blockNumber > sentLog.blockNumber
-
-    if (isLastToBefore) {
-      current = receivedLog
-      receivedLog = receivedLogs.pop()
-    } else {
-      current = sentLog
-      sentLog = sentLogs.pop()
-    }
-
-    if (current && current.topics[0] === sigHash && current.topics.length > 3) {
-      const data = current.data
-      const topics = current.topics
+  for (const log of receivedLogs.concat(sentLogs)) {
+    if (log.topics[0] === sigHash && log.topics.length > 3) {
+      const data = log.data
+      const topics = log.topics
       const result = iface.parseLog({ data, topics })
 
       if (result.args.from === result.args.to) continue
 
       const tokenId = (result.args.tokenId + 1).toString()
 
-      if (typeof ownedTokens[current.address] === 'undefined') {
-        ownedTokens[current.address] = tokenId
+      if (typeof ownedTokens[log.address] === 'undefined') {
+        ownedTokens[log.address] = tokenId
       } else {
-        ownedTokens[current.address] ^= tokenId
+        ownedTokens[log.address] ^= tokenId
       }
 
-      if (ownedTokens[current.address] === 0)
-        delete ownedTokens[current.address]
+      if (ownedTokens[log.address] === 0) delete ownedTokens[log.address]
     }
   }
 
