@@ -11,7 +11,8 @@ function BadgesOwnedForContractSuspended({
   contractAddress: string
 }) {
   const { derivativeContractsToOwnersMaps } = useSnapshot(SealCredStore)
-  const contractToOwnersMap = derivativeContractsToOwnersMaps[contractAddress]
+  const contractToOwnersMap =
+    derivativeContractsToOwnersMaps[contractAddress] || {}
   const { account } = useSnapshot(WalletStore)
   const ownedIds = Object.keys(contractToOwnersMap)
     .map((v) => +v)

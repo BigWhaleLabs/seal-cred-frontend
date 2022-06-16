@@ -31,7 +31,8 @@ const OriginalContractsStore = proxy<ContractsStoreType>({
       OriginalContractsStore.contractsOwned =
         connectedAccounts[WalletStore.account].getOwnedERC721()
     } else {
-      const oldContractsOwned = await OriginalContractsStore.contractsOwned
+      const oldContractsOwned =
+        (await OriginalContractsStore.contractsOwned) || []
       const newContractsOwned = await connectedAccounts[
         WalletStore.account
       ].getOwnedERC721()
