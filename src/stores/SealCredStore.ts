@@ -47,15 +47,9 @@ const SealCredStore = proxyWithComputed<
         ({ derivativeContract }) => derivativeContract
       )
       for (const derivativeContract of derivativeContracts) {
-        if (
-          !SealCredStore.derivativeContractsToIsOwnedMap[
-            derivativeContract.address
-          ]
-        ) {
-          SealCredStore.derivativeContractsToIsOwnedMap[
-            derivativeContract.address
-          ] = isOwned(derivativeContract, WalletStore.account)
-        }
+        SealCredStore.derivativeContractsToIsOwnedMap[
+          derivativeContract.address
+        ] = isOwned(derivativeContract, WalletStore.account)
         if (
           !SealCredStore.derivativeContractsToOwnersMaps[
             derivativeContract.address
