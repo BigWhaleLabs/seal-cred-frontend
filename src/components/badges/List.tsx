@@ -38,11 +38,11 @@ function BadgeListSuspended() {
   const isEmpty =
     !Object.keys(derivativeTokensOwned).length && !proofsAvailableToMint.length
 
-  if (isEmpty)
-    return (
-      <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
-    )
-  return (
+  return !Object.keys(derivativeContractsToIsOwnedMap).length ? (
+    <BodyText>Fetching derivative NFTs...</BodyText>
+  ) : isEmpty ? (
+    <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
+  ) : (
     <div className={badgesList}>
       {derivativeTokensOwned.map((contractAddress) => (
         <BadgesOwnedForContract
