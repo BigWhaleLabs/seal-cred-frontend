@@ -48,7 +48,7 @@ export default function () {
   const onScroll = useCallback(() => {
     setBackgroundVisible(window.scrollY > 20)
   }, [])
-  const throttledScroll = useThrottle(onScroll, 200)
+  const throttledScroll = useThrottle(onScroll, 20)
   useMemo(() => {
     window.addEventListener('scroll', throttledScroll, { passive: true })
     return () => window.removeEventListener('scroll', throttledScroll)

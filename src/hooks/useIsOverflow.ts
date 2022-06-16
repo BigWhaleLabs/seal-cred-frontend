@@ -8,12 +8,11 @@ export default function (
   maxHeight: number
 ) {
   const wrapper = useResizeDetector({ handleWidth: false })
-  const block = useResizeDetector({ handleWidth: false })
   const { sm, md } = useBreakpoints()
   const scrollMaxHeight = md
-    ? maxHeight > 0
+    ? maxHeight > 270
       ? maxHeight
-      : 300
+      : 270
     : sm
     ? 240
     : 190
@@ -76,7 +75,7 @@ export default function (
   }, [
     wrapper.ref,
     wrapper.height,
-    block.height,
+    blockRef,
     maxHeight,
     scrollRefHeight,
     scrollMaxHeight,
