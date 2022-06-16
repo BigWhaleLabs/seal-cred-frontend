@@ -1554,13 +1554,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@coinbase/wallet-sdk@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "@coinbase/wallet-sdk@npm:3.2.0"
+"@coinbase/wallet-sdk@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@coinbase/wallet-sdk@npm:3.3.0"
   dependencies:
     "@metamask/safe-event-emitter": 2.0.0
     bind-decorator: ^1.0.11
     bn.js: ^5.1.1
+    buffer: ^6.0.3
     clsx: ^1.1.0
     eth-block-tracker: 4.4.3
     eth-json-rpc-filters: 4.2.2
@@ -1572,7 +1573,8 @@ __metadata:
     qs: ^6.10.3
     rxjs: ^6.6.3
     stream-browserify: ^3.0.0
-  checksum: e286b137182c222eac5b75b13fcaedcf9d015f991c50d4a3385fabdc0044851af75e42993d76f10c895b804c0cbc035c4f99fa840cdaa73d8fda84bf0e008058
+    util: ^0.12.4
+  checksum: 9d655cd69f21e607ae4bb931d2d80fa743c7c486d0ac8741fa69e296cbaa55c11a550c5885d4e1b80c7b8ac4702075bb190ed2d33bf580c0301036e70d7f8a2f
   languageName: node
   linkType: hard
 
@@ -5159,6 +5161,16 @@ __metadata:
     base64-js: ^1.3.1
     ieee754: ^1.1.13
   checksum: e2cf8429e1c4c7b8cbd30834ac09bd61da46ce35f5c22a78e6c2f04497d6d25541b16881e30a019c6fd3154150650ccee27a308eff3e26229d788bbdeb08ab84
+  languageName: node
+  linkType: hard
+
+"buffer@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "buffer@npm:6.0.3"
+  dependencies:
+    base64-js: ^1.3.1
+    ieee754: ^1.2.1
+  checksum: 5ad23293d9a731e4318e420025800b42bf0d264004c0286c8cc010af7a270c7a0f6522e84f54b9ad65cbd6db20b8badbfd8d2ebf4f80fa03dab093b89e68c3f9
   languageName: node
   linkType: hard
 
@@ -9117,7 +9129,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ieee754@npm:^1.1.13":
+"ieee754@npm:^1.1.13, ieee754@npm:^1.2.1":
   version: 1.2.1
   resolution: "ieee754@npm:1.2.1"
   checksum: 5144c0c9815e54ada181d80a0b810221a253562422e7c6c3a60b1901154184f49326ec239d618c416c1c5945a2e197107aee8d986a3dd836b53dffefd99b5e7e
@@ -12812,10 +12824,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:^10.8.0":
-  version: 10.8.0
-  resolution: "preact@npm:10.8.0"
-  checksum: f9bb56f5eebf26ca28c6efbd6a31cf89224358c3cc5d273813f02794dea9605db4b449e15af9d9c4f804c48d3cf4522f990114850e51b9e17185199e174d2c2b
+"preact@npm:^10.8.1":
+  version: 10.8.1
+  resolution: "preact@npm:10.8.1"
+  checksum: 273500b3a763b8582420273f6bddcc74268d3cbd66f1c3cca7c4fbd0eb781740dd948bccf7011acd0b28f35dee116d038aa4d0a2112856939c26567d957d7155
   languageName: node
   linkType: hard
 
@@ -12849,12 +12861,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.7.0":
-  version: 2.7.0
-  resolution: "prettier@npm:2.7.0"
+"prettier@npm:^2.7.1":
+  version: 2.7.1
+  resolution: "prettier@npm:2.7.1"
   bin:
     prettier: bin-prettier.js
-  checksum: 5b55bb1dced9d16635b83229df8e670d150890fdb343f19e8a66e610094a108e960c0f57352b3e5cdbc4eff4ef00a834406047ffcd9f20bd22a6497ba143c81f
+  checksum: 55a4409182260866ab31284d929b3cb961e5fdb91fe0d2e099dac92eaecec890f36e524b4c19e6ceae839c99c6d7195817579cdffc8e2c80da0cb794463a748b
   languageName: node
   linkType: hard
 
@@ -13236,15 +13248,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resize-detector@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "react-resize-detector@npm:7.1.1"
+"react-resize-detector@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "react-resize-detector@npm:7.1.2"
   dependencies:
     lodash: ^4.17.21
   peerDependencies:
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: 8065ba7531f57409ddb47824d737e79d80952b91152a63a2a1e0dab8e8f2c899fceaac10d873d22f3262b023a0e1e5a5ae6d7a45fe392c60b270928af9051276
+  checksum: 55f4abad7f7523d16b081b5ab20f75c539a54a08253ce7e9df473d48386f42ceca6c31584ba9fa26e3528b498ef6685ec77fb9a22cffc97df05fb326d0bf1b26
   languageName: node
   linkType: hard
 
@@ -14037,7 +14049,7 @@ __metadata:
     "@big-whale-labs/constants": ^0.0.15
     "@big-whale-labs/poseidon": ^0.0.5
     "@big-whale-labs/seal-cred-ledger-contract": ^0.0.5
-    "@coinbase/wallet-sdk": ^3.2.0
+    "@coinbase/wallet-sdk": ^3.3.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@originjs/vite-plugin-commonjs": ^1.0.3
     "@preact/preset-vite": ^2.2.0
@@ -14067,10 +14079,10 @@ __metadata:
     ffjavascript: ^0.2.55
     fortmatic: ^2.4.0
     postcss: ^8.4.14
-    preact: ^10.8.0
-    prettier: ^2.7.0
+    preact: ^10.8.1
+    prettier: ^2.7.1
     qr-code-styling: ^1.6.0-rc.1
-    react-resize-detector: ^7.1.1
+    react-resize-detector: ^7.1.2
     react-router-dom: ^6.3.0
     react-scripts: ^5.0.1
     react-toastify: ^9.0.4
@@ -15549,7 +15561,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"util@npm:^0.12.0":
+"util@npm:^0.12.0, util@npm:^0.12.4":
   version: 0.12.4
   resolution: "util@npm:0.12.4"
   dependencies:
