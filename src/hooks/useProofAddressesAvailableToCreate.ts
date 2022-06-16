@@ -17,7 +17,7 @@ export default function () {
   return (
     contractsOwned.filter(
       (address) =>
-        !reverseLedger[address] && !completedProofAddressesMap[address]
+        !reverseLedger?.[address] && !completedProofAddressesMap[address]
     ) || []
   )
 }
