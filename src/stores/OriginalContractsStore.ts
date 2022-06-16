@@ -5,57 +5,52 @@ import defaultProvider from 'helpers/defaultProvider'
 import getOwnedERC721 from 'helpers/getOwnedERC721'
 
 interface ContractsStoreType {
-  contractsOwnedState: { [token: string]: number }
-  contractsOwnedStateAccount?: string
   contractsOwned: string[]
-  lastBlockId?: number
-  locked: boolean
-  fetchContractsOwned: () => void
+  fetchMoreContractsOwned: () => void
 }
 
+let locked = false
+let lastBlockId: number | undefined = 0
+let contractsOwnedState: { [token: string]: number } = {}
+let currentAccount: string | undefined
+
 const OriginalContractsStore = proxy<ContractsStoreType>({
-  locked: false,
-  contractsOwnedState: {},
   contractsOwned: [],
-  async fetchContractsOwned() {
-    if (
-      OriginalContractsStore.contractsOwnedStateAccount !== WalletStore.account
-    ) {
-      OriginalContractsStore.contractsOwnedStateAccount = WalletStore.account
-      OriginalContractsStore.lastBlockId = 0
-      OriginalContractsStore.contractsOwnedState = {}
+  async fetchMoreContractsOwned() {
+    if (currentAccount !== WalletStore.account) {
+      currentAccount = WalletStore.account
+      lastBlockId = 0
+      contractsOwnedState = {}
       OriginalContractsStore.contractsOwned = []
     }
 
-    if (!OriginalContractsStore.contractsOwnedStateAccount) return
+    if (!currentAccount) return
 
-    if (!OriginalContractsStore.locked) {
-      const currentBlockId = await defaultProvider.getBlockNumber()
-      const currentState = await OriginalContractsStore.contractsOwnedState
-      OriginalContractsStore.locked = true
-      OriginalContractsStore.contractsOwnedState = await getOwnedERC721(
-        OriginalContractsStore.contractsOwnedStateAccount,
-        OriginalContractsStore.lastBlockId
-          ? OriginalContractsStore.lastBlockId + 1
-          : 0,
-        currentBlockId,
-        currentState
-      )
-      OriginalContractsStore.locked = false
-      OriginalContractsStore.contractsOwned = Object.keys(
-        OriginalContractsStore.contractsOwnedState
-      )
-      OriginalContractsStore.lastBlockId = currentBlockId
+    if (!locked) {
+      locked = true
+      try {
+        const currentBlockId = await defaultProvider.getBlockNumber()
+        contractsOwnedState = await getOwnedERC721(
+          currentAccount,
+          lastBlockId,
+          currentBlockId,
+          contractsOwnedState
+        )
+        lastBlockId = currentBlockId + 1
+        OriginalContractsStore.contractsOwned = Object.keys(contractsOwnedState)
+      } finally {
+        locked = false
+      }
     }
   },
 })
 
 subscribeKey(WalletStore, 'account', () => {
-  OriginalContractsStore.fetchContractsOwned()
+  OriginalContractsStore.fetchMoreContractsOwned()
 })
 
 defaultProvider.on('block', () => {
-  OriginalContractsStore.fetchContractsOwned()
+  OriginalContractsStore.fetchMoreContractsOwned()
 })
 
 export default OriginalContractsStore
