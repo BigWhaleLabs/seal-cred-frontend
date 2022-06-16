@@ -18,11 +18,8 @@ class WalletStore extends PersistableStore {
   }
 
   replacer = (key: string, value: unknown) => {
-    return !key
-      ? value
-      : key === 'walletsToNotifiedOfBeingDoxxed'
-      ? { ...(value as Record<string, boolean>) }
-      : undefined
+    const disallowList = ['account', 'walletLoading']
+    return disallowList.includes(key) ? undefined : value
   }
 
   get cachedProvider() {
