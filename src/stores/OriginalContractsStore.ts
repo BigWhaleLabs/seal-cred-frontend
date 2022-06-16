@@ -5,27 +5,28 @@ import WalletStore from 'stores/WalletStore'
 import defaultProvider from 'helpers/defaultProvider'
 
 interface ContractsStoreType {
-  contractsOwned: Promise<string[]>
+  contractsOwned: string[]
   fetchMoreContractsOwned: () => void
 }
 
 const connectedAccounts: { [account: string]: ContractSynchronizer } = {}
 
-function getOwnedContracts(account?: string) {
-  if (!account) return Promise.resolve([])
-
-  if (!connectedAccounts[account])
-    connectedAccounts[account] = new ContractSynchronizer(account)
-
-  return connectedAccounts[account].getOwnedERC721()
-}
-
 const OriginalContractsStore = proxy<ContractsStoreType>({
-  contractsOwned: Promise.resolve([]), //getOwnedContracts(WalletStore.account),
-  fetchMoreContractsOwned() {
-    OriginalContractsStore.contractsOwned = getOwnedContracts(
+  contractsOwned: [],
+  async fetchMoreContractsOwned() {
+    if (!WalletStore.account) {
+      OriginalContractsStore.contractsOwned = []
+      return
+    }
+
+    if (!connectedAccounts[WalletStore.account])
+      connectedAccounts[WalletStore.account] = new ContractSynchronizer(
+        WalletStore.account
+      )
+
+    OriginalContractsStore.contractsOwned = await connectedAccounts[
       WalletStore.account
-    )
+    ].getOwnedERC721()
   },
 })
 
