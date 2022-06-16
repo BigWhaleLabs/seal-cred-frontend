@@ -54,8 +54,11 @@ export default function ({
   useEffect(() => {
     const { current } = wrapperRef
     if (!current) return
-    const numberOfViews = current.scrollHeight / current.clientHeight
-    setThumbHeight(100 / numberOfViews)
+
+    setTimeout(() => {
+      const numberOfViews = current.scrollHeight / current.clientHeight
+      setThumbHeight(100 / numberOfViews)
+    }, 400)
   }, [
     wrapperRef,
     wrapperRef.current?.scrollHeight,
