@@ -1,47 +1,32 @@
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
+import AccountOwnedERC721 from 'helpers/AccountOwnedERC721'
 import WalletStore from 'stores/WalletStore'
 import defaultProvider from 'helpers/defaultProvider'
-import getOwnedERC721 from 'helpers/getOwnedERC721'
 
 interface ContractsStoreType {
   contractsOwned: string[]
   fetchMoreContractsOwned: () => void
 }
 
-let locked = false
-let lastBlockId: number | undefined = 0
-let contractsOwnedState: { [token: string]: number } = {}
-let currentAccount: string | undefined
+const connectedAccounts: { [account: string]: AccountOwnedERC721 } = {}
 
 const OriginalContractsStore = proxy<ContractsStoreType>({
   contractsOwned: [],
   async fetchMoreContractsOwned() {
-    if (currentAccount !== WalletStore.account) {
-      currentAccount = WalletStore.account
-      lastBlockId = 0
-      contractsOwnedState = {}
+    if (!WalletStore.account) {
       OriginalContractsStore.contractsOwned = []
+      return
     }
 
-    if (!currentAccount) return
+    if (!connectedAccounts[WalletStore.account])
+      connectedAccounts[WalletStore.account] = new AccountOwnedERC721(
+        WalletStore.account
+      )
 
-    if (!locked) {
-      locked = true
-      try {
-        const currentBlockId = await defaultProvider.getBlockNumber()
-        contractsOwnedState = await getOwnedERC721(
-          currentAccount,
-          lastBlockId,
-          currentBlockId,
-          contractsOwnedState
-        )
-        lastBlockId = currentBlockId + 1
-        OriginalContractsStore.contractsOwned = Object.keys(contractsOwnedState)
-      } finally {
-        locked = false
-      }
-    }
+    OriginalContractsStore.contractsOwned = await connectedAccounts[
+      WalletStore.account
+    ].getOwnedERC721()
   },
 })
 
