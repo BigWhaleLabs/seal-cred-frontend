@@ -116,6 +116,9 @@ sealCred.on(
         originalContract,
         derivativeContract
       )
+      addListenerToDerivativeContract(
+        ledger[originalContract].derivativeContract
+      )
     }
   }
 )

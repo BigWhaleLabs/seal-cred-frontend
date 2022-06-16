@@ -23,7 +23,11 @@ const OriginalContractsStore = proxy<ContractsStoreType>({
       connectedAccounts[WalletStore.account] = new ContractSynchronizer(
         WalletStore.account
       )
-    if (accountChange || !connectedAccounts[WalletStore.account]) {
+    if (
+      accountChange ||
+      !connectedAccounts[WalletStore.account] ||
+      !OriginalContractsStore.contractsOwned
+    ) {
       OriginalContractsStore.contractsOwned =
         connectedAccounts[WalletStore.account].getOwnedERC721()
     } else {
