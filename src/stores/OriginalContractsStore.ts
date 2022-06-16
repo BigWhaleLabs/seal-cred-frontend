@@ -1,6 +1,6 @@
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
-import AccountOwnedERC721 from 'helpers/AccountOwnedERC721'
+import ContractSynchronizer from 'helpers/ContractSynchronizer'
 import WalletStore from 'stores/WalletStore'
 import defaultProvider from 'helpers/defaultProvider'
 
@@ -9,7 +9,7 @@ interface ContractsStoreType {
   fetchMoreContractsOwned: () => void
 }
 
-const connectedAccounts: { [account: string]: AccountOwnedERC721 } = {}
+const connectedAccounts: { [account: string]: ContractSynchronizer } = {}
 
 const OriginalContractsStore = proxy<ContractsStoreType>({
   contractsOwned: [],
@@ -20,7 +20,7 @@ const OriginalContractsStore = proxy<ContractsStoreType>({
     }
 
     if (!connectedAccounts[WalletStore.account])
-      connectedAccounts[WalletStore.account] = new AccountOwnedERC721(
+      connectedAccounts[WalletStore.account] = new ContractSynchronizer(
         WalletStore.account
       )
 

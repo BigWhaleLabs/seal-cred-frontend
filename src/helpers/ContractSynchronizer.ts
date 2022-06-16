@@ -1,7 +1,7 @@
 import defaultProvider from 'helpers/defaultProvider'
 import getOwnedERC721 from 'helpers/getOwnedERC721'
 
-export default class AccountOwnedERC721 {
+export default class ContractSynchronizer {
   account: string
   locked = false
   synchronizedBlockId = 0
