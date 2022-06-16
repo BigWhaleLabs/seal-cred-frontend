@@ -7,7 +7,13 @@ export default function (
   maxHeight: number
 ) {
   const { sm, md } = useBreakpoints()
-  const scrollMaxHeight = md ? maxHeight : sm ? 240 : 190
+  const scrollMaxHeight = md
+    ? maxHeight > 0
+      ? maxHeight
+      : 300
+    : sm
+    ? 240
+    : 190
   const [isOverflow, setIsOverflow] = useState<{
     overflows: boolean
     isOnTop: boolean

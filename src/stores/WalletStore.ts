@@ -3,7 +3,6 @@ import { SealCredLedger__factory } from '@big-whale-labs/seal-cred-ledger-contra
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import ProofResult from 'models/ProofResult'
-import WalletsToNotifiedOfBeingDoxxed from 'models/WalletsToNotifiedOfBeingDoxxed'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
 import web3Modal from 'helpers/web3Modal'
@@ -13,7 +12,9 @@ let provider: Web3Provider
 class WalletStore {
   account?: string
   walletLoading = false
-  walletsToNotifiedOfBeingDoxxed: WalletsToNotifiedOfBeingDoxxed = {}
+  walletsToNotifiedOfBeingDoxxed = {} as {
+    [address: string]: boolean
+  }
 
   get cachedProvider() {
     return web3Modal.cachedProvider
@@ -133,8 +134,8 @@ class WalletStore {
   }
 }
 
-const exportedStore = proxy(new WalletStore())
+const walletStore = proxy(new WalletStore())
 
-if (exportedStore.cachedProvider) void exportedStore.connect()
+if (walletStore.cachedProvider) void walletStore.connect()
 
-export default exportedStore
+export default walletStore

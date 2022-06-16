@@ -1,7 +1,7 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
 import { space } from 'classnames/tailwind'
 import Card from 'components/Card'
-import GetStartedButton from 'components/GetStartedButton'
+import GetStartedButton from 'components/landing/GetStartedButton'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const initialCardWrapper = space('space-y-4')

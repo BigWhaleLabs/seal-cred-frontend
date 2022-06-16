@@ -2,12 +2,12 @@ import { AccentText, BodyText } from 'components/Text'
 import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
+import Button from 'components/proofs/Button'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
 import ExternalLink from 'components/ExternalLink'
+import Line from 'components/proofs/Line'
 import Proof from 'models/Proof'
-import ProofButton from 'components/ProofButton'
-import ProofLine from 'components/ProofLine'
 import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
 import WalletStore from 'stores/WalletStore'
@@ -74,7 +74,7 @@ function useProofContent(
     return {
       color: 'text-tertiary',
       content: (
-        <ProofButton
+        <Button
           disabled={isGenerating}
           onClick={async () => {
             setIsGenerating(true)
@@ -83,7 +83,7 @@ function useProofContent(
           }}
         >
           Create proof
-        </ProofButton>
+        </Button>
       ),
     }
 
@@ -109,7 +109,7 @@ export default function ({
   const { color, content } = useProofContent(contractAddress, proof)
 
   return (
-    <ProofLine>
+    <Line>
       <BodyText bold small>
         <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
           <ContractName address={contractAddress} />
@@ -121,6 +121,6 @@ export default function ({
           {content}
         </AccentText>
       </div>
-    </ProofLine>
+    </Line>
   )
 }
