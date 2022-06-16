@@ -3,8 +3,8 @@ import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
-import DerivativeContractsStore from 'stores/DerivativeContractsStore'
 import HintCard from 'components/badges/HintCard'
+import SealCredStore from 'stores/SealCredStore'
 import classnames, {
   display,
   gap,
@@ -28,9 +28,11 @@ const badgesList = classnames(
   gridTemplateColumns('grid-cols-1', 'lg:grid-cols-2')
 )
 function BadgeListSuspended() {
-  const { contractsToIsOwnedMap } = useSnapshot(DerivativeContractsStore)
-  const derivativeTokensOwned = Object.keys(contractsToIsOwnedMap).filter(
-    (contractAddress) => contractsToIsOwnedMap[contractAddress]
+  const { derivativeContractsToIsOwnedMap } = useSnapshot(SealCredStore)
+  const derivativeTokensOwned = Object.keys(
+    derivativeContractsToIsOwnedMap
+  ).filter(
+    (contractAddress) => !!derivativeContractsToIsOwnedMap[contractAddress]
   )
   const proofsAvailableToMint = useProofsAvailableToMint()
   const isEmpty =
@@ -40,7 +42,6 @@ function BadgeListSuspended() {
     return (
       <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
     )
-
   return (
     <div className={badgesList}>
       {derivativeTokensOwned.map((contractAddress) => (

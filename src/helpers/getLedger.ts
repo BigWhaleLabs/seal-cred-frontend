@@ -17,6 +17,5 @@ export default async function (): Promise<Ledger> {
     },
     {}
   )
-  console.log('got ledger with size', Object.keys(result).length)
   return result
 }

@@ -134,8 +134,8 @@ class WalletStore {
   }
 }
 
-const exportedStore = proxy(new WalletStore())
+const walletStore = proxy(new WalletStore())
 
-if (exportedStore.cachedProvider) void exportedStore.connect()
+if (walletStore.cachedProvider) void walletStore.connect()
 
-export default exportedStore
+export default walletStore
