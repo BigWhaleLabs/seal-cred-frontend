@@ -97,7 +97,9 @@ function addListenerToDerivativeContract(
       const ownerMap = await SealCredStore.derivativeContractsToOwnersMaps[
         derivativeContract.address
       ]
-      ownerMap[Number(tokenId)] = to
+      if (ownerMap) {
+        ownerMap[Number(tokenId)] = to
+      }
     }
   )
 }
@@ -112,10 +114,16 @@ sealCred.on(
     )
     const ledger = await SealCredStore.ledger
     if (!ledger[originalContract]) {
-      ledger[originalContract] = getLedgerRecord(
-        originalContract,
-        derivativeContract
-      )
+      const ledgerRecord = getLedgerRecord(originalContract, derivativeContract)
+      ledger[originalContract] = ledgerRecord
+      if (WalletStore.account) {
+        SealCredStore.derivativeContractsToIsOwnedMap[
+          ledgerRecord.derivativeContract.address
+        ] = isOwned(ledgerRecord.derivativeContract, WalletStore.account)
+      }
+      SealCredStore.derivativeContractsToOwnersMaps[
+        ledgerRecord.derivativeContract.address
+      ] = getTokenIdToOwnerMap(ledgerRecord.derivativeContract)
       addListenerToDerivativeContract(
         ledger[originalContract].derivativeContract
       )
