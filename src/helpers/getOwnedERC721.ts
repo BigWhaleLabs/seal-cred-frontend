@@ -8,7 +8,9 @@ const transferEventInterface = new utils.Interface([
 const sig = 'Transfer(address,address,uint256)'
 const sigHash = utils.keccak256(utils.toUtf8Bytes(sig))
 
-export default async function (account: string) {
+export default async function (account?: string) {
+  if (!account) return []
+
   const receivedLogs = await defaultProvider.getLogs({
     fromBlock: 0,
     toBlock: 'latest',

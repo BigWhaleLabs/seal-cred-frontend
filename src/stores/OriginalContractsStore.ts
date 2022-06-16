@@ -9,11 +9,9 @@ interface ContractsStoreType {
 }
 
 const OriginalContractsStore = proxy<ContractsStoreType>({
-  contractsOwned: Promise.resolve([]),
+  contractsOwned: getOwnedERC721(WalletStore.account),
   fetchContractsOwned() {
-    OriginalContractsStore.contractsOwned = WalletStore.account
-      ? getOwnedERC721(WalletStore.account)
-      : Promise.resolve([])
+    OriginalContractsStore.contractsOwned = getOwnedERC721(WalletStore.account)
   },
 })
 
