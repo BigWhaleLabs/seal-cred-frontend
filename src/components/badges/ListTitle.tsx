@@ -1,17 +1,21 @@
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import LoadingTitle from 'components/badges/LoadingTitle'
+import SealCredStore from 'stores/SealCredStore'
 import Title from 'components/Title'
 import proofStore from 'stores/ProofStore'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
+  const { derivativeContractsToIsOwnedMap } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
   const { proofsCompleted } = useSnapshot(proofStore)
 
   const hasUnminted = proofsAvailableToMint.length > 0
 
-  return (
+  return !Object.keys(derivativeContractsToIsOwnedMap).length ? (
+    <LoadingTitle />
+  ) : (
     <Title
       title="Create ZK badges"
       subtitle={

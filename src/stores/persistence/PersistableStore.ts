@@ -13,6 +13,7 @@ export default class {
 
   persist(encrypt: boolean) {
     const json = JSON.stringify(this, this.replacer)
+    console.log('Persisting', this.constructor.name, json)
     encrypt
       ? ls.set(this.constructor.name, json)
       : localStorage.setItem(this.constructor.name, json)
@@ -33,6 +34,7 @@ export default class {
     if (savedString) {
       const savedState = JSON.parse(savedString, this.reviver)
       Object.assign(this, savedState)
+      console.log('recovered', this.constructor.name, savedState)
     }
     // Persist just in case
     this.persist(encrypt)
