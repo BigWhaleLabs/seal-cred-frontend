@@ -1,4 +1,4 @@
-import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
+import { MutableRef, useEffect, useState } from 'preact/hooks'
 import { useRef } from 'react'
 import { useResizeDetector } from 'react-resize-detector'
 import ChildrenProp from 'models/ChildrenProp'
@@ -32,18 +32,15 @@ export default function ({
 }: ChildrenProp & ScrollbarProps) {
   const { height = 0, ref } = useResizeDetector({ handleWidth: false })
 
-  const wrapRef = useRef() as MutableRef<HTMLDivElement>
   const thumbRef = useRef() as MutableRef<HTMLDivElement>
   const [thumbHeight, setThumbHeight] = useState(100)
 
-  const { overflows, scrollMaxHeight, isOnTop, isOnBottom } = useIsOverflow(
-    wrapRef,
-    height
-  )
+  const { overflows, scrollMaxHeight, isOnTop, isOnBottom, wrapperRef } =
+    useIsOverflow(ref, height)
 
   const handleScroll = () => {
-    if (!thumbRef.current || !wrapRef.current) return
-    const wrapCurrent = wrapRef.current
+    if (!thumbRef.current || !wrapperRef.current) return
+    const wrapCurrent = wrapperRef.current
 
     // .scrollTop counts whole box, not only visible
     // we should divide whole box by the visible to get how many visible boxes are in scrollable container
@@ -54,20 +51,21 @@ export default function ({
   }
 
   // Listens if something inside the wrapBox has changed
-  const refCallback = useCallback(<T extends HTMLElement>(node: T | null) => {
-    if (!node) return
-    const numberOfViews = node.scrollHeight / node.clientHeight
-    setThumbHeight(100 / numberOfViews)
-  }, [])
-
   useEffect(() => {
-    refCallback(wrapRef.current)
-  })
+    const { current } = wrapperRef
+    if (!current) return
+    const numberOfViews = current.scrollHeight / current.clientHeight
+    setThumbHeight(100 / numberOfViews)
+  }, [
+    wrapperRef,
+    wrapperRef.current?.scrollHeight,
+    wrapperRef.current?.clientHeight,
+  ])
 
   return (
     <div ref={ref} className={scrollContainer}>
       <div
-        ref={wrapRef}
+        ref={wrapperRef}
         className={classNamesToString(
           overflow('overflow-auto'),
           'scrollbar-hide'
