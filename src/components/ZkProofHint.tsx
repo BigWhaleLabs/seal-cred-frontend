@@ -22,10 +22,10 @@ const zkProofButton = classnames(
   display('flex'),
   flexDirection('flex-row'),
   justifyContent('justify-center'),
+  width('w-mobile-card', 'sm:w-card'),
   backgroundColor('bg-primary-background'),
   space('space-x-2'),
   padding('py-4'),
-  width('w-mobile-card', 'sm:w-card'),
   margin('mx-auto'),
   cursor('cursor-pointer'),
   borderRadius('rounded-2xl')
@@ -52,14 +52,13 @@ export default function () {
     'In your wallet(s), you have NFTs that can point back to your identity (aka, getting doxxed). But with ZK proof, you can verify ownership of NFTs while staying pseudonymous.'
 
   return (
-    <>
-      <div className={zkProofButton} data-tip={popoverText}>
+    <ToolTip arrow position="top" text={popoverText}>
+      <div className={zkProofButton}>
         <AccentText color="text-accent">What's a ZK proof?</AccentText>
         <AccentText small primary color="text-accent">
           <QuestionMark />
         </AccentText>
       </div>
-      <ToolTip place="top" dataFor={popoverText} clickable />
-    </>
+    </ToolTip>
   )
 }
