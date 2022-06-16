@@ -17,6 +17,9 @@ class WalletStore extends PersistableStore {
     [address: string]: boolean
   }
 
+  replacer = (key: string, value: unknown) =>
+    !key || key === 'walletsToNotifiedOfBeingDoxxed' ? value : undefined
+
   get cachedProvider() {
     return web3Modal.cachedProvider
   }
