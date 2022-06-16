@@ -1,13 +1,21 @@
 import { MutableRef } from 'preact/hooks'
 import { useCallback, useEffect, useState } from 'react'
+import { useResizeDetector } from 'react-resize-detector'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 export default function (
-  scrollRef: MutableRef<HTMLDivElement>,
+  blockRef: MutableRef<HTMLDivElement>,
   maxHeight: number
 ) {
+  const wrapper = useResizeDetector({ handleWidth: false })
   const { sm, md } = useBreakpoints()
-  const scrollMaxHeight = md ? maxHeight : sm ? 240 : 190
+  const scrollMaxHeight = md
+    ? maxHeight > 270
+      ? maxHeight
+      : 270
+    : sm
+    ? 240
+    : 190
   const [isOverflow, setIsOverflow] = useState<{
     overflows: boolean
     isOnTop: boolean
@@ -19,7 +27,7 @@ export default function (
   })
 
   const handleScroll = useCallback(() => {
-    const { current } = scrollRef
+    const { current } = wrapper.ref
     if (!current) return
 
     if (current.scrollTop <= 2 || current.scrollTop === 0) {
@@ -44,12 +52,12 @@ export default function (
         isOnBottom: true,
       }))
     }
-  }, [scrollRef])
+  }, [wrapper.ref])
 
-  const scrollRefHeight = scrollRef?.current?.scrollHeight
+  const scrollRefHeight = wrapper.ref?.current?.scrollHeight
 
   useEffect(() => {
-    const { current } = scrollRef
+    const { current } = wrapper.ref
     if (!current) return
 
     const isScrollable = current.scrollHeight > scrollMaxHeight
@@ -64,7 +72,19 @@ export default function (
     return () => {
       current.removeEventListener('scroll', handleScroll)
     }
-  }, [scrollRef, scrollRefHeight, scrollMaxHeight, handleScroll])
+  }, [
+    wrapper.ref,
+    wrapper.height,
+    blockRef,
+    maxHeight,
+    scrollRefHeight,
+    scrollMaxHeight,
+    handleScroll,
+  ])
 
-  return { ...isOverflow, scrollMaxHeight }
+  return {
+    ...isOverflow,
+    scrollMaxHeight,
+    wrapperRef: wrapper.ref,
+  }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import QRCodeStyling, { Options } from 'qr-code-styling'
 import classnames, {
   borderRadius,
@@ -42,7 +42,7 @@ export default function ({ derivativeAddress, tokenId }: QRCodeProps) {
   const ref = useRef<HTMLAnchorElement>(null)
   const url = `${window.location.origin}/${derivativeAddress}/${tokenId}`
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!ref.current) return
     const qrCode = new QRCodeStyling(QRCodeOptions)
     qrCode.append(ref.current)

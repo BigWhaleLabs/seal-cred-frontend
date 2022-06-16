@@ -1,7 +1,7 @@
-import Badges from 'components/Badges'
+import Badges from 'components/badges/Badges'
 import CardSeparator from 'components/CardSeparator'
-import ProofsCard from 'components/ProofsCard'
-import ZkProofButton from 'components/ZkProofButton'
+import ProofsCard from 'components/proofs/Card'
+import ZkProofHint from 'components/ZkProofHint'
 import classnames, {
   alignItems,
   display,
@@ -37,7 +37,7 @@ export default function () {
               gradient="secondary-to-transparent"
               vertical
             />
-            <ZkProofButton />
+            <ZkProofHint />
           </>
         )}
       </div>

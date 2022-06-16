@@ -1,7 +1,7 @@
 import { BodyText, LinkText } from 'components/Text'
 import Button from 'components/Button'
 import Card from 'components/Card'
-import PrivacyDeath from 'components/PrivacyDeath'
+import PrivacyDeath from 'components/landing/PrivacyDeath'
 import classnames, { margin } from 'classnames/tailwind'
 
 const bigWhaleLabsText = classnames(margin('mt-6'))

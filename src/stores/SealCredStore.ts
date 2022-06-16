@@ -1,27 +1,27 @@
-import { proxyWithComputed } from 'valtio/utils'
+import { SCERC721Derivative } from '@big-whale-labs/seal-cred-ledger-contract'
+import { proxyWithComputed, subscribeKey } from 'valtio/utils'
 import Ledger from 'models/Ledger'
-import LedgerRecord from 'models/LedgerRecord'
 import TokenIdToOwnerMap from 'models/TokenIdToOwnerMap'
-import getLedger, { getLedgerRecord } from 'helpers/getLedger'
-import getMapOfOwners from 'helpers/getTokenIdToOwnerMap'
+import WalletStore from 'stores/WalletStore'
+import getLedger from 'helpers/getLedger'
+import getLedgerRecord from 'helpers/getLedgerRecord'
+import getTokenIdToOwnerMap from 'helpers/getTokenIdToOwnerMap'
+import isOwned from 'helpers/isOwned'
 import sealCred from 'helpers/sealCred'
 
 interface SealCredStoreType {
   ledger: Promise<Ledger>
-  contractNames: { [contractAddress: string]: Promise<string | undefined> }
-  originalContractsToOwnersMaps: {
-    [contractAddress: string]: Promise<TokenIdToOwnerMap>
+  derivativeContractsToIsOwnedMap: {
+    [contractAddress: string]: Promise<boolean>
   }
   derivativeContractsToOwnersMaps: {
     [contractAddress: string]: Promise<TokenIdToOwnerMap>
   }
-
-  fetchContractNames: (ledger: Ledger) => void
-  fetchContractsToOwnerMaps: (ledger: Ledger) => void
+  fetchDerivativeContracts: (ledger: Ledger) => void
 }
 
 interface ComputedSealCredStoreType {
-  derivativeLedger: Ledger
+  reverseLedger: Ledger
 }
 
 const SealCredStore = proxyWithComputed<
@@ -29,114 +29,113 @@ const SealCredStore = proxyWithComputed<
   ComputedSealCredStoreType
 >(
   {
-    ledger: getLedger(sealCred).then((ledger) => {
-      SealCredStore.fetchContractNames(ledger)
-      SealCredStore.fetchContractsToOwnerMaps(ledger)
-      for (const record of Object.values(ledger)) {
-        addListenersToLedgerRecord(record)
+    ledger: getLedger().then((ledger) => {
+      SealCredStore.fetchDerivativeContracts(ledger)
+      for (const { derivativeContract } of Object.values(ledger)) {
+        addListenerToDerivativeContract(derivativeContract)
       }
       return ledger
     }),
-    contractNames: {},
-    originalContractsToOwnersMaps: {},
+    derivativeContractsToIsOwnedMap: {},
     derivativeContractsToOwnersMaps: {},
-
-    fetchContractNames(ledger: Ledger) {
-      for (const { originalContract, derivativeContract } of Object.values(
-        ledger
-      )) {
-        SealCredStore.contractNames[originalContract.address] =
-          originalContract.name()
-        SealCredStore.contractNames[derivativeContract.address] =
-          derivativeContract.name()
+    fetchDerivativeContracts: (ledger: Ledger) => {
+      if (!WalletStore.account) {
+        SealCredStore.derivativeContractsToIsOwnedMap = {}
+        return
       }
-    },
-    fetchContractsToOwnerMaps(ledger: Ledger) {
-      for (const { originalContract, derivativeContract } of Object.values(
-        ledger
-      )) {
-        SealCredStore.originalContractsToOwnersMaps[originalContract.address] =
-          getMapOfOwners(originalContract)
-        SealCredStore.derivativeContractsToOwnersMaps[
+      const derivativeContracts = Object.values(ledger).map(
+        ({ derivativeContract }) => derivativeContract
+      )
+      for (const derivativeContract of derivativeContracts) {
+        SealCredStore.derivativeContractsToIsOwnedMap[
           derivativeContract.address
-        ] = getMapOfOwners(derivativeContract)
+        ] = isOwned(derivativeContract, WalletStore.account)
+        if (
+          !SealCredStore.derivativeContractsToOwnersMaps[
+            derivativeContract.address
+          ]
+        ) {
+          SealCredStore.derivativeContractsToOwnersMaps[
+            derivativeContract.address
+          ] = getTokenIdToOwnerMap(derivativeContract)
+        }
       }
     },
   },
   {
-    derivativeLedger: (state) =>
+    reverseLedger: (state) =>
       Object.values(state.ledger).reduce(
-        (result, record) => ({
-          ...result,
-          [record.derivativeContract.address]: record,
+        (prev, { originalContract, derivativeContract }) => ({
+          ...prev,
+          [derivativeContract.address]: {
+            originalContract,
+            derivativeContract,
+          },
         }),
         {}
       ),
   }
 )
 
-function addListenersToLedgerRecord({
-  originalContract,
-  derivativeContract,
-}: LedgerRecord) {
-  originalContract.on(
-    originalContract.filters.Transfer(),
-    async (_, to, tokenId) => {
-      console.log('Transfer (original)', originalContract.address, to, tokenId)
-      const originalContractToOwnerMap = await SealCredStore
-        .originalContractsToOwnersMaps[originalContract.address]
-
-      const newOriginalContractToOwnerMap = {
-        ...originalContractToOwnerMap,
-        [tokenId.toNumber()]: to,
-      }
-
-      SealCredStore.originalContractsToOwnersMaps[originalContract.address] =
-        Promise.resolve(newOriginalContractToOwnerMap)
-    }
-  )
+function addListenerToDerivativeContract(
+  derivativeContract: SCERC721Derivative
+) {
   derivativeContract.on(
     derivativeContract.filters.Transfer(),
-    async (_, to, tokenId) => {
-      console.log(
-        'Transfer (derivative)',
-        derivativeContract.address,
-        to,
-        tokenId
-      )
-      const derivativeContractToOwnerMap = await SealCredStore
-        .derivativeContractsToOwnersMaps[derivativeContract.address]
-
-      const newDerivativeContractToOwnerMap = {
-        ...derivativeContractToOwnerMap,
-        [tokenId.toNumber()]: to,
+    async (from, to, tokenId) => {
+      if (from === WalletStore.account || to === WalletStore.account) {
+        SealCredStore.derivativeContractsToIsOwnedMap[
+          derivativeContract.address
+        ] = isOwned(derivativeContract, WalletStore.account)
       }
-
-      SealCredStore.derivativeContractsToOwnersMaps[
+      const ownerMap = await SealCredStore.derivativeContractsToOwnersMaps[
         derivativeContract.address
-      ] = Promise.resolve(newDerivativeContractToOwnerMap)
+      ]
+      if (ownerMap) {
+        ownerMap[Number(tokenId)] = to
+      }
     }
   )
 }
 
 sealCred.on(
-  sealCred.filters.SetMerkleRoot(),
-  async (tokenAddress, merkleRoot) => {
+  sealCred.filters.CreateDerivativeContract(),
+  async (originalContract, derivativeContract) => {
+    console.info(
+      'CreateDerivativeContract event',
+      originalContract,
+      derivativeContract
+    )
     const ledger = await SealCredStore.ledger
-    if (!ledger[tokenAddress]) {
-      const record = await getLedgerRecord(sealCred, tokenAddress, merkleRoot)
-      ledger[tokenAddress] = record
-      addListenersToLedgerRecord(record)
-    } else {
-      ledger[tokenAddress].merkleRoot = merkleRoot
+    if (!ledger[originalContract]) {
+      const ledgerRecord = getLedgerRecord(originalContract, derivativeContract)
+      ledger[originalContract] = ledgerRecord
+      if (WalletStore.account) {
+        SealCredStore.derivativeContractsToIsOwnedMap[
+          ledgerRecord.derivativeContract.address
+        ] = isOwned(ledgerRecord.derivativeContract, WalletStore.account)
+      }
+      SealCredStore.derivativeContractsToOwnersMaps[
+        ledgerRecord.derivativeContract.address
+      ] = getTokenIdToOwnerMap(ledgerRecord.derivativeContract)
+      addListenerToDerivativeContract(
+        ledger[originalContract].derivativeContract
+      )
     }
   }
 )
-sealCred.on(sealCred.filters.DeleteMerkleRoot(), async (tokenAddress) => {
-  const ledger = await SealCredStore.ledger
-  ledger[tokenAddress]?.originalContract.removeAllListeners()
-  ledger[tokenAddress]?.derivativeContract.removeAllListeners()
-  delete ledger[tokenAddress]
+sealCred.on(
+  sealCred.filters.DeleteOriginalContract(),
+  async (originalContract) => {
+    console.info('DeleteOriginalContract event', originalContract)
+    const ledger = await SealCredStore.ledger
+    ledger[originalContract].derivativeContract.removeAllListeners()
+    delete ledger[originalContract]
+  }
+)
+
+subscribeKey(WalletStore, 'account', async () => {
+  SealCredStore.fetchDerivativeContracts(await SealCredStore.ledger)
 })
 
 export default SealCredStore

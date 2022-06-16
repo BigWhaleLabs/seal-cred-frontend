@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import { wordBreak } from 'classnames/tailwind'
-import SealCredStore from 'stores/SealCredStore'
+import ContractNamesStore from 'stores/ContractNamesStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
 const addressText = wordBreak('break-all')
@@ -11,9 +11,11 @@ interface ContractNameProps {
   truncate?: boolean
 }
 
-function ContractNameSuspender({ address, truncate }: ContractNameProps) {
-  const { contractNames } = useSnapshot(SealCredStore)
+function ContractNameSuspended({ address, truncate }: ContractNameProps) {
+  const { contractNames } = useSnapshot(ContractNamesStore)
   const contractName = contractNames[address]
+  if (!contractNames[address]) ContractNamesStore.fetchContractName(address)
+
   return (
     <span className={contractName ? undefined : addressText}>
       {truncate
@@ -32,7 +34,7 @@ export default function ({ address, truncate }: ContractNameProps) {
         </span>
       }
     >
-      <ContractNameSuspender address={address} truncate={truncate} />
+      <ContractNameSuspended address={address} truncate={truncate} />
     </Suspense>
   )
 }

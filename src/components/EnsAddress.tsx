@@ -1,37 +1,37 @@
 import { Suspense } from 'react'
+import { useSnapshot } from 'valtio'
 import EnsStore from 'stores/EnsStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useBreakpoints from 'hooks/useBreakpoints'
-import useEnsNameOrAddress from 'hooks/useEnsNameOrAddress'
 
 interface EnsAddressProps {
   address: string
 }
 
-function EnsAddressSuspender({
+function EnsAddressSuspended({
   address,
   truncate,
 }: EnsAddressProps & { truncate?: boolean }) {
-  const ensNameOrAddress = useEnsNameOrAddress(address)
+  const { ensNames } = useSnapshot(EnsStore)
+  const ensName = ensNames[address]
+  if (!ensName) EnsStore.fetchEnsName(address)
 
   return (
     <>
       {truncate
-        ? truncateMiddleIfNeeded(ensNameOrAddress, 17)
-        : ensNameOrAddress}
+        ? truncateMiddleIfNeeded(ensName || address, 17)
+        : ensName || address}
     </>
   )
 }
 
 export default function ({ address }: EnsAddressProps) {
   const { lg } = useBreakpoints()
-  EnsStore.fetchEnsName(address)
-
   return (
     <Suspense
       fallback={<>{!lg ? truncateMiddleIfNeeded(address, 17) : address}</>}
     >
-      <EnsAddressSuspender address={address} truncate={!lg} />
+      <EnsAddressSuspended address={address} truncate={!lg} />
     </Suspense>
   )
 }
