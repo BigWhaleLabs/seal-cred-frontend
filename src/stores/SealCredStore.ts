@@ -1,3 +1,4 @@
+import { SCERC721Derivative } from '@big-whale-labs/seal-cred-ledger-contract'
 import { proxyWithComputed, subscribeKey } from 'valtio/utils'
 import Ledger from 'models/Ledger'
 import TokenIdToOwnerMap from 'models/TokenIdToOwnerMap'
@@ -30,6 +31,9 @@ const SealCredStore = proxyWithComputed<
   {
     ledger: getLedger().then((ledger) => {
       SealCredStore.fetchDerivativeContracts(ledger)
+      for (const { derivativeContract } of Object.values(ledger)) {
+        addListenerToDerivativeContract(derivativeContract)
+      }
       return ledger
     }),
     derivativeContractsToIsOwnedMap: {},
@@ -79,6 +83,25 @@ const SealCredStore = proxyWithComputed<
   }
 )
 
+function addListenerToDerivativeContract(
+  derivativeContract: SCERC721Derivative
+) {
+  derivativeContract.on(
+    derivativeContract.filters.Transfer(),
+    async (from, to, tokenId) => {
+      if (from === WalletStore.account || to === WalletStore.account) {
+        SealCredStore.derivativeContractsToIsOwnedMap[
+          derivativeContract.address
+        ] = isOwned(derivativeContract, WalletStore.account)
+      }
+      const ownerMap = await SealCredStore.derivativeContractsToOwnersMaps[
+        derivativeContract.address
+      ]
+      ownerMap[Number(tokenId)] = to
+    }
+  )
+}
+
 sealCred.on(
   sealCred.filters.CreateDerivativeContract(),
   async (originalContract, derivativeContract) => {
@@ -101,6 +124,7 @@ sealCred.on(
   async (originalContract) => {
     console.info('DeleteOriginalContract event', originalContract)
     const ledger = await SealCredStore.ledger
+    ledger[originalContract].derivativeContract.removeAllListeners()
     delete ledger[originalContract]
   }
 )
