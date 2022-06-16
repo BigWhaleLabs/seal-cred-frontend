@@ -14,7 +14,6 @@ const connectedAccounts: { [account: string]: ContractSynchronizer } = {}
 const OriginalContractsStore = proxy<ContractsStoreType>({
   contractsOwned: Promise.resolve([]),
   async fetchMoreContractsOwned(accountChange?: boolean) {
-    console.log('fetchMoreContractsOwned')
     if (!WalletStore.account) {
       OriginalContractsStore.contractsOwned = Promise.resolve([])
       return
