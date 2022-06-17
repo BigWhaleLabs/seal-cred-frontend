@@ -15,6 +15,7 @@ import classnames, {
   space,
 } from 'classnames/tailwind'
 import proofStore from 'stores/ProofStore'
+import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 const innerScrollableBlock = space('space-y-2')
 const proofContentBlock = classnames(
@@ -27,6 +28,10 @@ const proofContentBlock = classnames(
 export default function () {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
+  const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
+
+  const allGenerated =
+    proofsCompleted.length > 0 && proofAddressesAvailableToCreate.length === 0
 
   return (
     <ProofsListContainer>
@@ -34,7 +39,7 @@ export default function () {
         <ListTitle />
       </Suspense>
       <div className={proofContentBlock}>
-        <Scrollbar>
+        <Scrollbar extraPadding={allGenerated}>
           <div className={innerScrollableBlock}>
             <ReadyProofsList />
             {account && <AvailableProofsList />}
