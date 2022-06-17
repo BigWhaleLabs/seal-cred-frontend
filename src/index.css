@@ -44,11 +44,11 @@ body {
   }
   50% {
     /* Orb going into SuperOrb */
-    transform: translate(4.75rem, 44.688rem);
+    transform: translate(4.7rem, 44.688rem);
   }
   60% {
     /* Orb before fork */
-    transform: translate(4.75rem, 67.5rem);
+    transform: translate(4.7rem, 67.5rem);
   }
   64% {
     /* Orb to the ID Card */
@@ -101,10 +101,10 @@ body {
     transform: translate(0rem, 44.063rem);
   }
   50% {
-    transform: translate(-4.75rem, 44.063rem);
+    transform: translate(-4.7rem, 44.063rem);
   }
   60% {
-    transform: translate(-4.75rem, 67.5rem);
+    transform: translate(-4.7rem, 67.5rem);
   }
   64% {
     transform: translate(0rem, 72.5rem);
