@@ -41,7 +41,7 @@ function BadgeListSuspended() {
     !Object.keys(ownedDerivativeContracts).length &&
     !proofsAvailableToMint.length
 
-  return !Object.keys(ownedDerivativeContracts).length ? (
+  return !Object.keys(derivativeContracts).length ? (
     <BodyText>Fetching derivative NFTs...</BodyText>
   ) : isEmpty ? (
     <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
