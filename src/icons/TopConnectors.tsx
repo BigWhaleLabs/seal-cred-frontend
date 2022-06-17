@@ -12,18 +12,18 @@ export default function () {
         viewBox="0 0 202 700"
       >
         <line
-          x1="0.5"
+          x1="10"
           y1="100"
-          x2="0.5"
+          x2="10"
           y2="400"
           fill="none"
           className={strokeTertiary}
           stroke-linecap="round"
         />
         <line
-          x1="201.5"
+          x1="192"
           y1="100"
-          x2="201.5"
+          x2="192"
           y2="400"
           fill="none"
           className={strokeSecondary}
