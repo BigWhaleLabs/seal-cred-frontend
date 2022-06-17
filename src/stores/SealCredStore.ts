@@ -6,14 +6,10 @@ import WalletStore from 'stores/WalletStore'
 import getLedger from 'helpers/getLedger'
 import getLedgerRecord from 'helpers/getLedgerRecord'
 import getTokenIdToOwnerMap from 'helpers/getTokenIdToOwnerMap'
-import isOwned from 'helpers/isOwned'
 import sealCred from 'helpers/sealCred'
 
 interface SealCredStoreType {
   ledger: Promise<Ledger>
-  derivativeContractsToIsOwnedMap: {
-    [contractAddress: string]: Promise<boolean>
-  }
   derivativeContractsToOwnersMaps: {
     [contractAddress: string]: Promise<TokenIdToOwnerMap>
   }
@@ -22,6 +18,7 @@ interface SealCredStoreType {
 
 interface ComputedSealCredStoreType {
   reverseLedger: Ledger
+  derivativeContracts: string[]
 }
 
 const SealCredStore = proxyWithComputed<
@@ -36,20 +33,13 @@ const SealCredStore = proxyWithComputed<
       }
       return ledger
     }),
-    derivativeContractsToIsOwnedMap: {},
     derivativeContractsToOwnersMaps: {},
     fetchDerivativeContracts: (ledger: Ledger) => {
-      if (!WalletStore.account) {
-        SealCredStore.derivativeContractsToIsOwnedMap = {}
-        return
-      }
       const derivativeContracts = Object.values(ledger).map(
         ({ derivativeContract }) => derivativeContract
       )
+
       for (const derivativeContract of derivativeContracts) {
-        SealCredStore.derivativeContractsToIsOwnedMap[
-          derivativeContract.address
-        ] = isOwned(derivativeContract, WalletStore.account)
         if (
           !SealCredStore.derivativeContractsToOwnersMaps[
             derivativeContract.address
@@ -74,6 +64,10 @@ const SealCredStore = proxyWithComputed<
         }),
         {}
       ),
+    derivativeContracts: (state) =>
+      Object.values(state.ledger).map(
+        ({ derivativeContract }) => derivativeContract.address
+      ),
   }
 )
 
@@ -83,11 +77,6 @@ function addListenerToDerivativeContract(
   derivativeContract.on(
     derivativeContract.filters.Transfer(),
     async (from, to, tokenId) => {
-      if (from === WalletStore.account || to === WalletStore.account) {
-        SealCredStore.derivativeContractsToIsOwnedMap[
-          derivativeContract.address
-        ] = isOwned(derivativeContract, WalletStore.account)
-      }
       const ownerMap = await SealCredStore.derivativeContractsToOwnersMaps[
         derivativeContract.address
       ]
@@ -110,11 +99,6 @@ sealCred.on(
     if (!ledger[originalContract]) {
       const ledgerRecord = getLedgerRecord(originalContract, derivativeContract)
       ledger[originalContract] = ledgerRecord
-      if (WalletStore.account) {
-        SealCredStore.derivativeContractsToIsOwnedMap[
-          ledgerRecord.derivativeContract.address
-        ] = isOwned(ledgerRecord.derivativeContract, WalletStore.account)
-      }
       SealCredStore.derivativeContractsToOwnersMaps[
         ledgerRecord.derivativeContract.address
       ] = getTokenIdToOwnerMap(ledgerRecord.derivativeContract)
