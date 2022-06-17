@@ -291,18 +291,18 @@ const UpperConnectors = () => (
       </linearGradient>
     </defs>
     <line
-      x1="0.5"
+      x1="10"
       y1="33.5"
-      x2="0.5"
+      x2="10"
       y2="724.5"
       fill="none"
       className={strokeTertiary}
       stroke-linecap="round"
     />
     <line
-      x1="0.5"
-      y1="724.5"
+      x1="10"
       x2="73.5"
+      y1="724.5"
       y2="724.5"
       fill="none"
       stroke-linecap="round"
@@ -310,17 +310,17 @@ const UpperConnectors = () => (
     />
     <line
       x1="128.5"
+      x2="192"
       y1="724.5"
-      x2="201.5"
       y2="724.5"
       fill="none"
       stroke-linecap="round"
       stroke="url(#b)"
     />
     <line
-      x1="201.5"
+      x1="192"
       y1="47.5"
-      x2="201.5"
+      x2="192"
       y2="724.5"
       fill="none"
       className={strokeSecondary}
