@@ -17,6 +17,7 @@ type FadeType = 'top' | 'bottom' | 'both'
 
 interface ScrollbarProps {
   fade?: FadeType
+  extraPadding?: boolean
 }
 
 const scrollContainer = classnames(
@@ -29,6 +30,7 @@ const scrollContainer = classnames(
 export default function ({
   children,
   fade = 'both',
+  extraPadding = false,
 }: ChildrenProp & ScrollbarProps) {
   const { height = 0, ref } = useResizeDetector({ handleWidth: false })
 
@@ -36,7 +38,7 @@ export default function ({
   const [thumbHeight, setThumbHeight] = useState(100)
 
   const { overflows, scrollMaxHeight, isOnTop, isOnBottom, wrapperRef } =
-    useIsOverflow(ref, height)
+    useIsOverflow(ref, height - (extraPadding ? 46 : 0))
 
   const handleScroll = () => {
     if (!thumbRef.current || !wrapperRef.current) return
