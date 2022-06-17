@@ -14087,6 +14087,7 @@ __metadata:
     typescript: ^4.7.3
     valtio: ^1.6.1
     vite: ^2.9.12
+    vite-plugin-remove-console: ^1.0.0
     vite-tsconfig-paths: ^3.5.0
     web3modal: ^1.9.8
   languageName: unknown
@@ -15662,6 +15663,13 @@ __metadata:
     core-util-is: 1.0.2
     extsprintf: ^1.2.0
   checksum: c431df0bedf2088b227a4e051e0ff4ca54df2c114096b0c01e1cbaadb021c30a04d7dd5b41ab277bcd51246ca135bf931d4c4c796ecae7a4fef6d744ecef36ea
+  languageName: node
+  linkType: hard
+
+"vite-plugin-remove-console@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "vite-plugin-remove-console@npm:1.0.0"
+  checksum: fb114ffaca1b59278c921bb620e6345f862004103d30abde63a622b99d0ace1285b37fe201fbacd957dbd9af76f2aa27e649ceac41c20a42b3f75257a4f57530
   languageName: node
   linkType: hard
 

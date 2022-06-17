@@ -5,6 +5,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 import inject from '@rollup/plugin-inject'
 import nodePolyfills from 'rollup-plugin-node-polyfills'
+import removeConsole from 'vite-plugin-remove-console'
 
 export default defineConfig({
   plugins: [preact(), tsconfigPaths()],
@@ -24,6 +25,7 @@ export default defineConfig({
           stream: 'stream',
           _stream_duplex: 'duplex',
         }),
+        removeConsole(),
       ],
     },
     commonjsOptions: {
