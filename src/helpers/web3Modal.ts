@@ -1,12 +1,12 @@
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk'
-import Fortmatic from 'fortmatic'
+// import Fortmatic from 'fortmatic'
 import WalletConnect from '@walletconnect/web3-provider'
 import Web3Modal from 'web3modal'
 import env from 'helpers/env'
 
-const rpc = env.VITE_ETH_RPC as string
-const network = env.VITE_ETH_NETWORK as string
-const appName = env.VITE_APP_NAME as string
+const rpc = env.VITE_ETH_RPC
+const network = env.VITE_ETH_NETWORK
+const appName = env.VITE_APP_NAME
 
 export default new Web3Modal({
   cacheProvider: true,
@@ -14,18 +14,18 @@ export default new Web3Modal({
   disableInjectedProvider: false,
   network,
   providerOptions: {
-    fortmatic: {
-      package: Fortmatic,
-      options: {
-        key: env.VITE_FORTMATIC_KEY as string,
-        network,
-      },
-    },
+    // fortmatic: {
+    //   package: Fortmatic,
+    //   options: {
+    //     key: env.VITE_FORTMATIC_KEY,
+    //     network,
+    //   },
+    // },
     walletconnect: {
       package: WalletConnect,
       options: {
         rpc: {
-          4: rpc,
+          5: rpc,
         },
       },
     },
