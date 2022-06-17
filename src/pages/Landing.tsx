@@ -65,7 +65,7 @@ const topConnectorsWrapper = classnames(
 const createZkProofWrapper = classnames(
   position('absolute'),
   zIndex('z-40'),
-  inset('top-1/4'),
+  inset('tiny:top-1/4', 'top-48'),
   width('w-screen', 'md:w-fit')
 )
 const middleConnetorsBlock = classnames(
