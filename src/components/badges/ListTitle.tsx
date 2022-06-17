@@ -7,13 +7,13 @@ import proofStore from 'stores/ProofStore'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
-  const { derivativeContractsToIsOwnedMap } = useSnapshot(SealCredStore)
+  const { derivativeContracts } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
   const { proofsCompleted } = useSnapshot(proofStore)
 
   const hasUnminted = proofsAvailableToMint.length > 0
 
-  return !Object.keys(derivativeContractsToIsOwnedMap).length ? (
+  return !Object.keys(derivativeContracts).length ? (
     <LoadingTitle />
   ) : (
     <Title
