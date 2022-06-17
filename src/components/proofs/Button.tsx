@@ -1,28 +1,17 @@
 import {
   alignItems,
-  backgroundClip,
-  backgroundImage,
   classnames,
   cursor,
   display,
   flexDirection,
   fontFamily,
   fontWeight,
-  gradientColorStops,
   lineHeight,
   opacity,
   outlineStyle,
   space,
-  textColor,
   transitionProperty,
 } from 'classnames/tailwind'
-
-const proofButtonGradient = classnames(
-  textColor('text-transparent'),
-  gradientColorStops('from-primary-light', 'via-tertiary', 'to-tertiary'),
-  backgroundClip('bg-clip-text'),
-  backgroundImage('bg-gradient-to-t')
-)
 
 const button = (disabled?: boolean) =>
   classnames(
@@ -36,8 +25,7 @@ const button = (disabled?: boolean) =>
     outlineStyle('focus:outline-none'),
     cursor(disabled ? 'cursor-not-allowed' : undefined),
     opacity(disabled ? 'opacity-95' : undefined),
-    lineHeight('leading-5'),
-    proofButtonGradient
+    lineHeight('leading-5')
   )
 
 export default function ({
