@@ -3,8 +3,8 @@ import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
+import ContractsStore from 'stores/ContractsStore'
 import HintCard from 'components/badges/HintCard'
-import OriginalContractsStore from 'stores/OriginalContractsStore'
 import SealCredStore from 'stores/SealCredStore'
 import classnames, {
   display,
@@ -30,7 +30,7 @@ const badgesList = classnames(
 )
 function BadgeListSuspended() {
   const { derivativeContracts = [] } = useSnapshot(SealCredStore)
-  const { contractsOwned } = useSnapshot(OriginalContractsStore)
+  const { contractsOwned } = useSnapshot(ContractsStore)
 
   const ownedDerivativeContracts = derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)

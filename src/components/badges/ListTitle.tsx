@@ -1,7 +1,7 @@
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
+import ContractsStore from 'stores/ContractsStore'
 import LoadingTitle from 'components/badges/LoadingTitle'
-import OriginalContractsStore from 'stores/OriginalContractsStore'
 import SealCredStore from 'stores/SealCredStore'
 import Title from 'components/Title'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
@@ -9,7 +9,7 @@ import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 function ListTitleSuspended() {
   const { derivativeContracts } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
-  const { contractsOwned } = useSnapshot(OriginalContractsStore)
+  const { contractsOwned } = useSnapshot(ContractsStore)
 
   const ownedDerivativeContracts = derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)

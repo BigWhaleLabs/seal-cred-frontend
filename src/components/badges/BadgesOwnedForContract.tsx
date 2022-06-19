@@ -2,7 +2,7 @@ import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContractLoading from 'components/badges/BadgesOwnedForContractLoading'
-import SealCredStore from 'stores/SealCredStore'
+import ContractsStore from 'stores/ContractsStore'
 import WalletStore from 'stores/WalletStore'
 
 function BadgesOwnedForContractSuspended({
@@ -10,13 +10,16 @@ function BadgesOwnedForContractSuspended({
 }: {
   contractAddress: string
 }) {
-  const { derivativeContractsToOwnersMaps } = useSnapshot(SealCredStore)
-  const contractToOwnersMap =
-    derivativeContractsToOwnersMaps[contractAddress] || {}
+  const { connectedAccounts } = useSnapshot(ContractsStore)
   const { account } = useSnapshot(WalletStore)
-  const ownedIds = Object.keys(contractToOwnersMap)
-    .map((v) => +v)
-    .filter((tokenId) => contractToOwnersMap[tokenId] === account)
+  if (!account) {
+    return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
+  }
+  const contractSynchronizer = connectedAccounts[account]
+  if (!contractSynchronizer) {
+    return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
+  }
+  const ownedIds = [contractSynchronizer.tokenState[contractAddress]]
   return (
     <>
       {ownedIds.map((tokenId) => (

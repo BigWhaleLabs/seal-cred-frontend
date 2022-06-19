@@ -1,10 +1,17 @@
 import { LinkText } from 'components/Text'
-import { Suspense } from 'react'
-import { useSnapshot } from 'valtio'
+import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
+import { Suspense, useEffect } from 'react'
+import { proxy, useSnapshot } from 'valtio'
 import { wordBreak } from 'classnames/tailwind'
 import EnsAddress from 'components/EnsAddress'
-import SealCredStore from 'stores/SealCredStore'
+import TokenIdToOwnerMap from 'models/TokenIdToOwnerMap'
+import defaultProvider from 'helpers/defaultProvider'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import getTokenIdToOwnerMap from 'helpers/getTokenIdToOwnerMap'
+
+const state = proxy({
+  tokendIdToOwnerMap: Promise.resolve({}) as Promise<TokenIdToOwnerMap>,
+})
 
 const container = wordBreak('break-all')
 function OwnedBadgeAddressSuspended({
@@ -14,9 +21,15 @@ function OwnedBadgeAddressSuspended({
   derivativeAddress: string
   tokenId: string
 }) {
-  const { derivativeContractsToOwnersMaps } = useSnapshot(SealCredStore)
-  const owner =
-    derivativeContractsToOwnersMaps[derivativeAddress][Number(tokenId)]
+  useEffect(() => {
+    const derivativeContract = SCERC721Derivative__factory.connect(
+      derivativeAddress,
+      defaultProvider
+    )
+    state.tokendIdToOwnerMap = getTokenIdToOwnerMap(derivativeContract)
+  }, [derivativeAddress])
+  const { tokendIdToOwnerMap } = useSnapshot(state)
+  const owner = tokendIdToOwnerMap[Number(tokenId)]
 
   return (
     <span className={container}>

@@ -1,10 +1,10 @@
 import { useSnapshot } from 'valtio'
-import OriginalContractsStore from 'stores/OriginalContractsStore'
+import ContractsStore from 'stores/ContractsStore'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
 
 export default function () {
-  const { contractsOwned } = useSnapshot(OriginalContractsStore)
+  const { contractsOwned } = useSnapshot(ContractsStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { ledger } = useSnapshot(SealCredStore)
   return proofsCompleted.filter(
