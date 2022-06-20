@@ -79,7 +79,9 @@ function Badge({
           (p) => p.contract !== proof.contract && p.result !== proof.result
         )
         handleError(
-          'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'
+          new Error(
+            'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'
+          )
         )
       } else {
         handleError(error)
