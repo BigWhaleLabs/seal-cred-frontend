@@ -49,7 +49,10 @@ function Badge({
   const { xxs, sm } = useBreakpoints()
 
   const [loading, setLoading] = useState(false)
-  const [completed, setCompleted] = useState(false)
+
+  const proof = proofsCompleted.find(
+    (proof) => proof.contract === contractAddress
+  )
 
   const small = xxs && !sm
   const ledgerRecord = reverseLedger[contractAddress]
@@ -58,9 +61,7 @@ function Badge({
 
   const checkProofAndMint = async () => {
     setLoading(true)
-    const proof = proofsCompleted.find(
-      (proof) => proof.contract === contractAddress
-    )
+
     try {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
@@ -68,7 +69,6 @@ function Badge({
       ProofStore.proofsCompleted = proofsCompleted.filter(
         (p) => p.contract !== proof.contract && p.result !== proof.result
       )
-      setCompleted(true)
     } catch (error) {
       if (
         proof &&
@@ -125,10 +125,10 @@ function Badge({
             small
             primary
             loading={!!loading}
-            disabled={completed}
+            disabled={!proof}
             onClick={checkProofAndMint}
           >
-            {completed ? 'Minted!' : 'Mint badge'}
+            {proof ? 'Mint badge' : 'Minted!'}
           </Button>
         )
       }
