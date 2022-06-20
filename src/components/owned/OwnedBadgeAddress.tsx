@@ -1,17 +1,9 @@
 import { LinkText } from 'components/Text'
-import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
-import { Suspense, useEffect } from 'react'
-import { proxy, useSnapshot } from 'valtio'
+import { Suspense } from 'react'
 import { wordBreak } from 'classnames/tailwind'
 import EnsAddress from 'components/EnsAddress'
-import TokenIdToOwnerMap from 'models/TokenIdToOwnerMap'
-import defaultProvider from 'helpers/defaultProvider'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
-import getTokenIdToOwnerMap from 'helpers/getTokenIdToOwnerMap'
-
-const state = proxy({
-  tokendIdToOwnerMap: Promise.resolve({}) as Promise<TokenIdToOwnerMap>,
-})
+import useOwnerAddress from 'hooks/useOwnerAddress'
 
 const container = wordBreak('break-all')
 function OwnedBadgeAddressSuspended({
@@ -21,15 +13,7 @@ function OwnedBadgeAddressSuspended({
   derivativeAddress: string
   tokenId: string
 }) {
-  useEffect(() => {
-    const derivativeContract = SCERC721Derivative__factory.connect(
-      derivativeAddress,
-      defaultProvider
-    )
-    state.tokendIdToOwnerMap = getTokenIdToOwnerMap(derivativeContract)
-  }, [derivativeAddress])
-  const { tokendIdToOwnerMap } = useSnapshot(state)
-  const owner = tokendIdToOwnerMap[Number(tokenId)]
+  const owner = useOwnerAddress(derivativeAddress, tokenId)
 
   return (
     <span className={container}>

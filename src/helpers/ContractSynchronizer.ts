@@ -5,7 +5,7 @@ export default class ContractSynchronizer {
   account: string
   locked = false
   synchronizedBlockId = 0
-  tokenState: { [token: string]: number } = {}
+  addressToTokenIds: { [address: string]: Set<string> } = {}
 
   constructor(account: string) {
     this.account = account
@@ -16,18 +16,19 @@ export default class ContractSynchronizer {
       this.locked = true
       try {
         const currentBlockId = await defaultProvider.getBlockNumber()
-        this.tokenState = await getOwnedERC721(
+        this.addressToTokenIds = await getOwnedERC721(
           this.account,
           this.synchronizedBlockId,
           currentBlockId,
-          this.tokenState
+          this.addressToTokenIds
         )
+
         this.synchronizedBlockId = currentBlockId + 1
       } finally {
         this.locked = false
       }
     }
 
-    return Object.keys(this.tokenState)
+    return Object.keys(this.addressToTokenIds)
   }
 }

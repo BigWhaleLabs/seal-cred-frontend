@@ -12,7 +12,7 @@ export default async function (
   account: string,
   fromBlock = 0,
   toBlock: number,
-  ownedTokens: { [token: string]: number }
+  addressToTokenIds: { [address: string]: Set<string> }
 ) {
   const receivedLogs = await defaultProvider.getLogs({
     fromBlock,
@@ -33,15 +33,17 @@ export default async function (
       args: { tokenId },
     } = transferEventInterface.parseLog({ data, topics })
 
-    const value = (tokenId + 1).toString()
+    const value = tokenId.toString()
 
-    if (ownedTokens[address]) {
-      ownedTokens[address] ^= value
-      if (!ownedTokens[address]) delete ownedTokens[address]
+    if (!addressToTokenIds[address]) {
+      addressToTokenIds[address] = new Set([value])
+    } else if (addressToTokenIds[address].has(value)) {
+      addressToTokenIds[address].delete(value)
+      if (!addressToTokenIds[address].size) delete addressToTokenIds[address]
     } else {
-      ownedTokens[address] = value
+      addressToTokenIds[address].add(value)
     }
   }
 
-  return ownedTokens
+  return addressToTokenIds
 }
