@@ -1,5 +1,6 @@
 import { AccentText } from 'components/Text'
 import { Suspense } from 'preact/compat'
+import { useResizeDetector } from 'react-resize-detector'
 import { useSnapshot } from 'valtio'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import ListTitle from 'components/proofs/ListTitle'
@@ -29,6 +30,7 @@ export default function () {
   const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
+  const { height = 0, ref } = useResizeDetector({ handleWidth: false })
 
   const allGenerated =
     proofsCompleted.length > 0 && proofAddressesAvailableToCreate.length === 0
@@ -38,8 +40,8 @@ export default function () {
       <Suspense fallback={<LoadingTitle />}>
         <ListTitle />
       </Suspense>
-      <div className={proofContentBlock}>
-        <Scrollbar extraPadding={allGenerated}>
+      <div className={proofContentBlock} ref={ref}>
+        <Scrollbar extraPadding={allGenerated} parentHeight={height}>
           <div className={innerScrollableBlock}>
             <ReadyProofsList />
             {account && <AvailableProofsList />}
