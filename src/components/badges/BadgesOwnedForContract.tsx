@@ -20,7 +20,7 @@ function BadgesOwnedForContractSuspended({
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
   }
   const ownedIds = Array.from(
-    contractSynchronizer.addressToTokenIds[contractAddress]
+    contractSynchronizer.addressToTokenIds[contractAddress] || []
   )
   return (
     <>
