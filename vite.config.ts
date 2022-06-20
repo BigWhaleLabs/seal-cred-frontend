@@ -18,6 +18,7 @@ export default defineConfig({
         }) as unknown as Plugin,
         nodePolyfills() as unknown as Plugin,
         inject({
+          os: 'os',
           assert: 'assert',
           process: 'process',
           Buffer: ['buffer', 'Buffer'],
