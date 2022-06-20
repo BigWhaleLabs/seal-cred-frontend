@@ -8,11 +8,7 @@ export const ErrorList = {
   wrongNetwork: (userNetwork: string, contractNetwork: string) =>
     `Looks like you're using ${userNetwork} network, try switching to ${contractNetwork} and connect again`,
   unknown: 'An unknown error occurred, please, contact us',
-  invalidSignature: 'Signature is invalid',
   clear: '',
-  proofFailed: 'Proof generation failed, please, try again later',
-  proofCanceled:
-    'Server has reloaded while the proof was being generated, please, try again later',
 }
 
 export default function (error: unknown) {

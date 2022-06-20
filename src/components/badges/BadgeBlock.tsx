@@ -58,11 +58,11 @@ function Badge({
 
   const checkProofAndMint = async () => {
     setLoading(true)
+    const proof = proofsCompleted.find(
+      (proof) => proof.contract === contractAddress
+    )
     try {
       if (!account) throw new Error('No account found')
-      const proof = proofsCompleted.find(
-        (proof) => proof.contract === contractAddress
-      )
       if (!proof?.result) throw new Error('No proof found')
       await WalletStore.mintDerivative(contractAddress, proof.result)
       ProofStore.proofsCompleted = proofsCompleted.filter(
@@ -70,7 +70,20 @@ function Badge({
       )
       setCompleted(true)
     } catch (error) {
-      handleError(error)
+      if (
+        proof &&
+        error instanceof Error &&
+        error.message.includes('This ZK proof has already been used')
+      ) {
+        ProofStore.proofsCompleted = proofsCompleted.filter(
+          (p) => p.contract !== proof.contract && p.result !== proof.result
+        )
+        handleError(
+          'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'
+        )
+      } else {
+        handleError(error)
+      }
     } finally {
       setLoading(false)
     }
