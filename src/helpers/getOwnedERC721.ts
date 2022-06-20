@@ -1,4 +1,4 @@
-import { BigNumber, utils } from 'ethers'
+import { utils } from 'ethers'
 import defaultProvider from 'helpers/defaultProvider'
 
 const transferEventInterface = new utils.Interface([
@@ -12,7 +12,7 @@ export default async function (
   account: string,
   fromBlock = 0,
   toBlock: number,
-  ownedTokens: { [token: string]: Set<BigNumber> }
+  ownedTokens: { [token: string]: Set<string> }
 ) {
   const receivedLogs = await defaultProvider.getLogs({
     fromBlock,
@@ -33,13 +33,15 @@ export default async function (
       args: { tokenId },
     } = transferEventInterface.parseLog({ data, topics })
 
+    const value = tokenId.toString()
+
     if (!ownedTokens[address]) {
-      ownedTokens[address] = new Set([tokenId])
-    } else if (ownedTokens[address].has(tokenId)) {
-      ownedTokens[address].delete(tokenId)
+      ownedTokens[address] = new Set([value])
+    } else if (ownedTokens[address].has(value)) {
+      ownedTokens[address].delete(value)
       if (!ownedTokens[address].size) delete ownedTokens[address]
     } else {
-      ownedTokens[address].add(tokenId)
+      ownedTokens[address].add(value)
     }
   }
 
