@@ -10,15 +10,12 @@ export default async function (
 ) {
   const eventsFilter = contract.filters.Transfer()
   const events = await contract.queryFilter(eventsFilter)
-  let owner = ''
   while (events.length > 0) {
     const event = events.pop()
     if (!event || !event.args) continue
     const { to, tokenId } = event.args
     if (id.eq(tokenId)) {
-      owner = to
-      console.log(owner, event.blockNumber, id.eq(tokenId))
+      return to
     }
   }
-  return owner
 }
