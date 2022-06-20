@@ -11,6 +11,11 @@ export default class ContractSynchronizer {
     this.account = account
   }
 
+  tokenIds(address: string) {
+    if (!this.addressToTokenIds[address]) return []
+    return Array.from(this.addressToTokenIds[address])
+  }
+
   async getOwnedERC721() {
     if (!this.locked) {
       this.locked = true
