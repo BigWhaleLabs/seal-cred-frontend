@@ -5,7 +5,7 @@ export default class ContractSynchronizer {
   account: string
   locked = false
   synchronizedBlockId = 0
-  addressToTokenIds: { [token: string]: Set<string> } = {}
+  addressToTokenIds: { [address: string]: Set<string> } = {}
 
   constructor(account: string) {
     this.account = account
