@@ -25,16 +25,14 @@ function ContractNameSuspended({ address, truncate }: ContractNameProps) {
   )
 }
 
-export default memo(function ({ address, truncate }: ContractNameProps) {
-  return (
-    <Suspense
-      fallback={
-        <span className={addressText}>
-          {truncate ? truncateMiddleIfNeeded(address, 17) : address}
-        </span>
-      }
-    >
-      <ContractNameSuspended address={address} truncate={truncate} />
-    </Suspense>
-  )
-})
+export default memo(({ address, truncate }: ContractNameProps) => (
+  <Suspense
+    fallback={
+      <span className={addressText}>
+        {truncate ? truncateMiddleIfNeeded(address, 17) : address}
+      </span>
+    }
+  >
+    <ContractNameSuspended address={address} truncate={truncate} />
+  </Suspense>
+))
