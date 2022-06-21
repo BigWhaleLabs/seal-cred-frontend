@@ -7,6 +7,7 @@ import Proof from 'models/Proof'
 import WalletStore from 'stores/WalletStore'
 import buildBabyJub from 'circomlibjs/babyjub'
 import buildMimc7 from 'circomlibjs/mimc7'
+import checkNavigator from 'helpers/checkNavigator'
 import handleError from 'helpers/handleError'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,6 +58,8 @@ class ProofStore extends PersistableStore {
         pubKeyX: x,
         pubKeyY: y,
       }
+      // Check navigator availability
+      checkNavigator()
       // return
       proofStore.proofsCompleted.push({
         contract,
