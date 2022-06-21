@@ -1,7 +1,7 @@
 import { BadgeText } from 'components/Text'
 import { useState } from 'preact/hooks'
 import EmailForm from 'components/EmailForm'
-import ProofLine from 'components/ProofLine'
+import Line from 'components/proofs/Line'
 import StaticArrow from 'icons/StaticArrow'
 import TextForm from 'components/TextForm'
 import classnames, {
@@ -49,20 +49,17 @@ export default function () {
   }
 
   function onSendEmail(email?: string) {
-    if (email) {
-      const [_, domain] = email.split('@')
-      setDomain(domain)
-    }
+    if (!email) return
+    const domain = email.split('@')[1]
+    setDomain(domain)
   }
 
   function onSendSecret(secret?: string) {
-    if (secret) {
-      console.log(secret)
-    }
+    if (secret) console.log(secret)
   }
 
   return (
-    <ProofLine className={proofLineContainer}>
+    <Line className={proofLineContainer}>
       <div className={workTitleContainer}>
         <span>{`Work email ${domain ? `@${domain}` : ''}`}</span>
         <button className={arrowContainer} onClick={onToggle}>
@@ -91,6 +88,6 @@ export default function () {
           )}
         </>
       )}
-    </ProofLine>
+    </Line>
   )
 }

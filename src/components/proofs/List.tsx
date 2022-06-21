@@ -2,6 +2,7 @@ import { AccentText } from 'components/Text'
 import { Suspense } from 'preact/compat'
 import { useResizeDetector } from 'react-resize-detector'
 import { useSnapshot } from 'valtio'
+import AdditionalList from 'components/proofs/AdditionalList'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import ListTitle from 'components/proofs/ListTitle'
 import LoadingTitle from 'components/proofs/LoadingTitle'
@@ -45,6 +46,7 @@ export default function () {
           <div className={innerScrollableBlock}>
             <ReadyProofsList />
             {account && <AvailableProofsList />}
+            <AdditionalList />
           </div>
         </Scrollbar>
         {proofsCompleted.length > 0 && (
