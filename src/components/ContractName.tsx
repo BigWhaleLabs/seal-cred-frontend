@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
 import { wordBreak } from 'classnames/tailwind'
 import ContractNamesStore from 'stores/ContractNamesStore'
@@ -25,7 +25,7 @@ function ContractNameSuspended({ address, truncate }: ContractNameProps) {
   )
 }
 
-export default function ({ address, truncate }: ContractNameProps) {
+export default memo(function ({ address, truncate }: ContractNameProps) {
   return (
     <Suspense
       fallback={
@@ -37,4 +37,4 @@ export default function ({ address, truncate }: ContractNameProps) {
       <ContractNameSuspended address={address} truncate={truncate} />
     </Suspense>
   )
-}
+})

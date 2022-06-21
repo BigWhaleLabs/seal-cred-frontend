@@ -4,19 +4,19 @@ import defaultProvider from 'helpers/defaultProvider'
 
 interface ContractNamesStoreType {
   contractNames: {
-    [contractAddress: string]: string | undefined
+    [contractAddress: string]: Promise<string | undefined> | undefined
   }
   fetchContractName: (address: string) => void
 }
 
 const ContractNamesStore = proxy<ContractNamesStoreType>({
   contractNames: {},
-  async fetchContractName(address: string) {
+  fetchContractName(address: string) {
     if (ContractNamesStore.contractNames[address]) {
       return
     }
     const contract = ERC721__factory.connect(address, defaultProvider)
-    ContractNamesStore.contractNames[address] = await contract.name()
+    ContractNamesStore.contractNames[address] = contract.name()
   },
 })
 
