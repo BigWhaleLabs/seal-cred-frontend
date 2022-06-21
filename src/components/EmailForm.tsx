@@ -21,7 +21,7 @@ export default function ({
         type="email"
         placeholder={placeholder}
         value={email}
-        onChange={(e) => setEmail((e.target as HTMLInputElement).value || '')}
+        onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
         onKeyDown={(event) =>
           event.code === 'Enter' && emailIsValid ? onSubmit(email) : undefined
         }
