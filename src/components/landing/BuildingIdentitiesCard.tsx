@@ -1,6 +1,6 @@
 import { BodyText, HeaderText } from 'components/Text'
 import Card from 'components/Card'
-import GetStartedButton from 'components/GetStartedButton'
+import GetStartedButton from 'components/landing/GetStartedButton'
 
 export default function () {
   return (

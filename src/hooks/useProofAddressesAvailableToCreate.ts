@@ -1,25 +1,24 @@
 import { useSnapshot } from 'valtio'
+import ContractsStore from 'stores/ContractsStore'
 import ProofStore from 'stores/ProofStore'
-import useContractAddressesOwned from 'hooks/useContractAddressesOwned'
+import SealCredStore from 'stores/SealCredStore'
 
 export default function () {
-  const contractAddressesOwned = useContractAddressesOwned('original')
-  const { proofsCompleted, proofsInProgress } = useSnapshot(ProofStore)
-
-  const completedProofAddressesMap = [
-    ...proofsInProgress,
-    ...proofsCompleted,
-  ].reduce(
+  const { proofsCompleted } = useSnapshot(ProofStore)
+  const { contractsOwned } = useSnapshot(ContractsStore)
+  const { derivativeContracts } = useSnapshot(SealCredStore)
+  const completedProofAddressesMap = [...proofsCompleted].reduce(
     (result, proof) => ({
       ...result,
       [proof.contract]: true,
     }),
     {} as { [address: string]: boolean }
   )
-
   return (
-    contractAddressesOwned.filter(
-      (address) => !completedProofAddressesMap[address]
+    contractsOwned.filter(
+      (address) =>
+        !derivativeContracts.includes(address) &&
+        !completedProofAddressesMap[address]
     ) || []
   )
 }

@@ -16,6 +16,7 @@ import classnames, {
   borderRadius,
   display,
   flexDirection,
+  inset,
   justifyContent,
   margin,
   padding,
@@ -24,7 +25,6 @@ import classnames, {
   width,
   zIndex,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 import useScrollPercent from 'hooks/useScrollPercent'
 
 const pageBox = classnames(
@@ -43,48 +43,68 @@ const highlightedBlock = classnames(
   display('flex'),
   flexDirection('flex-row'),
   justifyContent('justify-center'),
-  width('lg:w-fit', 'w-5/6'),
-  position('absolute')
+  width('lg:w-max', 'w-5/6')
 )
 const highlightedWrapper = classnames(
   padding('px-4', 'py-1'),
   borderRadius('rounded-full'),
-  backgroundColor('bg-formal-accent')
+  backgroundColor('bg-formal-accent'),
+  zIndex('z-10')
+)
+const topBlockWrapper = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  position('relative'),
+  alignItems('items-center')
+)
+const topConnectorsWrapper = classnames(
+  position('absolute'),
+  inset('top-1/2'),
+  zIndex('z-0')
+)
+const createZkProofWrapper = classnames(
+  position('absolute'),
+  zIndex('z-40'),
+  inset('tiny:top-1/4', 'top-48'),
+  width('w-screen', 'md:w-fit')
+)
+const middleConnetorsBlock = classnames(
+  position('relative'),
+  display('flex'),
+  flexDirection('flex-col'),
+  alignItems('items-center')
 )
 
 export default function () {
   const scroll = useScrollPercent()
-  const { xs } = useBreakpoints()
   const animEnd = scroll > 0.645
 
   return (
     <div className={pageBox}>
       <InitialCard />
-      <ScrollDownButton />
-      <div
-        className={position('absolute')}
-        style={{ transform: `translateY(${xs ? '36.5' : '35.5'}rem)` }}
-      >
-        <TopConnectors />
-      </div>
-      <div
-        className={highlightedBlock}
-        style={{ transform: 'translateY(40rem)' }}
-      >
-        <div className={highlightedWrapper}>
-          <HighlightedText center>
-            It starts with connecting your wallets with NFTs
-          </HighlightedText>
+      <div className={topBlockWrapper}>
+        <ScrollDownButton />
+        <div className={topConnectorsWrapper}>
+          <TopConnectors />
+        </div>
+        <div className={highlightedBlock}>
+          <div className={highlightedWrapper}>
+            <HighlightedText center>
+              It starts with connecting your wallets with NFTs
+            </HighlightedText>
+          </div>
         </div>
       </div>
+
       <OrbsInBoxes />
-      <div
-        className={classnames(position('absolute'), zIndex('z-40'))}
-        style={{ transform: `translateY(${xs ? '63.625' : '65.625'}rem)` }}
-      >
-        <CreatingZKProofCard />
+
+      <div className={middleConnetorsBlock}>
+        <div className={createZkProofWrapper}>
+          <CreatingZKProofCard />
+        </div>
+        <SuperOrbWithConnectors />
       </div>
-      <SuperOrbWithConnectors />
+
       <div className={identityCards}>
         <IdentityCard left text="Identity-01" reveal={animEnd}>
           <ZkSphere text="ZK" color="tertiary" />

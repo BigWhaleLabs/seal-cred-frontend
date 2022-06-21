@@ -4,7 +4,8 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import { visualizer } from 'rollup-plugin-visualizer'
 import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 import inject from '@rollup/plugin-inject'
-import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
+import nodePolyfills from 'rollup-plugin-node-polyfills'
+import removeConsole from 'vite-plugin-remove-console'
 
 export default defineConfig({
   plugins: [preact(), tsconfigPaths()],
@@ -15,7 +16,7 @@ export default defineConfig({
           gzipSize: true,
           brotliSize: true,
         }) as unknown as Plugin,
-        rollupNodePolyFill(),
+        nodePolyfills() as unknown as Plugin,
         inject({
           assert: 'assert',
           process: 'process',
@@ -24,6 +25,7 @@ export default defineConfig({
           stream: 'stream',
           _stream_duplex: 'duplex',
         }),
+        removeConsole(),
       ],
     },
     commonjsOptions: {

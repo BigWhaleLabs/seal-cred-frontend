@@ -1,125 +1,78 @@
-import { checkJobStatus, scheduleProofGeneration } from 'helpers/callProof'
+import { Scalar } from 'ffjavascript'
+import { getPublicKey, requestERC721Attestation } from 'helpers/attestor'
 import { proxy } from 'valtio'
+import { utils } from 'ethers'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import Proof from 'models/Proof'
-import ProofStatus from 'models/ProofStatus'
-import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
-import axios from 'axios'
-import createEcdsaInput from 'helpers/createEcdsaInput'
-import createTreeProof from 'helpers/createTreeProof'
-import getMapOfOriginalContractOwners from 'helpers/getMapOfOriginalContractOwners'
+import buildBabyJub from 'circomlibjs/babyjub'
+import buildMimc7 from 'circomlibjs/mimc7'
 import handleError from 'helpers/handleError'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const snarkjs: any
+
 class ProofStore extends PersistableStore {
-  proofsInProgress: Proof[] = []
   proofsCompleted: Proof[] = []
 
   async generate(contract: string) {
     try {
+      // Get the account
       const account = WalletStore.account
       if (!account) throw new Error('No account found')
-
-      const ledger = await SealCredStore.ledger
-      const record = ledger[contract]
-
-      if (!record || !record.originalContract)
-        throw new Error('Derivative contract not found')
-
-      const { originalContract } = record
-
-      const isOwner = Object.values(
-        await SealCredStore.originalContractsToOwnersMaps[contract]
-      ).includes(account)
-      if (!isOwner) throw new Error('Account is not owner of contract')
-
-      const owners = await getMapOfOriginalContractOwners(
-        originalContract.address
-      )
-      const addresses = Array.from(owners.values())
-
-      const tokenId = addresses.indexOf(account)
-      if (tokenId < 0) throw new Error('Account is not owner of contract')
-
-      const signature = await WalletStore.signMessage(contract)
-      if (!signature) throw new Error('Signature is not found')
-
-      const treeProof = createTreeProof(tokenId, addresses)
-      const ecdsaInput = createEcdsaInput(signature)
-      const { job, position } = await scheduleProofGeneration(
-        treeProof,
-        ecdsaInput
-      )
-
-      this.proofsInProgress.push({
-        id: job._id,
-        status: job.status,
-        position: position,
-        account,
+      // Get public key
+      const { x, y } = await getPublicKey()
+      // Get the EdDSA signature from the attestor
+      const eddsaMessage = `${WalletStore.account} for SealCred`
+      const eddsaSignature = await WalletStore.signMessage(eddsaMessage)
+      if (!eddsaSignature) throw new Error('Signature is not found')
+      const { signature, message } = await requestERC721Attestation(
+        eddsaSignature,
         contract,
+        eddsaMessage
+      )
+      // Get the message in bytes and its hash
+      const messageUInt8 = utils.toUtf8Bytes(message)
+      const mimc7 = await buildMimc7()
+      const M = mimc7.multiHash(messageUInt8)
+      // Create BabyJub
+      const babyJub = await buildBabyJub()
+      const F = babyJub.F
+      // Unpack signature
+      const signatureBuffer = utils.arrayify(signature)
+      const unpackedSignature = {
+        R8: babyJub.unpackPoint(signatureBuffer.slice(0, 32)),
+        S: Scalar.fromRprLE(signatureBuffer, 32, 32),
+      }
+      if (!unpackedSignature.R8)
+        throw new Error('Unable to unpack the signature')
+      // Generate the proof
+      const input = {
+        message: Array.from(messageUInt8),
+        tokenAddress: Array.from(utils.toUtf8Bytes(contract.toLowerCase())),
+        M: F.toObject(M).toString(),
+        R8x: F.toObject(unpackedSignature.R8[0]).toString(),
+        R8y: F.toObject(unpackedSignature.R8[1]).toString(),
+        S: unpackedSignature.S.toString(),
+        pubKeyX: x,
+        pubKeyY: y,
+      }
+      // return
+      proofStore.proofsCompleted.push({
+        contract,
+        account,
+        result: await snarkjs.groth16.fullProve(
+          input,
+          'zk/circuit.wasm',
+          'zk/circuit_final.zkey'
+        ),
       })
     } catch (e) {
-      handleError(new Error('Scheduling the proof generation failed'))
+      handleError(e)
     }
-  }
-
-  checkTasks() {
-    return Promise.all(
-      this.proofsInProgress.map(async (proof) => {
-        try {
-          const { position, job } = await checkJobStatus(proof.id)
-          proof.status = job.status
-          proof.position = position
-
-          if (proof.status === ProofStatus.completed) {
-            proof.result = job.result
-            if (!proof.result) {
-              throw new Error('Proof is completed but no result is found')
-            }
-            this.proofsCompleted.push(proof)
-            const index = this.proofsInProgress.indexOf(proof)
-            if (index > -1) {
-              this.proofsInProgress.splice(index, 1)
-            }
-          }
-
-          if (
-            proof.status === ProofStatus.cancelled ||
-            proof.status === ProofStatus.failed
-          ) {
-            const index = this.proofsInProgress.indexOf(proof)
-            if (index > -1) {
-              this.proofsInProgress.splice(index, 1)
-            }
-            handleError(new Error('Proof generation failed'))
-          }
-        } catch (e) {
-          if (axios.isAxiosError(e)) {
-            if (e.response?.status === 404) {
-              const index = this.proofsInProgress.indexOf(proof)
-              if (index > -1) {
-                this.proofsInProgress.splice(index, 1)
-              }
-            }
-          }
-          handleError(new Error('Checking proof status failed'))
-        }
-      })
-    )
   }
 }
 
 const proofStore = proxy(new ProofStore()).makePersistent(true)
-
-let checking = false
-setInterval(async () => {
-  if (checking) return
-  checking = true
-  try {
-    await proofStore.checkTasks()
-  } finally {
-    checking = false
-  }
-}, 5 * 1000)
 
 export default proofStore

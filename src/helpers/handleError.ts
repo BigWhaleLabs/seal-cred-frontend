@@ -1,19 +1,15 @@
 import { serializeError } from 'eth-rpc-errors'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import parseRevertReason from 'helpers/parseRevertReason'
 
 export const ProofGenerationErrors = {}
 
 export const ErrorList = {
   wrongNetwork: (userNetwork: string, contractNetwork: string) =>
     `Looks like you're using ${userNetwork} network, try switching to ${contractNetwork} and connect again`,
-  invalidProof: 'Merkle Tree Proof is not valid',
   unknown: 'An unknown error occurred, please, contact us',
-  invalidSignature: 'Signature is invalid',
   clear: '',
-  proofFailed: 'Proof generation failed, please, try again later',
-  proofCanceled:
-    'Server has reloaded while the proof was being generated, please, try again later',
 }
 
 export default function (error: unknown) {
@@ -25,7 +21,9 @@ export default function (error: unknown) {
   if (error instanceof Error || axios.isAxiosError(error))
     displayedError = error.message
   const message = serializeError(error).message
-  if (message) displayedError = message
+  if (message) {
+    displayedError = parseRevertReason(message) ?? message
+  }
   if (!displayedError) displayedError = ErrorList.unknown
 
   toast.error(displayedError)

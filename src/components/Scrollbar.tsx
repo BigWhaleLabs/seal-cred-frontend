@@ -1,35 +1,53 @@
-import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
-import { overflow, position } from 'classnames/tailwind'
+import { MutableRef, useEffect, useState } from 'preact/hooks'
 import { useRef } from 'react'
+import { useResizeDetector } from 'react-resize-detector'
 import ChildrenProp from 'models/ChildrenProp'
 import Fade from 'components/Fade'
 import classNamesToString from 'helpers/classNamesToString'
+import classnames, {
+  display,
+  flexDirection,
+  flexGrow,
+  overflow,
+  position,
+} from 'classnames/tailwind'
 import useIsOverflow from 'hooks/useIsOverflow'
 
 type FadeType = 'top' | 'bottom' | 'both'
 
 interface ScrollbarProps {
-  maxHeight?: number
   fade?: FadeType
+  extraPadding?: boolean
+  parentHeight?: number
 }
+
+const scrollContainer = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  flexGrow('grow'),
+  position('relative')
+)
 
 export default function ({
   children,
-  maxHeight = 350,
   fade = 'both',
+  parentHeight = 0,
+  extraPadding = false,
 }: ChildrenProp & ScrollbarProps) {
-  const wrapRef = useRef() as MutableRef<HTMLDivElement>
+  const { height = 0, ref } = useResizeDetector({ handleWidth: false })
+
   const thumbRef = useRef() as MutableRef<HTMLDivElement>
   const [thumbHeight, setThumbHeight] = useState(100)
+  const extaHeightParent = parentHeight > 370 ? 40 : 0
+  const extaHeightTitle = extraPadding ? 32 : 0
+  const extraReservedSpace = extaHeightParent + extaHeightTitle
 
-  const { overflows, scrollMaxHeight, isOnTop, isOnBottom } = useIsOverflow(
-    wrapRef,
-    maxHeight
-  )
+  const { overflows, scrollMaxHeight, isOnTop, isOnBottom, wrapperRef } =
+    useIsOverflow(ref, height - extraReservedSpace)
 
   const handleScroll = () => {
-    if (!thumbRef.current || !wrapRef.current) return
-    const wrapCurrent = wrapRef.current
+    if (!thumbRef.current || !wrapperRef.current) return
+    const wrapCurrent = wrapperRef.current
 
     // .scrollTop counts whole box, not only visible
     // we should divide whole box by the visible to get how many visible boxes are in scrollable container
@@ -40,19 +58,26 @@ export default function ({
   }
 
   // Listens if something inside the wrapBox has changed
-  const refCallback = useCallback(<T extends HTMLElement>(node: T | null) => {
-    if (!node) return
-    const numberOfViews = node.scrollHeight / node.clientHeight
-    setThumbHeight(100 / numberOfViews)
-  }, [])
   useEffect(() => {
-    refCallback(wrapRef.current)
-  })
+    const { current } = wrapperRef
+    if (!current) return
+
+    setTimeout(() => {
+      const numberOfViews = current.scrollHeight / current.clientHeight
+      setThumbHeight(100 / numberOfViews)
+    }, 400)
+  }, [
+    wrapperRef,
+    parentHeight,
+    extraPadding,
+    wrapperRef.current?.scrollHeight,
+    wrapperRef.current?.clientHeight,
+  ])
 
   return (
-    <div className={position('relative')}>
+    <div ref={ref} className={scrollContainer}>
       <div
-        ref={wrapRef}
+        ref={wrapperRef}
         className={classNamesToString(
           overflow('overflow-auto'),
           'scrollbar-hide'
