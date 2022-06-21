@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
 import EnsStore from 'stores/EnsStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
@@ -25,7 +25,7 @@ function EnsAddressSuspended({
   )
 }
 
-export default function ({ address }: EnsAddressProps) {
+export default memo<EnsAddressProps>(({ address }) => {
   const { lg } = useBreakpoints()
   return (
     <Suspense
@@ -34,4 +34,4 @@ export default function ({ address }: EnsAddressProps) {
       <EnsAddressSuspended address={address} truncate={!lg} />
     </Suspense>
   )
-}
+})
