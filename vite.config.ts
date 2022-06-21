@@ -18,7 +18,6 @@ export default defineConfig({
         }) as unknown as Plugin,
         nodePolyfills() as unknown as Plugin,
         inject({
-          os: 'os',
           assert: 'assert',
           process: 'process',
           Buffer: ['buffer', 'Buffer'],
@@ -48,7 +47,6 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      os: 'rollup-plugin-node-polyfills/polyfills/os',
       stream: 'stream-browserify',
       https: 'agent-base',
       assert: 'assert-browserify',
