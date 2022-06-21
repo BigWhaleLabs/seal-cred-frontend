@@ -29,7 +29,7 @@ function BadgesSuspended() {
     <ListContainer>
       <ListTitle />
       <div className={proofContentBlock} ref={ref}>
-        <Scrollbar parentHeight={height}>
+        <Scrollbar parentHeight={shouldNotify ? 0 : height}>
           {shouldNotify ? <DoxNotification account={account} /> : <List />}
         </Scrollbar>
       </div>
