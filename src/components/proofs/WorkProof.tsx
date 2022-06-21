@@ -41,7 +41,7 @@ const proofLineContainer = classnames(
 )
 
 export default function () {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [domain, setDomain] = useState('')
 
   function onToggle() {
