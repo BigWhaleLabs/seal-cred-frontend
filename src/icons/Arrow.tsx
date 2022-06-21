@@ -1,26 +1,36 @@
-import classnames, { animation } from 'classnames/tailwind'
+import classnames, { animation, rotate } from 'classnames/tailwind'
 
-const arrowAnimation = (disabled?: boolean) =>
-  classnames(animation(disabled ? undefined : 'animate-pulse-horizontal'))
+const arrowAnimation = (disabled?: boolean, vertical?: boolean) =>
+  classnames(
+    animation(disabled ? undefined : 'animate-pulse-horizontal'),
+    rotate(vertical ? 'rotate-90' : undefined)
+  )
 
 interface ArrowProps {
   disabled?: boolean
   turnDown?: boolean
+  vertical?: boolean
 }
 
-export default function ({ disabled, turnDown }: ArrowProps) {
+export default function ({ disabled, turnDown, vertical }: ArrowProps) {
   return (
     <svg
-      width="20"
+      width="25"
       height="25"
-      viewBox="-4 0 22 25"
+      viewBox="0 0 22 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={arrowAnimation(disabled)}
+      className={arrowAnimation(disabled, vertical)}
     >
       <g
         filter="url(#filter0_d_97_51757)"
-        transform={turnDown ? 'rotate(90 10 10)' : undefined}
+        transform={
+          turnDown
+            ? vertical
+              ? 'rotate(180 10 10)'
+              : 'rotate(90 10 10)'
+            : undefined
+        }
       >
         <path
           d="M8 8L12.5 12.5L8 16.5"

@@ -1,8 +1,8 @@
 import { BadgeText } from 'components/Text'
 import { useState } from 'preact/hooks'
+import Arrow from 'icons/Arrow'
 import EmailForm from 'components/EmailForm'
 import Line from 'components/proofs/Line'
-import StaticArrow from 'icons/StaticArrow'
 import TextForm from 'components/TextForm'
 import classnames, {
   alignItems,
@@ -64,7 +64,7 @@ export default function () {
         <span>{`Work email ${domain ? `@${domain}` : ''}`}</span>
         <button className={arrowContainer} onClick={onToggle}>
           {!open && !domain && <span>Get started</span>}
-          <StaticArrow turnUp={open} />
+          <Arrow disabled vertical turnDown={open} />
         </button>
       </div>
       {open && (
