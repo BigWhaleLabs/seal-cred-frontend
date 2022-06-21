@@ -25,7 +25,7 @@ function ContractNameSuspended({ address, truncate }: ContractNameProps) {
   )
 }
 
-export default memo(({ address, truncate }: ContractNameProps) => (
+export default memo<ContractNameProps>(({ address, truncate }) => (
   <Suspense
     fallback={
       <span className={addressText}>
