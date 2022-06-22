@@ -5,7 +5,7 @@ const strokeStle = classnames(
   stroke('stroke-formal-accent')
 )
 
-const svgWrapper = classnames(width('w-6'))
+const svgWrapper = width('w-6')
 
 export default function () {
   return (
