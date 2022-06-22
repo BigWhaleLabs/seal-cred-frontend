@@ -34,15 +34,15 @@ const crossWrapper = classnames(
   margin('ml-auto')
 )
 
-const cross = classnames(margin('lg:ml-auto', 'ml-6'))
-
 export default function () {
   const { announceClosed } = useSnapshot(scwpStore)
   const { account } = useSnapshot(walletStore)
 
-  if (announceClosed || account) return null
+  const closedOrAccountConnected = announceClosed || account
 
-  return (
+  return closedOrAccountConnected ? (
+    <></>
+  ) : (
     <div className={announceWrapper}>
       <div className={classnames(flex('flex-1'))} />
       <AccentText small bold color="text-formal-accent">
@@ -52,7 +52,7 @@ export default function () {
       <div className={crossWrapper}>
         <Button
           onClick={() => (scwpStore.announceClosed = true)}
-          className={cross}
+          className={classnames(margin('lg:ml-auto', 'ml-6'))}
         >
           <Cross />
         </Button>
