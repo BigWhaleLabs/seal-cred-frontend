@@ -42,3 +42,23 @@ export async function getPublicKey() {
 
   return data
 }
+
+export async function sendEmail(email: string) {
+  const data = await axios.post<{
+    signature: string
+    message: string
+  }>(
+    `${baseURL}/verify/email`,
+    {
+      email,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  )
+
+  return data
+}

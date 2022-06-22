@@ -1,4 +1,5 @@
 import { BadgeText } from 'components/Text'
+import { sendEmail } from 'helpers/attestor'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import EmailForm from 'components/EmailForm'
@@ -48,8 +49,10 @@ export default function () {
     setOpen(!open)
   }
 
-  function onSendEmail(email?: string) {
+  async function onSendEmail(email?: string) {
     if (!email) return
+    const data = await sendEmail(email)
+    console.log(data)
     const domain = email.split('@')[1]
     setDomain(domain)
   }
