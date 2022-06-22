@@ -17,6 +17,25 @@ import classnames, {
 import scwpStore from 'stores/SCWPStore'
 import walletStore from 'stores/WalletStore'
 
+const announceWrapper = classnames(
+  backgroundColor('bg-primary-dimmed'),
+  padding('px-6', 'py-4'),
+  display('flex'),
+  alignItems('items-center'),
+  justifyContent('justify-center'),
+  fontWeight('font-bold'),
+  fontSize('text-sm'),
+  lineHeight('leading-5')
+)
+
+const crossWrapper = classnames(
+  display('flex'),
+  flex('flex-1'),
+  margin('ml-auto')
+)
+
+const cross = classnames(margin('lg:ml-auto', 'ml-6'))
+
 export default function () {
   const { announceClosed } = useSnapshot(scwpStore)
   const { account } = useSnapshot(walletStore)
@@ -24,33 +43,16 @@ export default function () {
   if (announceClosed || account) return null
 
   return (
-    <div
-      className={classnames(
-        backgroundColor('bg-primary-dimmed'),
-        padding('px-6', 'py-4'),
-        display('flex'),
-        alignItems('items-center'),
-        justifyContent('justify-center'),
-        fontWeight('font-bold'),
-        fontSize('text-sm'),
-        lineHeight('leading-5')
-      )}
-    >
+    <div className={announceWrapper}>
       <div className={classnames(flex('flex-1'))} />
       <AccentText small bold color="text-formal-accent">
         Now introducing zk proof for your work email! Connect wallet to get
         started.
       </AccentText>
-      <div
-        className={classnames(
-          display('flex'),
-          flex('flex-1'),
-          margin('ml-auto')
-        )}
-      >
+      <div className={crossWrapper}>
         <Button
           onClick={() => (scwpStore.announceClosed = true)}
-          className={classnames(margin('lg:ml-auto', 'ml-6'))}
+          className={cross}
         >
           <Cross />
         </Button>
