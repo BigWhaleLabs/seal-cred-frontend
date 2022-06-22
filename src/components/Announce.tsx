@@ -2,6 +2,7 @@ import { AccentText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Button from 'components/proofs/Button'
 import Cross from 'icons/Cross'
+import announceStore from 'stores/AnnounceStore'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -14,7 +15,6 @@ import classnames, {
   margin,
   padding,
 } from 'classnames/tailwind'
-import scwpStore from 'stores/SCWPStore'
 import walletStore from 'stores/WalletStore'
 
 const announceWrapper = classnames(
@@ -35,23 +35,20 @@ const crossWrapper = classnames(
 )
 
 export default function () {
-  const { announceClosed } = useSnapshot(scwpStore)
+  const { announceClosed, announceText } = useSnapshot(announceStore)
   const { account } = useSnapshot(walletStore)
 
   const closedOrAccountConnected = announceClosed || account
 
-  return closedOrAccountConnected ? (
-    <></>
-  ) : (
+  return closedOrAccountConnected ? null : (
     <div className={announceWrapper}>
       <div className={classnames(flex('flex-1'))} />
       <AccentText small bold color="text-formal-accent">
-        Now introducing zk proof for your work email! Connect wallet to get
-        started.
+        {announceText}
       </AccentText>
       <div className={crossWrapper}>
         <Button
-          onClick={() => (scwpStore.announceClosed = true)}
+          onClick={() => (announceStore.announceClosed = true)}
           className={classnames(margin('lg:ml-auto', 'ml-6'))}
         >
           <Cross />
