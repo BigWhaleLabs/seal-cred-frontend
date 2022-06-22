@@ -66,8 +66,8 @@ class ProofStore extends PersistableStore {
         account,
         result: await snarkjs.groth16.fullProve(
           input,
-          'zk/circuit.wasm',
-          'zk/circuit_final.zkey'
+          'zk/ERC721OwnershipChecker.wasm',
+          'zk/ERC721OwnershipChecker_final.zkey'
         ),
       })
     } catch (e) {

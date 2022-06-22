@@ -23,7 +23,6 @@ class WorkProofStore extends PersistableStore {
   async generate(domain: string, secret: string) {
     try {
       const maxDomainLength = 90
-
       const { x, y } = await getPublicKey()
       const [packedSignature, nullifier] = secret.split('-')
 
@@ -39,6 +38,7 @@ class WorkProofStore extends PersistableStore {
       ])
       const mimc7 = await buildMimc7()
       const M = mimc7.multiHash(messageUInt8)
+
       // Create BabyJub
       const babyJub = await buildBabyJub()
       const F = babyJub.F
@@ -62,13 +62,14 @@ class WorkProofStore extends PersistableStore {
       // Check navigator availability
       checkNavigator()
       // return
+
       workProofStore.proofsCompleted.push({
         id: nullifier,
         domain,
         result: await snarkjs.groth16.fullProve(
           input,
-          'zk/work_circuit.wasm',
-          'zk/work_circuit_final.zkey'
+          'zk/EmailOwnershipChecker.wasm',
+          'zk/EmailOwnershipChecker_final.zkey'
         ),
       })
     } catch (e) {
