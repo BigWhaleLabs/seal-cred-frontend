@@ -3,7 +3,9 @@ import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import EmailForm from 'components/EmailForm'
 import Line from 'components/proofs/Line'
+import QuestionMark from 'components/QuestionMark'
 import TextForm from 'components/TextForm'
+import ToolTip from 'components/ToolTip'
 import classnames, {
   alignItems,
   backgroundClip,
@@ -40,6 +42,13 @@ const proofLineContainer = classnames(
   fontWeight('font-normal')
 )
 
+const workTitleLeft = classnames(
+  display('flex'),
+  space('space-x-2'),
+  justifyContent('justify-center'),
+  alignItems('items-center')
+)
+
 export default function () {
   const [open, setOpen] = useState(true)
   const [email, setEmail] = useState<string>()
@@ -58,10 +67,18 @@ export default function () {
     if (secret) console.log(secret)
   }
 
+  const popoverText =
+    'When you submit your email, we create a token out of your email’s domain. You can then use that token to create zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
+
   return (
     <Line className={proofLineContainer}>
       <div className={workTitleContainer}>
-        <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
+        <div className={workTitleLeft}>
+          <ToolTip position="top" text={popoverText}>
+            <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
+            <QuestionMark small />
+          </ToolTip>
+        </div>
         <button className={arrowContainer} onClick={onToggle}>
           {!open && !domain && <span>Get started</span>}
           <Arrow disabled vertical turnDown={open} />
