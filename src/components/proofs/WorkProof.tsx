@@ -53,7 +53,7 @@ export default function () {
     setOpen(!open)
   }
 
-  async function onSendEmail(email?: string) {
+  async function onSendEmail(email: string) {
     setLoading(true)
     try {
       await sendEmail(email)
