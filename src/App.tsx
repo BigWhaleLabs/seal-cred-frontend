@@ -4,6 +4,7 @@ import { lazy } from 'react'
 import LazyComponent from 'components/LazyComponent'
 import Navbar from 'components/navbar/Navbar'
 import Root from 'components/Root'
+import SCWPAnnounce from 'components/SCWPAnnounce'
 
 const NotFound = lazy(() => import('pages/NotFound'))
 const OwnedBadge = lazy(() => import('pages/OwnedBadge'))
@@ -14,6 +15,7 @@ export default function () {
   return (
     <Root>
       <Router>
+        <SCWPAnnounce />
         <Navbar />
         <ToastContainer position="bottom-right" theme="dark" />
         <Routes>
