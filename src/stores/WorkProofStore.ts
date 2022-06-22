@@ -52,8 +52,8 @@ class WorkProofStore extends PersistableStore {
       const input = {
         message: Array.from(messageUInt8),
         domain: Array.from(domainBytes),
-        pubKeyX: F.toObject(x).toString(),
-        pubKeyY: F.toObject(y).toString(),
+        pubKeyX: x,
+        pubKeyY: y,
         R8x: F.toObject(signature.R8[0]).toString(),
         R8y: F.toObject(signature.R8[1]).toString(),
         S: signature.S.toString(),
