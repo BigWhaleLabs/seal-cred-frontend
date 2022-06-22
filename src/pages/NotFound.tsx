@@ -34,7 +34,7 @@ export default function () {
             <HeaderText>404</HeaderText>
             <SubheaderText>Not found</SubheaderText>
           </div>
-          <Button primary small onClick={() => navigate('/')}>
+          <Button type="primary" small onClick={() => navigate('/')}>
             Go to the main page
           </Button>
         </div>

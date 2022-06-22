@@ -3,7 +3,9 @@ import {
   backgroundClip,
   backgroundColor,
   backgroundImage,
+  borderColor,
   borderRadius,
+  borderWidth,
   boxShadow,
   boxShadowColor,
   brightness,
@@ -20,6 +22,7 @@ import {
   outlineStyle,
   padding,
   space,
+  textAlign,
   textColor,
   transitionDuration,
   transitionProperty,
@@ -51,13 +54,14 @@ const commonClasses = (
     opacity(loading || disabled ? 'opacity-50' : undefined),
     boxShadow('shadow-2xl', 'hover:shadow-lg', 'active:shadow-md'),
     width(fullWidth ? 'w-full' : 'w-fit'),
+    textAlign(center ? 'text-center' : undefined),
     space('space-x-2')
   )
 
 const button = ({
   fullWidth,
   center,
-  primary,
+  type,
   loading,
   disabled,
   small,
@@ -65,18 +69,18 @@ const button = ({
 }: ButtonProps) =>
   classnames(
     commonClasses(fullWidth, center, loading, disabled),
-    colorClasses({ primary, loading, disabled, small, fontSmall })
+    colorClasses({ type, loading, disabled, small, fontSmall })
   )
 
 const colorClasses = ({
-  primary,
+  type,
   loading,
   disabled,
   small,
   fontSmall,
 }: ButtonProps) =>
   classnames(
-    primary
+    type === 'primary'
       ? classnames(
           textColor('text-primary-dark'),
           fontSize(small ? 'text-sm' : 'text-lg'),
@@ -94,6 +98,26 @@ const colorClasses = ({
             loading || disabled ? undefined : 'active:brightness-50'
           )
         )
+      : type === 'secondary'
+      ? classnames(
+          borderWidth('border-1'),
+          borderRadius('rounded-full'),
+          borderColor(
+            'border-secondary',
+            'hover:border-secondary',
+            'active:border-secondary'
+          ),
+          padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
+          backgroundImage('bg-gradient-to-r'),
+          textColor('text-secondary'),
+          gradientColorStops(
+            'hover:from-accent-light-transparent',
+            'hover:to-secondary-light-transparent',
+            'active:from-accent-light-active-transparent',
+            'active:to-secondary-light-active-transparent'
+          ),
+          fontSize(fontSmall ? 'text-sm' : undefined)
+        )
       : classnames(
           textColor(
             'text-transparent',
@@ -109,7 +133,7 @@ const colorClasses = ({
 interface ButtonProps {
   fullWidth?: boolean
   center?: boolean
-  primary?: boolean
+  type?: 'primary' | 'secondary'
   disabled?: boolean
   loading?: boolean
   small?: boolean
@@ -122,7 +146,7 @@ export default function ({
   center,
   small,
   withArrow,
-  primary,
+  type,
   loading,
   disabled,
   children,
@@ -134,7 +158,7 @@ export default function ({
       className={button({
         fullWidth,
         center,
-        primary,
+        type,
         loading,
         disabled,
         small,

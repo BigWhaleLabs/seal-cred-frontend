@@ -156,6 +156,26 @@ const linkText = (
     gradientColorStops(gradientFrom, gradientTo),
     fontWeight(bold ? 'font-semibold' : 'font-normal')
   )
+
+export function GradientSpan({
+  children,
+  bold,
+  color,
+  gradientFrom,
+  gradientTo,
+}: ChildrenProp & {
+  bold?: boolean
+  color?: TTextColor
+  gradientFrom?: TGradientColorStops
+  gradientTo?: TGradientColorStops
+}) {
+  return (
+    <span className={linkText(bold, color, gradientFrom, gradientTo)}>
+      {children}
+    </span>
+  )
+}
+
 export function LinkText({
   url,
   bold,

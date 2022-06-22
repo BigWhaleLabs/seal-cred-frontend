@@ -123,7 +123,7 @@ function Badge({
         ) : (
           <Button
             small
-            primary
+            type="primary"
             loading={!!loading}
             disabled={!proof}
             onClick={checkProofAndMint}

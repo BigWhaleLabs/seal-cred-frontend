@@ -17,7 +17,7 @@ export default function ({ account }: { account: string }) {
     >
       <Button
         small
-        primary
+        type="primary"
         onClick={() => {
           WalletStore.walletsToNotifiedOfBeingDoxxed[account] = true
         }}
