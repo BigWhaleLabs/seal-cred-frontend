@@ -1,3 +1,4 @@
+import { GradientSpan } from 'components/Text'
 import Button from 'components/Button'
 import Email from 'icons/Email'
 import Input from 'components/Input'
@@ -30,11 +31,13 @@ export default function ({
         fullWidth
         center
         small
-        primary
+        type="secondary"
         disabled={!emailIsValid}
         onClick={() => onSubmit(email)}
       >
-        {submitText}
+        <GradientSpan bold gradientFrom="from-secondary" gradientTo="to-accent">
+          {submitText}
+        </GradientSpan>
       </Button>
     </>
   )
