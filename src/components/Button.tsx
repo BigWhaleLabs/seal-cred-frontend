@@ -3,7 +3,9 @@ import {
   backgroundClip,
   backgroundColor,
   backgroundImage,
+  borderColor,
   borderRadius,
+  borderWidth,
   boxShadow,
   boxShadowColor,
   brightness,
@@ -19,6 +21,7 @@ import {
   outlineStyle,
   padding,
   space,
+  textAlign,
   textColor,
   transitionDuration,
   transitionProperty,
@@ -29,7 +32,12 @@ import Arrow from 'icons/Arrow'
 import Loading from 'icons/Loading'
 import React from 'react'
 
-const commonClasses = (loading?: boolean, disabled?: boolean) =>
+const commonClasses = (
+  fullWidth?: boolean,
+  center?: boolean,
+  loading?: boolean,
+  disabled?: boolean
+) =>
   classnames(
     display('flex'),
     flexDirection('flex-row'),
@@ -43,31 +51,34 @@ const commonClasses = (loading?: boolean, disabled?: boolean) =>
     outlineStyle('focus:outline-none'),
     opacity(loading || disabled ? 'opacity-50' : undefined),
     boxShadow('shadow-2xl', 'hover:shadow-lg', 'active:shadow-md'),
-    width('w-fit'),
+    width(fullWidth ? 'w-full' : 'w-fit'),
+    textAlign(center ? 'text-center' : undefined),
     space('space-x-2')
   )
 
 const button = ({
-  primary,
+  fullWidth,
+  center,
+  type,
   loading,
   disabled,
   small,
   fontSmall,
 }: ButtonProps) =>
   classnames(
-    commonClasses(loading, disabled),
-    colorClasses({ primary, loading, disabled, small, fontSmall })
+    commonClasses(fullWidth, center, loading, disabled),
+    colorClasses({ type, loading, disabled, small, fontSmall })
   )
 
 const colorClasses = ({
-  primary,
+  type,
   loading,
   disabled,
   small,
   fontSmall,
 }: ButtonProps) =>
   classnames(
-    primary
+    type === 'primary'
       ? classnames(
           textColor('text-primary-dark'),
           fontSize(small ? 'text-sm' : 'text-lg'),
@@ -85,6 +96,26 @@ const colorClasses = ({
             loading || disabled ? undefined : 'active:brightness-50'
           )
         )
+      : type === 'secondary'
+      ? classnames(
+          borderWidth('border-1'),
+          borderRadius('rounded-full'),
+          borderColor(
+            'border-secondary',
+            'hover:border-secondary',
+            'active:border-secondary'
+          ),
+          padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
+          backgroundImage('bg-gradient-to-r'),
+          textColor('text-secondary'),
+          gradientColorStops(
+            'hover:from-accent-light-transparent',
+            'hover:to-secondary-light-transparent',
+            'active:from-accent-light-active-transparent',
+            'active:to-secondary-light-active-transparent'
+          ),
+          fontSize(fontSmall ? 'text-sm' : undefined)
+        )
       : classnames(
           textColor(
             'text-transparent',
@@ -98,7 +129,9 @@ const colorClasses = ({
   )
 
 interface ButtonProps {
-  primary?: boolean
+  fullWidth?: boolean
+  center?: boolean
+  type?: 'primary' | 'secondary'
   disabled?: boolean
   loading?: boolean
   small?: boolean
@@ -107,9 +140,11 @@ interface ButtonProps {
 }
 
 export default function ({
+  fullWidth,
+  center,
   small,
   withArrow,
-  primary,
+  type,
   loading,
   disabled,
   children,
@@ -118,7 +153,15 @@ export default function ({
 }: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   return (
     <button
-      className={button({ primary, loading, disabled, small, fontSmall })}
+      className={button({
+        fullWidth,
+        center,
+        type,
+        loading,
+        disabled,
+        small,
+        fontSmall,
+      })}
       disabled={loading || disabled}
       {...rest}
     >
