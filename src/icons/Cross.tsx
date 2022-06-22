@@ -5,9 +5,11 @@ const strokeStle = classnames(
   stroke('stroke-formal-accent')
 )
 
+const svgWrapper = classnames(width('w-6'))
+
 export default function () {
   return (
-    <div className={classnames(width('w-6'))}>
+    <div className={svgWrapper}>
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <line
           className={strokeStle}

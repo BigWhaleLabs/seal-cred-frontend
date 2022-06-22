@@ -5,6 +5,4 @@ class SCWPStore extends PersistableStore {
   announceClosed = false
 }
 
-const scwpStore = proxy(new SCWPStore()).makePersistent(true)
-
-export default scwpStore
+export default proxy(new SCWPStore()).makePersistent(true)
