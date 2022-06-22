@@ -61,8 +61,8 @@ class WorkProofStore extends PersistableStore {
       }
       // Check navigator availability
       checkNavigator()
-      // return
 
+      // return
       workProofStore.proofsCompleted.push({
         id: nullifier,
         domain,
