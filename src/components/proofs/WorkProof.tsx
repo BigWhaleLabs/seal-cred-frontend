@@ -41,17 +41,17 @@ const proofLineContainer = classnames(
 )
 
 export default function () {
-  const [open, setOpen] = useState(false)
-  const [domain, setDomain] = useState('')
+  const [open, setOpen] = useState(true)
+  const [email, setEmail] = useState<string>()
+
+  const domain = email ? email.split('@')[1] : ''
 
   function onToggle() {
     setOpen(!open)
   }
 
   function onSendEmail(email?: string) {
-    if (!email) return
-    const domain = email.split('@')[1]
-    setDomain(domain)
+    setEmail(email)
   }
 
   function onSendSecret(secret?: string) {
@@ -61,7 +61,7 @@ export default function () {
   return (
     <Line className={proofLineContainer}>
       <div className={workTitleContainer}>
-        <span>{`Work email ${domain ? `@${domain}` : ''}`}</span>
+        <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
         <button className={arrowContainer} onClick={onToggle}>
           {!open && !domain && <span>Get started</span>}
           <Arrow disabled vertical turnDown={open} />
@@ -70,12 +70,16 @@ export default function () {
       {open && (
         <>
           <BadgeText>
-            Add your work email and we’ll send you a token for that email. Then,
-            use the token here to create zk proof.
+            {domain
+              ? `A token has been sent to ${email}. Copy the token and add it here to create zk proof. Or re-enter email.`
+              : `
+                        Add your work email and we’ll send you a token for that email. Then,
+                        use the token here to create zk proof.
+            `}
           </BadgeText>
           {domain ? (
             <TextForm
-              submitText="Send token"
+              submitText="Generate proof"
               placeholder="Paste token here"
               onSubmit={onSendSecret}
             />
