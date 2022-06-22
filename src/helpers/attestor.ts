@@ -60,5 +60,7 @@ export async function sendEmail(email: string) {
     }
   )
 
+  console.log(data)
+
   return data
 }

@@ -11,7 +11,7 @@ export default function ({
   submitText = 'Submit',
 }: {
   loading?: boolean
-  onSubmit: (email?: string) => void
+  onSubmit: (email: string) => void
   submitText?: string
   placeholder?: string
 }) {
