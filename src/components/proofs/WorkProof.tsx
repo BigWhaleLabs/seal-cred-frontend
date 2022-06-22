@@ -49,10 +49,6 @@ export default function () {
 
   const domain = email ? email.split('@')[1] : ''
 
-  function onToggle() {
-    setOpen(!open)
-  }
-
   async function onSendEmail(email: string) {
     setLoading(true)
     try {
@@ -78,7 +74,7 @@ export default function () {
     <Line className={proofLineContainer}>
       <div className={workTitleContainer}>
         <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
-        <button className={arrowContainer} onClick={onToggle}>
+        <button className={arrowContainer} onClick={() => setOpen(!open)}>
           {!open && !domain && <span>Get started</span>}
           <Arrow disabled vertical turnDown={open} />
         </button>
