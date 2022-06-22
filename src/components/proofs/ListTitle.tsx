@@ -1,5 +1,4 @@
 import { useSnapshot } from 'valtio'
-import HintCard from 'components/badges/HintCard'
 import ProofStore from 'stores/ProofStore'
 import Title from 'components/Title'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
@@ -10,8 +9,6 @@ export default function () {
 
   const allGenerated =
     proofsCompleted.length > 0 && proofAddressesAvailableToCreate.length === 0
-  const nothingToGenerate =
-    proofsCompleted.length === 0 && proofAddressesAvailableToCreate.length === 0
 
   return (
     <>
@@ -23,9 +20,6 @@ export default function () {
             : 'Generate ZK proofs'
         }
       />
-      {nothingToGenerate && (
-        <HintCard text="You don't have any supported tokens." />
-      )}
     </>
   )
 }

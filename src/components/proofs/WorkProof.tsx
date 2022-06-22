@@ -17,6 +17,7 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
+import workProofStore from 'stores/WorkProofStore'
 
 const arrowContainer = classnames(
   textColor('text-transparent', 'active:text-accent'),
@@ -42,6 +43,7 @@ const proofLineContainer = classnames(
 )
 
 export default function () {
+  const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
   const [email, setEmail] = useState<string>()
 
@@ -52,12 +54,24 @@ export default function () {
   }
 
   async function onSendEmail(email?: string) {
-    await sendEmail(email)
-    setEmail(email)
+    setLoading(true)
+    try {
+      await sendEmail(email)
+      setEmail(email)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  function onSendSecret(secret?: string) {
-    if (secret) console.log(secret)
+  async function onGenerateProof(secret?: string) {
+    setLoading(true)
+    try {
+      if (secret) await workProofStore.generate(domain, secret)
+    } finally {
+      setLoading(false)
+      setOpen(false)
+      setEmail(undefined)
+    }
   }
 
   return (
@@ -83,13 +97,15 @@ export default function () {
             <TextForm
               submitText="Generate proof"
               placeholder="Paste token here"
-              onSubmit={onSendSecret}
+              onSubmit={onGenerateProof}
+              loading={loading}
             />
           ) : (
             <EmailForm
               submitText="Submit email"
               placeholder="Work email..."
               onSubmit={onSendEmail}
+              loading={loading}
             />
           )}
         </>
