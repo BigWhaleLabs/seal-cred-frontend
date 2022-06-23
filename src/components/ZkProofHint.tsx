@@ -1,16 +1,12 @@
 import { AccentText } from 'components/Text'
+import QuestionMark from 'components/QuestionMark'
 import ToolTip from 'components/ToolTip'
 import classnames, {
-  alignItems,
   backgroundColor,
-  borderColor,
   borderRadius,
-  borderWidth,
   cursor,
   display,
-  fill,
   flexDirection,
-  height,
   justifyContent,
   margin,
   padding,
@@ -30,22 +26,6 @@ const zkProofButton = classnames(
   cursor('cursor-pointer'),
   borderRadius('rounded-2xl')
 )
-
-const questionStyles = classnames(
-  fill('fill-accent'),
-  width('w-6'),
-  height('h-6'),
-  borderRadius('rounded-full'),
-  borderWidth('border'),
-  borderColor('border-accent'),
-  display('flex'),
-  justifyContent('justify-center'),
-  alignItems('items-center')
-)
-
-const QuestionMark = () => {
-  return <div className={questionStyles}>?</div>
-}
 
 export default function () {
   const popoverText =

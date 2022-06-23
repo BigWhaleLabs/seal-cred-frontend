@@ -4,7 +4,9 @@ import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import EmailForm from 'components/EmailForm'
 import Line from 'components/proofs/Line'
+import QuestionMark from 'components/QuestionMark'
 import TextForm from 'components/TextForm'
+import ToolTip from 'components/ToolTip'
 import classnames, {
   alignItems,
   backgroundClip,
@@ -41,6 +43,13 @@ const proofLineContainer = classnames(
   width('w-full')
 )
 
+const workTitleLeft = classnames(
+  display('flex'),
+  space('space-x-2'),
+  justifyContent('justify-center'),
+  alignItems('items-center')
+)
+
 export default function () {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
@@ -69,19 +78,24 @@ export default function () {
     }
   }
 
-  return (
-    <Line>
-      <div className={proofLineContainer}>
-        <div className={workTitleContainer}>
-          <BodyText bold small>
-            {domain ? `Work domain @${domain}` : `Work email`}
-          </BodyText>
+  const popoverText =
+    'When you submit your email, we create a token out of your email’s domain. You can then use that token to create zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
 
-          <button className={arrowContainer} onClick={() => setOpen(!open)}>
-            {!open && !domain && <span>Get started</span>}
-            <Arrow disabled vertical turnDown={open} />
-          </button>
-        </div>
+  return (
+    <Line breakWords>
+      <div className={proofLineContainer}>
+        <ToolTip position="bottom" text={popoverText} fitContainer>
+          <div className={workTitleContainer}>
+            <div className={workTitleLeft}>
+              <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
+              <QuestionMark />
+            </div>
+            <button className={arrowContainer} onClick={() => setOpen(!open)}>
+              {!open && !domain && <span>Get started</span>}
+              <Arrow disabled vertical turnDown={open} />
+            </button>
+          </div>
+        </ToolTip>
         {open && (
           <>
             <BadgeText>
