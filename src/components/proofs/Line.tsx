@@ -13,6 +13,7 @@ import classnames, {
   padding,
   space,
   width,
+  wordBreak,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -30,7 +31,8 @@ const contractContainer = (small?: boolean) =>
     padding('px-4', 'py-2'),
     width('w-full'),
     fontSize('text-sm'),
-    fontWeight('font-bold')
+    fontWeight('font-bold'),
+    wordBreak('break-all')
   )
 
 export default function ({ children }: ChildrenProp) {
