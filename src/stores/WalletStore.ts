@@ -1,14 +1,11 @@
-import { BigNumber } from 'ethers'
-import {
-  SealCredERC721Ledger,
-  SealCredERC721Ledger__factory,
-  SealCredEmailLedger,
-  SealCredEmailLedger__factory,
-} from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
+import ERC721BadgeBuilder from 'helpers/ERC721BadgeBuilder'
+import ERC721Proof from 'helpers/ERC721Proof'
+import EmailBadgeBuilder from 'helpers/EmailBadgeBuilder'
+import EmailProof from 'helpers/EmailProof'
 import PersistableStore from 'stores/persistence/PersistableStore'
-import ProofResult from 'models/ProofResult'
+import Proof from 'models/Proof'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
 import web3Modal from 'helpers/web3Modal'
@@ -68,11 +65,7 @@ class WalletStore extends PersistableStore {
     }
   }
 
-  async mintDerivative(
-    proofResult: ProofResult,
-    originalContractAddress?: string,
-    domain?: string
-  ) {
+  async mintDerivative(proof: Proof) {
     if (!provider) {
       throw new Error('No provider found')
     }
@@ -80,45 +73,15 @@ class WalletStore extends PersistableStore {
       throw new Error('No account found')
     }
 
-    const domainOrContract = domain || originalContractAddress
+    if (proof instanceof ERC721Proof) {
+      const builder = new ERC721BadgeBuilder(provider)
+      await builder.create(proof)
+    }
 
-    if (!domainOrContract) return
-
-    const ledgerWithSigner = domain
-      ? SealCredEmailLedger__factory.connect(
-          env.VITE_SCWPLEDGER_CONTRACT_ADDRESS,
-          provider.getSigner(0)
-        )
-      : SealCredERC721Ledger__factory.connect(
-          env.VITE_SCLEDGER_CONTRACT_ADDRESS,
-          provider.getSigner(0)
-        )
-
-    // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
-    // Also pay attention to array indexes
-    const tx = await ledgerWithSigner.mint(
-      domainOrContract,
-      [
-        BigNumber.from(proofResult.proof.pi_a[0]),
-        BigNumber.from(proofResult.proof.pi_a[1]),
-      ],
-      [
-        [
-          BigNumber.from(proofResult.proof.pi_b[0][1]),
-          BigNumber.from(proofResult.proof.pi_b[0][0]),
-        ],
-        [
-          BigNumber.from(proofResult.proof.pi_b[1][1]),
-          BigNumber.from(proofResult.proof.pi_b[1][0]),
-        ],
-      ],
-      [
-        BigNumber.from(proofResult.proof.pi_c[0]),
-        BigNumber.from(proofResult.proof.pi_c[1]),
-      ],
-      proofResult.publicSignals.map(BigNumber.from)
-    )
-    await tx.wait()
+    if (proof instanceof EmailProof) {
+      const builder = new EmailBadgeBuilder(provider)
+      await builder.create(proof)
+    }
   }
 
   private async handleAccountChanged() {

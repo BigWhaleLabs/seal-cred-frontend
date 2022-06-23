@@ -1,9 +1,10 @@
-import { BadgeText, BodyText } from 'components/Text'
+import { BadgeText } from 'components/Text'
 import { sendEmail } from 'helpers/attestor'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import EmailForm from 'components/EmailForm'
 import Line from 'components/proofs/Line'
+import ProofStore from 'stores/ProofStore'
 import QuestionMark from 'components/QuestionMark'
 import TextForm from 'components/TextForm'
 import ToolTip from 'components/ToolTip'
@@ -19,7 +20,6 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
-import workProofStore from 'stores/WorkProofStore'
 
 const arrowContainer = classnames(
   textColor('text-transparent', 'active:text-accent'),
@@ -70,7 +70,7 @@ export default function () {
   async function onGenerateProof(secret?: string) {
     setLoading(true)
     try {
-      if (secret) await workProofStore.generate(domain, secret)
+      if (secret) await ProofStore.generateEmail(domain, secret)
     } finally {
       setLoading(false)
       setOpen(false)

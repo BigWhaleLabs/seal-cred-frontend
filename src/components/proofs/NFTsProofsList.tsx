@@ -10,11 +10,12 @@ import walletStore from 'stores/WalletStore'
 
 export default function () {
   const { account } = useSnapshot(walletStore)
-  const { proofsCompleted } = useSnapshot(proofStore)
+  const { nftsProofsCompleted } = useSnapshot(proofStore)
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
 
   const nothingToGenerate =
-    proofsCompleted.length === 0 && proofAddressesAvailableToCreate.length === 0
+    nftsProofsCompleted.length === 0 &&
+    proofAddressesAvailableToCreate.length === 0
 
   return (
     <ProofSection title={<BodyText>NFTs</BodyText>}>

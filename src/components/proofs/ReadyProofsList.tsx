@@ -6,13 +6,13 @@ import Proof from 'components/proofs/Proof'
 import ProofStore from 'stores/ProofStore'
 
 function ContractList() {
-  const { proofsCompleted } = useSnapshot(ProofStore)
+  const { nftsProofsCompleted } = useSnapshot(ProofStore)
 
   return (
     <>
-      {!!proofsCompleted?.length && (
+      {!!nftsProofsCompleted?.length && (
         <ContractListContainer>
-          {Array.from(proofsCompleted)
+          {Array.from(nftsProofsCompleted)
             .sort((a, b) => (a.account === b.account ? 0 : -1))
             .map((proof) => (
               <Proof

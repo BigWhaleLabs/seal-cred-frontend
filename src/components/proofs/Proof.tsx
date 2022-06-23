@@ -78,7 +78,7 @@ function useProofContent(
           disabled={isGenerating}
           onClick={async () => {
             setIsGenerating(true)
-            await ProofStore.generate(contractAddress)
+            await ProofStore.generateERC721(contractAddress)
             setIsGenerating(false)
           }}
         >

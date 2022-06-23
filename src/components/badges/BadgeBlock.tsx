@@ -7,10 +7,12 @@ import BadgeWrapper from 'components/badges/BadgeWrapper'
 import Button from 'components/Button'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
+import ERC721Proof from 'helpers/ERC721Proof'
+import EmailProof from 'helpers/EmailProof'
 import ExternalLink from 'components/ExternalLink'
+import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import QRCode from 'components/QRCode'
-import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
@@ -22,7 +24,7 @@ import classnames, {
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
 import useBreakpoints from 'hooks/useBreakpoints'
-import workProofStore from 'stores/WorkProofStore'
+import useDerivativeAddress from 'hooks/useDerivativeAddress'
 
 const mintPassed = (small?: boolean) =>
   classnames(
@@ -36,36 +38,15 @@ const mintPassed = (small?: boolean) =>
     alignItems('items-center')
   )
 
-function Badge({
-  contractAddress,
-  tokenId,
-  domain,
-}: {
-  contractAddress?: string
-  domain?: string
-  tokenId?: number
-}) {
-  const { proofsCompleted: ERC721Proofs } = useSnapshot(ProofStore)
-  const { proofsCompleted: WorkProofs } = useSnapshot(workProofStore)
-  const { reverseErc721Ledger } = useSnapshot(SealCredStore)
+function Badge({ proof, tokenId }: { proof: Proof; tokenId?: number }) {
+  const { proofsCompleted } = useSnapshot(ProofStore)
+  const derivativeAddress = useDerivativeAddress(proof)
   const { account } = useSnapshot(WalletStore)
-
   const { xxs, sm } = useBreakpoints()
-
   const [loading, setLoading] = useState(false)
 
-  const proof = domain
-    ? WorkProofs.find((proof) => proof.domain === domain)
-    : ERC721Proofs.find((proof) => proof.contract === contractAddress)
-
   const small = xxs && !sm
-
-  // TODO
-  const ledgerRecord = contractAddress
-    ? reverseErc721Ledger[contractAddress]
-    : null // TODO reverseWorkLedger[domain]
-  const derivativeAddress = ledgerRecord?.derivativeContract.address
-  const minted = !!derivativeAddress && tokenId !== undefined
+  const minted = false // !!derivativeAddress && tokenId !== undefined
 
   const checkProofAndMint = async () => {
     setLoading(true)
@@ -73,26 +54,17 @@ function Badge({
     try {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
-      domain
-        ? await WalletStore.mintDerivative(proof.result, undefined, domain)
-        : await WalletStore.mintDerivative(
-            proof.result,
-            contractAddress,
-            undefined
-          )
 
-      ProofStore.proofsCompleted = ERC721Proofs.filter(
-        (p) => p.contract !== proof.contract && p.result !== proof.result
-      )
+      await WalletStore.mintDerivative(proof)
+
+      ProofStore.proofsCompleted = proofsCompleted.filter((p) => p === proof)
     } catch (error) {
       if (
         proof &&
         error instanceof Error &&
         error.message.includes('This ZK proof has already been used')
       ) {
-        ProofStore.proofsCompleted = proofsCompleted.filter(
-          (p) => p.contract !== proof.contract && p.result !== proof.result
-        )
+        ProofStore.proofsCompleted = proofsCompleted.filter((p) => p === proof)
         handleError(
           new Error(
             'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'
@@ -109,7 +81,7 @@ function Badge({
   return (
     <BadgeCard
       top={
-        minted ? (
+        minted && derivativeAddress ? (
           <QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />
         ) : (
           <BadgeIcon />
@@ -123,7 +95,14 @@ function Badge({
           </ExternalLink>
         ) : (
           <>
-            <ContractName address={contractAddress || domain} /> (derivative)
+            {proof instanceof ERC721Proof ? (
+              <ContractName address={proof.contract} />
+            ) : proof instanceof EmailProof ? (
+              proof.domain
+            ) : (
+              proof.key
+            )}{' '}
+            (derivative)
           </>
         )
       }
@@ -152,21 +131,15 @@ function Badge({
 }
 
 export default function ({
-  contractAddress,
-  domain,
+  proof,
   tokenId,
 }: {
-  contractAddress?: string
-  domain?: string
+  proof: Proof
   tokenId?: number
 }) {
   return (
     <BadgeWrapper minted={tokenId !== undefined}>
-      <Badge
-        contractAddress={contractAddress}
-        tokenId={tokenId}
-        domain={domain}
-      />
+      <Badge proof={proof} tokenId={tokenId} />
     </BadgeWrapper>
   )
 }

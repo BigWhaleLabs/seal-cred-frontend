@@ -1,13 +1,14 @@
 import { erc721Ledger, workLedger } from 'helpers/sealCred'
 import { proxyWithComputed } from 'valtio/utils'
+import EmailLedger from 'models/WorkLedger'
 import Ledger from 'models/Ledger'
+import getEmailLedger from 'helpers/getEmailLedger'
 import getLedger from 'helpers/getLedger'
 import getLedgerRecord from 'helpers/getLedgerRecord'
-import getSealCred from 'helpers/getSealCred'
 
 interface SealCredStoreType {
   erc721Ledger: Promise<Ledger>
-  workLedger: Promise<Ledger>
+  workLedger: Promise<EmailLedger>
 }
 
 interface ComputedSealCredStoreType {
@@ -21,7 +22,7 @@ const SealCredStore = proxyWithComputed<
 >(
   {
     erc721Ledger: getLedger(erc721Ledger),
-    workLedger: getLedger(workLedger),
+    workLedger: getEmailLedger(workLedger),
   },
   {
     reverseErc721Ledger: (state) =>
