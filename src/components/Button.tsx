@@ -98,7 +98,7 @@ const colorClasses = ({
         )
       : type === 'secondary'
       ? classnames(
-          borderWidth('border-1'),
+          borderWidth('border'),
           borderRadius('rounded-full'),
           borderColor(
             'border-secondary',
