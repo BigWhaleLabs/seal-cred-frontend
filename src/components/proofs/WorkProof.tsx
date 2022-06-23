@@ -33,7 +33,6 @@ const arrowContainer = classnames(
 const workTitleContainer = classnames(
   display('flex'),
   justifyContent('justify-between')
-  // width('w-full')
 )
 
 const proofLineContainer = classnames(
@@ -44,7 +43,7 @@ const proofLineContainer = classnames(
 
 export default function () {
   const [loading, setLoading] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   const [email, setEmail] = useState<string | undefined>()
 
   const domain = email ? email.split('@')[1] : ''
