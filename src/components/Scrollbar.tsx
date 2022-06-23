@@ -37,10 +37,11 @@ export default function ({
   titlePadding = 0,
 }: ChildrenProp & ScrollbarProps) {
   const { height = 0, ref } = useResizeDetector({ handleWidth: false })
-  const maximumHeightSize = 370
+  const maximumHeightSize = 370 // the maximum height of the block by design
+  const fullHeightInPercentage = 100 // the thumb height in percentages
 
   const thumbRef = useRef() as MutableRef<HTMLDivElement>
-  const [thumbHeight, setThumbHeight] = useState(100)
+  const [thumbHeight, setThumbHeight] = useState(fullHeightInPercentage)
   const extaBottomPadding = parentHeight > maximumHeightSize ? bottomPadding : 0
   const extaTitlePadding = titlePadding
   const extraReservedSpace = extaBottomPadding + extaTitlePadding
@@ -57,6 +58,7 @@ export default function ({
     const numberOfViews = wrapCurrent.scrollHeight / wrapCurrent.clientHeight
     const scroll = wrapCurrent.scrollTop / numberOfViews
 
+    // to prevent floating-point operation use px here
     thumbRef.current.style.top = scroll + 'px'
   }
 
@@ -67,7 +69,7 @@ export default function ({
 
     setTimeout(() => {
       const numberOfViews = current.scrollHeight / current.clientHeight
-      setThumbHeight(100 / numberOfViews)
+      setThumbHeight(fullHeightInPercentage / numberOfViews)
     }, 400)
   }, [
     titlePadding,
