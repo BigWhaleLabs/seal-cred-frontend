@@ -18,7 +18,7 @@ export default function ({ contractAddress }: { contractAddress: string }) {
           </ExternalLink>
         }
         bottom={
-          <Button small primary loading>
+          <Button small type="primary" loading>
             Fetching...
           </Button>
         }

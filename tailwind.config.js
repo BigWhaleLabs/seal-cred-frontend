@@ -50,12 +50,18 @@ module.exports = {
         secondary: '#ff7bed',
         tertiary: '#01feb6',
         'formal-accent': '#efecd6',
+        error: '#FF7B83',
 
         'primary-dark': '#0d0030',
         'primary-light': '#bff5fa',
         'primary-dimmed': '#3a00d6',
         'primary-semi-dimmed': '#4b61d5',
         'primary-background': '#1a0259',
+
+        'accent-light-transparent': '#FF7BED69',
+        'secondary-light-transparent': '#FED82369',
+        'accent-light-active-transparent': '#FF7BED9e',
+        'secondary-light-active-transparent': '#FED8239e',
 
         'accent-semi-transparent': 'rgba(254, 216, 35, 0.4)',
         'primary-semi-transparent': 'rgba(21, 161, 252, 0.5)',
