@@ -54,7 +54,11 @@ function BadgeListSuspended() {
         />
       ))}
       {proofsAvailableToMint.map((proof) => (
-        <BadgeBlock key={proof.contract} contractAddress={proof.contract} />
+        <BadgeBlock
+          key={proof.contract ? proof.contract : proof.domain}
+          contractAddress={proof.contract || undefined}
+          domain={proof.domain || undefined}
+        />
       ))}
     </div>
   )

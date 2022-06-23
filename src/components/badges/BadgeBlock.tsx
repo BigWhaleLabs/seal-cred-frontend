@@ -61,9 +61,9 @@ function Badge({
   const small = xxs && !sm
 
   // TODO
-  const ledgerRecord = domain
-    ? reverseWorkLedger[domain]
-    : reverseErc721Ledger[contractAddress]
+  const ledgerRecord = contractAddress
+    ? reverseErc721Ledger[contractAddress]
+    : null // TODO reverseWorkLedger[domain]
   const derivativeAddress = ledgerRecord?.derivativeContract.address
   const minted = !!derivativeAddress && tokenId !== undefined
 
