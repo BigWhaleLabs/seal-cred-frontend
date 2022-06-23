@@ -23,7 +23,11 @@ import classnames, {
 import useBreakpoints from 'hooks/useBreakpoints'
 import useClickOutside from 'hooks/useClickOutside'
 
-const tooltip = classnames(position('relative'), width('w-full', 'sm:w-card'))
+const tooltip = (fitContainer?: boolean) =>
+  classnames(
+    position('relative'),
+    width('w-full', fitContainer ? undefined : 'sm:w-card')
+  )
 const tooltipWrapper = classnames(
   position('relative'),
   height('h-px'),
@@ -72,11 +76,13 @@ export default function ({
   text,
   position,
   arrow,
+  fitContainer,
   children,
 }: ChildrenProp & {
   text: string
   position: 'top' | 'bottom'
   arrow?: boolean
+  fitContainer?: boolean
 }) {
   const [isShow, setIsShow] = useState(false)
   const childrenRef = useRef() as MutableRef<HTMLDivElement>
@@ -84,7 +90,7 @@ export default function ({
   useClickOutside(childrenRef, () => setIsShow(false))
 
   return (
-    <div className={tooltip}>
+    <div className={tooltip(fitContainer)}>
       {position === 'top' && (
         <div className={tooltipWrapper}>
           <div

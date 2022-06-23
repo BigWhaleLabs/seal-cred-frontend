@@ -41,7 +41,8 @@ const workTitleContainer = classnames(
 
 const proofLineContainer = classnames(
   space('space-y-2'),
-  fontWeight('font-normal')
+  fontWeight('font-normal'),
+  width('w-full')
 )
 
 const workTitleLeft = classnames(
@@ -83,9 +84,9 @@ export default function () {
     'When you submit your email, we create a token out of your email’s domain. You can then use that token to create zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
 
   return (
-    <Line>
+    <Line breakWords>
       <div className={proofLineContainer}>
-        <ToolTip position="bottom" text={popoverText}>
+        <ToolTip position="bottom" text={popoverText} fitContainer>
           <div className={workTitleContainer}>
             <div className={workTitleLeft}>
               <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
