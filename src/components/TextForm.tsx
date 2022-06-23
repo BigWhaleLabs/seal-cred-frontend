@@ -4,10 +4,12 @@ import Button from 'components/Button'
 import Input from 'components/Input'
 
 export default function ({
+  loading,
   onSubmit,
   placeholder = 'Enter...',
   submitText = 'Submit',
 }: {
+  loading?: boolean
   onSubmit: (text?: string) => void
   placeholder?: string
   submitText?: string
@@ -26,6 +28,7 @@ export default function ({
         }
       />
       <Button
+        loading={loading}
         fullWidth
         center
         small
