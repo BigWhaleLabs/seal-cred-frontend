@@ -1,4 +1,5 @@
 import { utils } from 'ethers'
+import BaseProof from 'helpers/BaseProof'
 import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import unpackSignature from 'helpers/unpackSignature'
@@ -10,8 +11,7 @@ export interface EmailProofSchema extends Proof {
   domain: string
 }
 
-export default class EmailProof implements EmailProofSchema {
-  result?: ProofResult
+export default class EmailProof extends BaseProof implements EmailProofSchema {
   domain: string
 
   get key() {
@@ -43,6 +43,7 @@ export default class EmailProof implements EmailProofSchema {
   }
 
   constructor(domain: string) {
+    super()
     this.domain = domain
   }
 

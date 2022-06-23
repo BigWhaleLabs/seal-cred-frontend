@@ -1,4 +1,5 @@
 import { utils } from 'ethers'
+import BaseProof from 'helpers/BaseProof'
 import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import unpackSignature from 'helpers/unpackSignature'
@@ -11,8 +12,10 @@ export interface ERC721ProofSchema extends Proof {
   account: string
 }
 
-export default class ERC721Proof implements ERC721ProofSchema {
-  result?: ProofResult
+export default class ERC721Proof
+  extends BaseProof
+  implements ERC721ProofSchema
+{
   contract: string
   account: string
 
@@ -48,6 +51,7 @@ export default class ERC721Proof implements ERC721ProofSchema {
   }
 
   constructor(contract: string, account: string) {
+    super()
     this.contract = contract
     this.account = account
   }
