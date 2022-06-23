@@ -13,7 +13,7 @@ interface SealCredStoreType {
 
 interface ComputedSealCredStoreType {
   reverseErc721Ledger: Ledger
-  erc721DerivativeContracts: string[]
+  derivativeContracts: string[]
 }
 
 const SealCredStore = proxyWithComputed<
@@ -36,10 +36,14 @@ const SealCredStore = proxyWithComputed<
         }),
         {}
       ),
-    erc721DerivativeContracts: (state) =>
-      Object.values(state.erc721Ledger).map(
+    derivativeContracts: (state) => [
+      ...Object.values(state.erc721Ledger).map(
         ({ derivativeContract }) => derivativeContract.address
       ),
+      ...Object.values(state.workLedger).map(
+        ({ derivativeContract }) => derivativeContract.address
+      ),
+    ],
   }
 )
 

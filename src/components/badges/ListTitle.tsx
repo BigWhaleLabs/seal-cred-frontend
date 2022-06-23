@@ -7,11 +7,11 @@ import Title from 'components/Title'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
-  const { erc721DerivativeContracts = [] } = useSnapshot(SealCredStore)
+  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
   const { contractsOwned } = useSnapshot(ContractsStore)
 
-  const ownederc721DerivativeContracts = erc721DerivativeContracts.filter(
+  const ownederc721DerivativeContracts = derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
   )
 

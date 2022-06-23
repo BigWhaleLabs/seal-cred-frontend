@@ -14,6 +14,5 @@ export default async function (ledger: SealCredEmailLedger): Promise<Ledger> {
     },
     {}
   )
-  console.log('loaded email ledger')
   return result
 }

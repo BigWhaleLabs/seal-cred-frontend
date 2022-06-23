@@ -17,6 +17,5 @@ export default async function (ledger: SealCredERC721Ledger): Promise<Ledger> {
     },
     {}
   )
-  console.log('loaded erc721 ledger')
   return result
 }

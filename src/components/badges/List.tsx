@@ -29,10 +29,10 @@ const badgesList = classnames(
   gridTemplateColumns('grid-cols-1', 'lg:grid-cols-2')
 )
 function BadgeListSuspended() {
-  const { erc721DerivativeContracts = [] } = useSnapshot(SealCredStore)
+  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const { contractsOwned } = useSnapshot(ContractsStore)
 
-  const ownederc721DerivativeContracts = erc721DerivativeContracts.filter(
+  const ownederc721DerivativeContracts = derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
   )
 
