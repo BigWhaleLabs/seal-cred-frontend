@@ -9,6 +9,8 @@ export default function (
 ) {
   const wrapper = useResizeDetector({ handleWidth: false })
   const { sm, md } = useBreakpoints()
+  // the maximum height of scroll container
+  // on different screen sizes according to the design
   const scrollMaxHeight = md
     ? maxHeight > 270
       ? maxHeight
@@ -30,6 +32,7 @@ export default function (
     const { current } = wrapper.ref
     if (!current) return
 
+    // if the user scrolled on two px show fade block at the top
     if (current.scrollTop <= 2 || current.scrollTop === 0) {
       setIsOverflow((prevState) => ({
         ...prevState,
