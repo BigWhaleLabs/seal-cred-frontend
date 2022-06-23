@@ -131,7 +131,7 @@ const colorClasses = ({
 interface ButtonProps {
   fullWidth?: boolean
   center?: boolean
-  type?: 'primary' | 'secondary'
+  type: 'primary' | 'secondary' | 'tertiary'
   disabled?: boolean
   loading?: boolean
   small?: boolean
