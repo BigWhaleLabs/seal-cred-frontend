@@ -64,7 +64,6 @@ class WorkProofStore extends PersistableStore {
 
       // return
       workProofStore.proofsCompleted.push({
-        id: nullifier,
         domain,
         result: await snarkjs.groth16.fullProve(
           input,

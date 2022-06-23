@@ -19,7 +19,7 @@ export default function () {
       }
     >
       {Array.from(proofsCompleted).map((proof) => (
-        <ReadyWorkProof proof={proof} key={proof.id} />
+        <ReadyWorkProof proof={proof} key={proof.domain + Math.random()} />
       ))}
       <WorkProof />
     </ProofSection>
