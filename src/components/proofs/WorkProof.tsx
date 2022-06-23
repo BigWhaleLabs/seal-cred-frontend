@@ -7,6 +7,7 @@ import Line from 'components/proofs/Line'
 import QuestionMark from 'components/QuestionMark'
 import TextForm from 'components/TextForm'
 import ToolTip from 'components/ToolTip'
+import checkDomainToken from 'helpers/checkDomainToken'
 import classnames, {
   alignItems,
   backgroundClip,
@@ -53,7 +54,7 @@ const workTitleLeft = classnames(
 export default function () {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
-  const [email, setEmail] = useState<string | undefined>()
+  const [email, setEmail] = useState<string | undefined>('@bwl.gg')
 
   const domain = email ? email.split('@')[1] : ''
 
@@ -68,6 +69,8 @@ export default function () {
   }
 
   async function onGenerateProof(secret?: string) {
+    if (!secret || !checkDomainToken(secret)) return
+
     setLoading(true)
     try {
       if (secret) await workProofStore.generate(domain, secret)

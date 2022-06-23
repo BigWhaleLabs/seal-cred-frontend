@@ -22,7 +22,9 @@ export default function ({
         type="text"
         placeholder={placeholder}
         value={text}
-        onChange={(e) => setText((e.target as HTMLInputElement).value || '')}
+        onChange={(e) =>
+          setText((e.target as HTMLInputElement).value.trim() || '')
+        }
         onKeyDown={(event) =>
           event.code === 'Enter' ? onSubmit(text) : undefined
         }
