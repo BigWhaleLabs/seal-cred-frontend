@@ -1,4 +1,4 @@
-import { BadgeText } from 'components/Text'
+import { BadgeText, BodyText } from 'components/Text'
 import { sendEmail } from 'helpers/attestor'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
@@ -32,19 +32,19 @@ const arrowContainer = classnames(
 
 const workTitleContainer = classnames(
   display('flex'),
-  justifyContent('justify-between'),
-  width('w-full'),
-  fontWeight('font-bold')
+  justifyContent('justify-between')
+  // width('w-full')
 )
 
 const proofLineContainer = classnames(
   space('space-y-2'),
-  fontWeight('font-normal')
+  fontWeight('font-normal'),
+  width('w-full')
 )
 
 export default function () {
   const [loading, setLoading] = useState(false)
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [email, setEmail] = useState<string | undefined>()
 
   const domain = email ? email.split('@')[1] : ''
@@ -74,7 +74,10 @@ export default function () {
     <Line>
       <div className={proofLineContainer}>
         <div className={workTitleContainer}>
-          <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
+          <BodyText bold small>
+            {domain ? `Work domain @${domain}` : `Work email`}
+          </BodyText>
+
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
             {!open && !domain && <span>Get started</span>}
             <Arrow disabled vertical turnDown={open} />
