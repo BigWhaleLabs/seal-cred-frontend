@@ -37,10 +37,11 @@ export default function ({
   titlePadding = 0,
 }: ChildrenProp & ScrollbarProps) {
   const { height = 0, ref } = useResizeDetector({ handleWidth: false })
+  const maximumHeightSize = 370
 
   const thumbRef = useRef() as MutableRef<HTMLDivElement>
   const [thumbHeight, setThumbHeight] = useState(100)
-  const extaBottomPadding = parentHeight > 370 ? bottomPadding : 0
+  const extaBottomPadding = parentHeight > maximumHeightSize ? bottomPadding : 0
   const extaTitlePadding = titlePadding
   const extraReservedSpace = extaBottomPadding + extaTitlePadding
 
