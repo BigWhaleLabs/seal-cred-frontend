@@ -5,11 +5,13 @@ import Input from 'components/Input'
 import useEmailForm from 'hooks/useEmailForm'
 
 export default function ({
+  loading,
   onSubmit,
   placeholder = 'Enter...',
   submitText = 'Submit',
 }: {
-  onSubmit: (email?: string) => void
+  loading?: boolean
+  onSubmit: (email: string) => void
   submitText?: string
   placeholder?: string
 }) {
@@ -28,6 +30,7 @@ export default function ({
         }
       />
       <Button
+        loading={loading}
         fullWidth
         center
         small

@@ -2878,13 +2878,6 @@ export type TBorderWidth =
   | 'border-x-0'
   | 'border-y-0'
   | 'border-0'
-  | 'border-t-1'
-  | 'border-r-1'
-  | 'border-b-1'
-  | 'border-l-1'
-  | 'border-x-1'
-  | 'border-y-1'
-  | 'border-1'
   | 'border-t-2'
   | 'border-r-2'
   | 'border-b-2'
@@ -3161,8 +3154,6 @@ export type TDivideOpacity =
 export type TDivideWidth =
   | 'divide-x-0'
   | 'divide-y-0'
-  | 'divide-x-1'
-  | 'divide-y-1'
   | 'divide-x-2'
   | 'divide-y-2'
   | 'divide-x-4'
@@ -7657,6 +7648,7 @@ export type TTranslate =
   | 'translate-x-full'
   | '-translate-x-5.5'
   | '-translate-x-7'
+  | '-translate-x-full'
   | 'translate-x-small'
   | 'translate-y-0'
   | 'translate-y-1'
@@ -7703,6 +7695,7 @@ export type TTranslate =
   | 'translate-y-full'
   | '-translate-y-5.5'
   | '-translate-y-7'
+  | '-translate-y-full'
   | 'translate-y-small'
 
 export type TSkew =

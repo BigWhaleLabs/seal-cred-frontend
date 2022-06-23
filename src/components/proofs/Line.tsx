@@ -1,7 +1,5 @@
 import ChildrenProp from 'models/ChildrenProp'
-import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
-  TTailwindString,
   alignItems,
   backgroundColor,
   borderRadius,
@@ -15,6 +13,7 @@ import classnames, {
   padding,
   space,
   width,
+  wordBreak,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -32,18 +31,12 @@ const contractContainer = (small?: boolean) =>
     padding('px-4', 'py-2'),
     width('w-full'),
     fontSize('text-sm'),
-    fontWeight('font-bold')
+    fontWeight('font-bold'),
+    wordBreak('break-all')
   )
 
-export default function ({
-  children,
-  className,
-}: ChildrenProp & { className?: TTailwindString }) {
+export default function ({ children }: ChildrenProp) {
   const { xs } = useBreakpoints()
 
-  return (
-    <div className={classNamesToString(contractContainer(xs), className)}>
-      {children}
-    </div>
-  )
+  return <div className={contractContainer(xs)}>{children}</div>
 }

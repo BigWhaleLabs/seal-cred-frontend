@@ -1,4 +1,5 @@
 import { BadgeText } from 'components/Text'
+import { sendEmail } from 'helpers/attestor'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import EmailForm from 'components/EmailForm'
@@ -18,6 +19,7 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
+import workProofStore from 'stores/WorkProofStore'
 
 const arrowContainer = classnames(
   textColor('text-transparent', 'active:text-accent'),
@@ -50,65 +52,76 @@ const workTitleLeft = classnames(
 )
 
 export default function () {
+  const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
-  const [email, setEmail] = useState<string>()
+  const [email, setEmail] = useState<string | undefined>()
 
   const domain = email ? email.split('@')[1] : ''
 
-  function onToggle() {
-    setOpen(!open)
+  async function onSendEmail(email: string) {
+    setLoading(true)
+    try {
+      await sendEmail(email)
+      setEmail(email)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  function onSendEmail(email?: string) {
-    setEmail(email)
-  }
-
-  function onSendSecret(secret?: string) {
-    if (secret) console.log(secret)
+  async function onGenerateProof(secret?: string) {
+    setLoading(true)
+    try {
+      if (secret) await workProofStore.generate(domain, secret)
+    } finally {
+      setLoading(false)
+      setOpen(false)
+      setEmail(undefined)
+    }
   }
 
   const popoverText =
     'When you submit your email, we create a token out of your email’s domain. You can then use that token to create zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
 
   return (
-    <Line className={proofLineContainer}>
-      <div className={workTitleContainer}>
-        <div className={workTitleLeft}>
-          <ToolTip position="top" text={popoverText}>
-            <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
-            <QuestionMark small />
-          </ToolTip>
-        </div>
-        <button className={arrowContainer} onClick={onToggle}>
-          {!open && !domain && <span>Get started</span>}
-          <Arrow disabled vertical turnDown={open} />
-        </button>
+    <Line>
+      <div className={proofLineContainer}>
+        <ToolTip position="top" text={popoverText}>
+          <div className={workTitleContainer}>
+            <div className={workTitleLeft}>
+              <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
+              <QuestionMark />
+            </div>
+            <button className={arrowContainer} onClick={() => setOpen(!open)}>
+              {!open && !domain && <span>Get started</span>}
+              <Arrow disabled vertical turnDown={open} />
+            </button>
+          </div>
+        </ToolTip>
+        {open && (
+          <>
+            <BadgeText>
+              {domain
+                ? `A token has been sent to ${email}. Copy the token and add it here to create zk proof. Or re-enter email.`
+                : `Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.`}
+            </BadgeText>
+            {domain ? (
+              <TextForm
+                submitText="Generate proof"
+                placeholder="Paste token here"
+                onSubmit={onGenerateProof}
+                loading={loading}
+              />
+            ) : (
+              <EmailForm
+                submitText="Submit email"
+                placeholder="Work email..."
+                onSubmit={onSendEmail}
+                loading={loading}
+              />
+            )}
+          </>
+        )}
       </div>
-      {open && (
-        <>
-          <BadgeText>
-            {domain
-              ? `A token has been sent to ${email}. Copy the token and add it here to create zk proof. Or re-enter email.`
-              : `
-                        Add your work email and we’ll send you a token for that email. Then,
-                        use the token here to create zk proof.
-            `}
-          </BadgeText>
-          {domain ? (
-            <TextForm
-              submitText="Generate proof"
-              placeholder="Paste token here"
-              onSubmit={onSendSecret}
-            />
-          ) : (
-            <EmailForm
-              submitText="Submit email"
-              placeholder="Work email..."
-              onSubmit={onSendEmail}
-            />
-          )}
-        </>
-      )}
     </Line>
   )
 }

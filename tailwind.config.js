@@ -10,9 +10,6 @@ module.exports = {
       primary: ['"Space Grotesk"', 'sans-serif'],
     },
     extend: {
-      borderWidth: {
-        1: '1px',
-      },
       maxHeight: {
         card: '31.75rem',
         'mobile-card': '41rem',
@@ -119,6 +116,7 @@ module.exports = {
       translate: {
         '-5.5': '-0.35rem',
         '-7': '-0.45rem',
+        '-full': '-100%',
       },
       backgroundImage: {
         noise: 'url("/img/noise50.png")',
