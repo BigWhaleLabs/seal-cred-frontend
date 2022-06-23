@@ -6,7 +6,6 @@ import Cross from 'icons/Cross'
 import announcementStore from 'stores/AnnouncementStore'
 import classnames, {
   alignItems,
-  animation,
   backgroundColor,
   display,
   flex,
