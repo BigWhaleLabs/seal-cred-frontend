@@ -4,7 +4,7 @@ import PersistableStore from 'stores/persistence/PersistableStore'
 import defaultProvider from 'helpers/defaultProvider'
 
 class ContractNamesStore extends PersistableStore {
-  saveContractNames = {} as {
+  savedContractNames = {} as {
     [contractAddress: string]: string | undefined
   }
 
@@ -15,7 +15,7 @@ class ContractNamesStore extends PersistableStore {
   get contractNames() {
     return {
       ...this.requestedNames,
-      ...this.saveContractNames,
+      ...this.savedContractNames,
     }
   }
 
@@ -30,7 +30,7 @@ class ContractNamesStore extends PersistableStore {
     }
     const contract = ERC721__factory.connect(address, defaultProvider)
     this.requestedNames[address] = contract.name().then((result) => {
-      this.saveContractNames[address] = result
+      this.savedContractNames[address] = result
       return result
     })
   }
