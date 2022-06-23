@@ -1,6 +1,5 @@
 import { AccentText, BodyText } from 'components/Text'
 import { JSX } from 'preact'
-import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Button from 'components/proofs/Button'
 import Complete from 'icons/Complete'
@@ -54,7 +53,6 @@ function useProofContent(
   color: 'text-accent' | 'text-secondary' | 'text-tertiary'
   content: JSX.Element | null
 } {
-  const { account } = useSnapshot(WalletStore)
   const [isGenerating, setIsGenerating] = useState(false)
 
   if (isGenerating)
@@ -91,7 +89,9 @@ function useProofContent(
     color: 'text-accent',
     content: (
       <span className={textWithIcon}>
-        <span>Proof {proof.account === account ? 'made' : 'saved'}</span>
+        <span>
+          Proof {proof.account === WalletStore.account ? 'made' : 'saved'}
+        </span>
         <Complete accent />
       </span>
     ),
