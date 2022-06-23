@@ -1,8 +1,8 @@
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
-import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContractLoading from 'components/badges/BadgesOwnedForContractLoading'
 import ContractsStore from 'stores/ContractsStore'
+import MintedBadgeBlock from 'components/badges/MintedBadgeBlock'
 import WalletStore from 'stores/WalletStore'
 
 function BadgesOwnedForContractSuspended({
@@ -23,9 +23,9 @@ function BadgesOwnedForContractSuspended({
   return (
     <>
       {ownedIds.map((tokenId) => (
-        <BadgeBlock
+        <MintedBadgeBlock
           key={`${contractAddress}-${tokenId}`}
-          contractAddress={contractAddress}
+          derivativeAddress={contractAddress}
           tokenId={+tokenId}
         />
       ))}

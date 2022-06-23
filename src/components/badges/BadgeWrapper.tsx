@@ -32,8 +32,8 @@ const badgeWrapper = (minted: boolean, small?: boolean) =>
 
 export default function ({
   children,
-  minted,
-}: ChildrenProp & { minted: boolean }) {
+  minted = false,
+}: ChildrenProp & { minted?: boolean }) {
   const { xxs, sm } = useBreakpoints()
   return <div className={badgeWrapper(minted, xxs && !sm)}>{children}</div>
 }
