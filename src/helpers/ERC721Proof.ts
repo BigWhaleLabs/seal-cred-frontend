@@ -6,7 +6,12 @@ import unpackSignature from 'helpers/unpackSignature'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const snarkjs: any
 
-export default class ERC721Proof implements Proof {
+export interface ERC721ProofSchema extends Proof {
+  contract: string
+  account: string
+}
+
+export default class ERC721Proof implements ERC721ProofSchema {
   result?: ProofResult
   contract: string
   account: string

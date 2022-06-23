@@ -6,7 +6,11 @@ import unpackSignature from 'helpers/unpackSignature'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const snarkjs: any
 
-export default class EmailProof implements Proof {
+export interface EmailProofSchema extends Proof {
+  domain: string
+}
+
+export default class EmailProof implements EmailProofSchema {
   result?: ProofResult
   domain: string
 

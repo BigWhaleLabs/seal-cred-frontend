@@ -1,7 +1,7 @@
 import { getPublicKey, requestERC721Attestation } from 'helpers/attestor'
 import { proxy } from 'valtio'
-import ERC721Proof from 'helpers/ERC721Proof'
-import EmailProof from 'helpers/EmailProof'
+import ERC721Proof, { ERC721ProofSchema } from 'helpers/ERC721Proof'
+import EmailProof, { EmailProofSchema } from 'helpers/EmailProof'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
@@ -16,19 +16,21 @@ class ProofStore extends PersistableStore {
     if (key === 'proofsCompleted') {
       return (
         value as ({ type: string; result?: ProofResult } & (
-          | { domain: string }
-          | { account: string; contract: string }
+          | EmailProofSchema
+          | ERC721ProofSchema
         ))[]
-      ).map(({ type, ...rest }) => {
+      ).map(({ type, result, ...rest }) => {
         if (type === EmailProof.type) {
-          return EmailProof.fromJSON(
-            rest as { domain: string; result: ProofResult }
-          )
+          return EmailProof.fromJSON({
+            result,
+            ...(rest as EmailProofSchema),
+          })
         }
         if (type === ERC721Proof.type) {
-          return ERC721Proof.fromJSON(
-            rest as { account: string; contract: string; result?: ProofResult }
-          )
+          return ERC721Proof.fromJSON({
+            result,
+            ...(rest as ERC721ProofSchema),
+          })
         }
         return rest
       })
