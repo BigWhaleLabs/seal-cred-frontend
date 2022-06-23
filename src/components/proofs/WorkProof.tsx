@@ -85,7 +85,7 @@ export default function () {
   return (
     <Line>
       <div className={proofLineContainer}>
-        <ToolTip position="top" text={popoverText}>
+        <ToolTip position="bottom" text={popoverText}>
           <div className={workTitleContainer}>
             <div className={workTitleLeft}>
               <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
