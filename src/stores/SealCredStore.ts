@@ -3,8 +3,9 @@ import { proxyWithComputed } from 'valtio/utils'
 import ERC721Ledger from 'models/ERC721Ledger'
 import EmailLedger from 'models/EmailLedger'
 import getERC721Ledger from 'helpers/getERC721Ledger'
+import getERC721LedgerRecord from 'helpers/getERC721LedgerRecord'
 import getEmailLedger from 'helpers/getEmailLedger'
-import getLedgerRecord from 'helpers/getERC721LedgerRecord'
+import getEmailLedgerRecord from 'helpers/getEmailLedgerRecord'
 
 interface SealCredStoreType {
   ERC721Ledger: Promise<ERC721Ledger>
@@ -57,7 +58,7 @@ ERC721LedgerContract.on(
     )
     const ledger = await SealCredStore.ERC721Ledger
     if (!ledger[originalContract]) {
-      ledger[originalContract] = getLedgerRecord(
+      ledger[originalContract] = getERC721LedgerRecord(
         originalContract,
         derivativeContract
       )
@@ -70,6 +71,25 @@ ERC721LedgerContract.on(
     console.info('DeleteOriginalContract event', originalContract)
     const ledger = await SealCredStore.ERC721Ledger
     delete ledger[originalContract]
+  }
+)
+
+SCEmailLedgerContract.on(
+  SCEmailLedgerContract.filters.CreateDerivativeContract(),
+  async (email, derivativeContract) => {
+    console.info('CreateDerivativeContract event', email, derivativeContract)
+    const ledger = await SealCredStore.emailLedger
+    if (!ledger[email]) {
+      ledger[email] = getEmailLedgerRecord(derivativeContract)
+    }
+  }
+)
+SCEmailLedgerContract.on(
+  SCEmailLedgerContract.filters.DeleteEmail(),
+  async (email) => {
+    console.info('DeleteOriginalContract event', email)
+    const ledger = await SealCredStore.emailLedger
+    delete ledger[email]
   }
 )
 
