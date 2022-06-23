@@ -90,7 +90,7 @@ function Badge({ proof }: { proof: Proof }) {
 
 export default function ({ proof }: { proof: Proof }) {
   return (
-    <BadgeWrapper>
+    <BadgeWrapper minted={false}>
       <Badge proof={proof} />
     </BadgeWrapper>
   )
