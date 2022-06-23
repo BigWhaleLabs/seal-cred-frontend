@@ -26,7 +26,7 @@
   "dependencies": {
     "@big-whale-labs/constants": "^0.0.18",
     "@big-whale-labs/poseidon": "^0.0.5",
-    "@big-whale-labs/seal-cred-ledger-contract": "^0.1.0",
+    "@big-whale-labs/seal-cred-ledger-contract": "^0.0.6",
     "@coinbase/wallet-sdk": "^3.3.0",
     "@walletconnect/web3-provider": "^1.7.8",
     "axios": "^0.27.2",

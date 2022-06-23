@@ -1466,7 +1466,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.4.5, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4":
   version: 7.18.3
   resolution: "@babel/runtime@npm:7.18.3"
   dependencies:
@@ -1521,13 +1521,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/constants@npm:^0.0.13":
-  version: 0.0.13
-  resolution: "@big-whale-labs/constants@npm:0.0.13"
-  checksum: 1ac8fe724862571c6e1d2729c78d5a1735b85c28b10ccb56e7b67e5b3e7b0e5d16b2ca0034c433e5d3db3027f334bb3c94af3d8a6b4084bcd9eb724159c1712c
-  languageName: node
-  linkType: hard
-
 "@big-whale-labs/constants@npm:^0.0.18":
   version: 0.0.18
   resolution: "@big-whale-labs/constants@npm:0.0.18"
@@ -1544,13 +1537,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/seal-cred-ledger-contract@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.1.0"
+"@big-whale-labs/seal-cred-ledger-contract@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.0.6"
   dependencies:
-    "@big-whale-labs/constants": ^0.0.13
+    "@big-whale-labs/constants": ^0.0.18
+    entropy-string: ^4.2.0
     prompt-sync: ^4.2.0
-  checksum: 735d4f3cb3c44afac605b951592897e12fadd7815db275312bbc751c9f9227d34d2ca232bb6f67ef1b83112e8433702de27407cb2bfd5a8b1a3c0261b664a94b
+  checksum: a6eed7de1c84c102585be58051fa8d093544c1d37039baa1590eb3d59ba3c8bc79fd61a83a90da151f1239b735b7336720795c14679994918f253fb523b66e69
   languageName: node
   linkType: hard
 
@@ -6744,6 +6738,15 @@ __metadata:
   version: 2.2.0
   resolution: "entities@npm:2.2.0"
   checksum: 19010dacaf0912c895ea262b4f6128574f9ccf8d4b3b65c7e8334ad0079b3706376360e28d8843ff50a78aabcb8f08f0a32dbfacdc77e47ed77ca08b713669b3
+  languageName: node
+  linkType: hard
+
+"entropy-string@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "entropy-string@npm:4.2.0"
+  dependencies:
+    "@babel/runtime": ^7.4.5
+  checksum: 8cf1e27ded17baa5e3f7849378d52b17a885e99d1250dd6f4b82275efdde9bdddfb8f90713e7352e750d55ca913ccab5aca6a153d1c2d1034076159c11465662
   languageName: node
   linkType: hard
 
@@ -14041,7 +14044,7 @@ __metadata:
   dependencies:
     "@big-whale-labs/constants": ^0.0.18
     "@big-whale-labs/poseidon": ^0.0.5
-    "@big-whale-labs/seal-cred-ledger-contract": ^0.1.0
+    "@big-whale-labs/seal-cred-ledger-contract": ^0.0.6
     "@coinbase/wallet-sdk": ^3.3.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@originjs/vite-plugin-commonjs": ^1.0.3
@@ -15404,11 +15407,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.7.3#~builtin<compat/typescript>":
   version: 4.7.3
-  resolution: "typescript@patch:typescript@npm%3A4.7.3#~builtin<compat/typescript>::version=4.7.3&hash=bda367"
+  resolution: "typescript@patch:typescript@npm%3A4.7.3#~builtin<compat/typescript>::version=4.7.3&hash=7ad353"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 8257ce7ecbbf9416da60045a76a99d473698ca9e973fa0ddab7137cacb1587255431176cbbcc801a650938c4dc8109ab88355774829a714fabe56a53a2fe4524
+  checksum: 137d18a77f52254a284960b16ab53d0619f57b69b5d585804b8413f798a1175ce3e774fb95e6a101868577aafe357d8fcfc9171f0dc9fc0c210e9ae59d107cc0
   languageName: node
   linkType: hard
 
