@@ -6,7 +6,7 @@ import env from 'helpers/env'
 
 export default class EmailBadgeBuilder extends BaseBadgeBuilder {
   constructor(provider: Web3Provider) {
-    super(provider, env.VITE_SCWPLEDGER_CONTRACT_ADDRESS)
+    super(provider, env.VITE_SC_EMAIL_LEDGER_CONTRACT_ADDRESS)
   }
 
   createLedger(provider: Web3Provider, address: string) {

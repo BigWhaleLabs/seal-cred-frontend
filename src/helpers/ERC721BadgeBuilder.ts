@@ -6,7 +6,7 @@ import env from 'helpers/env'
 
 export default class ERC721BadgeBuilder extends BaseBadgeBuilder {
   constructor(provider: Web3Provider) {
-    super(provider, env.VITE_SCLEDGER_CONTRACT_ADDRESS)
+    super(provider, env.VITE_SC_ERC721_LEDGER_CONTRACT_ADDRESS)
   }
 
   createLedger(provider: Web3Provider, address: string) {
