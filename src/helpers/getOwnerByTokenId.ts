@@ -1,8 +1,5 @@
 import { BigNumber } from 'ethers'
-import {
-  ERC721,
-  SCERC721Derivative,
-} from '@big-whale-labs/seal-cred-ledger-contract'
+import { ERC721, SCERC721Derivative } from '@upacyxou/test-contract'
 
 export default async function (
   contract: ERC721 | SCERC721Derivative,

@@ -1,5 +1,10 @@
 import { BigNumber } from 'ethers'
-import { SealCredLedger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
+import {
+  SealCredERC721Ledger,
+  SealCredERC721Ledger__factory,
+  SealCredEmailLedger,
+  SealCredEmailLedger__factory,
+} from '@upacyxou/test-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
@@ -64,8 +69,9 @@ class WalletStore extends PersistableStore {
   }
 
   async mintDerivative(
-    originalContractAddress: string,
-    proofResult: ProofResult
+    proofResult: ProofResult,
+    originalContractAddress?: string,
+    domain?: string
   ) {
     if (!provider) {
       throw new Error('No provider found')
@@ -73,14 +79,25 @@ class WalletStore extends PersistableStore {
     if (!this.account) {
       throw new Error('No account found')
     }
-    const sealCredWithSigner = SealCredLedger__factory.connect(
-      env.VITE_SCLEDGER_CONTRACT_ADDRESS,
-      provider.getSigner(0)
-    )
+
+    const domainOrContract = domain || originalContractAddress
+
+    if (!domainOrContract) return
+
+    const ledgerWithSigner = domain
+      ? SealCredEmailLedger__factory.connect(
+          env.VITE_SCWPLEDGER_CONTRACT_ADDRESS,
+          provider.getSigner(0)
+        )
+      : SealCredERC721Ledger__factory.connect(
+          env.VITE_SCLEDGER_CONTRACT_ADDRESS,
+          provider.getSigner(0)
+        )
+
     // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
     // Also pay attention to array indexes
-    const tx = await sealCredWithSigner.mint(
-      originalContractAddress,
+    const tx = await ledgerWithSigner.mint(
+      domainOrContract,
       [
         BigNumber.from(proofResult.proof.pi_a[0]),
         BigNumber.from(proofResult.proof.pi_a[1]),

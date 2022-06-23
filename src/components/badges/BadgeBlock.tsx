@@ -22,6 +22,7 @@ import classnames, {
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
 import useBreakpoints from 'hooks/useBreakpoints'
+import workProofStore from 'stores/WorkProofStore'
 
 const mintPassed = (small?: boolean) =>
   classnames(
@@ -38,11 +39,14 @@ const mintPassed = (small?: boolean) =>
 function Badge({
   contractAddress,
   tokenId,
+  domain,
 }: {
-  contractAddress: string
+  contractAddress?: string
+  domain?: string
   tokenId?: number
 }) {
-  const { proofsCompleted } = useSnapshot(ProofStore)
+  const { proofsCompleted: ERC721Proofs } = useSnapshot(ProofStore)
+  const { proofsCompleted: WorkProofs } = useSnapshot(workProofStore)
   const { reverseLedger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
 
@@ -50,12 +54,21 @@ function Badge({
 
   const [loading, setLoading] = useState(false)
 
-  const proof = proofsCompleted.find(
-    (proof) => proof.contract === contractAddress
+  const proof = [...ERC721Proofs, ...WorkProofs].find(
+    (proof) => proof.contract === contractAddress || proof.domain === domain
+  )
+
+  console.log(
+    WorkProofs.find((proof) => {
+      console.log(proof.domain)
+      console.log(domain)
+      return proof.domain === domain
+    })
   )
 
   const small = xxs && !sm
-  const ledgerRecord = reverseLedger[contractAddress]
+  // TODO
+  const ledgerRecord = contractAddress ? reverseLedger[contractAddress] : null
   const derivativeAddress = ledgerRecord?.derivativeContract.address
   const minted = !!derivativeAddress && tokenId !== undefined
 
@@ -65,8 +78,15 @@ function Badge({
     try {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
-      await WalletStore.mintDerivative(contractAddress, proof.result)
-      ProofStore.proofsCompleted = proofsCompleted.filter(
+      domain
+        ? await WalletStore.mintDerivative(proof.result, undefined, domain)
+        : await WalletStore.mintDerivative(
+            proof.result,
+            contractAddress,
+            undefined
+          )
+
+      ProofStore.proofsCompleted = ERC721Proofs.filter(
         (p) => p.contract !== proof.contract && p.result !== proof.result
       )
     } catch (error) {
@@ -108,7 +128,7 @@ function Badge({
           </ExternalLink>
         ) : (
           <>
-            <ContractName address={contractAddress} /> (derivative)
+            <ContractName address={contractAddress || domain} /> (derivative)
           </>
         )
       }
@@ -138,14 +158,20 @@ function Badge({
 
 export default function ({
   contractAddress,
+  domain,
   tokenId,
 }: {
-  contractAddress: string
+  contractAddress?: string
+  domain?: string
   tokenId?: number
 }) {
   return (
     <BadgeWrapper minted={tokenId !== undefined}>
-      <Badge contractAddress={contractAddress} tokenId={tokenId} />
+      <Badge
+        contractAddress={contractAddress}
+        tokenId={tokenId}
+        domain={domain}
+      />
     </BadgeWrapper>
   )
 }

@@ -12,4 +12,5 @@ export default cleanEnv(import.meta.env, {
   VITE_ETH_RPC: str({ default: ETH_RPC }),
   VITE_SCLEDGER_CONTRACT_ADDRESS: str({ default: SCLEDGER_CONTRACT_ADDRESS }),
   VITE_VERIFY_URL: str(),
+  VITE_SCWPLEDGER_CONTRACT_ADDRESS: str(),
 })
