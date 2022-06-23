@@ -21,7 +21,7 @@ export default class ERC721Proof implements ERC721ProofSchema {
   }
 
   static get type() {
-    return 'erc721'
+    return 'ERC721'
   }
 
   static fromJSON({

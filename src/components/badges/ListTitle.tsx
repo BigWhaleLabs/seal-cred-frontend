@@ -11,7 +11,7 @@ function ListTitleSuspended() {
   const proofsAvailableToMint = useProofsAvailableToMint()
   const { contractsOwned } = useSnapshot(ContractsStore)
 
-  const ownederc721DerivativeContracts = derivativeContracts.filter(
+  const ownedDerivativeContracts = derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
   )
 
@@ -23,7 +23,7 @@ function ListTitleSuspended() {
       subtitle={
         hasUnminted
           ? 'Looks like you can create ZK badges for this wallet'
-          : ownederc721DerivativeContracts.length
+          : ownedDerivativeContracts.length
           ? 'You’ve minted all of your available badges'
           : 'Once you’ve created a ZK proof, you will be able to mint ZK badges for your anonymous wallets'
       }

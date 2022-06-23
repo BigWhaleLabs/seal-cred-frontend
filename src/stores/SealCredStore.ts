@@ -1,4 +1,4 @@
-import { erc721Ledger, workLedger } from 'helpers/sealCred'
+import { ERC721Ledger, workLedger } from 'helpers/sealCred'
 import { proxyWithComputed } from 'valtio/utils'
 import EmailLedger from 'models/EmailLedger'
 import Ledger from 'models/Ledger'
@@ -7,7 +7,7 @@ import getEmailLedger from 'helpers/getEmailLedger'
 import getLedgerRecord from 'helpers/getERC721LedgerRecord'
 
 interface SealCredStoreType {
-  erc721Ledger: Promise<Ledger>
+  ERC721Ledger: Promise<Ledger>
   workLedger: Promise<EmailLedger>
 }
 
@@ -21,12 +21,12 @@ const SealCredStore = proxyWithComputed<
   ComputedSealCredStoreType
 >(
   {
-    erc721Ledger: getERC721Ledger(erc721Ledger),
+    ERC721Ledger: getERC721Ledger(ERC721Ledger),
     workLedger: getEmailLedger(workLedger),
   },
   {
     reverseErc721Ledger: (state) =>
-      Object.values(state.erc721Ledger).reduce(
+      Object.values(state.ERC721Ledger).reduce(
         (prev, { originalContract, derivativeContract }) => ({
           ...prev,
           [derivativeContract.address]: {
@@ -37,7 +37,7 @@ const SealCredStore = proxyWithComputed<
         {}
       ),
     derivativeContracts: (state) => [
-      ...Object.values(state.erc721Ledger).map(
+      ...Object.values(state.ERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract.address
       ),
       ...Object.values(state.workLedger).map(
@@ -47,15 +47,15 @@ const SealCredStore = proxyWithComputed<
   }
 )
 
-erc721Ledger.on(
-  erc721Ledger.filters.CreateDerivativeContract(),
+ERC721Ledger.on(
+  ERC721Ledger.filters.CreateDerivativeContract(),
   async (originalContract, derivativeContract) => {
     console.info(
       'CreateDerivativeContract event',
       originalContract,
       derivativeContract
     )
-    const ledger = await SealCredStore.erc721Ledger
+    const ledger = await SealCredStore.ERC721Ledger
     if (!ledger[originalContract]) {
       ledger[originalContract] = getLedgerRecord(
         originalContract,
@@ -64,11 +64,11 @@ erc721Ledger.on(
     }
   }
 )
-erc721Ledger.on(
-  erc721Ledger.filters.DeleteOriginalContract(),
+ERC721Ledger.on(
+  ERC721Ledger.filters.DeleteOriginalContract(),
   async (originalContract) => {
     console.info('DeleteOriginalContract event', originalContract)
-    const ledger = await SealCredStore.erc721Ledger
+    const ledger = await SealCredStore.ERC721Ledger
     delete ledger[originalContract]
   }
 )

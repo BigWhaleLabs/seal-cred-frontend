@@ -60,13 +60,13 @@ class ProofStore extends PersistableStore {
 
       const [signature, nullifier] = secret.split('-')
 
-      const emailProof = new EmailProof(domain)
-      await emailProof.build(nullifier, signature, x, y)
+      const newEmailProof = new EmailProof(domain)
+      await newEmailProof.build(nullifier, signature, x, y)
 
       // Check navigator availability
       checkNavigator()
 
-      proofStore.proofsCompleted.push(emailProof)
+      proofStore.proofsCompleted.push(newEmailProof)
     } catch (e) {
       handleError(e)
     }
@@ -92,13 +92,13 @@ class ProofStore extends PersistableStore {
         eddsaMessage
       )
 
-      const erc721proof = new ERC721Proof(contract, account)
+      const newERC721Proof = new ERC721Proof(contract, account)
 
       checkNavigator()
 
-      await erc721proof.build(message, signature, x, y)
+      await newERC721Proof.build(message, signature, x, y)
 
-      proofStore.proofsCompleted.push(erc721proof)
+      proofStore.proofsCompleted.push(newERC721Proof)
     } catch (e) {
       handleError(e)
     }
