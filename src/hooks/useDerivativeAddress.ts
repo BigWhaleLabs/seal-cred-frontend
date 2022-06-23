@@ -1,10 +1,10 @@
 import { useSnapshot } from 'valtio'
+import BaseProof from 'helpers/BaseProof'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
-import Proof from 'models/Proof'
 import SealCredStore from 'stores/SealCredStore'
 
-export default function useDerivativeAddress(proof: Proof) {
+export default function useDerivativeAddress(proof: BaseProof) {
   const { emailLedger, ERC721Ledger } = useSnapshot(SealCredStore)
   if (proof instanceof EmailProof && emailLedger[proof.domain]) {
     return emailLedger[proof.domain].derivativeContract.address

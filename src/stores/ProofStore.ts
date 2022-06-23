@@ -1,16 +1,16 @@
 import { getPublicKey, requestERC721Attestation } from 'helpers/attestor'
 import { proxy } from 'valtio'
+import BaseProof from 'helpers/BaseProof'
 import ERC721Proof, { ERC721ProofSchema } from 'helpers/ERC721Proof'
 import EmailProof, { EmailProofSchema } from 'helpers/EmailProof'
 import PersistableStore from 'stores/persistence/PersistableStore'
-import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import WalletStore from 'stores/WalletStore'
 import checkNavigator from 'helpers/checkNavigator'
 import handleError from 'helpers/handleError'
 
 class ProofStore extends PersistableStore {
-  proofsCompleted: Proof[] = []
+  proofsCompleted: BaseProof[] = []
 
   reviver = (key: string, value: unknown) => {
     if (key === 'proofsCompleted') {

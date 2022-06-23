@@ -5,9 +5,9 @@ import { useState } from 'react'
 import Button from 'components/proofs/Button'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
+import ERC721Proof from 'helpers/ERC721Proof'
 import ExternalLink from 'components/ExternalLink'
 import Line from 'components/proofs/Line'
-import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
 import WalletStore from 'stores/WalletStore'
@@ -49,7 +49,7 @@ const textWithIcon = classnames(
 
 function useProofContent(
   contractAddress: string,
-  proof?: Proof
+  proof?: ERC721Proof
 ): {
   color: 'text-accent' | 'text-secondary' | 'text-tertiary'
   content: JSX.Element | null
@@ -102,7 +102,7 @@ export default function ({
   proof,
   contractAddress,
 }: {
-  proof?: Proof
+  proof?: ERC721Proof
   contractAddress: string
 }) {
   const { xs } = useBreakpoints()

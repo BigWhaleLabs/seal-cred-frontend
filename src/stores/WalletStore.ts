@@ -1,11 +1,11 @@
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
+import BaseProof from 'helpers/BaseProof'
 import ERC721BadgeBuilder from 'helpers/ERC721BadgeBuilder'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailBadgeBuilder from 'helpers/EmailBadgeBuilder'
 import EmailProof from 'helpers/EmailProof'
 import PersistableStore from 'stores/persistence/PersistableStore'
-import Proof from 'models/Proof'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
 import web3Modal from 'helpers/web3Modal'
@@ -65,7 +65,7 @@ class WalletStore extends PersistableStore {
     }
   }
 
-  async mintDerivative(proof: Proof) {
+  async mintDerivative(proof: BaseProof) {
     if (!provider) {
       throw new Error('No provider found')
     }

@@ -3,19 +3,19 @@ import { useState } from 'react'
 import BadgeCard from 'components/badges/BadgeCard'
 import BadgeIcon from 'icons/BadgeIcon'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
+import BaseProof from 'helpers/BaseProof'
 import Button from 'components/Button'
 import ContractName from 'components/ContractName'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import ExternalLink from 'components/ExternalLink'
-import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
 import useDerivativeAddress from 'hooks/useDerivativeAddress'
 
-function Badge({ proof }: { proof: Proof }) {
+function Badge({ proof }: { proof: BaseProof }) {
   const { proofsCompleted } = useSnapshot(ProofStore)
   const derivativeAddress = useDerivativeAddress(proof)
   const { account } = useSnapshot(WalletStore)
@@ -67,7 +67,7 @@ function Badge({ proof }: { proof: Proof }) {
             ) : proof instanceof EmailProof ? (
               proof.domain
             ) : (
-              proof.key
+              'Unknown'
             )}{' '}
             (derivative)
           </>
@@ -88,7 +88,7 @@ function Badge({ proof }: { proof: Proof }) {
   )
 }
 
-export default function ({ proof }: { proof: Proof }) {
+export default function ({ proof }: { proof: BaseProof }) {
   return (
     <BadgeWrapper minted={false}>
       <Badge proof={proof} />
