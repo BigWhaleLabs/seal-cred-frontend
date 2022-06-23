@@ -1,7 +1,5 @@
 import ChildrenProp from 'models/ChildrenProp'
-import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
-  TTailwindString,
   alignItems,
   backgroundColor,
   borderRadius,
@@ -35,15 +33,8 @@ const contractContainer = (small?: boolean) =>
     fontWeight('font-bold')
   )
 
-export default function ({
-  children,
-  className,
-}: ChildrenProp & { className?: TTailwindString }) {
+export default function ({ children }: ChildrenProp) {
   const { xs } = useBreakpoints()
 
-  return (
-    <div className={classNamesToString(contractContainer(xs), className)}>
-      {children}
-    </div>
-  )
+  return <div className={contractContainer(xs)}>{children}</div>
 }
