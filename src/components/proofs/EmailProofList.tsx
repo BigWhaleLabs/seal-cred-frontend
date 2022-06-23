@@ -6,7 +6,7 @@ import ProofStore from 'stores/ProofStore'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 
 export default function () {
-  const { workProofsCompleted } = useSnapshot(ProofStore)
+  const { emailProofsCompleted } = useSnapshot(ProofStore)
   return (
     <ProofSection
       title={
@@ -18,7 +18,7 @@ export default function () {
         </BodyText>
       }
     >
-      {Array.from(workProofsCompleted).map((proof, index) => (
+      {Array.from(emailProofsCompleted).map((proof, index) => (
         <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
       ))}
       <EmailProof />

@@ -38,7 +38,7 @@ class ProofStore extends PersistableStore {
     return value
   }
 
-  get workProofsCompleted() {
+  get emailProofsCompleted() {
     const selected = []
     for (const proof of this.proofsCompleted) {
       if (proof instanceof EmailProof) selected.push(proof)

@@ -8,14 +8,14 @@ import SealCredStore from 'stores/SealCredStore'
 export default function () {
   const { contractsOwned } = useSnapshot(ContractsStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
-  const { ERC721Ledger, workLedger } = useSnapshot(SealCredStore)
+  const { ERC721Ledger, emailLedger } = useSnapshot(SealCredStore)
 
   return proofsCompleted.filter((proof) => {
     if (proof instanceof EmailProof) {
       return (
-        !workLedger[proof.domain] ||
+        !emailLedger[proof.domain] ||
         !contractsOwned.includes(
-          workLedger[proof.domain].derivativeContract.address
+          emailLedger[proof.domain].derivativeContract.address
         )
       )
     }

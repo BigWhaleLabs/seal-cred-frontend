@@ -32,7 +32,7 @@ const arrowContainer = classnames(
   fontWeight('font-bold')
 )
 
-const workTitleContainer = classnames(
+const emailTitleContainer = classnames(
   display('flex'),
   justifyContent('justify-between')
 )
@@ -43,7 +43,7 @@ const proofLineContainer = classnames(
   width('w-full')
 )
 
-const workTitleLeft = classnames(
+const emailTitleLeft = classnames(
   display('flex'),
   space('space-x-2'),
   justifyContent('justify-center'),
@@ -85,8 +85,8 @@ export default function () {
     <Line breakWords>
       <div className={proofLineContainer}>
         <ToolTip position="bottom" text={popoverText} fitContainer>
-          <div className={workTitleContainer}>
-            <div className={workTitleLeft}>
+          <div className={emailTitleContainer}>
+            <div className={emailTitleLeft}>
               <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
               <QuestionMark />
             </div>

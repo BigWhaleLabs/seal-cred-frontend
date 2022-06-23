@@ -14,7 +14,7 @@ export default function () {
     }),
     {} as { [address: string]: boolean }
   )
-  // TODO: add workProofsCompleted
+  // TODO: add emailProofsCompleted
   return (
     contractsOwned.filter(
       (address) =>
