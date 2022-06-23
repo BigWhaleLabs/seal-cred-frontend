@@ -1,7 +1,6 @@
 import { ERC721__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { proxy } from 'valtio'
 import defaultProvider from 'helpers/defaultProvider'
-import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
 interface ContractNamesStoreType {
   contractNames: {
@@ -19,7 +18,7 @@ const ContractNamesStore = proxy<ContractNamesStoreType>({
     const contract = ERC721__factory.connect(address, defaultProvider)
     ContractNamesStore.contractNames[address] = contract.callStatic
       .name()
-      .catch(() => truncateMiddleIfNeeded(address, 17))
+      .catch(() => undefined)
   },
 })
 
