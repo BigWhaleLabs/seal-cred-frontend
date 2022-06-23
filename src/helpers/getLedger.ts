@@ -1,10 +1,15 @@
+import {
+  SealCredERC721Ledger,
+  SealCredEmailLedger,
+} from '@big-whale-labs/seal-cred-ledger-contract'
 import Ledger from 'models/Ledger'
 import getLedgerRecord from 'helpers/getLedgerRecord'
-import sealCred from 'helpers/sealCred'
 
-export default async function (): Promise<Ledger> {
-  const eventsFilter = sealCred.filters.CreateDerivativeContract()
-  const events = await sealCred.queryFilter(eventsFilter)
+export default async function (
+  ledger: SealCredERC721Ledger | SealCredEmailLedger
+): Promise<Ledger> {
+  const eventsFilter = ledger.filters.CreateDerivativeContract()
+  const events = await ledger.queryFilter(eventsFilter)
   const result = events.reduce(
     (prev, { args: { originalContract, derivativeContract } }) => {
       return {

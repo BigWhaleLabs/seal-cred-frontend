@@ -6,7 +6,7 @@ import SealCredStore from 'stores/SealCredStore'
 export default function () {
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { contractsOwned } = useSnapshot(ContractsStore)
-  const { derivativeContracts } = useSnapshot(SealCredStore)
+  const { erc721DerivativeContracts } = useSnapshot(SealCredStore)
   const completedProofAddressesMap = [...proofsCompleted].reduce(
     (result, proof) => ({
       ...result,
@@ -17,7 +17,7 @@ export default function () {
   return (
     contractsOwned.filter(
       (address) =>
-        !derivativeContracts.includes(address) &&
+        !erc721DerivativeContracts.includes(address) &&
         !completedProofAddressesMap[address]
     ) || []
   )

@@ -29,8 +29,8 @@ export default function ({
   derivativeAddress: string
   tokenId: string
 }) {
-  const { reverseLedger } = useSnapshot(SealCredStore)
-  const record = reverseLedger[derivativeAddress]
+  const { reverseErc721Ledger } = useSnapshot(SealCredStore)
+  const record = reverseErc721Ledger[derivativeAddress]
 
   if (!record) {
     handleError('Looks like this contract was removed')

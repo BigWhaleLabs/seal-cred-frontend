@@ -47,28 +47,23 @@ function Badge({
 }) {
   const { proofsCompleted: ERC721Proofs } = useSnapshot(ProofStore)
   const { proofsCompleted: WorkProofs } = useSnapshot(workProofStore)
-  const { reverseLedger } = useSnapshot(SealCredStore)
+  const { reverseErc721Ledger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
 
   const { xxs, sm } = useBreakpoints()
 
   const [loading, setLoading] = useState(false)
 
-  const proof = [...ERC721Proofs, ...WorkProofs].find(
-    (proof) => proof.contract === contractAddress || proof.domain === domain
-  )
-
-  console.log(
-    WorkProofs.find((proof) => {
-      console.log(proof.domain)
-      console.log(domain)
-      return proof.domain === domain
-    })
-  )
+  const proof = domain
+    ? WorkProofs.find((proof) => proof.domain === domain)
+    : ERC721Proofs.find((proof) => proof.contract === contractAddress)
 
   const small = xxs && !sm
+
   // TODO
-  const ledgerRecord = contractAddress ? reverseLedger[contractAddress] : null
+  const ledgerRecord = domain
+    ? reverseWorkLedger[domain]
+    : reverseErc721Ledger[contractAddress]
   const derivativeAddress = ledgerRecord?.derivativeContract.address
   const minted = !!derivativeAddress && tokenId !== undefined
 

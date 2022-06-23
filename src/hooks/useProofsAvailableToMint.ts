@@ -8,7 +8,7 @@ export default function () {
   const { contractsOwned } = useSnapshot(ContractsStore)
   const { proofsCompleted: ERC721Proofs } = useSnapshot(ProofStore)
   const { proofsCompleted: WorkProofs } = useSnapshot(workProofStore)
-  const { ledger } = useSnapshot(SealCredStore)
+  const { erc721Ledger } = useSnapshot(SealCredStore)
 
   // TODO
   return [...WorkProofs, ...ERC721Proofs]
