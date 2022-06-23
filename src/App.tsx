@@ -1,7 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { lazy } from 'react'
-import Announce from 'components/Announce'
+import Announcement from 'components/Announcement'
 import LazyComponent from 'components/LazyComponent'
 import Navbar from 'components/navbar/Navbar'
 import Root from 'components/Root'
@@ -15,7 +15,7 @@ export default function () {
   return (
     <Root>
       <Router>
-        <Announce />
+        <Announcement />
         <Navbar />
         <ToastContainer position="bottom-right" theme="dark" />
         <Routes>
