@@ -19,9 +19,7 @@ const ContractNamesStore = proxy<ContractNamesStoreType>({
     const contract = ERC721__factory.connect(address, defaultProvider)
     ContractNamesStore.contractNames[address] = contract.callStatic
       .name()
-      .catch(() => {
-        return truncateMiddleIfNeeded(address, 17)
-      })
+      .catch(() => truncateMiddleIfNeeded(address, 17))
   },
 })
 
