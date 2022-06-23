@@ -1,4 +1,4 @@
-import { ERC721__factory } from '@upacyxou/test-contract'
+import { ERC721__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { proxy } from 'valtio'
 import defaultProvider from 'helpers/defaultProvider'
 

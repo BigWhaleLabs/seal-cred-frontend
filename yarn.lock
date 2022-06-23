@@ -1521,10 +1521,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/constants@npm:^0.0.12":
-  version: 0.0.12
-  resolution: "@big-whale-labs/constants@npm:0.0.12"
-  checksum: b6d921d50e9755130d4b534c1e6f715a41a45bd8aef602faaaa561eaf00367b29f4500f2e303c0918bb79d0ecb18970644d1c91e295ed0d84bc83eeaee7df163
+"@big-whale-labs/constants@npm:^0.0.13":
+  version: 0.0.13
+  resolution: "@big-whale-labs/constants@npm:0.0.13"
+  checksum: 1ac8fe724862571c6e1d2729c78d5a1735b85c28b10ccb56e7b67e5b3e7b0e5d16b2ca0034c433e5d3db3027f334bb3c94af3d8a6b4084bcd9eb724159c1712c
   languageName: node
   linkType: hard
 
@@ -1544,13 +1544,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/seal-cred-ledger-contract@npm:^0.0.5":
-  version: 0.0.5
-  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.0.5"
+"@big-whale-labs/seal-cred-ledger-contract@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.1.0"
   dependencies:
-    "@big-whale-labs/constants": ^0.0.12
+    "@big-whale-labs/constants": ^0.0.13
     prompt-sync: ^4.2.0
-  checksum: 7550cf7333aa231e6d87819148b9e4687c1f81d2144ad85476eae229df8a2ee9388df032c3e695ee2f12e2c241b9832e7fe4d71b6658c63b0e8d6a1bec740c66
+  checksum: 735d4f3cb3c44afac605b951592897e12fadd7815db275312bbc751c9f9227d34d2ca232bb6f67ef1b83112e8433702de27407cb2bfd5a8b1a3c0261b664a94b
   languageName: node
   linkType: hard
 
@@ -14041,7 +14041,7 @@ __metadata:
   dependencies:
     "@big-whale-labs/constants": ^0.0.18
     "@big-whale-labs/poseidon": ^0.0.5
-    "@big-whale-labs/seal-cred-ledger-contract": ^0.0.5
+    "@big-whale-labs/seal-cred-ledger-contract": ^0.1.0
     "@coinbase/wallet-sdk": ^3.3.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@originjs/vite-plugin-commonjs": ^1.0.3
@@ -15404,11 +15404,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.7.3#~builtin<compat/typescript>":
   version: 4.7.3
-  resolution: "typescript@patch:typescript@npm%3A4.7.3#~builtin<compat/typescript>::version=4.7.3&hash=7ad353"
+  resolution: "typescript@patch:typescript@npm%3A4.7.3#~builtin<compat/typescript>::version=4.7.3&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 137d18a77f52254a284960b16ab53d0619f57b69b5d585804b8413f798a1175ce3e774fb95e6a101868577aafe357d8fcfc9171f0dc9fc0c210e9ae59d107cc0
+  checksum: 8257ce7ecbbf9416da60045a76a99d473698ca9e973fa0ddab7137cacb1587255431176cbbcc801a650938c4dc8109ab88355774829a714fabe56a53a2fe4524
   languageName: node
   linkType: hard
 

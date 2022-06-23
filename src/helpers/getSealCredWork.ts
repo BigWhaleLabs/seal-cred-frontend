@@ -1,4 +1,4 @@
-import { SealCredEmailLedger__factory } from '@upacyxou/test-contract'
+import { SealCredEmailLedger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { providers } from 'ethers'
 import env from 'helpers/env'
 

@@ -4,7 +4,7 @@ import {
   SealCredERC721Ledger__factory,
   SealCredEmailLedger,
   SealCredEmailLedger__factory,
-} from '@upacyxou/test-contract'
+} from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'

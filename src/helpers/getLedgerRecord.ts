@@ -1,7 +1,7 @@
 import {
   ERC721__factory,
   SCERC721Derivative__factory,
-} from '@upacyxou/test-contract'
+} from '@big-whale-labs/seal-cred-ledger-contract'
 
 import defaultProvider from 'helpers/defaultProvider'
 
