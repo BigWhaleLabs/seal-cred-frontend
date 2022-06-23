@@ -54,7 +54,7 @@ const workTitleLeft = classnames(
 export default function () {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
-  const [email, setEmail] = useState<string | undefined>('@bwl.gg')
+  const [email, setEmail] = useState<string | undefined>()
 
   const domain = email ? email.split('@')[1] : ''
 
