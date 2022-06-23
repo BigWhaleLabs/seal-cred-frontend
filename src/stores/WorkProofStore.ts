@@ -36,12 +36,13 @@ class WorkProofStore extends PersistableStore {
       ])
 
       // Generate input
+      const privateInput = await unpackSignature(messageUInt8, packedSignature)
       const input = {
         message: Array.from(messageUInt8),
         domain: Array.from(domainBytes),
         pubKeyX: x,
         pubKeyY: y,
-        ...unpackSignature(messageUInt8, packedSignature),
+        ...privateInput,
       }
 
       // Check navigator availability

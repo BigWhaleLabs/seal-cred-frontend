@@ -36,12 +36,13 @@ class ProofStore extends PersistableStore {
 
       // Generate input
       const messageUInt8 = utils.toUtf8Bytes(message)
+      const privateInput = await unpackSignature(messageUInt8, signature)
       const input = {
         message: Array.from(messageUInt8),
         tokenAddress: Array.from(utils.toUtf8Bytes(contract.toLowerCase())),
         pubKeyX: x,
         pubKeyY: y,
-        ...unpackSignature(messageUInt8, signature),
+        ...privateInput,
       }
 
       // Check navigator availability
