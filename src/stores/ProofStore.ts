@@ -44,7 +44,7 @@ class ProofStore extends PersistableStore {
     return selected
   }
 
-  get nftsProofsCompleted() {
+  get ERC721ProofsCompleted() {
     const selected = []
     for (const proof of this.proofsCompleted) {
       if (proof instanceof ERC721Proof) selected.push(proof)

@@ -1,9 +1,9 @@
 import { AccentText, BodyText } from 'components/Text'
 import { useSnapshot } from 'valtio'
+import EmailProof from 'components/proofs/EmailProof'
 import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
-import ReadyWorkProof from 'components/proofs/ReadyWorkProof'
-import WorkProof from 'components/proofs/WorkProof'
+import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 
 export default function () {
   const { workProofsCompleted } = useSnapshot(ProofStore)
@@ -19,9 +19,9 @@ export default function () {
       }
     >
       {Array.from(workProofsCompleted).map((proof, index) => (
-        <ReadyWorkProof proof={proof} key={`${proof.domain}-${index}`} />
+        <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
       ))}
-      <WorkProof />
+      <EmailProof />
     </ProofSection>
   )
 }

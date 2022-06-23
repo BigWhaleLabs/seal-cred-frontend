@@ -10,11 +10,11 @@ import walletStore from 'stores/WalletStore'
 
 export default function () {
   const { account } = useSnapshot(walletStore)
-  const { nftsProofsCompleted } = useSnapshot(proofStore)
+  const { ERC721ProofsCompleted } = useSnapshot(proofStore)
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
 
   const nothingToGenerate =
-    nftsProofsCompleted.length === 0 &&
+    ERC721ProofsCompleted.length === 0 &&
     proofAddressesAvailableToCreate.length === 0
 
   return (

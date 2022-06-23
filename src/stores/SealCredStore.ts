@@ -1,6 +1,6 @@
 import { erc721Ledger, workLedger } from 'helpers/sealCred'
 import { proxyWithComputed } from 'valtio/utils'
-import EmailLedger from 'models/WorkLedger'
+import EmailLedger from 'models/EmailLedger'
 import Ledger from 'models/Ledger'
 import getEmailLedger from 'helpers/getEmailLedger'
 import getLedger from 'helpers/getLedger'

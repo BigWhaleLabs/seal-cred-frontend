@@ -6,13 +6,13 @@ import Proof from 'components/proofs/Proof'
 import ProofStore from 'stores/ProofStore'
 
 function ContractList() {
-  const { nftsProofsCompleted } = useSnapshot(ProofStore)
+  const { ERC721ProofsCompleted } = useSnapshot(ProofStore)
 
   return (
     <>
-      {!!nftsProofsCompleted?.length && (
+      {!!ERC721ProofsCompleted?.length && (
         <ContractListContainer>
-          {Array.from(nftsProofsCompleted)
+          {Array.from(ERC721ProofsCompleted)
             .sort((a, b) => (a.account === b.account ? 0 : -1))
             .map((proof) => (
               <Proof
