@@ -8,6 +8,7 @@ import SealCredStore from 'stores/SealCredStore'
 import Smile from 'icons/Smile'
 import Title from 'components/Title'
 import classnames, {
+  alignItems,
   borderColor,
   display,
   flexDirection,
@@ -19,7 +20,8 @@ import handleError from 'helpers/handleError'
 const walletBox = classnames(
   display('flex'),
   flexDirection('flex-row'),
-  space('space-x-4')
+  space('space-x-4'),
+  alignItems('items-center')
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
 export default function ({
@@ -29,8 +31,9 @@ export default function ({
   derivativeAddress: string
   tokenId: string
 }) {
-  const { reverseErc721Ledger } = useSnapshot(SealCredStore)
-  const record = reverseErc721Ledger[derivativeAddress]
+  const { reverseErc721Ledger, reverseEmailLedger } = useSnapshot(SealCredStore)
+  const emailRecord = reverseEmailLedger[derivativeAddress]
+  const record = reverseErc721Ledger[derivativeAddress] || emailRecord
 
   if (!record) {
     handleError('Looks like this contract was removed')
@@ -49,7 +52,9 @@ export default function ({
       spinner="Certified with SealCred ZK Proof"
     >
       <HeaderText extraLeading>
-        This wallet owns a{' '}
+        {emailRecord
+          ? 'This wallet belongs to someone with'
+          : 'This wallet owns a'}{' '}
         <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
           <AccentText bold color="text-secondary">
             <ContractName address={derivativeAddress} />
@@ -58,16 +63,18 @@ export default function ({
       </HeaderText>
 
       <BodyText>
-        This is a zkNFT derivative. It means this person has been verified to
-        own at least one ‘
+        {emailRecord
+          ? 'This is a zkNFT derivative of a work email. It means this person has been verified to work at '
+          : 'This is a zkNFT derivative. It means this person has been verified to own at least one '}
+        ‘
         <ExternalLink
-          url={getEtherscanAddressUrl(record.originalContract.address)}
+          url={getEtherscanAddressUrl(record.derivativeContract.address)}
         >
           <AccentText color="text-secondary">
-            <ContractName address={record.originalContract.address} />
+            <ContractName address={record.derivativeContract.address} />
           </AccentText>
         </ExternalLink>
-        ‘ NFT.
+        ‘{emailRecord ? '.' : ' NFT.'}
       </BodyText>
 
       <hr className={borderColor('border-primary-semi-dimmed')} />
