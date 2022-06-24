@@ -62,6 +62,9 @@ ERC721LedgerContract.on(
         originalContract,
         derivativeContract
       )
+      SealCredStore.ERC721Ledger = Promise.resolve({
+        ...ledger,
+      })
     }
   }
 )
@@ -81,6 +84,9 @@ SCEmailLedgerContract.on(
     const ledger = await SealCredStore.emailLedger
     if (!ledger[email]) {
       ledger[email] = getEmailLedgerRecord(derivativeContract)
+      SealCredStore.emailLedger = Promise.resolve({
+        ...ledger,
+      })
     }
   }
 )
