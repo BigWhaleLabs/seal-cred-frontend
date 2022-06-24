@@ -7,25 +7,23 @@ import Title from 'components/Title'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
-  const { erc721DerivativeContracts } = useSnapshot(SealCredStore)
+  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
   const { contractsOwned } = useSnapshot(ContractsStore)
 
-  const ownederc721DerivativeContracts = erc721DerivativeContracts.filter(
+  const ownedDerivativeContracts = derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
   )
 
   const hasUnminted = proofsAvailableToMint.length > 0
 
-  return !Object.keys(erc721DerivativeContracts).length ? (
-    <LoadingTitle />
-  ) : (
+  return (
     <Title
       title="Create ZK badges"
       subtitle={
         hasUnminted
           ? 'Looks like you can create ZK badges for this wallet'
-          : ownederc721DerivativeContracts.length
+          : ownedDerivativeContracts.length
           ? 'You’ve minted all of your available badges'
           : 'Once you’ve created a ZK proof, you will be able to mint ZK badges for your anonymous wallets'
       }

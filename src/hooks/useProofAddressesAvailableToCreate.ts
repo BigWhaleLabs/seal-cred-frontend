@@ -4,21 +4,22 @@ import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
 
 export default function () {
-  const { proofsCompleted } = useSnapshot(ProofStore)
+  const { ERC721ProofsCompleted } = useSnapshot(ProofStore)
   const { contractsOwned } = useSnapshot(ContractsStore)
-  const { erc721DerivativeContracts } = useSnapshot(SealCredStore)
-  const completedProofAddressesMap = [...proofsCompleted].reduce(
+  const { derivativeContracts } = useSnapshot(SealCredStore)
+  const completedERC721ProofAddressesMap = [...ERC721ProofsCompleted].reduce(
     (result, proof) => ({
       ...result,
       [proof.contract]: true,
     }),
     {} as { [address: string]: boolean }
   )
+  // TODO: add emailProofsCompleted
   return (
     contractsOwned.filter(
       (address) =>
-        !erc721DerivativeContracts.includes(address) &&
-        !completedProofAddressesMap[address]
+        !derivativeContracts.includes(address) &&
+        !completedERC721ProofAddressesMap[address]
     ) || []
   )
 }

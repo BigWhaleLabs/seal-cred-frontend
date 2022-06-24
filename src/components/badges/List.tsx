@@ -29,36 +29,30 @@ const badgesList = classnames(
   gridTemplateColumns('grid-cols-1', 'lg:grid-cols-2')
 )
 function BadgeListSuspended() {
-  const { erc721DerivativeContracts = [] } = useSnapshot(SealCredStore)
+  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const { contractsOwned } = useSnapshot(ContractsStore)
 
-  const ownederc721DerivativeContracts = erc721DerivativeContracts.filter(
+  const ownedDerivativeContracts = derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
   )
 
   const proofsAvailableToMint = useProofsAvailableToMint()
   const isEmpty =
-    !Object.keys(ownederc721DerivativeContracts).length &&
+    !Object.keys(ownedDerivativeContracts).length &&
     !proofsAvailableToMint.length
 
-  return !Object.keys(erc721DerivativeContracts).length ? (
-    <BodyText>Fetching derivative NFTs...</BodyText>
-  ) : isEmpty ? (
+  return isEmpty ? (
     <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
   ) : (
     <div className={badgesList}>
-      {ownederc721DerivativeContracts.map((contractAddress) => (
+      {ownedDerivativeContracts.map((contractAddress) => (
         <BadgesOwnedForContract
           key={contractAddress}
           contractAddress={contractAddress}
         />
       ))}
       {proofsAvailableToMint.map((proof) => (
-        <BadgeBlock
-          key={proof.contract ? proof.contract : proof.domain}
-          contractAddress={proof.contract || undefined}
-          domain={proof.domain || undefined}
-        />
+        <BadgeBlock key={proof.key} proof={proof} />
       ))}
     </div>
   )

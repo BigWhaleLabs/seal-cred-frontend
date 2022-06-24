@@ -3,22 +3,23 @@ import { useSnapshot } from 'valtio'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import HintCard from 'components/badges/HintCard'
 import ProofSection from 'components/ProofSection'
-import ReadyProofsList from 'components/proofs/ReadyProofsList'
+import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
 import proofStore from 'stores/ProofStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 import walletStore from 'stores/WalletStore'
 
 export default function () {
   const { account } = useSnapshot(walletStore)
-  const { proofsCompleted } = useSnapshot(proofStore)
+  const { ERC721ProofsCompleted } = useSnapshot(proofStore)
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
 
   const nothingToGenerate =
-    proofsCompleted.length === 0 && proofAddressesAvailableToCreate.length === 0
+    ERC721ProofsCompleted.length === 0 &&
+    proofAddressesAvailableToCreate.length === 0
 
   return (
     <ProofSection title={<BodyText>NFTs</BodyText>}>
-      <ReadyProofsList />
+      <ReadyERC721ProofsList />
       {account && <AvailableProofsList />}
       {nothingToGenerate && <HintCard text="No NFts to proof" />}
     </ProofSection>

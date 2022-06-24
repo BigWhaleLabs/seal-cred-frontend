@@ -1,12 +1,12 @@
 import { AccentText, BodyText } from 'components/Text'
 import { useSnapshot } from 'valtio'
+import EmailProof from 'components/proofs/EmailProof'
 import ProofSection from 'components/ProofSection'
-import ReadyWorkProof from 'components/proofs/ReadyWorkProof'
-import WorkProof from 'components/proofs/WorkProof'
-import workProofStore from 'stores/WorkProofStore'
+import ProofStore from 'stores/ProofStore'
+import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 
 export default function () {
-  const { proofsCompleted } = useSnapshot(workProofStore)
+  const { emailProofsCompleted } = useSnapshot(ProofStore)
   return (
     <ProofSection
       title={
@@ -18,10 +18,10 @@ export default function () {
         </BodyText>
       }
     >
-      {Array.from(proofsCompleted).map((proof) => (
-        <ReadyWorkProof proof={proof} key={proof.domain + Math.random()} />
+      {Array.from(emailProofsCompleted).map((proof, index) => (
+        <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
       ))}
-      <WorkProof />
+      <EmailProof />
     </ProofSection>
   )
 }

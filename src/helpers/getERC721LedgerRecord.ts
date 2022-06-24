@@ -2,7 +2,6 @@ import {
   ERC721__factory,
   SCERC721Derivative__factory,
 } from '@big-whale-labs/seal-cred-ledger-contract'
-
 import defaultProvider from 'helpers/defaultProvider'
 
 export default function (originalContract: string, derivativeContract: string) {

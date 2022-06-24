@@ -1,7 +1,7 @@
 import { AccentText, BodyText } from 'components/Text'
 import Complete from 'icons/Complete'
+import EmailProof from 'helpers/EmailProof'
 import Line from 'components/proofs/Line'
-import WorkProof from 'models/WorkProof'
 import classnames, {
   alignItems,
   display,
@@ -36,7 +36,7 @@ const textWithIcon = classnames(
   space('space-x-2')
 )
 
-export default function ({ proof }: { proof: WorkProof }) {
+export default function ({ proof }: { proof: EmailProof }) {
   const { xs } = useBreakpoints()
 
   return (

@@ -17,8 +17,9 @@ type FadeType = 'top' | 'bottom' | 'both'
 
 interface ScrollbarProps {
   fade?: FadeType
-  extraPadding?: boolean
   parentHeight?: number
+  bottomPadding?: number
+  titlePadding?: number
 }
 
 const scrollContainer = classnames(
@@ -32,15 +33,18 @@ export default function ({
   children,
   fade = 'both',
   parentHeight = 0,
-  extraPadding = false,
+  bottomPadding = 0,
+  titlePadding = 0,
 }: ChildrenProp & ScrollbarProps) {
   const { height = 0, ref } = useResizeDetector({ handleWidth: false })
+  const maximumHeightSize = 370 // the maximum height of the block by design
+  const fullHeightInPercentage = 100 // the thumb height in percentages
 
   const thumbRef = useRef() as MutableRef<HTMLDivElement>
-  const [thumbHeight, setThumbHeight] = useState(100)
-  const extaHeightParent = parentHeight > 370 ? 40 : 0
-  const extaHeightTitle = extraPadding ? 32 : 0
-  const extraReservedSpace = extaHeightParent + extaHeightTitle
+  const [thumbHeight, setThumbHeight] = useState(fullHeightInPercentage)
+  const extaBottomPadding = parentHeight > maximumHeightSize ? bottomPadding : 0
+  const extaTitlePadding = titlePadding
+  const extraReservedSpace = extaBottomPadding + extaTitlePadding
 
   const { overflows, scrollMaxHeight, isOnTop, isOnBottom, wrapperRef } =
     useIsOverflow(ref, height - extraReservedSpace)
@@ -54,6 +58,7 @@ export default function ({
     const numberOfViews = wrapCurrent.scrollHeight / wrapCurrent.clientHeight
     const scroll = wrapCurrent.scrollTop / numberOfViews
 
+    // to prevent floating-point operation use px here
     thumbRef.current.style.top = scroll + 'px'
   }
 
@@ -64,12 +69,14 @@ export default function ({
 
     setTimeout(() => {
       const numberOfViews = current.scrollHeight / current.clientHeight
-      setThumbHeight(100 / numberOfViews)
+      setThumbHeight(fullHeightInPercentage / numberOfViews)
     }, 400)
   }, [
-    wrapperRef,
+    titlePadding,
     parentHeight,
-    extraPadding,
+    bottomPadding,
+    ref,
+    wrapperRef,
     wrapperRef.current?.scrollHeight,
     wrapperRef.current?.clientHeight,
   ])

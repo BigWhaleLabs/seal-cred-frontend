@@ -1,9 +1,10 @@
-import { BadgeText, BodyText } from 'components/Text'
+import { BadgeText } from 'components/Text'
 import { sendEmail } from 'helpers/attestor'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import EmailForm from 'components/EmailForm'
 import Line from 'components/proofs/Line'
+import ProofStore from 'stores/ProofStore'
 import QuestionMark from 'components/QuestionMark'
 import TextForm from 'components/TextForm'
 import ToolTip from 'components/ToolTip'
@@ -20,7 +21,6 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
-import workProofStore from 'stores/WorkProofStore'
 
 const arrowContainer = classnames(
   textColor('text-transparent', 'active:text-accent'),
@@ -33,7 +33,7 @@ const arrowContainer = classnames(
   fontWeight('font-bold')
 )
 
-const workTitleContainer = classnames(
+const emailTitleContainer = classnames(
   display('flex'),
   justifyContent('justify-between')
 )
@@ -44,7 +44,7 @@ const proofLineContainer = classnames(
   width('w-full')
 )
 
-const workTitleLeft = classnames(
+const emailTitleLeft = classnames(
   display('flex'),
   space('space-x-2'),
   justifyContent('justify-center'),
@@ -73,7 +73,7 @@ export default function () {
 
     setLoading(true)
     try {
-      if (secret) await workProofStore.generate(domain, secret)
+      if (secret) await ProofStore.generateEmail(domain, secret)
     } finally {
       setLoading(false)
       setOpen(false)
@@ -88,8 +88,8 @@ export default function () {
     <Line breakWords>
       <div className={proofLineContainer}>
         <ToolTip position="bottom" text={popoverText} fitContainer>
-          <div className={workTitleContainer}>
-            <div className={workTitleLeft}>
+          <div className={emailTitleContainer}>
+            <div className={emailTitleLeft}>
               <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
               <QuestionMark />
             </div>

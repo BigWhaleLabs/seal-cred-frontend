@@ -1,6 +1,6 @@
 import defaultProvider from 'helpers/defaultProvider'
-import getSealCred from 'helpers/getSealCred'
-import getSealCredWork from 'helpers/getSealCredWork'
+import getSealCredERC721 from 'helpers/getSealCredERC721'
+import getSealCredEmail from 'helpers/getSealCredEmail'
 
-export const erc721Ledger = getSealCred(defaultProvider)
-export const workLedger = getSealCredWork(defaultProvider)
+export const ERC721LedgerContract = getSealCredERC721(defaultProvider)
+export const SCEmailLedgerContract = getSealCredEmail(defaultProvider)
