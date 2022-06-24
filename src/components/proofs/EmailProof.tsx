@@ -70,11 +70,10 @@ export default function () {
   }
 
   async function onGenerateProof(secret: string) {
-    if (!checkDomainToken(secret)) {
+    if (!checkDomainToken(secret))
       return setError(
         'This is an invalid token. Try re-entering your email to get a new token.'
       )
-    }
 
     setLoading(true)
     setError(undefined)
