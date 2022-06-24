@@ -6,7 +6,7 @@ import SealCredStore from 'stores/SealCredStore'
 export default function () {
   const { ERC721ProofsCompleted } = useSnapshot(ProofStore)
   const { contractsOwned } = useSnapshot(ContractsStore)
-  const { derivativeContracts } = useSnapshot(SealCredStore)
+  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const completedERC721ProofAddressesMap = [...ERC721ProofsCompleted].reduce(
     (result, proof) => ({
       ...result,
