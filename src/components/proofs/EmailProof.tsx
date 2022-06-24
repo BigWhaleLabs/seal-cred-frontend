@@ -1,4 +1,4 @@
-import { BadgeText } from 'components/Text'
+import { BadgeText, BodyText } from 'components/Text'
 import { sendEmail } from 'helpers/attestor'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
@@ -98,8 +98,8 @@ export default function () {
         <ToolTip position="bottom" text={popoverText} fitContainer>
           <div className={emailTitleContainer}>
             <div className={emailTitleLeft}>
-              <span>{domain ? `Work domain @${domain}` : `Work email`}</span>
-              <QuestionMark />
+              <BodyText small>Work email</BodyText>
+              <QuestionMark small />
             </div>
             <button className={arrowContainer} onClick={() => setOpen(!open)}>
               {!open && !domain && <span>Get started</span>}
