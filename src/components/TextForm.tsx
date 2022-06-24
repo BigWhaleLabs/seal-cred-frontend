@@ -10,7 +10,7 @@ export default function ({
   submitText = 'Submit',
 }: {
   loading?: boolean
-  onSubmit: (text?: string) => void
+  onSubmit: (text: string) => void
   placeholder?: string
   submitText?: string
 }) {
@@ -24,7 +24,7 @@ export default function ({
         value={text}
         onChange={(e) => setText((e.target as HTMLInputElement).value || '')}
         onKeyDown={(event) =>
-          event.code === 'Enter' ? onSubmit(text) : undefined
+          event.code === 'Enter' && !!text.length ? onSubmit(text) : undefined
         }
       />
       <Button

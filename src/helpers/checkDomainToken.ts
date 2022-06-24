@@ -1,11 +1,10 @@
 export default function (secret: string) {
-  const regexpMessage = /^[a-zA-Z\d]{130}$/g
-  const regexpNulifier = /^[a-zA-Z\d]{14}$/g
-
-  const splittedSecret = secret.trim().split('-')
-
-  return (
-    regexpMessage.test(splittedSecret[0]) &&
-    regexpNulifier.test(splittedSecret[1])
+  const messageLength = 130
+  const nulifierLength = 14
+  const regex = new RegExp(
+    `^[a-zA-Z\\d]{${messageLength}}-[a-zA-Z\\d]{${nulifierLength}}$`,
+    'g'
   )
+
+  return regex.test(secret.trim())
 }
