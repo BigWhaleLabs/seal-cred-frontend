@@ -55,6 +55,7 @@ export default function () {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
   const [email, setEmail] = useState<string | undefined>()
+  const [error, setError] = useState<string | undefined>()
 
   const domain = email ? email.split('@')[1] : ''
 
@@ -69,7 +70,14 @@ export default function () {
   }
 
   async function onGenerateProof(secret: string) {
-    if (!checkDomainToken(secret)) return // Show error state here
+    setError(undefined)
+
+    if (!checkDomainToken(secret)) {
+      setError(
+        'This is an invalid token. Try re-entering your email to get a new token.'
+      )
+      return
+    }
 
     setLoading(true)
     try {
@@ -112,6 +120,7 @@ export default function () {
                 placeholder="Paste token here"
                 onSubmit={onGenerateProof}
                 loading={loading}
+                error={error}
               />
             ) : (
               <EmailForm
