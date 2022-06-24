@@ -15,6 +15,7 @@ import classnames, {
   lineHeight,
   margin,
   padding,
+  textDecoration,
   transitionProperty,
   translate,
 } from 'classnames/tailwind'
@@ -40,6 +41,8 @@ const crossWrapper = classnames(
   margin('ml-auto')
 )
 
+const announcementLink = classnames(textDecoration('underline'))
+
 export default function () {
   const { announcementClosed, announcementText } =
     useSnapshot(announcementStore)
@@ -53,6 +56,15 @@ export default function () {
       <div className={classnames(flex('flex-1'))} />
       <AccentText small bold color="text-formal-accent">
         {announcementText}
+        <a
+          href="/app"
+          className={announcementLink}
+          onClick={() => {
+            announcementStore.announcementClosed = true
+          }}
+        >
+          Connect your wallet to get started.
+        </a>
       </AccentText>
       <div className={crossWrapper}>
         <Button
