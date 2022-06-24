@@ -72,7 +72,7 @@ function Badge({ proof }: { proof: BaseProof }) {
             ) : (
               'Unknown'
             )}{' '}
-            (derivative)
+            {isEmailProof ? '(email)' : '(derivative)'}
           </>
         )
       }
