@@ -10,6 +10,9 @@ export default cleanEnv(import.meta.env, {
   VITE_APP_NAME: str(),
   VITE_ETH_NETWORK: str({ default: ETH_NETWORK }),
   VITE_ETH_RPC: str({ default: ETH_RPC }),
-  VITE_SCLEDGER_CONTRACT_ADDRESS: str({ default: SCLEDGER_CONTRACT_ADDRESS }),
+  VITE_SC_ERC721_LEDGER_CONTRACT_ADDRESS: str({
+    default: SCLEDGER_CONTRACT_ADDRESS,
+  }),
   VITE_VERIFY_URL: str(),
+  VITE_SC_EMAIL_LEDGER_CONTRACT_ADDRESS: str(),
 })

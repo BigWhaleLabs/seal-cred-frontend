@@ -1,15 +1,19 @@
+import { ERC721LedgerContract, SCEmailLedgerContract } from 'helpers/sealCred'
 import { proxyWithComputed } from 'valtio/utils'
-import Ledger from 'models/Ledger'
-import getLedger from 'helpers/getLedger'
-import getLedgerRecord from 'helpers/getLedgerRecord'
-import sealCred from 'helpers/sealCred'
+import ERC721Ledger from 'models/ERC721Ledger'
+import EmailLedger from 'models/EmailLedger'
+import getERC721Ledger from 'helpers/getERC721Ledger'
+import getERC721LedgerRecord from 'helpers/getERC721LedgerRecord'
+import getEmailLedger from 'helpers/getEmailLedger'
+import getEmailLedgerRecord from 'helpers/getEmailLedgerRecord'
 
 interface SealCredStoreType {
-  ledger: Promise<Ledger>
+  ERC721Ledger: Promise<ERC721Ledger>
+  emailLedger: Promise<EmailLedger>
 }
 
 interface ComputedSealCredStoreType {
-  reverseLedger: Ledger
+  reverseErc721Ledger: ERC721Ledger
   derivativeContracts: string[]
 }
 
@@ -18,11 +22,12 @@ const SealCredStore = proxyWithComputed<
   ComputedSealCredStoreType
 >(
   {
-    ledger: getLedger(),
+    ERC721Ledger: getERC721Ledger(ERC721LedgerContract),
+    emailLedger: getEmailLedger(SCEmailLedgerContract),
   },
   {
-    reverseLedger: (state) =>
-      Object.values(state.ledger).reduce(
+    reverseErc721Ledger: (state) =>
+      Object.values(state.ERC721Ledger).reduce(
         (prev, { originalContract, derivativeContract }) => ({
           ...prev,
           [derivativeContract.address]: {
@@ -32,36 +37,59 @@ const SealCredStore = proxyWithComputed<
         }),
         {}
       ),
-    derivativeContracts: (state) =>
-      Object.values(state.ledger).map(
+    derivativeContracts: (state) => [
+      ...Object.values(state.ERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract.address
       ),
+      ...Object.values(state.emailLedger).map(
+        ({ derivativeContract }) => derivativeContract.address
+      ),
+    ],
   }
 )
 
-sealCred.on(
-  sealCred.filters.CreateDerivativeContract(),
+ERC721LedgerContract.on(
+  ERC721LedgerContract.filters.CreateDerivativeContract(),
   async (originalContract, derivativeContract) => {
     console.info(
       'CreateDerivativeContract event',
       originalContract,
       derivativeContract
     )
-    const ledger = await SealCredStore.ledger
+    const ledger = await SealCredStore.ERC721Ledger
     if (!ledger[originalContract]) {
-      ledger[originalContract] = getLedgerRecord(
+      ledger[originalContract] = getERC721LedgerRecord(
         originalContract,
         derivativeContract
       )
     }
   }
 )
-sealCred.on(
-  sealCred.filters.DeleteOriginalContract(),
+ERC721LedgerContract.on(
+  ERC721LedgerContract.filters.DeleteOriginalContract(),
   async (originalContract) => {
     console.info('DeleteOriginalContract event', originalContract)
-    const ledger = await SealCredStore.ledger
+    const ledger = await SealCredStore.ERC721Ledger
     delete ledger[originalContract]
+  }
+)
+
+SCEmailLedgerContract.on(
+  SCEmailLedgerContract.filters.CreateDerivativeContract(),
+  async (email, derivativeContract) => {
+    console.info('CreateDerivativeContract event', email, derivativeContract)
+    const ledger = await SealCredStore.emailLedger
+    if (!ledger[email]) {
+      ledger[email] = getEmailLedgerRecord(derivativeContract)
+    }
+  }
+)
+SCEmailLedgerContract.on(
+  SCEmailLedgerContract.filters.DeleteEmail(),
+  async (email) => {
+    console.info('DeleteOriginalContract event', email)
+    const ledger = await SealCredStore.emailLedger
+    delete ledger[email]
   }
 )
 
