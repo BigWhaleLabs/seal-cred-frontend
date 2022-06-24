@@ -25,6 +25,7 @@ export default function () {
           the anonymous wallet.
         </p>
         <Button
+          type="tertiary"
           withArrow
           onClick={async () => {
             await WalletStore.connect(true)

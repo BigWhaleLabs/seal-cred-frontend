@@ -22,6 +22,7 @@ export default function () {
       </div>
       <div className={learnMoreText}>
         <Button
+          type="tertiary"
           withArrow
           fontSmall
           onClick={() =>
