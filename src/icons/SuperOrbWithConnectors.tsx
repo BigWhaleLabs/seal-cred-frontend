@@ -152,7 +152,13 @@ const SuperOrb = () => (
       stroke-width="2"
     />
     <g mask="url(#c)">
-      <circle cx="53.5" cy="41.5" r="30.5" fill="url(#d)" />
+      <circle
+        cx="53.5"
+        cy="41.5"
+        r="30.5"
+        fill="url(#d)"
+        className={dropShadow('drop-shadow-formal-accent')}
+      />
       <circle cx="53.5" cy="41.5" r="30.5" fill="url(#e)" />
       <circle cx="53.5" cy="41.5" r="30.5" fill="url(#f)" />
       <g mask="url(#g)">
