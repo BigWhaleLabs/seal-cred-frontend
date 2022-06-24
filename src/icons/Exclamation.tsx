@@ -15,27 +15,27 @@ export default function () {
       xmlns="http://www.w3.org/2000/svg"
     >
       <circle
-        cx="6.50004"
-        cy="6.50016"
-        r="5.41667"
+        cx="6.5"
+        cy="6.5"
+        r="5.4"
         stroke-linecap="round"
         stroke-linejoin="round"
         className={svgElementClasses}
       />
       <line
-        x1="6.50004"
-        y1="3.79167"
-        x2="6.50004"
+        x1="6.5"
+        y1="3.8"
+        x2="6.5"
         y2="6.5"
         stroke-linecap="round"
         stroke-linejoin="round"
         className={svgElementClasses}
       />
       <line
-        x1="6.50004"
-        y1="8.66667"
-        x2="6.50004"
-        y2="9.20833"
+        x1="6.5"
+        y1="8.6"
+        x2="6.5"
+        y2="9.2"
         stroke-linecap="round"
         stroke-linejoin="round"
         className={svgElementClasses}

@@ -255,7 +255,7 @@ const tinyText = (color: 'base' | 'primary' | 'error') =>
     ),
     fontFamily('font-primary'),
     fontSize('text-xs'),
-    lineHeight('!leading-3')
+    lineHeight('leading-3')
   )
 export function TinyText({
   color,

@@ -18,12 +18,13 @@ export default function ({
   submitText?: string
 }) {
   const [text, setText] = useState('')
+  const hasError = !!error
 
   return (
     <>
       <Input
         type="text"
-        isError={!!error}
+        isError={hasError}
         disabled={loading}
         placeholder={placeholder}
         value={text}
@@ -32,7 +33,7 @@ export default function ({
           event.code === 'Enter' && text.length ? onSubmit(text) : undefined
         }
       />
-      {!!error && <TinyMessage withIcon state="error" text={error} />}
+      {hasError && <TinyMessage withIcon state="error" text={error} />}
       <Button
         loading={loading}
         fullWidth
