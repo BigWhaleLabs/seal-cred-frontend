@@ -70,16 +70,14 @@ export default function () {
   }
 
   async function onGenerateProof(secret: string) {
-    setError(undefined)
-
     if (!checkDomainToken(secret)) {
-      setError(
+      return setError(
         'This is an invalid token. Try re-entering your email to get a new token.'
       )
-      return
     }
 
     setLoading(true)
+    setError(undefined)
     try {
       if (secret) await ProofStore.generateEmail(domain, secret)
     } finally {
