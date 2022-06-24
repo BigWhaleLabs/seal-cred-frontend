@@ -69,7 +69,7 @@ export default function () {
   }
 
   async function onGenerateProof(secret: string) {
-    if (!checkDomainToken(secret)) return // Show error state here
+    if (!checkDomainToken(secret)) return // TODO: Show error state here
 
     setLoading(true)
     try {
