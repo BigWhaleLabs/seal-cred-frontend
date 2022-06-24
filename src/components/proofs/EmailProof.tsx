@@ -8,6 +8,7 @@ import ProofStore from 'stores/ProofStore'
 import QuestionMark from 'components/QuestionMark'
 import TextForm from 'components/TextForm'
 import ToolTip from 'components/ToolTip'
+import checkDomainToken from 'helpers/checkDomainToken'
 import classnames, {
   alignItems,
   backgroundClip,
@@ -67,7 +68,9 @@ export default function () {
     }
   }
 
-  async function onGenerateProof(secret?: string) {
+  async function onGenerateProof(secret: string) {
+    if (!checkDomainToken(secret)) return
+
     setLoading(true)
     try {
       if (secret) await ProofStore.generateEmail(domain, secret)
