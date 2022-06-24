@@ -55,6 +55,7 @@ export default function () {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(true)
   const [email, setEmail] = useState<string | undefined>()
+  const [error, setError] = useState<string | undefined>()
 
   const domain = email ? email.split('@')[1] : ''
 
@@ -69,9 +70,13 @@ export default function () {
   }
 
   async function onGenerateProof(secret: string) {
-    if (!checkDomainToken(secret)) return
+    if (!checkDomainToken(secret))
+      return setError(
+        'This is an invalid token. Try re-entering your email to get a new token.'
+      )
 
     setLoading(true)
+    setError(undefined)
     try {
       if (secret) await ProofStore.generateEmail(domain, secret)
     } finally {
@@ -112,6 +117,7 @@ export default function () {
                 placeholder="Paste token here"
                 onSubmit={onGenerateProof}
                 loading={loading}
+                error={error}
               />
             ) : (
               <EmailForm

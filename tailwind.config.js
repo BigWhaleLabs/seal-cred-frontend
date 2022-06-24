@@ -30,6 +30,7 @@ module.exports = {
         '4xl': '2.5rem',
       },
       lineHeight: {
+        3: '0.875rem',
         5: '1.125rem',
         6: '1.313rem',
         8: '1.938rem',
@@ -51,13 +52,16 @@ module.exports = {
         secondary: '#ff7bed',
         tertiary: '#01feb6',
         'formal-accent': '#efecd6',
+
         error: '#FF7B83',
+        'error-dark': '#3E1B1E',
 
         'primary-dark': '#0d0030',
         'primary-light': '#bff5fa',
         'primary-dimmed': '#3a00d6',
         'primary-semi-dimmed': '#4b61d5',
         'primary-background': '#1a0259',
+        'primary-dark-red': '#210030',
 
         'accent-light-transparent': '#FF7BED69',
         'secondary-light-transparent': '#FED82369',
@@ -69,6 +73,7 @@ module.exports = {
         'secondary-semi-transparent': 'rgba(255, 123, 237, 0.5)',
         'tertiary-semi-transparent': 'rgba(1, 254, 182, 0.4)',
         'formal-accent-semi-transparent': 'rgba(239, 236, 214, 0.4)',
+        'error-semi-transparent': 'rgba(255, 123, 131, .2)',
       },
       boxShadow: {
         '2xl': '0rem 0.25rem 2.75rem 0rem rgb(0 0 0 / 0.25)',

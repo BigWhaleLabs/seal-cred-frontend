@@ -243,3 +243,23 @@ const proofSectionTitle = classnames(
 export function ProofSectionTitle({ children }: ChildrenProp) {
   return <p className={proofSectionTitle}>{children}</p>
 }
+
+const tinyText = (color: 'base' | 'primary' | 'error') =>
+  classnames(
+    textColor(
+      color === 'error'
+        ? 'text-error'
+        : color === 'primary'
+        ? 'text-primary-semi-dimmed'
+        : 'text-formal-accent'
+    ),
+    fontFamily('font-primary'),
+    fontSize('text-xs'),
+    lineHeight('leading-3')
+  )
+export function TinyText({
+  color,
+  children,
+}: { color?: 'base' | 'primary' | 'error' } & ChildrenProp) {
+  return <span className={tinyText(color || 'base')}>{children}</span>
+}
