@@ -12,5 +12,4 @@ export default function useDerivativeAddress(proof: BaseProof) {
   if (proof instanceof ERC721Proof && ERC721Ledger[proof.contract]) {
     return ERC721Ledger[proof.contract].derivativeContract.address
   }
-  return
 }

@@ -77,7 +77,7 @@ function Badge({ proof }: { proof: BaseProof }) {
         <Button
           small
           type="primary"
-          loading={!!loading}
+          loading={loading}
           disabled={!proof}
           onClick={checkProofAndMint}
         >
