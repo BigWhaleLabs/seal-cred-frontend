@@ -29,7 +29,7 @@ export default function ({
         value={text}
         onChange={(e) => setText((e.target as HTMLInputElement).value || '')}
         onKeyDown={(event) =>
-          event.code === 'Enter' && !!text.length ? onSubmit(text) : undefined
+          event.code === 'Enter' && text.length ? onSubmit(text) : undefined
         }
       />
       {!!error && <TinyMessage withIcon state="error" text={error} />}
