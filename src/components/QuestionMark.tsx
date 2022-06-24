@@ -14,8 +14,8 @@ import classnames, {
 
 const questionStyles = (small?: boolean) =>
   classnames(
-    width(small ? 'w-5' : 'w-6'),
-    height(small ? 'h-5' : 'h-6'),
+    width(small ? 'w-4' : 'w-6'),
+    height(small ? 'h-4' : 'h-6'),
     borderRadius('rounded-full'),
     borderWidth('border'),
     borderColor('border-current'),
