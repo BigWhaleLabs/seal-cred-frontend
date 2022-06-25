@@ -8,10 +8,10 @@ export default async function (
   const eventsFilter = ledger.filters.CreateDerivativeContract()
   const events = await ledger.queryFilter(eventsFilter)
   const result = events.reduce(
-    (prev, { args: { email, derivativeContract } }) => {
+    (prev, { args: { email: domain, derivativeContract } }) => {
       return {
         ...prev,
-        [email]: getEmailLedgerRecord(derivativeContract),
+        [domain]: getEmailLedgerRecord(derivativeContract, domain),
       }
     },
     {}
