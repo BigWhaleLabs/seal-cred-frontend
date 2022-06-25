@@ -1,10 +1,11 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
-import { useSnapshot } from 'valtio'
+import BaseBadgeContract from 'helpers/BaseBadgeContract'
 import Card from 'components/Card'
 import ContractName from 'components/ContractName'
+import ERC721BadgeContract from 'helpers/ERC721BadgeContract'
+import EmailBadgeContract from 'helpers/EmailBadgeContract'
 import ExternalLink from 'components/ExternalLink'
 import OwnedBadgeAddress from 'components/owned/OwnedBadgeAddress'
-import SealCredStore from 'stores/SealCredStore'
 import Smile from 'icons/Smile'
 import Title from 'components/Title'
 import classnames, {
@@ -16,6 +17,7 @@ import classnames, {
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
+import useBadgeContracts from 'hooks/useBadgeContracts'
 
 const walletBox = classnames(
   display('flex'),
@@ -24,6 +26,62 @@ const walletBox = classnames(
   alignItems('items-center')
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
+
+function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
+  if (badge instanceof EmailBadgeContract) {
+    return (
+      <HeaderText extraLeading>
+        This wallet belongs to someone with{' '}
+        <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
+          <AccentText bold color="text-secondary">
+            <ContractName address={badge.address} />
+          </AccentText>
+        </ExternalLink>
+      </HeaderText>
+    )
+  }
+
+  return (
+    <HeaderText extraLeading>
+      This wallet owns a{' '}
+      <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
+        <AccentText bold color="text-secondary">
+          <ContractName address={badge.address} />
+        </AccentText>
+      </ExternalLink>
+    </HeaderText>
+  )
+}
+
+function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
+  if (badge instanceof EmailBadgeContract) {
+    return (
+      <BodyText>
+        This is a zkNFT derivative of a work email. It means this person has
+        been verified to work at ‘
+        <AccentText color="text-secondary">{badge.domain}</AccentText>‘.
+      </BodyText>
+    )
+  }
+
+  if (badge instanceof ERC721BadgeContract) {
+    return (
+      <BodyText>
+        This is a zkNFT derivative. It means this person has been verified to
+        own at least one ‘
+        <ExternalLink url={getEtherscanAddressUrl(badge.originalERC721)}>
+          <AccentText color="text-secondary">
+            <ContractName address={badge.originalERC721} />
+          </AccentText>
+        </ExternalLink>
+        ‘ NFT.
+      </BodyText>
+    )
+  }
+
+  return null
+}
+
 export default function ({
   derivativeAddress,
   tokenId,
@@ -31,11 +89,10 @@ export default function ({
   derivativeAddress: string
   tokenId: string
 }) {
-  const { reverseErc721Ledger, reverseEmailLedger } = useSnapshot(SealCredStore)
-  const emailRecord = reverseEmailLedger[derivativeAddress]
-  const record = reverseErc721Ledger[derivativeAddress] || emailRecord
+  const contractToBadge = useBadgeContracts()
+  const badge = contractToBadge[derivativeAddress]
 
-  if (!record) {
+  if (!badge) {
     handleError('Looks like this contract was removed')
     return (
       <Card color="secondary" shadow onlyWrap>
@@ -51,41 +108,16 @@ export default function ({
       onlyWrap
       spinner="Certified with SealCred ZK Proof"
     >
-      <HeaderText extraLeading>
-        {emailRecord
-          ? 'This wallet belongs to someone with'
-          : 'This wallet owns a'}{' '}
-        <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
-          <AccentText bold color="text-secondary">
-            <ContractName address={derivativeAddress} />
-          </AccentText>
-        </ExternalLink>
-      </HeaderText>
-
-      <BodyText>
-        {emailRecord
-          ? 'This is a zkNFT derivative of a work email. It means this person has been verified to work at '
-          : 'This is a zkNFT derivative. It means this person has been verified to own at least one '}
-        ‘
-        <ExternalLink
-          url={getEtherscanAddressUrl(record.derivativeContract.address)}
-        >
-          <AccentText color="text-secondary">
-            <ContractName address={record.derivativeContract.address} />
-          </AccentText>
-        </ExternalLink>
-        ‘{emailRecord ? '.' : ' NFT.'}
-      </BodyText>
-
+      <BadgeTitle badge={badge} />
+      <BadgeContent badge={badge} />
       <hr className={borderColor('border-primary-semi-dimmed')} />
-
       <div className={walletBox}>
         <Smile />
         <div className={walletAddress}>
           <BodyText small>Wallet address</BodyText>
           <OwnedBadgeAddress
             tokenId={tokenId}
-            derivativeAddress={derivativeAddress}
+            derivativeAddress={badge.address}
           />
         </div>
       </div>

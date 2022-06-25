@@ -13,8 +13,6 @@ interface SealCredStoreType {
 }
 
 interface ComputedSealCredStoreType {
-  reverseErc721Ledger: ERC721Ledger
-  reverseEmailLedger: EmailLedger
   derivativeContracts: string[]
 }
 
@@ -27,27 +25,6 @@ const SealCredStore = proxyWithComputed<
     emailLedger: getEmailLedger(SCEmailLedgerContract),
   },
   {
-    reverseErc721Ledger: (state) =>
-      Object.values(state.ERC721Ledger).reduce(
-        (prev, { originalContract, derivativeContract }) => ({
-          ...prev,
-          [derivativeContract.address]: {
-            originalContract,
-            derivativeContract,
-          },
-        }),
-        {}
-      ),
-    reverseEmailLedger: (state) =>
-      Object.values(state.emailLedger).reduce(
-        (prev, { derivativeContract }) => ({
-          ...prev,
-          [derivativeContract.address]: {
-            derivativeContract,
-          },
-        }),
-        {}
-      ),
     derivativeContracts: (state) => [
       ...Object.values(state.ERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract.address
@@ -90,11 +67,11 @@ ERC721LedgerContract.on(
 
 SCEmailLedgerContract.on(
   SCEmailLedgerContract.filters.CreateDerivativeContract(),
-  async (email, derivativeContract) => {
-    console.info('CreateDerivativeContract event', email, derivativeContract)
+  async (domain, derivativeContract) => {
+    console.info('CreateDerivativeContract event', domain, derivativeContract)
     const ledger = await SealCredStore.emailLedger
-    if (!ledger[email]) {
-      ledger[email] = getEmailLedgerRecord(derivativeContract)
+    if (!ledger[domain]) {
+      ledger[domain] = getEmailLedgerRecord(derivativeContract, domain)
       SealCredStore.emailLedger = Promise.resolve({
         ...ledger,
       })
@@ -103,10 +80,10 @@ SCEmailLedgerContract.on(
 )
 SCEmailLedgerContract.on(
   SCEmailLedgerContract.filters.DeleteEmail(),
-  async (email) => {
-    console.info('DeleteOriginalContract event', email)
+  async (domain) => {
+    console.info('DeleteOriginalContract event', domain)
     const ledger = await SealCredStore.emailLedger
-    delete ledger[email]
+    delete ledger[domain]
   }
 )
 
