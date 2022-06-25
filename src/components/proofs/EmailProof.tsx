@@ -21,6 +21,7 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const arrowContainer = classnames(
   textColor('text-transparent', 'active:text-accent'),
@@ -47,7 +48,6 @@ const proofLineContainer = classnames(
 const emailTitleLeft = classnames(
   display('flex'),
   space('space-x-2'),
-  justifyContent('justify-center'),
   alignItems('items-center')
 )
 
@@ -56,6 +56,7 @@ export default function () {
   const [open, setOpen] = useState(true)
   const [email, setEmail] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>()
+  const { xs } = useBreakpoints()
 
   const domain = email ? email.split('@')[1] : ''
 
@@ -86,6 +87,7 @@ export default function () {
     }
   }
 
+  const showButtonText = !xs ? !open : false
   const popoverText =
     'When you submit your email, we create a token out of your email’s domain. You can then use that token to create zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
 
@@ -99,7 +101,9 @@ export default function () {
               <QuestionMark small />
             </div>
             <button className={arrowContainer} onClick={() => setOpen(!open)}>
-              {!open && !domain && <span>Get started</span>}
+              {showButtonText && (
+                <span>{!domain ? 'Get started' : 'Set token'}</span>
+              )}
               <Arrow disabled vertical turnDown={open} />
             </button>
           </div>

@@ -1,4 +1,4 @@
-import { AccentText, BodyText } from 'components/Text'
+import { AccentText, ProofText } from 'components/Text'
 import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
@@ -15,6 +15,7 @@ import classnames, {
   alignItems,
   animation,
   display,
+  flex,
   flexDirection,
   fontFamily,
   fontSize,
@@ -26,6 +27,8 @@ import classnames, {
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import useBreakpoints from 'hooks/useBreakpoints'
+
+const proofName = classnames(display('flex'), flex('flex-1'))
 
 const proofText = (small?: boolean) =>
   classnames(
@@ -110,12 +113,14 @@ export default function ({
   const { color, content } = useProofContent(contractAddress, proof)
 
   return (
-    <Line>
-      <BodyText bold small>
-        <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
-          <ContractName address={contractAddress} />
-        </ExternalLink>
-      </BodyText>
+    <Line breakWords>
+      <div className={proofName}>
+        <ProofText>
+          <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
+            <ContractName address={contractAddress} />
+          </ExternalLink>
+        </ProofText>
+      </div>
 
       <div className={proofText(xs)}>
         <AccentText bold color={color}>
