@@ -96,6 +96,15 @@ export function BodyText({
   return <p className={bodyText(bold, small, center)}>{children}</p>
 }
 
+const proofText = classnames(
+  textColor('text-formal-accent'),
+  fontSize('text-sm'),
+  lineHeight('leading-5')
+)
+export function ProofText({ children }: ChildrenProp) {
+  return <p className={proofText}>{children}</p>
+}
+
 const cardHeader = (color?: TTextColor) =>
   textColor(color || 'text-formal-accent')
 export function CardHeader({

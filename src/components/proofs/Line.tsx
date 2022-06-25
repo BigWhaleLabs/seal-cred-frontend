@@ -24,7 +24,7 @@ const contractContainer = (small?: boolean, breakWords?: boolean) =>
     flexDirection(small ? 'flex-col' : 'flex-row'),
     alignItems(small ? 'items-start' : 'items-center'),
     justifyContent('justify-between'),
-    space(small ? 'space-y-1' : null),
+    space(small ? 'space-y-1' : 'space-x-2'),
     backgroundColor('bg-primary-dimmed'),
     borderRadius('rounded-lg'),
     height('h-fit'),

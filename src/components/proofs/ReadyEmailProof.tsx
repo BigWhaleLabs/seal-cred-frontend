@@ -1,10 +1,11 @@
-import { AccentText, BodyText } from 'components/Text'
+import { AccentText, ProofText } from 'components/Text'
 import Complete from 'icons/Complete'
 import EmailProof from 'helpers/EmailProof'
 import Line from 'components/proofs/Line'
 import classnames, {
   alignItems,
   display,
+  flex,
   flexDirection,
   fontFamily,
   fontSize,
@@ -15,6 +16,8 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
+
+const proofName = classnames(display('flex'), flex('flex-1'))
 
 const proofText = (small?: boolean) =>
   classnames(
@@ -41,9 +44,9 @@ export default function ({ proof }: { proof: EmailProof }) {
 
   return (
     <Line>
-      <BodyText bold small>
-        {proof.domain}
-      </BodyText>
+      <div className={proofName}>
+        <ProofText>{proof.domain}</ProofText>
+      </div>
 
       <div className={proofText(xs)}>
         <AccentText bold color="text-accent">
