@@ -1,13 +1,14 @@
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import BadgeCard from 'components/badges/BadgeCard'
-import BadgeIcon from 'icons/BadgeIcon'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import BaseProof from 'helpers/BaseProof'
 import Button from 'components/Button'
 import ContractName from 'components/ContractName'
 import ERC721Proof from 'helpers/ERC721Proof'
+import EmailBadge from 'icons/EmailBadge'
 import EmailProof from 'helpers/EmailProof'
+import Erc721Badge from 'icons/Erc721Badge'
 import ExternalLink from 'components/ExternalLink'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
@@ -20,6 +21,8 @@ function Badge({ proof }: { proof: BaseProof }) {
   const derivativeAddress = useDerivativeAddress(proof)
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
+
+  const isEmailProof = proof instanceof EmailProof
 
   const checkProofAndMint = async () => {
     setLoading(true)
@@ -53,7 +56,7 @@ function Badge({ proof }: { proof: BaseProof }) {
 
   return (
     <BadgeCard
-      top={<BadgeIcon />}
+      top={isEmailProof ? <EmailBadge /> : <Erc721Badge />}
       leanLeft={false}
       text={
         derivativeAddress ? (
@@ -64,12 +67,12 @@ function Badge({ proof }: { proof: BaseProof }) {
           <>
             {proof instanceof ERC721Proof ? (
               <ContractName address={proof.contract} />
-            ) : proof instanceof EmailProof ? (
+            ) : isEmailProof ? (
               proof.domain
             ) : (
               'Unknown'
             )}{' '}
-            (derivative)
+            {isEmailProof ? '(email)' : '(derivative)'}
           </>
         )
       }

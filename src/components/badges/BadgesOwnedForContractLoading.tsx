@@ -1,8 +1,8 @@
 import BadgeCard from 'components/badges/BadgeCard'
-import BadgeIcon from 'icons/BadgeIcon'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import Button from 'components/Button'
 import ContractName from 'components/ContractName'
+import Erc721Badge from 'icons/Erc721Badge'
 import ExternalLink from 'components/ExternalLink'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 
@@ -10,7 +10,7 @@ export default function ({ contractAddress }: { contractAddress: string }) {
   return (
     <BadgeWrapper minted={false}>
       <BadgeCard
-        top={<BadgeIcon />}
+        top={<Erc721Badge />}
         leanLeft
         text={
           <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
