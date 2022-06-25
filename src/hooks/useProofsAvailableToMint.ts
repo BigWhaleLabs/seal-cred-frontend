@@ -6,7 +6,7 @@ import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
 
 export default function () {
-  const { contractsOwned } = useSnapshot(ContractsStore)
+  const { derivativesContractsOwned = [] } = useSnapshot(ContractsStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { ERC721Ledger, emailLedger } = useSnapshot(SealCredStore)
 
@@ -14,7 +14,7 @@ export default function () {
     if (proof instanceof EmailProof) {
       return (
         !emailLedger[proof.domain] ||
-        !contractsOwned.includes(
+        !derivativesContractsOwned.includes(
           emailLedger[proof.domain].derivativeContract.address
         )
       )
@@ -22,7 +22,7 @@ export default function () {
     if (proof instanceof ERC721Proof) {
       return (
         !ERC721Ledger[proof.contract] ||
-        !contractsOwned.includes(
+        !derivativesContractsOwned.includes(
           ERC721Ledger[proof.contract].derivativeContract.address
         )
       )

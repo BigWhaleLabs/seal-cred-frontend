@@ -30,10 +30,10 @@ const badgesList = classnames(
 )
 function BadgeListSuspended() {
   const { derivativeContracts = [] } = useSnapshot(SealCredStore)
-  const { contractsOwned } = useSnapshot(ContractsStore)
+  const { derivativesContractsOwned = [] } = useSnapshot(ContractsStore)
 
   const ownedDerivativeContracts = derivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
+    (contractAddress) => derivativesContractsOwned.includes(contractAddress)
   )
 
   const proofsAvailableToMint = useProofsAvailableToMint()

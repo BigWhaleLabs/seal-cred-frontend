@@ -9,10 +9,10 @@ import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 function ListTitleSuspended() {
   const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
-  const { contractsOwned } = useSnapshot(ContractsStore)
+  const { derivativesContractsOwned = [] } = useSnapshot(ContractsStore)
 
   const ownedDerivativeContracts = derivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
+    (contractAddress) => derivativesContractsOwned.includes(contractAddress)
   )
 
   const hasUnminted = proofsAvailableToMint.length > 0
