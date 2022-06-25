@@ -1,5 +1,5 @@
 import BadgeCard from 'components/badges/BadgeCard'
-import BadgeIcon from 'icons/BadgeIcon'
+import BadgeIcon from 'icons/Erc721Badge'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import Button from 'components/Button'
 import ContractName from 'components/ContractName'

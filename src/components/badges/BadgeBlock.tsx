@@ -1,7 +1,7 @@
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import BadgeCard from 'components/badges/BadgeCard'
-import BadgeIcon from 'icons/BadgeIcon'
+import BadgeIcon from 'icons/Erc721Badge'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import BaseProof from 'helpers/BaseProof'
 import Button from 'components/Button'
