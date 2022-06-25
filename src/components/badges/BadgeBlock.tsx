@@ -1,7 +1,6 @@
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import BadgeCard from 'components/badges/BadgeCard'
-import BadgeIcon from 'icons/Erc721Badge'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import BaseProof from 'helpers/BaseProof'
 import Button from 'components/Button'
@@ -9,6 +8,7 @@ import ContractName from 'components/ContractName'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailBadge from 'icons/EmailBadge'
 import EmailProof from 'helpers/EmailProof'
+import Erc721Badge from 'icons/Erc721Badge'
 import ExternalLink from 'components/ExternalLink'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
@@ -56,7 +56,7 @@ function Badge({ proof }: { proof: BaseProof }) {
 
   return (
     <BadgeCard
-      top={isEmailProof ? <EmailBadge /> : <BadgeIcon />}
+      top={isEmailProof ? <EmailBadge /> : <Erc721Badge />}
       leanLeft={false}
       text={
         derivativeAddress ? (
