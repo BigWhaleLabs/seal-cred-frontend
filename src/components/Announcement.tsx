@@ -46,7 +46,7 @@ export default function () {
   const [animate, setAnimate] = useState(false)
   const location = useLocation()
 
-  const announcementPage = '/app'
+  const announcementPage = '/work'
   if (announcementClosed || location.pathname === announcementPage) return null
 
   return (
