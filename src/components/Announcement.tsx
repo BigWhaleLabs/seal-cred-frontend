@@ -1,5 +1,4 @@
 import { AccentText, LinkText } from 'components/Text'
-import { useLocation } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Button from 'components/proofs/Button'
@@ -44,15 +43,13 @@ export default function () {
   const { announcementClosed, announcementText } =
     useSnapshot(announcementStore)
   const [animate, setAnimate] = useState(false)
-  const location = useLocation()
 
-  const announcementPage = '/app'
-  if (announcementClosed || location.pathname === announcementPage) return null
+  if (announcementClosed) return null
 
   return (
     <div id="bottom-bar" className={announceWrapper(animate)}>
       <div className={flex('flex-1')} />
-      <LinkText url={announcementPage}>
+      <LinkText url="/app">
         <AccentText small bold color="text-formal-accent">
           {announcementText}
         </AccentText>
