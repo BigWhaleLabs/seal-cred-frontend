@@ -6,4 +6,5 @@ export default abstract class BaseProof implements Proof {
 
   abstract get key(): string
   abstract toJSON(): object
+  abstract equal(proof: BaseProof): boolean
 }
