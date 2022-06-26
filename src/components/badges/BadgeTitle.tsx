@@ -7,8 +7,12 @@ import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 
 function ProofName({ badge }: { badge: BaseProof }) {
   if (badge instanceof ERC721Proof)
-    return <ContractName address={badge.contract} />
-  if (badge instanceof EmailProof) return <>{badge.domain}</>
+    return (
+      <>
+        <ContractName address={badge.contract} /> (derivative)
+      </>
+    )
+  if (badge instanceof EmailProof) return <>@{badge.domain} email</>
   return <>Unknown</>
 }
 
@@ -28,9 +32,5 @@ export default function ({
 
   if (!proof) return null
 
-  return (
-    <>
-      <ProofName badge={proof} /> (derivative)
-    </>
-  )
+  return <ProofName badge={proof} />
 }
