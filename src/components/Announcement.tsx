@@ -1,4 +1,5 @@
 import { AccentText, LinkText } from 'components/Text'
+import { useLocation } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Button from 'components/proofs/Button'
@@ -18,6 +19,7 @@ import classnames, {
   transitionProperty,
   translate,
 } from 'classnames/tailwind'
+import walletStore from 'stores/WalletStore'
 
 const announceWrapper = (animate?: boolean) =>
   classnames(
@@ -40,18 +42,25 @@ const crossWrapper = classnames(
 )
 
 export default function () {
-  const { announcementClosed, announcementText } =
-    useSnapshot(announcementStore)
+  const { account } = useSnapshot(walletStore)
+  const { announcementClosed } = useSnapshot(announcementStore)
   const [animate, setAnimate] = useState(false)
+  const location = useLocation()
 
   if (announcementClosed) return null
+  const onPage = location.pathname === '/app'
 
   return (
     <div id="bottom-bar" className={announceWrapper(animate)}>
       <div className={flex('flex-1')} />
       <LinkText url="/app">
         <AccentText small bold color="text-formal-accent">
-          {announcementText}
+          Now introducing zk proof for your work email!{' '}
+          {!onPage
+            ? 'Get started'
+            : account
+            ? 'Get started below.'
+            : 'Connect wallet to get started.'}
         </AccentText>
       </LinkText>
       <div className={crossWrapper}>
