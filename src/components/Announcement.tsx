@@ -1,4 +1,5 @@
-import { AccentText } from 'components/Text'
+import { AccentText, LinkText } from 'components/Text'
+import { useLocation } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Button from 'components/proofs/Button'
@@ -15,11 +16,9 @@ import classnames, {
   lineHeight,
   margin,
   padding,
-  textDecoration,
   transitionProperty,
   translate,
 } from 'classnames/tailwind'
-import walletStore from 'stores/WalletStore'
 
 const announceWrapper = (animate?: boolean) =>
   classnames(
@@ -41,31 +40,23 @@ const crossWrapper = classnames(
   margin('ml-auto')
 )
 
-const announcementLink = classnames(textDecoration('underline'))
-
 export default function () {
   const { announcementClosed, announcementText } =
     useSnapshot(announcementStore)
-  const { account } = useSnapshot(walletStore)
   const [animate, setAnimate] = useState(false)
+  const location = useLocation()
 
-  const closedOrAccountConnected = announcementClosed || account
+  const announcementPage = '/app'
+  if (announcementClosed || location.pathname === announcementPage) return null
 
-  return closedOrAccountConnected ? null : (
+  return (
     <div id="bottom-bar" className={announceWrapper(animate)}>
       <div className={classnames(flex('flex-1'))} />
-      <AccentText small bold color="text-formal-accent">
-        {announcementText}
-        <a
-          href="/app"
-          className={announcementLink}
-          onClick={() => {
-            announcementStore.announcementClosed = true
-          }}
-        >
-          Connect your wallet to get started.
-        </a>
-      </AccentText>
+      <LinkText url={announcementPage}>
+        <AccentText small bold color="text-formal-accent">
+          {announcementText}
+        </AccentText>
+      </LinkText>
       <div className={crossWrapper}>
         <Button
           onClick={() => {

@@ -13,7 +13,7 @@ export default function () {
       <PrivacyDeath />
       <div className={bigWhaleLabsText}>
         <BodyText>
-          <LinkText color="text-primary" url={`https://bigwhalelabs.com`}>
+          <LinkText blank color="text-primary" url={`https://bigwhalelabs.com`}>
             Big Whale Labs{' '}
           </LinkText>
           is dedicated to building a pseudonymous world in which privacy and
