@@ -27,6 +27,14 @@ export default class ERC721Proof
     return 'ERC721'
   }
 
+  equal(proof: BaseProof): boolean {
+    return (
+      proof instanceof ERC721Proof &&
+      this.contract === proof.contract &&
+      this.account === proof.account
+    )
+  }
+
   static fromJSON({
     contract,
     account,

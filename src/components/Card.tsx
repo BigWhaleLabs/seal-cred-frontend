@@ -116,12 +116,12 @@ export default function ({
     <div
       className={cardContainer(shadow, color, onlyWrap, thin, small, nospace)}
     >
+      {children}
       {!!spinner && (
         <div className={spinnerBox}>
           <ArcText text={spinner} />
         </div>
       )}
-      {children}
     </div>
   )
 }
