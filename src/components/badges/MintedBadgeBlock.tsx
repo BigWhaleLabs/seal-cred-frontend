@@ -1,9 +1,8 @@
 import { AccentText } from 'components/Text'
 import BadgeCard from 'components/badges/BadgeCard'
+import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import Complete from 'icons/Complete'
-import ContractName from 'components/ContractName'
-import ExternalLink from 'components/ExternalLink'
 import QRCode from 'components/QRCode'
 import classnames, {
   alignItems,
@@ -12,7 +11,6 @@ import classnames, {
   justifyContent,
   space,
 } from 'classnames/tailwind'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const mintPassed = (small?: boolean) =>
@@ -41,17 +39,7 @@ function Badge({
     <BadgeCard
       top={<QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />}
       leanLeft
-      text={
-        derivativeAddress ? (
-          <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
-            <ContractName address={derivativeAddress} />
-          </ExternalLink>
-        ) : (
-          <>
-            <ContractName address={derivativeAddress} /> (derivative)
-          </>
-        )
-      }
+      text={<BadgeTitle derivativeAddress={derivativeAddress} />}
       bottom={
         <div className={mintPassed(small)}>
           <AccentText bold small primary color="text-secondary">

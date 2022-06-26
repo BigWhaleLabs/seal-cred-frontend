@@ -19,7 +19,7 @@ function OwnedBadgeAddressSuspended({
     <span className={container}>
       {owner && (
         <LinkText
-          blank
+          targetBlank
           url={getEtherscanAddressUrl(owner)}
           gradientFrom="from-secondary"
           gradientTo="to-accent"

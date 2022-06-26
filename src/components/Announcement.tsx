@@ -19,6 +19,7 @@ import classnames, {
   transitionProperty,
   translate,
 } from 'classnames/tailwind'
+import walletStore from 'stores/WalletStore'
 
 const announceWrapper = (animate?: boolean) =>
   classnames(
@@ -41,8 +42,8 @@ const crossWrapper = classnames(
 )
 
 export default function () {
-  const { announcementClosed, announcementText } =
-    useSnapshot(announcementStore)
+  const { account } = useSnapshot(walletStore)
+  const { announcementClosed } = useSnapshot(announcementStore)
   const [animate, setAnimate] = useState(false)
   const location = useLocation()
 
@@ -51,10 +52,11 @@ export default function () {
 
   return (
     <div id="bottom-bar" className={announceWrapper(animate)}>
-      <div className={classnames(flex('flex-1'))} />
+      <div className={flex('flex-1')} />
       <LinkText url={announcementPage}>
         <AccentText small bold color="text-formal-accent">
-          {announcementText}
+          Now introducing zk proof for your work email!{' '}
+          {account ? 'Get started below.' : 'Connect wallet to get started.'}
         </AccentText>
       </LinkText>
       <div className={crossWrapper}>
@@ -65,7 +67,7 @@ export default function () {
             }, 75)
             setAnimate(true)
           }}
-          className={classnames(margin('lg:ml-auto', 'ml-6'))}
+          className={margin('lg:ml-auto', 'ml-6')}
         >
           <Cross />
         </Button>
