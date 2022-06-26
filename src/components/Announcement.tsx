@@ -1,4 +1,5 @@
-import { AccentText } from 'components/Text'
+import { AccentText, LinkText } from 'components/Text'
+import { useLocation } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Button from 'components/proofs/Button'
@@ -15,7 +16,6 @@ import classnames, {
   lineHeight,
   margin,
   padding,
-  textDecoration,
   transitionProperty,
   translate,
 } from 'classnames/tailwind'
@@ -41,31 +41,28 @@ const crossWrapper = classnames(
   margin('ml-auto')
 )
 
-const announcementLink = classnames(textDecoration('underline'))
-
 export default function () {
-  const { announcementClosed, announcementText } =
-    useSnapshot(announcementStore)
   const { account } = useSnapshot(walletStore)
+  const { announcementClosed } = useSnapshot(announcementStore)
   const [animate, setAnimate] = useState(false)
+  const location = useLocation()
 
-  const closedOrAccountConnected = announcementClosed || account
+  if (announcementClosed) return null
+  const onPage = location.pathname === '/app'
 
-  return closedOrAccountConnected ? null : (
+  return (
     <div id="bottom-bar" className={announceWrapper(animate)}>
-      <div className={classnames(flex('flex-1'))} />
-      <AccentText small bold color="text-formal-accent">
-        {announcementText}
-        <a
-          href="/app"
-          className={announcementLink}
-          onClick={() => {
-            announcementStore.announcementClosed = true
-          }}
-        >
-          Connect your wallet to get started.
-        </a>
-      </AccentText>
+      <div className={flex('flex-1')} />
+      <LinkText url="/app">
+        <AccentText small bold color="text-formal-accent">
+          Now introducing zk proof for your work email!{' '}
+          {!onPage
+            ? 'Get started'
+            : account
+            ? 'Get started below.'
+            : 'Connect wallet to get started.'}
+        </AccentText>
+      </LinkText>
       <div className={crossWrapper}>
         <Button
           onClick={() => {
@@ -74,7 +71,7 @@ export default function () {
             }, 75)
             setAnimate(true)
           }}
-          className={classnames(margin('lg:ml-auto', 'ml-6'))}
+          className={margin('lg:ml-auto', 'ml-6')}
         >
           <Cross />
         </Button>

@@ -193,8 +193,10 @@ export function LinkText({
   gradientFrom,
   gradientTo,
   children,
+  targetBlank,
 }: ChildrenProp & {
   url: string
+  targetBlank?: boolean
   bold?: boolean
   title?: string
   color?: TTextColor
@@ -206,8 +208,7 @@ export function LinkText({
       className={linkText(bold, color, gradientFrom, gradientTo)}
       href={url}
       title={title}
-      rel="noopener noreferrer"
-      target="_blank"
+      target={targetBlank ? '_blank' : '_self'}
     >
       {children}
     </a>
