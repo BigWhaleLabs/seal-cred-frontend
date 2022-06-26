@@ -51,7 +51,7 @@ export default function () {
 
   return (
     <div id="bottom-bar" className={announceWrapper(animate)}>
-      <div className={classnames(flex('flex-1'))} />
+      <div className={flex('flex-1')} />
       <LinkText url={announcementPage}>
         <AccentText small bold color="text-formal-accent">
           {announcementText}
@@ -65,7 +65,7 @@ export default function () {
             }, 75)
             setAnimate(true)
           }}
-          className={classnames(margin('lg:ml-auto', 'ml-6'))}
+          className={margin('lg:ml-auto', 'ml-6')}
         >
           <Cross />
         </Button>
