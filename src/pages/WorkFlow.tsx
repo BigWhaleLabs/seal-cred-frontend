@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import Card from 'components/Card'
 import LoadingTitle from 'components/proofs/LoadingTitle'
-import SealCredCTA from 'components/owned/SealCredCTA'
+import SealCredCTM from 'components/work-flow/SealCredCTM'
 import WorkFlowCard from 'components/work-flow/WorkFlowCard'
 import classnames, {
   alignItems,
@@ -30,7 +30,7 @@ export default function () {
       >
         <WorkFlowCard />
       </Suspense>
-      <SealCredCTA />
+      <SealCredCTM />
     </div>
   )
 }
