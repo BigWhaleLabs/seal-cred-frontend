@@ -1,6 +1,5 @@
 import {
   ERC721__factory,
-  SCERC721Derivative,
   SCERC721Derivative__factory,
 } from '@big-whale-labs/seal-cred-ledger-contract'
 import { proxy } from 'valtio'
