@@ -13,7 +13,6 @@ import WalletStore from 'stores/WalletStore'
 import handleError from 'helpers/handleError'
 
 function Badge({ proof }: { proof: BaseProof }) {
-  const { proofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
 
