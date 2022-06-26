@@ -8,6 +8,7 @@ import Root from 'components/Root'
 
 const NotFound = lazy(() => import('pages/NotFound'))
 const OwnedBadge = lazy(() => import('pages/OwnedBadge'))
+const WorkFlow = lazy(() => import('pages/WorkFlow'))
 const Landing = lazy(() => import('pages/Landing'))
 const Main = lazy(() => import('pages/Main'))
 
@@ -22,6 +23,10 @@ export default function () {
           <Route
             path="/:derivativeAddress/:tokenId"
             element={<LazyComponent lazyImported={<OwnedBadge />} />}
+          />
+          <Route
+            path="/work"
+            element={<LazyComponent lazyImported={<WorkFlow />} />}
           />
           <Route
             path="/"

@@ -33,14 +33,14 @@ function Badge({ proof }: { proof: BaseProof }) {
 
       await WalletStore.mintDerivative(proof)
 
-      ProofStore.proofsCompleted = proofsCompleted.filter((p) => p === proof)
+      ProofStore.proofsCompleted = proofsCompleted.filter((p) => p !== proof)
     } catch (error) {
       if (
         proof &&
         error instanceof Error &&
         error.message.includes('This ZK proof has already been used')
       ) {
-        ProofStore.proofsCompleted = proofsCompleted.filter((p) => p === proof)
+        ProofStore.proofsCompleted = proofsCompleted.filter((p) => p !== proof)
         handleError(
           new Error(
             'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'

@@ -1,9 +1,9 @@
 import { AccentText, BodyText } from 'components/Text'
 import { useSnapshot } from 'valtio'
-import EmailProof from 'components/proofs/EmailProof'
+import EmailProof from 'components/proofs/Email/EmailProof'
 import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
-import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
+import ReadyEmailProof from 'components/proofs/Email/ReadyEmailProof'
 
 export default function () {
   const { emailProofsCompleted } = useSnapshot(ProofStore)

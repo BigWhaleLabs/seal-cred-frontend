@@ -45,7 +45,7 @@ export default function ({ proof }: { proof: EmailProof }) {
   return (
     <Line>
       <div className={proofName}>
-        <ProofText>{proof.domain}</ProofText>
+        <ProofText>@{proof.domain}</ProofText>
       </div>
 
       <div className={proofText(xs)}>

@@ -11,15 +11,13 @@ export default function () {
     proofsCompleted.length > 0 && proofAddressesAvailableToCreate.length === 0
 
   return (
-    <>
-      <Title
-        title={allGenerated ? 'All proofed out' : 'Start proofing!'}
-        subtitle={
-          allGenerated
-            ? 'You generated all available ZK proofs for this wallet'
-            : 'Generate ZK proofs'
-        }
-      />
-    </>
+    <Title
+      title={allGenerated ? 'All proofed out' : 'Start proofing!'}
+      subtitle={
+        allGenerated
+          ? 'You generated all available ZK proofs for this wallet'
+          : 'Generate ZK proofs'
+      }
+    />
   )
 }
