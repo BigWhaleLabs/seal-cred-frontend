@@ -21,6 +21,7 @@ import classnames, {
   gradientColorStops,
   justifyContent,
   lineHeight,
+  margin,
   space,
   textColor,
   textDecoration,
@@ -145,22 +146,24 @@ export default function () {
         </ToolTip>
         {open && (
           <>
-            <BadgeText>
-              {domain ? (
-                <>
-                  A token has been sent to ${email}. Copy the token and add it
-                  here to create zk proof. Or{' '}
-                  <button
-                    className={textDecoration('underline')}
-                    onClick={resetEmail}
-                  >
-                    re-enter email.
-                  </button>
-                </>
-              ) : (
-                `Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.`
-              )}
-            </BadgeText>
+            <div className={margin('mt-4')}>
+              <BadgeText>
+                {domain ? (
+                  <>
+                    A token has been sent to ${email}. Copy the token and add it
+                    here to create zk proof. Or{' '}
+                    <button
+                      className={textDecoration('underline')}
+                      onClick={resetEmail}
+                    >
+                      re-enter email.
+                    </button>
+                  </>
+                ) : (
+                  `Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.`
+                )}
+              </BadgeText>
+            </div>
             {domain ? (
               <TextForm
                 submitText="Generate proof"
