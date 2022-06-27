@@ -124,8 +124,9 @@ export default function () {
                     className={textDecoration('underline')}
                     onClick={resetEmail}
                   >
-                    re-enter email.
+                    re-enter email
                   </button>
+                  .
                 </>
               ) : (
                 `Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.`
