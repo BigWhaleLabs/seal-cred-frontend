@@ -40,8 +40,7 @@ export default function () {
 
   const ledgerRecord = proof && emailLedger[proof.domain]
   const minted =
-    ledgerRecord &&
-    contractsOwned.includes(ledgerRecord.derivativeContract.address)
+    ledgerRecord && contractsOwned.includes(ledgerRecord.derivativeContract)
 
   return (
     <CardContainer>
@@ -75,7 +74,7 @@ export default function () {
                 {minted ? (
                   <>
                     <BadgesOwnedForContract
-                      contractAddress={ledgerRecord?.derivativeContract.address}
+                      contractAddress={ledgerRecord?.derivativeContract}
                     />
                     <Button
                       fullWidth
