@@ -37,17 +37,19 @@ const arrowContainer = classnames(
   space('space-x-2')
 )
 
-const getStartedText = classnames(
-  textColor('text-transparent', 'active:text-accent'),
-  transitionProperty('transition-colors'),
-  backgroundClip('bg-clip-text'),
-  backgroundImage('bg-gradient-to-r'),
-  gradientColorStops('from-secondary', 'to-accent'),
-  fontWeight('font-bold'),
-  fontFamily('font-primary'),
-  lineHeight('leading-5'),
-  fontSize('text-sm')
-)
+const getStartedText = (open: boolean) =>
+  classnames(
+    textColor('text-transparent', 'active:text-accent'),
+    transitionProperty('transition-all'),
+    backgroundClip('bg-clip-text'),
+    backgroundImage('bg-gradient-to-r'),
+    gradientColorStops('from-secondary', 'to-accent'),
+    fontWeight('font-bold'),
+    fontFamily('font-primary'),
+    lineHeight('leading-5'),
+    fontSize('text-sm'),
+    animation(open ? 'animate-unreveal' : 'animate-reveal')
+  )
 
 const emailTitleContainer = classnames(
   display('flex'),
@@ -66,7 +68,7 @@ const emailTitleLeft = classnames(
   alignItems('items-center')
 )
 
-const revealAnimation = (open: boolean) =>
+const questionBlock = (open: boolean) =>
   classnames(
     animation(open ? 'animate-reveal' : 'animate-unreveal'),
     visibility(open ? 'visible' : 'invisible')
@@ -128,13 +130,13 @@ export default function () {
           <div className={emailTitleContainer}>
             <div className={emailTitleLeft}>
               <ProofText>Work email</ProofText>
-              <div className={revealAnimation(open)}>
+              <div className={questionBlock(open)}>
                 <QuestionMark small />
               </div>
             </div>
             <button className={arrowContainer} onClick={() => setOpen(!open)}>
               {showButtonText && (
-                <span className={getStartedText}>
+                <span className={getStartedText(open)}>
                   {!domain ? 'Get started' : 'Set token'}
                 </span>
               )}
