@@ -14,16 +14,14 @@ export default function () {
     if (proof instanceof EmailProof) {
       return (
         !emailLedger[proof.domain] ||
-        !contractsOwned.includes(
-          emailLedger[proof.domain].derivativeContract.address
-        )
+        !contractsOwned.includes(emailLedger[proof.domain].derivativeContract)
       )
     }
     if (proof instanceof ERC721Proof) {
       return (
         !ERC721Ledger[proof.contract] ||
         !contractsOwned.includes(
-          ERC721Ledger[proof.contract].derivativeContract.address
+          ERC721Ledger[proof.contract].derivativeContract
         )
       )
     }
