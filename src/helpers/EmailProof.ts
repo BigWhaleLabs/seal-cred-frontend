@@ -22,6 +22,10 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
     return 'email'
   }
 
+  equal(proof: BaseProof): boolean {
+    return proof instanceof EmailProof && this.domain === proof.domain
+  }
+
   static fromJSON({
     domain,
     result,

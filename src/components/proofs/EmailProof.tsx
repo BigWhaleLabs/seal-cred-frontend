@@ -19,6 +19,7 @@ import classnames, {
   justifyContent,
   space,
   textColor,
+  textDecoration,
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
@@ -59,6 +60,10 @@ export default function () {
   const { xs } = useBreakpoints()
 
   const domain = email ? email.split('@')[1] : ''
+
+  function resetEmail() {
+    setEmail(undefined)
+  }
 
   async function onSendEmail(email: string) {
     setLoading(true)
@@ -111,9 +116,20 @@ export default function () {
         {open && (
           <>
             <BadgeText>
-              {domain
-                ? `A token has been sent to ${email}. Copy the token and add it here to create zk proof. Or re-enter email.`
-                : `Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.`}
+              {domain ? (
+                <>
+                  A token has been sent to ${email}. Copy the token and add it
+                  here to create zk proof. Or{' '}
+                  <button
+                    className={textDecoration('underline')}
+                    onClick={resetEmail}
+                  >
+                    re-enter email.
+                  </button>
+                </>
+              ) : (
+                `Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.`
+              )}
             </BadgeText>
             {domain ? (
               <TextForm

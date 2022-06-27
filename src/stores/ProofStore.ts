@@ -12,6 +12,10 @@ import handleError from 'helpers/handleError'
 class ProofStore extends PersistableStore {
   proofsCompleted: BaseProof[] = []
 
+  deleteProof(proof: BaseProof) {
+    this.proofsCompleted = this.proofsCompleted.filter((p) => !proof.equal(p))
+  }
+
   reviver = (key: string, value: unknown) => {
     if (key === 'proofsCompleted') {
       return (

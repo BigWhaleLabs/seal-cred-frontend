@@ -1,24 +1,18 @@
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import BadgeCard from 'components/badges/BadgeCard'
+import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import BaseProof from 'helpers/BaseProof'
 import Button from 'components/Button'
-import ContractName from 'components/ContractName'
-import ERC721Proof from 'helpers/ERC721Proof'
 import EmailBadge from 'icons/EmailBadge'
 import EmailProof from 'helpers/EmailProof'
 import Erc721Badge from 'icons/Erc721Badge'
-import ExternalLink from 'components/ExternalLink'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
-import useDerivativeAddress from 'hooks/useDerivativeAddress'
 
 function Badge({ proof }: { proof: BaseProof }) {
-  const { proofsCompleted } = useSnapshot(ProofStore)
-  const derivativeAddress = useDerivativeAddress(proof)
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
 
@@ -32,15 +26,14 @@ function Badge({ proof }: { proof: BaseProof }) {
       if (!proof?.result) throw new Error('No proof found')
 
       await WalletStore.mintDerivative(proof)
-
-      ProofStore.proofsCompleted = proofsCompleted.filter((p) => p === proof)
+      ProofStore.deleteProof(proof)
     } catch (error) {
       if (
         proof &&
         error instanceof Error &&
         error.message.includes('This ZK proof has already been used')
       ) {
-        ProofStore.proofsCompleted = proofsCompleted.filter((p) => p === proof)
+        ProofStore.deleteProof(proof)
         handleError(
           new Error(
             'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'
@@ -58,24 +51,7 @@ function Badge({ proof }: { proof: BaseProof }) {
     <BadgeCard
       top={isEmailProof ? <EmailBadge /> : <Erc721Badge />}
       leanLeft={false}
-      text={
-        derivativeAddress ? (
-          <ExternalLink url={getEtherscanAddressUrl(derivativeAddress)}>
-            <ContractName address={derivativeAddress} />
-          </ExternalLink>
-        ) : (
-          <>
-            {proof instanceof ERC721Proof ? (
-              <ContractName address={proof.contract} />
-            ) : isEmailProof ? (
-              proof.domain
-            ) : (
-              'Unknown'
-            )}{' '}
-            {isEmailProof ? '(email)' : '(derivative)'}
-          </>
-        )
-      }
+      text={<BadgeTitle proof={proof} />}
       bottom={
         <Button
           small
