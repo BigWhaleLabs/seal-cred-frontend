@@ -39,8 +39,7 @@ const arrowContainer = classnames(
   gradientColorStops('from-secondary', 'to-accent'),
   display('flex'),
   alignItems('items-center'),
-  space('space-x-2'),
-  fontWeight('font-bold')
+  space('space-x-2')
 )
 
 const getStartedText = classnames(
