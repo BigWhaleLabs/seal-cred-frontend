@@ -49,8 +49,8 @@ export default function () {
           bottomPadding={savedMessage?.height || 0}
         >
           <div className={innerScrollableBlock}>
-            <EmailProofList />
             <ERC721ProofsList />
+            <EmailProofList />
           </div>
         </Scrollbar>
         {proofsCompleted.length > 0 && (
