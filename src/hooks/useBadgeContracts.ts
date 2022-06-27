@@ -14,8 +14,8 @@ export default function () {
     result = Object.values(emailLedger).reduce(
       (result, { derivativeContract, domain }) => ({
         ...result,
-        [derivativeContract.address]: new EmailBadgeContract(
-          derivativeContract.address,
+        [derivativeContract]: new EmailBadgeContract(
+          derivativeContract,
           domain
         ),
       }),
@@ -25,9 +25,9 @@ export default function () {
     return Object.values(ERC721Ledger).reduce(
       (result, { derivativeContract, originalContract }) => ({
         ...result,
-        [derivativeContract.address]: new ERC721BadgeContract(
-          derivativeContract.address,
-          originalContract.address
+        [derivativeContract]: new ERC721BadgeContract(
+          derivativeContract,
+          originalContract
         ),
       }),
       result

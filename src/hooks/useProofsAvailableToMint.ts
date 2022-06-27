@@ -15,7 +15,7 @@ export default function () {
       return (
         !emailLedger[proof.domain] ||
         !derivativesContractsOwned.includes(
-          emailLedger[proof.domain].derivativeContract.address
+          emailLedger[proof.domain].derivativeContract
         )
       )
     }
@@ -23,7 +23,7 @@ export default function () {
       return (
         !ERC721Ledger[proof.contract] ||
         !derivativesContractsOwned.includes(
-          ERC721Ledger[proof.contract].derivativeContract.address
+          ERC721Ledger[proof.contract].derivativeContract
         )
       )
     }
