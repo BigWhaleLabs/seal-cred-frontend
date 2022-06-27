@@ -26,7 +26,6 @@ import classnames, {
   textColor,
   textDecoration,
   transitionProperty,
-  visibility,
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
