@@ -64,7 +64,7 @@ export default function () {
   return (
     <Line breakWords>
       <div className={proofLineContainer}>
-        <ToolTip position="bottom" text={popoverText} fitContainer>
+        <ToolTip position="floating" text={popoverText} fitContainer>
           <div className={emailTitleContainer}>
             <div className={emailTitleLeft}>
               <BodyText small>Work email</BodyText>

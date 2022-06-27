@@ -1,6 +1,6 @@
 import { HighlightedText } from 'components/Text'
 import { MutableRef } from 'preact/hooks'
-import { useRef } from 'react'
+import { createPortal, useRef } from 'react'
 import { useState } from 'preact/hooks'
 import ChildrenProp from 'models/ChildrenProp'
 import classnames, {
@@ -80,7 +80,7 @@ export default function ({
   children,
 }: ChildrenProp & {
   text: string
-  position: 'top' | 'bottom'
+  position: 'top' | 'bottom' | 'floating'
   arrow?: boolean
   fitContainer?: boolean
 }) {
@@ -89,8 +89,10 @@ export default function ({
   const { xs } = useBreakpoints()
   useClickOutside(childrenRef, () => setIsShow(false))
 
+  const [node, setNode] = useState<any>(null)
+
   return (
-    <div className={tooltip(fitContainer)}>
+    <div id="questionMark" className={tooltip(fitContainer)}>
       {position === 'top' && (
         <div className={tooltipWrapper}>
           <div
@@ -102,15 +104,67 @@ export default function ({
           </div>
         </div>
       )}
-      <div
-        ref={childrenRef}
-        className={tooltipChildrenWrapper}
-        onMouseEnter={() => setIsShow(true)}
-        onMouseLeave={() => setIsShow(false)}
-        onClick={() => setIsShow(true)}
-      >
-        {children}
-      </div>
+      {position === 'floating' ? (
+        <div
+          ref={childrenRef}
+          className={tooltipChildrenWrapper}
+          onMouseMove={(e) => {
+            if (position !== 'floating') {
+              return
+            }
+            const x = e.clientX
+            const y = e.clientY
+            const el = document.getElementById('root')
+            const positionX = (xs ? x * 0.5 : x * 0.95) + 'px;'
+            const positionY = y + 0.5 + 'px;'
+
+            const classLove = width('lg:w-card', 'w-6/12')
+
+            const stylestring =
+              `position:absolute; z-index: 999;` +
+              'left:' +
+              positionX +
+              'top:' +
+              positionY
+            const node = createPortal(
+              <div style={stylestring} className={classLove}>
+                <div className={tooltipWrapper}>
+                  <div
+                    className={tooltipClasses(xs, isShow, position)}
+                    style={{ visibility: isShow ? 'visible' : 'collapse' }}
+                  >
+                    <HighlightedText>{text}</HighlightedText>
+                    {arrow && <div className={triangle(position)} />}
+                  </div>
+                </div>
+              </div>,
+              el
+            )
+            setNode(node)
+          }}
+          onMouseEnter={() => {
+            setIsShow(true)
+          }}
+          onMouseLeave={() => {
+            setNode(null)
+            setIsShow(false)
+          }}
+          onClick={() => setIsShow(true)}
+        >
+          {children}
+        </div>
+      ) : (
+        <div
+          ref={childrenRef}
+          className={tooltipChildrenWrapper}
+          onMouseEnter={() => setIsShow(true)}
+          onMouseLeave={() => setIsShow(false)}
+          onClick={() => setIsShow(true)}
+        >
+          {children}
+        </div>
+      )}
+      {node}
       {position === 'bottom' && (
         <div className={tooltipWrapper}>
           <div
