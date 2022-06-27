@@ -40,7 +40,7 @@ const arrowContainer = classnames(
 const getStartedText = (open: boolean) =>
   classnames(
     textColor('text-transparent', 'active:text-accent'),
-    transitionProperty('transition-all'),
+    transitionProperty('transition-colors'),
     backgroundClip('bg-clip-text'),
     backgroundImage('bg-gradient-to-r'),
     gradientColorStops('from-secondary', 'to-accent'),
@@ -69,10 +69,7 @@ const emailTitleLeft = classnames(
 )
 
 const questionBlock = (open: boolean) =>
-  classnames(
-    animation(open ? 'animate-reveal' : 'animate-unreveal'),
-    visibility(open ? 'visible' : 'invisible')
-  )
+  animation(open ? 'animate-reveal' : 'animate-unreveal')
 
 export default function () {
   const [loading, setLoading] = useState(false)
@@ -114,7 +111,6 @@ export default function () {
     }
   }
 
-  const showButtonText = !xs ? !open : false
   const popoverText =
     'When you submit your email, we create a token out of your email’s domain. You can then use that token to create zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
 
@@ -135,7 +131,7 @@ export default function () {
               </div>
             </div>
             <button className={arrowContainer} onClick={() => setOpen(!open)}>
-              {showButtonText && (
+              {!xs && (
                 <span className={getStartedText(open)}>
                   {!domain ? 'Get started' : 'Set token'}
                 </span>
