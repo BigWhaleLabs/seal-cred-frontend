@@ -32,17 +32,17 @@ import classnames, {
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const arrowContainer = classnames(
-  textColor('text-transparent', 'active:text-accent'),
-  transitionProperty('transition-colors'),
-  backgroundClip('bg-clip-text'),
-  backgroundImage('bg-gradient-to-r'),
-  gradientColorStops('from-secondary', 'to-accent'),
   display('flex'),
   alignItems('items-center'),
   space('space-x-2')
 )
 
 const getStartedText = classnames(
+  textColor('text-transparent', 'active:text-accent'),
+  transitionProperty('transition-colors'),
+  backgroundClip('bg-clip-text'),
+  backgroundImage('bg-gradient-to-r'),
+  gradientColorStops('from-secondary', 'to-accent'),
   fontWeight('font-bold'),
   fontFamily('font-primary'),
   lineHeight('leading-5'),
