@@ -171,7 +171,7 @@ export default function ({
       {typeof children === 'string' ? <span>{children}</span> : children}
       {withArrow && (
         <div className={width('w-4')}>
-          <Arrow horizontal pulseDisabled={disabled || loading} />
+          <Arrow horizontal pulseDisabled={disabled || loading} openDisabled />
         </div>
       )}
     </button>

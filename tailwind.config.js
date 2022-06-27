@@ -109,8 +109,8 @@ module.exports = {
         '-24': '-6rem',
         '-4': '-1rem',
       },
-      space: {
-        '-4': '-1rem',
+      rotate: {
+        '-90': '-90deg',
       },
       dropShadow: {
         accent: '0rem 0rem 0.625rem #fed823',
