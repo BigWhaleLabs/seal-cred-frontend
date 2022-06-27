@@ -11,13 +11,16 @@ import ToolTip from 'components/ToolTip'
 import checkDomainToken from 'helpers/checkDomainToken'
 import classnames, {
   alignItems,
+  animation,
   backgroundClip,
   backgroundImage,
   display,
+  fontFamily,
+  fontSize,
   fontWeight,
   gradientColorStops,
   justifyContent,
-  opacity,
+  lineHeight,
   space,
   textColor,
   textDecoration,
@@ -28,13 +31,20 @@ import useBreakpoints from 'hooks/useBreakpoints'
 
 const arrowContainer = classnames(
   textColor('text-transparent', 'active:text-accent'),
+  transitionProperty('transition-colors'),
   backgroundClip('bg-clip-text'),
   backgroundImage('bg-gradient-to-r'),
   gradientColorStops('from-secondary', 'to-accent'),
   display('flex'),
   alignItems('items-center'),
-  space('space-x-2'),
-  fontWeight('font-bold')
+  space('space-x-2')
+)
+
+const getStartedText = classnames(
+  fontWeight('font-bold'),
+  fontFamily('font-primary'),
+  lineHeight('leading-5'),
+  fontSize('text-sm')
 )
 
 const emailTitleContainer = classnames(
@@ -54,11 +64,8 @@ const emailTitleLeft = classnames(
   alignItems('items-center')
 )
 
-const openAnimationWrapper = (open: boolean) =>
-  classnames(
-    opacity(open ? 'opacity-100' : 'opacity-0'),
-    transitionProperty('transition-opacity')
-  )
+const revealAnimation = (open: boolean) =>
+  animation(open ? 'animate-reveal' : 'animate-unreveal')
 
 export default function () {
   const [loading, setLoading] = useState(false)
@@ -116,15 +123,19 @@ export default function () {
           <div className={emailTitleContainer}>
             <div className={emailTitleLeft}>
               <ProofText>Work email</ProofText>
-              <div className={openAnimationWrapper(open)}>
+              <div className={revealAnimation(open)}>
                 <QuestionMark small />
               </div>
             </div>
             <button className={arrowContainer} onClick={() => setOpen(!open)}>
               {showButtonText && (
-                <span>{!domain ? 'Get started' : 'Set token'}</span>
+                <span className={getStartedText}>
+                  {!domain ? 'Get started' : 'Set token'}
+                </span>
               )}
-              <Arrow disabled open={open} turnDown />
+              <div className={width('w-4')}>
+                <Arrow pulseDisabled open={open} />
+              </div>
             </button>
           </div>
         </ToolTip>

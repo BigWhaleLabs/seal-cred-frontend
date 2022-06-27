@@ -16,9 +16,9 @@ const arrowsBox = classnames(
 export default function () {
   return (
     <div className={arrowsBox}>
-      <Arrow turnDown disabled />
-      <Arrow turnDown disabled />
-      <Arrow turnDown disabled />
+      <Arrow turnDown pulseDisabled />
+      <Arrow turnDown pulseDisabled />
+      <Arrow turnDown pulseDisabled />
     </div>
   )
 }

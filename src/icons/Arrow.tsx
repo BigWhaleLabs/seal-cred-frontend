@@ -1,93 +1,70 @@
 import classnames, {
   animation,
+  dropShadow,
+  height,
   rotate,
   transitionProperty,
+  width,
 } from 'classnames/tailwind'
 
 const arrowAnimation = (
-  disabled?: boolean,
-  turnDown?: boolean,
+  pulseDisabled?: boolean,
+  horizontal?: boolean,
   open?: boolean
 ) =>
   classnames(
-    animation(disabled ? undefined : 'animate-pulse-horizontal'),
-    rotate(turnDown ? (open ? 'rotate-270' : 'rotate-90') : undefined),
-    transitionProperty('transition-transform')
+    animation(
+      pulseDisabled
+        ? open
+          ? 'animate-rotate-180'
+          : 'animate-rotate-0'
+        : 'animate-pulse-horizontal'
+    ),
+    rotate(horizontal ? 'rotate-90' : undefined),
+    transitionProperty('transition-all')
   )
+const svgInnerWrapper = classnames(
+  width('w-full'),
+  height('h-auto'),
+  dropShadow('drop-shadow-secondary')
+)
 
 interface ArrowProps {
-  disabled?: boolean
-  turnDown?: boolean
+  pulseDisabled?: boolean
+  horizontal?: boolean
   open?: boolean
 }
 
-export default function ({ disabled, turnDown, open }: ArrowProps) {
+export default function ({ pulseDisabled, horizontal, open }: ArrowProps) {
   return (
-    <svg
-      width="25"
-      height="25"
-      viewBox="0 0 25 25"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={arrowAnimation(disabled, turnDown, open)}
-    >
-      <g filter="url(#filter0_d_97_51757)">
+    <div className={svgInnerWrapper}>
+      <svg
+        viewBox="0 0 14 7"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={arrowAnimation(pulseDisabled, horizontal, open)}
+      >
         <path
-          d="M8 8L12.5 12.5L8 16.5"
-          stroke="url(#paint0_linear_97_51757)"
+          d="M10.75 1.25L6.25 5.75L1.75 1.25"
+          stroke="url(#paint0_linear_90_6626)"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
         />
-      </g>
-      <defs>
-        <filter
-          id="filter0_d_97_51757"
-          x="0"
-          y="0"
-          width="20.5"
-          height="25"
-          filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
-        >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset />
-          <feGaussianBlur stdDeviation="3.5" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 0.482353 0 0 0 0 0.929412 0 0 0 1 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_97_51757"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_97_51757"
-            result="shape"
-          />
-        </filter>
-        <linearGradient
-          id="paint0_linear_97_51757"
-          x1="8.10547"
-          y1="14.8571"
-          x2="12.5"
-          y2="14.8571"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stop-color="#FF7BED" />
-          <stop offset="1" stop-color="#FED823" />
-        </linearGradient>
-      </defs>
-    </svg>
+        <defs>
+          <linearGradient
+            id="paint0_linear_90_6626"
+            x1="3.89285"
+            y1="1.35547"
+            x2="3.89285"
+            y2="5.75"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#FF7BED" />
+            <stop offset="1" stop-color="#FED823" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
   )
 }
