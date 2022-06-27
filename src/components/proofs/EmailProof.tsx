@@ -107,7 +107,12 @@ export default function () {
   return (
     <Line breakWords>
       <div className={proofLineContainer}>
-        <ToolTip position="bottom" text={popoverText} fitContainer>
+        <ToolTip
+          position="bottom"
+          text={popoverText}
+          fitContainer
+          disabled={!open}
+        >
           <div className={emailTitleContainer}>
             <div className={emailTitleLeft}>
               <ProofText>Work email</ProofText>
