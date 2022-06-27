@@ -150,7 +150,7 @@ export default function () {
               <BadgeText>
                 {domain ? (
                   <>
-                    A token has been sent to ${email}. Copy the token and add it
+                    A token has been sent to {email}. Copy the token and add it
                     here to create zk proof. Or{' '}
                     <button
                       className={textDecoration('underline')}
