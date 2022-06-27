@@ -1,5 +1,6 @@
 import { BadgeText } from 'components/Text'
 import { sendEmail } from 'helpers/attestor'
+import { textDecoration } from 'classnames/tailwind'
 import { useState } from 'preact/hooks'
 import EmailForm from 'components/EmailForm'
 import ProofStore from 'stores/ProofStore'
@@ -17,6 +18,11 @@ export default function ({
   const [email, setEmail] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>()
   const domain = email ? email.split('@')[1] : ''
+
+  function resetEmail() {
+    setEmail(undefined)
+    onChange({})
+  }
 
   async function onSendEmail(email: string) {
     setLoading(true)
@@ -50,9 +56,20 @@ export default function ({
   return (
     <>
       <BadgeText>
-        {domain
-          ? `A token has been sent to ${email}. Copy the token and add it here to create zk proof. Or re-enter email.`
-          : `Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.`}
+        {domain ? (
+          <>
+            A token has been sent to ${email}. Copy the token and add it here to
+            create zk proof. Or{' '}
+            <button
+              className={textDecoration('underline')}
+              onClick={resetEmail}
+            >
+              re-enter email
+            </button>
+          </>
+        ) : (
+          `Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof`
+        )}
       </BadgeText>
       {domain ? (
         <TextForm
