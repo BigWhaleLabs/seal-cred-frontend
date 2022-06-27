@@ -17,9 +17,11 @@ import classnames, {
   fontWeight,
   gradientColorStops,
   justifyContent,
+  opacity,
   space,
   textColor,
   textDecoration,
+  transitionProperty,
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
@@ -52,9 +54,15 @@ const emailTitleLeft = classnames(
   alignItems('items-center')
 )
 
+const openAnimationWrapper = (open: boolean) =>
+  classnames(
+    opacity(open ? 'opacity-100' : 'opacity-0'),
+    transitionProperty('transition-opacity')
+  )
+
 export default function () {
   const [loading, setLoading] = useState(false)
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [email, setEmail] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>()
   const { xs } = useBreakpoints()
@@ -103,7 +111,9 @@ export default function () {
           <div className={emailTitleContainer}>
             <div className={emailTitleLeft}>
               <ProofText>Work email</ProofText>
-              <QuestionMark small />
+              <div className={openAnimationWrapper(open)}>
+                <QuestionMark small />
+              </div>
             </div>
             <button className={arrowContainer} onClick={() => setOpen(!open)}>
               {showButtonText && (
