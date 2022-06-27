@@ -24,7 +24,9 @@ const headerText = (accent = false, extraLeading = false, xs = false) =>
     fontWeight('font-bold'),
     fontSize(xs ? 'text-2xl' : 'text-3xl', 'sm:text-4xl'),
     textColor(accent ? 'text-accent' : 'text-formal-accent'),
-    lineHeight(extraLeading ? 'leading-11' : 'leading-8')
+    extraLeading
+      ? lineHeight('leading-9', 'sm:leading-10', 'md:leading-11')
+      : lineHeight('leading-8')
   )
 export function HeaderText({
   accent,
