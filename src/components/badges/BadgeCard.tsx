@@ -34,7 +34,7 @@ const badgeBody = (leanLeft?: boolean, small?: boolean) =>
       leanLeft ? (small ? 'text-center' : 'text-left') : 'text-center',
       'lg:text-center'
     ),
-    wordBreak('break-all')
+    wordBreak('break-words')
   )
 const badgeBlockName = (small?: boolean) =>
   small ? classNamesToString(maxWidth('max-w-100'), 'line-clamp-2') : undefined
