@@ -124,7 +124,7 @@ export default function () {
               {showButtonText && (
                 <span>{!domain ? 'Get started' : 'Set token'}</span>
               )}
-              <Arrow disabled vertical turnDown={open} />
+              <Arrow disabled open={open} turnDown />
             </button>
           </div>
         </ToolTip>

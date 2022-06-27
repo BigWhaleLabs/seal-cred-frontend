@@ -10,7 +10,7 @@ const arrowsBox = classnames(
   transitionProperty('transition-all'),
   animation('animate-bounce'),
   space('-space-y-4'),
-  margin('my-6', 'ml-2')
+  margin('my-6')
 )
 
 export default function () {

@@ -10,6 +10,9 @@ module.exports = {
       primary: ['"Space Grotesk"', 'sans-serif'],
     },
     extend: {
+      rotate: {
+        270: '270deg',
+      },
       maxHeight: {
         card: '31.75rem',
         'mobile-card': '41rem',
