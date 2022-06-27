@@ -116,6 +116,7 @@ export default function () {
                 )}
                 <div className={proofLineContainer}>
                   <EmailProofForm
+                    hintColor="primary"
                     onChange={onUpdateDomain}
                     onCreate={onUpdateDomain}
                   />

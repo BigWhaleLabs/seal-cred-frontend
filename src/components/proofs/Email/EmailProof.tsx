@@ -78,7 +78,13 @@ export default function () {
             </button>
           </div>
         </ToolTip>
-        {open && <EmailProofForm onCreate={onCreate} onChange={updateForm} />}
+        {open && (
+          <EmailProofForm
+            hintColor="base"
+            onCreate={onCreate}
+            onChange={updateForm}
+          />
+        )}
       </div>
     </Line>
   )
