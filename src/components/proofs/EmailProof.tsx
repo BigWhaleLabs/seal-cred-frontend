@@ -25,6 +25,7 @@ import classnames, {
   textColor,
   textDecoration,
   transitionProperty,
+  visibility,
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
@@ -65,7 +66,10 @@ const emailTitleLeft = classnames(
 )
 
 const revealAnimation = (open: boolean) =>
-  animation(open ? 'animate-reveal' : 'animate-unreveal')
+  classnames(
+    animation(open ? 'animate-reveal' : 'animate-unreveal'),
+    visibility(open ? 'visible' : 'invisible')
+  )
 
 export default function () {
   const [loading, setLoading] = useState(false)
