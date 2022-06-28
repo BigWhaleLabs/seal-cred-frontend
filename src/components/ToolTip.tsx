@@ -1,6 +1,7 @@
 import { HighlightedText } from 'components/Text'
 import { JSXInternal } from 'preact/src/jsx'
 import { MutableRef, useEffect } from 'preact/hooks'
+import { VNode } from 'preact'
 import { createPortal, useRef } from 'react'
 import { useState } from 'preact/hooks'
 import ChildrenProp from 'models/ChildrenProp'
@@ -90,7 +91,7 @@ export default function ({
   const { xs } = useBreakpoints()
   useClickOutside(childrenRef, () => setIsShow(false))
 
-  const [node, setNode] = useState<any>(null)
+  const [node, setNode] = useState<VNode | null>(null)
 
   useEffect(() => {
     setIsShow(!!node)
