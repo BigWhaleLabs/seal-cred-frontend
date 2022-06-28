@@ -101,7 +101,8 @@ export function BodyText({
 const proofText = classnames(
   textColor('text-formal-accent'),
   fontSize('text-sm'),
-  lineHeight('leading-5')
+  lineHeight('leading-5'),
+  fontWeight('font-bold')
 )
 export function ProofText({ children }: ChildrenProp) {
   return <p className={proofText}>{children}</p>
