@@ -7,14 +7,12 @@ import classnames, {
   display,
   flexDirection,
   fontSize,
-  fontWeight,
   lineHeight,
   padding,
   space,
-  textAlign,
 } from 'classnames/tailwind'
 
-const container = (center?: boolean, small?: boolean, bold?: boolean) =>
+const container = (small?: boolean) =>
   classnames(
     display('flex'),
     flexDirection('flex-col'),
@@ -23,24 +21,18 @@ const container = (center?: boolean, small?: boolean, bold?: boolean) =>
     padding('px-4', small ? 'py-2' : 'py-4'),
     space('space-y-4'),
     fontSize('text-sm'),
-    lineHeight('leading-6'),
-    fontWeight(bold ? 'font-bold' : undefined),
-    textAlign(center ? 'text-center' : undefined)
+    lineHeight('leading-6')
   )
 export default function ({
   children,
   text,
-  center,
   small,
-  bold,
 }: ChildrenProp & {
-  bold?: boolean
   small?: boolean
-  center?: boolean
   text?: ComponentChildren
 }) {
   return (
-    <div className={container(center, small, bold)}>
+    <div className={container(small)}>
       {text && <BadgeText>{text}</BadgeText>}
       {children}
     </div>

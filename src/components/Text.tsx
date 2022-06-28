@@ -218,6 +218,23 @@ export function LinkText({
   )
 }
 
+const hintText = (bold?: boolean, center?: boolean) =>
+  classnames(
+    fontSize('text-sm'),
+    fontWeight(bold ? 'font-bold' : 'font-normal'),
+    textAlign(center ? 'text-center' : 'text-left')
+  )
+export function HintText({
+  bold,
+  center,
+  children,
+}: ChildrenProp & {
+  bold?: boolean
+  center?: boolean
+}) {
+  return <div className={hintText(bold, center)}>{children}</div>
+}
+
 const highlightedText = (bold?: boolean, center?: boolean) =>
   classnames(
     width('w-fit'),

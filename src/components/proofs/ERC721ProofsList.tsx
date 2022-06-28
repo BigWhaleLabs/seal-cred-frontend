@@ -1,4 +1,4 @@
-import { BodyText } from 'components/Text'
+import { BadgeText, BodyText, HintText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import HintCard from 'components/badges/HintCard'
@@ -22,7 +22,11 @@ export default function () {
       <ReadyERC721ProofsList />
       {account && <AvailableProofsList />}
       {nothingToGenerate && (
-        <HintCard bold small center text="No NFTs to proof" />
+        <HintCard small>
+          <HintText bold center>
+            No NFTs to proof
+          </HintText>
+        </HintCard>
       )}
     </ProofSection>
   )
