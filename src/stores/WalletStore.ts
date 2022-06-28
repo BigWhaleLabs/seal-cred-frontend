@@ -85,24 +85,22 @@ class WalletStore extends PersistableStore {
   }
 
   private async handleAccountChanged() {
-    if (!provider) return
+    if (!provider || this.walletLoading) return
 
     this.walletLoading = true
     const accounts = await provider.listAccounts()
     this.account = accounts[0]
-    this.walletLoading = false
+    setTimeout(() => (this.walletLoading = false), 500)
   }
 
   private subscribeProvider(provider: Web3Provider) {
     if (!provider.on) return
 
-    provider.on('error', (error: Error) => {
-      handleError(error)
-    })
+    provider.on('error', (error: Error) => handleError(error))
 
-    provider.on('accountsChanged', (accounts: string[]) => {
-      accounts.length ? void this.handleAccountChanged() : this.clearData()
-    })
+    provider.on('accountsChanged', async (accounts: string[]) =>
+      accounts.length ? await this.handleAccountChanged() : this.clearData()
+    )
     provider.on('disconnect', (error: unknown) => {
       if (provider) provider.removeAllListeners()
       handleError(error)
