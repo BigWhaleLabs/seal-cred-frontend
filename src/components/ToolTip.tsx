@@ -1,7 +1,7 @@
 import { HighlightedText } from 'components/Text'
 import { MutableRef, useEffect } from 'preact/hooks'
 import { VNode } from 'preact'
-import { createPortal, useRef } from 'react'
+import { createPortal, useRef } from 'preact/compat'
 import { useState } from 'preact/hooks'
 import ChildrenProp from 'models/ChildrenProp'
 import classnames, {
@@ -98,12 +98,12 @@ export default function ({
     setIsShow(!!node)
   }, [node])
 
-  const positionTooltip = (e: MouseEvent) => {
+  const positionTooltip = (event: MouseEvent) => {
     if (position !== 'floating') return
 
-    const x = e.pageX
-    const y = e.pageY
-    const el = document.getElementById('root')
+    const x = event.pageX
+    const y = event.pageY
+    const element = document.getElementById('root')
     const positionX = (xs ? x * 0.5 : x * 0.95) + 'px;'
     const positionY = y + 0.5 + 'px;'
 
@@ -116,7 +116,7 @@ export default function ({
       'top:' +
       positionY
 
-    if (!el) return
+    if (!element) return
 
     const node = createPortal(
       <div style={portalStyles} className={portalWrapper}>
@@ -130,7 +130,7 @@ export default function ({
           </div>
         </div>
       </div>,
-      el
+      element
     )
     setNode(node)
   }
