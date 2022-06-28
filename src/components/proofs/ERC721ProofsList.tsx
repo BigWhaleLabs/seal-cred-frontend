@@ -21,7 +21,9 @@ export default function () {
     <ProofSection title={<BodyText>NFTs</BodyText>}>
       <ReadyERC721ProofsList />
       {account && <AvailableProofsList />}
-      {nothingToGenerate && <HintCard text="No NFts to proof" />}
+      {nothingToGenerate && (
+        <HintCard bold small center text="No NFTs to proof" />
+      )}
     </ProofSection>
   )
 }
