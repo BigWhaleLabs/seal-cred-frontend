@@ -10,6 +10,7 @@ import classnames, {
   backgroundClip,
   backgroundImage,
   display,
+  flex,
   fontWeight,
   gradientColorStops,
   justifyContent,
@@ -29,6 +30,7 @@ const arrowContainer = classnames(
   space('space-x-2'),
   fontWeight('font-bold')
 )
+const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 const emailTitleContainer = classnames(
   display('flex'),
@@ -64,20 +66,23 @@ export default function () {
   return (
     <Line breakWords>
       <div className={proofLineContainer}>
-        <ToolTip position="floating" text={popoverText} fitContainer>
-          <div className={emailTitleContainer}>
-            <div className={emailTitleLeft}>
-              <BodyText small>Work email</BodyText>
-              <QuestionMark small />
-            </div>
-            <button className={arrowContainer} onClick={() => setOpen(!open)}>
-              {showButtonText && (
-                <span>{!form.domain ? 'Get started' : 'Set token'}</span>
-              )}
-              <Arrow disabled vertical turnDown={open} />
-            </button>
+        <div className={emailTitleContainer}>
+          <div className={tooltipWrapper}>
+            <ToolTip position="floating" text={popoverText} fitContainer>
+              <div className={emailTitleLeft}>
+                <BodyText small>Work email</BodyText>
+                <QuestionMark small />
+              </div>
+            </ToolTip>
           </div>
-        </ToolTip>
+          <button className={arrowContainer} onClick={() => setOpen(!open)}>
+            {showButtonText && (
+              <span>{!form.domain ? 'Get started' : 'Set token'}</span>
+            )}
+            <Arrow disabled vertical turnDown={open} />
+          </button>
+        </div>
+
         {open && (
           <EmailProofForm
             hintColor="base"

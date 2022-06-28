@@ -19,6 +19,7 @@ import classnames, {
   transitionDuration,
   transitionProperty,
   translate,
+  userSelect,
   width,
   zIndex,
 } from 'classnames/tailwind'
@@ -28,6 +29,7 @@ import useClickOutside from 'hooks/useClickOutside'
 const tooltip = (fitContainer?: boolean) =>
   classnames(
     position('relative'),
+    userSelect('select-none'),
     width('w-full', fitContainer ? undefined : 'sm:w-card')
   )
 const tooltipWrapper = classnames(
@@ -120,12 +122,7 @@ export default function ({
     if (!el) return
 
     const node = createPortal(
-      <div
-        style={stylestring}
-        className={classLove}
-        id="floatingTooltip"
-        ref={childrenRef}
-      >
+      <div style={stylestring} className={classLove}>
         <div className={tooltipWrapper}>
           <div
             className={tooltipClasses(xs, isShow, 'bottom')}
@@ -142,7 +139,7 @@ export default function ({
   }
 
   return (
-    <div id="questionMark" className={tooltip(fitContainer)}>
+    <div id="questionMark" className={tooltip(fitContainer)} ref={childrenRef}>
       {position === 'top' && (
         <div className={tooltipWrapper}>
           <div
@@ -155,19 +152,25 @@ export default function ({
         </div>
       )}
       {position === 'floating' ? (
-        <div
-          ref={childrenRef}
-          className={tooltipChildrenWrapper}
-          onMouseMove={(e) => {
-            positionTooltip(e)
-            setIsShow(true)
-          }}
-          onMouseEnter={(e) => positionTooltip(e)}
-          onMouseLeave={() => setNode(null)}
-          onClick={() => setIsShow(true)}
-        >
-          {children}
-        </div>
+        <>
+          <div
+            ref={childrenRef}
+            className={tooltipChildrenWrapper}
+            onMouseMove={(e) => {
+              positionTooltip(e)
+              setIsShow(true)
+            }}
+            onMouseEnter={(e) => positionTooltip(e)}
+            onMouseLeave={() => setNode(null)}
+            onClick={(e) => {
+              positionTooltip(e)
+              setIsShow(true)
+            }}
+          >
+            {children}
+          </div>
+          {node}
+        </>
       ) : (
         <div
           ref={childrenRef}
@@ -179,7 +182,7 @@ export default function ({
           {children}
         </div>
       )}
-      {node}
+
       {position === 'bottom' && (
         <div className={tooltipWrapper}>
           <div
