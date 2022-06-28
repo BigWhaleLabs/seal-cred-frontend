@@ -100,9 +100,8 @@ export default function ({
   const positionTooltip = (
     e: JSXInternal.TargetedMouseEvent<HTMLDivElement>
   ) => {
-    if (position !== 'floating') {
-      return
-    }
+    if (position !== 'floating') return
+
     const x = e.pageX
     const y = e.pageY
     const el = document.getElementById('root')
@@ -163,14 +162,8 @@ export default function ({
             positionTooltip(e)
             setIsShow(true)
           }}
-          onMouseEnter={(e) => {
-            positionTooltip(e)
-            // setIsShow(true)
-          }}
-          onMouseLeave={() => {
-            setNode(null)
-            // setIsShow(false)
-          }}
+          onMouseEnter={(e) => positionTooltip(e)}
+          onMouseLeave={() => setNode(null)}
           onClick={() => setIsShow(true)}
         >
           {children}
