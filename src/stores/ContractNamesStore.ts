@@ -14,8 +14,8 @@ class ContractNamesStore extends PersistableStore {
 
   get contractNames() {
     return {
-      ...this.requestedNames,
       ...this.savedContractNames,
+      ...this.requestedNames,
     }
   }
 
@@ -29,10 +29,16 @@ class ContractNamesStore extends PersistableStore {
       return
     }
     const contract = ERC721__factory.connect(address, defaultProvider)
-    this.requestedNames[address] = contract.name().then((result) => {
-      this.savedContractNames[address] = result
-      return result
-    })
+    this.requestedNames[address] = contract
+      .name()
+      .then((result) => {
+        this.savedContractNames[address] = result || address
+        return result || address
+      })
+      .catch(() => {
+        this.savedContractNames[address] = address
+        return address
+      })
   }
 }
 
