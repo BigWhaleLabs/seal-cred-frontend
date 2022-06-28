@@ -103,8 +103,8 @@ export default function ({
     if (position !== 'floating') {
       return
     }
-    const x = e.clientX
-    const y = e.clientY
+    const x = e.pageX
+    const y = e.pageY
     const el = document.getElementById('root')
     const positionX = (xs ? x * 0.5 : x * 0.95) + 'px;'
     const positionY = y + 0.5 + 'px;'
