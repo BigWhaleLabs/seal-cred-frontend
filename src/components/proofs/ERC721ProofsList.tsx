@@ -1,4 +1,4 @@
-import { BadgeText, BodyText, HintText } from 'components/Text'
+import { BodyText, HintText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import HintCard from 'components/badges/HintCard'
