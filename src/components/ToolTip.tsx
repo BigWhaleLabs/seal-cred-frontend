@@ -1,5 +1,4 @@
 import { HighlightedText } from 'components/Text'
-import { JSXInternal } from 'preact/src/jsx'
 import { MutableRef, useEffect } from 'preact/hooks'
 import { VNode } from 'preact'
 import { createPortal, useRef } from 'react'
@@ -99,9 +98,7 @@ export default function ({
     setIsShow(!!node)
   }, [node])
 
-  const positionTooltip = (
-    e: JSXInternal.TargetedMouseEvent<HTMLDivElement>
-  ) => {
+  const positionTooltip = (e: MouseEvent) => {
     if (position !== 'floating') return
 
     const x = e.pageX
@@ -110,10 +107,10 @@ export default function ({
     const positionX = (xs ? x * 0.5 : x * 0.95) + 'px;'
     const positionY = y + 0.5 + 'px;'
 
-    const classLove = width('lg:w-card', 'w-6/12')
+    const portalWrapper = width('lg:w-card', 'w-6/12')
 
-    const stylestring =
-      `position:absolute; z-index: 999;` +
+    const portalStyles =
+      `position:absolute; z-index: 49;` +
       'left:' +
       positionX +
       'top:' +
@@ -122,7 +119,7 @@ export default function ({
     if (!el) return
 
     const node = createPortal(
-      <div style={stylestring} className={classLove}>
+      <div style={portalStyles} className={portalWrapper}>
         <div className={tooltipWrapper}>
           <div
             className={tooltipClasses(xs, isShow, 'bottom')}
@@ -136,6 +133,10 @@ export default function ({
       el
     )
     setNode(node)
+  }
+  const recalculatePosition = (e: MouseEvent, isClick?: boolean) => {
+    positionTooltip(e)
+    setIsShow(isClick ? !isShow : true)
   }
 
   return (
@@ -156,16 +157,10 @@ export default function ({
           <div
             ref={childrenRef}
             className={tooltipChildrenWrapper}
-            onMouseMove={(e) => {
-              positionTooltip(e)
-              setIsShow(true)
-            }}
+            onMouseMove={(e) => recalculatePosition(e)}
             onMouseEnter={(e) => positionTooltip(e)}
             onMouseLeave={() => setNode(null)}
-            onClick={(e) => {
-              positionTooltip(e)
-              setIsShow(true)
-            }}
+            onClick={(e) => recalculatePosition(e, true)}
           >
             {children}
           </div>
@@ -177,7 +172,7 @@ export default function ({
           className={tooltipChildrenWrapper}
           onMouseEnter={() => setIsShow(true)}
           onMouseLeave={() => setIsShow(false)}
-          onClick={() => setIsShow(true)}
+          onClick={() => setIsShow(!isShow)}
         >
           {children}
         </div>

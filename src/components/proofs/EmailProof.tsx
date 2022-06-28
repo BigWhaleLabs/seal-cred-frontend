@@ -112,7 +112,7 @@ export default function () {
           </div>
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
             {showButtonText && (
-              <span>{!domain ? 'Get started' : 'Set token'}</span>
+              <span>{domain ? 'Set token' : 'Get started'}</span>
             )}
             <Arrow disabled vertical turnDown={!open} />
           </button>
