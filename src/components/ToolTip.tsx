@@ -78,12 +78,16 @@ export default function ({
   arrow,
   fitContainer,
   children,
+  disabled,
 }: ChildrenProp & {
   text: string
   position: 'top' | 'bottom'
   arrow?: boolean
   fitContainer?: boolean
+  disabled?: boolean
 }) {
+  if (disabled) return <>{children}</>
+
   const [isShow, setIsShow] = useState(false)
   const childrenRef = useRef() as MutableRef<HTMLDivElement>
   const { xs } = useBreakpoints()

@@ -1,24 +1,26 @@
 import Arrow from 'icons/Arrow'
 import classnames, {
   animation,
+  height,
   margin,
-  space,
   transitionProperty,
+  width,
 } from 'classnames/tailwind'
 
 const arrowsBox = classnames(
   transitionProperty('transition-all'),
   animation('animate-bounce'),
-  space('-space-y-4'),
-  margin('my-6', 'ml-2')
+  margin('my-6', 'ml-1'),
+  height('h-10'),
+  width('w-6')
 )
 
 export default function () {
   return (
     <div className={arrowsBox}>
-      <Arrow turnDown disabled />
-      <Arrow turnDown disabled />
-      <Arrow turnDown disabled />
+      <Arrow pulseDisabled />
+      <Arrow pulseDisabled />
+      <Arrow pulseDisabled />
     </div>
   )
 }

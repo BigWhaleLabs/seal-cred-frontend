@@ -4384,6 +4384,10 @@ export type TAnimation =
   | 'animate-pulse'
   | 'animate-bounce'
   | 'animate-pulse-horizontal'
+  | 'animate-rotate-180'
+  | 'animate-rotate-0'
+  | 'animate-reveal'
+  | 'animate-unreveal'
 
 export type TTransitionsAndAnimations =
   | TTransitionProperty
@@ -5595,7 +5599,6 @@ export type TSpace =
   | 'space-x-1.5'
   | 'space-x-2.5'
   | 'space-x-3.5'
-  | '-space-x-4'
   | 'space-x-small'
   | 'space-x-reverse'
   | 'space-y-0'
@@ -5634,7 +5637,6 @@ export type TSpace =
   | 'space-y-1.5'
   | 'space-y-2.5'
   | 'space-y-3.5'
-  | '-space-y-4'
   | 'space-y-small'
   | 'space-y-reverse'
 
@@ -7659,6 +7661,7 @@ export type TRotate =
   | 'rotate-45'
   | 'rotate-90'
   | 'rotate-180'
+  | '-rotate-90'
 
 export type TTranslate =
   | 'translate-x-0'

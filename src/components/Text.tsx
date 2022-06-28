@@ -165,7 +165,7 @@ const linkText = (
     ),
     backgroundClip(gradientFrom && gradientTo ? 'bg-clip-text' : undefined),
     gradientColorStops(gradientFrom, gradientTo),
-    fontWeight(bold ? 'font-semibold' : 'font-normal')
+    fontWeight(bold ? 'font-bold' : 'font-normal')
   )
 
 export function GradientSpan({

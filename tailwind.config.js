@@ -23,6 +23,14 @@ module.exports = {
           '0%, 100%': { transform: 'translateX(0.5rem)' },
           '50%': { transform: 'translateX(0rem)' },
         },
+        'rotate-180': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(180deg)' },
+        },
+        reveal: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
       },
       fontSize: {
         sm: '0.876rem',
@@ -44,6 +52,10 @@ module.exports = {
       },
       animation: {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
+        'rotate-180': 'rotate-180 0.5s ease-in-out forwards',
+        'rotate-0': 'rotate-180 0.5s ease-in-out reverse forwards',
+        reveal: 'reveal 0.5s ease-in-out forwards',
+        unreveal: 'reveal 0.5s ease-in-out reverse forwards ',
       },
       colors: {
         orb: '#ffffff',
@@ -97,8 +109,8 @@ module.exports = {
         '-24': '-6rem',
         '-4': '-1rem',
       },
-      space: {
-        '-4': '-1rem',
+      rotate: {
+        '-90': '-90deg',
       },
       dropShadow: {
         accent: '0rem 0rem 0.625rem #fed823',
