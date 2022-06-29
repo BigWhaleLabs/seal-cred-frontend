@@ -19,6 +19,7 @@ function ListTitleSuspended() {
 
   return (
     <Title
+      titleColor="secondary"
       title="Create ZK badges"
       subtitle={
         hasUnminted

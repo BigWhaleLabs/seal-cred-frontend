@@ -1,3 +1,4 @@
+import { CardColor } from 'components/Text'
 import {
   backgroundColor,
   borderColor,
@@ -20,10 +21,9 @@ import {
 import ArcText from 'icons/ArcText'
 import ChildrenProp from 'models/ChildrenProp'
 
-type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'formal-accent'
 interface CardProps {
   shadow?: boolean
-  color?: Color
+  color?: CardColor
   onlyWrap?: boolean
   spinner?: string
   thin?: boolean
@@ -31,7 +31,7 @@ interface CardProps {
   nospace?: boolean
 }
 
-const cardColor = (color?: Color) => {
+const cardColor = (color?: CardColor) => {
   return classnames(
     borderWidth('border'),
     borderColor(
@@ -66,7 +66,7 @@ const cardColor = (color?: Color) => {
 
 const cardContainer = (
   shadow?: boolean,
-  color?: Color,
+  color?: CardColor,
   onlyWrap = false,
   thin = false,
   small?: boolean,

@@ -96,7 +96,11 @@ export default function ({
     handleError('Looks like this contract was removed')
     return (
       <Card color="secondary" shadow onlyWrap>
-        <Title title="Unsupported NFT" subtitle="This NFT is not supported" />
+        <Title
+          titleColor="secondary"
+          title="Unsupported NFT"
+          subtitle="This NFT is not supported"
+        />
       </Card>
     )
   }

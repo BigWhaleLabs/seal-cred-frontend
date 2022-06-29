@@ -108,15 +108,34 @@ export function ProofText({ children }: ChildrenProp) {
   return <p className={proofText}>{children}</p>
 }
 
-const cardHeader = (color?: TTextColor) =>
-  textColor(color || 'text-formal-accent')
+export type CardColor =
+  | 'accent'
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'formal-accent'
+
+export const cardTextColor = (color?: CardColor) =>
+  textColor(
+    color === 'accent'
+      ? 'text-accent'
+      : color === 'tertiary'
+      ? 'text-tertiary'
+      : color === 'secondary'
+      ? 'text-secondary'
+      : color === 'formal-accent'
+      ? 'text-formal-accent'
+      : color === 'primary'
+      ? 'text-primary'
+      : 'text-primary-dark'
+  )
 export function CardHeader({
   color,
   children,
 }: ChildrenProp & {
-  color?: TTextColor
+  color?: CardColor
 }) {
-  return <h3 className={cardHeader(color)}>{children}</h3>
+  return <h3 className={cardTextColor(color)}>{children}</h3>
 }
 
 const cardDescription = classnames(

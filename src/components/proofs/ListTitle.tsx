@@ -13,6 +13,7 @@ export default function () {
   return (
     <>
       <Title
+        titleColor="accent"
         title={allGenerated ? 'All proofed out' : 'Start proofing!'}
         subtitle={
           allGenerated

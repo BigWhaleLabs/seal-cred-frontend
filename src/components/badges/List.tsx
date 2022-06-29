@@ -61,9 +61,7 @@ function BadgeListSuspended() {
 export default function () {
   return (
     <div className={badges}>
-      <Suspense fallback={<BodyText>Fetching derivative NFTs...</BodyText>}>
-        <BadgeListSuspended />
-      </Suspense>
+      <BadgeListSuspended />
     </div>
   )
 }

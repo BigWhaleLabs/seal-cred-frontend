@@ -8,6 +8,7 @@ export default function () {
   return (
     <>
       <Title
+        titleColor="secondary"
         title="Then"
         subtitle="Once you’ve created a ZK proof, you will be able to mint ZK badges for your anonymous wallets"
       />
