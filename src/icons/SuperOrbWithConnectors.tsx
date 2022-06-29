@@ -19,7 +19,6 @@ const strokeWhite = (isFill?: boolean) =>
     fill(isFill ? 'fill-primary-dark' : undefined)
   )
 const fillOrb = fill('fill-orb')
-const fillCircle = fill('fill-gray')
 
 const SuperOrb = () => (
   <svg
@@ -48,18 +47,26 @@ const SuperOrb = () => (
         y2="113.84"
         xlinkHref="#a"
       />
-      <mask
+      <linearGradient
         id="c"
-        x="8.78"
-        y="1"
-        width="80.22"
-        height="82.87"
-        maskUnits="userSpaceOnUse"
+        x1="101.5"
+        y1="503"
+        x2="101.5"
+        y2="1186"
+        gradientTransform="matrix(1, 0, 0, -1, 0, 1186)"
+        gradientUnits="userSpaceOnUse"
       >
-        <g transform="translate(-48.02 -4.86)">
-          <circle cx="101.52" cy="46.36" r="30.5" className={fillCircle} />
-        </g>
-      </mask>
+        <stop offset="0" stop-color="#efecd6" />
+        <stop offset="0.03" stop-color="#f1e9be" />
+        <stop offset="0.08" stop-color="#f4e59a" />
+        <stop offset="0.14" stop-color="#f7e27a" />
+        <stop offset="0.2" stop-color="#f9df5e" />
+        <stop offset="0.27" stop-color="#fbdc48" />
+        <stop offset="0.35" stop-color="#fcda37" />
+        <stop offset="0.46" stop-color="#fdd92c" />
+        <stop offset="0.6" stop-color="#fed825" />
+        <stop offset="1" stop-color="#fed823" />
+      </linearGradient>
       <radialGradient
         id="d"
         cx="-2654.78"

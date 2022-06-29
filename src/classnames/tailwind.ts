@@ -4384,6 +4384,10 @@ export type TAnimation =
   | 'animate-pulse'
   | 'animate-bounce'
   | 'animate-pulse-horizontal'
+  | 'animate-rotate-180'
+  | 'animate-rotate-0'
+  | 'animate-reveal'
+  | 'animate-unreveal'
 
 export type TTransitionsAndAnimations =
   | TTransitionProperty
@@ -5291,6 +5295,7 @@ export type TMargin =
   | 'm-7.5'
   | 'm-8.5'
   | '-m-10'
+  | '-m-12'
   | 'm-small'
   | 'my-0'
   | 'my-1'
@@ -5334,6 +5339,7 @@ export type TMargin =
   | 'my-7.5'
   | 'my-8.5'
   | '-my-10'
+  | '-my-12'
   | 'my-small'
   | 'mx-0'
   | 'mx-1'
@@ -5377,6 +5383,7 @@ export type TMargin =
   | 'mx-7.5'
   | 'mx-8.5'
   | '-mx-10'
+  | '-mx-12'
   | 'mx-small'
   | 'mt-0'
   | 'mt-1'
@@ -5420,6 +5427,7 @@ export type TMargin =
   | 'mt-7.5'
   | 'mt-8.5'
   | '-mt-10'
+  | '-mt-12'
   | 'mt-small'
   | 'mr-0'
   | 'mr-1'
@@ -5463,6 +5471,7 @@ export type TMargin =
   | 'mr-7.5'
   | 'mr-8.5'
   | '-mr-10'
+  | '-mr-12'
   | 'mr-small'
   | 'mb-0'
   | 'mb-1'
@@ -5506,6 +5515,7 @@ export type TMargin =
   | 'mb-7.5'
   | 'mb-8.5'
   | '-mb-10'
+  | '-mb-12'
   | 'mb-small'
   | 'ml-0'
   | 'ml-1'
@@ -5549,6 +5559,7 @@ export type TMargin =
   | 'ml-7.5'
   | 'ml-8.5'
   | '-ml-10'
+  | '-ml-12'
   | 'ml-small'
 
 export type TSpace =
@@ -5588,7 +5599,6 @@ export type TSpace =
   | 'space-x-1.5'
   | 'space-x-2.5'
   | 'space-x-3.5'
-  | '-space-x-4'
   | 'space-x-small'
   | 'space-x-reverse'
   | 'space-y-0'
@@ -5627,7 +5637,6 @@ export type TSpace =
   | 'space-y-1.5'
   | 'space-y-2.5'
   | 'space-y-3.5'
-  | '-space-y-4'
   | 'space-y-small'
   | 'space-y-reverse'
 
@@ -7652,6 +7661,7 @@ export type TRotate =
   | 'rotate-45'
   | 'rotate-90'
   | 'rotate-180'
+  | '-rotate-90'
 
 export type TTranslate =
   | 'translate-x-0'

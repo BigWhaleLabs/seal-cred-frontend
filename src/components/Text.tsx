@@ -24,7 +24,9 @@ const headerText = (accent = false, extraLeading = false, xs = false) =>
     fontWeight('font-bold'),
     fontSize(xs ? 'text-2xl' : 'text-3xl', 'sm:text-4xl'),
     textColor(accent ? 'text-accent' : 'text-formal-accent'),
-    lineHeight(extraLeading ? 'leading-11' : 'leading-8')
+    extraLeading
+      ? lineHeight('leading-9', 'sm:leading-10', 'md:leading-11')
+      : lineHeight('leading-8')
   )
 export function HeaderText({
   accent,
@@ -99,7 +101,8 @@ export function BodyText({
 const proofText = classnames(
   textColor('text-formal-accent'),
   fontSize('text-sm'),
-  lineHeight('leading-5')
+  lineHeight('leading-5'),
+  fontWeight('font-bold')
 )
 export function ProofText({ children }: ChildrenProp) {
   return <p className={proofText}>{children}</p>
@@ -163,7 +166,7 @@ const linkText = (
     ),
     backgroundClip(gradientFrom && gradientTo ? 'bg-clip-text' : undefined),
     gradientColorStops(gradientFrom, gradientTo),
-    fontWeight(bold ? 'font-semibold' : 'font-normal')
+    fontWeight(bold ? 'font-bold' : 'font-normal')
   )
 
 export function GradientSpan({
@@ -213,6 +216,23 @@ export function LinkText({
       {children}
     </a>
   )
+}
+
+const hintText = (bold?: boolean, center?: boolean) =>
+  classnames(
+    fontSize('text-sm'),
+    fontWeight(bold ? 'font-bold' : 'font-normal'),
+    textAlign(center ? 'text-center' : 'text-left')
+  )
+export function HintText({
+  bold,
+  center,
+  children,
+}: ChildrenProp & {
+  bold?: boolean
+  center?: boolean
+}) {
+  return <div className={hintText(bold, center)}>{children}</div>
 }
 
 const highlightedText = (bold?: boolean, center?: boolean) =>
