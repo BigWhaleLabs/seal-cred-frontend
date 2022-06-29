@@ -169,7 +169,11 @@ export default function ({
     >
       {loading && <Loading small={small} />}
       {typeof children === 'string' ? <span>{children}</span> : children}
-      {withArrow && <Arrow disabled={disabled || loading} />}
+      {withArrow && (
+        <div className={width('w-4')}>
+          <Arrow horizontal pulseDisabled={disabled || loading} openDisabled />
+        </div>
+      )}
     </button>
   )
 }
