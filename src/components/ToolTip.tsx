@@ -1,6 +1,7 @@
 import { HighlightedText } from 'components/Text'
-import { MutableRef } from 'preact/hooks'
-import { useRef } from 'react'
+import { MutableRef, useCallback, useEffect } from 'preact/hooks'
+import { VNode } from 'preact'
+import { createPortal, useRef } from 'preact/compat'
 import { useState } from 'preact/hooks'
 import ChildrenProp from 'models/ChildrenProp'
 import classnames, {
@@ -17,6 +18,7 @@ import classnames, {
   transitionDuration,
   transitionProperty,
   translate,
+  userSelect,
   width,
   zIndex,
 } from 'classnames/tailwind'
@@ -26,7 +28,9 @@ import useClickOutside from 'hooks/useClickOutside'
 const tooltip = (fitContainer?: boolean) =>
   classnames(
     position('relative'),
-    width('w-full', fitContainer ? undefined : 'sm:w-card')
+    userSelect('select-none'),
+    width('w-full', fitContainer ? undefined : 'sm:w-card'),
+    zIndex('z-30')
   )
 const tooltipWrapper = classnames(
   position('relative'),
@@ -34,7 +38,7 @@ const tooltipWrapper = classnames(
   width('w-full'),
   margin('mx-auto')
 )
-const tooltipChildrenWrapper = width('w-full')
+const tooltipChildrenWrapper = classnames(width('w-full'), zIndex('z-10'))
 
 const tooltipClasses = (
   mobile: boolean,
@@ -81,7 +85,7 @@ export default function ({
   disabled,
 }: ChildrenProp & {
   text: string
-  position: 'top' | 'bottom'
+  position: 'top' | 'bottom' | 'floating'
   arrow?: boolean
   fitContainer?: boolean
   disabled?: boolean
@@ -93,8 +97,86 @@ export default function ({
   const { xs } = useBreakpoints()
   useClickOutside(childrenRef, () => setIsShow(false))
 
+  const [node, setNode] = useState<VNode | null>(null)
+
+  const positionTooltip = useCallback(
+    (event: MouseEvent) => {
+      if (position !== 'floating') return
+
+      const x = event.pageX
+      const y = event.pageY
+      const element = document.getElementById('root')
+      const parent = childrenRef.current
+      const positionX = (xs ? x * 0.5 : x * 0.95) + 'px;'
+      const positionY = y + 0.5 + 'px;'
+      const portalWrapper = width('lg:w-card', 'w-6/12')
+
+      const portalStyles =
+        `position:absolute; z-index: 49;` +
+        'left:' +
+        positionX +
+        'top:' +
+        positionY
+
+      if (!parent) return
+      const parentXStart = parent.getBoundingClientRect().left + window.scrollX
+      const parentXEnd = parentXStart + parent.offsetWidth
+      const parentYStart = parent.getBoundingClientRect().top + window.scrollY
+      const parentYEnd = parentYStart + parent.offsetHeight
+      if (!element) return
+
+      if (
+        x < parentXStart ||
+        x > parentXEnd ||
+        y < parentYStart ||
+        y > parentYEnd
+      ) {
+        setIsShow(false)
+        setNode(null)
+        return
+      }
+
+      const node = createPortal(
+        <div style={portalStyles} className={portalWrapper}>
+          <div className={tooltipWrapper}>
+            <div
+              className={tooltipClasses(xs, isShow, 'bottom')}
+              style={{ visibility: isShow ? 'visible' : 'collapse' }}
+            >
+              <HighlightedText>{text}</HighlightedText>
+              {arrow && <div className={triangle('bottom')} />}
+            </div>
+          </div>
+        </div>,
+        element
+      )
+      setIsShow(true)
+      setNode(node)
+    },
+    [arrow, isShow, xs, position, text]
+  )
+
+  const isFloating = position === 'floating'
+
+  useEffect(() => {
+    if (!isFloating) return
+    const element = childrenRef.current
+    if (!element) return
+
+    document.addEventListener('mouseover', positionTooltip)
+    document.addEventListener('mouseout', positionTooltip)
+    document.addEventListener('click', positionTooltip)
+
+    return () => {
+      if (!isFloating) return
+      document.removeEventListener('mouseover', positionTooltip)
+      document.addEventListener('mouseout', positionTooltip)
+      document.addEventListener('click', positionTooltip)
+    }
+  }, [isFloating, positionTooltip])
+
   return (
-    <div className={tooltip(fitContainer)}>
+    <div className={tooltip(fitContainer)} ref={childrenRef}>
       {position === 'top' && (
         <div className={tooltipWrapper}>
           <div
@@ -106,15 +188,25 @@ export default function ({
           </div>
         </div>
       )}
-      <div
-        ref={childrenRef}
-        className={tooltipChildrenWrapper}
-        onMouseEnter={() => setIsShow(true)}
-        onMouseLeave={() => setIsShow(false)}
-        onClick={() => setIsShow(true)}
-      >
-        {children}
-      </div>
+      {position === 'floating' ? (
+        <>
+          <div ref={childrenRef} className={tooltipChildrenWrapper}>
+            {children}
+          </div>
+          {node}
+        </>
+      ) : (
+        <div
+          ref={childrenRef}
+          className={tooltipChildrenWrapper}
+          onMouseEnter={() => setIsShow(true)}
+          onMouseLeave={() => setIsShow(false)}
+          onClick={() => setIsShow(!isShow)}
+        >
+          {children}
+        </div>
+      )}
+
       {position === 'bottom' && (
         <div className={tooltipWrapper}>
           <div
