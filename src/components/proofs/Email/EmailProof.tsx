@@ -79,7 +79,9 @@ export default function () {
             {showButtonText && (
               <span>{form.domain ? 'Set token' : 'Get started'}</span>
             )}
-            <Arrow disabled vertical turnDown={open} />
+            <div className={width('w-4')}>
+              <Arrow pulseDisabled open={open} />
+            </div>
           </button>
         </div>
 
