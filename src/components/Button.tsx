@@ -17,6 +17,7 @@ import {
   fontSize,
   fontWeight,
   gradientColorStops,
+  justifyContent,
   opacity,
   outlineStyle,
   padding,
@@ -41,6 +42,7 @@ const commonClasses = (
   classnames(
     display('flex'),
     flexDirection('flex-row'),
+    justifyContent(center ? 'justify-center' : undefined),
     alignItems('items-center'),
     fontWeight('font-bold'),
     fontFamily('font-primary'),
@@ -167,7 +169,11 @@ export default function ({
     >
       {loading && <Loading small={small} />}
       {typeof children === 'string' ? <span>{children}</span> : children}
-      {withArrow && <Arrow disabled={disabled || loading} />}
+      {withArrow && (
+        <div className={width('w-4')}>
+          <Arrow horizontal pulseDisabled={disabled || loading} openDisabled />
+        </div>
+      )}
     </button>
   )
 }

@@ -99,7 +99,8 @@ const cardContainer = (
 }
 const spinnerBox = classnames(
   position('absolute'),
-  inset('-top-24', '-right-4', 'md:-top-28', 'md:-right-28')
+  inset('-top-24', '-right-4', 'md:-top-28', 'md:-right-28'),
+  margin('-mr-12')
 )
 
 export default function ({
@@ -116,12 +117,12 @@ export default function ({
     <div
       className={cardContainer(shadow, color, onlyWrap, thin, small, nospace)}
     >
+      {children}
       {!!spinner && (
         <div className={spinnerBox}>
           <ArcText text={spinner} />
         </div>
       )}
-      {children}
     </div>
   )
 }

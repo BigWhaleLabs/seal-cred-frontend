@@ -7,7 +7,7 @@ import Title from 'components/Title'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
-  const { derivativeContracts } = useSnapshot(SealCredStore)
+  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
   const { contractsOwned } = useSnapshot(ContractsStore)
 
@@ -17,9 +17,7 @@ function ListTitleSuspended() {
 
   const hasUnminted = proofsAvailableToMint.length > 0
 
-  return !Object.keys(derivativeContracts).length ? (
-    <LoadingTitle />
-  ) : (
+  return (
     <Title
       title="Create ZK badges"
       subtitle={

@@ -1,13 +1,13 @@
-import { AccentText, BodyText } from 'components/Text'
+import { AccentText, ProofText } from 'components/Text'
 import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import Button from 'components/proofs/Button'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
+import ERC721Proof from 'helpers/ERC721Proof'
 import ExternalLink from 'components/ExternalLink'
 import Line from 'components/proofs/Line'
-import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
 import WalletStore from 'stores/WalletStore'
@@ -15,6 +15,7 @@ import classnames, {
   alignItems,
   animation,
   display,
+  flex,
   flexDirection,
   fontFamily,
   fontSize,
@@ -26,6 +27,8 @@ import classnames, {
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import useBreakpoints from 'hooks/useBreakpoints'
+
+const proofName = classnames(display('flex'), flex('flex-1'))
 
 const proofText = (small?: boolean) =>
   classnames(
@@ -49,7 +52,7 @@ const textWithIcon = classnames(
 
 function useProofContent(
   contractAddress: string,
-  proof?: Proof
+  proof?: ERC721Proof
 ): {
   color: 'text-accent' | 'text-secondary' | 'text-tertiary'
   content: JSX.Element | null
@@ -79,7 +82,7 @@ function useProofContent(
           disabled={isGenerating}
           onClick={async () => {
             setIsGenerating(true)
-            await ProofStore.generate(contractAddress)
+            await ProofStore.generateERC721(contractAddress)
             setIsGenerating(false)
           }}
         >
@@ -103,19 +106,21 @@ export default function ({
   proof,
   contractAddress,
 }: {
-  proof?: Proof
+  proof?: ERC721Proof
   contractAddress: string
 }) {
   const { xs } = useBreakpoints()
   const { color, content } = useProofContent(contractAddress, proof)
 
   return (
-    <Line>
-      <BodyText bold small>
-        <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
-          <ContractName address={contractAddress} />
-        </ExternalLink>
-      </BodyText>
+    <Line breakWords>
+      <div className={proofName}>
+        <ProofText>
+          <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
+            <ContractName address={contractAddress} />
+          </ExternalLink>
+        </ProofText>
+      </div>
 
       <div className={proofText(xs)}>
         <AccentText bold color={color}>

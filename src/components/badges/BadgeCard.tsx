@@ -9,6 +9,7 @@ import classnames, {
   maxWidth,
   space,
   textAlign,
+  wordBreak,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -32,7 +33,8 @@ const badgeBody = (leanLeft?: boolean, small?: boolean) =>
     textAlign(
       leanLeft ? (small ? 'text-center' : 'text-left') : 'text-center',
       'lg:text-center'
-    )
+    ),
+    wordBreak('break-words')
   )
 const badgeBlockName = (small?: boolean) =>
   small ? classNamesToString(maxWidth('max-w-100'), 'line-clamp-2') : undefined

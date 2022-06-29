@@ -2,13 +2,12 @@ import { AccentText } from 'components/Text'
 import { Suspense } from 'preact/compat'
 import { useResizeDetector } from 'react-resize-detector'
 import { useSnapshot } from 'valtio'
-import AvailableProofsList from 'components/proofs/AvailableProofsList'
+import ERC721ProofsList from 'components/proofs/ERC721ProofsList'
+import EmailProofList from 'components/proofs/EmailProofList'
 import ListTitle from 'components/proofs/ListTitle'
 import LoadingTitle from 'components/proofs/LoadingTitle'
 import ProofsListContainer from 'components/proofs/ListContainer'
-import ReadyProofsList from 'components/proofs/ReadyProofsList'
 import Scrollbar from 'components/Scrollbar'
-import WalletStore from 'stores/WalletStore'
 import classnames, {
   display,
   flexDirection,
@@ -27,7 +26,6 @@ const proofContentBlock = classnames(
 )
 
 export default function () {
-  const { account } = useSnapshot(WalletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
   const { height = 0, ref } = useResizeDetector({ handleWidth: false })
@@ -51,8 +49,8 @@ export default function () {
           bottomPadding={savedMessage?.height || 0}
         >
           <div className={innerScrollableBlock}>
-            <ReadyProofsList />
-            {account && <AvailableProofsList />}
+            <ERC721ProofsList />
+            <EmailProofList />
           </div>
         </Scrollbar>
         {proofsCompleted.length > 0 && (

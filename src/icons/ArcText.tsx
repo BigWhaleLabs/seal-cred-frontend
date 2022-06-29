@@ -13,7 +13,7 @@ const textStyle = classnames(
   fill('fill-secondary'),
   textTransform('uppercase'),
   fontWeight('font-semibold'),
-  fontSize('text-xl')
+  fontSize('text-3xl')
 )
 const svgBox = (mobile?: boolean) =>
   classnames(
@@ -24,12 +24,13 @@ const svgBox = (mobile?: boolean) =>
 
 interface ArcTextProps {
   text: string
+  smallCircle?: boolean
 }
 
-export default function ({ text }: ArcTextProps) {
+export default function ({ text, smallCircle }: ArcTextProps) {
   const { xxs, sm, md } = useBreakpoints()
   const mobile = (xxs || sm) && !md
-  const radius = mobile ? 85 : 110
+  const radius = mobile ? 85 : smallCircle ? 110 : 55
 
   return (
     <svg
