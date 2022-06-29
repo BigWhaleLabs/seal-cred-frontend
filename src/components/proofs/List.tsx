@@ -2,8 +2,8 @@ import { AccentText } from 'components/Text'
 import { Suspense } from 'preact/compat'
 import { useResizeDetector } from 'react-resize-detector'
 import { useSnapshot } from 'valtio'
-import ERC721ProofsList from 'components/proofs/ERC721/ERC721ProofsList'
-import EmailProofList from 'components/proofs/Email/EmailProofList'
+import ERC721ProofsList from 'components/proofs/ERC721ProofsList'
+import EmailProofList from 'components/proofs/EmailProofList'
 import ListTitle from 'components/proofs/ListTitle'
 import LoadingTitle from 'components/proofs/LoadingTitle'
 import ProofsListContainer from 'components/proofs/ListContainer'
@@ -49,8 +49,8 @@ export default function () {
           bottomPadding={savedMessage?.height || 0}
         >
           <div className={innerScrollableBlock}>
-            <EmailProofList />
             <ERC721ProofsList />
+            <EmailProofList />
           </div>
         </Scrollbar>
         {proofsCompleted.length > 0 && (

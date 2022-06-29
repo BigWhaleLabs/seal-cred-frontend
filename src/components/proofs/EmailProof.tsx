@@ -1,4 +1,4 @@
-import { BadgeText, BodyText } from 'components/Text'
+import { BadgeText, ProofText } from 'components/Text'
 import { sendEmail } from 'helpers/attestor'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
@@ -11,29 +11,45 @@ import ToolTip from 'components/ToolTip'
 import checkDomainToken from 'helpers/checkDomainToken'
 import classnames, {
   alignItems,
+  animation,
   backgroundClip,
   backgroundImage,
   display,
+  flex,
+  fontFamily,
+  fontSize,
   fontWeight,
   gradientColorStops,
   justifyContent,
+  lineHeight,
+  margin,
   space,
   textColor,
   textDecoration,
+  transitionProperty,
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const arrowContainer = classnames(
-  textColor('text-transparent', 'active:text-accent'),
-  backgroundClip('bg-clip-text'),
-  backgroundImage('bg-gradient-to-r'),
-  gradientColorStops('from-secondary', 'to-accent'),
   display('flex'),
   alignItems('items-center'),
-  space('space-x-2'),
-  fontWeight('font-bold')
+  space('space-x-2')
 )
+
+const getStartedText = (open: boolean) =>
+  classnames(
+    textColor('text-transparent', 'active:text-accent'),
+    transitionProperty('transition-colors'),
+    backgroundClip('bg-clip-text'),
+    backgroundImage('bg-gradient-to-r'),
+    gradientColorStops('from-secondary', 'to-accent'),
+    fontWeight('font-bold'),
+    fontFamily('font-primary'),
+    lineHeight('leading-5'),
+    fontSize('text-sm'),
+    animation(open ? 'animate-unreveal' : 'animate-reveal')
+  )
 
 const emailTitleContainer = classnames(
   display('flex'),
@@ -52,9 +68,14 @@ const emailTitleLeft = classnames(
   alignItems('items-center')
 )
 
+const questionBlock = (open: boolean) =>
+  animation(open ? 'animate-reveal' : 'animate-unreveal')
+
+const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
+
 export default function () {
   const [loading, setLoading] = useState(false)
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [email, setEmail] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>()
   const { xs } = useBreakpoints()
@@ -92,45 +113,60 @@ export default function () {
     }
   }
 
-  const showButtonText = !xs ? !open : false
   const popoverText =
     'When you submit your email, we create a token out of your email’s domain. You can then use that token to create zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
 
   return (
     <Line breakWords>
       <div className={proofLineContainer}>
-        <ToolTip position="bottom" text={popoverText} fitContainer>
-          <div className={emailTitleContainer}>
-            <div className={emailTitleLeft}>
-              <BodyText small>Work email</BodyText>
-              <QuestionMark small />
+        <div className={emailTitleContainer}>
+          <div className={emailTitleLeft}>
+            <ProofText>Work email</ProofText>
+            <div className={tooltipWrapper}>
+              <ToolTip
+                position="floating"
+                text={popoverText}
+                fitContainer
+                disabled={!open}
+              >
+                <div className={questionBlock(open)}>
+                  <QuestionMark small />
+                </div>
+              </ToolTip>
             </div>
-            <button className={arrowContainer} onClick={() => setOpen(!open)}>
-              {showButtonText && (
-                <span>{!domain ? 'Get started' : 'Set token'}</span>
-              )}
-              <Arrow disabled vertical turnDown={open} />
-            </button>
           </div>
-        </ToolTip>
+          <button className={arrowContainer} onClick={() => setOpen(!open)}>
+            {!xs && (
+              <span className={getStartedText(open)}>
+                {domain ? 'Set token' : 'Get started'}
+              </span>
+            )}
+            <div className={width('w-4')}>
+              <Arrow pulseDisabled open={open} />
+            </div>
+          </button>
+        </div>
         {open && (
           <>
-            <BadgeText>
-              {domain ? (
-                <>
-                  A token has been sent to ${email}. Copy the token and add it
-                  here to create zk proof. Or{' '}
-                  <button
-                    className={textDecoration('underline')}
-                    onClick={resetEmail}
-                  >
-                    re-enter email.
-                  </button>
-                </>
-              ) : (
-                `Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.`
-              )}
-            </BadgeText>
+            <div className={margin('mt-4')}>
+              <BadgeText>
+                {domain ? (
+                  <>
+                    A token has been sent to {email}. Copy the token and add it
+                    here to create zk proof. Or{' '}
+                    <button
+                      className={textDecoration('underline')}
+                      onClick={resetEmail}
+                    >
+                      re-enter email
+                    </button>
+                    .
+                  </>
+                ) : (
+                  'Add your work email and we’ll send you a token for that email (check the spam folder). Then, use the token here to create zk proof.'
+                )}
+              </BadgeText>
+            </div>
             {domain ? (
               <TextForm
                 submitText="Generate proof"
