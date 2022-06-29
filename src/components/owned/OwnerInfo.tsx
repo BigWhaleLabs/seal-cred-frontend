@@ -57,9 +57,9 @@ function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
   if (badge instanceof EmailBadgeContract) {
     return (
       <BodyText>
-        This is a zkNFT derivative of a work email. It means this person has
-        been verified to work at ‘
-        <AccentText color="text-secondary">{badge.domain}</AccentText>‘.
+        This is a zkNFT derivative of an email. It means this person has been
+        verified own a ‘
+        <AccentText color="text-secondary">{badge.domain}</AccentText>‘ email.
       </BodyText>
     )
   }
