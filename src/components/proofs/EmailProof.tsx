@@ -15,12 +15,9 @@ import classnames, {
   backgroundClip,
   backgroundImage,
   display,
-<<<<<<< HEAD
   flex,
-=======
   fontFamily,
   fontSize,
->>>>>>> work-proof
   fontWeight,
   gradientColorStops,
   justifyContent,
@@ -121,47 +118,37 @@ export default function () {
   return (
     <Line breakWords>
       <div className={proofLineContainer}>
-<<<<<<< HEAD
         <div className={emailTitleContainer}>
           <div className={tooltipWrapper}>
-            <ToolTip position="bottom" text={popoverText} fitContainer>
-              <div className={emailTitleLeft}>
-                <BodyText small>Work email</BodyText>
-                <QuestionMark small />
+            <ToolTip
+              position="bottom"
+              text={popoverText}
+              fitContainer
+              disabled={!open}
+            >
+              <div className={emailTitleContainer}>
+                <div className={emailTitleLeft}>
+                  <ProofText>Work email</ProofText>
+                  <div className={questionBlock(open)}>
+                    <QuestionMark small />
+                  </div>
+                </div>
+                <button
+                  className={arrowContainer}
+                  onClick={() => setOpen(!open)}
+                >
+                  {!xs && (
+                    <span className={getStartedText(open)}>
+                      {domain ? 'Set token' : 'Get started'}
+                    </span>
+                  )}
+                  <div className={width('w-4')}>
+                    <Arrow pulseDisabled open={open} />
+                  </div>
+                </button>
               </div>
             </ToolTip>
-=======
-        <ToolTip
-          position="bottom"
-          text={popoverText}
-          fitContainer
-          disabled={!open}
-        >
-          <div className={emailTitleContainer}>
-            <div className={emailTitleLeft}>
-              <ProofText>Work email</ProofText>
-              <div className={questionBlock(open)}>
-                <QuestionMark small />
-              </div>
-            </div>
-            <button className={arrowContainer} onClick={() => setOpen(!open)}>
-              {!xs && (
-                <span className={getStartedText(open)}>
-                  {!domain ? 'Get started' : 'Set token'}
-                </span>
-              )}
-              <div className={width('w-4')}>
-                <Arrow pulseDisabled open={open} />
-              </div>
-            </button>
->>>>>>> work-proof
           </div>
-          <button className={arrowContainer} onClick={() => setOpen(!open)}>
-            {showButtonText && (
-              <span>{domain ? 'Set token' : 'Get started'}</span>
-            )}
-            <Arrow disabled vertical turnDown={!open} />
-          </button>
         </div>
 
         {open && (
