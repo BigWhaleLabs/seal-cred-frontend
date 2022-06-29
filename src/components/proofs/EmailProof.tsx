@@ -132,7 +132,7 @@ export default function () {
             <button className={arrowContainer} onClick={() => setOpen(!open)}>
               {!xs && (
                 <span className={getStartedText(open)}>
-                  {!domain ? 'Get started' : 'Set token'}
+                  {domain ? 'Set token' : 'Get started'}
                 </span>
               )}
               <div className={width('w-4')}>
@@ -158,7 +158,7 @@ export default function () {
                     .
                   </>
                 ) : (
-                  `Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.`
+                  'Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.'
                 )}
               </BadgeText>
             </div>
