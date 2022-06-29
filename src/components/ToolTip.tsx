@@ -107,9 +107,9 @@ export default function ({
       const y = event.pageY
       const element = document.getElementById('root')
       const parent = childrenRef.current
-      const positionX = (xs ? x * 0.5 : x * 0.95) + 'px;'
+      const positionX = (xs ? 0 : x * 0.95) + 'px;'
       const positionY = y + 0.5 + 'px;'
-      const portalWrapper = width('lg:w-card', 'w-6/12')
+      const portalWrapper = width('lg:w-card', xs ? 'w-full' : 'w-6/12')
 
       const portalStyles =
         `position:absolute; z-index: 49;` +
