@@ -14141,7 +14141,6 @@ __metadata:
     rollup-plugin-node-polyfills: ^0.2.1
     rollup-plugin-visualizer: ^5.6.0
     secure-ls: ^1.2.6
-    tailwind-scrollbar-hide: ^1.1.7
     tailwindcss: ^3.1.4
     tailwindcss-classnames: ^3.0.5
     typescript: ^4.7.4
@@ -14981,13 +14980,6 @@ __metadata:
   version: 3.2.4
   resolution: "symbol-tree@npm:3.2.4"
   checksum: 6e8fc7e1486b8b54bea91199d9535bb72f10842e40c79e882fc94fb7b14b89866adf2fd79efa5ebb5b658bc07fb459ccce5ac0e99ef3d72f474e74aaf284029d
-  languageName: node
-  linkType: hard
-
-"tailwind-scrollbar-hide@npm:^1.1.7":
-  version: 1.1.7
-  resolution: "tailwind-scrollbar-hide@npm:1.1.7"
-  checksum: 2434a1db7a92fa91952ce4fbef7f80b83f121fa2fae27453cefc6030c06d368768e3172d3640ae6836fe4f813ed89b40c2f44b1f17756593ab4625259ef22a75
   languageName: node
   linkType: hard
 

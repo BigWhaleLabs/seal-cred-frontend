@@ -1,10 +1,7 @@
 /** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
 module.exports = {
   content: ['./public/index.html', './src/**/!(tailwind).{ts,tsx}'],
-  plugins: [
-    require('@tailwindcss/line-clamp'),
-    require('tailwind-scrollbar-hide'),
-  ],
+  plugins: [require('@tailwindcss/line-clamp')],
   theme: {
     fontFamily: {
       primary: ['"Space Grotesk"', 'sans-serif'],

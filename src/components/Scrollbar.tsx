@@ -85,10 +85,7 @@ export default function ({
     <div ref={ref} className={scrollContainer}>
       <div
         ref={wrapperRef}
-        className={classNamesToString(
-          overflow('overflow-auto'),
-          'scrollbar-hide'
-        )}
+        className={overflow('overflow-auto')}
         style={{
           maxHeight: scrollMaxHeight,
           marginRight: overflows ? '1rem' : undefined,
