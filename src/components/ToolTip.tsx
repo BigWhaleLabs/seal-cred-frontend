@@ -133,6 +133,7 @@ export default function ({
       ) {
         setIsShow(false)
         setNode(null)
+        return
       }
 
       const node = createPortal(
@@ -162,18 +163,18 @@ export default function ({
     const element = childrenRef.current
     if (!element) return
 
-    element.addEventListener('mousemove', positionTooltip)
-    element.addEventListener('mouseleave', positionTooltip)
+    document.addEventListener('mouseover', positionTooltip)
+    document.addEventListener('mouseout', positionTooltip)
 
     return () => {
       if (!isFloating) return
-      element.removeEventListener('mousemove', positionTooltip)
-      element.addEventListener('mouseleave', positionTooltip)
+      document.removeEventListener('mouseover', positionTooltip)
+      document.addEventListener('mouseout', positionTooltip)
     }
   }, [isFloating, positionTooltip])
 
   return (
-    <div id="questionMark" className={tooltip(fitContainer)} ref={childrenRef}>
+    <div className={tooltip(fitContainer)} ref={childrenRef}>
       {position === 'top' && (
         <div className={tooltipWrapper}>
           <div
