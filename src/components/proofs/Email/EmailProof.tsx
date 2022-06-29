@@ -120,20 +120,20 @@ export default function () {
     <Line breakWords>
       <div className={proofLineContainer}>
         <div className={emailTitleContainer}>
-          <div className={tooltipWrapper}>
-            <ToolTip
-              position="floating"
-              text={popoverText}
-              fitContainer
-              disabled={!open}
-            >
-              <div className={emailTitleLeft}>
-                <ProofText>Work email</ProofText>
+          <div className={emailTitleLeft}>
+            <ProofText>Work email</ProofText>
+            <div className={tooltipWrapper}>
+              <ToolTip
+                position="floating"
+                text={popoverText}
+                fitContainer
+                disabled={!open}
+              >
                 <div className={questionBlock(open)}>
                   <QuestionMark small />
                 </div>
-              </div>
-            </ToolTip>
+              </ToolTip>
+            </div>
           </div>
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
             {!xs && (
