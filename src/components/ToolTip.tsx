@@ -165,11 +165,13 @@ export default function ({
 
     document.addEventListener('mouseover', positionTooltip)
     document.addEventListener('mouseout', positionTooltip)
+    document.addEventListener('click', positionTooltip)
 
     return () => {
       if (!isFloating) return
       document.removeEventListener('mouseover', positionTooltip)
       document.addEventListener('mouseout', positionTooltip)
+      document.addEventListener('click', positionTooltip)
     }
   }, [isFloating, positionTooltip])
 
@@ -188,31 +190,21 @@ export default function ({
       )}
       {position === 'floating' ? (
         <>
-          <div
-            ref={childrenRef}
-            className={tooltipChildrenWrapper}
-            onClick={(event) => {
-              if (isFloating) positionTooltip(event)
-              setIsShow(!isShow)
-            }}
-          >
+          <div ref={childrenRef} className={tooltipChildrenWrapper}>
             {children}
           </div>
-          {isShow && node}
+          {node}
         </>
       ) : (
-        <>
-          <div
-            ref={childrenRef}
-            className={tooltipChildrenWrapper}
-            onMouseEnter={() => setIsShow(true)}
-            onMouseLeave={() => setIsShow(false)}
-            onClick={() => setIsShow(!isShow)}
-          >
-            {children}
-          </div>
-          {isShow && node}
-        </>
+        <div
+          ref={childrenRef}
+          className={tooltipChildrenWrapper}
+          onMouseEnter={() => setIsShow(true)}
+          onMouseLeave={() => setIsShow(false)}
+          onClick={() => setIsShow(!isShow)}
+        >
+          {children}
+        </div>
       )}
 
       {position === 'bottom' && (
