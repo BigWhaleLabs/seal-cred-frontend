@@ -27,7 +27,10 @@
   ],
   "rules": {
     "valtio/state-snapshot-rule": "off",
-    "no-relative-import-paths/no-relative-import-paths": "error",
+    "no-relative-import-paths/no-relative-import-paths": [
+      "error",
+      { "allowSameFolder": false }
+    ],
     "import/newline-after-import": ["error"],
     "@typescript-eslint/no-floating-promises": "error",
     "require-await": "error",
