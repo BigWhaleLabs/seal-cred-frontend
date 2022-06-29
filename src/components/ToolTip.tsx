@@ -204,15 +204,9 @@ export default function ({
           <div
             ref={childrenRef}
             className={tooltipChildrenWrapper}
-            onMouseEnter={() => {
-              setIsShow(true)
-            }}
-            onMouseLeave={() => {
-              setIsShow(false)
-            }}
-            onClick={() => {
-              setIsShow(!isShow)
-            }}
+            onMouseEnter={() => setIsShow(true)}
+            onMouseLeave={() => setIsShow(false)}
+            onClick={() => setIsShow(!isShow)}
           >
             {children}
           </div>
