@@ -101,7 +101,10 @@ class WalletStore extends PersistableStore {
     })
 
     provider.on('accountsChanged', (accounts: string[]) => {
-      accounts.length ? void this.handleAccountChanged() : this.clearData()
+      if (!accounts.length) this.clearData()
+
+      this.account = undefined
+      void this.handleAccountChanged()
     })
     provider.on('disconnect', (error: unknown) => {
       if (provider) provider.removeAllListeners()
