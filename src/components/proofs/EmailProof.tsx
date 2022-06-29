@@ -158,7 +158,7 @@ export default function () {
                     .
                   </>
                 ) : (
-                  'Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof.'
+                  'Add your work email and we’ll send you a token for that email (check the spam folder). Then, use the token here to create zk proof.'
                 )}
               </BadgeText>
             </div>
