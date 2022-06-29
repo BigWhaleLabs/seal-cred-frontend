@@ -15,6 +15,7 @@ import classnames, {
   backgroundClip,
   backgroundImage,
   display,
+  flex,
   fontFamily,
   fontSize,
   fontWeight,
@@ -70,6 +71,8 @@ const emailTitleLeft = classnames(
 const questionBlock = (open: boolean) =>
   animation(open ? 'animate-reveal' : 'animate-unreveal')
 
+const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
+
 export default function () {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
@@ -116,31 +119,33 @@ export default function () {
   return (
     <Line breakWords>
       <div className={proofLineContainer}>
-        <ToolTip
-          position="bottom"
-          text={popoverText}
-          fitContainer
-          disabled={!open}
-        >
-          <div className={emailTitleContainer}>
-            <div className={emailTitleLeft}>
-              <ProofText>Work email</ProofText>
-              <div className={questionBlock(open)}>
-                <QuestionMark small />
-              </div>
+        <div className={emailTitleContainer}>
+          <div className={emailTitleLeft}>
+            <ProofText>Work email</ProofText>
+            <div className={tooltipWrapper}>
+              <ToolTip
+                position="floating"
+                text={popoverText}
+                fitContainer
+                disabled={!open}
+              >
+                <div className={questionBlock(open)}>
+                  <QuestionMark small />
+                </div>
+              </ToolTip>
             </div>
-            <button className={arrowContainer} onClick={() => setOpen(!open)}>
-              {!xs && (
-                <span className={getStartedText(open)}>
-                  {domain ? 'Set token' : 'Get started'}
-                </span>
-              )}
-              <div className={width('w-4')}>
-                <Arrow pulseDisabled open={open} />
-              </div>
-            </button>
           </div>
-        </ToolTip>
+          <button className={arrowContainer} onClick={() => setOpen(!open)}>
+            {!xs && (
+              <span className={getStartedText(open)}>
+                {domain ? 'Set token' : 'Get started'}
+              </span>
+            )}
+            <div className={width('w-4')}>
+              <Arrow pulseDisabled open={open} />
+            </div>
+          </button>
+        </div>
         {open && (
           <>
             <div className={margin('mt-4')}>
