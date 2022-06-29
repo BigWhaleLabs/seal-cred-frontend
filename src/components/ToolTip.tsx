@@ -1,5 +1,5 @@
 import { HighlightedText } from 'components/Text'
-import { MutableRef, useEffect } from 'preact/hooks'
+import { MutableRef, useCallback, useEffect } from 'preact/hooks'
 import { VNode } from 'preact'
 import { createPortal, useRef } from 'preact/compat'
 import { useState } from 'preact/hooks'
@@ -29,7 +29,8 @@ const tooltip = (fitContainer?: boolean) =>
   classnames(
     position('relative'),
     userSelect('select-none'),
-    width('w-full', fitContainer ? undefined : 'sm:w-card')
+    width('w-full', fitContainer ? undefined : 'sm:w-card'),
+    zIndex('z-30')
   )
 const tooltipWrapper = classnames(
   position('relative'),
@@ -37,7 +38,7 @@ const tooltipWrapper = classnames(
   width('w-full'),
   margin('mx-auto')
 )
-const tooltipChildrenWrapper = width('w-full')
+const tooltipChildrenWrapper = classnames(width('w-full'), zIndex('z-10'))
 
 const tooltipClasses = (
   mobile: boolean,
@@ -98,50 +99,78 @@ export default function ({
 
   const [node, setNode] = useState<VNode | null>(null)
 
+  const positionTooltip = useCallback(
+    (event: MouseEvent) => {
+      if (position !== 'floating') return
+
+      const x = event.pageX
+      const y = event.pageY
+      const element = document.getElementById('root')
+      const parent = childrenRef.current
+      const positionX = (xs ? x * 0.5 : x * 0.95) + 'px;'
+      const positionY = y + 0.5 + 'px;'
+      const portalWrapper = width('lg:w-card', 'w-6/12')
+
+      const portalStyles =
+        `position:absolute; z-index: 49;` +
+        'left:' +
+        positionX +
+        'top:' +
+        positionY
+
+      if (!parent) return
+      const parentXStart = parent.getBoundingClientRect().left + window.scrollX
+      const parentXEnd = parentXStart + parent.offsetWidth
+      const parentYStart = parent.getBoundingClientRect().top + window.scrollY
+      const parentYEnd = parentYStart + parent.offsetHeight
+      if (!element) return
+
+      if (
+        x < parentXStart ||
+        x > parentXEnd ||
+        y < parentYStart ||
+        y > parentYEnd
+      ) {
+        setIsShow(false)
+        setNode(null)
+      }
+
+      const node = createPortal(
+        <div style={portalStyles} className={portalWrapper}>
+          <div className={tooltipWrapper}>
+            <div
+              className={tooltipClasses(xs, isShow, 'bottom')}
+              style={{ visibility: isShow ? 'visible' : 'collapse' }}
+            >
+              <HighlightedText>{text}</HighlightedText>
+              {arrow && <div className={triangle('bottom')} />}
+            </div>
+          </div>
+        </div>,
+        element
+      )
+      setIsShow(true)
+      setNode(node)
+    },
+    [arrow, isShow, xs, position, text]
+  )
+
+  const isFloating = position === 'floating'
+
   useEffect(() => {
-    setIsShow(!!node)
-  }, [node])
-
-  const positionTooltip = (event: MouseEvent) => {
-    if (position !== 'floating') return
-
-    const x = event.pageX
-    const y = event.pageY
-    const element = document.getElementById('root')
-    const positionX = (xs ? x * 0.5 : x * 0.95) + 'px;'
-    const positionY = y + 0.5 + 'px;'
-
-    const portalWrapper = width('lg:w-card', 'w-6/12')
-
-    const portalStyles =
-      `position:absolute; z-index: 49;` +
-      'left:' +
-      positionX +
-      'top:' +
-      positionY
-
+    if (!isFloating) return
+    const element = childrenRef.current
     if (!element) return
 
-    const node = createPortal(
-      <div style={portalStyles} className={portalWrapper}>
-        <div className={tooltipWrapper}>
-          <div
-            className={tooltipClasses(xs, isShow, 'bottom')}
-            style={{ visibility: isShow ? 'visible' : 'collapse' }}
-          >
-            <HighlightedText>{text}</HighlightedText>
-            {arrow && <div className={triangle('bottom')} />}
-          </div>
-        </div>
-      </div>,
-      element
-    )
-    setNode(node)
-  }
-  const recalculatePosition = (e: MouseEvent, isClick?: boolean) => {
-    positionTooltip(e)
-    setIsShow(isClick ? !isShow : true)
-  }
+    element.addEventListener('mousemove', positionTooltip)
+    element.addEventListener('mouseleave', positionTooltip)
+
+    return () => {
+      if (!isFloating) return
+      element.removeEventListener('mousemove', positionTooltip)
+      element.addEventListener('mouseleave', positionTooltip)
+    }
+  }, [isFloating, positionTooltip])
 
   return (
     <div id="questionMark" className={tooltip(fitContainer)} ref={childrenRef}>
@@ -161,25 +190,34 @@ export default function ({
           <div
             ref={childrenRef}
             className={tooltipChildrenWrapper}
-            onMouseMove={(e) => recalculatePosition(e)}
-            onMouseEnter={(e) => positionTooltip(e)}
-            onMouseLeave={() => setNode(null)}
-            onClick={(e) => recalculatePosition(e, true)}
+            onClick={(event) => {
+              if (isFloating) positionTooltip(event)
+              setIsShow(!isShow)
+            }}
           >
             {children}
           </div>
-          {node}
+          {isShow && node}
         </>
       ) : (
-        <div
-          ref={childrenRef}
-          className={tooltipChildrenWrapper}
-          onMouseEnter={() => setIsShow(true)}
-          onMouseLeave={() => setIsShow(false)}
-          onClick={() => setIsShow(!isShow)}
-        >
-          {children}
-        </div>
+        <>
+          <div
+            ref={childrenRef}
+            className={tooltipChildrenWrapper}
+            onMouseEnter={() => {
+              setIsShow(true)
+            }}
+            onMouseLeave={() => {
+              setIsShow(false)
+            }}
+            onClick={() => {
+              setIsShow(!isShow)
+            }}
+          >
+            {children}
+          </div>
+          {isShow && node}
+        </>
       )}
 
       {position === 'bottom' && (
