@@ -7,7 +7,7 @@ import DoxNotification from 'components/badges/DoxNotification'
 import List from 'components/badges/List'
 import ListContainer from 'components/badges/ListContainer'
 import ListTitle from 'components/badges/ListTitle'
-import LoadingTitle from 'components/badges/LoadingTitle'
+import LoadingCard from 'components/badges/LoadingCard'
 import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
@@ -42,7 +42,7 @@ export default function () {
   return (
     <Card shadow color="secondary">
       {account ? (
-        <Suspense fallback={<LoadingTitle />}>
+        <Suspense fallback={<LoadingCard />}>
           <BadgesSuspended />
         </Suspense>
       ) : (

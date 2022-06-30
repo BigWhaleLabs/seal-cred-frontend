@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import Card from 'components/Card'
-import LoadingTitle from 'components/proofs/LoadingTitle'
+import LoadingCard from 'components/proofs/LoadingCard'
 import NotFound from 'pages/NotFound'
 import OwnerInfo from 'components/owned/OwnerInfo'
 import SealCredCTA from 'components/owned/SealCredCTA'
@@ -30,7 +30,7 @@ export default function () {
       <Suspense
         fallback={
           <Card color="secondary" shadow onlyWrap>
-            <LoadingTitle />
+            <LoadingCard />
           </Card>
         }
       >
