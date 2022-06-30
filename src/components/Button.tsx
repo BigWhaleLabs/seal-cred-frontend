@@ -118,7 +118,7 @@ const colorClasses = ({
           ),
           fontSize(fontSmall ? 'text-sm' : undefined)
         )
-      : classnames(fontSize(fontSmall ? 'text-sm' : undefined))
+      : fontSize(fontSmall ? 'text-sm' : undefined)
   )
 
 const textGradient = ({ type, loading, disabled }: ButtonProps) =>
