@@ -26,7 +26,8 @@ const scrollContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
   flexGrow('grow'),
-  position('relative')
+  position('relative'),
+  overflow('overflow-y-auto')
 )
 
 export default function ({
@@ -38,75 +39,21 @@ export default function ({
 }: ChildrenProp & ScrollbarProps) {
   const { height = 0, ref } = useResizeDetector({ handleWidth: false })
   const maximumHeightSize = 370 // the maximum height of the block by design
-  const fullHeightInPercentage = 100 // the thumb height in percentages
 
-  const thumbRef = useRef() as MutableRef<HTMLDivElement>
-  const [thumbHeight, setThumbHeight] = useState(fullHeightInPercentage)
   const extaBottomPadding = parentHeight > maximumHeightSize ? bottomPadding : 0
   const extaTitlePadding = titlePadding
   const extraReservedSpace = extaBottomPadding + extaTitlePadding
 
-  const { overflows, scrollMaxHeight, isOnTop, isOnBottom, wrapperRef } =
-    useIsOverflow(ref, height - extraReservedSpace)
-
-  const handleScroll = () => {
-    if (!thumbRef.current || !wrapperRef.current) return
-    const wrapCurrent = wrapperRef.current
-
-    // .scrollTop counts whole box, not only visible
-    // we should divide whole box by the visible to get how many visible boxes are in scrollable container
-    const numberOfViews = wrapCurrent.scrollHeight / wrapCurrent.clientHeight
-    const scroll = wrapCurrent.scrollTop / numberOfViews
-
-    // to prevent floating-point operation use px here
-    thumbRef.current.style.top = scroll + 'px'
-  }
-
-  // Listens if something inside the wrapBox has changed
-  useEffect(() => {
-    const { current } = wrapperRef
-    if (!current) return
-
-    setTimeout(() => {
-      const numberOfViews = current.scrollHeight / current.clientHeight
-      setThumbHeight(fullHeightInPercentage / numberOfViews)
-    }, 400)
-  }, [
-    titlePadding,
-    parentHeight,
-    bottomPadding,
+  const { isOnTop, isOnBottom, wrapperRef } = useIsOverflow(
     ref,
-    wrapperRef,
-    wrapperRef.current?.scrollHeight,
-    wrapperRef.current?.clientHeight,
-  ])
+    height - extraReservedSpace
+  )
 
   return (
-    <div ref={ref} className={scrollContainer}>
-      <div
-        ref={wrapperRef}
-        className={overflow('overflow-auto')}
-        style={{
-          maxHeight: scrollMaxHeight,
-          marginRight: overflows ? '1rem' : undefined,
-        }}
-        onScroll={handleScroll}
-      >
-        {overflows && (
-          <div className={classNamesToString('custom-scrollbar-body')}>
-            <div
-              ref={thumbRef}
-              className={classNamesToString('custom-scrollbar-thumb')}
-              style={{ height: thumbHeight + '%' }}
-            />
-          </div>
-        )}
-        {isOnTop && (fade === 'both' || fade === 'top') && <Fade />}
-        {children}
-        {isOnBottom && (fade === 'both' || fade === 'bottom') && (
-          <Fade bottom />
-        )}
-      </div>
+    <div ref={wrapperRef} className={scrollContainer}>
+      {isOnTop && (fade === 'both' || fade === 'top') && <Fade />}
+      {children}
+      {isOnBottom && (fade === 'both' || fade === 'bottom') && <Fade bottom />}
     </div>
   )
 }
