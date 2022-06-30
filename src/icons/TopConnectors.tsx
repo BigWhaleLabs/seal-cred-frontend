@@ -14,7 +14,7 @@ export default function () {
       >
         <line
           x1="10"
-          y1="100"
+          y1="80"
           x2="10"
           y2="225"
           fill="none"
@@ -23,7 +23,7 @@ export default function () {
         />
         <line
           x1="192"
-          y1="100"
+          y1="80"
           x2="192"
           y2="235"
           fill="none"
