@@ -41,19 +41,19 @@ const crossWrapper = classnames(
   margin('ml-auto')
 )
 
-export default function () {
+export default function ({ redirectTo }: { redirectTo: string }) {
   const { account } = useSnapshot(walletStore)
   const { announcementClosed } = useSnapshot(announcementStore)
   const [animate, setAnimate] = useState(false)
   const location = useLocation()
 
   if (announcementClosed) return null
-  const onPage = location.pathname === '/app'
+  const onPage = location.pathname === redirectTo
 
   return (
     <div id="bottom-bar" className={announceWrapper(animate)}>
       <div className={flex('flex-1')} />
-      <LinkText url="/app">
+      <LinkText url={redirectTo}>
         <AccentText small bold color="text-formal-accent">
           Now introducing zk proof for your work email!{' '}
           {!onPage
