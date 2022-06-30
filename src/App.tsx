@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify'
 import { lazy } from 'react'
 import { space } from 'classnames/tailwind'
 import Announcement from 'components/Announcement'
+import Footer from 'components/Footer'
 import LazyComponent from 'components/LazyComponent'
 import Navbar from 'components/navbar/Navbar'
 import Root from 'components/Root'
@@ -38,6 +39,7 @@ export default function () {
               element={<LazyComponent lazyImported={<NotFound />} />}
             />
           </Routes>
+          <Footer />
         </div>
       </Router>
     </Root>

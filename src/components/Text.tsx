@@ -226,6 +226,25 @@ export function LinkText({
   )
 }
 
+const socialLink = (tertiary?: boolean) =>
+  classnames(
+    lineHeight('leading-6'),
+    fontSize('text-base'),
+    textDecoration('no-underline', 'hover:underline'),
+    textColor(tertiary ? 'hover:text-tertiary' : 'text-formal-accent')
+  )
+export function SocialLink({
+  url,
+  tertiary,
+  children,
+}: ChildrenProp & { url: string; tertiary?: boolean }) {
+  return (
+    <a className={socialLink(tertiary)} href={url} target="_blank">
+      {children}
+    </a>
+  )
+}
+
 const hintText = (bold?: boolean, center?: boolean) =>
   classnames(
     fontSize('text-sm'),
