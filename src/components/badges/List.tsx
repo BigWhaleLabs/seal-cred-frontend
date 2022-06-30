@@ -46,7 +46,7 @@ function BadgeListSuspended() {
     <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
   ) : (
     <div className={space('space-y-2')}>
-      {!!ownedEmailDerivativeContracts.length && (
+      {!!ownedERC721DerivativeContracts.length && (
         <BadgeSection title="NFT derivatives">
           {ownedERC721DerivativeContracts.map((contractAddress) => (
             <BadgesOwnedForContract
@@ -61,7 +61,7 @@ function BadgeListSuspended() {
             ))}
         </BadgeSection>
       )}
-      {!!ownedERC721DerivativeContracts.length && (
+      {!!ownedEmailDerivativeContracts.length && (
         <BadgeSection title="Email derivatives">
           {ownedEmailDerivativeContracts.map((contractAddress) => (
             <BadgesOwnedForContract
