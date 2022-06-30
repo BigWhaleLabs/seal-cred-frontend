@@ -9,14 +9,12 @@ import WalletStore from 'stores/WalletStore'
 import ZkProofHintWhenLg from 'components/proofs/ZkProofHintWhenLg'
 
 export default function () {
-  const { account, walletLoading } = useSnapshot(WalletStore)
+  const { account } = useSnapshot(WalletStore)
 
   return (
     <CardContainer>
       <Card color="accent" shadow>
-        {walletLoading ? (
-          <LoadingCard />
-        ) : account ? (
+        {account ? (
           <Suspense fallback={<LoadingCard />}>
             <List />
           </Suspense>
