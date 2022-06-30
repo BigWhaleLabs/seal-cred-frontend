@@ -11,6 +11,7 @@ const NotFound = lazy(() => import('pages/NotFound'))
 const OwnedBadge = lazy(() => import('pages/OwnedBadge'))
 const Landing = lazy(() => import('pages/Landing'))
 const Main = lazy(() => import('pages/Main'))
+const EmailProof = lazy(() => import('pages/EmailProof'))
 
 export default function () {
   return (
@@ -21,6 +22,10 @@ export default function () {
           <Navbar />
           <ToastContainer position="bottom-right" theme="dark" />
           <Routes>
+            <Route
+              path="/email"
+              element={<LazyComponent lazyImported={<EmailProof />} />}
+            />
             <Route
               path="/:derivativeAddress/:tokenId"
               element={<LazyComponent lazyImported={<OwnedBadge />} />}

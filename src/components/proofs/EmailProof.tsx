@@ -1,14 +1,10 @@
-import { BadgeText, ProofText } from 'components/Text'
-import { sendEmail } from 'helpers/attestor'
+import { ProofText } from 'components/Text'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
-import EmailForm from 'components/EmailForm'
+import EmailProofForm from 'components/proofs/EmailProofForm'
 import Line from 'components/proofs/Line'
-import ProofStore from 'stores/ProofStore'
 import QuestionMark from 'components/QuestionMark'
-import TextForm from 'components/TextForm'
 import ToolTip from 'components/ToolTip'
-import checkDomainToken from 'helpers/checkDomainToken'
 import classnames, {
   alignItems,
   animation,
@@ -22,10 +18,8 @@ import classnames, {
   gradientColorStops,
   justifyContent,
   lineHeight,
-  margin,
   space,
   textColor,
-  textDecoration,
   transitionProperty,
   width,
 } from 'classnames/tailwind'
@@ -74,43 +68,13 @@ const questionBlock = (open: boolean) =>
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
-  const [loading, setLoading] = useState(false)
+  const [form, updateForm] = useState<{ domain?: string }>({})
   const [open, setOpen] = useState(false)
-  const [email, setEmail] = useState<string | undefined>()
-  const [error, setError] = useState<string | undefined>()
   const { xs } = useBreakpoints()
 
-  const domain = email ? email.split('@')[1] : ''
-
-  function resetEmail() {
-    setEmail(undefined)
-  }
-
-  async function onSendEmail(email: string) {
-    setLoading(true)
-    try {
-      await sendEmail(email)
-      setEmail(email)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function onGenerateProof(secret: string) {
-    if (!checkDomainToken(secret))
-      return setError(
-        'This is an invalid token. Try re-entering your email to get a new token.'
-      )
-
-    setLoading(true)
-    setError(undefined)
-    try {
-      if (secret) await ProofStore.generateEmail(domain, secret)
-    } finally {
-      setLoading(false)
-      setOpen(false)
-      setEmail(undefined)
-    }
+  function onCreate() {
+    setOpen(false)
+    updateForm({})
   }
 
   const popoverText =
@@ -138,7 +102,7 @@ export default function () {
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
             {!xs && (
               <span className={getStartedText(open)}>
-                {domain ? 'Set token' : 'Get started'}
+                <span>{!form.domain ? 'Get started' : 'Set token'}</span>
               </span>
             )}
             <div className={width('w-4')}>
@@ -147,43 +111,11 @@ export default function () {
           </button>
         </div>
         {open && (
-          <>
-            <div className={margin('mt-4')}>
-              <BadgeText>
-                {domain ? (
-                  <>
-                    A token has been sent to {email}. Copy the token and add it
-                    here to create zk proof. Or{' '}
-                    <button
-                      className={textDecoration('underline')}
-                      onClick={resetEmail}
-                    >
-                      re-enter email
-                    </button>
-                    .
-                  </>
-                ) : (
-                  'Add your work email and we’ll send you a token for that email (check the spam folder). Then, use the token here to create zk proof.'
-                )}
-              </BadgeText>
-            </div>
-            {domain ? (
-              <TextForm
-                submitText="Generate proof"
-                placeholder="Paste token here"
-                onSubmit={onGenerateProof}
-                loading={loading}
-                error={error}
-              />
-            ) : (
-              <EmailForm
-                submitText="Submit email"
-                placeholder="Work email..."
-                onSubmit={onSendEmail}
-                loading={loading}
-              />
-            )}
-          </>
+          <EmailProofForm
+            hintColor="base"
+            onCreate={onCreate}
+            onChange={updateForm}
+          />
         )}
       </div>
     </Line>
