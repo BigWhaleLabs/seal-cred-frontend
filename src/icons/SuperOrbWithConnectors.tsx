@@ -313,7 +313,7 @@ const UpperConnectors = () => (
       stroke-linecap="round"
     />
     <line
-      x1="10"
+      x1="9.5"
       x2="73.5"
       y1="724.5"
       y2="724.5"
@@ -323,7 +323,7 @@ const UpperConnectors = () => (
     />
     <line
       x1="128.5"
-      x2="192"
+      x2="193"
       y1="724.5"
       y2="724.5"
       fill="none"
@@ -339,7 +339,7 @@ const UpperConnectors = () => (
       className={strokeSecondary}
       stroke-linecap="round"
     />
-    <line x1="100.5" x2="100.5" y1="30" y2="683" fill="none" stroke="url(#c)" />
+    <line x1="100.5" x2="100.5" y1="30" y2="690" fill="none" stroke="url(#c)" />
     <path d="M109.35,312.51" fill="none" className={strokeAccent} />
   </svg>
 )
