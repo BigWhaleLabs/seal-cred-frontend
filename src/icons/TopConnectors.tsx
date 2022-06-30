@@ -16,7 +16,7 @@ export default function () {
           x1="10"
           y1="80"
           x2="10"
-          y2="225"
+          y2="240"
           fill="none"
           className={strokeTertiary}
           stroke-linecap="round"
@@ -25,7 +25,7 @@ export default function () {
           x1="192"
           y1="80"
           x2="192"
-          y2="235"
+          y2="250"
           fill="none"
           className={strokeSecondary}
           stroke-linecap="round"
@@ -34,7 +34,7 @@ export default function () {
           x1="102"
           x2="102"
           y1="0"
-          y2="190"
+          y2="210"
           fill="none"
           className={strokeAccent}
         />
