@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { LogoText } from 'components/Text'
+import { LogoText, LogoVersion } from 'components/Text'
 import { useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Logo from 'icons/Logo'
@@ -8,6 +8,7 @@ import classnames, {
   alignItems,
   backgroundColor,
   display,
+  flexDirection,
   inset,
   justifyContent,
   margin,
@@ -36,9 +37,11 @@ const navbar = (visible?: boolean, withoutWallet?: boolean) =>
 const logoContainer = classnames(
   display('inline-flex'),
   alignItems('items-center'),
-  space('space-x-2'),
+  space('space-x-4'),
   margin('mt-2')
 )
+
+const logoWithVersion = classnames(display('flex'), flexDirection('flex-col'))
 
 export default function () {
   const { pathname } = useLocation()
@@ -59,7 +62,10 @@ export default function () {
       <Link to="/">
         <div className={logoContainer}>
           <Logo />
-          <LogoText>SealCred</LogoText>
+          <div className={logoWithVersion}>
+            <LogoText>SealCred</LogoText>
+            <LogoVersion>(ALPHA)</LogoVersion>
+          </div>
         </div>
       </Link>
       {!withoutWallet && <Wallet />}
