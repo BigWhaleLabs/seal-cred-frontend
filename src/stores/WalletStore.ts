@@ -14,14 +14,13 @@ let provider: Web3Provider
 
 class WalletStore extends PersistableStore {
   account?: string
-  pending?: boolean
   walletLoading = false
   walletsToNotifiedOfBeingDoxxed = {} as {
     [address: string]: boolean
   }
 
   replacer = (key: string, value: unknown) => {
-    const disallowList = ['pending', 'account', 'walletLoading']
+    const disallowList = ['account', 'walletLoading']
     return disallowList.includes(key) ? undefined : value
   }
 
@@ -90,7 +89,6 @@ class WalletStore extends PersistableStore {
 
     this.walletLoading = true
     const accounts = await provider.listAccounts()
-    this.pending = false
     this.account = accounts[0]
     this.walletLoading = false
   }
@@ -106,7 +104,6 @@ class WalletStore extends PersistableStore {
       if (!accounts.length) this.clearData()
 
       this.account = undefined
-      this.pending = true
       void this.handleAccountChanged()
     })
     provider.on('disconnect', (error: unknown) => {
