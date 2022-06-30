@@ -1,6 +1,6 @@
-import { BadgeSectionTitle } from 'components/Text'
 import { ComponentChildren } from 'preact'
 import ChildrenProp from 'models/ChildrenProp'
+import Section from 'components/Section'
 import classnames, {
   display,
   gap,
@@ -20,9 +20,8 @@ export default function ({
   children,
 }: ChildrenProp & { title?: ComponentChildren }) {
   return (
-    <section>
-      <BadgeSectionTitle>{title}</BadgeSectionTitle>
+    <Section title={title}>
       <div className={badgesList}>{children}</div>
-    </section>
+    </Section>
   )
 }

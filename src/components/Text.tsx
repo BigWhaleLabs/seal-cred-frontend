@@ -274,22 +274,9 @@ export function SphereText({ children }: ChildrenProp) {
   return <p className={sphereText}>{children}</p>
 }
 
-const proofSectionTitle = classnames(
-  fontWeight('font-bold'),
-  margin('mb-2'),
-  fontSize('text-sm')
-)
-export function ProofSectionTitle({ children }: ChildrenProp) {
-  return <p className={proofSectionTitle}>{children}</p>
-}
-
-const badgeSectionTitle = classnames(
-  fontWeight('font-bold'),
-  margin('mb-2'),
-  fontSize('text-sm')
-)
-export function BadgeSectionTitle({ children }: ChildrenProp) {
-  return <p className={badgeSectionTitle}>{children}</p>
+const sectionTitle = classnames(fontWeight('font-bold'), fontSize('text-sm'))
+export function SectionTitle({ children }: ChildrenProp) {
+  return <p className={sectionTitle}>{children}</p>
 }
 
 const tinyText = (color: 'base' | 'primary' | 'error') =>
