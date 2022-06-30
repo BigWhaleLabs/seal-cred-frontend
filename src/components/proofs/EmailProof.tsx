@@ -102,7 +102,7 @@ export default function () {
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
             {!xs && (
               <span className={getStartedText(open)}>
-                <span>{!form.domain ? 'Get started' : 'Set token'}</span>
+                <span>{form.domain ? 'Set token' : 'Get started'}</span>
               </span>
             )}
             <div className={width('w-4')}>

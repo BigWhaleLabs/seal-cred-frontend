@@ -5,6 +5,7 @@ import Card from 'components/Card'
 
 export default function () {
   const navigate = useNavigate()
+
   return (
     <Card color="tertiary" shadow onlyWrap>
       <AccentText color="text-tertiary">

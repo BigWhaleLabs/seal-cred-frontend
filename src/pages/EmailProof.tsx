@@ -18,6 +18,7 @@ const container = classnames(
   alignItems('items-center'),
   space('space-y-6')
 )
+
 export default function () {
   return (
     <div className={container}>

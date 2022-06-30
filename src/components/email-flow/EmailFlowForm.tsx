@@ -1,12 +1,8 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
 import EmailProofForm from 'components/proofs/EmailProofForm'
-import classnames, { fontWeight, space, width } from 'classnames/tailwind'
+import classnames, { space, width } from 'classnames/tailwind'
 
-const proofLineContainer = classnames(
-  space('space-y-4'),
-  fontWeight('font-normal'),
-  width('w-full')
-)
+const proofLineContainer = classnames(space('space-y-4'), width('w-full'))
 
 export default function EmailFlowForm({
   domain,
