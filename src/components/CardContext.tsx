@@ -1,11 +1,5 @@
 import { createContext } from 'preact'
-
-export type CardColor =
-  | 'accent'
-  | 'primary'
-  | 'secondary'
-  | 'tertiary'
-  | 'formal-accent'
+import CardColor from 'models/CardColor'
 
 export default createContext<{
   cardColor: CardColor

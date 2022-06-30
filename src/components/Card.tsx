@@ -18,7 +18,8 @@ import {
   zIndex,
 } from 'classnames/tailwind'
 import ArcText from 'icons/ArcText'
-import CardContext, { CardColor } from 'components/CardContext'
+import CardColor from 'models/CardColor'
+import CardContext from 'components/CardContext'
 import ChildrenProp from 'models/ChildrenProp'
 
 interface CardProps {

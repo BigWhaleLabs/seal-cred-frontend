@@ -1,5 +1,5 @@
-import { CardColor } from 'components/CardContext'
 import { CardDescription, CardHeader } from 'components/Text'
+import CardColor from 'models/CardColor'
 import TitleContainer from 'components/TitleContainer'
 
 export default function ({

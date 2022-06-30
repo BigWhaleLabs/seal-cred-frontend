@@ -1,4 +1,3 @@
-import { CardColor } from 'components/CardContext'
 import {
   TGradientColorStops,
   TTextColor,
@@ -16,6 +15,7 @@ import {
   textDecoration,
   width,
 } from 'classnames/tailwind'
+import CardColor from 'models/CardColor'
 import ChildrenProp from 'models/ChildrenProp'
 import colorToTextColor from 'helpers/colorToTextColor'
 import useBreakpoints from 'hooks/useBreakpoints'

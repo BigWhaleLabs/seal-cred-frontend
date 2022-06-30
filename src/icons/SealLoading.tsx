@@ -1,4 +1,4 @@
-import { CardColor } from 'components/CardContext'
+import CardColor from 'models/CardColor'
 import classnames from 'classnames/tailwind'
 import colorToCardDropShadow from 'helpers/colorToCardDropShadow'
 import colorToTextColor from 'helpers/colorToTextColor'

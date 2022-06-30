@@ -1,5 +1,5 @@
-import { CardColor } from 'components/CardContext'
 import { dropShadow } from 'classnames/tailwind'
+import CardColor from 'models/CardColor'
 
 export default function (color: CardColor) {
   switch (color) {
