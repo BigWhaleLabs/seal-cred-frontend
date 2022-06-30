@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { LogoText, LogoVersion } from 'components/Text'
+import { LogoSubText, LogoText } from 'components/Text'
 import { useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Logo from 'icons/Logo'
@@ -64,7 +64,7 @@ export default function () {
           <Logo />
           <div className={logoWithVersion}>
             <LogoText>SealCred</LogoText>
-            <LogoVersion>(ALPHA)</LogoVersion>
+            <LogoSubText>(ALPHA)</LogoSubText>
           </div>
         </div>
       </Link>
