@@ -1,12 +1,10 @@
 import { BodyText } from 'components/Text'
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
-import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgeSection from 'components/badges/BadgeSection'
-import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
 import ContractsStore from 'stores/ContractsStore'
 import ERC721Proof from 'helpers/ERC721Proof'
-import EmailProof from 'components/proofs/EmailProof'
+import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
 import SealCredStore from 'stores/SealCredStore'
 import classnames, {
@@ -46,36 +44,20 @@ function BadgeListSuspended() {
     <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
   ) : (
     <div className={space('space-y-2')}>
-      {!!ownedERC721DerivativeContracts.length && (
-        <BadgeSection title="NFT derivatives">
-          {ownedERC721DerivativeContracts.map((contractAddress) => (
-            <BadgesOwnedForContract
-              key={contractAddress}
-              contractAddress={contractAddress}
-            />
-          ))}
-          {proofsAvailableToMint
-            .filter((proof) => proof instanceof ERC721Proof)
-            .map((proof) => (
-              <BadgeBlock key={proof.key} proof={proof} />
-            ))}
-        </BadgeSection>
-      )}
-      {!!ownedEmailDerivativeContracts.length && (
-        <BadgeSection title="Email derivatives">
-          {ownedEmailDerivativeContracts.map((contractAddress) => (
-            <BadgesOwnedForContract
-              key={contractAddress}
-              contractAddress={contractAddress}
-            />
-          ))}
-          {proofsAvailableToMint
-            .filter((proof) => proof instanceof EmailProof)
-            .map((proof) => (
-              <BadgeBlock key={proof.key} proof={proof} />
-            ))}
-        </BadgeSection>
-      )}
+      <BadgeSection
+        title="NFT derivatives"
+        minted={ownedERC721DerivativeContracts}
+        proofs={proofsAvailableToMint.filter(
+          (proof) => proof instanceof ERC721Proof
+        )}
+      />
+      <BadgeSection
+        title="Email derivatives"
+        minted={ownedEmailDerivativeContracts}
+        proofs={proofsAvailableToMint.filter(
+          (proof) => proof instanceof EmailProof
+        )}
+      />
     </div>
   )
 }
