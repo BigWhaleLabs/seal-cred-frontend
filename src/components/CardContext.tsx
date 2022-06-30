@@ -1,8 +1,10 @@
 import { createContext } from 'preact'
-import CardColor from 'models/CardColor'
+import Color from 'models/Color'
 
-export default createContext<{
-  cardColor: CardColor
+const cardContext = createContext<{
+  cardColor: Color
 }>({
   cardColor: 'accent',
 })
+
+export default cardContext

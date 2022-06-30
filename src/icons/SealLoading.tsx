@@ -1,11 +1,12 @@
-import CardColor from 'models/CardColor'
+import Color from 'models/Color'
 import classnames from 'classnames/tailwind'
-import colorToCardDropShadow from 'helpers/colorToCardDropShadow'
+import colorToDropShadow from 'helpers/colorToDropShadow'
 import colorToTextColor from 'helpers/colorToTextColor'
 
-export default function ({ color }: { color: CardColor }) {
+export default function ({ color }: { color: Color }) {
   const textColor = colorToTextColor(color)
-  const shadowColor = colorToCardDropShadow(color)
+  const shadowColor = colorToDropShadow(color)
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

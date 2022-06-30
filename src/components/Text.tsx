@@ -15,8 +15,8 @@ import {
   textDecoration,
   width,
 } from 'classnames/tailwind'
-import CardColor from 'models/CardColor'
 import ChildrenProp from 'models/ChildrenProp'
+import Color from 'models/Color'
 import colorToTextColor from 'helpers/colorToTextColor'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -114,7 +114,7 @@ export function CardHeader({
   color = 'formal-accent',
   children,
 }: ChildrenProp & {
-  color?: CardColor
+  color?: Color
 }) {
   return <h3 className={colorToTextColor(color)}>{children}</h3>
 }

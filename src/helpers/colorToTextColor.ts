@@ -1,7 +1,7 @@
 import { textColor } from 'classnames/tailwind'
-import CardColor from 'models/CardColor'
+import Color from 'models/Color'
 
-export default function (color: CardColor) {
+export default function (color: Color) {
   switch (color) {
     case 'accent':
       return textColor('text-accent')

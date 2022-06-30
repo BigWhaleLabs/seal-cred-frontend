@@ -1,5 +1,5 @@
 import { CardDescription, CardHeader } from 'components/Text'
-import CardColor from 'models/CardColor'
+import Color from 'models/Color'
 import TitleContainer from 'components/TitleContainer'
 
 export default function ({
@@ -7,7 +7,7 @@ export default function ({
   subtitle,
   titleColor = 'accent',
 }: {
-  titleColor?: CardColor
+  titleColor?: Color
   title: string
   subtitle: string
 }) {

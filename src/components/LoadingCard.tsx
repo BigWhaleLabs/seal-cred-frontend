@@ -31,6 +31,7 @@ export default function ({
   subtitle: string
 }) {
   const { cardColor } = useContext(CardContext)
+
   return (
     <div className={loaderContainer}>
       <Title titleColor={cardColor} title={title} subtitle={subtitle} />

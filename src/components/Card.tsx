@@ -18,13 +18,13 @@ import {
   zIndex,
 } from 'classnames/tailwind'
 import ArcText from 'icons/ArcText'
-import CardColor from 'models/CardColor'
 import CardContext from 'components/CardContext'
 import ChildrenProp from 'models/ChildrenProp'
+import Color from 'models/Color'
 
 interface CardProps {
   shadow?: boolean
-  color: CardColor
+  color: Color
   onlyWrap?: boolean
   spinner?: string
   thin?: boolean
@@ -32,7 +32,7 @@ interface CardProps {
   nospace?: boolean
 }
 
-const cardColor = (color?: CardColor) => {
+const cardColor = (color?: Color) => {
   return classnames(
     borderWidth('border'),
     borderColor(
@@ -67,7 +67,7 @@ const cardColor = (color?: CardColor) => {
 
 const cardContainer = (
   shadow?: boolean,
-  color?: CardColor,
+  color?: Color,
   onlyWrap = false,
   thin = false,
   small?: boolean,
