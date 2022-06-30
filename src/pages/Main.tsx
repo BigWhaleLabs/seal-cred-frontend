@@ -39,10 +39,7 @@ export default function () {
               gradient="secondary-to-transparent"
               vertical
             />
-            <div className={space('space-y-4')}>
-              <ZkProofHint />
-              <Footer />
-            </div>
+            <ZkProofHint />
           </>
         )}
       </div>

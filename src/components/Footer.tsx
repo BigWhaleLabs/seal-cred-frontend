@@ -13,6 +13,7 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const socialContainerCard = classnames(
   display('flex'),
@@ -34,6 +35,9 @@ const socialContainer = classnames(
 )
 
 export default function () {
+  const { md } = useBreakpoints()
+  if (md) return null
+
   return (
     <div className={socialContainerCard}>
       <div className={padding('px-8')}>

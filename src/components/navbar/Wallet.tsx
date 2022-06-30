@@ -19,6 +19,7 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const walletContainer = classnames(
   display('inline-flex'),
@@ -38,7 +39,6 @@ const walletAccount = classnames(
   display('sm:flex', 'hidden')
 )
 const socialContainer = classnames(
-  visibility('invisible', 'md:visible'),
   display('inline-flex'),
   alignItems('items-center'),
   space('space-x-4')
@@ -53,18 +53,23 @@ const delimeterContainer = classnames(
 
 export default function () {
   const { account } = useSnapshot(WalletStore)
+  const { md } = useBreakpoints()
 
   return (
     <div className={walletContainer}>
-      <div className={socialContainer}>
-        <SocialLink tertiary url="https://discord.gg/NHk96pPZUV">
-          <Discord />
-        </SocialLink>
-        <SocialLink tertiary url="https://twitter.com/bigwhalelabs">
-          <Twitter />
-        </SocialLink>
-      </div>
-      <hr className={delimeterContainer} />
+      {md && (
+        <>
+          <div className={socialContainer}>
+            <SocialLink tertiary url="https://discord.gg/NHk96pPZUV">
+              <Discord />
+            </SocialLink>
+            <SocialLink tertiary url="https://twitter.com/bigwhalelabs">
+              <Twitter />
+            </SocialLink>
+          </div>
+          <hr className={delimeterContainer} />
+        </>
+      )}
       <div
         className={accountLinkContainer}
         onClick={async () => {
