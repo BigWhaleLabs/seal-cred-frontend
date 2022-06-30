@@ -1,8 +1,11 @@
+import classnames from 'classnames/tailwind'
 import { CardColor } from 'components/CardContext'
+import colorToCardDropShadow from 'helpers/colorToCardDropShadow'
 import colorToTextColor from 'helpers/colorToTextColor'
 
 export default function ({ color }: { color: CardColor }) {
   const textColor = colorToTextColor(color)
+  const shadowColor = colorToCardDropShadow(color)
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,55 +13,53 @@ export default function ({ color }: { color: CardColor }) {
       height="202"
       viewBox="0 0 202 202"
       fill="none"
-      className={textColor}
+      className={classnames(textColor, shadowColor)}
     >
-      <g filter="url(#filter0_d_2063_23458)">
-        <circle
-          cx="101"
-          cy="101"
-          r="66"
-          fill="#0D0030"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-        <path
-          d="M152.097 142.516V101C152.097 72.7801 129.22 49.9033 101 49.9033C72.7801 49.9033 49.9033 72.7801 49.9033 101V142.516"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-        <path
-          d="M100.999 111.645C105.115 111.645 108.451 112.138 108.451 107.418C108.451 102.697 105.115 98.8708 100.999 98.8708C96.884 98.8708 93.5478 102.697 93.5478 107.418C93.5478 112.138 96.884 111.645 100.999 111.645ZM100.999 111.645C100.999 114.484 100.999 120.8 100.999 123.355M100.999 123.355C100.999 131.871 111.645 131.871 111.645 123.355M100.999 123.355C100.999 131.871 90.3542 131.871 90.3542 123.355"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-        <path
-          d="M135.064 111.645L122.29 113.774"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-        <path
-          d="M122.29 120.161L135.064 122.29"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-        <path
-          d="M66.9348 111.645L79.709 113.774"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-        <path
-          d="M79.7088 120.161L66.9346 122.29"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-      </g>
+      <circle
+        cx="101"
+        cy="101"
+        r="66"
+        fill="#0D0030"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        d="M152.097 142.516V101C152.097 72.7801 129.22 49.9033 101 49.9033C72.7801 49.9033 49.9033 72.7801 49.9033 101V142.516"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        d="M100.999 111.645C105.115 111.645 108.451 112.138 108.451 107.418C108.451 102.697 105.115 98.8708 100.999 98.8708C96.884 98.8708 93.5478 102.697 93.5478 107.418C93.5478 112.138 96.884 111.645 100.999 111.645ZM100.999 111.645C100.999 114.484 100.999 120.8 100.999 123.355M100.999 123.355C100.999 131.871 111.645 131.871 111.645 123.355M100.999 123.355C100.999 131.871 90.3542 131.871 90.3542 123.355"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        d="M135.064 111.645L122.29 113.774"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        d="M122.29 120.161L135.064 122.29"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        d="M66.9348 111.645L79.709 113.774"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        d="M79.7088 120.161L66.9346 122.29"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
       <path
         d="M91 83C91 77.4772 86.5228 73 81 73C75.4772 73 71 77.4772 71 83C71 88.5228 75.4772 93 81 93"
         stroke="currentColor"
@@ -123,43 +124,6 @@ export default function ({ color }: { color: CardColor }) {
           repeatCount="indefinite"
         />
       </path>
-      <defs>
-        <filter
-          id="filter0_d_2063_23458"
-          x="0"
-          y="0"
-          width="202"
-          height="202"
-          filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
-        >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset />
-          <feGaussianBlur stdDeviation="17" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.996078 0 0 0 0 0.847059 0 0 0 0 0.137255 0 0 0 0.5 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_2063_23458"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_2063_23458"
-            result="shape"
-          />
-        </filter>
-      </defs>
     </svg>
   )
 }

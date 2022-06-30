@@ -111,7 +111,7 @@ export function ProofText({ children }: ChildrenProp) {
 }
 
 export function CardHeader({
-  color,
+  color = 'formal-accent',
   children,
 }: ChildrenProp & {
   color?: CardColor
