@@ -1,5 +1,5 @@
-import classnames from 'classnames/tailwind'
 import { CardColor } from 'components/CardContext'
+import classnames from 'classnames/tailwind'
 import colorToCardDropShadow from 'helpers/colorToCardDropShadow'
 import colorToTextColor from 'helpers/colorToTextColor'
 
