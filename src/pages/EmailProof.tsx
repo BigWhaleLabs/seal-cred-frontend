@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import Card from 'components/Card'
 import EmailFlowCard from 'components/email-flow/EmailFlowCard'
-import LoadingTitle from 'components/proofs/LoadingTitle'
+import LoadingCard from 'components/proofs/LoadingCard'
 import SealCredCTM from 'components/email-flow/SealCredCTM'
 import classnames, {
   alignItems,
@@ -25,7 +25,7 @@ export default function () {
       <Suspense
         fallback={
           <Card color="secondary" shadow onlyWrap>
-            <LoadingTitle />
+            <LoadingCard />
           </Card>
         }
       >

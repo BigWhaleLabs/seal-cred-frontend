@@ -5,7 +5,7 @@ import Card from 'components/Card'
 import CardContainer from 'components/proofs/CardContainer'
 import ConnectAccount from 'components/proofs/ConnectAccount'
 import EmailFlowProof from 'components/email-flow/EmailFlowProof'
-import LoadingTitle from 'components/proofs/LoadingTitle'
+import LoadingCard from 'components/proofs/LoadingCard'
 import WalletStore from 'stores/WalletStore'
 
 import EmailFlowForm from 'components/email-flow/EmailFlowForm'
@@ -33,7 +33,7 @@ export default function () {
         spinner="Work hard, play hard, whistleblow hard"
       >
         {account ? (
-          <Suspense fallback={<LoadingTitle />}>
+          <Suspense fallback={<LoadingCard />}>
             {proof ? (
               <EmailFlowProof
                 proof={proof}
