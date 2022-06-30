@@ -43,16 +43,10 @@ export default function () {
         </Suspense>
       </div>
       <div className={proofContentBlock} ref={ref}>
-        <Scrollbar
-          parentHeight={height}
-          titlePadding={allGenerated ? titleMessage?.height : 0}
-          bottomPadding={savedMessage?.height || 0}
-        >
-          <div className={innerScrollableBlock}>
-            <ERC721ProofsList />
-            <EmailProofList />
-          </div>
-        </Scrollbar>
+        <div className={innerScrollableBlock}>
+          <ERC721ProofsList />
+          <EmailProofList />
+        </div>
         {proofsCompleted.length > 0 && (
           <div ref={savedMessage.ref}>
             <AccentText small primary color="text-primary">

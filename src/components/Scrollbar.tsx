@@ -22,14 +22,6 @@ interface ScrollbarProps {
   titlePadding?: number
 }
 
-const scrollContainer = classnames(
-  display('flex'),
-  flexDirection('flex-col'),
-  flexGrow('grow'),
-  position('relative'),
-  overflow('overflow-y-auto')
-)
-
 export default function ({
   children,
   fade = 'both',
@@ -50,7 +42,7 @@ export default function ({
   )
 
   return (
-    <div ref={wrapperRef} className={scrollContainer}>
+    <div ref={wrapperRef}>
       {isOnTop && (fade === 'both' || fade === 'top') && <Fade />}
       {children}
       {isOnBottom && (fade === 'both' || fade === 'bottom') && <Fade bottom />}
