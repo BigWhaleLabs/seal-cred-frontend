@@ -14,7 +14,7 @@ export default function ({ contractAddress }: { contractAddress: string }) {
         leanLeft
         text={
           <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
-            <ContractName address={contractAddress} />
+            <ContractName address={contractAddress} clearType />
           </ExternalLink>
         }
         bottom={

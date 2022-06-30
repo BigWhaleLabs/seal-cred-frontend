@@ -283,6 +283,15 @@ export function ProofSectionTitle({ children }: ChildrenProp) {
   return <p className={proofSectionTitle}>{children}</p>
 }
 
+const badgeSectionTitle = classnames(
+  fontWeight('font-bold'),
+  margin('mb-2'),
+  fontSize('text-sm')
+)
+export function BadgeSectionTitle({ children }: ChildrenProp) {
+  return <p className={badgeSectionTitle}>{children}</p>
+}
+
 const tinyText = (color: 'base' | 'primary' | 'error') =>
   classnames(
     textColor(
