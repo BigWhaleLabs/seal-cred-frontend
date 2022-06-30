@@ -47,7 +47,7 @@ function BadgeListSuspended() {
   ) : (
     <div className={space('space-y-2')}>
       {!!ownedEmailDerivativeContracts.length && (
-        <BadgeSection title="Derivatives">
+        <BadgeSection title="NFT derivatives">
           {ownedERC721DerivativeContracts.map((contractAddress) => (
             <BadgesOwnedForContract
               key={contractAddress}
@@ -62,7 +62,7 @@ function BadgeListSuspended() {
         </BadgeSection>
       )}
       {!!ownedERC721DerivativeContracts.length && (
-        <BadgeSection title="Email">
+        <BadgeSection title="Email derivatives">
           {ownedEmailDerivativeContracts.map((contractAddress) => (
             <BadgesOwnedForContract
               key={contractAddress}
