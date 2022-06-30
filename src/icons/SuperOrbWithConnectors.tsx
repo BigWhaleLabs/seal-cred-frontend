@@ -292,21 +292,14 @@ const UpperConnectors = () => (
         gradientUnits="userSpaceOnUse"
       >
         <stop offset="0" stop-color="#efecd6" />
-        <stop offset="0.03" stop-color="#f1e9be" />
-        <stop offset="0.08" stop-color="#f4e59a" />
-        <stop offset="0.14" stop-color="#f7e27a" />
         <stop offset="0.2" stop-color="#f9df5e" />
-        <stop offset="0.27" stop-color="#fbdc48" />
-        <stop offset="0.35" stop-color="#fcda37" />
-        <stop offset="0.46" stop-color="#fdd92c" />
-        <stop offset="0.6" stop-color="#fed825" />
         <stop offset="1" stop-color="#fed823" />
       </linearGradient>
     </defs>
     <line
-      x1="10"
-      y1="33.5"
-      x2="10"
+      x1="9.25"
+      y1="60"
+      x2="9.25"
       y2="724.5"
       fill="none"
       className={strokeTertiary}
@@ -331,15 +324,15 @@ const UpperConnectors = () => (
       stroke="url(#b)"
     />
     <line
-      x1="192"
-      y1="47.5"
-      x2="192"
+      x1="193.25"
+      y1="70"
+      x2="193.25"
       y2="724.5"
       fill="none"
       className={strokeSecondary}
       stroke-linecap="round"
     />
-    <line x1="101.5" x2="101.5" y2="683" fill="none" stroke="url(#c)" />
+    <line x1="100.5" x2="100.5" y1="30" y2="683" fill="none" stroke="url(#c)" />
     <path d="M109.35,312.51" fill="none" className={strokeAccent} />
   </svg>
 )
