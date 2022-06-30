@@ -1,5 +1,6 @@
 import Badges from 'components/badges/Badges'
 import CardSeparator from 'components/CardSeparator'
+import Footer from 'components/Footer'
 import ProofsCard from 'components/proofs/Card'
 import ZkProofHint from 'components/ZkProofHint'
 import classnames, {
@@ -7,6 +8,7 @@ import classnames, {
   display,
   flexDirection,
   justifyContent,
+  space,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -37,7 +39,10 @@ export default function () {
               gradient="secondary-to-transparent"
               vertical
             />
-            <ZkProofHint />
+            <div className={space('space-y-4')}>
+              <ZkProofHint />
+              <Footer />
+            </div>
           </>
         )}
       </div>
