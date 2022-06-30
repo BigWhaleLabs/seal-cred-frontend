@@ -132,10 +132,19 @@ export function CardDescription({ children }: ChildrenProp) {
 const logoText = classnames(
   textColor('text-accent'),
   fontWeight('font-bold'),
-  fontSize('text-xl')
+  fontSize('text-lg'),
+  lineHeight('leading-none')
 )
 export function LogoText({ children }: ChildrenProp) {
   return <span className={logoText}>{children}</span>
+}
+const logoSubText = classnames(
+  textColor('text-primary-semi-dimmed'),
+  fontWeight('font-bold'),
+  fontSize('text-xs')
+)
+export function LogoSubText({ children }: ChildrenProp) {
+  return <span className={logoSubText}>{children}</span>
 }
 
 const badgeText = (small?: boolean) =>

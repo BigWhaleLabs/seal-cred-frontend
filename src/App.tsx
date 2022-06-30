@@ -16,7 +16,7 @@ export default function () {
   return (
     <Root>
       <Router>
-        <Announcement />
+        <Announcement redirectTo="/app" />
         <div className={space('space-y-6', 'sm:space-y-10')}>
           <Navbar />
           <ToastContainer position="bottom-right" theme="dark" />
