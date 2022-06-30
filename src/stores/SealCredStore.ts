@@ -14,6 +14,8 @@ interface SealCredStoreType {
 
 interface ComputedSealCredStoreType {
   derivativeContracts: string[]
+  ERC721derivativeContracts: string[]
+  emailDerivativeContracts: string[]
 }
 
 const SealCredStore = proxyWithComputed<
@@ -25,6 +27,14 @@ const SealCredStore = proxyWithComputed<
     emailLedger: getEmailLedger(SCEmailLedgerContract),
   },
   {
+    ERC721derivativeContracts: (state) =>
+      Object.values(state.ERC721Ledger).map(
+        ({ derivativeContract }) => derivativeContract
+      ),
+    emailDerivativeContracts: (state) =>
+      Object.values(state.emailLedger).map(
+        ({ derivativeContract }) => derivativeContract
+      ),
     derivativeContracts: (state) => [
       ...Object.values(state.ERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract
