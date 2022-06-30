@@ -18,12 +18,13 @@ import {
   zIndex,
 } from 'classnames/tailwind'
 import ArcText from 'icons/ArcText'
+import CardContext from 'components/CardContext'
 import ChildrenProp from 'models/ChildrenProp'
+import Color from 'models/Color'
 
-type Color = 'accent' | 'primary' | 'secondary' | 'tertiary' | 'formal-accent'
 interface CardProps {
   shadow?: boolean
-  color?: Color
+  color: Color
   onlyWrap?: boolean
   spinner?: string
   thin?: boolean
@@ -114,15 +115,17 @@ export default function ({
   nospace,
 }: ChildrenProp & CardProps) {
   return (
-    <div
-      className={cardContainer(shadow, color, onlyWrap, thin, small, nospace)}
-    >
-      {children}
-      {!!spinner && (
-        <div className={spinnerBox}>
-          <ArcText text={spinner} />
-        </div>
-      )}
-    </div>
+    <CardContext.Provider value={{ cardColor: color }}>
+      <div
+        className={cardContainer(shadow, color, onlyWrap, thin, small, nospace)}
+      >
+        {children}
+        {!!spinner && (
+          <div className={spinnerBox}>
+            <ArcText text={spinner} />
+          </div>
+        )}
+      </div>
+    </CardContext.Provider>
   )
 }
