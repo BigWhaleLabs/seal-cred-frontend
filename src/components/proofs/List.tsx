@@ -7,28 +7,29 @@ import EmailProofList from 'components/proofs/EmailProofList'
 import ListTitle from 'components/proofs/ListTitle'
 import LoadingTitle from 'components/proofs/LoadingTitle'
 import ProofsListContainer from 'components/proofs/ListContainer'
-import Scrollbar from 'components/Scrollbar'
+import ScrollShadow from 'components/ScrollShadow'
 import classnames, {
   display,
   flexDirection,
   flexGrow,
+  overflow,
   space,
 } from 'classnames/tailwind'
 import proofStore from 'stores/ProofStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-const innerScrollableBlock = space('space-y-2')
 const proofContentBlock = classnames(
   display('flex'),
   flexDirection('flex-col'),
   space('space-y-4'),
-  flexGrow('grow')
+  flexGrow('grow'),
+  overflow('overflow-y-auto'),
+  space('space-y-2')
 )
 
 export default function () {
   const { proofsCompleted } = useSnapshot(proofStore)
   const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
-  const { height = 0, ref } = useResizeDetector({ handleWidth: false })
   const titleMessage = useResizeDetector({ handleWidth: false })
   const savedMessage = useResizeDetector({ handleWidth: false })
 
@@ -42,11 +43,11 @@ export default function () {
           <ListTitle />
         </Suspense>
       </div>
-      <div className={proofContentBlock} ref={ref}>
-        <div className={innerScrollableBlock}>
+      <div className={proofContentBlock}>
+        <ScrollShadow>
           <ERC721ProofsList />
           <EmailProofList />
-        </div>
+        </ScrollShadow>
         {proofsCompleted.length > 0 && (
           <div ref={savedMessage.ref}>
             <AccentText small primary color="text-primary">

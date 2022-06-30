@@ -8,7 +8,8 @@ import ListContainer from 'components/badges/ListContainer'
 import ListTitle from 'components/badges/ListTitle'
 import LoadingTitle from 'components/badges/LoadingTitle'
 import ProofStore from 'stores/ProofStore'
-import Scrollbar from 'components/Scrollbar'
+import ScrollShadow from 'components/ScrollShadow'
+import ScrollbarShadow from 'components/ScrollShadow'
 import WalletStore from 'stores/WalletStore'
 import classnames, { display, flexGrow, overflow } from 'classnames/tailwind'
 
@@ -31,7 +32,9 @@ function BadgesSuspended() {
     <ListContainer>
       <ListTitle />
       <div className={proofContentBlock}>
-        {shouldNotify ? <DoxNotification account={account} /> : <List />}
+        <ScrollShadow>
+          {shouldNotify ? <DoxNotification account={account} /> : <List />}
+        </ScrollShadow>
       </div>
     </ListContainer>
   )
