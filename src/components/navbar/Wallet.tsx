@@ -15,7 +15,6 @@ import classnames, {
   lineHeight,
   space,
   textAlign,
-  visibility,
   width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
@@ -44,7 +43,6 @@ const socialContainer = classnames(
   space('space-x-4')
 )
 const delimeterContainer = classnames(
-  visibility('invisible', 'md:visible'),
   borderWidth('border-0'),
   backgroundColor('bg-primary-dimmed'),
   width('w-px'),
