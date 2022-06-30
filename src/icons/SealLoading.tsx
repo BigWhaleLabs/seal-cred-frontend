@@ -69,11 +69,11 @@ export default function ({ color }: { color: Color }) {
       >
         <animateTransform
           attributeName="transform"
-          attributeType="XML"
+          begin="0s"
+          dur="1s"
           type="rotate"
           from="0 81 83"
           to="360 81 83"
-          dur="1s"
           repeatCount="indefinite"
         />
       </path>
@@ -85,11 +85,11 @@ export default function ({ color }: { color: Color }) {
       >
         <animateTransform
           attributeName="transform"
-          attributeType="XML"
+          begin="0s"
+          dur="1s"
           type="rotate"
           from="0 119 83"
           to="360 119 83"
-          dur="1s"
           repeatCount="indefinite"
         />
       </path>
@@ -101,11 +101,11 @@ export default function ({ color }: { color: Color }) {
       >
         <animateTransform
           attributeName="transform"
-          attributeType="XML"
+          begin="0s"
+          dur="1s"
           type="rotate"
           from="0 119 83"
           to="360 119 83"
-          dur="1s"
           repeatCount="indefinite"
         />
       </path>
@@ -117,11 +117,11 @@ export default function ({ color }: { color: Color }) {
       >
         <animateTransform
           attributeName="transform"
-          attributeType="XML"
+          begin="0s"
+          dur="1s"
           type="rotate"
           from="0 81 83"
           to="360 81 83"
-          dur="1s"
           repeatCount="indefinite"
         />
       </path>
