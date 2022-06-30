@@ -1,13 +1,13 @@
 import { AccentText } from 'components/Text'
 import Button from 'components/Button'
+import CardTitle from 'components/CardTitle'
 import HintCard from 'components/badges/HintCard'
-import Title from 'components/Title'
 import WalletStore from 'stores/WalletStore'
 
 export default function () {
   return (
     <>
-      <Title
+      <CardTitle
         title="Then"
         subtitle="Once you’ve created a ZK proof, you will be able to mint ZK badges for your anonymous wallets"
       />

@@ -5,7 +5,7 @@ import { useSnapshot } from 'valtio'
 import ERC721ProofsList from 'components/proofs/ERC721ProofsList'
 import EmailProofList from 'components/proofs/EmailProofList'
 import ListTitle from 'components/proofs/ListTitle'
-import LoadingTitle from 'components/proofs/LoadingTitle'
+import LoadingCard from 'components/proofs/LoadingCard'
 import ProofsListContainer from 'components/proofs/ListContainer'
 import Scrollbar from 'components/Scrollbar'
 import classnames, {
@@ -38,7 +38,7 @@ export default function () {
   return (
     <ProofsListContainer>
       <div ref={titleMessage.ref}>
-        <Suspense fallback={<LoadingTitle />}>
+        <Suspense fallback={<LoadingCard />}>
           <ListTitle />
         </Suspense>
       </div>

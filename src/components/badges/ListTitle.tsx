@@ -1,9 +1,9 @@
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
+import CardTitle from 'components/CardTitle'
 import ContractsStore from 'stores/ContractsStore'
-import LoadingTitle from 'components/badges/LoadingTitle'
+import LoadingCard from 'components/badges/LoadingCard'
 import SealCredStore from 'stores/SealCredStore'
-import Title from 'components/Title'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
@@ -18,7 +18,7 @@ function ListTitleSuspended() {
   const hasUnminted = proofsAvailableToMint.length > 0
 
   return (
-    <Title
+    <CardTitle
       title="Create ZK badges"
       subtitle={
         hasUnminted
@@ -33,7 +33,7 @@ function ListTitleSuspended() {
 
 export default function () {
   return (
-    <Suspense fallback={<LoadingTitle />}>
+    <Suspense fallback={<LoadingCard />}>
       <ListTitleSuspended />
     </Suspense>
   )

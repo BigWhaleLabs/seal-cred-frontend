@@ -1,3 +1,4 @@
+import { CardColor } from 'components/CardContext'
 import {
   TGradientColorStops,
   TTextColor,
@@ -16,6 +17,7 @@ import {
   width,
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
+import colorToTextColor from 'helpers/colorToTextColor'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const headerText = (accent = false, extraLeading = false, xs = false) =>
@@ -108,15 +110,13 @@ export function ProofText({ children }: ChildrenProp) {
   return <p className={proofText}>{children}</p>
 }
 
-const cardHeader = (color?: TTextColor) =>
-  textColor(color || 'text-formal-accent')
 export function CardHeader({
   color,
   children,
 }: ChildrenProp & {
-  color?: TTextColor
+  color?: CardColor
 }) {
-  return <h3 className={cardHeader(color)}>{children}</h3>
+  return <h3 className={colorToTextColor(color)}>{children}</h3>
 }
 
 const cardDescription = classnames(
