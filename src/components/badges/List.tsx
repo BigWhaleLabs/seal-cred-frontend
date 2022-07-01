@@ -18,7 +18,7 @@ import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 const badges = classnames(
   position('relative'),
   height('h-fit'),
-  overflow('overflow-y-visible')
+  overflow('overflow-y-auto')
 )
 
 function BadgeListSuspended() {
