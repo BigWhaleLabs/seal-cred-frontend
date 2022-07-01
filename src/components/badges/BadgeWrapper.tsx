@@ -9,21 +9,13 @@ import classnames, {
   padding,
   space,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
-const badgeWrapper = (minted: boolean, small?: boolean) =>
+const badgeWrapper = (minted: boolean) =>
   classnames(
     display('flex'),
-    flexDirection(
-      minted ? (small ? 'flex-col' : 'flex-row') : 'flex-col',
-      'lg:flex-col'
-    ),
+    flexDirection('flex-col'),
     justifyContent(minted ? 'justify-start' : 'justify-center'),
-    space(
-      minted ? (small ? 'space-y-2' : 'space-x-2') : 'space-y-2',
-      minted ? 'lg:space-x-0' : undefined,
-      'lg:space-y-2'
-    ),
+    space('space-y-2'),
     alignItems('items-center'),
     borderRadius('rounded-lg'),
     backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
@@ -34,6 +26,5 @@ export default function ({
   children,
   minted,
 }: ChildrenProp & { minted: boolean }) {
-  const { xxs, sm } = useBreakpoints()
-  return <div className={badgeWrapper(minted, xxs && !sm)}>{children}</div>
+  return <div className={badgeWrapper(minted)}>{children}</div>
 }
