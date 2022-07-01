@@ -9,7 +9,6 @@ import ListTitle from 'components/badges/ListTitle'
 import LoadingCard from 'components/badges/LoadingCard'
 import ProofStore from 'stores/ProofStore'
 import ScrollShadow from 'components/ScrollShadow'
-import ScrollbarShadow from 'components/ScrollShadow'
 import WalletStore from 'stores/WalletStore'
 import classnames, { display, flexGrow, overflow } from 'classnames/tailwind'
 

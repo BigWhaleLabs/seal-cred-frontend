@@ -1,6 +1,5 @@
 import { AccentText } from 'components/Text'
 import { Suspense } from 'preact/compat'
-import { useResizeDetector } from 'react-resize-detector'
 import { useSnapshot } from 'valtio'
 import ERC721ProofsList from 'components/proofs/ERC721ProofsList'
 import EmailProofList from 'components/proofs/EmailProofList'
@@ -16,7 +15,6 @@ import classnames, {
   space,
 } from 'classnames/tailwind'
 import proofStore from 'stores/ProofStore'
-import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 const proofContentBlock = classnames(
   display('flex'),
@@ -29,32 +27,22 @@ const proofContentBlock = classnames(
 
 export default function () {
   const { proofsCompleted } = useSnapshot(proofStore)
-  const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
-  const titleMessage = useResizeDetector({ handleWidth: false })
-  const savedMessage = useResizeDetector({ handleWidth: false })
-
-  const allGenerated =
-    proofsCompleted.length > 0 && proofAddressesAvailableToCreate.length === 0
 
   return (
     <ProofsListContainer>
-      <div ref={titleMessage.ref}>
-        <Suspense fallback={<LoadingCard />}>
-          <ListTitle />
-        </Suspense>
-      </div>
+      <Suspense fallback={<LoadingCard />}>
+        <ListTitle />
+      </Suspense>
       <div className={proofContentBlock}>
         <ScrollShadow>
           <ERC721ProofsList />
           <EmailProofList />
         </ScrollShadow>
         {proofsCompleted.length > 0 && (
-          <div ref={savedMessage.ref}>
-            <AccentText small primary color="text-primary">
-              Created ZK proofs are saved in the browser even if you switch
-              wallets.
-            </AccentText>
-          </div>
+          <AccentText small primary color="text-primary">
+            Created ZK proofs are saved in the browser even if you switch
+            wallets.
+          </AccentText>
         )}
       </div>
     </ProofsListContainer>
