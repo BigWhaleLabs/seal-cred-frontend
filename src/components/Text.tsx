@@ -9,13 +9,14 @@ import {
   fontWeight,
   gradientColorStops,
   lineHeight,
-  margin,
   textAlign,
   textColor,
   textDecoration,
   width,
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
+import Color from 'models/Color'
+import colorToTextColor from 'helpers/colorToTextColor'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const headerText = (accent = false, extraLeading = false, xs = false) =>
@@ -108,15 +109,13 @@ export function ProofText({ children }: ChildrenProp) {
   return <p className={proofText}>{children}</p>
 }
 
-const cardHeader = (color?: TTextColor) =>
-  textColor(color || 'text-formal-accent')
 export function CardHeader({
-  color,
+  color = 'formal-accent',
   children,
 }: ChildrenProp & {
-  color?: TTextColor
+  color?: Color
 }) {
-  return <h3 className={cardHeader(color)}>{children}</h3>
+  return <h3 className={colorToTextColor(color)}>{children}</h3>
 }
 
 const cardDescription = classnames(
@@ -132,10 +131,19 @@ export function CardDescription({ children }: ChildrenProp) {
 const logoText = classnames(
   textColor('text-accent'),
   fontWeight('font-bold'),
-  fontSize('text-xl')
+  fontSize('text-lg'),
+  lineHeight('leading-none')
 )
 export function LogoText({ children }: ChildrenProp) {
   return <span className={logoText}>{children}</span>
+}
+const logoSubText = classnames(
+  textColor('text-primary-semi-dimmed'),
+  fontWeight('font-bold'),
+  fontSize('text-xs')
+)
+export function LogoSubText({ children }: ChildrenProp) {
+  return <span className={logoSubText}>{children}</span>
 }
 
 const badgeText = (small?: boolean) =>
@@ -218,6 +226,25 @@ export function LinkText({
   )
 }
 
+const socialLink = (tertiary?: boolean) =>
+  classnames(
+    lineHeight('leading-6'),
+    fontSize('text-base'),
+    textDecoration('no-underline', 'hover:underline'),
+    textColor(tertiary ? 'hover:text-tertiary' : 'text-formal-accent')
+  )
+export function SocialLink({
+  url,
+  tertiary,
+  children,
+}: ChildrenProp & { url: string; tertiary?: boolean }) {
+  return (
+    <a className={socialLink(tertiary)} href={url} target="_blank">
+      {children}
+    </a>
+  )
+}
+
 const hintText = (bold?: boolean, center?: boolean) =>
   classnames(
     fontSize('text-sm'),
@@ -265,13 +292,9 @@ export function SphereText({ children }: ChildrenProp) {
   return <p className={sphereText}>{children}</p>
 }
 
-const proofSectionTitle = classnames(
-  fontWeight('font-bold'),
-  margin('mb-2'),
-  fontSize('text-sm')
-)
-export function ProofSectionTitle({ children }: ChildrenProp) {
-  return <p className={proofSectionTitle}>{children}</p>
+const sectionTitle = classnames(fontWeight('font-bold'), fontSize('text-sm'))
+export function SectionTitle({ children }: ChildrenProp) {
+  return <p className={sectionTitle}>{children}</p>
 }
 
 const tinyText = (color: 'base' | 'primary' | 'error') =>

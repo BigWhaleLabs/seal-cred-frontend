@@ -3,6 +3,7 @@ import Color from 'models/Color'
 import classnames, {
   alignItems,
   borderRadius,
+  boxShadow,
   display,
   fontWeight,
   height,
@@ -38,7 +39,10 @@ interface ZkSphereProps {
 
 export default function ({ color, animated, text }: ZkSphereProps) {
   const bgColor = colorToTailwindBackground(color)
-  const shadowColor = colorToDropShadow(color)
+  const shadowColor = classnames(
+    colorToDropShadow(color),
+    boxShadow('shadow-lg')
+  )
 
   const scroll = useScrollPercent()
 

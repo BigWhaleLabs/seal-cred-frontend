@@ -1,6 +1,6 @@
 import { useSnapshot } from 'valtio'
+import CardTitle from 'components/CardTitle'
 import ProofStore from 'stores/ProofStore'
-import Title from 'components/Title'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 export default function () {
@@ -11,15 +11,13 @@ export default function () {
     proofsCompleted.length > 0 && proofAddressesAvailableToCreate.length === 0
 
   return (
-    <>
-      <Title
-        title={allGenerated ? 'All proofed out' : 'Start proofing!'}
-        subtitle={
-          allGenerated
-            ? 'You generated all available ZK proofs for this wallet'
-            : 'Generate ZK proofs'
-        }
-      />
-    </>
+    <CardTitle
+      title={allGenerated ? 'All proofed out' : 'Start proofing!'}
+      subtitle={
+        allGenerated
+          ? 'You generated all available ZK proofs for this wallet'
+          : 'Generate ZK proofs'
+      }
+    />
   )
 }

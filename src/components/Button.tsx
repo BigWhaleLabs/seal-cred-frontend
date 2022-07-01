@@ -118,17 +118,21 @@ const colorClasses = ({
           ),
           fontSize(fontSmall ? 'text-sm' : undefined)
         )
-      : classnames(
-          textColor(
-            'text-transparent',
-            loading || disabled ? undefined : 'active:text-accent'
-          ),
-          backgroundClip('bg-clip-text'),
-          backgroundImage('bg-gradient-to-r'),
-          gradientColorStops('from-secondary', 'to-accent'),
-          fontSize(fontSmall ? 'text-sm' : undefined)
-        )
+      : fontSize(fontSmall ? 'text-sm' : undefined)
   )
+
+const textGradient = ({ type, loading, disabled }: ButtonProps) =>
+  type === 'tertiary'
+    ? classnames(
+        textColor(
+          'text-transparent',
+          loading || disabled ? undefined : 'active:text-accent'
+        ),
+        backgroundClip('bg-clip-text'),
+        backgroundImage('bg-gradient-to-r'),
+        gradientColorStops('from-secondary', 'to-accent')
+      )
+    : undefined
 
 interface ButtonProps {
   fullWidth?: boolean
@@ -168,7 +172,13 @@ export default function ({
       {...rest}
     >
       {loading && <Loading small={small} />}
-      {typeof children === 'string' ? <span>{children}</span> : children}
+      {typeof children === 'string' ? (
+        <span className={textGradient({ type, loading, disabled })}>
+          {children}
+        </span>
+      ) : (
+        children
+      )}
       {withArrow && (
         <div className={width('w-4')}>
           <Arrow horizontal pulseDisabled={disabled || loading} openDisabled />

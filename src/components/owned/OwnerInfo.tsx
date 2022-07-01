@@ -1,13 +1,13 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
 import BaseBadgeContract from 'helpers/BaseBadgeContract'
 import Card from 'components/Card'
+import CardTitle from 'components/CardTitle'
 import ContractName from 'components/ContractName'
 import ERC721BadgeContract from 'helpers/ERC721BadgeContract'
 import EmailBadgeContract from 'helpers/EmailBadgeContract'
 import ExternalLink from 'components/ExternalLink'
 import OwnedBadgeAddress from 'components/owned/OwnedBadgeAddress'
 import Smile from 'icons/Smile'
-import Title from 'components/Title'
 import classnames, {
   alignItems,
   borderColor,
@@ -96,7 +96,10 @@ export default function ({
     handleError('Looks like this contract was removed')
     return (
       <Card color="secondary" shadow onlyWrap>
-        <Title title="Unsupported NFT" subtitle="This NFT is not supported" />
+        <CardTitle
+          title="Unsupported NFT"
+          subtitle="This NFT is not supported"
+        />
       </Card>
     )
   }

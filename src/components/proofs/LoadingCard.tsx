@@ -1,8 +1,8 @@
-import Title from 'components/Title'
+import LoadingCard from 'components/LoadingCard'
 
 export default function () {
   return (
-    <Title
+    <LoadingCard
       title="Loading..."
       subtitle="Please, wait until I load supported NFTs, it takes time"
     />
