@@ -32,18 +32,19 @@ export default function () {
     <ProofsListContainer>
       <Suspense fallback={<LoadingCard />}>
         <ListTitle />
+        <div className={proofContentBlock}>
+          <ScrollShadow>
+            <ERC721ProofsList />
+            <EmailProofList />
+          </ScrollShadow>
+        </div>
+        {proofsCompleted.length > 0 && (
+          <AccentText small primary color="text-primary">
+            Created ZK proofs are saved in the browser even if you switch
+            wallets.
+          </AccentText>
+        )}
       </Suspense>
-      <div className={proofContentBlock}>
-        <ScrollShadow>
-          <ERC721ProofsList />
-          <EmailProofList />
-        </ScrollShadow>
-      </div>
-      {proofsCompleted.length > 0 && (
-        <AccentText small primary color="text-primary">
-          Created ZK proofs are saved in the browser even if you switch wallets.
-        </AccentText>
-      )}
     </ProofsListContainer>
   )
 }
