@@ -7451,6 +7451,7 @@ export type TMinHeight =
   | 'min-h-min'
   | 'min-h-max'
   | 'min-h-fit'
+  | 'min-h-card'
 
 export type TMaxHeight =
   | 'max-h-0'

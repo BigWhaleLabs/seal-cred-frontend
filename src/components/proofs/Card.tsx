@@ -13,7 +13,7 @@ export default function () {
 
   return (
     <CardContainer>
-      <Card color="accent" shadow>
+      <Card color="accent" shadow forApp>
         {walletLoading ? (
           <LoadingCard />
         ) : account ? (

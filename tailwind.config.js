@@ -7,6 +7,9 @@ module.exports = {
       primary: ['"Space Grotesk"', 'sans-serif'],
     },
     extend: {
+      minHeight: {
+        card: '31.75rem',
+      },
       maxHeight: {
         card: '31.75rem',
         'mobile-card': '41rem',
