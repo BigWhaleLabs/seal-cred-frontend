@@ -9,7 +9,6 @@ import {
   fontWeight,
   gradientColorStops,
   lineHeight,
-  margin,
   textAlign,
   textColor,
   textDecoration,
@@ -227,6 +226,25 @@ export function LinkText({
   )
 }
 
+const socialLink = (tertiary?: boolean) =>
+  classnames(
+    lineHeight('leading-6'),
+    fontSize('text-base'),
+    textDecoration('no-underline', 'hover:underline'),
+    textColor(tertiary ? 'hover:text-tertiary' : 'text-formal-accent')
+  )
+export function SocialLink({
+  url,
+  tertiary,
+  children,
+}: ChildrenProp & { url: string; tertiary?: boolean }) {
+  return (
+    <a className={socialLink(tertiary)} href={url} target="_blank">
+      {children}
+    </a>
+  )
+}
+
 const hintText = (bold?: boolean, center?: boolean) =>
   classnames(
     fontSize('text-sm'),
@@ -274,13 +292,9 @@ export function SphereText({ children }: ChildrenProp) {
   return <p className={sphereText}>{children}</p>
 }
 
-const proofSectionTitle = classnames(
-  fontWeight('font-bold'),
-  margin('mb-2'),
-  fontSize('text-sm')
-)
-export function ProofSectionTitle({ children }: ChildrenProp) {
-  return <p className={proofSectionTitle}>{children}</p>
+const sectionTitle = classnames(fontWeight('font-bold'), fontSize('text-sm'))
+export function SectionTitle({ children }: ChildrenProp) {
+  return <p className={sectionTitle}>{children}</p>
 }
 
 const tinyText = (color: 'base' | 'primary' | 'error') =>

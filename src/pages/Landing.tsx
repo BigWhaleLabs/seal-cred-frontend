@@ -32,6 +32,7 @@ const pageBox = classnames(
   flexDirection('flex-col'),
   alignItems('items-center')
 )
+const initialCardWrapper = margin('mt-10')
 const identityCards = classnames(
   display('flex'),
   flexDirection('flex-row'),
@@ -81,7 +82,9 @@ export default function () {
 
   return (
     <div className={pageBox}>
-      <InitialCard />
+      <div className={initialCardWrapper}>
+        <InitialCard />
+      </div>
       <div className={topBlockWrapper}>
         <ScrollDownButton />
         <div className={topConnectorsWrapper}>
