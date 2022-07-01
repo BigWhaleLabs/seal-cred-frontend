@@ -9,7 +9,7 @@ export default function ({ children }: ChildrenProp) {
 
   return (
     <div
-      className={overflow('overflow-y-auto')}
+      className={overflow('overflow-auto')}
       ref={elementRef as RefObject<HTMLDivElement>}
     >
       {children}

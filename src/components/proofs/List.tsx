@@ -38,13 +38,12 @@ export default function () {
           <ERC721ProofsList />
           <EmailProofList />
         </ScrollShadow>
-        {proofsCompleted.length > 0 && (
-          <AccentText small primary color="text-primary">
-            Created ZK proofs are saved in the browser even if you switch
-            wallets.
-          </AccentText>
-        )}
       </div>
+      {proofsCompleted.length > 0 && (
+        <AccentText small primary color="text-primary">
+          Created ZK proofs are saved in the browser even if you switch wallets.
+        </AccentText>
+      )}
     </ProofsListContainer>
   )
 }
