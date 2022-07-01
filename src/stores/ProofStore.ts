@@ -8,6 +8,8 @@ import ProofResult from 'models/ProofResult'
 import WalletStore from 'stores/WalletStore'
 import checkNavigator from 'helpers/checkNavigator'
 import handleError from 'helpers/handleError'
+import mimcHash from 'circomlibjs/mimc'
+import parseSignature from 'helpers/parseSignature'
 
 class ProofStore extends PersistableStore {
   proofsCompleted: BaseProof[] = []
@@ -90,6 +92,21 @@ class ProofStore extends PersistableStore {
       const eddsaSignature = await WalletStore.signMessage(eddsaMessage)
       if (!eddsaSignature) throw new Error('Signature is not found')
 
+      const [r_array, s_array] = parseSignature(eddsaSignature)
+      const nullifierHash = mimcHash(123)(
+        r_array[0],
+        r_array[1],
+        r_array[2],
+        s_array[0],
+        s_array[1],
+        s_array[2]
+      ).toString()
+
+      console.log(nullifierHash)
+
+      const r = r_array.map((x) => x.toString())
+      const s = s_array.map((x) => x.toString())
+
       const { signature, message } = await requestERC721Attestation(
         eddsaSignature,
         contract,
@@ -100,7 +117,7 @@ class ProofStore extends PersistableStore {
 
       checkNavigator()
 
-      await newERC721Proof.build(message, signature, x, y)
+      await newERC721Proof.build(message, signature, x, y, r, s, nullifierHash)
 
       proofStore.proofsCompleted.push(newERC721Proof)
     } catch (e) {

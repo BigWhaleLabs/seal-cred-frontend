@@ -69,7 +69,10 @@ export default class ERC721Proof
     contract: string,
     signature: string,
     pubKeyX: string,
-    pubKeyY: string
+    pubKeyY: string,
+    r: string[],
+    s: string[],
+    nullifierHash: string
   ) {
     const messageUInt8 = utils.toUtf8Bytes(message)
     const privateInput = await unpackSignature(messageUInt8, signature)
@@ -79,6 +82,9 @@ export default class ERC721Proof
       pubKeyX,
       pubKeyY,
       ...privateInput,
+      r,
+      s,
+      nullifierHash,
     }
   }
 
@@ -86,7 +92,10 @@ export default class ERC721Proof
     message: string,
     signature: string,
     pubKeyX: string,
-    pubKeyY: string
+    pubKeyY: string,
+    r: string[],
+    s: string[],
+    nullifierHash: string
   ) {
     this.result = await snarkjs.groth16.fullProve(
       await this.generateInput(
@@ -94,7 +103,10 @@ export default class ERC721Proof
         this.contract,
         signature,
         pubKeyX,
-        pubKeyY
+        pubKeyY,
+        r,
+        s,
+        nullifierHash
       ),
       'zk/ERC721OwnershipChecker.wasm',
       'zk/ERC721OwnershipChecker_final.zkey'
