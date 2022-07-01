@@ -1,5 +1,16 @@
+import 'use-scroll-shadow/lib/index.css'
+import { RefObject } from 'preact'
+import { useScrollShadow } from 'use-scroll-shadow'
 import ChildrenProp from 'models/ChildrenProp'
 
 export default function ({ children }: ChildrenProp) {
-  return <div className="scroll-shadow">{children}</div>
+  const { elementRef } = useScrollShadow()
+  return (
+    <div
+      className="overflow-y-auto"
+      ref={elementRef as RefObject<HTMLDivElement>}
+    >
+      {children}
+    </div>
+  )
 }

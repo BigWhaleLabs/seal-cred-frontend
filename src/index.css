@@ -62,24 +62,15 @@ body {
   border: 7.5px solid transparent;
 }
 
-.scroll-shadow {
-  background: linear-gradient(#0d0030 33%, #00000000),
-    linear-gradient(#00000000, #0d0030 66%) 0 100%,
-    radial-gradient(
-      farthest-side at 50% 0,
-      rgba(34, 34, 34, 0.5),
-      rgba(0, 0, 0, 0)
-    ),
-    radial-gradient(
-        farthest-side at 50% 100%,
-        rgba(34, 34, 34, 0.5),
-        rgba(0, 0, 0, 0)
-      )
-      0 100%;
-  background-color: #0d0030;
-  background-repeat: no-repeat;
-  background-attachment: local, local, scroll, scroll;
-  background-size: 100% 45px, 100% 45px, 100% 15px, 100% 15px;
+.scroll-shadow-box:before {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.5),
+    transparent
+  ) !important;
+}
+.scroll-shadow-box:after {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), transparent) !important;
 }
 
 @keyframes tertiarySphereAnimation {
