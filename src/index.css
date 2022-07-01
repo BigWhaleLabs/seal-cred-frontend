@@ -4,7 +4,7 @@
 
 html {
   background-color: #0d0030;
-  scrollbar-color: #fed823 #8ea5b5;
+  scrollbar-color: #fed823 transparent;
   scrollbar-width: thin;
 }
 body {
