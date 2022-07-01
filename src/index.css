@@ -38,13 +38,20 @@ body {
 }
 ::-webkit-scrollbar-track {
   background: #00000000;
-  background-image: url('img/scrollbarBg.png');
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 47%,
+    #fed823 47%,
+    #fed823 51%,
+    rgba(0, 0, 0, 0) 52%
+  );
 }
 ::-webkit-scrollbar-thumb {
   background: #fed823;
   border-radius: 20px;
   background-clip: content-box;
   border: 8px solid transparent;
+  box-shadow: inset #fed823;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #fed950;
