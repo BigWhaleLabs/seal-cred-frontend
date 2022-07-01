@@ -9,7 +9,6 @@ import {
   height,
   inset,
   margin,
-  maxHeight,
   padding,
   position,
   space,
@@ -86,14 +85,10 @@ const cardContainer = (
     ),
     margin(thin ? undefined : 'mx-auto', 'lg:mx-0'),
     height(
-      onlyWrap ? undefined : thin ? 'h-60' : 'h-fit',
+      onlyWrap ? undefined : thin ? 'h-60' : 'h-mobile-card',
       onlyWrap ? undefined : thin ? undefined : 'lg:h-card'
     ),
     space(nospace ? undefined : 'space-y-4'),
-    maxHeight(
-      onlyWrap ? undefined : 'sm:max-h-card',
-      onlyWrap ? undefined : 'max-h-mobile-card'
-    ),
     wordBreak('break-words'),
     zIndex('z-30')
   )
