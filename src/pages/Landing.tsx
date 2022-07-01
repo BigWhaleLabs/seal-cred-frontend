@@ -32,7 +32,7 @@ const pageBox = classnames(
   flexDirection('flex-col'),
   alignItems('items-center')
 )
-const initialCardWrapper = classnames(margin('mt-10'))
+const initialCardWrapper = margin('mt-10')
 const identityCards = classnames(
   display('flex'),
   flexDirection('flex-row'),

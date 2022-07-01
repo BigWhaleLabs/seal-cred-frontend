@@ -12,6 +12,7 @@ const NotFound = lazy(() => import('pages/NotFound'))
 const OwnedBadge = lazy(() => import('pages/OwnedBadge'))
 const Landing = lazy(() => import('pages/Landing'))
 const Main = lazy(() => import('pages/Main'))
+
 const pageContainer = classnames(
   space('space-y-6', 'sm:space-y-10'),
   overflow('overflow-x-hidden')
