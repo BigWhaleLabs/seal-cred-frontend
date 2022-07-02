@@ -9,33 +9,35 @@ const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
 
 export default function () {
   return (
-    <Card color="primary" shadow onlyWrap>
-      <PrivacyDeath />
-      <div className={bigWhaleLabsText}>
-        <BodyText>
-          <LinkText
-            targetBlank
-            color="text-primary"
-            url="https://bigwhalelabs.com"
+    <div className={margin('mb-2')}>
+      <Card color="primary" shadow onlyWrap>
+        <PrivacyDeath />
+        <div className={bigWhaleLabsText}>
+          <BodyText>
+            <LinkText
+              targetBlank
+              color="text-primary"
+              url="https://bigwhalelabs.com"
+            >
+              Big Whale Labs{' '}
+            </LinkText>
+            is dedicated to building a pseudonymous world in which privacy and
+            identity are owned by the human, not the corporation.
+          </BodyText>
+        </div>
+        <div className={learnMoreText}>
+          <Button
+            type="tertiary"
+            withArrow
+            fontSmall
+            onClick={() =>
+              window.open('https://bigwhalelabs.com/', '_blank')?.focus()
+            }
           >
-            Big Whale Labs{' '}
-          </LinkText>
-          is dedicated to building a pseudonymous world in which privacy and
-          identity are owned by the human, not the corporation.
-        </BodyText>
-      </div>
-      <div className={learnMoreText}>
-        <Button
-          type="tertiary"
-          withArrow
-          fontSmall
-          onClick={() =>
-            window.open('https://bigwhalelabs.com/', '_blank')?.focus()
-          }
-        >
-          Learn more about us
-        </Button>
-      </div>
-    </Card>
+            Learn more about us
+          </Button>
+        </div>
+      </Card>
+    </div>
   )
 }
