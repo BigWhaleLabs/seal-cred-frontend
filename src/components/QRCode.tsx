@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react'
 import QRCodeStyling, { Options } from 'qr-code-styling'
+import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   borderRadius,
   minWidth,
@@ -18,9 +19,8 @@ const qrCodeContainer = classnames(
 )
 
 const QRCodeOptions: Options = {
-  width: 140,
-  height: 140,
-  type: 'svg',
+  type: 'canvas',
+  margin: 10,
   image: '/img/logo.svg',
   dotsOptions: {
     color: '#fed823',
@@ -55,7 +55,7 @@ export default function ({ derivativeAddress, tokenId }: QRCodeProps) {
     <a
       href={url}
       ref={ref}
-      className={qrCodeContainer}
+      className={classNamesToString(qrCodeContainer, 'custom-qr-code')}
       target="_blank"
       rel="noopener noreferrer"
     />
