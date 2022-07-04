@@ -139,9 +139,8 @@ body {
   /* Creates background with less than thumb width */
   background: url('/img/scrollbarBg.png');
 }
-
-canvas {
-  max-width: 100%;
+.custom-qr-code canvas {
+  max-width: 8.75rem;
 }
 
 /* Wallet select menu for dark and light theme */
