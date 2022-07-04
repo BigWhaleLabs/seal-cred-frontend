@@ -1,6 +1,5 @@
-import { AccentText, BodyText, HeaderText } from 'components/Text'
+import { AccentText, BodyText, HeaderText, TinyText } from 'components/Text'
 import EmailProofForm from 'components/proofs/EmailProofForm'
-import TinyMessage from 'components/TinyMessage'
 import classnames, { space, width } from 'classnames/tailwind'
 
 const proofLineContainer = classnames(space('space-y-4'), width('w-full'))
@@ -30,11 +29,15 @@ export default function EmailFlowForm({
         </BodyText>
       )}
       <div className={proofLineContainer}>
-        <EmailProofForm onChange={onUpdateDomain} onCreate={onUpdateDomain} />
-        <TinyMessage
-          state="primary"
-          text="Be sure to check your spam folder if you don’t see the email at first."
+        <EmailProofForm
+          submitType="primary"
+          description="Start by entering your email. We’ll then send you an email containing a token. You’ll come back here and enter your token to receive your zkBadge."
+          onChange={onUpdateDomain}
+          onCreate={onUpdateDomain}
         />
+        <TinyText color="primary">
+          Be sure to check your spam folder if you don’t see the email at first.
+        </TinyText>
       </div>
     </>
   )

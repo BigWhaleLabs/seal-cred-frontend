@@ -4,6 +4,7 @@ import { useState } from 'preact/hooks'
 import Card from 'components/Card'
 import CardContainer from 'components/proofs/CardContainer'
 import ConnectAccount from 'components/proofs/ConnectAccount'
+import ContractsStore from 'stores/ContractsStore'
 import EmailFlowBadge from 'components/email-flow/EmailFlowBadge'
 import EmailFlowForm from 'components/email-flow/EmailFlowForm'
 import EmailFlowProof from 'components/email-flow/EmailFlowProof'
@@ -13,15 +14,19 @@ import WalletStore from 'stores/WalletStore'
 import proofStore from 'stores/ProofStore'
 
 export default function () {
+  const { contractsOwned } = useSnapshot(ContractsStore)
   const { emailLedger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
   const { emailProofsCompleted } = useSnapshot(proofStore)
   const [domain, setDomain] = useState<string | undefined>()
-  const ledgerRecord = domain && emailLedger[domain]
 
   function onUpdateDomain({ domain }: { domain?: string }) {
     setDomain(domain)
   }
+
+  const ledgerRecord = domain && emailLedger[domain]
+  const minted =
+    ledgerRecord && contractsOwned.includes(ledgerRecord.derivativeContract)
 
   const proof = emailProofsCompleted.find(
     (emailProof) => emailProof.domain === domain
@@ -37,7 +42,7 @@ export default function () {
       >
         {account ? (
           <Suspense fallback={<LoadingCard />}>
-            {ledgerRecord ? (
+            {minted ? (
               <EmailFlowBadge
                 contractAddress={ledgerRecord.derivativeContract}
                 resetEmail={() => setDomain(undefined)}

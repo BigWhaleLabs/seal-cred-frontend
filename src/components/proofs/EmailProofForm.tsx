@@ -8,9 +8,13 @@ import TextForm from 'components/TextForm'
 import checkDomainToken from 'helpers/checkDomainToken'
 
 export default function ({
+  description,
+  submitType = 'secondary',
   onCreate,
   onChange,
 }: {
+  submitType?: 'primary' | 'secondary' | 'tertiary'
+  description: string
   onCreate: (params: { domain?: string }) => void
   onChange: (params: { domain?: string }) => void
 }) {
@@ -70,12 +74,13 @@ export default function ({
               .
             </>
           ) : (
-            'Add your work email and we’ll send you a token for that email. Then, use the token here to create zk proof'
+            description
           )}
         </BadgeText>
       </div>
       {domain ? (
         <TextForm
+          submitType={submitType}
           submitText="Generate proof"
           placeholder="Paste token here"
           onSubmit={onGenerateProof}
@@ -84,6 +89,7 @@ export default function ({
         />
       ) : (
         <EmailForm
+          submitType={submitType}
           submitText="Submit email"
           placeholder="Work email..."
           onSubmit={onSendEmail}

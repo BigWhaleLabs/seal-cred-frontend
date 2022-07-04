@@ -1,4 +1,3 @@
-import { GradientSpan } from 'components/Text'
 import { useState } from 'preact/hooks'
 import Button from 'components/Button'
 import Input from 'components/Input'
@@ -8,11 +7,13 @@ export default function ({
   error,
   loading,
   onSubmit,
+  submitType = 'primary',
   placeholder = 'Enter...',
   submitText = 'Submit',
 }: {
   error?: string
   loading?: boolean
+  submitType?: 'primary' | 'secondary' | 'tertiary'
   onSubmit: (text: string) => void
   placeholder?: string
   submitText?: string
@@ -39,13 +40,11 @@ export default function ({
         fullWidth
         center
         small
-        type="secondary"
+        type={submitType}
         disabled={text.length === 0}
         onClick={() => onSubmit(text)}
       >
-        <GradientSpan bold gradientFrom="from-secondary" gradientTo="to-accent">
-          {submitText}
-        </GradientSpan>
+        {submitText}
       </Button>
     </>
   )

@@ -176,26 +176,6 @@ const linkText = (
     gradientColorStops(gradientFrom, gradientTo),
     fontWeight(bold ? 'font-bold' : 'font-normal')
   )
-
-export function GradientSpan({
-  children,
-  bold,
-  color,
-  gradientFrom,
-  gradientTo,
-}: ChildrenProp & {
-  bold?: boolean
-  color?: TTextColor
-  gradientFrom?: TGradientColorStops
-  gradientTo?: TGradientColorStops
-}) {
-  return (
-    <span className={linkText(bold, color, gradientFrom, gradientTo)}>
-      {children}
-    </span>
-  )
-}
-
 export function LinkText({
   url,
   bold,
@@ -297,7 +277,7 @@ export function SectionTitle({ children }: ChildrenProp) {
   return <p className={sectionTitle}>{children}</p>
 }
 
-const tinyText = (color: 'base' | 'primary' | 'error') =>
+const tinyText = (color: 'base' | 'primary' | 'error', primary?: boolean) =>
   classnames(
     textColor(
       color === 'error'
@@ -306,13 +286,14 @@ const tinyText = (color: 'base' | 'primary' | 'error') =>
         ? 'text-primary-semi-dimmed'
         : 'text-formal-accent'
     ),
-    fontFamily('font-primary'),
+    fontFamily(primary ? 'font-primary' : undefined),
     fontSize('text-xs'),
     lineHeight('leading-3')
   )
 export function TinyText({
   color,
+  primary,
   children,
-}: { color?: 'base' | 'primary' | 'error' } & ChildrenProp) {
-  return <span className={tinyText(color || 'base')}>{children}</span>
+}: { color?: 'base' | 'primary' | 'error'; primary?: boolean } & ChildrenProp) {
+  return <div className={tinyText(color || 'base', primary)}>{children}</div>
 }

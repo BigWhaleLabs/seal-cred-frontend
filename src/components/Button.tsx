@@ -122,7 +122,7 @@ const colorClasses = ({
   )
 
 const textGradient = ({ type, loading, disabled }: ButtonProps) =>
-  type === 'tertiary'
+  type === 'tertiary' || type === 'secondary'
     ? classnames(
         textColor(
           'text-transparent',

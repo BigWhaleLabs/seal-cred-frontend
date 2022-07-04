@@ -113,7 +113,8 @@ export default function () {
         </div>
         {open && (
           <EmailProofForm
-            hintColor="base"
+            submitType="secondary"
+            description="Add your work email and we’ll send you a token for that email (check the spam folder). Then, use the token here to create zk proof."
             onCreate={onCreate}
             onChange={updateForm}
           />

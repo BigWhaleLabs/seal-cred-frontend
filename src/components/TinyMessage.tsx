@@ -30,7 +30,9 @@ export default function ({
           <Exclamation />
         </div>
       )}
-      <TinyText color={state}>{text}</TinyText>
+      <TinyText primary color={state}>
+        {text}
+      </TinyText>
     </div>
   )
 }
