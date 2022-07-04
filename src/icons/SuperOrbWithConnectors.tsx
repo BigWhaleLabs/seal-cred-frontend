@@ -291,7 +291,6 @@ const UpperConnectors = () => (
       className={strokeSecondary}
     />
     <line x1="100.5" x2="100.5" y1="30" y2="690" fill="none" stroke="url(#c)" />
-    <path d="M109.35,312.51" fill="none" className={strokeAccent} />
   </svg>
 )
 
