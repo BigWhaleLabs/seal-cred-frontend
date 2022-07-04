@@ -38,7 +38,6 @@ function Badge({
   return (
     <BadgeCard
       top={<QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />}
-      leanLeft
       text={<BadgeTitle derivativeAddress={derivativeAddress} />}
       bottom={
         <div className={mintPassed(small)}>

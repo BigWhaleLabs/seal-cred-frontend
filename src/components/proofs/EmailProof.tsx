@@ -47,7 +47,8 @@ const getStartedText = (open: boolean) =>
 
 const emailTitleContainer = classnames(
   display('flex'),
-  justifyContent('justify-between')
+  justifyContent('justify-between'),
+  alignItems('items-center')
 )
 
 const proofLineContainer = classnames(

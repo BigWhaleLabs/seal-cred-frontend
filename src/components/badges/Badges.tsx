@@ -3,12 +3,10 @@ import { useResizeDetector } from 'react-resize-detector'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import ConnectAccount from 'components/badges/ConnectAccount'
-import DoxNotification from 'components/badges/DoxNotification'
 import List from 'components/badges/List'
 import ListContainer from 'components/badges/ListContainer'
 import ListTitle from 'components/badges/ListTitle'
 import LoadingCard from 'components/badges/LoadingCard'
-import ProofStore from 'stores/ProofStore'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
 import classnames, { display, flexGrow } from 'classnames/tailwind'
@@ -16,21 +14,14 @@ import classnames, { display, flexGrow } from 'classnames/tailwind'
 const proofContentBlock = classnames(display('flex'), flexGrow('grow'))
 
 function BadgesSuspended() {
-  const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(WalletStore)
-  const { proofsCompleted } = useSnapshot(ProofStore)
   const { height = 0, ref } = useResizeDetector({ handleWidth: false })
-
-  const shouldNotify =
-    !!account &&
-    !walletsToNotifiedOfBeingDoxxed[account] &&
-    proofsCompleted.length > 0
 
   return (
     <ListContainer>
       <ListTitle />
       <div className={proofContentBlock} ref={ref}>
-        <Scrollbar parentHeight={shouldNotify ? 0 : height}>
-          {shouldNotify ? <DoxNotification account={account} /> : <List />}
+        <Scrollbar parentHeight={height}>
+          <List />
         </Scrollbar>
       </div>
     </ListContainer>
