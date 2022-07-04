@@ -55,14 +55,9 @@ class WalletStore extends PersistableStore {
   async signMessage(message: string) {
     if (!provider) throw new Error('No provider')
 
-    this.walletLoading = true
-    try {
-      const signer = provider.getSigner()
-      const signature = await signer.signMessage(message)
-      return signature
-    } finally {
-      this.walletLoading = false
-    }
+    const signer = provider.getSigner()
+    const signature = await signer.signMessage(message)
+    return signature
   }
 
   async mintDerivative(proof: BaseProof) {
