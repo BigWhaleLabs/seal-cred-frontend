@@ -53,6 +53,8 @@ class WalletStore extends PersistableStore {
   }
 
   async signMessage(message: string) {
+    if (!provider) throw new Error('No provider')
+
     const signer = provider.getSigner()
     const signature = await signer.signMessage(message)
     return signature
