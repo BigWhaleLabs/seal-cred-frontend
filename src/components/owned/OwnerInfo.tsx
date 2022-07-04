@@ -2,6 +2,7 @@ import { AccentText, BodyText, HeaderText } from 'components/Text'
 import BaseBadgeContract from 'helpers/BaseBadgeContract'
 import Card from 'components/Card'
 import CardTitle from 'components/CardTitle'
+import ChildrenProp from 'models/ChildrenProp'
 import ContractName from 'components/ContractName'
 import ERC721BadgeContract from 'helpers/ERC721BadgeContract'
 import EmailBadgeContract from 'helpers/EmailBadgeContract'
@@ -15,6 +16,8 @@ import classnames, {
   flexDirection,
   space,
   textOverflow,
+  verticalAlign,
+  width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
@@ -27,11 +30,27 @@ const walletBox = classnames(
   alignItems('items-center')
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
-const badgeNaneWrapper = classnames(textOverflow('truncate'))
+const badgeNaneWrapper = (email?: boolean) =>
+  classnames(
+    display('inline-block'),
+    verticalAlign('align-middle'),
+    textOverflow('truncate'),
+    width(email ? 'w-full' : 'w-derivative-name') // to fit the name on the next line
+  )
 
-const badgeNameWrapperStyles = {
-  hyphens: 'auto', // to enable hyphens
-  fontSize: 'calc(20px + (34 - 20) * ((100vw - 280px) / (6000 - 280)))', // to calculate font size based on viewport width
+const badgeNameFontStyles = {
+  fontSize: 'calc(20px + (34 - 20) * ((100vw - 280px) / (7000 - 280)))', // to calculate font size based on viewport width
+}
+
+const BadgeNameWrapper = ({
+  email,
+  children,
+}: { email?: boolean } & ChildrenProp) => {
+  return (
+    <span className={badgeNaneWrapper(email)} style={badgeNameFontStyles}>
+      {children}
+    </span>
+  )
 }
 
 function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
@@ -42,9 +61,9 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
           This wallet belongs to someone with{' '}
           <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
             <AccentText bold color="text-secondary">
-              <div className={badgeNaneWrapper} style={badgeNameWrapperStyles}>
+              <BadgeNameWrapper email>
                 <ContractName address={badge.address} />
-              </div>
+              </BadgeNameWrapper>
             </AccentText>
           </ExternalLink>
         </HeaderText>
@@ -58,9 +77,9 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
         This wallet owns a{' '}
         <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
           <AccentText bold color="text-secondary">
-            <div className={badgeNaneWrapper} style={badgeNameWrapperStyles}>
+            <BadgeNameWrapper>
               <ContractName address={badge.address} />
-            </div>
+            </BadgeNameWrapper>
           </AccentText>
         </ExternalLink>
       </HeaderText>

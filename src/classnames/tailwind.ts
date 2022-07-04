@@ -7344,6 +7344,7 @@ export type TWidth =
   | 'w-thin-card'
   | 'w-card'
   | 'w-mobile-card'
+  | 'w-derivative-name'
   | 'w-small'
 
 export type TMinWidth =

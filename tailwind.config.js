@@ -103,6 +103,7 @@ module.exports = {
         'thin-card': '11.688rem',
         card: '24.875rem',
         'mobile-card': '92%',
+        'derivative-name': '90%',
       },
       inset: {
         '-28': '-7rem',
