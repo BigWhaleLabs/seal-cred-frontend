@@ -28,26 +28,6 @@ const SuperOrb = () => (
   >
     <defs>
       <linearGradient
-        id="a"
-        x1="-513.57"
-        y1="113.84"
-        x2="-513.57"
-        y2="113.84"
-        gradientTransform="translate(587.07 -66.06)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0" stop-color="#efecd6" />
-        <stop offset="1" stop-color="#01feb6" />
-      </linearGradient>
-      <linearGradient
-        id="b"
-        x1="-586.57"
-        y1="113.84"
-        x2="-586.57"
-        y2="113.84"
-        xlinkHref="#a"
-      />
-      <linearGradient
         id="c"
         x1="101.5"
         y1="503"
@@ -140,15 +120,13 @@ const SuperOrb = () => (
       d="M73.5,47.78"
       transform="translate(-48.02 -4.86)"
       fill="none"
-      stroke-linecap="round"
-      stroke="url(#a)"
+      className={strokeTertiary}
     />
     <path
       d="M.5,47.78"
       transform="translate(-48.02 -4.86)"
       fill="none"
-      stroke-linecap="round"
-      stroke="url(#b)"
+      className={strokeSecondary}
     />
     <circle
       cx="53"
@@ -259,30 +237,6 @@ const UpperConnectors = () => (
   >
     <defs>
       <linearGradient
-        id="a"
-        x1="-524.69"
-        y1="790.56"
-        x2="-584.92"
-        y2="790.56"
-        gradientTransform="translate(587.07 -66.06)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0" stop-color="#efecd6" />
-        <stop offset="1" stop-color="#01feb6" />
-      </linearGradient>
-      <linearGradient
-        id="b"
-        x1="-447.51"
-        y1="790.56"
-        x2="-385.07"
-        y2="790.56"
-        gradientTransform="translate(587.07 -66.06)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0" stop-color="#efecd6" />
-        <stop offset="1" stop-color="#ff7bed" />
-      </linearGradient>
-      <linearGradient
         id="c"
         x1="101.5"
         y1="503"
@@ -318,8 +272,7 @@ const UpperConnectors = () => (
       y1="724.5"
       y2="724.5"
       fill="none"
-      stroke-linecap="round"
-      stroke="url(#a)"
+      className={strokeTertiary}
     />
     <line
       x1="128.5"
@@ -327,8 +280,7 @@ const UpperConnectors = () => (
       y1="724.5"
       y2="724.5"
       fill="none"
-      stroke-linecap="round"
-      stroke="url(#b)"
+      className={strokeSecondary}
     />
     <line
       x1="193.25"
@@ -337,7 +289,6 @@ const UpperConnectors = () => (
       y2="724.5"
       fill="none"
       className={strokeSecondary}
-      stroke-linecap="round"
     />
     <line x1="100.5" x2="100.5" y1="30" y2="690" fill="none" stroke="url(#c)" />
     <path d="M109.35,312.51" fill="none" className={strokeAccent} />
