@@ -1,4 +1,4 @@
-import { BadgeText } from 'components/Text'
+import { BodyText } from 'components/Text'
 import { margin, textDecoration } from 'classnames/tailwind'
 import { sendEmail } from 'helpers/attestor'
 import { useState } from 'preact/hooks'
@@ -60,7 +60,7 @@ export default function ({
   return (
     <>
       <div className={margin('mt-4')}>
-        <BadgeText>
+        <BodyText>
           {domain ? (
             <>
               A token has been sent to {email}. Copy the token and add it here
@@ -76,7 +76,7 @@ export default function ({
           ) : (
             description
           )}
-        </BadgeText>
+        </BodyText>
       </div>
       {domain ? (
         <TextForm
