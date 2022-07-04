@@ -18,9 +18,9 @@ const qrCodeContainer = classnames(
 )
 
 const QRCodeOptions: Options = {
-  width: 140,
-  height: 140,
-  type: 'svg',
+  width: 280,
+  height: 280,
+  type: 'canvas',
   image: '/img/logo.svg',
   dotsOptions: {
     color: '#fed823',

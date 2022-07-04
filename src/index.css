@@ -140,6 +140,10 @@ body {
   background: url('/img/scrollbarBg.png');
 }
 
+canvas {
+  max-width: 100%;
+}
+
 /* Wallet select menu for dark and light theme */
 .web3modal-modal-lightbox {
   z-index: 100 !important;
