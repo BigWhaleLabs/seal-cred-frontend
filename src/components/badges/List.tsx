@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import BadgeSection from 'components/badges/BadgeSection'
 import ContractsStore from 'stores/ContractsStore'
+import DoxNotification from 'components/badges/DoxNotification'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
@@ -13,7 +14,9 @@ import classnames, {
   position,
   space,
 } from 'classnames/tailwind'
+import proofStore from 'stores/ProofStore'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
+import walletStore from 'stores/WalletStore'
 
 const badges = classnames(
   position('relative'),
@@ -22,6 +25,8 @@ const badges = classnames(
 )
 
 function BadgeListSuspended() {
+  const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
+  const { proofsCompleted } = useSnapshot(proofStore)
   const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
     useSnapshot(SealCredStore)
   const { contractsOwned } = useSnapshot(ContractsStore)
@@ -40,7 +45,14 @@ function BadgeListSuspended() {
     !ownedERC721DerivativeContracts.length &&
     !proofsAvailableToMint.length
 
-  return isEmpty ? (
+  const shouldNotify =
+    !!account &&
+    !walletsToNotifiedOfBeingDoxxed[account] &&
+    proofsCompleted.length > 0
+
+  return shouldNotify ? (
+    <DoxNotification account={account} />
+  ) : isEmpty ? (
     <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
   ) : (
     <div className={space('space-y-2')}>

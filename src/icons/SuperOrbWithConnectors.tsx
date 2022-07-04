@@ -28,26 +28,6 @@ const SuperOrb = () => (
   >
     <defs>
       <linearGradient
-        id="a"
-        x1="-513.57"
-        y1="113.84"
-        x2="-513.57"
-        y2="113.84"
-        gradientTransform="translate(587.07 -66.06)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0" stop-color="#efecd6" />
-        <stop offset="1" stop-color="#01feb6" />
-      </linearGradient>
-      <linearGradient
-        id="b"
-        x1="-586.57"
-        y1="113.84"
-        x2="-586.57"
-        y2="113.84"
-        xlinkHref="#a"
-      />
-      <linearGradient
         id="c"
         x1="101.5"
         y1="503"
@@ -140,15 +120,13 @@ const SuperOrb = () => (
       d="M73.5,47.78"
       transform="translate(-48.02 -4.86)"
       fill="none"
-      stroke-linecap="round"
-      stroke="url(#a)"
+      className={strokeTertiary}
     />
     <path
       d="M.5,47.78"
       transform="translate(-48.02 -4.86)"
       fill="none"
-      stroke-linecap="round"
-      stroke="url(#b)"
+      className={strokeSecondary}
     />
     <circle
       cx="53"
@@ -256,32 +234,9 @@ const UpperConnectors = () => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 202 725"
+    className={strokeSecondary}
   >
     <defs>
-      <linearGradient
-        id="a"
-        x1="-524.69"
-        y1="790.56"
-        x2="-584.92"
-        y2="790.56"
-        gradientTransform="translate(587.07 -66.06)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0" stop-color="#efecd6" />
-        <stop offset="1" stop-color="#01feb6" />
-      </linearGradient>
-      <linearGradient
-        id="b"
-        x1="-447.51"
-        y1="790.56"
-        x2="-385.07"
-        y2="790.56"
-        gradientTransform="translate(587.07 -66.06)"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop offset="0" stop-color="#efecd6" />
-        <stop offset="1" stop-color="#ff7bed" />
-      </linearGradient>
       <linearGradient
         id="c"
         x1="101.5"
@@ -304,48 +259,34 @@ const UpperConnectors = () => (
       </linearGradient>
     </defs>
     <line
-      x1="10"
-      y1="33.5"
-      x2="10"
+      x1="9.25"
+      y1="60"
+      x2="9.25"
       y2="724.5"
       fill="none"
       className={strokeTertiary}
       stroke-linecap="round"
     />
     <line
-      x1="10"
+      x1="9.5"
       x2="73.5"
       y1="724.5"
       y2="724.5"
       fill="none"
-      stroke-linecap="round"
-      stroke="url(#a)"
+      className={strokeTertiary}
     />
-    <line
-      x1="128.5"
-      x2="192"
-      y1="724.5"
-      y2="724.5"
-      fill="none"
-      stroke-linecap="round"
-      stroke="url(#b)"
-    />
-    <line
-      x1="192"
-      y1="47.5"
-      x2="192"
-      y2="724.5"
-      fill="none"
-      className={strokeSecondary}
-      stroke-linecap="round"
-    />
-    <line x1="101.5" x2="101.5" y2="683" fill="none" stroke="url(#c)" />
-    <path d="M109.35,312.51" fill="none" className={strokeAccent} />
+    <line x1="128.5" x2="193" y1="724.5" y2="724.5" fill="none" />
+    <line x1="193.25" y1="70" x2="193.25" y2="724.5" fill="none" />
+    <line x1="100.5" x2="100.5" y1="30" y2="690" fill="none" stroke="url(#c)" />
   </svg>
 )
 
 const BottomConnectors = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 425.5">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 196 425.5"
+    className={strokeAccent}
+  >
     <path
       d="M86.25,0V343L4.75,424.5"
       transform="translate(-4.25 0.5)"
@@ -357,28 +298,17 @@ const BottomConnectors = () => (
       d="M102.25,0V343l-81.5,81.5"
       transform="translate(-4.25 0.5)"
       fill="none"
-      className={strokeAccent}
       stroke-linecap="round"
     />
     <path
       d="M118.25,0V343l81.5,81.5"
       transform="translate(-4.25 0.5)"
       fill="none"
-      className={strokeSecondary}
       stroke-linecap="round"
+      className={strokeSecondary}
     />
-    <path
-      d="M109.35,235.28"
-      transform="translate(-4.25 0.5)"
-      fill="none"
-      className={strokeAccent}
-    />
-    <path
-      d="M109.35-447.72"
-      transform="translate(-4.25 0.5)"
-      fill="none"
-      className={strokeAccent}
-    />
+    <path d="M109.35,235.28" transform="translate(-4.25 0.5)" fill="none" />
+    <path d="M109.35-447.72" transform="translate(-4.25 0.5)" fill="none" />
   </svg>
 )
 

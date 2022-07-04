@@ -26,25 +26,27 @@ export default function () {
         <div className={pageContainer}>
           <Navbar />
           <ToastContainer position="bottom-right" theme="dark" />
-          <Routes>
-            <Route
-              path="/:derivativeAddress/:tokenId"
-              element={<LazyComponent lazyImported={<OwnedBadge />} />}
-            />
-            <Route
-              path="/"
-              element={<LazyComponent lazyImported={<Landing />} />}
-            />
-            <Route
-              path="/app"
-              element={<LazyComponent lazyImported={<Main />} />}
-            />
-            <Route
-              path="*"
-              element={<LazyComponent lazyImported={<NotFound />} />}
-            />
-          </Routes>
-          <Footer />
+          <div className={space('space-y-4')}>
+            <Routes>
+              <Route
+                path="/:derivativeAddress/:tokenId"
+                element={<LazyComponent lazyImported={<OwnedBadge />} />}
+              />
+              <Route
+                path="/"
+                element={<LazyComponent lazyImported={<Landing />} />}
+              />
+              <Route
+                path="/app"
+                element={<LazyComponent lazyImported={<Main />} />}
+              />
+              <Route
+                path="*"
+                element={<LazyComponent lazyImported={<NotFound />} />}
+              />
+            </Routes>
+            <Footer />
+          </div>
         </div>
       </Router>
     </Root>

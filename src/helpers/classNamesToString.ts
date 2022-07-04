@@ -5,6 +5,7 @@ type AllowedExtraClassnames =
   | '-top-16'
   | 'custom-scrollbar-body'
   | 'custom-scrollbar-thumb'
+  | 'custom-qr-code'
 
 export default function (
   ...classNames: (AllowedExtraClassnames | TTailwindString | undefined | null)[]
