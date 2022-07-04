@@ -14,6 +14,7 @@ import classnames, {
   display,
   flexDirection,
   space,
+  textOverflow,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
@@ -26,30 +27,44 @@ const walletBox = classnames(
   alignItems('items-center')
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
+const badgeNaneWrapper = classnames(textOverflow('truncate'))
+
+const badgeNameWrapperStyles = {
+  hyphens: 'auto', // to enable hyphens
+  fontSize: 'calc(20px + (34 - 20) * ((100vw - 280px) / (6000 - 280)))', // to calculate font size based on viewport width
+}
 
 function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
   if (badge instanceof EmailBadgeContract) {
     return (
-      <HeaderText extraLeading>
-        This wallet belongs to someone with{' '}
-        <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
-          <AccentText bold color="text-secondary">
-            <ContractName address={badge.address} />
-          </AccentText>
-        </ExternalLink>
-      </HeaderText>
+      <>
+        <HeaderText extraLeading>
+          This wallet belongs to someone with{' '}
+          <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
+            <AccentText bold color="text-secondary">
+              <div className={badgeNaneWrapper} style={badgeNameWrapperStyles}>
+                <ContractName address={badge.address} />
+              </div>
+            </AccentText>
+          </ExternalLink>
+        </HeaderText>
+      </>
     )
   }
 
   return (
-    <HeaderText extraLeading>
-      This wallet owns a{' '}
-      <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
-        <AccentText bold color="text-secondary">
-          <ContractName address={badge.address} />
-        </AccentText>
-      </ExternalLink>
-    </HeaderText>
+    <>
+      <HeaderText extraLeading>
+        This wallet owns a{' '}
+        <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
+          <AccentText bold color="text-secondary">
+            <div className={badgeNaneWrapper} style={badgeNameWrapperStyles}>
+              <ContractName address={badge.address} />
+            </div>
+          </AccentText>
+        </ExternalLink>
+      </HeaderText>
+    </>
   )
 }
 
