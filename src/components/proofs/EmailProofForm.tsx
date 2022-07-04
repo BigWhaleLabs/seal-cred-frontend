@@ -5,15 +5,12 @@ import { useState } from 'preact/hooks'
 import EmailForm from 'components/EmailForm'
 import ProofStore from 'stores/ProofStore'
 import TextForm from 'components/TextForm'
-import TinyMessage from 'components/TinyMessage'
 import checkDomainToken from 'helpers/checkDomainToken'
 
 export default function ({
   onCreate,
   onChange,
-  hintColor,
 }: {
-  hintColor: 'base' | 'primary'
   onCreate: (params: { domain?: string }) => void
   onChange: (params: { domain?: string }) => void
 }) {
@@ -93,10 +90,6 @@ export default function ({
           loading={loading}
         />
       )}
-      <TinyMessage
-        state={hintColor}
-        text="Be sure to check your spam folder if you don’t see the email at first."
-      />
     </>
   )
 }

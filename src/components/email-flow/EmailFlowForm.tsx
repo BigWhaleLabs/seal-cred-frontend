@@ -1,5 +1,6 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
 import EmailProofForm from 'components/proofs/EmailProofForm'
+import TinyMessage from 'components/TinyMessage'
 import classnames, { space, width } from 'classnames/tailwind'
 
 const proofLineContainer = classnames(space('space-y-4'), width('w-full'))
@@ -29,10 +30,10 @@ export default function EmailFlowForm({
         </BodyText>
       )}
       <div className={proofLineContainer}>
-        <EmailProofForm
-          hintColor="primary"
-          onChange={onUpdateDomain}
-          onCreate={onUpdateDomain}
+        <EmailProofForm onChange={onUpdateDomain} onCreate={onUpdateDomain} />
+        <TinyMessage
+          state="primary"
+          text="Be sure to check your spam folder if you don’t see the email at first."
         />
       </div>
     </>
