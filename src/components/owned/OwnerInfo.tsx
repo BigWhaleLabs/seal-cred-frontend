@@ -39,7 +39,7 @@ const badgeNaneWrapper = (email?: boolean) =>
   )
 
 const badgeNameFontStyles = {
-  fontSize: 'calc(20px + (34 - 20) * ((100vw - 280px) / (7000 - 280)))', // to calculate font size based on viewport width
+  fontSize: 'calc(1.25rem + (2.125 - 1.25) * ((100vw - 280px) / (4000 - 280)))', // to calculate font size based on viewport width
 }
 
 const BadgeNameWrapper = ({
