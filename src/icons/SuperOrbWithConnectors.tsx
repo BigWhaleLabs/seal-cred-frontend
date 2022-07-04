@@ -234,6 +234,7 @@ const UpperConnectors = () => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 202 725"
+    className={strokeSecondary}
   >
     <defs>
       <linearGradient
@@ -274,28 +275,18 @@ const UpperConnectors = () => (
       fill="none"
       className={strokeTertiary}
     />
-    <line
-      x1="128.5"
-      x2="193"
-      y1="724.5"
-      y2="724.5"
-      fill="none"
-      className={strokeSecondary}
-    />
-    <line
-      x1="193.25"
-      y1="70"
-      x2="193.25"
-      y2="724.5"
-      fill="none"
-      className={strokeSecondary}
-    />
+    <line x1="128.5" x2="193" y1="724.5" y2="724.5" fill="none" />
+    <line x1="193.25" y1="70" x2="193.25" y2="724.5" fill="none" />
     <line x1="100.5" x2="100.5" y1="30" y2="690" fill="none" stroke="url(#c)" />
   </svg>
 )
 
 const BottomConnectors = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 425.5">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 196 425.5"
+    className={strokeAccent}
+  >
     <path
       d="M86.25,0V343L4.75,424.5"
       transform="translate(-4.25 0.5)"
@@ -307,28 +298,17 @@ const BottomConnectors = () => (
       d="M102.25,0V343l-81.5,81.5"
       transform="translate(-4.25 0.5)"
       fill="none"
-      className={strokeAccent}
       stroke-linecap="round"
     />
     <path
       d="M118.25,0V343l81.5,81.5"
       transform="translate(-4.25 0.5)"
       fill="none"
-      className={strokeSecondary}
       stroke-linecap="round"
+      className={strokeSecondary}
     />
-    <path
-      d="M109.35,235.28"
-      transform="translate(-4.25 0.5)"
-      fill="none"
-      className={strokeAccent}
-    />
-    <path
-      d="M109.35-447.72"
-      transform="translate(-4.25 0.5)"
-      fill="none"
-      className={strokeAccent}
-    />
+    <path d="M109.35,235.28" transform="translate(-4.25 0.5)" fill="none" />
+    <path d="M109.35-447.72" transform="translate(-4.25 0.5)" fill="none" />
   </svg>
 )
 
