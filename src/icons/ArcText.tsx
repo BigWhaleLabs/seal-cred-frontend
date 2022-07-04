@@ -13,7 +13,7 @@ const textStyle = classnames(
   fill('fill-secondary'),
   textTransform('uppercase'),
   fontWeight('font-semibold'),
-  fontSize('text-3xl')
+  fontSize('text-4xl', 'md:text-3xl')
 )
 const svgBox = (mobile?: boolean) =>
   classnames(
