@@ -8,21 +8,12 @@ import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
 import SealCredStore from 'stores/SealCredStore'
-import classnames, {
-  height,
-  overflow,
-  position,
-  space,
-} from 'classnames/tailwind'
+import classnames, { height, position, space } from 'classnames/tailwind'
 import proofStore from 'stores/ProofStore'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 import walletStore from 'stores/WalletStore'
 
-const badges = classnames(
-  position('relative'),
-  height('h-fit'),
-  overflow('overflow-y-auto')
-)
+const badges = classnames(position('relative'), height('h-fit'))
 
 function BadgeListSuspended() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
