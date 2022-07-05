@@ -106,6 +106,7 @@ module.exports = {
         'derivative-name': '90%',
       },
       inset: {
+        '-40': '-10rem',
         '-28': '-7rem',
         '-24': '-6rem',
         '-4': '-1rem',
