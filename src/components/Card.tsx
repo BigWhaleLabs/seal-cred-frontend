@@ -33,7 +33,7 @@ interface CardProps {
   thin?: boolean
   small?: boolean
   nospace?: boolean
-  forApp?: boolean
+  useAppStyles?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -84,7 +84,7 @@ const cardContainer = (
   thin = false,
   small?: boolean,
   nospace?: boolean,
-  forApp?: boolean
+  useAppStyles?: boolean
 ) => {
   return classnames(
     position('relative'),
@@ -105,7 +105,7 @@ const cardContainer = (
     space(nospace ? undefined : 'space-y-4'),
     wordBreak('break-words'),
     zIndex('z-30'),
-    forApp ? appStyles : undefined
+    useAppStyles ? appStyles : undefined
   )
 }
 const spinnerBox = classnames(
@@ -122,7 +122,7 @@ export default function ({
   children,
   small,
   nospace,
-  forApp,
+  useAppStyles,
 }: ChildrenProp & CardProps) {
   return (
     <CardContext.Provider value={{ cardColor: color }}>
@@ -134,7 +134,7 @@ export default function ({
           thin,
           small,
           nospace,
-          forApp
+          useAppStyles
         )}
       >
         {children}

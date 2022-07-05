@@ -19,7 +19,7 @@ function BadgesSuspended() {
 export default function () {
   const { account } = useSnapshot(WalletStore)
   return (
-    <Card shadow color="secondary" forApp>
+    <Card shadow color="secondary" useAppStyles>
       {account ? (
         <Suspense fallback={<LoadingCard />}>
           <BadgesSuspended />
