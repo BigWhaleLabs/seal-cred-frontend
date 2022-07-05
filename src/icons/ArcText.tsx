@@ -10,13 +10,15 @@ import classnames, {
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
-const textStyle = classnames(
-  fill('fill-secondary'),
-  textTransform('uppercase'),
-  fontWeight('font-semibold'),
-  fontSize('text-4xl', 'md:text-3xl'),
-  letterSpacing('tracking-widest', 'md:!tracking-normal')
-)
+const textStyle = (thinText?: boolean) =>
+  classnames(
+    fill('fill-secondary'),
+    textTransform('uppercase'),
+    fontWeight('font-semibold'),
+    thinText ? fontSize('text-2xl') : fontSize('text-3xl'),
+    letterSpacing('tracking-widest', 'md:!tracking-normal')
+  )
+
 const svgBox = (mobile?: boolean) =>
   classnames(
     height('md:h-64', 'h-44'),
@@ -27,9 +29,10 @@ const svgBox = (mobile?: boolean) =>
 interface ArcTextProps {
   text: string
   smallCircle?: boolean
+  thinText?: boolean
 }
 
-export default function ({ text, smallCircle }: ArcTextProps) {
+export default function ({ text, smallCircle, thinText }: ArcTextProps) {
   const { xxs, sm, md } = useBreakpoints()
   const mobile = (xxs || sm) && !md
   const radius = mobile ? 85 : smallCircle ? 110 : 55
@@ -66,7 +69,7 @@ export default function ({ text, smallCircle }: ArcTextProps) {
       <text
         dy={radius}
         textLength={text.length * 36}
-        className={textStyle}
+        className={textStyle(thinText)}
         letter-spacing={(radius * 3.14) / 10}
       >
         <textPath xlinkHref="#textcircle">{text}</textPath>

@@ -29,7 +29,11 @@ export default function () {
   return (
     <div className={wrapperBox}>
       <div className={arcText}>
-        <ArcText text="Give me privacy or give me death •" smallCircle />
+        <ArcText
+          text="Give me privacy or give me death •"
+          smallCircle
+          thinText
+        />
       </div>
       <div className={eyeBoxMargin}>
         <EyeWhale />
