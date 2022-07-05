@@ -1,7 +1,9 @@
 import { BadgeText, ProofText } from 'components/Text'
 import { sendEmail } from 'helpers/attestor'
+import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
+import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/EmailForm'
 import Line from 'components/proofs/Line'
 import ProofStore from 'stores/ProofStore'
@@ -77,22 +79,24 @@ const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 export default function () {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
-  const [email, setEmail] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>()
   const { xs } = useBreakpoints()
 
-  const domain = email ? email.split('@')[1] : ''
+  const { emailDomain } = useSnapshot(EmailDomainStore)
+  const [email, setEmail] = useState<string | undefined>()
 
   function resetEmail() {
     setEmail(undefined)
+    EmailDomainStore.emailDomain = undefined
   }
   function jumpToToken() {
-    setEmail('example@example.com')
+    setEmail(emailDomain)
   }
 
   async function onSendEmail(email: string) {
     setLoading(true)
     try {
+      EmailDomainStore.emailDomain = email.split('@')[1]
       await sendEmail(email)
       setEmail(email)
     } finally {
@@ -101,6 +105,7 @@ export default function () {
   }
 
   async function onGenerateProof(secret: string) {
+    if (!emailDomain) return setError("Looks like you didn't enter an email.")
     if (!checkDomainToken(secret))
       return setError(
         'This is an invalid token. Try re-entering your email to get a new token.'
@@ -109,7 +114,7 @@ export default function () {
     setLoading(true)
     setError(undefined)
     try {
-      if (secret) await ProofStore.generateEmail(domain, secret)
+      if (secret) await ProofStore.generateEmail(emailDomain, secret)
     } finally {
       setLoading(false)
       setOpen(false)
@@ -142,7 +147,7 @@ export default function () {
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
             {!xs && (
               <span className={getStartedText(open)}>
-                {domain ? 'Set token' : 'Get started'}
+                {emailDomain ? 'Set token' : 'Get started'}
               </span>
             )}
             <div className={width('w-4')}>
@@ -154,7 +159,7 @@ export default function () {
           <>
             <div className={margin('mt-4')}>
               <BadgeText>
-                {domain ? (
+                {emailDomain ? (
                   <>
                     A token has been sent to {email}. Copy the token and add it
                     here to create zk proof. Or{' '}
@@ -171,17 +176,19 @@ export default function () {
                     Add your work email and we’ll send you a token for that
                     email (check the spam folder). Then, use the token here to
                     create zk proof.{' '}
-                    <button
-                      className={textDecoration('underline')}
-                      onClick={jumpToToken}
-                    >
-                      Have an existing token?
-                    </button>
+                    {emailDomain ? (
+                      <button
+                        className={textDecoration('underline')}
+                        onClick={jumpToToken}
+                      >
+                        Have an existing token?
+                      </button>
+                    ) : null}
                   </>
                 )}
               </BadgeText>
             </div>
-            {domain ? (
+            {emailDomain ? (
               <TextForm
                 submitText="Generate proof"
                 placeholder="Paste token here"
