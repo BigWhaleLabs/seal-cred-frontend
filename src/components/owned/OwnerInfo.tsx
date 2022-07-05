@@ -1,9 +1,7 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
-import { MutableRef, useEffect, useRef } from 'preact/hooks'
 import BaseBadgeContract from 'helpers/BaseBadgeContract'
 import Card from 'components/Card'
 import CardTitle from 'components/CardTitle'
-import ChildrenProp from 'models/ChildrenProp'
 import ContractName from 'components/ContractName'
 import ERC721BadgeContract from 'helpers/ERC721BadgeContract'
 import EmailBadgeContract from 'helpers/EmailBadgeContract'
@@ -15,9 +13,6 @@ import classnames, {
   borderColor,
   display,
   flexDirection,
-  flexWrap,
-  minWidth,
-  padding,
   space,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
@@ -31,53 +26,8 @@ const walletBox = classnames(
   alignItems('items-center')
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
-const badgeNameWrapper = classnames(
-  minWidth('min-w-fit'),
-  display('inline-flex'),
-  flexWrap('flex-wrap'),
-  padding('pr-2')
-)
-
-const BadgeNameWrapper = ({
-  childNode,
-  children,
-}: { childNode: MutableRef<HTMLSpanElement> } & ChildrenProp) => {
-  const ref = useRef() as MutableRef<HTMLSpanElement>
-
-  useEffect(() => {
-    function recalculateFontSize(node: HTMLSpanElement) {
-      const words = node.innerText.split(' ')
-
-      const listOfWords = words.map((word, index) => {
-        const el = document.createElement('span')
-        el.classList.add(...badgeNameWrapper.split(' '))
-        el.innerText = `${index > 0 ? ' ' : ''}${word}`
-        return el
-      })
-
-      node.replaceChildren(...listOfWords)
-    }
-
-    if (!ref.current || !childNode.current) return
-    if (
-      !childNode.current.innerText ||
-      childNode.current.innerText.split(' ').length - 1 === 0
-    )
-      return
-
-    void recalculateFontSize(ref.current)
-  })
-
-  return (
-    <span ref={ref} className="hyphensAuto">
-      {children}
-    </span>
-  )
-}
 
 function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
-  const ref = useRef() as MutableRef<HTMLSpanElement>
-
   if (badge instanceof EmailBadgeContract) {
     return (
       <>
@@ -85,9 +35,7 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
           This wallet belongs to someone with{' '}
           <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
             <AccentText bold color="text-secondary">
-              <BadgeNameWrapper childNode={ref}>
-                <ContractName ref={ref} address={badge.address} />
-              </BadgeNameWrapper>
+              <ContractName hyphens address={badge.address} />
             </AccentText>
           </ExternalLink>
         </HeaderText>
@@ -101,9 +49,7 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
         This wallet owns a{' '}
         <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
           <AccentText bold color="text-secondary">
-            <BadgeNameWrapper childNode={ref}>
-              <ContractName ref={ref} address={badge.address} />
-            </BadgeNameWrapper>
+            <ContractName hyphens address={badge.address} />
           </AccentText>
         </ExternalLink>
       </HeaderText>
