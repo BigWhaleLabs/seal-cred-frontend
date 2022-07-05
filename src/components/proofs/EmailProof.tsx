@@ -86,6 +86,9 @@ export default function () {
   function resetEmail() {
     setEmail(undefined)
   }
+  function jumpToToken() {
+    setEmail('example@example.com')
+  }
 
   async function onSendEmail(email: string) {
     setLoading(true)
@@ -164,7 +167,17 @@ export default function () {
                     .
                   </>
                 ) : (
-                  'Add your work email and we’ll send you a token for that email (check the spam folder). Then, use the token here to create zk proof.'
+                  <>
+                    Add your work email and we’ll send you a token for that
+                    email (check the spam folder). Then, use the token here to
+                    create zk proof.{' '}
+                    <button
+                      className={textDecoration('underline')}
+                      onClick={jumpToToken}
+                    >
+                      Have an existing token?
+                    </button>
+                  </>
                 )}
               </BadgeText>
             </div>
