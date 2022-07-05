@@ -36,10 +36,10 @@
     "ffjavascript": "^0.2.55",
     "preact": "^10.8.2",
     "qr-code-styling": "^1.6.0-rc.1",
+    "react-resize-detector": "^7.1.2",
     "react-router-dom": "^6.3.0",
     "react-toastify": "^9.0.5",
     "secure-ls": "^1.2.6",
-    "use-scroll-shadow": "^1.0.5",
     "valtio": "^1.6.1",
     "web3modal": "^1.9.8"
   },

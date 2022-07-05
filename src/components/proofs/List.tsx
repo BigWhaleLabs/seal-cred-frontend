@@ -1,11 +1,11 @@
 import { AccentText } from 'components/Text'
-import { RefObject, Suspense } from 'preact/compat'
-import { useScrollShadow } from 'use-scroll-shadow'
+import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import ERC721ProofsList from 'components/proofs/ERC721ProofsList'
 import EmailProofList from 'components/proofs/EmailProofList'
 import ListTitle from 'components/proofs/ListTitle'
 import LoadingCard from 'components/proofs/LoadingCard'
+import Scrollbar from 'components/Scrollbar'
 import classnames, {
   display,
   flexDirection,
@@ -26,18 +26,16 @@ const proofContentBlock = classnames(
 
 export default function () {
   const { proofsCompleted } = useSnapshot(proofStore)
-  const { elementRef } = useScrollShadow()
 
   return (
     <Suspense fallback={<LoadingCard />}>
       <ListTitle />
-      <div
-        className={proofContentBlock}
-        ref={elementRef as RefObject<HTMLDivElement>}
-      >
-        <ERC721ProofsList />
-        <EmailProofList />
-      </div>
+      <Scrollbar>
+        <div className={proofContentBlock}>
+          <ERC721ProofsList />
+          <EmailProofList />
+        </div>
+      </Scrollbar>
       {proofsCompleted.length > 0 && (
         <AccentText small primary color="text-primary">
           Created ZK proofs are saved in the browser even if you switch wallets.

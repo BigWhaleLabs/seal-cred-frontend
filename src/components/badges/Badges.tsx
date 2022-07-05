@@ -1,11 +1,11 @@
-import { RefObject, Suspense } from 'react'
-import { useScrollShadow } from 'use-scroll-shadow'
+import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import ConnectAccount from 'components/badges/ConnectAccount'
 import List from 'components/badges/List'
 import ListTitle from 'components/badges/ListTitle'
 import LoadingCard from 'components/badges/LoadingCard'
+import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
 import classnames, { display, flexGrow, overflow } from 'classnames/tailwind'
 
@@ -16,17 +16,14 @@ const proofContentBlock = classnames(
 )
 
 function BadgesSuspended() {
-  const { elementRef } = useScrollShadow()
-
   return (
     <>
       <ListTitle />
-      <div
-        className={proofContentBlock}
-        ref={elementRef as RefObject<HTMLDivElement>}
-      >
-        <List />
-      </div>
+      <Scrollbar>
+        <div className={proofContentBlock}>
+          <List />
+        </div>
+      </Scrollbar>
     </>
   )
 }

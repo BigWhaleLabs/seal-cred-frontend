@@ -60,17 +60,6 @@ body {
   border: 7.5px solid transparent;
 }
 
-.scroll-shadow-box:before {
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.5),
-    transparent
-  ) !important;
-}
-.scroll-shadow-box:after {
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), transparent) !important;
-}
-
 @keyframes tertiarySphereAnimation {
   20% {
     /* Animation starts after 20% of page is scrolled */
