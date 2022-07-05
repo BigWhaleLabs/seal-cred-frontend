@@ -1,10 +1,9 @@
-import defaultProvider from 'helpers/defaultProvider'
 import getOwnedERC721 from 'helpers/getOwnedERC721'
 
 export default class ContractSynchronizer {
   account: string
   locked = false
-  synchronizedBlockId = 0
+  synchronizedBlockId?: number
   addressToTokenIds: { [address: string]: Set<string> } = {}
 
   constructor(account: string) {
@@ -16,19 +15,20 @@ export default class ContractSynchronizer {
     return Array.from(this.addressToTokenIds[address])
   }
 
-  async getOwnedERC721() {
-    if (!this.locked) {
+  async getOwnedERC721(blockId: number) {
+    if (!this.locked && blockId !== this.synchronizedBlockId) {
       this.locked = true
       try {
-        const currentBlockId = await defaultProvider.getBlockNumber()
         this.addressToTokenIds = await getOwnedERC721(
           this.account,
-          this.synchronizedBlockId,
-          currentBlockId,
+          typeof this.synchronizedBlockId !== 'undefined'
+            ? this.synchronizedBlockId + 1
+            : 0,
+          blockId,
           this.addressToTokenIds
         )
 
-        this.synchronizedBlockId = currentBlockId + 1
+        this.synchronizedBlockId = blockId
       } finally {
         this.locked = false
       }
