@@ -5,7 +5,6 @@ import classnames, {
   display,
   flexDirection,
   justifyContent,
-  overflow,
   space,
   textAlign,
   textOverflow,
@@ -24,7 +23,6 @@ const badgeBody = classnames(
   textAlign('text-center'),
   wordBreak('break-words'),
   whitespace('whitespace-nowrap'),
-  overflow('overflow-hidden'),
   textOverflow('text-ellipsis')
 )
 
