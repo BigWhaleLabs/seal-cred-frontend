@@ -4,6 +4,8 @@
 
 html {
   background-color: #0d0030;
+  scrollbar-color: #fed823 transparent;
+  scrollbar-width: thin;
 }
 body {
   scroll-behavior: smooth;
@@ -31,6 +33,32 @@ body {
       )
       0 0/2rem 2rem;
   }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 25px;
+}
+::-webkit-scrollbar-track {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 47%,
+    #fed823 47%,
+    #fed823 51%,
+    rgba(0, 0, 0, 0) 52%
+  );
+}
+::-webkit-scrollbar-thumb {
+  background: #fed823;
+  border-radius: 20px;
+  background-clip: content-box;
+  border: 8px solid transparent;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fed950;
+  border-radius: 20px;
+  background-clip: content-box;
+  border: 7.5px solid transparent;
 }
 
 @keyframes tertiarySphereAnimation {

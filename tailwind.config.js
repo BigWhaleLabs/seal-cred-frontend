@@ -1,15 +1,15 @@
 /** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
 module.exports = {
   content: ['./public/index.html', './src/**/!(tailwind).{ts,tsx}'],
-  plugins: [
-    require('@tailwindcss/line-clamp'),
-    require('tailwind-scrollbar-hide'),
-  ],
+  plugins: [require('@tailwindcss/line-clamp')],
   theme: {
     fontFamily: {
       primary: ['"Space Grotesk"', 'sans-serif'],
     },
     extend: {
+      minHeight: {
+        card: '31.75rem',
+      },
       maxHeight: {
         card: '31.75rem',
         'mobile-card': '41rem',
@@ -109,6 +109,7 @@ module.exports = {
         '-28': '-7rem',
         '-24': '-6rem',
         '-4': '-1rem',
+        '-1': '-1px',
       },
       rotate: {
         '-90': '-90deg',
