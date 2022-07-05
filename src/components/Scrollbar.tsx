@@ -28,7 +28,6 @@ export default function ({
       className={wrapperStyles}
       style={{
         marginRight: isOverflow && hasWebKit ? '-0.7rem' : '0rem',
-        marginTop: isOverflow ? '-0.1rem' : '0rem',
       }}
     >
       {(fade === 'both' || fade === 'top') && <Fade />}
