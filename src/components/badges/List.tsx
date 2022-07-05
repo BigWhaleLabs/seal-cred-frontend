@@ -8,6 +8,7 @@ import DoxNotification from 'components/badges/DoxNotification'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
+import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
 import proofStore from 'stores/ProofStore'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
@@ -44,22 +45,24 @@ function BadgeListSuspended() {
   ) : isEmpty ? (
     <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
   ) : (
-    <div className={space('space-y-2')}>
-      <BadgeSection
-        title="NFT derivatives"
-        minted={ownedERC721DerivativeContracts}
-        proofs={proofsAvailableToMint.filter(
-          (proof) => proof instanceof ERC721Proof
-        )}
-      />
-      <BadgeSection
-        title="Email derivatives"
-        minted={ownedEmailDerivativeContracts}
-        proofs={proofsAvailableToMint.filter(
-          (proof) => proof instanceof EmailProof
-        )}
-      />
-    </div>
+    <Scrollbar>
+      <div className={space('space-y-2')}>
+        <BadgeSection
+          title="NFT derivatives"
+          minted={ownedERC721DerivativeContracts}
+          proofs={proofsAvailableToMint.filter(
+            (proof) => proof instanceof ERC721Proof
+          )}
+        />
+        <BadgeSection
+          title="Email derivatives"
+          minted={ownedEmailDerivativeContracts}
+          proofs={proofsAvailableToMint.filter(
+            (proof) => proof instanceof EmailProof
+          )}
+        />
+      </div>
+    </Scrollbar>
   )
 }
 

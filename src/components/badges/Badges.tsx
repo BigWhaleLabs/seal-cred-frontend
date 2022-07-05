@@ -5,25 +5,13 @@ import ConnectAccount from 'components/badges/ConnectAccount'
 import List from 'components/badges/List'
 import ListTitle from 'components/badges/ListTitle'
 import LoadingCard from 'components/badges/LoadingCard'
-import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
-import classnames, { display, flexGrow, overflow } from 'classnames/tailwind'
-
-const proofContentBlock = classnames(
-  display('flex'),
-  flexGrow('grow'),
-  overflow('overflow-y-auto')
-)
 
 function BadgesSuspended() {
   return (
     <>
       <ListTitle />
-      <Scrollbar>
-        <div className={proofContentBlock}>
-          <List />
-        </div>
-      </Scrollbar>
+      <List />
     </>
   )
 }

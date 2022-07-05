@@ -10,7 +10,6 @@ import classnames, {
   display,
   flexDirection,
   flexGrow,
-  overflow,
   space,
 } from 'classnames/tailwind'
 import proofStore from 'stores/ProofStore'
@@ -18,9 +17,7 @@ import proofStore from 'stores/ProofStore'
 const proofContentBlock = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  space('space-y-4'),
   flexGrow('grow'),
-  overflow('overflow-y-auto'),
   space('space-y-2')
 )
 
