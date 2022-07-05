@@ -50,7 +50,6 @@ function Badge({ proof }: { proof: BaseProof }) {
   return (
     <BadgeCard
       top={isEmailProof ? <EmailBadge /> : <Erc721Badge />}
-      leanLeft={false}
       text={<BadgeTitle proof={proof} />}
       bottom={
         <Button

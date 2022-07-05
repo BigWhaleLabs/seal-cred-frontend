@@ -11,7 +11,6 @@ export default function ({ contractAddress }: { contractAddress: string }) {
     <BadgeWrapper minted={false}>
       <BadgeCard
         top={<Erc721Badge />}
-        leanLeft
         text={
           <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
             <ContractName address={contractAddress} clearType />
