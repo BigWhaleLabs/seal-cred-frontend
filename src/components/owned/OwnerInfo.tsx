@@ -1,4 +1,5 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
+import { MutableRef, useEffect, useRef } from 'preact/hooks'
 import BaseBadgeContract from 'helpers/BaseBadgeContract'
 import Card from 'components/Card'
 import CardTitle from 'components/CardTitle'
@@ -14,10 +15,10 @@ import classnames, {
   borderColor,
   display,
   flexDirection,
+  flexWrap,
+  minWidth,
+  padding,
   space,
-  textOverflow,
-  verticalAlign,
-  width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
@@ -30,30 +31,53 @@ const walletBox = classnames(
   alignItems('items-center')
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
-const badgeNaneWrapper = (email?: boolean) =>
-  classnames(
-    display('inline-block'),
-    verticalAlign('align-middle'),
-    textOverflow('truncate'),
-    width(email ? 'w-full' : 'w-derivative-name') // to fit the name on the next line
-  )
-
-const badgeNameFontStyles = {
-  fontSize: 'calc(20px + (34 - 20) * ((100vw - 280px) / (4000 - 280)))', // to calculate font size based on viewport width
-}
+const badgeNameWrapper = classnames(
+  minWidth('min-w-fit'),
+  display('inline-flex'),
+  flexWrap('flex-wrap'),
+  padding('pr-2')
+)
 
 const BadgeNameWrapper = ({
-  email,
+  childNode,
   children,
-}: { email?: boolean } & ChildrenProp) => {
+}: { childNode: MutableRef<HTMLSpanElement> } & ChildrenProp) => {
+  const ref = useRef() as MutableRef<HTMLSpanElement>
+
+  useEffect(() => {
+    function recalculateFontSize(node: HTMLSpanElement) {
+      const words = node.innerText.split(' ')
+
+      const listOfWords = words.map((word, index) => {
+        const el = document.createElement('span')
+        el.classList.add(...badgeNameWrapper.split(' '))
+        el.innerText = `${index > 0 ? ' ' : ''}${word}`
+        return el
+      })
+
+      node.replaceChildren(...listOfWords)
+    }
+
+    if (!ref.current || !childNode.current) return
+    if (
+      !childNode.current.innerText ||
+      childNode.current.innerText.split(' ').length - 1 === 0
+    )
+      return
+
+    void recalculateFontSize(ref.current)
+  })
+
   return (
-    <span className={badgeNaneWrapper(email)} style={badgeNameFontStyles}>
+    <span ref={ref} className="hyphensAuto">
       {children}
     </span>
   )
 }
 
 function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
+  const ref = useRef() as MutableRef<HTMLSpanElement>
+
   if (badge instanceof EmailBadgeContract) {
     return (
       <>
@@ -61,8 +85,8 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
           This wallet belongs to someone with{' '}
           <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
             <AccentText bold color="text-secondary">
-              <BadgeNameWrapper email>
-                <ContractName address={badge.address} />
+              <BadgeNameWrapper childNode={ref}>
+                <ContractName ref={ref} address={badge.address} />
               </BadgeNameWrapper>
             </AccentText>
           </ExternalLink>
@@ -77,8 +101,8 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
         This wallet owns a{' '}
         <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
           <AccentText bold color="text-secondary">
-            <BadgeNameWrapper>
-              <ContractName address={badge.address} />
+            <BadgeNameWrapper childNode={ref}>
+              <ContractName ref={ref} address={badge.address} />
             </BadgeNameWrapper>
           </AccentText>
         </ExternalLink>
