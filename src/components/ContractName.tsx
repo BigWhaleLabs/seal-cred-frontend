@@ -27,7 +27,7 @@ interface ContractNameProps {
   hyphens?: boolean
 }
 
-const wrappWord = (name: string) => {
+const wrappedWord = (name: string) => {
   return name
     .split(' ')
     .map((word) => <span className={badgeNameWrapper}>{word}</span>)
@@ -63,7 +63,7 @@ function ContractNameSuspended({
       {truncate
         ? truncateMiddleIfNeeded(contractName || address, 17)
         : hyphens
-        ? wrappWord(contractName || address)
+        ? wrappedWord(contractName || address)
         : contractName || address}
     </span>
   )
