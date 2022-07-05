@@ -30,26 +30,30 @@ const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
 function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
   if (badge instanceof EmailBadgeContract) {
     return (
-      <HeaderText extraLeading>
-        This wallet belongs to someone with{' '}
-        <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
-          <AccentText bold color="text-secondary">
-            <ContractName address={badge.address} />
-          </AccentText>
-        </ExternalLink>
-      </HeaderText>
+      <>
+        <HeaderText extraLeading>
+          This wallet belongs to someone with{' '}
+          <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
+            <AccentText bold color="text-secondary">
+              <ContractName hyphens address={badge.address} />
+            </AccentText>
+          </ExternalLink>
+        </HeaderText>
+      </>
     )
   }
 
   return (
-    <HeaderText extraLeading>
-      This wallet owns a{' '}
-      <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
-        <AccentText bold color="text-secondary">
-          <ContractName address={badge.address} />
-        </AccentText>
-      </ExternalLink>
-    </HeaderText>
+    <>
+      <HeaderText extraLeading>
+        This wallet owns a{' '}
+        <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
+          <AccentText bold color="text-secondary">
+            <ContractName hyphens address={badge.address} />
+          </AccentText>
+        </ExternalLink>
+      </HeaderText>
+    </>
   )
 }
 
