@@ -39,21 +39,19 @@ export default function () {
   if (md) return null
 
   return (
-    <div className={padding('pb-6')}>
-      <div className={socialContainerCard}>
-        <div className={padding('px-8')}>
-          <BodyText center>
-            Stay up to date, provide feedback, or just hang.
-          </BodyText>
-        </div>
-        <div className={socialContainer}>
-          <SocialLink tertiary url="https://discord.gg/NHk96pPZUV">
-            <Discord />
-          </SocialLink>
-          <SocialLink tertiary url="https://twitter.com/bigwhalelabs">
-            <Twitter />
-          </SocialLink>
-        </div>
+    <div className={socialContainerCard}>
+      <div className={padding('px-8')}>
+        <BodyText center>
+          Stay up to date, provide feedback, or just hang.
+        </BodyText>
+      </div>
+      <div className={socialContainer}>
+        <SocialLink tertiary url="https://discord.gg/NHk96pPZUV">
+          <Discord />
+        </SocialLink>
+        <SocialLink tertiary url="https://twitter.com/bigwhalelabs">
+          <Twitter />
+        </SocialLink>
       </div>
     </div>
   )
