@@ -28,8 +28,9 @@ export default function () {
         <div className={learnMoreText}>
           <Button
             type="tertiary"
+            small
             withArrow
-            fontSmall
+            gradientFont
             onClick={() =>
               window.open('https://bigwhalelabs.com/', '_blank')?.focus()
             }

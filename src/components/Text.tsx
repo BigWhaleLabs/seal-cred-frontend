@@ -277,7 +277,7 @@ export function SectionTitle({ children }: ChildrenProp) {
   return <p className={sectionTitle}>{children}</p>
 }
 
-const tinyText = (color: 'base' | 'primary' | 'error', primary?: boolean) =>
+const tinyText = (color: 'base' | 'primary' | 'error', fontPrimary?: boolean) =>
   classnames(
     textColor(
       color === 'error'
@@ -286,14 +286,17 @@ const tinyText = (color: 'base' | 'primary' | 'error', primary?: boolean) =>
         ? 'text-primary-semi-dimmed'
         : 'text-formal-accent'
     ),
-    fontFamily(primary ? 'font-primary' : undefined),
+    fontFamily(fontPrimary ? 'font-primary' : undefined),
     fontSize('text-xs'),
     lineHeight('leading-3')
   )
 export function TinyText({
-  color,
-  primary,
+  color = 'base',
+  fontPrimary,
   children,
-}: { color?: 'base' | 'primary' | 'error'; primary?: boolean } & ChildrenProp) {
-  return <div className={tinyText(color || 'base', primary)}>{children}</div>
+}: {
+  color?: 'base' | 'primary' | 'error'
+  fontPrimary?: boolean
+} & ChildrenProp) {
+  return <div className={tinyText(color, fontPrimary)}>{children}</div>
 }
