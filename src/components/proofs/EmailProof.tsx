@@ -1,7 +1,9 @@
 import { BadgeText, ProofText } from 'components/Text'
 import { sendEmail } from 'helpers/attestor'
+import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
+import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/EmailForm'
 import Line from 'components/proofs/Line'
 import ProofStore from 'stores/ProofStore'
@@ -23,6 +25,7 @@ import classnames, {
   justifyContent,
   lineHeight,
   margin,
+  opacity,
   space,
   textColor,
   textDecoration,
@@ -30,6 +33,7 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
+import useEmailForm from 'hooks/useEmailForm'
 
 const arrowContainer = classnames(
   display('flex'),
@@ -69,6 +73,11 @@ const emailTitleLeft = classnames(
   alignItems('items-center')
 )
 
+const textButton = classnames(
+  textDecoration('underline'),
+  opacity('disabled:opacity-75')
+)
+
 const questionBlock = (open: boolean) =>
   animation(open ? 'animate-reveal' : 'animate-unreveal')
 
@@ -77,31 +86,38 @@ const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 export default function () {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
-  const [email, setEmail] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>()
   const { xs } = useBreakpoints()
 
-  const domain = email ? email.split('@')[1] : ''
+  const { emailDomain } = useSnapshot(EmailDomainStore)
+  const { email, setEmail, emailIsValid } = useEmailForm()
+  const [domain, setDomain] = useState('')
 
-  function resetEmail() {
-    setEmail(undefined)
+  function resetEmail(withStore = false) {
+    if (withStore) EmailDomainStore.emailDomain = ''
+    setEmail('')
+    setDomain('')
+  }
+  function jumpToToken() {
+    setDomain(emailDomain)
   }
 
   async function onSendEmail(email: string) {
     setLoading(true)
     try {
+      const recipientDomain = email.split('@')[1]
+      setDomain(recipientDomain)
+      EmailDomainStore.emailDomain = recipientDomain
       await sendEmail(email)
-      setEmail(email)
     } finally {
       setLoading(false)
     }
   }
 
   async function onGenerateProof(secret: string) {
+    if (!domain) return setError("Looks like you didn't enter an email.")
     if (!checkDomainToken(secret))
-      return setError(
-        'This is an invalid token. Try re-entering your email to get a new token.'
-      )
+      return setError('This is an invalid token. Please try again.')
 
     setLoading(true)
     setError(undefined)
@@ -110,7 +126,7 @@ export default function () {
     } finally {
       setLoading(false)
       setOpen(false)
-      setEmail(undefined)
+      resetEmail(true)
     }
   }
 
@@ -139,7 +155,7 @@ export default function () {
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
             {!xs && (
               <span className={getStartedText(open)}>
-                {domain ? 'Set token' : 'Get started'}
+                {emailDomain ? 'Set token' : 'Get started'}
               </span>
             )}
             <div className={width('w-4')}>
@@ -153,18 +169,33 @@ export default function () {
               <BadgeText>
                 {domain ? (
                   <>
-                    A token has been sent to {email}. Copy the token and add it
-                    here to create zk proof. Or{' '}
+                    A token has been sent to{' '}
+                    <b>{email ? email : `@${domain}`}</b>. Copy the token and
+                    add it here to create zk proof. Or{' '}
                     <button
-                      className={textDecoration('underline')}
-                      onClick={resetEmail}
+                      className={textButton}
+                      onClick={() => resetEmail()}
+                      disabled={loading}
                     >
                       re-enter email
                     </button>
                     .
                   </>
                 ) : (
-                  'Add your work email and we’ll send you a token for that email (check the spam folder). Then, use the token here to create zk proof.'
+                  <>
+                    Add your work email and we’ll send you a token for that
+                    email (check the spam folder). Then, use the token here to
+                    create zk proof.{' '}
+                    {emailDomain ? (
+                      <button
+                        className={textButton}
+                        onClick={jumpToToken}
+                        disabled={loading}
+                      >
+                        Have an existing token?
+                      </button>
+                    ) : null}
+                  </>
                 )}
               </BadgeText>
             </div>
@@ -178,6 +209,9 @@ export default function () {
               />
             ) : (
               <EmailForm
+                value={email}
+                onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
+                isValid={emailIsValid}
                 submitText="Submit email"
                 placeholder="Work email..."
                 onSubmit={onSendEmail}
