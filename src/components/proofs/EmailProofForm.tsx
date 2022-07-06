@@ -15,8 +15,8 @@ export default function ({
 }: {
   submitType?: 'primary' | 'secondary' | 'tertiary'
   description: string
-  onCreate: (params: { domain?: string }) => void
-  onChange: (params: { domain?: string }) => void
+  onCreate: (domain: string) => void
+  onChange: (domain: string) => void
 }) {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState<string | undefined>()
@@ -25,7 +25,7 @@ export default function ({
 
   function resetEmail() {
     setEmail(undefined)
-    onChange({})
+    onChange('')
   }
 
   async function onSendEmail(email: string) {
@@ -36,7 +36,7 @@ export default function ({
     } finally {
       setLoading(false)
       const domain = email ? email.split('@')[1] : ''
-      onChange({ domain })
+      onChange(domain)
     }
   }
 
@@ -53,7 +53,7 @@ export default function ({
     } finally {
       setLoading(false)
       setEmail(undefined)
-      onCreate({ domain })
+      onCreate(domain)
     }
   }
 

@@ -8,8 +8,8 @@ export default function EmailFlowForm({
   domain,
   onUpdateDomain,
 }: {
-  domain?: string
-  onUpdateDomain: (data: { domain?: string }) => void
+  domain: string
+  onUpdateDomain: (domain: string) => void
 }) {
   return (
     <>

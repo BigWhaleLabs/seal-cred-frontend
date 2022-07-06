@@ -18,11 +18,7 @@ export default function () {
   const { emailLedger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
   const { emailProofsCompleted } = useSnapshot(proofStore)
-  const [domain, setDomain] = useState<string | undefined>()
-
-  function onUpdateDomain({ domain }: { domain?: string }) {
-    setDomain(domain)
-  }
+  const [domain, setDomain] = useState('')
 
   const ledgerRecord = domain && emailLedger[domain]
   const minted =
@@ -45,12 +41,12 @@ export default function () {
             {minted ? (
               <EmailFlowBadge
                 contractAddress={ledgerRecord.derivativeContract}
-                resetEmail={() => setDomain(undefined)}
+                resetEmail={() => setDomain('')}
               />
             ) : proof ? (
               <EmailFlowProof proof={proof} />
             ) : (
-              <EmailFlowForm domain={domain} onUpdateDomain={onUpdateDomain} />
+              <EmailFlowForm domain={domain} onUpdateDomain={setDomain} />
             )}
           </Suspense>
         ) : (
