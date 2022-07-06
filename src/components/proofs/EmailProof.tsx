@@ -75,7 +75,7 @@ const emailTitleLeft = classnames(
 
 const textButton = classnames(
   textDecoration('underline'),
-  opacity('disabled:opacity-75')
+  textColor('disabled:text-formal-accent')
 )
 
 const questionBlock = (open: boolean) =>
@@ -104,9 +104,9 @@ export default function () {
   async function onSendEmail(email: string) {
     setLoading(true)
     try {
-      setEmail(email)
-      setDomain(email.split('@')[1])
-      EmailDomainStore.emailDomain = domain
+      const recipientDomain = email.split('@')[1]
+      setDomain(recipientDomain)
+      EmailDomainStore.emailDomain = recipientDomain
       await sendEmail(email)
     } finally {
       setLoading(false)
@@ -124,6 +124,8 @@ export default function () {
     setError(undefined)
     try {
       if (secret) await ProofStore.generateEmail(domain, secret)
+      resetEmail()
+      EmailDomainStore.emailDomain = undefined
     } finally {
       setLoading(false)
       setOpen(false)
@@ -170,8 +172,9 @@ export default function () {
               <BadgeText>
                 {domain ? (
                   <>
-                    A token has been sent to {email ? email : `@${domain}`}.
-                    Copy the token and add it here to create zk proof. Or{' '}
+                    A token has been sent to{' '}
+                    <b>{email ? email : `@${domain}`}</b>. Copy the token and
+                    add it here to create zk proof. Or{' '}
                     <button
                       className={textDecoration('underline')}
                       onClick={resetEmail}
