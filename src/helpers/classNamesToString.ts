@@ -1,6 +1,7 @@
 import { TTailwindString } from 'classnames/tailwind'
 
 type AllowedExtraClassnames =
+  | 'hyphensAuto'
   | 'line-clamp-2'
   | '-top-16'
   | 'custom-scrollbar-body'

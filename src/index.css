@@ -23,6 +23,11 @@ body {
     )
     0 0/3rem 3rem;
 }
+/* Add hyphens to the text block */
+.hyphensAuto {
+  hyphens: auto;
+  line-height: initial;
+}
 /* Grid for mobiles */
 @media screen and (max-width: 600px) {
   body {
