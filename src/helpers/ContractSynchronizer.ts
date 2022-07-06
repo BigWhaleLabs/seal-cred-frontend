@@ -1,13 +1,35 @@
-import getOwnedERC721 from 'helpers/getOwnedERC721'
+import { ContractReceipt } from 'ethers'
+import getOwnedERC721, {
+  isTransferEvent,
+  parseLogData,
+} from 'helpers/getOwnedERC721'
 
 export default class ContractSynchronizer {
   account: string
   locked = false
   synchronizedBlockId?: number
   addressToTokenIds: { [address: string]: Set<string> } = {}
+  skipTransactions = new Set<string>()
 
   constructor(account: string) {
     this.account = account
+  }
+
+  applyTransaction(transaction: ContractReceipt) {
+    for (const { data, topics, transactionHash, address } of transaction.logs) {
+      if (!isTransferEvent(topics)) continue
+      if (this.skipTransactions.has(transactionHash)) continue
+      const {
+        args: { tokenId },
+      } = parseLogData({ data, topics })
+
+      if (!this.addressToTokenIds[address])
+        this.addressToTokenIds[address] = new Set()
+
+      const value = tokenId.toString()
+      this.addressToTokenIds[address].add(value)
+      this.skipTransactions.add(transactionHash)
+    }
   }
 
   tokenIds(address: string) {
@@ -25,7 +47,8 @@ export default class ContractSynchronizer {
             ? this.synchronizedBlockId + 1
             : 0,
           blockId,
-          this.addressToTokenIds
+          this.addressToTokenIds,
+          this.skipTransactions
         )
 
         this.synchronizedBlockId = blockId

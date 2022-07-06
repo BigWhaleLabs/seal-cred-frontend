@@ -5,6 +5,7 @@ import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import BaseProof from 'helpers/BaseProof'
 import Button from 'components/Button'
+import ContractsStore from 'stores/ContractsStore'
 import EmailBadge from 'icons/EmailBadge'
 import EmailProof from 'helpers/EmailProof'
 import Erc721Badge from 'icons/Erc721Badge'
@@ -25,7 +26,8 @@ function Badge({ proof }: { proof: BaseProof }) {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
 
-      await WalletStore.mintDerivative(proof)
+      const transaction = await WalletStore.mintDerivative(proof)
+      ContractsStore.connectedAccounts[account].applyTransaction(transaction)
       ProofStore.deleteProof(proof)
     } catch (error) {
       if (

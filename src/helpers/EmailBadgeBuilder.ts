@@ -14,7 +14,6 @@ export default class EmailBadgeBuilder extends BaseBadgeBuilder {
   }
 
   create(proof: EmailProof) {
-    if (!proof.result) return
     return this.mint(proof.domain, proof.result)
   }
 }
