@@ -1,7 +1,7 @@
 import axios from 'axios'
 import env from 'helpers/env'
 
-const baseURL = `${env.VITE_VERIFY_URL}/verify`
+const baseURL = `${env.VITE_VERIFY_URL}/v0.2/verify`
 
 interface SendVerifyResponse {
   signature: string

@@ -7209,6 +7209,13 @@ export type TInset =
   | '-right-4'
   | '-bottom-4'
   | '-left-4'
+  | '-inset-1'
+  | '-inset-x-1'
+  | '-inset-y-1'
+  | '-top-1'
+  | '-right-1'
+  | '-bottom-1'
+  | '-left-1'
   | 'inset-small'
   | 'inset-x-small'
   | 'inset-y-small'
@@ -7458,6 +7465,7 @@ export type TMinHeight =
   | 'min-h-min'
   | 'min-h-max'
   | 'min-h-fit'
+  | 'min-h-card'
 
 export type TMaxHeight =
   | 'max-h-0'

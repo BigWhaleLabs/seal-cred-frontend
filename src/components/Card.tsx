@@ -1,4 +1,5 @@
 import {
+  alignItems,
   backgroundColor,
   borderColor,
   borderRadius,
@@ -6,10 +7,12 @@ import {
   boxShadow,
   boxShadowColor,
   classnames,
-  height,
+  display,
+  flexDirection,
   inset,
   margin,
   maxHeight,
+  minHeight,
   padding,
   position,
   space,
@@ -30,6 +33,7 @@ interface CardProps {
   thin?: boolean
   small?: boolean
   nospace?: boolean
+  useAppStyles?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -65,13 +69,22 @@ const cardColor = (color?: Color) => {
   )
 }
 
+const appStyles = classnames(
+  space('space-y-6'),
+  display('flex'),
+  flexDirection('flex-col'),
+  alignItems('items-stretch'),
+  minHeight('sm:min-h-card', 'min-h-fit')
+)
+
 const cardContainer = (
   shadow?: boolean,
   color?: Color,
   onlyWrap = false,
   thin = false,
   small?: boolean,
-  nospace?: boolean
+  nospace?: boolean,
+  useAppStyles?: boolean
 ) => {
   return classnames(
     position('relative'),
@@ -85,17 +98,14 @@ const cardContainer = (
       thin ? 'w-32' : undefined
     ),
     margin(thin ? undefined : 'mx-auto', 'lg:mx-0'),
-    height(
-      onlyWrap ? undefined : thin ? 'h-60' : 'h-fit',
-      onlyWrap ? undefined : thin ? undefined : 'lg:h-card'
-    ),
-    space(nospace ? undefined : 'space-y-4'),
     maxHeight(
       onlyWrap ? undefined : 'sm:max-h-card',
       onlyWrap ? undefined : 'max-h-mobile-card'
     ),
+    space(nospace ? undefined : 'space-y-4'),
     wordBreak('break-words'),
-    zIndex('z-30')
+    zIndex('z-30'),
+    useAppStyles ? appStyles : undefined
   )
 }
 const spinnerBox = classnames(
@@ -112,11 +122,20 @@ export default function ({
   children,
   small,
   nospace,
+  useAppStyles,
 }: ChildrenProp & CardProps) {
   return (
     <CardContext.Provider value={{ cardColor: color }}>
       <div
-        className={cardContainer(shadow, color, onlyWrap, thin, small, nospace)}
+        className={cardContainer(
+          shadow,
+          color,
+          onlyWrap,
+          thin,
+          small,
+          nospace,
+          useAppStyles
+        )}
       >
         {children}
         {!!spinner && (
