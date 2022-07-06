@@ -75,7 +75,7 @@ const emailTitleLeft = classnames(
 
 const textButton = classnames(
   textDecoration('underline'),
-  textColor('disabled:text-formal-accent')
+  opacity('disabled:opacity-75')
 )
 
 const questionBlock = (open: boolean) =>
@@ -176,7 +176,7 @@ export default function () {
                     <b>{email ? email : `@${domain}`}</b>. Copy the token and
                     add it here to create zk proof. Or{' '}
                     <button
-                      className={textDecoration('underline')}
+                      className={textButton}
                       onClick={resetEmail}
                       disabled={loading}
                     >
