@@ -91,12 +91,12 @@ export default function () {
 
   const { emailDomain } = useSnapshot(EmailDomainStore)
   const { email, setEmail, emailIsValid } = useEmailForm()
-  const [domain, setDomain] = useState<string | undefined>()
+  const [domain, setDomain] = useState('')
 
   function resetEmail(withStore = false) {
-    if (withStore) EmailDomainStore.emailDomain = undefined
+    if (withStore) EmailDomainStore.emailDomain = ''
     setEmail('')
-    setDomain(undefined)
+    setDomain('')
   }
   function jumpToToken() {
     setDomain(emailDomain)
