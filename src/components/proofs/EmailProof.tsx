@@ -69,13 +69,13 @@ const questionBlock = (open: boolean) =>
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
-  const [form, updateForm] = useState<{ domain?: string }>({})
+  const [domain, setDomain] = useState('')
   const [open, setOpen] = useState(false)
   const { xs } = useBreakpoints()
 
   function onCreate() {
     setOpen(false)
-    updateForm({})
+    setDomain('')
   }
 
   const popoverText =
@@ -103,7 +103,7 @@ export default function () {
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
             {!xs && (
               <span className={getStartedText(open)}>
-                <span>{form.domain ? 'Set token' : 'Get started'}</span>
+                <span>{domain ? 'Set token' : 'Get started'}</span>
               </span>
             )}
             <div className={width('w-4')}>
@@ -116,7 +116,7 @@ export default function () {
             submitType="secondary"
             description="Add your work email and we’ll send you a token for that email (check the spam folder). Then, use the token here to create zk proof."
             onCreate={onCreate}
-            onChange={updateForm}
+            onChange={setDomain}
           />
         )}
       </div>
