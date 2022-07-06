@@ -18,6 +18,7 @@ import {
   fontWeight,
   gradientColorStops,
   justifyContent,
+  lineHeight,
   opacity,
   outlineStyle,
   padding,
@@ -34,10 +35,12 @@ import Loading from 'icons/Loading'
 import React from 'react'
 
 const commonClasses = (
+  type: 'primary' | 'secondary' | 'tertiary',
   fullWidth?: boolean,
   center?: boolean,
   loading?: boolean,
-  disabled?: boolean
+  disabled?: boolean,
+  small?: boolean
 ) =>
   classnames(
     display('flex'),
@@ -55,6 +58,11 @@ const commonClasses = (
     boxShadow('shadow-2xl', 'hover:shadow-lg', 'active:shadow-md'),
     width(fullWidth ? 'w-full' : 'w-fit'),
     textAlign(center ? 'text-center' : undefined),
+    fontSize(small ? 'text-sm' : 'text-lg'),
+    lineHeight(small ? 'leading-5' : 'leading-7'),
+    type !== 'tertiary'
+      ? padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6')
+      : undefined,
     space('space-x-2')
   )
 
@@ -65,27 +73,18 @@ const button = ({
   loading,
   disabled,
   small,
-  fontSmall,
   gradientFont,
 }: ButtonProps) =>
   classnames(
-    commonClasses(fullWidth, center, loading, disabled),
-    colorClasses({ type, loading, disabled, small, fontSmall, gradientFont })
+    commonClasses(type, fullWidth, center, loading, disabled, small),
+    colorClasses({ type, loading, disabled, gradientFont })
   )
 
-const colorClasses = ({
-  type,
-  loading,
-  disabled,
-  small,
-  fontSmall,
-}: ButtonProps) =>
+const colorClasses = ({ type, loading, disabled }: ButtonProps) =>
   classnames(
     type === 'primary'
       ? classnames(
           textColor('text-primary-dark'),
-          fontSize(small ? 'text-sm' : 'text-lg'),
-          padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
           borderRadius('rounded-full'),
           backgroundColor('bg-tertiary'),
           boxShadowColor(
@@ -108,7 +107,6 @@ const colorClasses = ({
             'hover:border-secondary',
             'active:border-secondary'
           ),
-          padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6'),
           backgroundImage('bg-gradient-to-r'),
           textColor('text-secondary'),
           gradientColorStops(
@@ -116,10 +114,9 @@ const colorClasses = ({
             'hover:to-secondary-light-transparent',
             'active:from-accent-light-active-transparent',
             'active:to-secondary-light-active-transparent'
-          ),
-          fontSize(fontSmall ? 'text-sm' : undefined)
+          )
         )
-      : fontSize(fontSmall ? 'text-sm' : undefined)
+      : backgroundColor('bg-transparent')
   )
 
 const textGradient = ({ loading, disabled }: ButtonProps) =>
@@ -141,7 +138,6 @@ interface ButtonProps {
   loading?: boolean
   small?: boolean
   withArrow?: boolean
-  fontSmall?: boolean
   gradientFont?: boolean
 }
 
@@ -154,7 +150,6 @@ export default function ({
   loading,
   disabled,
   children,
-  fontSmall,
   gradientFont,
   ...rest
 }: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
@@ -167,7 +162,6 @@ export default function ({
         loading,
         disabled,
         small,
-        fontSmall,
       })}
       disabled={loading || disabled}
       {...rest}
