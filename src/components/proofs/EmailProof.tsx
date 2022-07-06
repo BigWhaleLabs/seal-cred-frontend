@@ -25,6 +25,7 @@ import classnames, {
   justifyContent,
   lineHeight,
   margin,
+  opacity,
   space,
   textColor,
   textDecoration,
@@ -70,6 +71,11 @@ const emailTitleLeft = classnames(
   display('flex'),
   space('space-x-2'),
   alignItems('items-center')
+)
+
+const textButton = classnames(
+  textDecoration('underline'),
+  opacity('disabled:opacity-75')
 )
 
 const questionBlock = (open: boolean) =>
@@ -169,6 +175,7 @@ export default function () {
                     <button
                       className={textDecoration('underline')}
                       onClick={resetEmail}
+                      disabled={loading}
                     >
                       re-enter email
                     </button>
@@ -181,8 +188,9 @@ export default function () {
                     create zk proof.{' '}
                     {emailDomain ? (
                       <button
-                        className={textDecoration('underline')}
+                        className={textButton}
                         onClick={jumpToToken}
+                        disabled={loading}
                       >
                         Have an existing token?
                       </button>
