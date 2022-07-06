@@ -129,7 +129,7 @@ export default function () {
     } finally {
       setLoading(false)
       setOpen(false)
-      setEmail('')
+      resetEmail()
     }
   }
 
