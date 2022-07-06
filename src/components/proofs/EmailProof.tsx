@@ -1,6 +1,8 @@
-import { ProofText } from 'components/Text'
+import { ProofText, TextButton } from 'components/Text'
+import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
+import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import Line from 'components/proofs/Line'
 import QuestionMark from 'components/QuestionMark'
@@ -72,6 +74,7 @@ export default function () {
   const [domain, setDomain] = useState('')
   const [open, setOpen] = useState(false)
   const { xs } = useBreakpoints()
+  const { emailDomain } = useSnapshot(EmailDomainStore)
 
   function onCreate() {
     setOpen(false)
@@ -113,8 +116,20 @@ export default function () {
         </div>
         {open && (
           <EmailProofForm
+            domain={domain}
             submitType="secondary"
-            description="Add your work email and we’ll send you a token for that email (check the spam folder). Then, use the token here to create zk proof."
+            description={
+              <>
+                Add your work email and we’ll send you a token for that email
+                (check the spam folder). Then, use the token here to create zk
+                proof.{' '}
+                {emailDomain ? (
+                  <TextButton onClick={() => setDomain(emailDomain)}>
+                    Have an existing token?
+                  </TextButton>
+                ) : null}
+              </>
+            }
             onCreate={onCreate}
             onChange={setDomain}
           />

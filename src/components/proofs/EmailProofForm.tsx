@@ -1,30 +1,34 @@
-import { BodyText } from 'components/Text'
-import { margin, textDecoration } from 'classnames/tailwind'
+import { BodyText, TextButton } from 'components/Text'
+import { ComponentChildren } from 'preact'
+import { margin } from 'classnames/tailwind'
 import { sendEmail } from 'helpers/attestor'
 import { useState } from 'preact/hooks'
+import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/EmailForm'
 import ProofStore from 'stores/ProofStore'
 import TextForm from 'components/TextForm'
 import checkDomainToken from 'helpers/checkDomainToken'
 
 export default function ({
+  domain,
   description,
   submitType = 'secondary',
   onCreate,
   onChange,
 }: {
+  domain: string
   submitType?: 'primary' | 'secondary' | 'tertiary'
-  description: string
+  description: ComponentChildren
   onCreate: (domain: string) => void
   onChange: (domain: string) => void
 }) {
   const [loading, setLoading] = useState(false)
-  const [email, setEmail] = useState<string | undefined>()
+  const [email, setEmail] = useState<string>('')
   const [error, setError] = useState<string | undefined>()
-  const domain = email ? email.split('@')[1] : ''
 
-  function resetEmail() {
-    setEmail(undefined)
+  function resetEmail(withStore = false) {
+    if (withStore) EmailDomainStore.emailDomain = ''
+    setEmail('')
     onChange('')
   }
 
@@ -32,19 +36,18 @@ export default function ({
     setLoading(true)
     try {
       await sendEmail(email)
-      setEmail(email)
+      const domain = email.split('@')[1]
+      EmailDomainStore.emailDomain = domain
+      onChange(domain)
     } finally {
       setLoading(false)
-      const domain = email ? email.split('@')[1] : ''
-      onChange(domain)
     }
   }
 
   async function onGenerateProof(secret: string) {
+    if (!domain) return setError("Looks like you didn't enter an email.")
     if (!checkDomainToken(secret))
-      return setError(
-        'This is an invalid token. Try re-entering your email to get a new token.'
-      )
+      return setError('This is an invalid token. Please try again.')
 
     setLoading(true)
     setError(undefined)
@@ -52,7 +55,7 @@ export default function ({
       if (secret) await ProofStore.generateEmail(domain, secret)
     } finally {
       setLoading(false)
-      setEmail(undefined)
+      resetEmail(true)
       onCreate(domain)
     }
   }
@@ -63,14 +66,11 @@ export default function ({
         <BodyText>
           {domain ? (
             <>
-              A token has been sent to {email}. Copy the token and add it here
-              to create zk proof. Or{' '}
-              <button
-                className={textDecoration('underline')}
-                onClick={resetEmail}
-              >
+              A token has been sent to <b>{email ? email : `@${domain}`}</b>.
+              Copy the token and add it here to create zk proof. Or{' '}
+              <TextButton onClick={() => resetEmail()} disabled={loading}>
                 re-enter email
-              </button>
+              </TextButton>
               .
             </>
           ) : (

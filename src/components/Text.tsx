@@ -9,6 +9,7 @@ import {
   fontWeight,
   gradientColorStops,
   lineHeight,
+  opacity,
   textAlign,
   textColor,
   textDecoration,
@@ -299,4 +300,12 @@ export function TinyText({
   fontPrimary?: boolean
 } & ChildrenProp) {
   return <div className={tinyText(color, fontPrimary)}>{children}</div>
+}
+
+const textButton = classnames(
+  textDecoration('underline'),
+  opacity('disabled:opacity-75')
+)
+export function TextButton(props: React.HTMLAttributes<HTMLButtonElement>) {
+  return <button className={textButton} {...props} />
 }

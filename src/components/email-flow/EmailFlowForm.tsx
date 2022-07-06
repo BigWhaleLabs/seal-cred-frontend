@@ -1,4 +1,12 @@
-import { AccentText, BodyText, HeaderText, TinyText } from 'components/Text'
+import {
+  AccentText,
+  BodyText,
+  HeaderText,
+  TextButton,
+  TinyText,
+} from 'components/Text'
+import { useSnapshot } from 'valtio'
+import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import classnames, { space, width } from 'classnames/tailwind'
 
@@ -11,6 +19,8 @@ export default function EmailFlowForm({
   domain: string
   onUpdateDomain: (domain: string) => void
 }) {
+  const { emailDomain } = useSnapshot(EmailDomainStore)
+
   return (
     <>
       <HeaderText extraLeading>
@@ -30,8 +40,20 @@ export default function EmailFlowForm({
       )}
       <div className={proofLineContainer}>
         <EmailProofForm
+          domain={domain}
           submitType="primary"
-          description="Start by entering your email. We’ll then send you an email containing a token. You’ll come back here and enter your token to receive your zkBadge."
+          description={
+            <>
+              Start by entering your email. We’ll then send you an email
+              containing a token. You’ll come back here and enter your token to
+              receive your zkBadge.{' '}
+              {emailDomain ? (
+                <TextButton onClick={() => onUpdateDomain(emailDomain)}>
+                  Have an existing token?
+                </TextButton>
+              ) : null}
+            </>
+          }
           onChange={onUpdateDomain}
           onCreate={onUpdateDomain}
         />
