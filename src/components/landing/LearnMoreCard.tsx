@@ -2,14 +2,15 @@ import { BodyText, LinkText } from 'components/Text'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import PrivacyDeath from 'components/landing/PrivacyDeath'
-import classnames, { margin } from 'classnames/tailwind'
+import classnames, { margin, padding } from 'classnames/tailwind'
 
+const wrapper = classnames(padding('md:pb-20', 'pb-0'), margin('mb-4'))
 const bigWhaleLabsText = classnames(margin('mt-6'))
 const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
 
 export default function () {
   return (
-    <div className={margin('mb-2')}>
+    <div className={wrapper}>
       <Card color="primary" shadow onlyWrap>
         <PrivacyDeath />
         <div className={bigWhaleLabsText}>
