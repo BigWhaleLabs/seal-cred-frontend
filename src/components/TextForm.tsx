@@ -36,10 +36,11 @@ export default function ({
       />
       {hasError && <TinyMessage withIcon state="error" text={error} />}
       <Button
+        gradientFont={submitType !== 'primary'}
         loading={loading}
         fullWidth
         center
-        small
+        small={submitType !== 'primary'}
         type={submitType}
         disabled={text.length === 0}
         onClick={() => onSubmit(text)}

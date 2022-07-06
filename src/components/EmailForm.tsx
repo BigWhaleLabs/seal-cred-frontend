@@ -31,10 +31,11 @@ export default function ({
         }
       />
       <Button
+        gradientFont={submitType !== 'primary'}
         loading={loading}
         fullWidth
         center
-        small
+        small={submitType !== 'primary'}
         type={submitType}
         disabled={!emailIsValid}
         onClick={() => onSubmit(email)}

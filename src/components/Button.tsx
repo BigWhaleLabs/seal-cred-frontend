@@ -66,10 +66,11 @@ const button = ({
   disabled,
   small,
   fontSmall,
+  gradientFont,
 }: ButtonProps) =>
   classnames(
     commonClasses(fullWidth, center, loading, disabled),
-    colorClasses({ type, loading, disabled, small, fontSmall })
+    colorClasses({ type, loading, disabled, small, fontSmall, gradientFont })
   )
 
 const colorClasses = ({
@@ -121,18 +122,16 @@ const colorClasses = ({
       : fontSize(fontSmall ? 'text-sm' : undefined)
   )
 
-const textGradient = ({ type, loading, disabled }: ButtonProps) =>
-  type === 'tertiary' || type === 'secondary'
-    ? classnames(
-        textColor(
-          'text-transparent',
-          loading || disabled ? undefined : 'active:text-accent'
-        ),
-        backgroundClip('bg-clip-text'),
-        backgroundImage('bg-gradient-to-r'),
-        gradientColorStops('from-secondary', 'to-accent')
-      )
-    : undefined
+const textGradient = ({ loading, disabled }: ButtonProps) =>
+  classnames(
+    textColor(
+      'text-transparent',
+      loading || disabled ? undefined : 'active:text-accent'
+    ),
+    backgroundClip('bg-clip-text'),
+    backgroundImage('bg-gradient-to-r'),
+    gradientColorStops('from-secondary', 'to-accent')
+  )
 
 interface ButtonProps {
   fullWidth?: boolean
@@ -143,6 +142,7 @@ interface ButtonProps {
   small?: boolean
   withArrow?: boolean
   fontSmall?: boolean
+  gradientFont?: boolean
 }
 
 export default function ({
@@ -155,6 +155,7 @@ export default function ({
   disabled,
   children,
   fontSmall,
+  gradientFont,
   ...rest
 }: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   return (
@@ -172,7 +173,7 @@ export default function ({
       {...rest}
     >
       {loading && <Loading small={small} />}
-      {typeof children === 'string' ? (
+      {typeof children === 'string' && gradientFont ? (
         <span className={textGradient({ type, loading, disabled })}>
           {children}
         </span>
