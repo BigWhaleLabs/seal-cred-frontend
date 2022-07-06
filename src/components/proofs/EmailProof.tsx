@@ -117,9 +117,7 @@ export default function () {
   async function onGenerateProof(secret: string) {
     if (!domain) return setError("Looks like you didn't enter an email.")
     if (!checkDomainToken(secret))
-      return setError(
-        'This is an invalid token. Try re-entering your email to get a new token.'
-      )
+      return setError('This is an invalid token. Please try again.')
 
     setLoading(true)
     setError(undefined)
