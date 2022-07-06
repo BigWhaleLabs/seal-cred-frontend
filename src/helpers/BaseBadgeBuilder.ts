@@ -28,7 +28,9 @@ export default abstract class BaseBadgeBuilder {
 
   abstract createLedger(provider: Web3Provider, address: string): SimpleLedger
 
-  async mint(message: string, proofResult: ProofResult) {
+  async mint(message: string, proofResult?: ProofResult) {
+    if (!proofResult) throw new Error('Invalid proof')
+
     // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
     // Also pay attention to array indexes
     const tx = await this.ledger.mint(
@@ -53,6 +55,6 @@ export default abstract class BaseBadgeBuilder {
       ],
       proofResult.publicSignals.map(BigNumber.from)
     )
-    await tx.wait()
+    return tx.wait()
   }
 }
