@@ -291,14 +291,12 @@ const tinyText = (color: 'base' | 'primary' | 'error', fontPrimary?: boolean) =>
     lineHeight('leading-3')
   )
 export function TinyText({
-  color,
+  color = 'base',
   fontPrimary,
   children,
 }: {
   color?: 'base' | 'primary' | 'error'
   fontPrimary?: boolean
 } & ChildrenProp) {
-  return (
-    <div className={tinyText(color || 'base', fontPrimary)}>{children}</div>
-  )
+  return <div className={tinyText(color, fontPrimary)}>{children}</div>
 }

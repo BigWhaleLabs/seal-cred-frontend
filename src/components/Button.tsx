@@ -61,7 +61,11 @@ const commonClasses = (
     fontSize(small ? 'text-sm' : 'text-lg'),
     lineHeight(small ? 'leading-5' : 'leading-7'),
     type !== 'tertiary'
-      ? padding(small ? 'py-2' : 'py-4', small ? 'px-4' : 'px-6')
+      ? padding(
+          small
+            ? { 'py-2': true, 'px-4': true }
+            : { 'py-4': true, 'px-6': true }
+        )
       : undefined,
     space('space-x-2')
   )
