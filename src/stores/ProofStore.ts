@@ -71,6 +71,8 @@ class ProofStore extends PersistableStore {
       checkNavigator()
 
       proofStore.proofsCompleted.push(newEmailProof)
+
+      return newEmailProof
     } catch (e) {
       handleError(e)
     }

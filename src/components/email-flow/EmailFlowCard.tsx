@@ -8,25 +8,21 @@ import ContractsStore from 'stores/ContractsStore'
 import EmailFlowBadge from 'components/email-flow/EmailFlowBadge'
 import EmailFlowForm from 'components/email-flow/EmailFlowForm'
 import EmailFlowProof from 'components/email-flow/EmailFlowProof'
+import EmailProof from 'helpers/EmailProof'
 import LoadingCard from 'components/proofs/LoadingCard'
 import SealCredStore from 'stores/SealCredStore'
 import WalletStore from 'stores/WalletStore'
-import proofStore from 'stores/ProofStore'
 
 export default function () {
   const { contractsOwned } = useSnapshot(ContractsStore)
   const { emailLedger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
-  const { emailProofsCompleted } = useSnapshot(proofStore)
   const [domain, setDomain] = useState('')
+  const [proof, setProof] = useState<EmailProof | undefined>()
 
   const ledgerRecord = domain && emailLedger[domain]
   const minted =
     ledgerRecord && contractsOwned.includes(ledgerRecord.derivativeContract)
-
-  const proof = emailProofsCompleted.find(
-    (emailProof) => emailProof.domain === domain
-  )
 
   return (
     <CardContainer>
@@ -38,7 +34,7 @@ export default function () {
       >
         {account ? (
           <Suspense fallback={<LoadingCard />}>
-            {minted ? (
+            {minted && !domain ? (
               <EmailFlowBadge
                 contractAddress={ledgerRecord.derivativeContract}
                 resetEmail={() => setDomain('')}
@@ -46,7 +42,11 @@ export default function () {
             ) : proof ? (
               <EmailFlowProof proof={proof} />
             ) : (
-              <EmailFlowForm domain={domain} onUpdateDomain={setDomain} />
+              <EmailFlowForm
+                domain={domain}
+                onUpdateDomain={setDomain}
+                onSelectProof={setProof}
+              />
             )}
           </Suspense>
         ) : (
