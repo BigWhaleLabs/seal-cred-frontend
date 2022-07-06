@@ -123,11 +123,10 @@ export default function () {
     setError(undefined)
     try {
       if (secret) await ProofStore.generateEmail(domain, secret)
-      resetEmail(true)
     } finally {
       setLoading(false)
       setOpen(false)
-      resetEmail()
+      resetEmail(true)
     }
   }
 
@@ -175,7 +174,7 @@ export default function () {
                     add it here to create zk proof. Or{' '}
                     <button
                       className={textButton}
-                      onClick={resetEmail}
+                      onClick={() => resetEmail()}
                       disabled={loading}
                     >
                       re-enter email
