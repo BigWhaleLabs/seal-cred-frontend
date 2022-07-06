@@ -37,6 +37,9 @@ export default function ({ text, smallCircle, thinText }: ArcTextProps) {
   const mobile = (xxs || sm) && !md
   const radius = mobile ? 85 : smallCircle ? 110 : 55
 
+  const textLength = text.length
+  const longText = textLength > 35
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +71,7 @@ export default function ({ text, smallCircle, thinText }: ArcTextProps) {
       <use transform="rotate(-45 250 250)" />
       <text
         dy={radius}
-        textLength={text.length * 36}
+        textLength={longText ? textLength * textLength - 300 : textLength * 35}
         className={textStyle(thinText)}
         letter-spacing={(radius * 3.14) / 10}
       >
