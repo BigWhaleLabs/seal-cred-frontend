@@ -32,6 +32,7 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
+import useEmailForm from 'hooks/useEmailForm'
 
 const arrowContainer = classnames(
   display('flex'),
@@ -83,29 +84,31 @@ export default function () {
   const { xs } = useBreakpoints()
 
   const { emailDomain } = useSnapshot(EmailDomainStore)
-  const [email, setEmail] = useState<string | undefined>()
+  const { email, setEmail, emailIsValid } = useEmailForm()
+  const [domain, setDomain] = useState<string | undefined>()
 
   function resetEmail() {
-    setEmail(undefined)
-    EmailDomainStore.emailDomain = undefined
+    setEmail('')
+    setDomain(undefined)
   }
   function jumpToToken() {
-    setEmail(emailDomain)
+    setDomain(emailDomain)
   }
 
   async function onSendEmail(email: string) {
     setLoading(true)
     try {
-      EmailDomainStore.emailDomain = email.split('@')[1]
-      await sendEmail(email)
       setEmail(email)
+      setDomain(email.split('@')[1])
+      EmailDomainStore.emailDomain = domain
+      await sendEmail(email)
     } finally {
       setLoading(false)
     }
   }
 
   async function onGenerateProof(secret: string) {
-    if (!emailDomain) return setError("Looks like you didn't enter an email.")
+    if (!domain) return setError("Looks like you didn't enter an email.")
     if (!checkDomainToken(secret))
       return setError(
         'This is an invalid token. Try re-entering your email to get a new token.'
@@ -114,11 +117,11 @@ export default function () {
     setLoading(true)
     setError(undefined)
     try {
-      if (secret) await ProofStore.generateEmail(emailDomain, secret)
+      if (secret) await ProofStore.generateEmail(domain, secret)
     } finally {
       setLoading(false)
       setOpen(false)
-      setEmail(undefined)
+      setEmail('')
     }
   }
 
@@ -159,10 +162,10 @@ export default function () {
           <>
             <div className={margin('mt-4')}>
               <BadgeText>
-                {emailDomain ? (
+                {domain ? (
                   <>
-                    A token has been sent to {email}. Copy the token and add it
-                    here to create zk proof. Or{' '}
+                    A token has been sent to {email ? email : `@${domain}`}.
+                    Copy the token and add it here to create zk proof. Or{' '}
                     <button
                       className={textDecoration('underline')}
                       onClick={resetEmail}
@@ -188,7 +191,7 @@ export default function () {
                 )}
               </BadgeText>
             </div>
-            {emailDomain ? (
+            {domain ? (
               <TextForm
                 submitText="Generate proof"
                 placeholder="Paste token here"
@@ -198,6 +201,9 @@ export default function () {
               />
             ) : (
               <EmailForm
+                value={email}
+                onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
+                isValid={emailIsValid}
                 submitText="Submit email"
                 placeholder="Work email..."
                 onSubmit={onSendEmail}
