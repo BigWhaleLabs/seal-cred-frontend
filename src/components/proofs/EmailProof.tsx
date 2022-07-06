@@ -93,7 +93,8 @@ export default function () {
   const { email, setEmail, emailIsValid } = useEmailForm()
   const [domain, setDomain] = useState<string | undefined>()
 
-  function resetEmail() {
+  function resetEmail(withStore = false) {
+    if (withStore) EmailDomainStore.emailDomain = undefined
     setEmail('')
     setDomain(undefined)
   }
@@ -124,8 +125,7 @@ export default function () {
     setError(undefined)
     try {
       if (secret) await ProofStore.generateEmail(domain, secret)
-      resetEmail()
-      EmailDomainStore.emailDomain = undefined
+      resetEmail(true)
     } finally {
       setLoading(false)
       setOpen(false)
