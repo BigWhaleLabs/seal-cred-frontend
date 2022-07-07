@@ -16,11 +16,11 @@ import handleError from 'helpers/handleError'
 
 function Badge({
   proof,
-  onMint,
+  onMinted,
   onMintFailed,
 }: {
   proof: BaseProof
-  onMint?: (minted?: MintedToken[]) => void
+  onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {
   const { account } = useSnapshot(WalletStore)
@@ -39,7 +39,7 @@ function Badge({
       const minted =
         ContractsStore.connectedAccounts[account].applyTransaction(transaction)
       ProofStore.deleteProof(proof)
-      if (onMint) onMint(minted)
+      if (onMinted) onMinted(minted)
     } catch (error) {
       if (
         proof &&
@@ -82,16 +82,16 @@ function Badge({
 
 export default function ({
   proof,
-  onMint,
+  onMinted,
   onMintFailed,
 }: {
   proof: BaseProof
-  onMint?: (minted?: MintedToken[]) => void
+  onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {
   return (
     <BadgeWrapper minted={false}>
-      <Badge proof={proof} onMint={onMint} onMintFailed={onMintFailed} />
+      <Badge proof={proof} onMinted={onMinted} onMintFailed={onMintFailed} />
     </BadgeWrapper>
   )
 }

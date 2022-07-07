@@ -18,7 +18,7 @@ export default function () {
   const [proof, setProof] = useState<EmailProof | undefined>()
   const [minted, setMinted] = useState<MintedToken[] | undefined>()
 
-  function onMint(minted?: MintedToken[]) {
+  function onMinted(minted?: MintedToken[]) {
     if (minted) setMinted(minted)
     setProof(undefined)
     setDomain('')
@@ -44,7 +44,7 @@ export default function () {
               <EmailFlowBadge minted={minted} resetEmail={onReset} />
             ) : proof ? (
               <EmailFlowProof
-                onMint={onMint}
+                onMinted={onMinted}
                 onMintFailed={onReset}
                 proof={proof}
               />

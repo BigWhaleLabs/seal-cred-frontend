@@ -6,11 +6,11 @@ import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 
 export default function ({
   proof,
-  onMint,
+  onMinted,
   onMintFailed,
 }: {
   proof: EmailProof
-  onMint?: (minted?: MintedToken[]) => void
+  onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {
   const headerTitle = proof.result ? 'Ready to mint!' : 'Creating your zk proof'
@@ -25,7 +25,11 @@ export default function ({
       <BodyText>{statusText}</BodyText>
       <ReadyEmailProof proof={proof} />
       {proof.result && (
-        <BadgeBlock proof={proof} onMint={onMint} onMintFailed={onMintFailed} />
+        <BadgeBlock
+          proof={proof}
+          onMinted={onMinted}
+          onMintFailed={onMintFailed}
+        />
       )}
     </>
   )
