@@ -38,6 +38,7 @@ export default function ({
       <Button
         gradientFont={submitType !== 'primary'}
         loading={loading}
+        loadingOverflow
         fullWidth
         center
         small={submitType !== 'primary'}

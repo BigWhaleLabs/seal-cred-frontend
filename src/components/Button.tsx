@@ -143,6 +143,7 @@ interface ButtonProps {
   small?: boolean
   withArrow?: boolean
   gradientFont?: boolean
+  loadingOverflow?: boolean
 }
 
 export default function ({
@@ -155,8 +156,11 @@ export default function ({
   disabled,
   children,
   gradientFont,
+  loadingOverflow,
   ...rest
 }: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
+  const showContent = loadingOverflow ? !loading : true
+
   return (
     <button
       className={button({
@@ -171,16 +175,24 @@ export default function ({
       {...rest}
     >
       {loading && <Loading small={small} />}
-      {typeof children === 'string' && gradientFont ? (
-        <span className={textGradient({ type, loading, disabled })}>
-          {children}
-        </span>
-      ) : (
-        children
-      )}
-      {withArrow && (
-        <div className={width('w-4')}>
-          <Arrow horizontal pulseDisabled={disabled || loading} openDisabled />
+      {showContent && (
+        <div className={space('space-x-2')}>
+          {typeof children === 'string' && gradientFont ? (
+            <span className={textGradient({ type, loading, disabled })}>
+              {children}
+            </span>
+          ) : (
+            children
+          )}
+          {withArrow && (
+            <div className={width('w-4')}>
+              <Arrow
+                horizontal
+                pulseDisabled={disabled || loading}
+                openDisabled
+              />
+            </div>
+          )}
         </div>
       )}
     </button>
