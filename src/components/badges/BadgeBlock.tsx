@@ -36,10 +36,10 @@ function Badge({
       if (!proof?.result) throw new Error('No proof found')
 
       const transaction = await WalletStore.mintDerivative(proof)
-      const minted =
+      const mintedBadge =
         ContractsStore.connectedAccounts[account].applyTransaction(transaction)
       ProofStore.deleteProof(proof)
-      if (onMinted) onMinted(minted)
+      if (onMinted) onMinted(mintedBadge)
     } catch (error) {
       if (
         proof &&
