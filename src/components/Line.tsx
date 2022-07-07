@@ -8,9 +8,11 @@ import classnames, {
 import colorsToGradientColorStops from 'helpers/colorsToGradientColorStops'
 import useBreakpoints from 'hooks/useBreakpoints'
 
-const line = (gradientDirection: 'to-left' | 'to-right', small?: boolean) => {
-  const { iPhoneSizes } = useBreakpoints()
-
+const line = (
+  iPhoneSizes: boolean,
+  gradientDirection: 'to-left' | 'to-right',
+  small?: boolean
+) => {
   return classnames(
     height('h-px'),
     width(small ? (iPhoneSizes ? 'w-8' : 'w-20') : 'w-36'),
@@ -32,9 +34,12 @@ export default ({
   fromLight?: boolean
   small?: boolean
 }) => {
+  const { iPhoneSizes } = useBreakpoints()
   const gradient = colorsToGradientColorStops(color, fromLight)
-
-  return (
-    <div className={classnames(line(gradientDirection, small), gradient)} />
+  const lineClassName = classnames(
+    line(iPhoneSizes, gradientDirection, small),
+    gradient
   )
+
+  return <div className={lineClassName} />
 }
