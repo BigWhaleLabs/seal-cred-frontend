@@ -20,7 +20,7 @@ function EnsAddressSuspended({
     <>
       {truncate
         ? truncateMiddleIfNeeded(ensName || address, 17)
-        : ensName || address}
+        : ensName || truncateMiddleIfNeeded(address, 25)}
     </>
   )
 }

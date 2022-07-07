@@ -180,6 +180,7 @@ const linkText = (
       gradientFrom && gradientTo ? 'bg-gradient-to-r' : undefined
     ),
     backgroundClip(gradientFrom && gradientTo ? 'bg-clip-text' : undefined),
+    fontSize('text-sm', 'tiny:text-base'),
     gradientColorStops(gradientFrom, gradientTo),
     fontWeight(bold ? 'font-bold' : 'font-normal')
   )
