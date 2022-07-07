@@ -46,6 +46,9 @@ export default function () {
           <BodyText center>
             Connect a wallet with supported NFTs to create ZK proofs.
           </BodyText>
+          <BodyText center color="text-primary">
+            Keep in mind this project is still in Alpha
+          </BodyText>
           <Button
             type="primary"
             loading={walletLoading}

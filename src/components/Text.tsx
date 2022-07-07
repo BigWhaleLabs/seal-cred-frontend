@@ -79,9 +79,14 @@ export function AccentText({
   )
 }
 
-const bodyText = (bold?: boolean, small?: boolean, center?: boolean) =>
+const bodyText = (
+  bold?: boolean,
+  small?: boolean,
+  center?: boolean,
+  color?: TTextColor
+) =>
   classnames(
-    textColor('text-formal-accent'),
+    color ? textColor(color) : textColor('text-formal-accent'),
     textAlign(center ? 'text-center' : undefined),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
     fontSize(small ? 'text-xs' : 'text-sm', 'sm:text-base'),
@@ -92,12 +97,14 @@ export function BodyText({
   small,
   center,
   children,
+  color,
 }: ChildrenProp & {
   bold?: boolean
   small?: boolean
   center?: boolean
+  color?: TTextColor
 }) {
-  return <p className={bodyText(bold, small, center)}>{children}</p>
+  return <p className={bodyText(bold, small, center, color)}>{children}</p>
 }
 
 const proofText = classnames(
