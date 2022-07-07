@@ -1,6 +1,5 @@
 import { AccentText, ExtraBoldText } from 'components/Text'
 import ChildrenProp from 'models/ChildrenProp'
-import Color from 'models/Color'
 import Line from 'components/Line'
 import classnames, {
   alignItems,
@@ -17,20 +16,16 @@ const lineBlockWrapper = classnames(
   space('space-x-3')
 )
 
-export default function ({ children, color }: ChildrenProp & { color: Color }) {
+export default function ({ children }: ChildrenProp) {
   return (
     <div className={lineBlockWrapper}>
-      <Line color={color} gradientDirection="to-right" />
+      <Line color="secondary" gradientDirection="to-right" />
       <ExtraBoldText>
-        <AccentText
-          small
-          color={`text-${color}`}
-          shadow={`drop-shadow-${color}`}
-        >
+        <AccentText small color="text-secondary" shadow="drop-shadow-secondary">
           <span className={lineHeight('leading-10')}>{children}</span>
         </AccentText>
       </ExtraBoldText>
-      <Line color={color} gradientDirection="to-left" />
+      <Line color="secondary" gradientDirection="to-left" />
     </div>
   )
 }

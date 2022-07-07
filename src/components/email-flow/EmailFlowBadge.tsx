@@ -18,7 +18,7 @@ export default function ({
         <MintedBadgeBlock
           key={`${address}-${tokenId}`}
           derivativeAddress={address}
-          tokenId={+tokenId}
+          tokenId={tokenId.toNumber()}
         />
       ))}
       <Button fullWidth center small type="secondary" onClick={resetEmail}>
