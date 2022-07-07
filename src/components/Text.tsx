@@ -1,18 +1,22 @@
 import {
+  TDropShadow,
   TGradientColorStops,
   TTextColor,
   backgroundClip,
   backgroundImage,
   classnames,
+  dropShadow,
   fontFamily,
   fontSize,
   fontWeight,
   gradientColorStops,
+  letterSpacing,
   lineHeight,
   opacity,
   textAlign,
   textColor,
   textDecoration,
+  textTransform,
   width,
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
@@ -54,28 +58,34 @@ const accentText = (
   color: TTextColor,
   bold?: boolean,
   small?: boolean,
-  primary?: boolean
+  primary?: boolean,
+  shadow?: TDropShadow
 ) =>
   classnames(
     textColor(color),
     fontFamily(primary ? 'font-primary' : undefined),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize(small ? 'text-sm' : undefined)
+    fontSize(small ? 'text-sm' : undefined),
+    dropShadow(shadow)
   )
 export function AccentText({
   color,
   bold,
   small,
   primary,
+  shadow,
   children,
 }: ChildrenProp & {
   color: TTextColor
   bold?: boolean
   small?: boolean
   primary?: boolean
+  shadow?: TDropShadow
 }) {
   return (
-    <span className={accentText(color, bold, small, primary)}>{children}</span>
+    <span className={accentText(color, bold, small, primary, shadow)}>
+      {children}
+    </span>
   )
 }
 
@@ -315,4 +325,29 @@ const textButton = classnames(
 )
 export function TextButton(props: React.HTMLAttributes<HTMLButtonElement>) {
   return <button className={textButton} {...props} />
+}
+
+const extraBoldText = (small?: boolean, extraLeading?: boolean) =>
+  classnames(
+    fontWeight('font-bold', 'md:font-extrabold'),
+    fontSize(
+      extraLeading ? 'text-2xl' : small ? 'text-xs' : 'text-xl',
+      'md:text-2xl'
+    ),
+    lineHeight(
+      extraLeading ? 'leading-8' : small ? 'leading-3' : 'leading-7',
+      extraLeading ? 'md:leading-10' : 'md:leading-8'
+    ),
+    textColor('text-primary-dark'),
+    textTransform('uppercase')
+  )
+export function ExtraBoldText({
+  small,
+  extraLeading,
+  children,
+}: ChildrenProp & {
+  small?: boolean
+  extraLeading?: boolean
+}) {
+  return <span className={extraBoldText(small, extraLeading)}>{children}</span>
 }
