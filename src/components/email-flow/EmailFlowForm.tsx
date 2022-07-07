@@ -9,10 +9,7 @@ import { useSnapshot } from 'valtio'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProof from 'helpers/EmailProof'
 import EmailProofForm from 'components/proofs/EmailProofForm'
-import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
-import Separator from 'components/Separator'
-import classnames, { cursor, space, width } from 'classnames/tailwind'
-import proofStore from 'stores/ProofStore'
+import classnames, { space, width } from 'classnames/tailwind'
 
 const proofLineContainer = classnames(space('space-y-4'), width('w-full'))
 
@@ -25,9 +22,7 @@ export default function EmailFlowForm({
   onUpdateDomain: (domain: string) => void
   onSelectProof: (proof: EmailProof) => void
 }) {
-  const { emailProofsCompleted } = useSnapshot(proofStore)
   const { emailDomain } = useSnapshot(EmailDomainStore)
-  const hasProofsCompleted = emailProofsCompleted.length > 0
 
   return (
     <>
@@ -36,7 +31,7 @@ export default function EmailFlowForm({
           ? 'A token has been sent to your email!'
           : 'Zero knowledge proof for work'}
       </HeaderText>
-      {!domain && !hasProofsCompleted && (
+      {!domain && (
         <BodyText>
           <span>
             <AccentText color="text-accent">SealCred</AccentText>
@@ -69,20 +64,6 @@ export default function EmailFlowForm({
           Be sure to check your spam folder if you don’t see the email at first.
         </TinyText>
       </div>
-      {!domain && hasProofsCompleted && (
-        <>
-          <Separator>OR</Separator>
-          <BodyText center>Select a proof to continue</BodyText>
-          {Array.from(emailProofsCompleted).map((proof, index) => (
-            <div
-              onClick={() => onSelectProof(proof)}
-              className={cursor('cursor-pointer')}
-            >
-              <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
-            </div>
-          ))}
-        </>
-      )}
     </>
   )
 }

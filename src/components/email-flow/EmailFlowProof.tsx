@@ -19,12 +19,14 @@ export default function ({
     ? 'Mint your zkBadge below to add it to your wallet.'
     : 'This may take a second.'
 
+  const proofCreated = !!proof.result
+
   return (
     <>
       <HeaderText extraLeading>{headerTitle}</HeaderText>
       <BodyText>{statusText}</BodyText>
       <ReadyEmailProof proof={proof} />
-      {proof.result && (
+      {proofCreated && (
         <BadgeBlock
           proof={proof}
           onMinted={onMinted}
