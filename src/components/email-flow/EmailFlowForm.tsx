@@ -71,7 +71,7 @@ export default function EmailFlowForm({
       </div>
       {!domain && hasProofsCompleted && (
         <>
-          <Separator color="accent">OR</Separator>
+          <Separator>OR</Separator>
           <BodyText center>Select a proof to continue</BodyText>
           {Array.from(emailProofsCompleted).map((proof, index) => (
             <div

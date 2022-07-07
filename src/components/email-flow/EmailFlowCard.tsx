@@ -43,7 +43,11 @@ export default function () {
             {minted ? (
               <EmailFlowBadge minted={minted} resetEmail={onReset} />
             ) : proof ? (
-              <EmailFlowProof onMint={onMint} proof={proof} />
+              <EmailFlowProof
+                onMint={onMint}
+                onMintFailed={onReset}
+                proof={proof}
+              />
             ) : (
               <EmailFlowForm
                 domain={domain}

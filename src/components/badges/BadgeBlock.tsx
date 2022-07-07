@@ -17,9 +17,11 @@ import handleError from 'helpers/handleError'
 function Badge({
   proof,
   onMint,
+  onMintFailed,
 }: {
   proof: BaseProof
   onMint?: (minted?: MintedToken[]) => void
+  onMintFailed?: (minted?: MintedToken[]) => void
 }) {
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
@@ -45,7 +47,7 @@ function Badge({
         error.message.includes('This ZK proof has already been used')
       ) {
         ProofStore.deleteProof(proof)
-        if (onMint) onMint()
+        if (onMintFailed) onMintFailed()
         handleError(
           new Error(
             'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'
@@ -81,13 +83,15 @@ function Badge({
 export default function ({
   proof,
   onMint,
+  onMintFailed,
 }: {
   proof: BaseProof
   onMint?: (minted?: MintedToken[]) => void
+  onMintFailed?: (minted?: MintedToken[]) => void
 }) {
   return (
     <BadgeWrapper minted={false}>
-      <Badge proof={proof} onMint={onMint} />
+      <Badge proof={proof} onMint={onMint} onMintFailed={onMintFailed} />
     </BadgeWrapper>
   )
 }

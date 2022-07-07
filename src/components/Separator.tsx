@@ -19,13 +19,13 @@ const lineBlockWrapper = classnames(
 export default function ({ children }: ChildrenProp) {
   return (
     <div className={lineBlockWrapper}>
-      <Line color="secondary" gradientDirection="to-right" />
+      <Line color="accent" gradientDirection="to-right" />
       <ExtraBoldText>
-        <AccentText small color="text-secondary" shadow="drop-shadow-secondary">
+        <AccentText small color="text-accent" shadow="drop-shadow-accent">
           <span className={lineHeight('leading-10')}>{children}</span>
         </AccentText>
       </ExtraBoldText>
-      <Line color="secondary" gradientDirection="to-left" />
+      <Line color="accent" gradientDirection="to-left" />
     </div>
   )
 }
