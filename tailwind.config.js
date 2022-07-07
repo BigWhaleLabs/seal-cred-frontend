@@ -105,6 +105,7 @@ module.exports = {
         'mobile-card': '92%',
       },
       inset: {
+        '-78': '-19.5rem',
         '-40': '-10rem',
         '-28': '-7rem',
         '-24': '-6rem',
