@@ -1,16 +1,12 @@
-import { BadgeText, ProofText } from 'components/Text'
-import { sendEmail } from 'helpers/attestor'
+import { ProofText, TextButton } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import EmailDomainStore from 'stores/EmailDomainStore'
-import EmailForm from 'components/EmailForm'
+import EmailProofForm from 'components/proofs/EmailProofForm'
 import Line from 'components/proofs/Line'
-import ProofStore from 'stores/ProofStore'
 import QuestionMark from 'components/QuestionMark'
-import TextForm from 'components/TextForm'
 import ToolTip from 'components/ToolTip'
-import checkDomainToken from 'helpers/checkDomainToken'
 import classnames, {
   alignItems,
   animation,
@@ -24,16 +20,12 @@ import classnames, {
   gradientColorStops,
   justifyContent,
   lineHeight,
-  margin,
-  opacity,
   space,
   textColor,
-  textDecoration,
   transitionProperty,
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
-import useEmailForm from 'hooks/useEmailForm'
 
 const arrowContainer = classnames(
   display('flex'),
@@ -73,61 +65,20 @@ const emailTitleLeft = classnames(
   alignItems('items-center')
 )
 
-const textButton = classnames(
-  textDecoration('underline'),
-  opacity('disabled:opacity-75')
-)
-
 const questionBlock = (open: boolean) =>
   animation(open ? 'animate-reveal' : 'animate-unreveal')
 
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
-  const [loading, setLoading] = useState(false)
-  const [open, setOpen] = useState(false)
-  const [error, setError] = useState<string | undefined>()
-  const { xs } = useBreakpoints()
-
-  const { emailDomain } = useSnapshot(EmailDomainStore)
-  const { email, setEmail, emailIsValid } = useEmailForm()
   const [domain, setDomain] = useState('')
+  const [open, setOpen] = useState(false)
+  const { xs } = useBreakpoints()
+  const { emailDomain } = useSnapshot(EmailDomainStore)
 
-  function resetEmail(withStore = false) {
-    if (withStore) EmailDomainStore.emailDomain = ''
-    setEmail('')
+  function onCreate() {
+    setOpen(false)
     setDomain('')
-  }
-  function jumpToToken() {
-    setDomain(emailDomain)
-  }
-
-  async function onSendEmail(email: string) {
-    setLoading(true)
-    try {
-      const recipientDomain = email.split('@')[1]
-      setDomain(recipientDomain)
-      EmailDomainStore.emailDomain = recipientDomain
-      await sendEmail(email)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function onGenerateProof(secret: string) {
-    if (!domain) return setError("Looks like you didn't enter an email.")
-    if (!checkDomainToken(secret))
-      return setError('This is an invalid token. Please try again.')
-
-    setLoading(true)
-    setError(undefined)
-    try {
-      if (secret) await ProofStore.generateEmail(domain, secret)
-    } finally {
-      setLoading(false)
-      setOpen(false)
-      resetEmail(true)
-    }
   }
 
   const popoverText =
@@ -155,7 +106,7 @@ export default function () {
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
             {!xs && (
               <span className={getStartedText(open)}>
-                {emailDomain ? 'Set token' : 'Get started'}
+                <span>{domain ? 'Set token' : 'Get started'}</span>
               </span>
             )}
             <div className={width('w-4')}>
@@ -164,61 +115,24 @@ export default function () {
           </button>
         </div>
         {open && (
-          <>
-            <div className={margin('mt-4')}>
-              <BadgeText>
-                {domain ? (
-                  <>
-                    A token has been sent to{' '}
-                    <b>{email ? email : `@${domain}`}</b>. Copy the token and
-                    add it here to create zk proof. Or{' '}
-                    <button
-                      className={textButton}
-                      onClick={() => resetEmail()}
-                      disabled={loading}
-                    >
-                      re-enter email
-                    </button>
-                    .
-                  </>
-                ) : (
-                  <>
-                    Add your work email and we’ll send you a token for that
-                    email (check the spam folder). Then, use the token here to
-                    create zk proof.{' '}
-                    {emailDomain ? (
-                      <button
-                        className={textButton}
-                        onClick={jumpToToken}
-                        disabled={loading}
-                      >
-                        Have an existing token?
-                      </button>
-                    ) : null}
-                  </>
-                )}
-              </BadgeText>
-            </div>
-            {domain ? (
-              <TextForm
-                submitText="Generate proof"
-                placeholder="Paste token here"
-                onSubmit={onGenerateProof}
-                loading={loading}
-                error={error}
-              />
-            ) : (
-              <EmailForm
-                value={email}
-                onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
-                isValid={emailIsValid}
-                submitText="Submit email"
-                placeholder="Work email..."
-                onSubmit={onSendEmail}
-                loading={loading}
-              />
-            )}
-          </>
+          <EmailProofForm
+            domain={domain}
+            submitType="secondary"
+            description={
+              <>
+                Add your work email and we’ll send you a token for that email
+                (check the spam folder). Then, use the token here to create zk
+                proof.{' '}
+                {emailDomain ? (
+                  <TextButton onClick={() => setDomain(emailDomain)}>
+                    Have an existing token?
+                  </TextButton>
+                ) : null}
+              </>
+            }
+            onCreate={onCreate}
+            onChange={setDomain}
+          />
         )}
       </div>
     </Line>

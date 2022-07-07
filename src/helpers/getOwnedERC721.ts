@@ -9,11 +9,26 @@ const transferEventInterface = new utils.Interface([
 const sig = 'Transfer(address,address,uint256)'
 const sigHash = utils.keccak256(utils.toUtf8Bytes(sig))
 
+export function isTransferEvent(topics: string[]) {
+  return topics[0] === sigHash && topics.length > 3
+}
+
+export function parseLogData({
+  data,
+  topics,
+}: {
+  data: string
+  topics: string[]
+}) {
+  return transferEventInterface.parseLog({ data, topics })
+}
+
 export default async function (
   account: string,
   fromBlock = 0,
   toBlock: number,
-  addressToTokenIds: { [address: string]: Set<string> }
+  addressToTokenIds: { [address: string]: Set<string> },
+  skipTransactions: Set<string>
 ) {
   const provider = fromBlock === 0 ? heavyProvider : defaultProvider
   const receivedLogs = await provider.getLogs({
@@ -28,12 +43,19 @@ export default async function (
     topics: [utils.id(sig), utils.hexZeroPad(account, 32)],
   })
 
-  for (const { topics, data, address } of receivedLogs.concat(sentLogs)) {
-    if (topics[0] !== sigHash || topics.length <= 3) continue
+  for (const { topics, data, address, transactionHash } of receivedLogs.concat(
+    sentLogs
+  )) {
+    if (!isTransferEvent(topics)) continue
 
     const {
       args: { tokenId },
-    } = transferEventInterface.parseLog({ data, topics })
+    } = parseLogData({ data, topics })
+
+    if (skipTransactions.has(transactionHash)) {
+      skipTransactions.delete(transactionHash)
+      continue
+    }
 
     const value = tokenId.toString()
 

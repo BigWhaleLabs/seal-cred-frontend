@@ -1,17 +1,21 @@
 import {
+  TDropShadow,
   TGradientColorStops,
   TTextColor,
   backgroundClip,
   backgroundImage,
   classnames,
+  dropShadow,
   fontFamily,
   fontSize,
   fontWeight,
   gradientColorStops,
   lineHeight,
+  opacity,
   textAlign,
   textColor,
   textDecoration,
+  textTransform,
   width,
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
@@ -53,28 +57,34 @@ const accentText = (
   color: TTextColor,
   bold?: boolean,
   small?: boolean,
-  primary?: boolean
+  primary?: boolean,
+  shadow?: TDropShadow
 ) =>
   classnames(
     textColor(color),
     fontFamily(primary ? 'font-primary' : undefined),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize(small ? 'text-sm' : undefined)
+    fontSize(small ? 'text-sm' : undefined),
+    dropShadow(shadow)
   )
 export function AccentText({
   color,
   bold,
   small,
   primary,
+  shadow,
   children,
 }: ChildrenProp & {
   color: TTextColor
   bold?: boolean
   small?: boolean
   primary?: boolean
+  shadow?: TDropShadow
 }) {
   return (
-    <span className={accentText(color, bold, small, primary)}>{children}</span>
+    <span className={accentText(color, bold, small, primary, shadow)}>
+      {children}
+    </span>
   )
 }
 
@@ -88,7 +98,7 @@ const bodyText = (
     color ? textColor(color) : textColor('text-formal-accent'),
     textAlign(center ? 'text-center' : undefined),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize(small ? 'text-sm' : 'text-sm', 'sm:text-base'),
+    fontSize(small ? 'text-xs' : 'text-sm', 'sm:text-base'),
     lineHeight('leading-6')
   )
 export function BodyText({
@@ -184,26 +194,6 @@ const linkText = (
     gradientColorStops(gradientFrom, gradientTo),
     fontWeight(bold ? 'font-bold' : 'font-normal')
   )
-
-export function GradientSpan({
-  children,
-  bold,
-  color,
-  gradientFrom,
-  gradientTo,
-}: ChildrenProp & {
-  bold?: boolean
-  color?: TTextColor
-  gradientFrom?: TGradientColorStops
-  gradientTo?: TGradientColorStops
-}) {
-  return (
-    <span className={linkText(bold, color, gradientFrom, gradientTo)}>
-      {children}
-    </span>
-  )
-}
-
 export function LinkText({
   url,
   bold,
@@ -305,7 +295,7 @@ export function SectionTitle({ children }: ChildrenProp) {
   return <p className={sectionTitle}>{children}</p>
 }
 
-const tinyText = (color: 'base' | 'primary' | 'error') =>
+const tinyText = (color: 'base' | 'primary' | 'error', fontPrimary?: boolean) =>
   classnames(
     textColor(
       color === 'error'
@@ -314,13 +304,50 @@ const tinyText = (color: 'base' | 'primary' | 'error') =>
         ? 'text-primary-semi-dimmed'
         : 'text-formal-accent'
     ),
-    fontFamily('font-primary'),
+    fontFamily(fontPrimary ? 'font-primary' : undefined),
     fontSize('text-xs'),
     lineHeight('leading-3')
   )
 export function TinyText({
-  color,
+  color = 'base',
+  fontPrimary,
   children,
-}: { color?: 'base' | 'primary' | 'error' } & ChildrenProp) {
-  return <span className={tinyText(color || 'base')}>{children}</span>
+}: {
+  color?: 'base' | 'primary' | 'error'
+  fontPrimary?: boolean
+} & ChildrenProp) {
+  return <div className={tinyText(color, fontPrimary)}>{children}</div>
+}
+
+const textButton = classnames(
+  textDecoration('underline'),
+  opacity('disabled:opacity-75')
+)
+export function TextButton(props: React.HTMLAttributes<HTMLButtonElement>) {
+  return <button className={textButton} {...props} />
+}
+
+const extraBoldText = (small?: boolean, extraLeading?: boolean) =>
+  classnames(
+    fontWeight('font-bold', 'md:font-extrabold'),
+    fontSize(
+      extraLeading ? 'text-2xl' : small ? 'text-xs' : 'text-xl',
+      'md:text-2xl'
+    ),
+    lineHeight(
+      extraLeading ? 'leading-8' : small ? 'leading-3' : 'leading-7',
+      extraLeading ? 'md:leading-10' : 'md:leading-8'
+    ),
+    textColor('text-primary-dark'),
+    textTransform('uppercase')
+  )
+export function ExtraBoldText({
+  small,
+  extraLeading,
+  children,
+}: ChildrenProp & {
+  small?: boolean
+  extraLeading?: boolean
+}) {
+  return <span className={extraBoldText(small, extraLeading)}>{children}</span>
 }

@@ -60,7 +60,7 @@ class WalletStore extends PersistableStore {
     return signature
   }
 
-  async mintDerivative(proof: BaseProof) {
+  mintDerivative(proof: BaseProof) {
     if (!provider) {
       throw new Error('No provider found')
     }
@@ -70,13 +70,15 @@ class WalletStore extends PersistableStore {
 
     if (proof instanceof ERC721Proof) {
       const builder = new ERC721BadgeBuilder(provider)
-      await builder.create(proof)
+      return builder.create(proof)
     }
 
     if (proof instanceof EmailProof) {
       const builder = new EmailBadgeBuilder(provider)
-      await builder.create(proof)
+      return builder.create(proof)
     }
+
+    throw new Error('Unknown proof type')
   }
 
   private async handleAccountChanged() {

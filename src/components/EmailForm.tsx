@@ -1,49 +1,47 @@
-import { GradientSpan } from 'components/Text'
 import Button from 'components/Button'
 import Email from 'icons/Email'
 import Input from 'components/Input'
+import useEmailForm from 'hooks/useEmailForm'
 
 export default function ({
   loading,
   onSubmit,
-  value,
-  onChange,
-  isValid,
+  submitType = 'primary',
   placeholder = 'Enter...',
   submitText = 'Submit',
 }: {
-  value: string
-  onChange: (e: Event) => void
-  isValid: boolean
   loading?: boolean
+  submitType?: 'primary' | 'secondary' | 'tertiary'
   onSubmit: (email: string) => void
   submitText?: string
   placeholder?: string
 }) {
+  const { email, setEmail, emailIsValid } = useEmailForm()
+
   return (
     <>
       <Input
         leftIcon={<Email />}
         type="email"
         placeholder={placeholder}
-        value={value}
-        onChange={onChange}
+        value={email}
+        onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
         onKeyDown={(event) =>
-          event.code === 'Enter' && isValid ? onSubmit(value) : undefined
+          event.code === 'Enter' && emailIsValid ? onSubmit(email) : undefined
         }
       />
       <Button
+        gradientFont={submitType !== 'primary'}
         loading={loading}
+        loadingOverflow
         fullWidth
         center
-        small
-        type="secondary"
-        disabled={!isValid}
-        onClick={() => onSubmit(value)}
+        small={submitType !== 'primary'}
+        type={submitType}
+        disabled={!emailIsValid}
+        onClick={() => onSubmit(email)}
       >
-        <GradientSpan bold gradientFrom="from-secondary" gradientTo="to-accent">
-          {submitText}
-        </GradientSpan>
+        {submitText}
       </Button>
     </>
   )

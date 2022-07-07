@@ -1,13 +1,8 @@
 import { TinyText } from 'components/Text'
 import Exclamation from 'icons/Exclamation'
-import classnames, {
-  display,
-  flex,
-  flexDirection,
-  space,
-} from 'classnames/tailwind'
+import classnames, { display, flexDirection, space } from 'classnames/tailwind'
 
-const svgContainer = classnames(display('flex'), flex('flex-1'))
+const svgContainer = display('flex')
 const messageBlock = classnames(
   display('flex'),
   flexDirection('flex-row'),
@@ -30,7 +25,9 @@ export default function ({
           <Exclamation />
         </div>
       )}
-      <TinyText color={state}>{text}</TinyText>
+      <TinyText fontPrimary color={state}>
+        {text}
+      </TinyText>
     </div>
   )
 }

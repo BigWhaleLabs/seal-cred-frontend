@@ -26,7 +26,9 @@ export default function () {
         </p>
         <Button
           type="tertiary"
+          small
           withArrow
+          gradientFont
           onClick={async () => {
             await WalletStore.connect(true)
           }}

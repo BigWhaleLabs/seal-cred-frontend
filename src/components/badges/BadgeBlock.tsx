@@ -5,14 +5,24 @@ import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import BaseProof from 'helpers/BaseProof'
 import Button from 'components/Button'
+import ContractsStore from 'stores/ContractsStore'
 import EmailBadge from 'icons/EmailBadge'
 import EmailProof from 'helpers/EmailProof'
 import Erc721Badge from 'icons/Erc721Badge'
+import MintedToken from 'models/MintedToken'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import handleError from 'helpers/handleError'
 
-function Badge({ proof }: { proof: BaseProof }) {
+function Badge({
+  proof,
+  onMinted,
+  onMintFailed,
+}: {
+  proof: BaseProof
+  onMinted?: (minted?: MintedToken[]) => void
+  onMintFailed?: (minted?: MintedToken[]) => void
+}) {
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
 
@@ -25,8 +35,11 @@ function Badge({ proof }: { proof: BaseProof }) {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
 
-      await WalletStore.mintDerivative(proof)
+      const transaction = await WalletStore.mintDerivative(proof)
+      const mintedBadge =
+        ContractsStore.connectedAccounts[account].applyTransaction(transaction)
       ProofStore.deleteProof(proof)
+      if (onMinted) onMinted(mintedBadge)
     } catch (error) {
       if (
         proof &&
@@ -34,6 +47,7 @@ function Badge({ proof }: { proof: BaseProof }) {
         error.message.includes('This ZK proof has already been used')
       ) {
         ProofStore.deleteProof(proof)
+        if (onMintFailed) onMintFailed()
         handleError(
           new Error(
             'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'
@@ -66,10 +80,18 @@ function Badge({ proof }: { proof: BaseProof }) {
   )
 }
 
-export default function ({ proof }: { proof: BaseProof }) {
+export default function ({
+  proof,
+  onMinted,
+  onMintFailed,
+}: {
+  proof: BaseProof
+  onMinted?: (minted?: MintedToken[]) => void
+  onMintFailed?: (minted?: MintedToken[]) => void
+}) {
   return (
     <BadgeWrapper minted={false}>
-      <Badge proof={proof} />
+      <Badge proof={proof} onMinted={onMinted} onMintFailed={onMintFailed} />
     </BadgeWrapper>
   )
 }
