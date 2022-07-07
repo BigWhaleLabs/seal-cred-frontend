@@ -27,6 +27,7 @@ export default function EmailFlowForm({
 }) {
   const { emailProofsCompleted } = useSnapshot(proofStore)
   const { emailDomain } = useSnapshot(EmailDomainStore)
+  const hasProofsCompleted = emailProofsCompleted.length > 0
 
   return (
     <>
@@ -35,7 +36,7 @@ export default function EmailFlowForm({
           ? 'A token has been sent to your email!'
           : 'Zero knowledge proof for work'}
       </HeaderText>
-      {!domain && emailProofsCompleted.length === 0 && (
+      {!domain && !hasProofsCompleted && (
         <BodyText>
           <span>
             <AccentText color="text-accent">SealCred</AccentText>
@@ -68,7 +69,7 @@ export default function EmailFlowForm({
           Be sure to check your spam folder if you don’t see the email at first.
         </TinyText>
       </div>
-      {!domain && emailProofsCompleted.length > 0 && (
+      {!domain && hasProofsCompleted && (
         <>
           <Separator color="accent">OR</Separator>
           <BodyText center>Select a proof to continue</BodyText>
