@@ -20,7 +20,9 @@ export default function () {
   return (
     <ProofSection title={<BodyText>NFTs</BodyText>}>
       <ReadyERC721ProofsList />
-      {account && <AvailableProofsList />}
+      {account && (
+        <AvailableProofsList proofs={proofAddressesAvailableToCreate} />
+      )}
       {nothingToGenerate && (
         <HintCard small>
           <HintText bold center>
