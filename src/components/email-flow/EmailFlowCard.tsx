@@ -21,7 +21,9 @@ export default function () {
   const [domain, setDomain] = useState('')
   const [proof, setProof] = useState<EmailProof | undefined>()
   const [minted, setMinted] = useState<MintedToken[] | undefined>()
+
   const hasProofsCompleted = emailProofsCompleted.length > 0
+  const offerChooseCreatedProof = !domain && hasProofsCompleted
 
   function onMinted(minted?: MintedToken[]) {
     if (minted) setMinted(minted)
@@ -60,7 +62,7 @@ export default function () {
                   onUpdateDomain={setDomain}
                   onSelectProof={setProof}
                 />
-                {!domain && hasProofsCompleted && (
+                {offerChooseCreatedProof && (
                   <>
                     <Separator>OR</Separator>
                     <EmailFlowListProofs onSelectProof={setProof} />
