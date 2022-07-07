@@ -159,7 +159,7 @@ export default function ({
   loadingOverflow,
   ...rest
 }: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
-  const showContent = loadingOverflow ? !loading : true
+  const showContent = !loadingOverflow || !loading
 
   return (
     <button
