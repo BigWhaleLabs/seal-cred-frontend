@@ -10,7 +10,6 @@ import {
   fontSize,
   fontWeight,
   gradientColorStops,
-  letterSpacing,
   lineHeight,
   opacity,
   textAlign,

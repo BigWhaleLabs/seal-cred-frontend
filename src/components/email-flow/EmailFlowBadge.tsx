@@ -1,19 +1,26 @@
 import { BodyText, HeaderText } from 'components/Text'
-import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
 import Button from 'components/Button'
+import MintedBadgeBlock from 'components/badges/MintedBadgeBlock'
+import MintedToken from 'models/MintedToken'
 
 export default function ({
-  contractAddress,
+  minted,
   resetEmail,
 }: {
-  contractAddress: string
+  minted: MintedToken[]
   resetEmail: () => void
 }) {
   return (
     <>
       <HeaderText extraLeading>Congrats!</HeaderText>
       <BodyText>You’ve minted a zkBadge verifying your work email!</BodyText>
-      <BadgesOwnedForContract contractAddress={contractAddress} />
+      {minted.map(({ address, tokenId }) => (
+        <MintedBadgeBlock
+          key={`${address}-${tokenId}`}
+          derivativeAddress={address}
+          tokenId={+tokenId}
+        />
+      ))}
       <Button fullWidth center small type="secondary" onClick={resetEmail}>
         Try another email
       </Button>

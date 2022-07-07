@@ -9,11 +9,18 @@ import ContractsStore from 'stores/ContractsStore'
 import EmailBadge from 'icons/EmailBadge'
 import EmailProof from 'helpers/EmailProof'
 import Erc721Badge from 'icons/Erc721Badge'
+import MintedToken from 'models/MintedToken'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import handleError from 'helpers/handleError'
 
-function Badge({ proof }: { proof: BaseProof }) {
+function Badge({
+  proof,
+  onMint,
+}: {
+  proof: BaseProof
+  onMint?: (minted?: MintedToken[]) => void
+}) {
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
 
@@ -27,8 +34,10 @@ function Badge({ proof }: { proof: BaseProof }) {
       if (!proof?.result) throw new Error('No proof found')
 
       const transaction = await WalletStore.mintDerivative(proof)
-      ContractsStore.connectedAccounts[account].applyTransaction(transaction)
+      const minted =
+        ContractsStore.connectedAccounts[account].applyTransaction(transaction)
       ProofStore.deleteProof(proof)
+      if (onMint) onMint(minted)
     } catch (error) {
       if (
         proof &&
@@ -36,6 +45,7 @@ function Badge({ proof }: { proof: BaseProof }) {
         error.message.includes('This ZK proof has already been used')
       ) {
         ProofStore.deleteProof(proof)
+        if (onMint) onMint()
         handleError(
           new Error(
             'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'
@@ -68,10 +78,16 @@ function Badge({ proof }: { proof: BaseProof }) {
   )
 }
 
-export default function ({ proof }: { proof: BaseProof }) {
+export default function ({
+  proof,
+  onMint,
+}: {
+  proof: BaseProof
+  onMint?: (minted?: MintedToken[]) => void
+}) {
   return (
     <BadgeWrapper minted={false}>
-      <Badge proof={proof} />
+      <Badge proof={proof} onMint={onMint} />
     </BadgeWrapper>
   )
 }

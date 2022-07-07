@@ -4,25 +4,31 @@ import { useState } from 'preact/hooks'
 import Card from 'components/Card'
 import CardContainer from 'components/proofs/CardContainer'
 import ConnectAccount from 'components/proofs/ConnectAccount'
-import ContractsStore from 'stores/ContractsStore'
 import EmailFlowBadge from 'components/email-flow/EmailFlowBadge'
 import EmailFlowForm from 'components/email-flow/EmailFlowForm'
 import EmailFlowProof from 'components/email-flow/EmailFlowProof'
 import EmailProof from 'helpers/EmailProof'
 import LoadingCard from 'components/proofs/LoadingCard'
-import SealCredStore from 'stores/SealCredStore'
+import MintedToken from 'models/MintedToken'
 import WalletStore from 'stores/WalletStore'
 
 export default function () {
-  const { contractsOwned } = useSnapshot(ContractsStore)
-  const { emailLedger } = useSnapshot(SealCredStore)
   const { account } = useSnapshot(WalletStore)
   const [domain, setDomain] = useState('')
   const [proof, setProof] = useState<EmailProof | undefined>()
+  const [minted, setMinted] = useState<MintedToken[] | undefined>()
 
-  const ledgerRecord = domain && emailLedger[domain]
-  const minted =
-    ledgerRecord && contractsOwned.includes(ledgerRecord.derivativeContract)
+  function onMint(minted?: MintedToken[]) {
+    if (minted) setMinted(minted)
+    setProof(undefined)
+    setDomain('')
+  }
+
+  function onReset() {
+    setMinted(undefined)
+    setProof(undefined)
+    setDomain('')
+  }
 
   return (
     <CardContainer>
@@ -34,13 +40,10 @@ export default function () {
       >
         {account ? (
           <Suspense fallback={<LoadingCard />}>
-            {minted && !domain ? (
-              <EmailFlowBadge
-                contractAddress={ledgerRecord.derivativeContract}
-                resetEmail={() => setDomain('')}
-              />
+            {minted ? (
+              <EmailFlowBadge minted={minted} resetEmail={onReset} />
             ) : proof ? (
-              <EmailFlowProof proof={proof} />
+              <EmailFlowProof onMint={onMint} proof={proof} />
             ) : (
               <EmailFlowForm
                 domain={domain}
