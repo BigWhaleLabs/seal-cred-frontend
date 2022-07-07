@@ -4,29 +4,38 @@ import { useState } from 'preact/hooks'
 import Card from 'components/Card'
 import CardContainer from 'components/proofs/CardContainer'
 import ConnectAccount from 'components/proofs/ConnectAccount'
-import ContractsStore from 'stores/ContractsStore'
 import EmailFlowBadge from 'components/email-flow/EmailFlowBadge'
 import EmailFlowForm from 'components/email-flow/EmailFlowForm'
+import EmailFlowListProofs from 'components/email-flow/EmailFlowListProofs'
 import EmailFlowProof from 'components/email-flow/EmailFlowProof'
+import EmailProof from 'helpers/EmailProof'
 import LoadingCard from 'components/proofs/LoadingCard'
-import SealCredStore from 'stores/SealCredStore'
+import MintedToken from 'models/MintedToken'
+import ProofStore from 'stores/ProofStore'
+import Separator from 'components/Separator'
 import WalletStore from 'stores/WalletStore'
-import proofStore from 'stores/ProofStore'
 
 export default function () {
-  const { contractsOwned } = useSnapshot(ContractsStore)
-  const { emailLedger } = useSnapshot(SealCredStore)
+  const { emailProofsCompleted } = useSnapshot(ProofStore)
   const { account } = useSnapshot(WalletStore)
-  const { emailProofsCompleted } = useSnapshot(proofStore)
   const [domain, setDomain] = useState('')
+  const [proof, setProof] = useState<EmailProof | undefined>()
+  const [minted, setMinted] = useState<MintedToken[] | undefined>()
 
-  const ledgerRecord = domain && emailLedger[domain]
-  const minted =
-    ledgerRecord && contractsOwned.includes(ledgerRecord.derivativeContract)
+  const hasProofsCompleted = emailProofsCompleted.length > 0
+  const offerChooseCreatedProof = !domain && hasProofsCompleted
 
-  const proof = emailProofsCompleted.find(
-    (emailProof) => emailProof.domain === domain
-  )
+  function onMinted(minted?: MintedToken[]) {
+    if (minted) setMinted(minted)
+    setProof(undefined)
+    setDomain('')
+  }
+
+  function onReset() {
+    setMinted(undefined)
+    setProof(undefined)
+    setDomain('')
+  }
 
   return (
     <CardContainer>
@@ -39,14 +48,27 @@ export default function () {
         {account ? (
           <Suspense fallback={<LoadingCard />}>
             {minted ? (
-              <EmailFlowBadge
-                contractAddress={ledgerRecord.derivativeContract}
-                resetEmail={() => setDomain('')}
-              />
+              <EmailFlowBadge minted={minted} resetEmail={onReset} />
             ) : proof ? (
-              <EmailFlowProof proof={proof} />
+              <EmailFlowProof
+                onMinted={onMinted}
+                onMintFailed={onReset}
+                proof={proof}
+              />
             ) : (
-              <EmailFlowForm domain={domain} onUpdateDomain={setDomain} />
+              <>
+                <EmailFlowForm
+                  domain={domain}
+                  onUpdateDomain={setDomain}
+                  onSelectProof={setProof}
+                />
+                {offerChooseCreatedProof && (
+                  <>
+                    <Separator>OR</Separator>
+                    <EmailFlowListProofs onSelectProof={setProof} />
+                  </>
+                )}
+              </>
             )}
           </Suspense>
         ) : (

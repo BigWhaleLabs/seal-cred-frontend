@@ -7,6 +7,7 @@ import {
 } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import EmailDomainStore from 'stores/EmailDomainStore'
+import EmailProof from 'helpers/EmailProof'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import classnames, { space, width } from 'classnames/tailwind'
 
@@ -15,9 +16,11 @@ const proofLineContainer = classnames(space('space-y-4'), width('w-full'))
 export default function EmailFlowForm({
   domain,
   onUpdateDomain,
+  onSelectProof,
 }: {
   domain: string
   onUpdateDomain: (domain: string) => void
+  onSelectProof: (proof: EmailProof) => void
 }) {
   const { emailDomain } = useSnapshot(EmailDomainStore)
 
@@ -55,7 +58,7 @@ export default function EmailFlowForm({
             </>
           }
           onChange={onUpdateDomain}
-          onCreate={onUpdateDomain}
+          onCreate={onSelectProof}
         />
         <TinyText color="primary">
           Be sure to check your spam folder if you don’t see the email at first.

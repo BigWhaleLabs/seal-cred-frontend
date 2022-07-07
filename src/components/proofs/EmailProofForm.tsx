@@ -5,6 +5,7 @@ import { sendEmail } from 'helpers/attestor'
 import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/EmailForm'
+import EmailProof from 'helpers/EmailProof'
 import ProofStore from 'stores/ProofStore'
 import TextForm from 'components/TextForm'
 import checkDomainToken from 'helpers/checkDomainToken'
@@ -19,7 +20,7 @@ export default function ({
   domain: string
   submitType?: 'primary' | 'secondary' | 'tertiary'
   description: ComponentChildren
-  onCreate: (domain: string) => void
+  onCreate: (proof: EmailProof) => void
   onChange: (domain: string) => void
 }) {
   const [loading, setLoading] = useState(false)
@@ -52,11 +53,13 @@ export default function ({
     setLoading(true)
     setError(undefined)
     try {
-      if (secret) await ProofStore.generateEmail(domain, secret)
+      if (secret) {
+        const proof = await ProofStore.generateEmail(domain, secret)
+        if (proof) onCreate(proof)
+      }
     } finally {
       setLoading(false)
       resetEmail(true)
-      onCreate(domain)
     }
   }
 
