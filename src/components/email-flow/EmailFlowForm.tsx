@@ -11,7 +11,7 @@ import EmailProof from 'helpers/EmailProof'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 import Separator from 'components/Separator'
-import classnames, { space, width } from 'classnames/tailwind'
+import classnames, { cursor, space, width } from 'classnames/tailwind'
 import proofStore from 'stores/ProofStore'
 
 const proofLineContainer = classnames(space('space-y-4'), width('w-full'))
@@ -73,7 +73,10 @@ export default function EmailFlowForm({
           <Separator color="accent">OR</Separator>
           <BodyText center>Select a proof to continue</BodyText>
           {Array.from(emailProofsCompleted).map((proof, index) => (
-            <div onClick={() => onSelectProof(proof)}>
+            <div
+              onClick={() => onSelectProof(proof)}
+              className={cursor('cursor-pointer')}
+            >
               <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
             </div>
           ))}
