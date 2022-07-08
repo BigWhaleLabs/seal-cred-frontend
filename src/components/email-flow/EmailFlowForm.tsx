@@ -6,6 +6,7 @@ import {
   TinyText,
 } from 'components/Text'
 import { useSnapshot } from 'valtio'
+import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProof from 'helpers/EmailProof'
 import EmailProofForm from 'components/proofs/EmailProofForm'
@@ -23,6 +24,7 @@ export default function EmailFlowForm({
   onSelectProof: (proof: EmailProof) => void
 }) {
   const { emailDomain } = useSnapshot(EmailDomainStore)
+  const [error, setError] = useState<string | undefined>()
 
   return (
     <>
@@ -59,6 +61,8 @@ export default function EmailFlowForm({
           }
           onChange={onUpdateDomain}
           onCreate={onSelectProof}
+          error={error}
+          onError={setError}
         />
         <TinyText color="primary">
           Be sure to check your spam folder if you don’t see the email at first.
