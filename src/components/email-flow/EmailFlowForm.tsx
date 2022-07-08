@@ -6,6 +6,7 @@ import {
   TinyText,
 } from 'components/Text'
 import { useSnapshot } from 'valtio'
+import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProof from 'helpers/EmailProof'
 import EmailProofForm from 'components/proofs/EmailProofForm'
@@ -23,6 +24,12 @@ export default function EmailFlowForm({
   onSelectProof: (proof: EmailProof) => void
 }) {
   const { emailDomain } = useSnapshot(EmailDomainStore)
+  const [error, setError] = useState<string | undefined>()
+
+  function jumpToToken() {
+    setError('')
+    onUpdateDomain(emailDomain)
+  }
 
   return (
     <>
@@ -51,7 +58,7 @@ export default function EmailFlowForm({
               containing a token. You’ll come back here and enter your token to
               receive your zkBadge.{' '}
               {emailDomain ? (
-                <TextButton onClick={() => onUpdateDomain(emailDomain)}>
+                <TextButton onClick={() => jumpToToken()}>
                   Have an existing token?
                 </TextButton>
               ) : null}
@@ -59,6 +66,8 @@ export default function EmailFlowForm({
           }
           onChange={onUpdateDomain}
           onCreate={onSelectProof}
+          error={error}
+          onError={setError}
         />
         <TinyText color="primary">
           Be sure to check your spam folder if you don’t see the email at first.

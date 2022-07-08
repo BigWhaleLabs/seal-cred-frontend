@@ -14,18 +14,21 @@ export default function ({
   domain,
   description,
   submitType = 'secondary',
+  error,
+  onError,
   onCreate,
   onChange,
 }: {
   domain: string
   submitType?: 'primary' | 'secondary' | 'tertiary'
   description: ComponentChildren
+  error: string | undefined
+  onError: (error: string | undefined) => void
   onCreate: (proof: EmailProof) => void
   onChange: (domain: string) => void
 }) {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState<string>('')
-  const [error, setError] = useState<string | undefined>()
 
   function resetEmail(withStore = false) {
     if (withStore) EmailDomainStore.emailDomain = ''
@@ -46,12 +49,12 @@ export default function ({
   }
 
   async function onGenerateProof(secret: string) {
-    if (!domain) return setError("Looks like you didn't enter an email.")
+    if (!domain) return onError("Looks like you didn't enter an email.")
     if (!checkDomainToken(secret))
-      return setError('This is an invalid token. Please try again.')
+      return onError('This is an invalid token. Please try again.')
 
     setLoading(true)
-    setError(undefined)
+    onError(undefined)
     try {
       if (secret) {
         const proof = await ProofStore.generateEmail(domain, secret)

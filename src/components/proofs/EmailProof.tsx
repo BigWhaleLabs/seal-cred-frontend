@@ -73,12 +73,18 @@ const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 export default function () {
   const [domain, setDomain] = useState('')
   const [open, setOpen] = useState(false)
+  const [error, setError] = useState<string | undefined>()
   const { xs } = useBreakpoints()
   const { emailDomain } = useSnapshot(EmailDomainStore)
 
   function onCreate() {
     setOpen(false)
     setDomain('')
+  }
+
+  function jumpToToken() {
+    setError(undefined)
+    setDomain(emailDomain)
   }
 
   const popoverText =
@@ -124,7 +130,7 @@ export default function () {
                 (check the spam folder). Then, use the token here to create zk
                 proof.{' '}
                 {emailDomain ? (
-                  <TextButton onClick={() => setDomain(emailDomain)}>
+                  <TextButton onClick={jumpToToken}>
                     Have an existing token?
                   </TextButton>
                 ) : null}
@@ -132,6 +138,8 @@ export default function () {
             }
             onCreate={onCreate}
             onChange={setDomain}
+            onError={setError}
+            error={error}
           />
         )}
       </div>
