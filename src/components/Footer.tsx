@@ -1,5 +1,6 @@
 import { BodyText, SocialLink } from 'components/Text'
 import Discord from 'icons/Discord'
+import Spacer from 'components/Spacer'
 import Twitter from 'icons/Twitter'
 import classnames, {
   alignItems,
@@ -24,7 +25,7 @@ const socialContainerCard = classnames(
   backgroundColor('bg-primary-background'),
   space('space-y-4'),
   padding('p-4'),
-  margin('mx-auto'),
+  margin('mx-auto', 'mb-10'),
   borderRadius('rounded-2xl')
 )
 
@@ -36,23 +37,26 @@ const socialContainer = classnames(
 
 export default function () {
   const { md } = useBreakpoints()
-  if (md) return null
+  if (md) return <Spacer />
 
   return (
-    <div className={socialContainerCard}>
-      <div className={padding('px-8')}>
-        <BodyText center>
-          Stay up to date, provide feedback, or just hang.
-        </BodyText>
+    <div>
+      <div className={socialContainerCard}>
+        <div className={padding('px-8')}>
+          <BodyText center>
+            Stay up to date, provide feedback, or just hang.
+          </BodyText>
+        </div>
+        <div className={socialContainer}>
+          <SocialLink tertiary url="https://discord.gg/NHk96pPZUV">
+            <Discord />
+          </SocialLink>
+          <SocialLink tertiary url="https://twitter.com/bigwhalelabs">
+            <Twitter />
+          </SocialLink>
+        </div>
       </div>
-      <div className={socialContainer}>
-        <SocialLink tertiary url="https://discord.gg/NHk96pPZUV">
-          <Discord />
-        </SocialLink>
-        <SocialLink tertiary url="https://twitter.com/bigwhalelabs">
-          <Twitter />
-        </SocialLink>
-      </div>
+      <Spacer />
     </div>
   )
 }
