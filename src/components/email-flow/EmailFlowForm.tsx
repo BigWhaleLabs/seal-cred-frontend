@@ -26,6 +26,11 @@ export default function EmailFlowForm({
   const { emailDomain } = useSnapshot(EmailDomainStore)
   const [error, setError] = useState<string | undefined>()
 
+  function jumpToToken() {
+    setError('')
+    onUpdateDomain(emailDomain)
+  }
+
   return (
     <>
       <HeaderText extraLeading>
@@ -53,7 +58,7 @@ export default function EmailFlowForm({
               containing a token. You’ll come back here and enter your token to
               receive your zkBadge.{' '}
               {emailDomain ? (
-                <TextButton onClick={() => onUpdateDomain(emailDomain)}>
+                <TextButton onClick={() => jumpToToken()}>
                   Have an existing token?
                 </TextButton>
               ) : null}
