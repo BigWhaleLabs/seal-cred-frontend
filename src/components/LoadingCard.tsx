@@ -27,16 +27,14 @@ export default function ({
   title,
   subtitle,
 }: {
-  title?: string
-  subtitle?: string
+  title: string
+  subtitle: string
 }) {
   const { cardColor } = useContext(CardContext)
 
   return (
     <div className={loaderContainer}>
-      {!!title && !!subtitle && (
-        <Title titleColor={cardColor} title={title} subtitle={subtitle} />
-      )}
+      <Title titleColor={cardColor} title={title} subtitle={subtitle} />
       <div className={iconContainer}>
         <SealLoading color={cardColor} />
       </div>

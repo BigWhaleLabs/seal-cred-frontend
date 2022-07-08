@@ -1,25 +1,24 @@
-import { Suspense, SuspenseList } from 'preact/compat'
-import CardTitle from 'components/CardTitle'
+import { Suspense } from 'preact/compat'
 import ListTitle from 'components/proofs/ListTitle'
-import LoadingCard from 'components/LoadingCard'
+import LoadingCard from 'components/proofs/LoadingCard'
 import ProofList from 'components/proofs/ProofList'
+import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
+
+function ListSuspended() {
+  const proofAddressesAvailableToCreate = useProofAddressesAvailableToCreate()
+
+  return (
+    <>
+      <ListTitle available={proofAddressesAvailableToCreate} />
+      <ProofList available={proofAddressesAvailableToCreate} />
+    </>
+  )
+}
 
 export default function () {
   return (
-    <SuspenseList revealOrder="together">
-      <Suspense
-        fallback={
-          <CardTitle
-            title="Loading..."
-            subtitle="Please, wait until I load supported NFTs, it takes time"
-          />
-        }
-      >
-        <ListTitle />
-      </Suspense>
-      <Suspense fallback={<LoadingCard title="" subtitle="" />}>
-        <ProofList />
-      </Suspense>
-    </SuspenseList>
+    <Suspense fallback={<LoadingCard />}>
+      <ListSuspended />
+    </Suspense>
   )
 }
