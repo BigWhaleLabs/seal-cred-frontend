@@ -20,6 +20,7 @@ import {
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
 import Color from 'models/Color'
+import classNamesToString from 'helpers/classNamesToString'
 import colorToTextColor from 'helpers/colorToTextColor'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -232,8 +233,8 @@ const socialLink = (tertiary?: boolean) =>
   classnames(
     lineHeight('leading-6'),
     fontSize('text-base'),
-    textDecoration('no-underline', 'hover:underline'),
-    textColor(tertiary ? 'hover:text-tertiary' : 'text-formal-accent')
+    textDecoration('no-underline', 'active:underline'),
+    textColor(tertiary ? 'active:text-tertiary' : 'text-formal-accent')
   )
 export function SocialLink({
   url,
@@ -241,7 +242,11 @@ export function SocialLink({
   children,
 }: ChildrenProp & { url: string; tertiary?: boolean }) {
   return (
-    <a className={socialLink(tertiary)} href={url} target="_blank">
+    <a
+      className={classNamesToString(socialLink(tertiary), 'hover-tertiary')}
+      href={url}
+      target="_blank"
+    >
       {children}
     </a>
   )

@@ -7,6 +7,7 @@ type AllowedExtraClassnames =
   | 'custom-scrollbar-body'
   | 'custom-scrollbar-thumb'
   | 'custom-qr-code'
+  | 'hover-tertiary'
 
 export default function (
   ...classNames: (AllowedExtraClassnames | TTailwindString | undefined | null)[]

@@ -47,6 +47,12 @@ body {
       0 0/2rem 2rem;
   }
 }
+@media (hover: hover) and (pointer: fine) {
+  .hover-tertiary:hover {
+    color: #01feb6;
+    text-decoration: underline;
+  }
+}
 
 /* Scrollbar */
 ::-webkit-scrollbar {
