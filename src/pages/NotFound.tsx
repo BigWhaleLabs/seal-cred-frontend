@@ -6,6 +6,7 @@ import {
   flexDirection,
   justifyContent,
   space,
+  textAlign,
 } from 'classnames/tailwind'
 import { useNavigate } from 'react-router-dom'
 import Button from 'components/Button'
@@ -14,7 +15,8 @@ import Card from 'components/Card'
 const container = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-center')
+  alignItems('items-center'),
+  textAlign('text-center')
 )
 const bodyWrapper = classnames(
   display('flex'),
