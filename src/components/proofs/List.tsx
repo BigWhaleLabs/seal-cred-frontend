@@ -9,8 +9,8 @@ function ListSuspended() {
 
   return (
     <>
-      <ListTitle available={proofAddressesAvailableToCreate} />
-      <ProofList available={proofAddressesAvailableToCreate} />
+      <ListTitle avaliableToProof={proofAddressesAvailableToCreate} />
+      <ProofList avaliableToProof={proofAddressesAvailableToCreate} />
     </>
   )
 }
