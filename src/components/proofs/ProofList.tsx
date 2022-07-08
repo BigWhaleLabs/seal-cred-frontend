@@ -12,14 +12,14 @@ import Scrollbar from 'components/Scrollbar'
 import proofStore from 'stores/ProofStore'
 import walletStore from 'stores/WalletStore'
 
-export default function ({ available }: { available: string[] }) {
+export default function ({ avaliableToProof }: { avaliableToProof: string[] }) {
   const { account } = useSnapshot(walletStore)
   const { emailProofsCompleted } = useSnapshot(ProofStore)
   const { ERC721ProofsCompleted } = useSnapshot(proofStore)
   const { proofsCompleted } = useSnapshot(proofStore)
 
   const nothingToGenerate =
-    ERC721ProofsCompleted.length === 0 && available.length === 0
+    ERC721ProofsCompleted.length === 0 && avaliableToProof.length === 0
 
   return (
     <>
@@ -27,7 +27,7 @@ export default function ({ available }: { available: string[] }) {
         <div className={space('space-y-2')}>
           <ProofSection title={<BodyText>NFTs</BodyText>}>
             <ReadyERC721ProofsList />
-            {account && <AvailableProofsList proofs={available} />}
+            {account && <AvailableProofsList proofs={avaliableToProof} />}
             {nothingToGenerate && (
               <HintCard small>
                 <HintText bold center>
