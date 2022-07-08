@@ -21,7 +21,7 @@ export default abstract class BaseBadgeBuilder {
 
   abstract createLedger(provider: Web3Provider, address: string): SimpleLedger
 
-  async mint(message: string, proofResult?: ProofResult) {
+  async mint(proofResult?: ProofResult) {
     if (!proofResult) throw new Error('Invalid proof')
 
     // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber

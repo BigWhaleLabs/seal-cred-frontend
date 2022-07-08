@@ -14,6 +14,6 @@ export default class ERC721BadgeBuilder extends BaseBadgeBuilder {
   }
 
   create(proof: ERC721Proof) {
-    return this.mint(proof.contract, proof.result)
+    return this.mint(proof.result)
   }
 }
