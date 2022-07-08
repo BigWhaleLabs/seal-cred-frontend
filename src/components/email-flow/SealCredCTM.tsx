@@ -8,7 +8,7 @@ export default function () {
   const navigate = useNavigate()
 
   return (
-    <div className={margin('md:!mb-10')}>
+    <div className={margin('md:!mb-12')}>
       <Card color="tertiary" shadow onlyWrap>
         <AccentText color="text-tertiary">
           Create more zkBadges with SealCred.

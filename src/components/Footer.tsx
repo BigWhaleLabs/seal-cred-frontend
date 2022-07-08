@@ -24,7 +24,7 @@ const socialContainerCard = classnames(
   backgroundColor('bg-primary-background'),
   space('space-y-4'),
   padding('p-4'),
-  margin('mx-auto'),
+  margin('mx-auto', '!mb-6'),
   borderRadius('rounded-2xl')
 )
 
