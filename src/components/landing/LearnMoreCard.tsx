@@ -9,7 +9,7 @@ const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
 
 export default function () {
   return (
-    <div className={margin('mb-2')}>
+    <div className={margin('md:mb-10', 'mb-2')}>
       <Card color="primary" shadow onlyWrap>
         <PrivacyDeath />
         <div className={bigWhaleLabsText}>
