@@ -1,6 +1,6 @@
+import { goerliDefaultProvider } from 'helpers/defaultProvider'
+import { goerliHeavyProvider } from 'helpers/heavyProvider'
 import { utils } from 'ethers'
-import defaultProvider from 'helpers/defaultProvider'
-import heavyProvider from 'helpers/heavyProvider'
 
 const transferEventInterface = new utils.Interface([
   'event Transfer(address indexed from, address indexed to, uint indexed tokenId)',
@@ -30,7 +30,7 @@ export default async function (
   addressToTokenIds: { [address: string]: Set<string> },
   skipTransactions: Set<string>
 ) {
-  const provider = fromBlock === 0 ? heavyProvider : defaultProvider
+  const provider = fromBlock === 0 ? goerliHeavyProvider : goerliDefaultProvider
   const receivedLogs = await provider.getLogs({
     fromBlock,
     toBlock,

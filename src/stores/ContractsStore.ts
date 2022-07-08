@@ -1,8 +1,8 @@
+import { goerliDefaultProvider } from 'helpers/defaultProvider'
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
 import ContractSynchronizer from 'helpers/ContractSynchronizer'
 import WalletStore from 'stores/WalletStore'
-import defaultProvider from 'helpers/defaultProvider'
 
 interface ContractsStoreType {
   connectedAccounts: { [account: string]: ContractSynchronizer }
@@ -18,7 +18,7 @@ const ContractsStore = proxy<ContractsStoreType>({
   currentBlock: undefined,
 
   fetchBlockNumber() {
-    return defaultProvider.getBlockNumber()
+    return goerliDefaultProvider.getBlockNumber()
   },
   async fetchMoreContractsOwned(accountChange) {
     if (!ContractsStore.currentBlock)
@@ -28,6 +28,8 @@ const ContractsStore = proxy<ContractsStoreType>({
       ContractsStore.contractsOwned = Promise.resolve([])
       return
     }
+
+    console.log(ContractsStore.currentBlock)
 
     if (!ContractsStore.connectedAccounts[WalletStore.account])
       ContractsStore.connectedAccounts[WalletStore.account] =
@@ -56,7 +58,7 @@ subscribeKey(WalletStore, 'account', () =>
   ContractsStore.fetchMoreContractsOwned(true)
 )
 
-defaultProvider.on('block', async (blockNumber: number) => {
+goerliDefaultProvider.on('block', async (blockNumber: number) => {
   ContractsStore.currentBlock = blockNumber
   await ContractsStore.fetchMoreContractsOwned()
 })

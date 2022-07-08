@@ -1,5 +1,5 @@
+import { goerliDefaultProvider } from 'helpers/defaultProvider'
 import { proxy } from 'valtio'
-import defaultProvider from 'helpers/defaultProvider'
 
 interface EnsStoreInterface {
   ensNames: { [address: string]: Promise<string | null> | undefined }
@@ -12,7 +12,7 @@ const EnsStore = proxy<EnsStoreInterface>({
     if (EnsStore.ensNames[address]) {
       return
     }
-    EnsStore.ensNames[address] = defaultProvider.lookupAddress(address)
+    EnsStore.ensNames[address] = goerliDefaultProvider.lookupAddress(address)
   },
 })
 

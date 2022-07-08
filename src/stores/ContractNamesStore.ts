@@ -1,7 +1,7 @@
 import { ERC721__factory } from '@big-whale-labs/seal-cred-ledger-contract'
+import { goerliDefaultProvider } from 'helpers/defaultProvider'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
-import defaultProvider from 'helpers/defaultProvider'
 
 class ContractNamesStore extends PersistableStore {
   savedContractNames = {} as {
@@ -28,7 +28,7 @@ class ContractNamesStore extends PersistableStore {
     if (this.contractNames[address]) {
       return
     }
-    const contract = ERC721__factory.connect(address, defaultProvider)
+    const contract = ERC721__factory.connect(address, goerliDefaultProvider)
     this.requestedNames[address] = contract
       .name()
       .then((result) => {
