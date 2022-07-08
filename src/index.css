@@ -23,6 +23,14 @@ body {
     )
     0 0/3rem 3rem;
 }
+
+::selection {
+  background: #ff7bed35; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #ff7bed35; /* Gecko Browsers */
+}
+
 /* Add hyphens to the text block */
 .hyphensAuto {
   hyphens: auto;

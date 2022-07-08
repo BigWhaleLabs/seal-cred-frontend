@@ -61,7 +61,11 @@ const accentText = (
   shadow?: TDropShadow
 ) =>
   classnames(
-    textColor(color),
+    textColor(
+      color === 'text-primary-semi-dimmed'
+        ? { 'selection:text-primary': true, 'text-primary-semi-dimmed': true }
+        : color
+    ),
     fontFamily(primary ? 'font-primary' : undefined),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
     fontSize(small ? 'text-sm' : undefined),
@@ -155,7 +159,7 @@ export function LogoText({ children }: ChildrenProp) {
   return <span className={logoText}>{children}</span>
 }
 const logoSubText = classnames(
-  textColor('text-primary-semi-dimmed'),
+  textColor('text-primary-semi-dimmed', 'selection:text-primary'),
   fontWeight('font-bold'),
   fontSize('text-xs')
 )
@@ -301,7 +305,7 @@ const tinyText = (color: 'base' | 'primary' | 'error', fontPrimary?: boolean) =>
       color === 'error'
         ? 'text-error'
         : color === 'primary'
-        ? 'text-primary-semi-dimmed'
+        ? { 'text-primary-semi-dimmed': true, 'selection:text-primary': true }
         : 'text-formal-accent'
     ),
     fontFamily(fontPrimary ? 'font-primary' : undefined),
