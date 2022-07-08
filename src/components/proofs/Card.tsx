@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import Card from 'components/Card'
 import CardContainer from 'components/proofs/CardContainer'
@@ -17,9 +16,7 @@ export default function () {
         {walletLoading ? (
           <LoadingCard />
         ) : account ? (
-          <Suspense fallback={<LoadingCard />}>
-            <List />
-          </Suspense>
+          <List />
         ) : (
           <ConnectAccount />
         )}

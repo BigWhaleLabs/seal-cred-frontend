@@ -7,16 +7,23 @@ import defaultProvider from 'helpers/defaultProvider'
 interface ContractsStoreType {
   connectedAccounts: { [account: string]: ContractSynchronizer }
   contractsOwned: Promise<string[]>
-  fetchMoreContractsOwned: (
-    blockNumber: number,
-    accountChange?: boolean
-  ) => Promise<void>
+  currentBlock?: number
+  fetchBlockNumber: () => Promise<number>
+  fetchMoreContractsOwned: (accountChange?: boolean) => Promise<void>
 }
 
 const ContractsStore = proxy<ContractsStoreType>({
   connectedAccounts: {},
   contractsOwned: Promise.resolve([]),
-  async fetchMoreContractsOwned(blockNumber: number, accountChange?: boolean) {
+  currentBlock: undefined,
+
+  fetchBlockNumber() {
+    return defaultProvider.getBlockNumber()
+  },
+  async fetchMoreContractsOwned(accountChange) {
+    if (!ContractsStore.currentBlock)
+      ContractsStore.currentBlock = await ContractsStore.fetchBlockNumber()
+
     if (!WalletStore.account) {
       ContractsStore.contractsOwned = Promise.resolve([])
       return
@@ -30,15 +37,14 @@ const ContractsStore = proxy<ContractsStoreType>({
       !ContractsStore.connectedAccounts[WalletStore.account] ||
       !ContractsStore.contractsOwned
     ) {
-      ContractsStore.contractsOwned =
-        ContractsStore.connectedAccounts[WalletStore.account].getOwnedERC721(
-          blockNumber
-        )
+      ContractsStore.contractsOwned = ContractsStore.connectedAccounts[
+        WalletStore.account
+      ].getOwnedERC721(ContractsStore.currentBlock)
     } else {
       const oldContractsOwned = (await ContractsStore.contractsOwned) || []
       const newContractsOwned = await ContractsStore.connectedAccounts[
         WalletStore.account
-      ].getOwnedERC721(blockNumber)
+      ].getOwnedERC721(ContractsStore.currentBlock)
       ContractsStore.contractsOwned = Promise.resolve(
         Array.from(new Set([...oldContractsOwned, ...newContractsOwned]))
       )
@@ -46,13 +52,13 @@ const ContractsStore = proxy<ContractsStoreType>({
   },
 })
 
-subscribeKey(WalletStore, 'account', async () => {
-  const blockNumber = await defaultProvider.getBlockNumber()
-  return ContractsStore.fetchMoreContractsOwned(blockNumber, true)
-})
-
-defaultProvider.on('block', (blockNumber: number) =>
-  ContractsStore.fetchMoreContractsOwned(blockNumber)
+subscribeKey(WalletStore, 'account', () =>
+  ContractsStore.fetchMoreContractsOwned(true)
 )
+
+defaultProvider.on('block', async (blockNumber: number) => {
+  ContractsStore.currentBlock = blockNumber
+  await ContractsStore.fetchMoreContractsOwned()
+})
 
 export default ContractsStore
