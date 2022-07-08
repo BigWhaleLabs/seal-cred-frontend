@@ -176,13 +176,13 @@ export default function ({
     >
       {loading && <Loading small={small} />}
       {showContent && (
-        <div className={space('space-x-2')}>
+        <>
           {typeof children === 'string' && gradientFont ? (
             <span className={textGradient({ type, loading, disabled })}>
               {children}
             </span>
           ) : (
-            children
+            <div>{children}</div>
           )}
           {withArrow && (
             <div className={width('w-4')}>
@@ -193,7 +193,7 @@ export default function ({
               />
             </div>
           )}
-        </div>
+        </>
       )}
     </button>
   )
