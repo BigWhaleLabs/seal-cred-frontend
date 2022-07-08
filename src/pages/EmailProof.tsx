@@ -8,6 +8,7 @@ import classnames, {
   display,
   flexDirection,
   justifyContent,
+  padding,
   space,
 } from 'classnames/tailwind'
 
@@ -16,7 +17,8 @@ const container = classnames(
   flexDirection('flex-col'),
   justifyContent('justify-center'),
   alignItems('items-center'),
-  space('space-y-6')
+  space('space-y-6'),
+  padding('pb-2')
 )
 
 export default function () {
