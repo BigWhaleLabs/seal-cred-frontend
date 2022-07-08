@@ -29,8 +29,6 @@ const ContractsStore = proxy<ContractsStoreType>({
       return
     }
 
-    console.log(ContractsStore.currentBlock)
-
     if (!ContractsStore.connectedAccounts[WalletStore.account])
       ContractsStore.connectedAccounts[WalletStore.account] =
         new ContractSynchronizer(WalletStore.account)
