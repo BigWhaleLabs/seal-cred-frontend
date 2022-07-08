@@ -1,5 +1,6 @@
 import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
+import { utils } from 'ethers'
 import ContractNamesStore from 'stores/ContractNamesStore'
 import SealCredStore from 'stores/SealCredStore'
 import classNamesToString from 'helpers/classNamesToString'
@@ -53,6 +54,11 @@ function ContractNameSuspended({
       contractName = contractName.replace(' (derivative)', '')
   }
 
+  let content = contractName || address
+
+  if (truncate) content = truncateMiddleIfNeeded(content, 17)
+  if (utils.isAddress(content)) content = truncateMiddleIfNeeded(content, 17)
+
   return (
     <span
       className={classNamesToString(
@@ -60,11 +66,7 @@ function ContractNameSuspended({
         hyphens ? 'hyphensAuto' : undefined
       )}
     >
-      {truncate
-        ? truncateMiddleIfNeeded(contractName || address, 17)
-        : hyphens
-        ? wrappedWord(contractName || address)
-        : contractName || address}
+      {hyphens ? wrappedWord(content) : content}
     </span>
   )
 }
