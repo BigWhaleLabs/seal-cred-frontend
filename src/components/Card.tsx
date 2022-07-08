@@ -109,12 +109,12 @@ const cardContainer = (
     useAppStyles ? appStyles : undefined
   )
 }
+const spinnerBoxPosition = inset('-top-24', 'md:-top-28', 'md:-right-40')
 const spinnerBox = (mobileSpinnerOnRight?: boolean) => {
   return classnames(
     position('absolute'),
-    mobileSpinnerOnRight
-      ? inset('-top-24', '-right-28', 'md:-top-28', 'md:-right-40')
-      : inset('-top-24', '-right-4', 'md:-top-28', 'md:-right-40')
+    mobileSpinnerOnRight ? inset('-right-28') : inset('-right-4'),
+    spinnerBoxPosition
   )
 }
 export default function ({
