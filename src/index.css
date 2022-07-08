@@ -25,10 +25,10 @@ body {
 }
 
 ::selection {
-  background: #ff7bed35; /* WebKit/Blink Browsers */
+  background: #ff7bed35;
 }
 ::-moz-selection {
-  background: #ff7bed35; /* Gecko Browsers */
+  background: #ff7bed35;
 }
 
 /* Add hyphens to the text block */
