@@ -23,7 +23,7 @@ export default function () {
   return (
     <Root>
       <Router>
-        <Announcement redirectTo="/app" />
+        <Announcement redirectTo="/email" />
         <div className={pageContainer}>
           <Navbar />
           <ToastContainer position="bottom-right" theme="dark" />
