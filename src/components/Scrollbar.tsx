@@ -5,7 +5,7 @@ import useHasWebkit from 'hooks/useHasWebkit'
 import useIsOverflow from 'hooks/useIsOverflow'
 
 const wrapperStyles = classnames(
-  overflow('overflow-y-auto'),
+  overflow('overflow-y-auto', 'overflow-x-hidden'),
   position('relative')
 )
 
