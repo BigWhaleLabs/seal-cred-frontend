@@ -44,6 +44,7 @@ export default function () {
         shadow
         onlyWrap
         spinner="Work hard, play hard, whistleblow hard"
+        spinnerOnRight
       >
         {account ? (
           <Suspense fallback={<LoadingCard />}>

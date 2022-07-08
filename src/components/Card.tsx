@@ -34,6 +34,7 @@ interface CardProps {
   small?: boolean
   nospace?: boolean
   useAppStyles?: boolean
+  spinnerOnRight?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -108,10 +109,14 @@ const cardContainer = (
     useAppStyles ? appStyles : undefined
   )
 }
-const spinnerBox = classnames(
-  position('absolute'),
-  inset('-top-24', '-right-4', 'md:-top-28', 'md:-right-40')
-)
+const spinnerBox = (spinnerOnRight?: boolean) => {
+  return classnames(
+    position('absolute'),
+    spinnerOnRight
+      ? inset('-top-24', '-right-28', 'md:-top-28', 'md:-right-40')
+      : inset('-top-24', '-right-4', 'md:-top-28', 'md:-right-40')
+  )
+}
 
 export default function ({
   color,
@@ -123,6 +128,7 @@ export default function ({
   small,
   nospace,
   useAppStyles,
+  spinnerOnRight,
 }: ChildrenProp & CardProps) {
   return (
     <CardContext.Provider value={{ cardColor: color }}>
@@ -139,7 +145,7 @@ export default function ({
       >
         {children}
         {!!spinner && (
-          <div className={spinnerBox}>
+          <div className={spinnerBox(spinnerOnRight)}>
             <ArcText text={spinner} />
           </div>
         )}
