@@ -6,19 +6,18 @@ import { useSnapshot } from 'valtio'
 import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
+import networkPick from 'helpers/networkPick'
 
 export default function (network?: Network) {
   const { goerliERC721ProofsCompleted, mainnetERC721ProofsCompleted } =
     useSnapshot(ProofStore)
   let contractsOwned: readonly string[]
   switch (network) {
-    case Network.Mainnet: {
-      const { contractsOwned: temp } = useSnapshot(MainnetContractsStore)
-      contractsOwned = temp
-      break
-    }
+    case Network.Mainnet:
     case Network.Goerli: {
-      const { contractsOwned: temp } = useSnapshot(GoerliContractsStore)
+      const { contractsOwned: temp } = useSnapshot(
+        networkPick(network, GoerliContractsStore, MainnetContractsStore)
+      )
       contractsOwned = temp
       break
     }
