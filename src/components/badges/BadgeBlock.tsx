@@ -10,6 +10,7 @@ import EmailBadge from 'icons/EmailBadge'
 import EmailProof from 'helpers/EmailProof'
 import Erc721Badge from 'icons/Erc721Badge'
 import MintedToken from 'models/MintedToken'
+import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import handleError from 'helpers/handleError'
@@ -18,10 +19,12 @@ function Badge({
   proof,
   onMinted,
   onMintFailed,
+  network,
 }: {
   proof: BaseProof
   onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
+  network: Network
 }) {
   const { account } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
@@ -66,7 +69,7 @@ function Badge({
   return (
     <BadgeCard
       top={isEmailProof ? <EmailBadge /> : <Erc721Badge />}
-      text={<BadgeTitle proof={proof} />}
+      text={<BadgeTitle proof={proof} network={network} />}
       bottom={
         <Button
           small
@@ -86,14 +89,21 @@ export default function ({
   proof,
   onMinted,
   onMintFailed,
+  network,
 }: {
   proof: BaseProof
   onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
+  network: Network
 }) {
   return (
     <BadgeWrapper minted={false}>
-      <Badge proof={proof} onMinted={onMinted} onMintFailed={onMintFailed} />
+      <Badge
+        proof={proof}
+        onMinted={onMinted}
+        onMintFailed={onMintFailed}
+        network={network}
+      />
     </BadgeWrapper>
   )
 }

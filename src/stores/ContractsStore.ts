@@ -6,6 +6,7 @@ import { providers } from 'ethers'
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
 import ContractSynchronizer from 'helpers/ContractSynchronizer'
+import Network from 'models/Network'
 import WalletStore from 'stores/WalletStore'
 
 class ContractsStore {
@@ -14,9 +15,11 @@ class ContractsStore {
   currentBlock?: number
 
   provider: providers.Provider
+  network: Network
 
-  constructor(provider: providers.Provider) {
+  constructor(provider: providers.Provider, network: Network) {
     this.provider = provider
+    this.network = network
   }
 
   fetchBlockNumber() {
@@ -41,12 +44,12 @@ class ContractsStore {
     ) {
       this.contractsOwned = this.connectedAccounts[
         WalletStore.account
-      ].getOwnedERC721(this.currentBlock)
+      ].getOwnedERC721(this.currentBlock, this.network)
     } else {
       const oldContractsOwned = (await this.contractsOwned) || []
       const newContractsOwned = await this.connectedAccounts[
         WalletStore.account
-      ].getOwnedERC721(this.currentBlock)
+      ].getOwnedERC721(this.currentBlock, this.network)
       this.contractsOwned = Promise.resolve(
         Array.from(new Set([...oldContractsOwned, ...newContractsOwned]))
       )
@@ -55,10 +58,10 @@ class ContractsStore {
 }
 
 export const GoerliContractsStore = proxy(
-  new ContractsStore(goerliDefaultProvider)
+  new ContractsStore(goerliDefaultProvider, Network.Goerli)
 )
 export const MainnetContractsStore = proxy(
-  new ContractsStore(mainnetDefaultProvider)
+  new ContractsStore(mainnetDefaultProvider, Network.Mainnet)
 )
 
 subscribeKey(WalletStore, 'account', () => {

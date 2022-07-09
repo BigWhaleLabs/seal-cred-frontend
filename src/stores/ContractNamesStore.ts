@@ -5,6 +5,7 @@ import {
 } from 'helpers/defaultProvider'
 import { providers } from 'ethers'
 import { proxy } from 'valtio'
+import Network from 'models/Network'
 import PersistableStore from 'stores/persistence/PersistableStore'
 
 class ContractNamesStore extends PersistableStore {
@@ -25,7 +26,7 @@ class ContractNamesStore extends PersistableStore {
 
   provider: providers.Provider
 
-  constructor(provider: providers.Provider, persistanceSuffix: string) {
+  constructor(provider: providers.Provider, persistanceSuffix: Network) {
     super()
     this.provider = provider
     this.persistanceName = `${this.constructor.name}${persistanceSuffix}`
@@ -55,8 +56,8 @@ class ContractNamesStore extends PersistableStore {
 }
 
 export const GoerliContractNamesStore = proxy(
-  new ContractNamesStore(goerliDefaultProvider, 'goerli')
+  new ContractNamesStore(goerliDefaultProvider, Network.Goerli)
 ).makePersistent(true)
 export const MainnetContractNamesStore = proxy(
-  new ContractNamesStore(mainnetDefaultProvider, 'mainnet')
+  new ContractNamesStore(mainnetDefaultProvider, Network.Mainnet)
 ).makePersistent(true)

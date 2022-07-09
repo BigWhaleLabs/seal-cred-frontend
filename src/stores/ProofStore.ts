@@ -3,6 +3,7 @@ import { proxy } from 'valtio'
 import BaseProof from 'helpers/BaseProof'
 import ERC721Proof, { ERC721ProofSchema } from 'helpers/ERC721Proof'
 import EmailProof, { EmailProofSchema } from 'helpers/EmailProof'
+import Network from 'models/Network'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResult from 'models/ProofResult'
 import WalletStore from 'stores/WalletStore'
@@ -50,10 +51,20 @@ class ProofStore extends PersistableStore {
     return selected
   }
 
-  get ERC721ProofsCompleted() {
+  get goerliERC721ProofsCompleted() {
     const selected = []
     for (const proof of this.proofsCompleted) {
-      if (proof instanceof ERC721Proof) selected.push(proof)
+      if (proof instanceof ERC721Proof && proof.network === Network.Goerli)
+        selected.push(proof)
+    }
+    return selected
+  }
+
+  get mainnetERC721ProofsCompleted() {
+    const selected = []
+    for (const proof of this.proofsCompleted) {
+      if (proof instanceof ERC721Proof && proof.network === Network.Mainnet)
+        selected.push(proof)
     }
     return selected
   }
@@ -70,7 +81,7 @@ class ProofStore extends PersistableStore {
       // Check navigator availability
       checkNavigator()
 
-      proofStore.proofsCompleted.push(newEmailProof)
+      this.proofsCompleted.push(newEmailProof)
 
       return newEmailProof
     } catch (e) {
@@ -78,7 +89,7 @@ class ProofStore extends PersistableStore {
     }
   }
 
-  async generateERC721(contract: string) {
+  async generateERC721(contract: string, network: Network) {
     try {
       // Get the account
       const account = WalletStore.account
@@ -98,19 +109,17 @@ class ProofStore extends PersistableStore {
         eddsaMessage
       )
 
-      const newERC721Proof = new ERC721Proof(contract, account)
+      const newERC721Proof = new ERC721Proof(contract, account, network)
 
       checkNavigator()
 
       await newERC721Proof.build(message, signature, x, y)
 
-      proofStore.proofsCompleted.push(newERC721Proof)
+      this.proofsCompleted.push(newERC721Proof)
     } catch (e) {
       handleError(e)
     }
   }
 }
 
-const proofStore = proxy(new ProofStore()).makePersistent(true)
-
-export default proofStore
+export default proxy(new ProofStore()).makePersistent(true)

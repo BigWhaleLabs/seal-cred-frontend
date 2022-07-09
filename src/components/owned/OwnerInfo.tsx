@@ -6,6 +6,7 @@ import ContractName from 'components/ContractName'
 import ERC721BadgeContract from 'helpers/ERC721BadgeContract'
 import EmailBadgeContract from 'helpers/EmailBadgeContract'
 import ExternalLink from 'components/ExternalLink'
+import Network from 'models/Network'
 import OwnedBadgeAddress from 'components/owned/OwnedBadgeAddress'
 import Smile from 'icons/Smile'
 import classnames, {
@@ -27,15 +28,21 @@ const walletBox = classnames(
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
 
-function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
+function BadgeTitle({
+  badge,
+  network,
+}: {
+  badge: BaseBadgeContract
+  network: Network
+}) {
   if (badge instanceof EmailBadgeContract) {
     return (
       <>
         <HeaderText extraLeading>
           This wallet belongs to someone with{' '}
-          <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
+          <ExternalLink url={getEtherscanAddressUrl(badge.address, network)}>
             <AccentText bold color="text-secondary">
-              <ContractName hyphens address={badge.address} />
+              <ContractName hyphens address={badge.address} network={network} />
             </AccentText>
           </ExternalLink>
         </HeaderText>
@@ -47,9 +54,9 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
     <>
       <HeaderText extraLeading>
         This wallet owns a{' '}
-        <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
+        <ExternalLink url={getEtherscanAddressUrl(badge.address, network)}>
           <AccentText bold color="text-secondary">
-            <ContractName hyphens address={badge.address} />
+            <ContractName hyphens address={badge.address} network={network} />
           </AccentText>
         </ExternalLink>
       </HeaderText>
@@ -57,7 +64,13 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
   )
 }
 
-function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
+function BadgeContent({
+  badge,
+  network,
+}: {
+  badge: BaseBadgeContract
+  network: Network
+}) {
   if (badge instanceof EmailBadgeContract) {
     return (
       <BodyText>
@@ -73,9 +86,11 @@ function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
       <BodyText>
         This is a zkNFT derivative. It means this person has been verified to
         own at least one ‘
-        <ExternalLink url={getEtherscanAddressUrl(badge.originalERC721)}>
+        <ExternalLink
+          url={getEtherscanAddressUrl(badge.originalERC721, network)}
+        >
           <AccentText color="text-secondary">
-            <ContractName address={badge.originalERC721} />
+            <ContractName address={badge.originalERC721} network={network} />
           </AccentText>
         </ExternalLink>
         ‘ NFT.
@@ -89,9 +104,11 @@ function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
 export default function ({
   derivativeAddress,
   tokenId,
+  network,
 }: {
   derivativeAddress: string
   tokenId: string
+  network: Network
 }) {
   const contractToBadge = useBadgeContracts()
   const badge = contractToBadge[derivativeAddress]
@@ -115,8 +132,8 @@ export default function ({
       onlyWrap
       spinner="Certified with SealCred ZK Proof"
     >
-      <BadgeTitle badge={badge} />
-      <BadgeContent badge={badge} />
+      <BadgeTitle badge={badge} network={network} />
+      <BadgeContent badge={badge} network={network} />
       <hr className={borderColor('border-primary-semi-dimmed')} />
       <div className={walletBox}>
         <Smile />
@@ -125,6 +142,7 @@ export default function ({
           <OwnedBadgeAddress
             tokenId={tokenId}
             derivativeAddress={badge.address}
+            network={network}
           />
         </div>
       </div>

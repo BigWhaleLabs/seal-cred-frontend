@@ -3,6 +3,7 @@ import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
 import BaseProof from 'helpers/BaseProof'
 import ChildrenProp from 'models/ChildrenProp'
+import Network from 'models/Network'
 import Section from 'components/Section'
 import classnames, {
   display,
@@ -22,10 +23,12 @@ export default function ({
   title,
   minted,
   proofs,
+  network,
 }: ChildrenProp & {
   title?: ComponentChildren
   minted: string[]
   proofs: BaseProof[]
+  network: Network
 }) {
   if (minted.length === 0 && proofs.length === 0) return null
 
@@ -36,10 +39,11 @@ export default function ({
           <BadgesOwnedForContract
             key={contractAddress}
             contractAddress={contractAddress}
+            network={network}
           />
         ))}
         {proofs.map((proof) => (
-          <BadgeBlock key={proof.key} proof={proof} />
+          <BadgeBlock key={proof.key} proof={proof} network={network} />
         ))}
       </div>
     </Section>

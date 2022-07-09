@@ -8,6 +8,7 @@ import DoxNotification from 'components/badges/DoxNotification'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
+import Network from 'models/Network'
 import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
 import proofStore from 'stores/ProofStore'
@@ -48,19 +49,28 @@ function BadgeListSuspended() {
     <Scrollbar>
       <div className={space('space-y-2')}>
         <BadgeSection
-          title="NFT derivatives"
+          title="Mainnet NFT derivatives"
           minted={ownedERC721DerivativeContracts}
           proofs={proofsAvailableToMint.filter(
             (proof) => proof instanceof ERC721Proof
           )}
+          network={Network.Mainnet}
         />
         <BadgeSection
+          title="Goerli NFT derivatives"
+          minted={ownedERC721DerivativeContracts}
+          proofs={proofsAvailableToMint.filter(
+            (proof) => proof instanceof ERC721Proof
+          )}
+          network={Network.Mainnet}
+        />
+        {/* <BadgeSection
           title="Email derivatives"
           minted={ownedEmailDerivativeContracts}
           proofs={proofsAvailableToMint.filter(
             (proof) => proof instanceof EmailProof
           )}
-        />
+        /> */}
       </div>
     </Scrollbar>
   )

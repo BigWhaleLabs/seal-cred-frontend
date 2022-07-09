@@ -1,6 +1,14 @@
-import { goerliDefaultProvider } from 'helpers/defaultProvider'
-import { goerliHeavyProvider } from 'helpers/heavyProvider'
+import {
+  goerliDefaultProvider,
+  mainnetDefaultProvider,
+} from 'helpers/defaultProvider'
+import {
+  goerliHeavyProvider,
+  mainnetHeavyProvider,
+} from 'helpers/heavyProvider'
 import { utils } from 'ethers'
+import Network from 'models/Network'
+import networkPick from 'helpers/networkPick'
 
 const transferEventInterface = new utils.Interface([
   'event Transfer(address indexed from, address indexed to, uint indexed tokenId)',
@@ -28,9 +36,13 @@ export default async function (
   fromBlock = 0,
   toBlock: number,
   addressToTokenIds: { [address: string]: Set<string> },
-  skipTransactions: Set<string>
+  skipTransactions: Set<string>,
+  network: Network
 ) {
-  const provider = fromBlock === 0 ? goerliHeavyProvider : goerliDefaultProvider
+  const provider =
+    fromBlock === 0
+      ? networkPick(network, goerliHeavyProvider, mainnetHeavyProvider)
+      : networkPick(network, goerliDefaultProvider, mainnetDefaultProvider)
   const receivedLogs = await provider.getLogs({
     fromBlock,
     toBlock,

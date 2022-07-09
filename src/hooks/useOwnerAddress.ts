@@ -1,11 +1,22 @@
-import { GoerliContractsStore } from 'stores/ContractsStore'
+import {
+  GoerliContractsStore,
+  MainnetContractsStore,
+} from 'stores/ContractsStore'
 import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
+import Network from 'models/Network'
 import TokenOwnersStore from 'stores/TokenOwnersStore'
+import networkPick from 'helpers/networkPick'
 import walletStore from 'stores/WalletStore'
 
-export default function (derivativeAddress: string, tokenId: string) {
-  const { connectedAccounts } = useSnapshot(GoerliContractsStore)
+export default function (
+  derivativeAddress: string,
+  tokenId: string,
+  network: Network
+) {
+  const { connectedAccounts } = useSnapshot(
+    networkPick(network, GoerliContractsStore, MainnetContractsStore)
+  )
   const { account } = useSnapshot(walletStore)
   const { addressOwnerMap } = useSnapshot(TokenOwnersStore)
 

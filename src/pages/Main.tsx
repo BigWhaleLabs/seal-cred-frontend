@@ -29,7 +29,7 @@ export default function () {
           gradient="accent-to-secondary"
           vertical={!lg}
         />
-        <Badges />
+        {/* <Badges /> */}
         {!lg && (
           <>
             <CardSeparator

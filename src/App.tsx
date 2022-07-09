@@ -34,7 +34,7 @@ export default function () {
                 element={<LazyComponent lazyImported={<EmailProof />} />}
               />
               <Route
-                path="/:derivativeAddress/:tokenId"
+                path="/:network/:derivativeAddress/:tokenId"
                 element={<LazyComponent lazyImported={<OwnedBadge />} />}
               />
               <Route

@@ -1,8 +1,13 @@
-import { GoerliContractNamesStore } from 'stores/ContractNamesStore'
+import {
+  GoerliContractNamesStore,
+  MainnetContractNamesStore,
+} from 'stores/ContractNamesStore'
 import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
 import { utils } from 'ethers'
+import Network from 'models/Network'
 import SealCredStore from 'stores/SealCredStore'
+import chooseWithNetwork from 'helpers/networkPick'
 import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   display,
@@ -26,6 +31,7 @@ interface ContractNameProps {
   truncate?: boolean
   clearType?: boolean
   hyphens?: boolean
+  network: Network
 }
 
 const wrappedWord = (name: string) => {
@@ -39,12 +45,24 @@ function ContractNameSuspended({
   hyphens,
   truncate,
   clearType,
+  network,
 }: ContractNameProps) {
   const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
     useSnapshot(SealCredStore)
-  const { contractNames } = useSnapshot(GoerliContractNamesStore)
+  const { contractNames } = useSnapshot(
+    chooseWithNetwork(
+      network,
+      GoerliContractNamesStore,
+      MainnetContractNamesStore
+    )
+  )
   let contractName = contractNames[address]
-  if (!contractName) GoerliContractNamesStore.fetchContractName(address)
+  if (!contractName)
+    chooseWithNetwork(
+      network,
+      GoerliContractNamesStore,
+      MainnetContractNamesStore
+    ).fetchContractName(address)
 
   if (clearType) {
     if (contractName && emailDerivativeContracts.includes(address))
@@ -71,21 +89,14 @@ function ContractNameSuspended({
   )
 }
 
-export default memo<ContractNameProps>(
-  ({ address, hyphens, truncate, clearType }) => (
-    <Suspense
-      fallback={
-        <span className={addressText}>
-          {truncate ? truncateMiddleIfNeeded(address, 17) : address}
-        </span>
-      }
-    >
-      <ContractNameSuspended
-        address={address}
-        hyphens={hyphens}
-        truncate={truncate}
-        clearType={clearType}
-      />
-    </Suspense>
-  )
-)
+export default memo<ContractNameProps>(({ address, truncate, ...rest }) => (
+  <Suspense
+    fallback={
+      <span className={addressText}>
+        {truncate ? truncateMiddleIfNeeded(address, 17) : address}
+      </span>
+    }
+  >
+    <ContractNameSuspended address={address} truncate={truncate} {...rest} />
+  </Suspense>
+))

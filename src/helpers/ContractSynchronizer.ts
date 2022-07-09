@@ -1,5 +1,6 @@
 import { ContractReceipt } from 'ethers'
 import MintedToken from 'models/MintedToken'
+import Network from 'models/Network'
 import getOwnedERC721, {
   isTransferEvent,
   parseLogData,
@@ -44,7 +45,7 @@ export default class ContractSynchronizer {
     return Array.from(this.addressToTokenIds[address])
   }
 
-  async getOwnedERC721(blockId: number) {
+  async getOwnedERC721(blockId: number, network: Network) {
     if (!this.locked && blockId !== this.synchronizedBlockId) {
       this.locked = true
       try {
@@ -55,7 +56,8 @@ export default class ContractSynchronizer {
             : 0,
           blockId,
           this.addressToTokenIds,
-          this.skipTransactions
+          this.skipTransactions,
+          network
         )
 
         this.synchronizedBlockId = blockId

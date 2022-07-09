@@ -1,11 +1,13 @@
 import { GoerliEnsStore } from 'stores/EnsStore'
 import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
+import Network from 'models/Network'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 interface EnsAddressProps {
   address: string
+  network: Network
 }
 
 function EnsAddressSuspended({
@@ -25,13 +27,13 @@ function EnsAddressSuspended({
   )
 }
 
-export default memo<EnsAddressProps>(({ address }) => {
+export default memo<EnsAddressProps>(({ address, network }) => {
   const { lg } = useBreakpoints()
   return (
     <Suspense
       fallback={<>{!lg ? truncateMiddleIfNeeded(address, 17) : address}</>}
     >
-      <EnsAddressSuspended address={address} truncate={!lg} />
+      <EnsAddressSuspended address={address} truncate={!lg} network={network} />
     </Suspense>
   )
 })

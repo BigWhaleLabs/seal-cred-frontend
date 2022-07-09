@@ -4,30 +4,46 @@ import { useSnapshot } from 'valtio'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import EmailProof from 'components/proofs/EmailProof'
 import HintCard from 'components/badges/HintCard'
+import Network from 'models/Network'
 import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
 import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 import Scrollbar from 'components/Scrollbar'
-import proofStore from 'stores/ProofStore'
-import walletStore from 'stores/WalletStore'
+import WalletStore from 'stores/WalletStore'
+import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-export default function ({ avaliableToProof }: { avaliableToProof: string[] }) {
-  const { account } = useSnapshot(walletStore)
-  const { emailProofsCompleted } = useSnapshot(ProofStore)
-  const { ERC721ProofsCompleted } = useSnapshot(proofStore)
-  const { proofsCompleted } = useSnapshot(proofStore)
+export default function () {
+  const { account } = useSnapshot(WalletStore)
+  const {
+    emailProofsCompleted,
+    goerliERC721ProofsCompleted,
+    mainnetERC721ProofsCompleted,
+    proofsCompleted,
+  } = useSnapshot(ProofStore)
+  const goerliProofAddressesAvailableToCreate =
+    useProofAddressesAvailableToCreate(Network.Goerli)
+  const mainnetProofAddressesAvailableToCreate =
+    useProofAddressesAvailableToCreate(Network.Mainnet)
 
   const nothingToGenerate =
-    ERC721ProofsCompleted.length === 0 && avaliableToProof.length === 0
+    goerliERC721ProofsCompleted.length === 0 &&
+    mainnetERC721ProofsCompleted.length === 0 &&
+    goerliProofAddressesAvailableToCreate.length === 0 &&
+    mainnetProofAddressesAvailableToCreate.length === 0
 
   return (
     <>
       <Scrollbar>
         <div className={space('space-y-2')}>
-          <ProofSection title={<BodyText>NFTs</BodyText>}>
-            <ReadyERC721ProofsList />
-            {account && <AvailableProofsList proofs={avaliableToProof} />}
+          <ProofSection title={<BodyText>Mainnet NFTs</BodyText>}>
+            <ReadyERC721ProofsList network={Network.Mainnet} />
+            {account && (
+              <AvailableProofsList
+                proofs={mainnetProofAddressesAvailableToCreate}
+                network={Network.Mainnet}
+              />
+            )}
             {nothingToGenerate && (
               <HintCard small>
                 <HintText bold center>
@@ -36,7 +52,22 @@ export default function ({ avaliableToProof }: { avaliableToProof: string[] }) {
               </HintCard>
             )}
           </ProofSection>
-
+          <ProofSection title={<BodyText>Goerli NFTs</BodyText>}>
+            <ReadyERC721ProofsList network={Network.Goerli} />
+            {account && (
+              <AvailableProofsList
+                proofs={goerliProofAddressesAvailableToCreate}
+                network={Network.Goerli}
+              />
+            )}
+            {nothingToGenerate && (
+              <HintCard small>
+                <HintText bold center>
+                  No NFTs to proof
+                </HintText>
+              </HintCard>
+            )}
+          </ProofSection>
           <ProofSection
             title={
               <BodyText>

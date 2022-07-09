@@ -8,6 +8,7 @@ import ContractName from 'components/ContractName'
 import ERC721Proof from 'helpers/ERC721Proof'
 import ExternalLink from 'components/ExternalLink'
 import Line from 'components/proofs/Line'
+import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
 import WalletStore from 'stores/WalletStore'
@@ -52,6 +53,7 @@ const textWithIcon = classnames(
 
 function useProofContent(
   contractAddress: string,
+  network: Network,
   proof?: ERC721Proof
 ): {
   color: 'text-accent' | 'text-secondary' | 'text-tertiary'
@@ -82,7 +84,7 @@ function useProofContent(
           disabled={isGenerating}
           onClick={async () => {
             setIsGenerating(true)
-            await ProofStore.generateERC721(contractAddress)
+            await ProofStore.generateERC721(contractAddress, network)
             setIsGenerating(false)
           }}
         >
@@ -105,19 +107,21 @@ function useProofContent(
 export default function ({
   proof,
   contractAddress,
+  network,
 }: {
   proof?: ERC721Proof
   contractAddress: string
+  network: Network
 }) {
   const { xs } = useBreakpoints()
-  const { color, content } = useProofContent(contractAddress, proof)
+  const { color, content } = useProofContent(contractAddress, network, proof)
 
   return (
     <Line breakWords>
       <div className={proofName}>
         <ProofText>
-          <ExternalLink url={getEtherscanAddressUrl(contractAddress)}>
-            <ContractName address={contractAddress} />
+          <ExternalLink url={getEtherscanAddressUrl(contractAddress, network)}>
+            <ContractName address={contractAddress} network={network} />
           </ExternalLink>
         </ProofText>
       </div>
