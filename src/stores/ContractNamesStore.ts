@@ -3,10 +3,10 @@ import {
   goerliDefaultProvider,
   mainnetDefaultProvider,
 } from 'helpers/defaultProvider'
-import { providers } from 'ethers'
 import { proxy } from 'valtio'
 import Network from 'models/Network'
 import PersistableStore from 'stores/persistence/PersistableStore'
+import networkPick from 'helpers/networkPick'
 
 class ContractNamesStore extends PersistableStore {
   savedContractNames = {} as {
@@ -24,24 +24,19 @@ class ContractNamesStore extends PersistableStore {
     }
   }
 
-  provider: providers.Provider
-
-  constructor(provider: providers.Provider, persistanceSuffix: Network) {
-    super()
-    this.provider = provider
-    this.persistanceName = `${this.constructor.name}${persistanceSuffix}`
-  }
-
   replacer = (key: string, value: unknown) => {
     const disallowList = ['requestedNames', 'contractNames']
     return disallowList.includes(key) ? undefined : value
   }
 
-  fetchContractName(address: string) {
+  fetchContractName(address: string, network: Network) {
     if (this.contractNames[address]) {
       return
     }
-    const contract = ERC721__factory.connect(address, this.provider)
+    const contract = ERC721__factory.connect(
+      address,
+      networkPick(network, goerliDefaultProvider, mainnetDefaultProvider)
+    )
     this.requestedNames[address] = contract
       .name()
       .then((result) => {
@@ -55,9 +50,4 @@ class ContractNamesStore extends PersistableStore {
   }
 }
 
-export const GoerliContractNamesStore = proxy(
-  new ContractNamesStore(goerliDefaultProvider, Network.Goerli)
-).makePersistent(true)
-export const MainnetContractNamesStore = proxy(
-  new ContractNamesStore(mainnetDefaultProvider, Network.Mainnet)
-).makePersistent(true)
+export default proxy(new ContractNamesStore()).makePersistent(true)

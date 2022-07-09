@@ -1,13 +1,9 @@
-import {
-  GoerliContractNamesStore,
-  MainnetContractNamesStore,
-} from 'stores/ContractNamesStore'
 import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
 import { utils } from 'ethers'
+import ContractNamesStore from 'stores/ContractNamesStore'
 import Network from 'models/Network'
 import SealCredStore from 'stores/SealCredStore'
-import chooseWithNetwork from 'helpers/networkPick'
 import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   display,
@@ -49,20 +45,9 @@ function ContractNameSuspended({
 }: ContractNameProps) {
   const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
     useSnapshot(SealCredStore)
-  const { contractNames } = useSnapshot(
-    chooseWithNetwork(
-      network,
-      GoerliContractNamesStore,
-      MainnetContractNamesStore
-    )
-  )
+  const { contractNames } = useSnapshot(ContractNamesStore)
   let contractName = contractNames[address]
-  if (!contractName)
-    chooseWithNetwork(
-      network,
-      GoerliContractNamesStore,
-      MainnetContractNamesStore
-    ).fetchContractName(address)
+  if (!contractName) ContractNamesStore.fetchContractName(address, network)
 
   if (clearType) {
     if (contractName && emailDerivativeContracts.includes(address))
