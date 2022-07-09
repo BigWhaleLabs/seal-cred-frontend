@@ -32,17 +32,13 @@ class ContractsStore extends PersistableStore {
   }
 
   async fetchMoreContractsOwned() {
+    if (!WalletStore.account) return
     if (!this.currentBlock) this.currentBlock = await this.fetchBlockNumber()
 
-    if (!WalletStore.account) {
-      return
-    }
-
-    if (!this.connectedAccounts[WalletStore.account]) {
+    if (!this.connectedAccounts[WalletStore.account])
       this.connectedAccounts[WalletStore.account] = new ContractSynchronizer(
         WalletStore.account
       )
-    }
 
     await this.connectedAccounts[WalletStore.account].getOwnedERC721(
       this.currentBlock
