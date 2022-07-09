@@ -5,7 +5,7 @@ import {
 import {
   goerliHeavyProvider,
   mainnetHeavyProvider,
-} from 'helpers/heavyProvider'
+} from 'helpers/providers/heavyProvider'
 import { utils } from 'ethers'
 import Network from 'models/Network'
 import networkPick from 'helpers/networkPick'
