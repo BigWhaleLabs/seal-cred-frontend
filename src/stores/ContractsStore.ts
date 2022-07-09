@@ -5,11 +5,12 @@ import ContractSynchronizer, {
 import PersistableStore from 'stores/persistence/PersistableStore'
 import WalletStore from 'stores/WalletStore'
 import defaultProvider from 'helpers/defaultProvider'
+import transformObjectValues from 'helpers/transformObjectValues'
 import walletStore from 'stores/WalletStore'
 
 class ContractsStore extends PersistableStore {
   connectedAccounts: { [account: string]: ContractSynchronizer } = {}
-  currentBlock: undefined | number
+  currentBlock?: number
 
   replacer = (key: string, value: unknown) => {
     const disallowList = [] as string[] // ['contractsOwned']
@@ -18,14 +19,9 @@ class ContractsStore extends PersistableStore {
 
   reviver = (key: string, value: unknown) => {
     if (key === 'connectedAccounts') {
-      return Object.entries(
-        value as { [account: string]: ContractSynchronizerSchema }
-      ).reduce(
-        (result, [account, state]) => ({
-          ...result,
-          [account]: ContractSynchronizer.fromJSON(state),
-        }),
-        {}
+      return transformObjectValues(
+        value as { [account: string]: ContractSynchronizerSchema },
+        ContractSynchronizer.fromJSON
       )
     }
     return value

@@ -4,6 +4,7 @@ import getOwnedERC721, {
   isTransferEvent,
   parseLogData,
 } from 'helpers/getOwnedERC721'
+import transformObjectValues from 'helpers/transformObjectValues'
 
 export interface ContractSynchronizerSchema {
   account: string
@@ -37,12 +38,9 @@ export default class ContractSynchronizer {
     synchronizedBlockId: number
     addressToTokenIds: { [address: string]: string[] }
   }) {
-    const addressToTokenSetIds = Object.entries(addressToTokenIds).reduce(
-      (result, [address, tokenIds]) => ({
-        ...result,
-        [address]: new Set(tokenIds),
-      }),
-      {}
+    const addressToTokenSetIds = transformObjectValues(
+      addressToTokenIds,
+      (tokenIds) => new Set(tokenIds)
     )
     return new ContractSynchronizer(
       account,
@@ -55,12 +53,9 @@ export default class ContractSynchronizer {
     return {
       account: this.account,
       synchronizedBlockId: this.synchronizedBlockId,
-      addressToTokenIds: Object.entries(this.addressToTokenIds).reduce(
-        (result, [address, tokenSet]) => ({
-          ...result,
-          [address]: Array.from(tokenSet),
-        }),
-        {}
+      addressToTokenIds: transformObjectValues(
+        this.addressToTokenIds,
+        Array.from
       ),
     }
   }
