@@ -1,9 +1,9 @@
 import { BodyText } from 'components/Text'
+import { GoerliContractsStore } from 'stores/ContractsStore'
 import { Suspense } from 'react'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgeSection from 'components/badges/BadgeSection'
-import ContractsStore from 'stores/ContractsStore'
 import DoxNotification from 'components/badges/DoxNotification'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
@@ -19,7 +19,7 @@ function BadgeListSuspended() {
   const { proofsCompleted } = useSnapshot(proofStore)
   const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
     useSnapshot(SealCredStore)
-  const { contractsOwned } = useSnapshot(ContractsStore)
+  const { contractsOwned } = useSnapshot(GoerliContractsStore)
 
   const ownedEmailDerivativeContracts = emailDerivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)

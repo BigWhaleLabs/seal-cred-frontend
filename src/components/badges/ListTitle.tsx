@@ -1,7 +1,7 @@
+import { GoerliContractsStore } from 'stores/ContractsStore'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import CardTitle from 'components/CardTitle'
-import ContractsStore from 'stores/ContractsStore'
 import LoadingCard from 'components/badges/LoadingCard'
 import SealCredStore from 'stores/SealCredStore'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
@@ -9,7 +9,7 @@ import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 function ListTitleSuspended() {
   const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
-  const { contractsOwned } = useSnapshot(ContractsStore)
+  const { contractsOwned } = useSnapshot(GoerliContractsStore)
 
   const ownedDerivativeContracts = derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)

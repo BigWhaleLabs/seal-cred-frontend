@@ -1,7 +1,7 @@
+import { GoerliContractNamesStore } from 'stores/ContractNamesStore'
 import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
 import { utils } from 'ethers'
-import ContractNamesStore from 'stores/ContractNamesStore'
 import SealCredStore from 'stores/SealCredStore'
 import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
@@ -42,9 +42,9 @@ function ContractNameSuspended({
 }: ContractNameProps) {
   const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
     useSnapshot(SealCredStore)
-  const { contractNames } = useSnapshot(ContractNamesStore)
+  const { contractNames } = useSnapshot(GoerliContractNamesStore)
   let contractName = contractNames[address]
-  if (!contractName) ContractNamesStore.fetchContractName(address)
+  if (!contractName) GoerliContractNamesStore.fetchContractName(address)
 
   if (clearType) {
     if (contractName && emailDerivativeContracts.includes(address))

@@ -1,3 +1,4 @@
+import { GoerliContractsStore } from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import BadgeCard from 'components/badges/BadgeCard'
@@ -5,7 +6,6 @@ import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import BaseProof from 'helpers/BaseProof'
 import Button from 'components/Button'
-import ContractsStore from 'stores/ContractsStore'
 import EmailBadge from 'icons/EmailBadge'
 import EmailProof from 'helpers/EmailProof'
 import Erc721Badge from 'icons/Erc721Badge'
@@ -37,7 +37,9 @@ function Badge({
 
       const transaction = await WalletStore.mintDerivative(proof)
       const mintedBadge =
-        ContractsStore.connectedAccounts[account].applyTransaction(transaction)
+        GoerliContractsStore.connectedAccounts[account].applyTransaction(
+          transaction
+        )
       ProofStore.deleteProof(proof)
       if (onMinted) onMinted(mintedBadge)
     } catch (error) {

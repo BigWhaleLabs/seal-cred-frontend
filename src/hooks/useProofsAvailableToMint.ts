@@ -1,12 +1,12 @@
+import { GoerliContractsStore } from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
-import ContractsStore from 'stores/ContractsStore'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
 
 export default function () {
-  const { contractsOwned } = useSnapshot(ContractsStore)
+  const { contractsOwned } = useSnapshot(GoerliContractsStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { ERC721Ledger, emailLedger } = useSnapshot(SealCredStore)
 

@@ -1,11 +1,11 @@
+import { GoerliContractsStore } from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
-import ContractsStore from 'stores/ContractsStore'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
 
 export default function () {
   const { ERC721ProofsCompleted } = useSnapshot(ProofStore)
-  const { contractsOwned } = useSnapshot(ContractsStore)
+  const { contractsOwned } = useSnapshot(GoerliContractsStore)
   const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const completedERC721ProofAddressesMap = [...ERC721ProofsCompleted].reduce(
     (result, proof) => ({

@@ -1,6 +1,6 @@
+import { GoerliEnsStore } from 'stores/EnsStore'
 import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
-import EnsStore from 'stores/EnsStore'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -12,9 +12,9 @@ function EnsAddressSuspended({
   address,
   truncate,
 }: EnsAddressProps & { truncate?: boolean }) {
-  const { ensNames } = useSnapshot(EnsStore)
+  const { ensNames } = useSnapshot(GoerliEnsStore)
   const ensName = ensNames[address]
-  if (!ensName) EnsStore.fetchEnsName(address)
+  if (!ensName) GoerliEnsStore.fetchEnsName(address)
 
   return (
     <>

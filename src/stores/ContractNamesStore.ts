@@ -1,5 +1,9 @@
 import { ERC721__factory } from '@big-whale-labs/seal-cred-ledger-contract'
-import { goerliDefaultProvider } from 'helpers/defaultProvider'
+import {
+  goerliDefaultProvider,
+  mainnetDefaultProvider,
+} from 'helpers/defaultProvider'
+import { providers } from 'ethers'
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
 
@@ -19,6 +23,14 @@ class ContractNamesStore extends PersistableStore {
     }
   }
 
+  provider: providers.Provider
+
+  constructor(provider: providers.Provider, persistanceSuffix: string) {
+    super()
+    this.provider = provider
+    this.persistanceName = `${this.constructor.name}${persistanceSuffix}`
+  }
+
   replacer = (key: string, value: unknown) => {
     const disallowList = ['requestedNames', 'contractNames']
     return disallowList.includes(key) ? undefined : value
@@ -28,7 +40,7 @@ class ContractNamesStore extends PersistableStore {
     if (this.contractNames[address]) {
       return
     }
-    const contract = ERC721__factory.connect(address, goerliDefaultProvider)
+    const contract = ERC721__factory.connect(address, this.provider)
     this.requestedNames[address] = contract
       .name()
       .then((result) => {
@@ -42,4 +54,9 @@ class ContractNamesStore extends PersistableStore {
   }
 }
 
-export default proxy(new ContractNamesStore()).makePersistent(true)
+export const GoerliContractNamesStore = proxy(
+  new ContractNamesStore(goerliDefaultProvider, 'goerli')
+).makePersistent(true)
+export const MainnetContractNamesStore = proxy(
+  new ContractNamesStore(mainnetDefaultProvider, 'mainnet')
+).makePersistent(true)

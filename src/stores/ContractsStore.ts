@@ -1,64 +1,78 @@
-import { goerliDefaultProvider } from 'helpers/defaultProvider'
+import {
+  goerliDefaultProvider,
+  mainnetDefaultProvider,
+} from 'helpers/defaultProvider'
+import { providers } from 'ethers'
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
 import ContractSynchronizer from 'helpers/ContractSynchronizer'
 import WalletStore from 'stores/WalletStore'
 
-interface ContractsStoreType {
-  connectedAccounts: { [account: string]: ContractSynchronizer }
-  contractsOwned: Promise<string[]>
+class ContractsStore {
+  connectedAccounts: { [account: string]: ContractSynchronizer } = {}
+  contractsOwned: Promise<string[]> = Promise.resolve([])
   currentBlock?: number
-  fetchBlockNumber: () => Promise<number>
-  fetchMoreContractsOwned: (accountChange?: boolean) => Promise<void>
-}
 
-const ContractsStore = proxy<ContractsStoreType>({
-  connectedAccounts: {},
-  contractsOwned: Promise.resolve([]),
-  currentBlock: undefined,
+  provider: providers.Provider
+
+  constructor(provider: providers.Provider) {
+    this.provider = provider
+  }
 
   fetchBlockNumber() {
-    return goerliDefaultProvider.getBlockNumber()
-  },
-  async fetchMoreContractsOwned(accountChange) {
-    if (!ContractsStore.currentBlock)
-      ContractsStore.currentBlock = await ContractsStore.fetchBlockNumber()
+    return this.provider.getBlockNumber()
+  }
+  async fetchMoreContractsOwned(accountChange?: boolean) {
+    if (!this.currentBlock) this.currentBlock = await this.fetchBlockNumber()
 
     if (!WalletStore.account) {
-      ContractsStore.contractsOwned = Promise.resolve([])
+      this.contractsOwned = Promise.resolve([])
       return
     }
 
-    if (!ContractsStore.connectedAccounts[WalletStore.account])
-      ContractsStore.connectedAccounts[WalletStore.account] =
-        new ContractSynchronizer(WalletStore.account)
+    if (!this.connectedAccounts[WalletStore.account])
+      this.connectedAccounts[WalletStore.account] = new ContractSynchronizer(
+        WalletStore.account
+      )
     if (
       accountChange ||
-      !ContractsStore.connectedAccounts[WalletStore.account] ||
-      !ContractsStore.contractsOwned
+      !this.connectedAccounts[WalletStore.account] ||
+      !this.contractsOwned
     ) {
-      ContractsStore.contractsOwned = ContractsStore.connectedAccounts[
+      this.contractsOwned = this.connectedAccounts[
         WalletStore.account
-      ].getOwnedERC721(ContractsStore.currentBlock)
+      ].getOwnedERC721(this.currentBlock)
     } else {
-      const oldContractsOwned = (await ContractsStore.contractsOwned) || []
-      const newContractsOwned = await ContractsStore.connectedAccounts[
+      const oldContractsOwned = (await this.contractsOwned) || []
+      const newContractsOwned = await this.connectedAccounts[
         WalletStore.account
-      ].getOwnedERC721(ContractsStore.currentBlock)
-      ContractsStore.contractsOwned = Promise.resolve(
+      ].getOwnedERC721(this.currentBlock)
+      this.contractsOwned = Promise.resolve(
         Array.from(new Set([...oldContractsOwned, ...newContractsOwned]))
       )
     }
-  },
-})
+  }
+}
 
-subscribeKey(WalletStore, 'account', () =>
-  ContractsStore.fetchMoreContractsOwned(true)
+export const GoerliContractsStore = proxy(
+  new ContractsStore(goerliDefaultProvider)
+)
+export const MainnetContractsStore = proxy(
+  new ContractsStore(mainnetDefaultProvider)
 )
 
+subscribeKey(WalletStore, 'account', () => {
+  void GoerliContractsStore.fetchMoreContractsOwned(true)
+  void MainnetContractsStore.fetchMoreContractsOwned(true)
+})
+
 goerliDefaultProvider.on('block', async (blockNumber: number) => {
-  ContractsStore.currentBlock = blockNumber
-  await ContractsStore.fetchMoreContractsOwned()
+  GoerliContractsStore.currentBlock = blockNumber
+  await GoerliContractsStore.fetchMoreContractsOwned()
+})
+mainnetDefaultProvider.on('block', async (blockNumber: number) => {
+  MainnetContractsStore.currentBlock = blockNumber
+  await MainnetContractsStore.fetchMoreContractsOwned()
 })
 
 export default ContractsStore
