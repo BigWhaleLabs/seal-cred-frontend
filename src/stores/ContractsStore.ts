@@ -59,7 +59,7 @@ const contractsStore = proxyWithComputed(new ContractsStore(), {
     walletStore.account && state.connectedAccounts[walletStore.account]
       ? state.connectedAccounts[walletStore.account].contractsOwned
       : [],
-}).makePersistent()
+}).makePersistent(true)
 
 subscribeKey(WalletStore, 'account', () =>
   contractsStore.fetchMoreContractsOwned()
