@@ -53,6 +53,9 @@ const SealCredStore = proxyWithComputed<
       ...Object.values(state.ERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract
       ),
+      ...Object.values(state.externalERC721Ledger).map(
+        ({ derivativeContract }) => derivativeContract
+      ),
       ...Object.values(state.emailLedger).map(
         ({ derivativeContract }) => derivativeContract
       ),

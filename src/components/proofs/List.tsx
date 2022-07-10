@@ -1,12 +1,12 @@
 import { Suspense } from 'preact/compat'
-// import ListTitle from 'components/proofs/ListTitle'
+import ListTitle from 'components/proofs/ListTitle'
 import LoadingCard from 'components/proofs/LoadingCard'
 import ProofList from 'components/proofs/ProofList'
 
 function ListSuspended() {
   return (
     <>
-      {/* <ListTitle /> */}
+      <ListTitle />
       <ProofList />
     </>
   )
