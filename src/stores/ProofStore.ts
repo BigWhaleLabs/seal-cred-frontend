@@ -85,7 +85,6 @@ class ProofStore extends PersistableStore {
 
       const newEmailProof = new EmailProof(domain)
       await newEmailProof.build(signature, x, y, nullifierSignature)
-      console.log(newEmailProof)
       this.proofsCompleted.push(newEmailProof)
 
       return newEmailProof
