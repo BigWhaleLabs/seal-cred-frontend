@@ -1,7 +1,7 @@
 import {
   goerliDefaultProvider,
   mainnetDefaultProvider,
-} from 'helpers/defaultProvider'
+} from 'helpers/providers/defaultProvider'
 import { providers } from 'ethers'
 import { proxy } from 'valtio'
 

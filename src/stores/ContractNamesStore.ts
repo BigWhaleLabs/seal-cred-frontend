@@ -2,7 +2,7 @@ import { ERC721__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import {
   goerliDefaultProvider,
   mainnetDefaultProvider,
-} from 'helpers/defaultProvider'
+} from 'helpers/providers/defaultProvider'
 import { proxy } from 'valtio'
 import Network from 'models/Network'
 import PersistableStore from 'stores/persistence/PersistableStore'

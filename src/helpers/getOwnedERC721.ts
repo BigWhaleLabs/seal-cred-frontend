@@ -1,7 +1,7 @@
 import {
   goerliDefaultProvider,
   mainnetDefaultProvider,
-} from 'helpers/defaultProvider'
+} from 'helpers/providers/defaultProvider'
 import {
   goerliHeavyProvider,
   mainnetHeavyProvider,

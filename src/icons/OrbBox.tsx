@@ -4,9 +4,9 @@ import classnames, {
   opacity,
   transitionProperty,
 } from 'classnames/tailwind'
-import colorToDropShadow from 'helpers/colorToDropShadow'
-import colorToFillColor from 'helpers/colorToFillColor'
-import colorToStrokeColor from 'helpers/colorToStrokeColor'
+import colorToDropShadow from 'helpers/colors/colorToDropShadow'
+import colorToFillColor from 'helpers/colors/colorToFillColor'
+import colorToStrokeColor from 'helpers/colors/colorToStrokeColor'
 
 const orbBoxStyles = (shadow?: boolean) =>
   classnames(

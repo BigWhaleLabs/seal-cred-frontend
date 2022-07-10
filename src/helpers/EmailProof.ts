@@ -58,47 +58,40 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
 
   async generateInput(
     domain: string,
-    nullifier: string,
     signature: string,
     pubKeyX: string,
-    pubKeyY: string
+    pubKeyY: string,
+    nullifierSignature: string
   ) {
     const maxDomainLength = 90
-    const domainBytes = this.padZeroesOnRightUint8(
+    const messageUInt8 = this.padZeroesOnRightUint8(
       utils.toUtf8Bytes(domain),
       maxDomainLength
     )
-
-    // Get the message in bytes and its hash
-    const messageUInt8 = utils.concat([
-      domainBytes,
-      utils.toUtf8Bytes(nullifier),
-    ])
-
-    // Generate input
-    const privateInput = await unpackSignature(messageUInt8, signature)
+    const { r: r2, s: s2 } = utils.splitSignature(nullifierSignature)
     return {
       message: Array.from(messageUInt8),
-      domain: Array.from(domainBytes),
       pubKeyX,
       pubKeyY,
-      ...privateInput,
+      ...(await unpackSignature(messageUInt8, signature)),
+      r2,
+      s2,
     }
   }
 
   async build(
-    nullifier: string,
     signature: string,
     pubKeyX: string,
-    pubKeyY: string
+    pubKeyY: string,
+    nullifierSignature: string
   ) {
     this.result = await snarkjs.groth16.fullProve(
       await this.generateInput(
         this.domain,
-        nullifier,
         signature,
         pubKeyX,
-        pubKeyY
+        pubKeyY,
+        nullifierSignature
       ),
       'zk/EmailOwnershipChecker.wasm',
       'zk/EmailOwnershipChecker_final.zkey'

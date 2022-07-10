@@ -21,7 +21,7 @@ import {
 import ChildrenProp from 'models/ChildrenProp'
 import Color from 'models/Color'
 import classNamesToString from 'helpers/classNamesToString'
-import colorToTextColor from 'helpers/colorToTextColor'
+import colorToTextColor from 'helpers/colors/colorToTextColor'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const headerText = (accent = false, extraLeading = false, xs = false) =>

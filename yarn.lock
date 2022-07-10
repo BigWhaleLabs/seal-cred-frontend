@@ -3122,6 +3122,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/entropy-string@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "@types/entropy-string@npm:4.2.0"
+  dependencies:
+    "@types/node": "*"
+  checksum: 70e03d51ad5af4542dd9e3e1ca6dac99e18659cb8586430e40120047ac62d082608b7295907bc8310eea85409535a2a1495baef155f06c88b6e43c783763efc6
+  languageName: node
+  linkType: hard
+
 "@types/eslint-scope@npm:^3.7.3":
   version: 3.7.3
   resolution: "@types/eslint-scope@npm:3.7.3"
@@ -14201,6 +14210,7 @@ __metadata:
     "@rollup/plugin-inject": ^4.0.4
     "@tailwindcss/line-clamp": ^0.4.0
     "@typechain/ethers-v5": ^10.1.0
+    "@types/entropy-string": ^4.2.0
     "@typescript-eslint/eslint-plugin": ^5.30.5
     "@typescript-eslint/parser": ^5.30.5
     "@vitejs/plugin-react": ^1.3.2
@@ -14209,6 +14219,7 @@ __metadata:
     autoprefixer: ^10.4.7
     axios: ^0.27.2
     cross-env: ^7.0.3
+    entropy-string: ^4.2.0
     envalid: ^7.3.1
     eslint: ^8.19.0
     eslint-config-prettier: ^8.5.0

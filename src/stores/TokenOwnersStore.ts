@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
-import { goerliDefaultProvider } from 'helpers/defaultProvider'
+import { goerliDefaultProvider } from 'helpers/providers/defaultProvider'
 import { proxy } from 'valtio'
 import TokenOwnersStore from 'stores/TokenOwnersStore'
 import getOwnerByTokenId from 'helpers/getOwnerByTokenId'
