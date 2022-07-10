@@ -1,4 +1,4 @@
-import { getPublicKey, requestERC721Attestation } from 'helpers/attestor'
+import { getPublicKey } from 'helpers/attestor'
 import { proxy } from 'valtio'
 import BaseProof from 'helpers/BaseProof'
 import ERC721Proof, { ERC721ProofSchema } from 'helpers/ERC721Proof'
@@ -69,17 +69,15 @@ class ProofStore extends PersistableStore {
     return selected
   }
 
-  async generateEmail(domain: string, secret: string) {
+  async generateEmail(domain: string, signature: string) {
     try {
       const { x, y } = await getPublicKey()
 
-      const [signature, nullifier] = secret.split('-')
-
-      const newEmailProof = new EmailProof(domain)
-      await newEmailProof.build(nullifier, signature, x, y)
-
       // Check navigator availability
       checkNavigator()
+
+      const newEmailProof = new EmailProof(domain)
+      await newEmailProof.build(signature, x, y)
 
       this.proofsCompleted.push(newEmailProof)
 
