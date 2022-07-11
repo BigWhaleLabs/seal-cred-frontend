@@ -12,11 +12,6 @@ class ContractsStore extends PersistableStore {
   connectedAccounts: { [account: string]: ContractSynchronizer } = {}
   currentBlock?: number
 
-  replacer = (key: string, value: unknown) => {
-    const disallowList = [] as string[] // ['contractsOwned']
-    return disallowList.includes(key) ? undefined : value
-  }
-
   reviver = (key: string, value: unknown) => {
     if (key === 'connectedAccounts') {
       return transformObjectValues(
