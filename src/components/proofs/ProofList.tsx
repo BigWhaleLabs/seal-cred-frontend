@@ -21,15 +21,14 @@ export default function () {
   const mainnetProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(Network.Mainnet)
 
+  const hasCompletedProofs = proofsCompleted.length > 0
   const hasGoerliProofsToCreate =
     goerliProofAddressesAvailableToCreate.length > 0
   const hasMainnetProofsToCreate =
     mainnetProofAddressesAvailableToCreate.length > 0
 
   const nothingToGenerate =
-    proofsCompleted.length === 0 &&
-    !hasGoerliProofsToCreate &&
-    !hasMainnetProofsToCreate
+    !hasCompletedProofs && !hasGoerliProofsToCreate && !hasMainnetProofsToCreate
 
   return (
     <>
@@ -83,7 +82,7 @@ export default function () {
           </ProofSection>
         </div>
       </Scrollbar>
-      {proofsCompleted.length > 0 && (
+      {hasCompletedProofs && (
         <AccentText small primary color="text-primary">
           Created ZK proofs are saved in the browser even if you switch wallets.
         </AccentText>
