@@ -16,7 +16,7 @@ const fade = (bottom = true) =>
       bottom ? 'to-primary-dark' : 'to-transparent'
     ),
     position('sticky'),
-    inset(bottom ? '-bottom-1' : '-top-1', 'left-0', 'right-0'),
+    inset(bottom ? '-bottom-1.5' : '-top-1', 'left-0', 'right-0'),
     height('h-4'),
     zIndex('z-10')
   )
