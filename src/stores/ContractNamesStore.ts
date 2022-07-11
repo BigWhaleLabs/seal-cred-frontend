@@ -4,6 +4,7 @@ import {
   mainnetDefaultProvider,
 } from 'helpers/providers/defaultProvider'
 import { proxy } from 'valtio'
+import { reservedContractMetadata } from '@big-whale-labs/constants'
 import Network from 'models/Network'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import networkPick from 'helpers/networkPick'
@@ -31,6 +32,10 @@ class ContractNamesStore extends PersistableStore {
 
   fetchContractName(address: string, network: Network) {
     if (this.contractNames[address]) {
+      return
+    }
+    if (reservedContractMetadata[address]) {
+      this.savedContractNames[address] = reservedContractMetadata[address].name
       return
     }
     const contract = ERC721__factory.connect(
