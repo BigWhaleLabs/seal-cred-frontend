@@ -28,21 +28,21 @@ const walletBox = classnames(
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
 
-function BadgeTitle({
-  badge,
-  network,
-}: {
-  badge: BaseBadgeContract
-  network: Network
-}) {
+function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
   if (badge instanceof EmailBadgeContract) {
     return (
       <>
         <HeaderText extraLeading>
           This wallet belongs to someone with{' '}
-          <ExternalLink url={getEtherscanAddressUrl(badge.address, network)}>
+          <ExternalLink
+            url={getEtherscanAddressUrl(badge.address, Network.Goerli)}
+          >
             <AccentText bold color="text-secondary">
-              <ContractName hyphens address={badge.address} network={network} />
+              <ContractName
+                hyphens
+                address={badge.address}
+                network={Network.Goerli}
+              />
             </AccentText>
           </ExternalLink>
         </HeaderText>
@@ -54,9 +54,15 @@ function BadgeTitle({
     <>
       <HeaderText extraLeading>
         This wallet owns a{' '}
-        <ExternalLink url={getEtherscanAddressUrl(badge.address, network)}>
+        <ExternalLink
+          url={getEtherscanAddressUrl(badge.address, Network.Goerli)}
+        >
           <AccentText bold color="text-secondary">
-            <ContractName hyphens address={badge.address} network={network} />
+            <ContractName
+              hyphens
+              address={badge.address}
+              network={Network.Goerli}
+            />
           </AccentText>
         </ExternalLink>
       </HeaderText>
@@ -64,13 +70,7 @@ function BadgeTitle({
   )
 }
 
-function BadgeContent({
-  badge,
-  network,
-}: {
-  badge: BaseBadgeContract
-  network: Network
-}) {
+function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
   if (badge instanceof EmailBadgeContract) {
     return (
       <BodyText>
@@ -87,10 +87,13 @@ function BadgeContent({
         This is a zkNFT derivative. It means this person has been verified to
         own at least one ‘
         <ExternalLink
-          url={getEtherscanAddressUrl(badge.originalERC721, network)}
+          url={getEtherscanAddressUrl(badge.originalERC721, Network.Goerli)}
         >
           <AccentText color="text-secondary">
-            <ContractName address={badge.originalERC721} network={network} />
+            <ContractName
+              address={badge.originalERC721}
+              network={Network.Goerli}
+            />
           </AccentText>
         </ExternalLink>
         ‘ NFT.
@@ -104,11 +107,9 @@ function BadgeContent({
 export default function ({
   derivativeAddress,
   tokenId,
-  network,
 }: {
   derivativeAddress: string
   tokenId: string
-  network: Network
 }) {
   const contractToBadge = useBadgeContracts()
   const badge = contractToBadge[derivativeAddress]
@@ -132,8 +133,8 @@ export default function ({
       onlyWrap
       spinner="Certified with SealCred ZK Proof"
     >
-      <BadgeTitle badge={badge} network={network} />
-      <BadgeContent badge={badge} network={network} />
+      <BadgeTitle badge={badge} />
+      <BadgeContent badge={badge} />
       <hr className={borderColor('border-primary-semi-dimmed')} />
       <div className={walletBox}>
         <Smile />
@@ -142,7 +143,7 @@ export default function ({
           <OwnedBadgeAddress
             tokenId={tokenId}
             derivativeAddress={badge.address}
-            network={network}
+            network={Network.Goerli}
           />
         </div>
       </div>

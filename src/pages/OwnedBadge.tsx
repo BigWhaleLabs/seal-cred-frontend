@@ -22,15 +22,9 @@ const container = classnames(
   space('space-y-6')
 )
 export default function () {
-  const { derivativeAddress, tokenId, network } = useParams()
+  const { derivativeAddress, tokenId } = useParams()
 
-  if (
-    !derivativeAddress ||
-    tokenId === undefined ||
-    !network ||
-    !([Network.Goerli, Network.Mainnet] as string[]).includes(network)
-  )
-    return <NotFound />
+  if (!derivativeAddress || tokenId === undefined) return <NotFound />
 
   return (
     <div className={container}>
@@ -41,11 +35,7 @@ export default function () {
           </Card>
         }
       >
-        <OwnerInfo
-          derivativeAddress={derivativeAddress}
-          tokenId={tokenId}
-          network={network as Network}
-        />
+        <OwnerInfo derivativeAddress={derivativeAddress} tokenId={tokenId} />
       </Suspense>
       <SealCredCTA />
     </div>
