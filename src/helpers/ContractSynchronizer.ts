@@ -5,6 +5,13 @@ import getOwnedERC721, {
   isTransferEvent,
   parseLogData,
 } from 'helpers/getOwnedERC721'
+import transformObjectValues from 'helpers/transformObjectValues'
+
+export interface ContractSynchronizerSchema {
+  account: string
+  synchronizedBlockId: number
+  addressToTokenIds: { [address: string]: string[] }
+}
 
 export default class ContractSynchronizer {
   account: string
@@ -13,8 +20,45 @@ export default class ContractSynchronizer {
   addressToTokenIds: { [address: string]: Set<string> } = {}
   skipTransactions = new Set<string>()
 
-  constructor(account: string) {
+  constructor(
+    account: string,
+    addressToTokenIds: { [address: string]: Set<string> } = {},
+    synchronizedBlockId?: number
+  ) {
     this.account = account
+    this.synchronizedBlockId = synchronizedBlockId
+    this.addressToTokenIds = addressToTokenIds
+  }
+
+  static fromJSON({
+    account,
+    synchronizedBlockId,
+    addressToTokenIds,
+  }: {
+    account: string
+    synchronizedBlockId: number
+    addressToTokenIds: { [address: string]: string[] }
+  }) {
+    const addressToTokenSetIds = transformObjectValues(
+      addressToTokenIds,
+      (tokenIds) => new Set(tokenIds)
+    )
+    return new ContractSynchronizer(
+      account,
+      addressToTokenSetIds,
+      synchronizedBlockId
+    )
+  }
+
+  toJSON() {
+    return {
+      account: this.account,
+      synchronizedBlockId: this.synchronizedBlockId,
+      addressToTokenIds: transformObjectValues(
+        this.addressToTokenIds,
+        Array.from
+      ),
+    }
   }
 
   applyTransaction(transaction: ContractReceipt) {
@@ -66,6 +110,10 @@ export default class ContractSynchronizer {
       }
     }
 
+    return this.contractsOwned
+  }
+
+  get contractsOwned() {
     return Object.keys(this.addressToTokenIds)
   }
 }

@@ -71,7 +71,6 @@ const cardColor = (color?: Color) => {
 }
 
 const appStyles = classnames(
-  space('space-y-6'),
   display('flex'),
   flexDirection('flex-col'),
   alignItems('items-stretch'),

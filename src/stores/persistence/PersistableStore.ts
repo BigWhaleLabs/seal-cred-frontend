@@ -11,7 +11,9 @@ export default class {
   reviver = (_: string, value: unknown) => value
   replacer = (_: string, value: unknown) => value
 
-  persistanceName = this.constructor.name
+  get persistanceName() {
+    return this.constructor.name
+  }
 
   persist(encrypt: boolean) {
     const json = JSON.stringify(this, this.replacer)

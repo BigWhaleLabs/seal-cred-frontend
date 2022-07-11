@@ -3,70 +3,85 @@ import {
   mainnetDefaultProvider,
 } from 'helpers/providers/defaultProvider'
 import { providers } from 'ethers'
-import { proxy } from 'valtio'
-import { subscribeKey } from 'valtio/utils'
-import ContractSynchronizer from 'helpers/ContractSynchronizer'
+import { proxyWithComputed, subscribeKey } from 'valtio/utils'
+import ContractSynchronizer, {
+  ContractSynchronizerSchema,
+} from 'helpers/ContractSynchronizer'
 import Network from 'models/Network'
+import PersistableStore from 'stores/persistence/PersistableStore'
 import WalletStore from 'stores/WalletStore'
+import transformObjectValues from 'helpers/transformObjectValues'
 
-class ContractsStore {
+class ContractsStore extends PersistableStore {
   connectedAccounts: { [account: string]: ContractSynchronizer } = {}
-  contractsOwned: Promise<string[]> = Promise.resolve([])
   currentBlock?: number
+
+  get persistanceName() {
+    return `${this.constructor.name}_${this.network}`
+  }
 
   provider: providers.Provider
   network: Network
 
   constructor(provider: providers.Provider, network: Network) {
+    super()
     this.provider = provider
     this.network = network
+  }
+
+  reviver = (key: string, value: unknown) => {
+    if (key === 'connectedAccounts') {
+      return transformObjectValues(
+        value as { [account: string]: ContractSynchronizerSchema },
+        ContractSynchronizer.fromJSON
+      )
+    }
+    return value
   }
 
   fetchBlockNumber() {
     return this.provider.getBlockNumber()
   }
-  async fetchMoreContractsOwned(accountChange?: boolean) {
-    if (!this.currentBlock) this.currentBlock = await this.fetchBlockNumber()
 
-    if (!WalletStore.account) {
-      this.contractsOwned = Promise.resolve([])
-      return
-    }
+  async fetchMoreContractsOwned() {
+    if (!WalletStore.account) return
+    if (!this.currentBlock) this.currentBlock = await this.fetchBlockNumber()
 
     if (!this.connectedAccounts[WalletStore.account])
       this.connectedAccounts[WalletStore.account] = new ContractSynchronizer(
         WalletStore.account
       )
-    if (
-      accountChange ||
-      !this.connectedAccounts[WalletStore.account] ||
-      !this.contractsOwned
-    ) {
-      this.contractsOwned = this.connectedAccounts[
-        WalletStore.account
-      ].getOwnedERC721(this.currentBlock, this.network)
-    } else {
-      const oldContractsOwned = (await this.contractsOwned) || []
-      const newContractsOwned = await this.connectedAccounts[
-        WalletStore.account
-      ].getOwnedERC721(this.currentBlock, this.network)
-      this.contractsOwned = Promise.resolve(
-        Array.from(new Set([...oldContractsOwned, ...newContractsOwned]))
-      )
-    }
+
+    await this.connectedAccounts[WalletStore.account].getOwnedERC721(
+      this.currentBlock,
+      this.network
+    )
   }
 }
 
-export const GoerliContractsStore = proxy(
-  new ContractsStore(goerliDefaultProvider, Network.Goerli)
-)
-export const MainnetContractsStore = proxy(
-  new ContractsStore(mainnetDefaultProvider, Network.Mainnet)
-)
+export const GoerliContractsStore = proxyWithComputed(
+  new ContractsStore(goerliDefaultProvider, Network.Goerli),
+  {
+    contractsOwned: (state) =>
+      WalletStore.account && state.connectedAccounts[WalletStore.account]
+        ? state.connectedAccounts[WalletStore.account].contractsOwned
+        : [],
+  }
+).makePersistent(true)
+
+export const MainnetContractsStore = proxyWithComputed(
+  new ContractsStore(mainnetDefaultProvider, Network.Mainnet),
+  {
+    contractsOwned: (state) =>
+      WalletStore.account && state.connectedAccounts[WalletStore.account]
+        ? state.connectedAccounts[WalletStore.account].contractsOwned
+        : [],
+  }
+).makePersistent(true)
 
 subscribeKey(WalletStore, 'account', () => {
-  void GoerliContractsStore.fetchMoreContractsOwned(true)
-  void MainnetContractsStore.fetchMoreContractsOwned(true)
+  void GoerliContractsStore.fetchMoreContractsOwned()
+  void MainnetContractsStore.fetchMoreContractsOwned()
 })
 
 goerliDefaultProvider.on('block', async (blockNumber: number) => {
