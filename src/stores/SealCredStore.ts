@@ -3,7 +3,8 @@ import {
   SCERC721LedgerContract,
   SCEmailLedgerContract,
 } from 'helpers/contracts/sealCredContracts'
-import { proxyWithComputed } from 'valtio/utils'
+import { derive, proxyWithComputed } from 'valtio/utils'
+import { proxy } from 'valtio'
 import ERC721Ledger from 'models/ERC721Ledger'
 import EmailLedger from 'models/EmailLedger'
 import getERC721Ledger from 'helpers/contracts/getERC721Ledger'
@@ -25,42 +26,41 @@ interface ComputedSealCredStoreType {
   emailDerivativeContracts: string[]
 }
 
-const SealCredStore = proxyWithComputed<
-  SealCredStoreType,
-  ComputedSealCredStoreType
->(
+const state = proxy<SealCredStoreType>({
+  externalERC721Ledger: getExternalSCERC721Ledger(
+    ExternalSCERC721LedgerContract
+  ),
+  ERC721Ledger: getERC721Ledger(SCERC721LedgerContract),
+  emailLedger: getEmailLedger(SCEmailLedgerContract),
+})
+
+const SealCredStore = derive<SealCredStoreType, ComputedSealCredStoreType>(
   {
-    externalERC721Ledger: getExternalSCERC721Ledger(
-      ExternalSCERC721LedgerContract
-    ),
-    ERC721Ledger: getERC721Ledger(SCERC721LedgerContract),
-    emailLedger: getEmailLedger(SCEmailLedgerContract),
-  },
-  {
-    externalERC721derivativeContracts: (state) =>
-      Object.values(state.externalERC721Ledger).map(
+    externalERC721derivativeContracts: (get) =>
+      Object.values(get(state).externalERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract
       ),
-    ERC721derivativeContracts: (state) =>
-      Object.values(state.ERC721Ledger).map(
+    ERC721derivativeContracts: (get) =>
+      Object.values(get(state).ERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract
       ),
-    emailDerivativeContracts: (state) =>
-      Object.values(state.emailLedger).map(
+    emailDerivativeContracts: (get) =>
+      Object.values(get(state).emailLedger).map(
         ({ derivativeContract }) => derivativeContract
       ),
-    derivativeContracts: (state) => [
-      ...Object.values(state.ERC721Ledger).map(
+    derivativeContracts: (get) => [
+      ...Object.values(get(state).ERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract
       ),
-      ...Object.values(state.externalERC721Ledger).map(
+      ...Object.values(get(state).externalERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract
       ),
-      ...Object.values(state.emailLedger).map(
+      ...Object.values(get(state).emailLedger).map(
         ({ derivativeContract }) => derivativeContract
       ),
     ],
-  }
+  },
+  { proxy: state }
 )
 
 SCERC721LedgerContract.on(

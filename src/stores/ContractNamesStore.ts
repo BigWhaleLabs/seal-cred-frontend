@@ -34,7 +34,7 @@ class ContractNamesStore extends PersistableStore {
     if (this.contractNames[address]) {
       return
     }
-    if (reservedContractMetadata[address]) {
+    if (reservedContractMetadata?.[address]) {
       this.savedContractNames[address] = reservedContractMetadata[address].name
       return
     }
