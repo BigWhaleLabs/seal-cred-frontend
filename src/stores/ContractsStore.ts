@@ -1,64 +1,60 @@
-import { proxy } from 'valtio'
-import { subscribeKey } from 'valtio/utils'
-import ContractSynchronizer from 'helpers/ContractSynchronizer'
+import { proxyWithComputed, subscribeKey } from 'valtio/utils'
+import ContractSynchronizer, {
+  ContractSynchronizerSchema,
+} from 'helpers/ContractSynchronizer'
+import PersistableStore from 'stores/persistence/PersistableStore'
 import WalletStore from 'stores/WalletStore'
 import defaultProvider from 'helpers/defaultProvider'
+import transformObjectValues from 'helpers/transformObjectValues'
+import walletStore from 'stores/WalletStore'
 
-interface ContractsStoreType {
-  connectedAccounts: { [account: string]: ContractSynchronizer }
-  contractsOwned: Promise<string[]>
+class ContractsStore extends PersistableStore {
+  connectedAccounts: { [account: string]: ContractSynchronizer } = {}
   currentBlock?: number
-  fetchBlockNumber: () => Promise<number>
-  fetchMoreContractsOwned: (accountChange?: boolean) => Promise<void>
-}
 
-const ContractsStore = proxy<ContractsStoreType>({
-  connectedAccounts: {},
-  contractsOwned: Promise.resolve([]),
-  currentBlock: undefined,
+  reviver = (key: string, value: unknown) => {
+    if (key === 'connectedAccounts') {
+      return transformObjectValues(
+        value as { [account: string]: ContractSynchronizerSchema },
+        ContractSynchronizer.fromJSON
+      )
+    }
+    return value
+  }
 
   fetchBlockNumber() {
     return defaultProvider.getBlockNumber()
-  },
-  async fetchMoreContractsOwned(accountChange) {
-    if (!ContractsStore.currentBlock)
-      ContractsStore.currentBlock = await ContractsStore.fetchBlockNumber()
+  }
 
-    if (!WalletStore.account) {
-      ContractsStore.contractsOwned = Promise.resolve([])
-      return
-    }
+  async fetchMoreContractsOwned() {
+    if (!WalletStore.account) return
+    if (!this.currentBlock) this.currentBlock = await this.fetchBlockNumber()
 
-    if (!ContractsStore.connectedAccounts[WalletStore.account])
-      ContractsStore.connectedAccounts[WalletStore.account] =
-        new ContractSynchronizer(WalletStore.account)
-    if (
-      accountChange ||
-      !ContractsStore.connectedAccounts[WalletStore.account] ||
-      !ContractsStore.contractsOwned
-    ) {
-      ContractsStore.contractsOwned = ContractsStore.connectedAccounts[
+    if (!this.connectedAccounts[WalletStore.account])
+      this.connectedAccounts[WalletStore.account] = new ContractSynchronizer(
         WalletStore.account
-      ].getOwnedERC721(ContractsStore.currentBlock)
-    } else {
-      const oldContractsOwned = (await ContractsStore.contractsOwned) || []
-      const newContractsOwned = await ContractsStore.connectedAccounts[
-        WalletStore.account
-      ].getOwnedERC721(ContractsStore.currentBlock)
-      ContractsStore.contractsOwned = Promise.resolve(
-        Array.from(new Set([...oldContractsOwned, ...newContractsOwned]))
       )
-    }
-  },
-})
+
+    await this.connectedAccounts[WalletStore.account].getOwnedERC721(
+      this.currentBlock
+    )
+  }
+}
+
+const contractsStore = proxyWithComputed(new ContractsStore(), {
+  contractsOwned: (state) =>
+    walletStore.account && state.connectedAccounts[walletStore.account]
+      ? state.connectedAccounts[walletStore.account].contractsOwned
+      : [],
+}).makePersistent(true)
 
 subscribeKey(WalletStore, 'account', () =>
-  ContractsStore.fetchMoreContractsOwned(true)
+  contractsStore.fetchMoreContractsOwned()
 )
 
 defaultProvider.on('block', async (blockNumber: number) => {
-  ContractsStore.currentBlock = blockNumber
-  await ContractsStore.fetchMoreContractsOwned()
+  contractsStore.currentBlock = blockNumber
+  await contractsStore.fetchMoreContractsOwned()
 })
 
-export default ContractsStore
+export default contractsStore
