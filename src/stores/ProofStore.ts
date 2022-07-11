@@ -87,6 +87,7 @@ class ProofStore extends PersistableStore {
       const newEmailProof = new EmailProof(domain)
       await newEmailProof.build(signature, eddsaPublicKey, nullifierSignature)
       this.proofsCompleted.push(newEmailProof)
+      return newEmailProof
     } catch (e) {
       handleError(e)
     }
@@ -126,6 +127,7 @@ class ProofStore extends PersistableStore {
         eddsaPublicKey
       )
       this.proofsCompleted.push(newERC721Proof)
+      return newERC721Proof
     } catch (e) {
       handleError(e)
     }
