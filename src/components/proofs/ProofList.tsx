@@ -21,16 +21,24 @@ export default function () {
   const mainnetProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(Network.Mainnet)
 
+  const hasGoerliProofsToCreate =
+    goerliProofAddressesAvailableToCreate.length > 0
+  const hasMainnetProofsToCreate =
+    mainnetProofAddressesAvailableToCreate.length > 0
+
   const nothingToGenerate =
     proofsCompleted.length === 0 &&
-    goerliProofAddressesAvailableToCreate.length === 0 &&
-    mainnetProofAddressesAvailableToCreate.length === 0
+    !hasGoerliProofsToCreate &&
+    !hasMainnetProofsToCreate
 
   return (
     <>
       <Scrollbar>
         <div className={space('space-y-2')}>
-          <ProofSection title={<BodyText>Mainnet NFTs</BodyText>}>
+          <ProofSection
+            title={<BodyText>Mainnet NFTs</BodyText>}
+            hasContent={hasMainnetProofsToCreate}
+          >
             <ReadyERC721ProofsList network={Network.Mainnet} />
             {account && (
               <AvailableProofsList
@@ -38,15 +46,11 @@ export default function () {
                 network={Network.Mainnet}
               />
             )}
-            {nothingToGenerate && (
-              <HintCard small>
-                <HintText bold center>
-                  No NFTs to proof
-                </HintText>
-              </HintCard>
-            )}
           </ProofSection>
-          <ProofSection title={<BodyText>Goerli NFTs</BodyText>}>
+          <ProofSection
+            title={<BodyText>Goerli NFTs</BodyText>}
+            hasContent={hasGoerliProofsToCreate}
+          >
             <ReadyERC721ProofsList network={Network.Goerli} />
             {account && (
               <AvailableProofsList
@@ -54,14 +58,14 @@ export default function () {
                 network={Network.Goerli}
               />
             )}
-            {nothingToGenerate && (
-              <HintCard small>
-                <HintText bold center>
-                  No NFTs to proof
-                </HintText>
-              </HintCard>
-            )}
           </ProofSection>
+          {nothingToGenerate && (
+            <HintCard small>
+              <HintText bold center>
+                No NFTs to proof
+              </HintText>
+            </HintCard>
+          )}
           <ProofSection
             title={
               <BodyText>

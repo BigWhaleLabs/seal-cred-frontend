@@ -5,6 +5,7 @@ import Section from 'components/Section'
 export default function ({
   title,
   children,
-}: ChildrenProp & { title?: ComponentChildren }) {
-  return <Section title={title}>{children}</Section>
+  hasContent = true,
+}: ChildrenProp & { title?: ComponentChildren; hasContent?: boolean }) {
+  return hasContent ? <Section title={title}>{children}</Section> : null
 }
