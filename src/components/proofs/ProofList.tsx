@@ -15,20 +15,14 @@ import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailable
 
 export default function () {
   const { account } = useSnapshot(WalletStore)
-  const {
-    emailProofsCompleted,
-    goerliERC721ProofsCompleted,
-    mainnetERC721ProofsCompleted,
-    proofsCompleted,
-  } = useSnapshot(ProofStore)
+  const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
   const goerliProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(Network.Goerli)
   const mainnetProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(Network.Mainnet)
 
   const nothingToGenerate =
-    goerliERC721ProofsCompleted.length === 0 &&
-    mainnetERC721ProofsCompleted.length === 0 &&
+    proofsCompleted.length === 0 &&
     goerliProofAddressesAvailableToCreate.length === 0 &&
     mainnetProofAddressesAvailableToCreate.length === 0
 

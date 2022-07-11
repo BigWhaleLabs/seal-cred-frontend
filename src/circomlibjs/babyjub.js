@@ -5,7 +5,7 @@ export default async function buildBabyJub() {
   return new BabyJub(bn128.Fr)
 }
 
-class BabyJub {
+export class BabyJub {
   constructor(F) {
     this.F = F
     this.p = Scalar.fromString(

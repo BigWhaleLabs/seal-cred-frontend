@@ -6,7 +6,6 @@ import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import PublicKey from 'models/PublicKey'
 import Signature from 'models/Signature'
-import buildBabyJub from 'circomlibjs/babyjub'
 import unpackSignature from 'helpers/unpackSignature'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -82,8 +81,6 @@ export default class ERC721Proof
     suffix: 'Token' | 'Address',
     threshold?: number
   ) {
-    const babyJub = await buildBabyJub()
-    const F = babyJub.F
     const messageUInt8 = utils.toUtf8Bytes(signature.message)
     const messageBytes =
       'balance' in signature

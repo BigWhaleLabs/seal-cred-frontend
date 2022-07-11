@@ -1,7 +1,9 @@
 import { Scalar } from 'ffjavascript'
 import { utils } from 'ethers'
-import buildBabyJub from 'circomlibjs/babyjub'
+import buildBabyJub, { BabyJub } from 'circomlibjs/babyjub'
 import buildMimc7 from 'circomlibjs/mimc7'
+
+let babyJub: BabyJub
 
 export default async function (
   messageUInt8: Uint8Array | (number | string)[],
@@ -11,7 +13,9 @@ export default async function (
   const M = mimc7.multiHash(messageUInt8)
 
   // Create BabyJub
-  const babyJub = await buildBabyJub()
+  if (!babyJub) {
+    babyJub = await buildBabyJub()
+  }
   const F = babyJub.F
 
   // Unpack signature
