@@ -1,9 +1,11 @@
+import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import CardTitle from 'components/CardTitle'
 import ProofStore from 'stores/ProofStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-export default function () {
+// export default function () {
+export function ListTitleSuspended() {
   const { proofsCompleted } = useSnapshot(ProofStore)
   const avaliableToProof = useProofAddressesAvailableToCreate()
 
@@ -19,5 +21,13 @@ export default function () {
           : 'Generate ZK proofs'
       }
     />
+  )
+}
+
+export default function () {
+  return (
+    <Suspense fallback={<div>Loading title</div>}>
+      <ListTitleSuspended />
+    </Suspense>
   )
 }

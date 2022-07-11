@@ -14,8 +14,12 @@ function ListSuspended() {
 
 export default function () {
   return (
-    <Suspense fallback={<LoadingCard />}>
-      <ListSuspended />
-    </Suspense>
+    // <Suspense fallback={<LoadingCard />}>
+    //   <ListSuspended />
+    // </Suspense>
+    <>
+      <ListTitle />
+      <ProofList />
+    </>
   )
 }
