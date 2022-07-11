@@ -1,6 +1,6 @@
 import { serializeError } from 'eth-rpc-errors'
 import { toast } from 'react-toastify'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import parseRevertReason from 'helpers/parseRevertReason'
 
 export const ProofGenerationErrors = {}
@@ -23,6 +23,9 @@ export default function (error: unknown) {
   const message = serializeError(error).message
   if (message) {
     displayedError = parseRevertReason(message) ?? message
+  }
+  if (error instanceof AxiosError && error.response?.data?.message) {
+    displayedError = error.response?.data?.message
   }
   if (!displayedError) displayedError = ErrorList.unknown
 
