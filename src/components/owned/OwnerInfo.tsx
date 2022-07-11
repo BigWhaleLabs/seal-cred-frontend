@@ -87,16 +87,16 @@ function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
         This is a zkNFT derivative. It means this person has been verified to
         own at least one ‘
         <ExternalLink
-          url={getEtherscanAddressUrl(badge.originalERC721, Network.Goerli)}
+          url={getEtherscanAddressUrl(badge.originalERC721, badge.network)}
         >
           <AccentText color="text-secondary">
             <ContractName
               address={badge.originalERC721}
-              network={Network.Goerli}
+              network={badge.network}
             />
           </AccentText>
         </ExternalLink>
-        ‘ NFT.
+        ‘ {badge.network[0].toUpperCase() + badge.network.slice(1)} NFT.
       </BodyText>
     )
   }

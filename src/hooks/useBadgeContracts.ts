@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio'
 import BaseBadgeContract from 'helpers/BaseBadgeContract'
 import ERC721BadgeContract from 'helpers/ERC721BadgeContract'
 import EmailBadgeContract from 'helpers/EmailBadgeContract'
+import Network from 'models/Network'
 import SealCredStore from 'stores/SealCredStore'
 
 export default function () {
@@ -31,7 +32,8 @@ export default function () {
         ...result,
         [derivativeContract]: new ERC721BadgeContract(
           derivativeContract,
-          originalContract
+          originalContract,
+          ERC721Ledger[originalContract] ? Network.Goerli : Network.Mainnet
         ),
       }),
       result
