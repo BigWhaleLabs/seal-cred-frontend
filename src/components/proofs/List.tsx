@@ -6,12 +6,12 @@ import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailable
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListSuspended() {
-  const avaliableToProof = useProofAddressesAvailableToCreate()
+  const availableToProofList = useProofAddressesAvailableToCreate()
   useProofsAvailableToMint() // used to synchronize loading with badge card
 
   return (
     <>
-      <ListTitle avaliableToProof={avaliableToProof} />
+      <ListTitle availableToProofList={availableToProofList} />
       <ProofList />
     </>
   )

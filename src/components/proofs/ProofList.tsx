@@ -6,11 +6,11 @@ import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import EmailProof from 'components/proofs/EmailProof'
 import HintCard from 'components/badges/HintCard'
 import Network from 'models/Network'
-import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
 import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 import Scrollbar from 'components/Scrollbar'
+import Section from 'components/Section'
 import WalletStore from 'stores/WalletStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
@@ -34,7 +34,7 @@ export function ProofListSuspended() {
     <>
       <Scrollbar>
         <div className={space('space-y-2')}>
-          <ProofSection title={<BodyText>Mainnet NFTs</BodyText>}>
+          <Section title={<BodyText>Mainnet NFTs</BodyText>}>
             <ReadyERC721ProofsList network={Network.Mainnet} />
             {account && (
               <AvailableProofsList
@@ -49,8 +49,8 @@ export function ProofListSuspended() {
                 </HintText>
               </HintCard>
             )}
-          </ProofSection>
-          <ProofSection title={<BodyText>Goerli NFTs</BodyText>}>
+          </Section>
+          <Section title={<BodyText>Goerli NFTs</BodyText>}>
             <ReadyERC721ProofsList network={Network.Goerli} />
             {account && (
               <AvailableProofsList
@@ -65,8 +65,8 @@ export function ProofListSuspended() {
                 </HintText>
               </HintCard>
             )}
-          </ProofSection>
-          <ProofSection
+          </Section>
+          <Section
             title={
               <BodyText>
                 Additional proofs{' '}
@@ -80,7 +80,7 @@ export function ProofListSuspended() {
               <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
             ))}
             <EmailProof />
-          </ProofSection>
+          </Section>
         </div>
       </Scrollbar>
       {proofsCompleted.length > 0 && (

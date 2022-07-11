@@ -2,11 +2,15 @@ import { useSnapshot } from 'valtio'
 import CardTitle from 'components/CardTitle'
 import ProofStore from 'stores/ProofStore'
 
-export default function ({ avaliableToProof }: { avaliableToProof: string[] }) {
+export default function ({
+  availableToProofList,
+}: {
+  availableToProofList: string[]
+}) {
   const { proofsCompleted } = useSnapshot(ProofStore)
 
   const allGenerated =
-    proofsCompleted.length > 0 && avaliableToProof.length === 0
+    proofsCompleted.length > 0 && availableToProofList.length === 0
 
   return (
     <CardTitle
