@@ -3,7 +3,7 @@ import {
   SCERC721LedgerContract,
   SCEmailLedgerContract,
 } from 'helpers/contracts/sealCredContracts'
-import { derive, proxyWithComputed } from 'valtio/utils'
+import { derive } from 'valtio/utils'
 import { proxy } from 'valtio'
 import ERC721Ledger from 'models/ERC721Ledger'
 import EmailLedger from 'models/EmailLedger'
