@@ -33,7 +33,7 @@ class ContractNamesStore extends PersistableStore {
   fetchContractName(address: string, network: Network) {
     if (this.contractNames[address]) return
 
-    if (reservedContractMetadata?.[address]) {
+    if (reservedContractMetadata[address]) {
       this.savedContractNames[address] = reservedContractMetadata[address].name
       return
     }
