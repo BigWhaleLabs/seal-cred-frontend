@@ -52,25 +52,25 @@ function BadgeListSuspended() {
           title="Mainnet NFT derivatives"
           minted={ownedERC721DerivativeContracts}
           proofs={proofsAvailableToMint.filter(
-            (proof) => proof instanceof ERC721Proof
+            (proof) =>
+              proof instanceof ERC721Proof && proof.network === Network.Mainnet
           )}
-          network={Network.Mainnet}
         />
         <BadgeSection
           title="Goerli NFT derivatives"
           minted={ownedERC721DerivativeContracts}
           proofs={proofsAvailableToMint.filter(
-            (proof) => proof instanceof ERC721Proof
+            (proof) =>
+              proof instanceof ERC721Proof && proof.network === Network.Goerli
           )}
-          network={Network.Mainnet}
         />
-        {/* <BadgeSection
+        <BadgeSection
           title="Email derivatives"
           minted={ownedEmailDerivativeContracts}
           proofs={proofsAvailableToMint.filter(
             (proof) => proof instanceof EmailProof
           )}
-        /> */}
+        />
       </div>
     </Scrollbar>
   )

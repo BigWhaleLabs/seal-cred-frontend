@@ -7,23 +7,19 @@ import ExternalLink from 'components/ExternalLink'
 import Network from 'models/Network'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 
-export default function ({
-  contractAddress,
-  network,
-}: {
-  contractAddress: string
-  network: Network
-}) {
+export default function ({ contractAddress }: { contractAddress: string }) {
   return (
     <BadgeWrapper minted={false}>
       <BadgeCard
         top={<Erc721Badge />}
         text={
-          <ExternalLink url={getEtherscanAddressUrl(contractAddress, network)}>
+          <ExternalLink
+            url={getEtherscanAddressUrl(contractAddress, Network.Goerli)}
+          >
             <ContractName
               address={contractAddress}
               clearType
-              network={network}
+              network={Network.Goerli}
             />
           </ExternalLink>
         }

@@ -6,9 +6,9 @@ import ExternalLink from 'components/ExternalLink'
 import Network from 'models/Network'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 
-function ProofName({ badge, network }: { badge: BaseProof; network: Network }) {
+function ProofName({ badge }: { badge: BaseProof }) {
   if (badge instanceof ERC721Proof)
-    return <ContractName address={badge.contract} network={network} />
+    return <ContractName address={badge.contract} network={Network.Goerli} />
   if (badge instanceof EmailProof) return <>@{badge.domain}</>
   return <>Unknown</>
 }
@@ -16,20 +16,24 @@ function ProofName({ badge, network }: { badge: BaseProof; network: Network }) {
 export default function ({
   derivativeAddress,
   proof,
-  network,
 }: {
   derivativeAddress?: string
   proof?: BaseProof
-  network: Network
 }) {
   if (derivativeAddress)
     return (
-      <ExternalLink url={getEtherscanAddressUrl(derivativeAddress, network)}>
-        <ContractName address={derivativeAddress} clearType network={network} />
+      <ExternalLink
+        url={getEtherscanAddressUrl(derivativeAddress, Network.Goerli)}
+      >
+        <ContractName
+          address={derivativeAddress}
+          clearType
+          network={Network.Goerli}
+        />
       </ExternalLink>
     )
 
   if (!proof) return null
 
-  return <ProofName badge={proof} network={network} />
+  return <ProofName badge={proof} />
 }

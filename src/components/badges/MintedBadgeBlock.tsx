@@ -29,11 +29,9 @@ const mintPassed = (small?: boolean) =>
 function Badge({
   derivativeAddress,
   tokenId,
-  network,
 }: {
   derivativeAddress: string
   tokenId: number
-  network?: Network
 }) {
   const { xxs, sm } = useBreakpoints()
   const small = xxs && !sm
@@ -41,9 +39,7 @@ function Badge({
   return (
     <BadgeCard
       top={<QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />}
-      text={
-        <BadgeTitle derivativeAddress={derivativeAddress} network={network} />
-      }
+      text={<BadgeTitle derivativeAddress={derivativeAddress} />}
       bottom={
         <div className={mintPassed(small)}>
           <AccentText bold small primary color="text-secondary">
@@ -59,19 +55,13 @@ function Badge({
 export default function ({
   derivativeAddress,
   tokenId,
-  network,
 }: {
   derivativeAddress: string
   tokenId: number
-  network?: Network
 }) {
   return (
     <BadgeWrapper minted={tokenId !== undefined}>
-      <Badge
-        derivativeAddress={derivativeAddress}
-        tokenId={tokenId}
-        network={network}
-      />
+      <Badge derivativeAddress={derivativeAddress} tokenId={tokenId} />
     </BadgeWrapper>
   )
 }
