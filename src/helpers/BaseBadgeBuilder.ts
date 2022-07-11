@@ -26,7 +26,7 @@ export default abstract class BaseBadgeBuilder {
 
     // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
     // Also pay attention to array indexes
-    const tx = await this.ledger.mint({
+    const txData = {
       a: [
         BigNumber.from(proofResult.proof.pi_a[0]),
         BigNumber.from(proofResult.proof.pi_a[1]),
@@ -46,7 +46,8 @@ export default abstract class BaseBadgeBuilder {
         BigNumber.from(proofResult.proof.pi_c[1]),
       ],
       input: proofResult.publicSignals.map(BigNumber.from),
-    })
+    }
+    const tx = await this.ledger.mint(txData)
     return tx.wait()
   }
 }

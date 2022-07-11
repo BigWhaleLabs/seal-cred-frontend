@@ -1528,10 +1528,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/constants@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "@big-whale-labs/constants@npm:0.1.2"
-  checksum: bd2062dd3c6ccced3c3d1cc62454e04217b3b4bee0c61eba9a13499b30b2c27559252a72a084281d37a64a620d0c8ae99de7bb18519f978e6e286b8043ddcb46
+"@big-whale-labs/constants@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@big-whale-labs/constants@npm:0.1.3"
+  checksum: 02ff8a4cdd0709c73c930ddf2231ceb00382bbdc8000593978d16d1a6a046ff5693cdc0dfd1b78ca804eaeb3179aac53166ebc0bb32fd713182ccb69f5b6697e
   languageName: node
   linkType: hard
 
@@ -1544,14 +1544,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/seal-cred-ledger-contract@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.2.1"
+"@big-whale-labs/seal-cred-ledger-contract@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.2.2"
   dependencies:
     "@big-whale-labs/constants": ^0.1.0
     entropy-string: ^4.2.0
     prompt: ^1.3.0
-  checksum: 62cbef399cc650e2f221a798ced107ba4cc723eee2ddcb4da31af1332f911a69e874aab55baced531054f40ea1bf89ee57cc6c822b5f6ec800256effce4e991a
+  checksum: bba91741dc4ba3f0636792b8eb511675e4b6e2926dbf51238d98377b197df3a8821aeb61b8fa2be402f36dd61f042a6ba57227065e1a1d211e8ebd13ed90a0aa
   languageName: node
   linkType: hard
 
@@ -14200,9 +14200,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "seal-cred-frontend@workspace:."
   dependencies:
-    "@big-whale-labs/constants": ^0.1.2
+    "@big-whale-labs/constants": ^0.1.3
     "@big-whale-labs/poseidon": ^0.0.5
-    "@big-whale-labs/seal-cred-ledger-contract": ^0.2.1
+    "@big-whale-labs/seal-cred-ledger-contract": ^0.2.2
     "@coinbase/wallet-sdk": ^3.3.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@originjs/vite-plugin-commonjs": ^1.0.3
