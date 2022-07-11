@@ -18,20 +18,28 @@ import walletStore from 'stores/WalletStore'
 function BadgeListSuspended() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
-  const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
-    useSnapshot(SealCredStore)
+  const {
+    emailDerivativeContracts = [],
+    ERC721derivativeContracts = [],
+    externalERC721derivativeContracts = [],
+  } = useSnapshot(SealCredStore)
   const { contractsOwned } = useSnapshot(GoerliContractsStore)
 
   const ownedEmailDerivativeContracts = emailDerivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
   )
 
+  const ownedExternalERC721DerivativeContracts =
+    externalERC721derivativeContracts.filter((contractAddress) =>
+      contractsOwned.includes(contractAddress)
+    )
   const ownedERC721DerivativeContracts = ERC721derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
   )
 
   const proofsAvailableToMint = useProofsAvailableToMint()
   const isEmpty =
+    !ownedExternalERC721DerivativeContracts.length &&
     !ownedEmailDerivativeContracts.length &&
     !ownedERC721DerivativeContracts.length &&
     !proofsAvailableToMint.length
@@ -50,7 +58,7 @@ function BadgeListSuspended() {
       <div className={space('space-y-2')}>
         <BadgeSection
           title="Mainnet NFT derivatives"
-          minted={ownedERC721DerivativeContracts}
+          minted={ownedExternalERC721DerivativeContracts}
           proofs={proofsAvailableToMint.filter(
             (proof) =>
               proof instanceof ERC721Proof && proof.network === Network.Mainnet
