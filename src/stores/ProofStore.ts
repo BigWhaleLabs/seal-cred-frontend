@@ -97,9 +97,6 @@ class ProofStore extends PersistableStore {
       if (!WalletStore.account) {
         throw new Error('No account selected')
       }
-      if (network === Network.Mainnet) {
-        throw new Error('ERC721 not supported on Mainnet yet')
-      }
       // Get the account
       const account = WalletStore.account
       if (!account) throw new Error('No account found')
