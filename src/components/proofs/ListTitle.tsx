@@ -4,7 +4,6 @@ import CardTitle from 'components/CardTitle'
 import ProofStore from 'stores/ProofStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-// export default function () {
 export function ListTitleSuspended() {
   const { proofsCompleted } = useSnapshot(ProofStore)
   const avaliableToProof = useProofAddressesAvailableToCreate()
@@ -26,7 +25,14 @@ export function ListTitleSuspended() {
 
 export default function () {
   return (
-    <Suspense fallback={<div>Loading title</div>}>
+    <Suspense
+      fallback={
+        <CardTitle
+          title="Loading..."
+          subtitle="Please, wait until I load supported NFTs, it takes time"
+        />
+      }
+    >
       <ListTitleSuspended />
     </Suspense>
   )

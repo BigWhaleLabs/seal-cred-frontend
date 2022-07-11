@@ -14,7 +14,6 @@ import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-// export default function () {
 export function ProofListSuspended() {
   const { account } = useSnapshot(WalletStore)
   const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
