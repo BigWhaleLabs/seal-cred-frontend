@@ -1,4 +1,8 @@
-import { getPublicKey } from 'helpers/attestor'
+import {
+  getEddsaPublicKey,
+  requestAddressOwnershipAttestation,
+  requestBalanceAttestation,
+} from 'helpers/attestor'
 import { proxy } from 'valtio'
 import BaseProof from 'helpers/BaseProof'
 import ERC721Proof, { ERC721ProofSchema } from 'helpers/ERC721Proof'
@@ -8,7 +12,7 @@ import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResult from 'models/ProofResult'
 import WalletStore from 'stores/WalletStore'
 import checkNavigator from 'helpers/checkNavigator'
-import entropy from 'helpers/entropy'
+import getNullifierMessage from 'helpers/getNullifierMessage'
 import handleError from 'helpers/handleError'
 
 class ProofStore extends PersistableStore {
@@ -73,49 +77,61 @@ class ProofStore extends PersistableStore {
   async generateEmail(domain: string, signature: string) {
     try {
       // Get public key
-      const { x, y } = await getPublicKey()
+      const eddsaPublicKey = await getEddsaPublicKey()
       // Get nullifier signature
-      const nullifierMessage = `${
-        WalletStore.account
-      } for SealCred\nnonce: 0x${entropy.string()}`
+      const nullifierMessage = getNullifierMessage()
       const nullifierSignature = await WalletStore.signMessage(nullifierMessage)
-
       // Check navigator availability
       checkNavigator()
-
+      // Create proof
       const newEmailProof = new EmailProof(domain)
-      await newEmailProof.build(signature, x, y, nullifierSignature)
+      await newEmailProof.build(signature, eddsaPublicKey, nullifierSignature)
       this.proofsCompleted.push(newEmailProof)
-
-      return newEmailProof
     } catch (e) {
       handleError(e)
     }
   }
 
   async generateERC721(contract: string, network: Network) {
-    // try {
-    //   // Get the account
-    //   const account = WalletStore.account
-    //   if (!account) throw new Error('No account found')
-    //   // Get public key
-    //   const { x, y } = await getPublicKey()
-    //   // Get the EdDSA signature from the attestor
-    //   const eddsaMessage = `${WalletStore.account} for SealCred`
-    //   const eddsaSignature = await WalletStore.signMessage(eddsaMessage)
-    //   if (!eddsaSignature) throw new Error('Signature is not found')
-    //   const { signature, message } = await requestERC721Attestation(
-    //     eddsaSignature,
-    //     contract,
-    //     eddsaMessage
-    //   )
-    //   const newERC721Proof = new ERC721Proof(contract, account, network)
-    //   checkNavigator()
-    //   await newERC721Proof.build(message, signature, x, y)
-    //   this.proofsCompleted.push(newERC721Proof)
-    // } catch (e) {
-    //   handleError(e)
-    // }
+    try {
+      if (!WalletStore.account) {
+        throw new Error('No account selected')
+      }
+      if (network === Network.Mainnet) {
+        throw new Error('ERC721 not supported on Mainnet yet')
+      }
+      // Get the account
+      const account = WalletStore.account
+      if (!account) throw new Error('No account found')
+      // Get public key
+      const eddsaPublicKey = await getEddsaPublicKey()
+      // Get nullifier signature
+      const nullifierMessage = getNullifierMessage()
+      const nullifierSignature = await WalletStore.signMessage(nullifierMessage)
+      // Get ownership EdDSA attestation
+      const ownershipSignature = await requestAddressOwnershipAttestation(
+        nullifierSignature,
+        nullifierMessage
+      )
+      // Get balance EdDSA attestation
+      const balanceSignature = await requestBalanceAttestation(
+        contract,
+        network,
+        WalletStore.account
+      )
+      // Get the proof
+      const newERC721Proof = new ERC721Proof(contract, account, network)
+      checkNavigator()
+      await newERC721Proof.build(
+        ownershipSignature,
+        balanceSignature,
+        nullifierSignature,
+        eddsaPublicKey
+      )
+      this.proofsCompleted.push(newERC721Proof)
+    } catch (e) {
+      handleError(e)
+    }
   }
 }
 

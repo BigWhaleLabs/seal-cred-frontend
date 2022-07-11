@@ -2,6 +2,7 @@ import { utils } from 'ethers'
 import BaseProof from 'helpers/BaseProof'
 import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
+import PublicKey from 'models/PublicKey'
 import unpackSignature from 'helpers/unpackSignature'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,8 +60,7 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
   async generateInput(
     domain: string,
     signature: string,
-    pubKeyX: string,
-    pubKeyY: string,
+    eddsaPublicKey: PublicKey,
     nullifierSignature: string
   ) {
     const maxDomainLength = 90
@@ -71,8 +71,8 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
     const { r: r2, s: s2 } = utils.splitSignature(nullifierSignature)
     return {
       message: Array.from(messageUInt8),
-      pubKeyX,
-      pubKeyY,
+      pubKeyX: eddsaPublicKey.x,
+      pubKeyY: eddsaPublicKey.y,
       ...(await unpackSignature(messageUInt8, signature)),
       r2,
       s2,
@@ -81,16 +81,14 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
 
   async build(
     signature: string,
-    pubKeyX: string,
-    pubKeyY: string,
+    eddsaPublicKey: PublicKey,
     nullifierSignature: string
   ) {
     this.result = await snarkjs.groth16.fullProve(
       await this.generateInput(
         this.domain,
         signature,
-        pubKeyX,
-        pubKeyY,
+        eddsaPublicKey,
         nullifierSignature
       ),
       'zk/EmailOwnershipChecker.wasm',

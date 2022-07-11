@@ -1,8 +1,12 @@
 import { utils } from 'ethers'
+import BalanceSignature from 'models/BalanceSignature'
 import BaseProof from 'helpers/BaseProof'
 import Network from 'models/Network'
 import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
+import PublicKey from 'models/PublicKey'
+import Signature from 'models/Signature'
+import buildBabyJub from 'circomlibjs/babyjub'
 import unpackSignature from 'helpers/unpackSignature'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -72,40 +76,77 @@ export default class ERC721Proof
     this.network = network
   }
 
-  async generateInput(
-    message: string,
-    contract: string,
-    signature: string,
-    pubKeyX: string,
-    pubKeyY: string
+  async inputsForSignature(
+    publicKey: PublicKey,
+    signature: Signature | BalanceSignature,
+    suffix: 'Token' | 'Address',
+    threshold?: number
   ) {
-    const messageUInt8 = utils.toUtf8Bytes(message)
-    const privateInput = await unpackSignature(messageUInt8, signature)
+    const babyJub = await buildBabyJub()
+    const F = babyJub.F
+    const messageUInt8 = utils.toUtf8Bytes(signature.message)
+    const messageBytes =
+      'balance' in signature
+        ? [...messageUInt8, signature.balance]
+        : messageUInt8
+    const { R8x, R8y, S, M } = await unpackSignature(
+      messageBytes,
+      signature.signature
+    )
     return {
-      message: Array.from(messageUInt8),
-      tokenAddress: Array.from(utils.toUtf8Bytes(contract.toLowerCase())),
-      pubKeyX,
-      pubKeyY,
-      ...privateInput,
+      [`message${suffix}`]: Array.from(messageUInt8),
+      [`pubKeyX${suffix}`]: publicKey.x,
+      [`pubKeyY${suffix}`]: publicKey.y,
+      [`R8x${suffix}`]: R8x,
+      [`R8y${suffix}`]: R8y,
+      [`S${suffix}`]: S,
+      [`M${suffix}`]: M,
+      balance: 'balance' in signature ? signature.balance : undefined,
+      threshold,
+    }
+  }
+
+  async generateInputs(
+    ownershipSignature: Signature,
+    balanceSignature: BalanceSignature,
+    nullifierSignature: string,
+    eddsaPublicKey: PublicKey
+  ) {
+    const { r: r2, s: s2 } = utils.splitSignature(nullifierSignature)
+    const addressInputs = await this.inputsForSignature(
+      eddsaPublicKey,
+      ownershipSignature,
+      'Address'
+    )
+    return {
+      ...addressInputs,
+      ...(await this.inputsForSignature(
+        eddsaPublicKey,
+        balanceSignature,
+        'Token',
+        1
+      )),
+      r2,
+      s2,
     }
   }
 
   async build(
-    message: string,
-    signature: string,
-    pubKeyX: string,
-    pubKeyY: string
+    ownershipSignature: Signature,
+    balanceSignature: BalanceSignature,
+    nullifierSignature: string,
+    eddsaPublicKey: PublicKey
   ) {
+    const inputs = await this.generateInputs(
+      ownershipSignature,
+      balanceSignature,
+      nullifierSignature,
+      eddsaPublicKey
+    )
     this.result = await snarkjs.groth16.fullProve(
-      await this.generateInput(
-        message,
-        this.contract,
-        signature,
-        pubKeyX,
-        pubKeyY
-      ),
-      'zk/ERC721OwnershipChecker.wasm',
-      'zk/ERC721OwnershipChecker_final.zkey'
+      inputs,
+      'zk/BalanceChecker.wasm',
+      'zk/BalanceChecker_final.zkey'
     )
   }
 }

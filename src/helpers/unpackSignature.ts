@@ -4,7 +4,7 @@ import buildBabyJub from 'circomlibjs/babyjub'
 import buildMimc7 from 'circomlibjs/mimc7'
 
 export default async function (
-  messageUInt8: Uint8Array,
+  messageUInt8: Uint8Array | (number | string)[],
   packedSignature: string
 ) {
   const mimc7 = await buildMimc7()
