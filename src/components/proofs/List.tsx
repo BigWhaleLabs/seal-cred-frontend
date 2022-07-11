@@ -5,11 +5,11 @@ import ProofList from 'components/proofs/ProofList'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 function ListSuspended() {
-  const avaliableToProof = useProofAddressesAvailableToCreate()
+  const availableToProofList = useProofAddressesAvailableToCreate()
 
   return (
     <>
-      <ListTitle avaliableToProof={avaliableToProof} />
+      <ListTitle availableToProofList={availableToProofList} />
       <ProofList />
     </>
   )
