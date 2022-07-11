@@ -6,7 +6,8 @@ import EmailBadgeContract from 'helpers/EmailBadgeContract'
 import SealCredStore from 'stores/SealCredStore'
 
 export default function () {
-  const { emailLedger, ERC721Ledger } = useSnapshot(SealCredStore)
+  const { emailLedger, ERC721Ledger, externalERC721Ledger } =
+    useSnapshot(SealCredStore)
 
   return useMemo(() => {
     let result: { [address: string]: BaseBadgeContract } = {}
@@ -22,7 +23,10 @@ export default function () {
       result
     )
 
-    return Object.values(ERC721Ledger).reduce(
+    return [
+      ...Object.values(ERC721Ledger),
+      ...Object.values(externalERC721Ledger),
+    ].reduce(
       (result, { derivativeContract, originalContract }) => ({
         ...result,
         [derivativeContract]: new ERC721BadgeContract(
@@ -32,5 +36,5 @@ export default function () {
       }),
       result
     )
-  }, [emailLedger, ERC721Ledger])
+  }, [emailLedger, ERC721Ledger, externalERC721Ledger])
 }
