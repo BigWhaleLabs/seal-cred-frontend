@@ -1,14 +1,14 @@
 import { AccentText, BodyText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import EmailProof from 'components/proofs/EmailProof'
-import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
+import Section from 'components/Section'
 
 export default function () {
   const { emailProofsCompleted } = useSnapshot(ProofStore)
   return (
-    <ProofSection
+    <Section
       title={
         <BodyText>
           Additional proofs{' '}
@@ -22,6 +22,6 @@ export default function () {
         <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
       ))}
       <EmailProof />
-    </ProofSection>
+    </Section>
   )
 }

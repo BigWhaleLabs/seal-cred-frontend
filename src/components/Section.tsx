@@ -6,7 +6,10 @@ import ChildrenProp from 'models/ChildrenProp'
 export default function ({
   title,
   children,
-}: ChildrenProp & { title?: ComponentChildren }) {
+  show = true,
+}: ChildrenProp & { title?: ComponentChildren; show?: boolean }) {
+  if (!show) return null
+
   return (
     <section className={space('space-y-2')}>
       <SectionTitle>{title}</SectionTitle>

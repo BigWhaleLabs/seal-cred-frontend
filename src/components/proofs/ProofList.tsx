@@ -5,11 +5,11 @@ import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import EmailProof from 'components/proofs/EmailProof'
 import HintCard from 'components/badges/HintCard'
 import Network from 'models/Network'
-import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
 import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 import Scrollbar from 'components/Scrollbar'
+import Section from 'components/Section'
 import WalletStore from 'stores/WalletStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
@@ -34,9 +34,9 @@ export default function () {
     <>
       <Scrollbar>
         <div className={space('space-y-2')}>
-          <ProofSection
+          <Section
             title={<BodyText>Mainnet NFTs</BodyText>}
-            hasContent={hasMainnetProofsToCreate}
+            show={hasMainnetProofsToCreate}
           >
             <ReadyERC721ProofsList network={Network.Mainnet} />
             {account && (
@@ -45,10 +45,10 @@ export default function () {
                 network={Network.Mainnet}
               />
             )}
-          </ProofSection>
-          <ProofSection
+          </Section>
+          <Section
             title={<BodyText>Goerli NFTs</BodyText>}
-            hasContent={hasGoerliProofsToCreate}
+            show={hasGoerliProofsToCreate}
           >
             <ReadyERC721ProofsList network={Network.Goerli} />
             {account && (
@@ -57,7 +57,7 @@ export default function () {
                 network={Network.Goerli}
               />
             )}
-          </ProofSection>
+          </Section>
           {nothingToGenerate && (
             <HintCard small>
               <HintText bold center>
@@ -65,7 +65,7 @@ export default function () {
               </HintText>
             </HintCard>
           )}
-          <ProofSection
+          <Section
             title={
               <BodyText>
                 Additional proofs{' '}
@@ -79,7 +79,7 @@ export default function () {
               <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
             ))}
             <EmailProof />
-          </ProofSection>
+          </Section>
         </div>
       </Scrollbar>
       {hasCompletedProofs && (
