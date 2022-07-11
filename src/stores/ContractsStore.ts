@@ -3,7 +3,8 @@ import {
   mainnetDefaultProvider,
 } from 'helpers/providers/defaultProvider'
 import { providers } from 'ethers'
-import { proxyWithComputed, subscribeKey } from 'valtio/utils'
+import { proxy } from 'valtio'
+import { subscribeKey } from 'valtio/utils'
 import ContractSynchronizer, {
   ContractSynchronizerSchema,
 } from 'helpers/ContractSynchronizer'
@@ -43,6 +44,12 @@ class ContractsStore extends PersistableStore {
     return this.provider.getBlockNumber()
   }
 
+  get contractsOwned() {
+    return WalletStore.account && this.connectedAccounts[WalletStore.account]
+      ? this.connectedAccounts[WalletStore.account].contractsOwned
+      : []
+  }
+
   async fetchMoreContractsOwned() {
     if (!WalletStore.account) return
     if (!this.currentBlock) this.currentBlock = await this.fetchBlockNumber()
@@ -59,24 +66,12 @@ class ContractsStore extends PersistableStore {
   }
 }
 
-export const GoerliContractsStore = proxyWithComputed(
-  new ContractsStore(goerliDefaultProvider, Network.Goerli),
-  {
-    contractsOwned: (state) =>
-      WalletStore.account && state.connectedAccounts[WalletStore.account]
-        ? state.connectedAccounts[WalletStore.account].contractsOwned
-        : [],
-  }
+export const GoerliContractsStore = proxy(
+  new ContractsStore(goerliDefaultProvider, Network.Goerli)
 ).makePersistent(true)
 
-export const MainnetContractsStore = proxyWithComputed(
-  new ContractsStore(mainnetDefaultProvider, Network.Mainnet),
-  {
-    contractsOwned: (state) =>
-      WalletStore.account && state.connectedAccounts[WalletStore.account]
-        ? state.connectedAccounts[WalletStore.account].contractsOwned
-        : [],
-  }
+export const MainnetContractsStore = proxy(
+  new ContractsStore(mainnetDefaultProvider, Network.Mainnet)
 ).makePersistent(true)
 
 subscribeKey(WalletStore, 'account', () => {
