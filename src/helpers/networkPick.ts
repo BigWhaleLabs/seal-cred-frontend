@@ -1,9 +1,9 @@
 import Network from 'models/Network'
 
-export default function <T>(
+export default function <T, A>(
   attestationSource: Network,
   goerliOption: T,
-  mainnetOption: T
+  mainnetOption: A
 ) {
   switch (attestationSource) {
     case Network.Goerli:

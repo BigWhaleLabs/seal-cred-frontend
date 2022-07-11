@@ -35,7 +35,7 @@ export async function requestContractMetadata(
   network: Network,
   tokenAddress: string
 ) {
-  const { data } = await axios.post<Signature>(`${baseURL}/balance`, {
+  const { data } = await axios.post<Signature>(`${baseURL}/contract-metadata`, {
     tokenAddress,
     network,
   })

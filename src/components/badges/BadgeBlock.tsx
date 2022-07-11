@@ -34,7 +34,6 @@ function Badge({
     try {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
-
       const transaction = await WalletStore.mintDerivative(proof)
       const mintedBadge =
         GoerliContractsStore.connectedAccounts[account].applyTransaction(
@@ -52,7 +51,7 @@ function Badge({
         if (onMintFailed) onMintFailed()
         handleError(
           new Error(
-            'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'
+            'The ZK proof has been used before. Please, regenerate the proof.'
           )
         )
       } else {

@@ -1,4 +1,6 @@
+import { BalanceProofStruct } from '@big-whale-labs/seal-cred-ledger-contract/dist/typechain/contracts/ExternalSCERC721Ledger'
 import { BigNumber, ContractTransaction, Overrides } from 'ethers'
+import { ExternalSCERC721Ledger } from '@big-whale-labs/seal-cred-ledger-contract'
 import { PromiseOrValue } from '@big-whale-labs/seal-cred-ledger-contract/dist/typechain/common'
 import { Web3Provider } from '@ethersproject/providers'
 import ProofResult from 'models/ProofResult'
@@ -13,15 +15,18 @@ interface SimpleLedger {
 }
 
 export default abstract class BaseBadgeBuilder {
-  ledger: SimpleLedger
+  ledger: SimpleLedger | ExternalSCERC721Ledger
 
   constructor(provider: Web3Provider, address: string) {
     this.ledger = this.createLedger(provider, address)
   }
 
-  abstract createLedger(provider: Web3Provider, address: string): SimpleLedger
+  abstract createLedger(
+    provider: Web3Provider,
+    address: string
+  ): SimpleLedger | ExternalSCERC721Ledger
 
-  async mint(proofResult?: ProofResult) {
+  async mint(proofResult?: ProofResult, message?: string, signature?: string) {
     if (!proofResult) throw new Error('Invalid proof')
 
     // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
@@ -47,7 +52,13 @@ export default abstract class BaseBadgeBuilder {
       ],
       input: proofResult.publicSignals.map(BigNumber.from),
     }
-    const tx = await this.ledger.mint(txData)
+    const tx =
+      'mint((uint256[2],uint256[2][2],uint256[2],uint256[46]),bytes,bytes)' in
+      this.ledger
+        ? await this.ledger[
+            'mint((uint256[2],uint256[2][2],uint256[2],uint256[46]),bytes,bytes)'
+          ](txData as BalanceProofStruct, message || '', signature || '')
+        : await this.ledger.mint(txData)
     return tx.wait()
   }
 }
