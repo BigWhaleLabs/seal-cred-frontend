@@ -7,5 +7,7 @@ export default function ({
   children,
   hasContent = true,
 }: ChildrenProp & { title?: ComponentChildren; hasContent?: boolean }) {
-  return hasContent ? <Section title={title}>{children}</Section> : null
+  if (!hasContent) return null
+
+  return <Section title={title}>{children}</Section>
 }
