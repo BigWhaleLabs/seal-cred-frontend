@@ -21,10 +21,13 @@ export default function () {
   const mainnetProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(Network.Mainnet)
 
-  const nothingToGenerate =
+  const nothingToGenerateMainnet =
     proofsCompleted.length === 0 &&
-    goerliProofAddressesAvailableToCreate.length === 0 &&
     mainnetProofAddressesAvailableToCreate.length === 0
+
+  const nothingToGenerateGoerli =
+    proofsCompleted.length === 0 &&
+    goerliProofAddressesAvailableToCreate.length === 0
 
   return (
     <>
@@ -38,7 +41,7 @@ export default function () {
                 network={Network.Mainnet}
               />
             )}
-            {nothingToGenerate && (
+            {nothingToGenerateMainnet && (
               <HintCard small>
                 <HintText bold center>
                   No NFTs to proof
@@ -54,7 +57,7 @@ export default function () {
                 network={Network.Goerli}
               />
             )}
-            {nothingToGenerate && (
+            {nothingToGenerateGoerli && (
               <HintCard small>
                 <HintText bold center>
                   No NFTs to proof
