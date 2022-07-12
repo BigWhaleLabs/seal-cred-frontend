@@ -1,19 +1,25 @@
+import {
+  goerliDefaultProvider,
+  mainnetDefaultProvider,
+} from 'helpers/providers/defaultProvider'
+import { providers } from 'ethers'
 import { proxy } from 'valtio'
-import defaultProvider from 'helpers/defaultProvider'
 
-interface EnsStoreInterface {
-  ensNames: { [address: string]: Promise<string | null> | undefined }
-  fetchEnsName: (address: string) => void
-}
+class EnsStore {
+  provider: providers.Provider
+  ensNames: { [address: string]: Promise<string | null> | undefined } = {}
 
-const EnsStore = proxy<EnsStoreInterface>({
-  ensNames: {},
+  constructor(provider: providers.Provider) {
+    this.provider = provider
+  }
+
   fetchEnsName(address: string) {
-    if (EnsStore.ensNames[address]) {
+    if (this.ensNames[address]) {
       return
     }
-    EnsStore.ensNames[address] = defaultProvider.lookupAddress(address)
-  },
-})
+    this.ensNames[address] = this.provider.lookupAddress(address)
+  }
+}
 
-export default EnsStore
+export const GoerliEnsStore = proxy(new EnsStore(goerliDefaultProvider))
+export const MainnetEnsStore = proxy(new EnsStore(mainnetDefaultProvider))

@@ -6,6 +6,7 @@ import ContractName from 'components/ContractName'
 import ERC721BadgeContract from 'helpers/ERC721BadgeContract'
 import EmailBadgeContract from 'helpers/EmailBadgeContract'
 import ExternalLink from 'components/ExternalLink'
+import Network from 'models/Network'
 import OwnedBadgeAddress from 'components/owned/OwnedBadgeAddress'
 import Smile from 'icons/Smile'
 import classnames, {
@@ -33,9 +34,15 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
       <>
         <HeaderText extraLeading>
           This wallet belongs to someone with{' '}
-          <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
+          <ExternalLink
+            url={getEtherscanAddressUrl(badge.address, Network.Goerli)}
+          >
             <AccentText bold color="text-secondary">
-              <ContractName hyphens address={badge.address} />
+              <ContractName
+                hyphens
+                address={badge.address}
+                network={Network.Goerli}
+              />
             </AccentText>
           </ExternalLink>
         </HeaderText>
@@ -47,9 +54,15 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
     <>
       <HeaderText extraLeading>
         This wallet owns a{' '}
-        <ExternalLink url={getEtherscanAddressUrl(badge.address)}>
+        <ExternalLink
+          url={getEtherscanAddressUrl(badge.address, Network.Goerli)}
+        >
           <AccentText bold color="text-secondary">
-            <ContractName hyphens address={badge.address} />
+            <ContractName
+              hyphens
+              address={badge.address}
+              network={Network.Goerli}
+            />
           </AccentText>
         </ExternalLink>
       </HeaderText>
@@ -73,12 +86,17 @@ function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
       <BodyText>
         This is a zkNFT derivative. It means this person has been verified to
         own at least one ‘
-        <ExternalLink url={getEtherscanAddressUrl(badge.originalERC721)}>
+        <ExternalLink
+          url={getEtherscanAddressUrl(badge.originalERC721, badge.network)}
+        >
           <AccentText color="text-secondary">
-            <ContractName address={badge.originalERC721} />
+            <ContractName
+              address={badge.originalERC721}
+              network={badge.network}
+            />
           </AccentText>
         </ExternalLink>
-        ‘ NFT.
+        ‘ {badge.network[0].toUpperCase() + badge.network.slice(1)} NFT.
       </BodyText>
     )
   }
@@ -125,6 +143,7 @@ export default function ({
           <OwnedBadgeAddress
             tokenId={tokenId}
             derivativeAddress={badge.address}
+            network={Network.Goerli}
           />
         </div>
       </div>

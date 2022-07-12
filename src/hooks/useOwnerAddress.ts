@@ -1,21 +1,26 @@
+import {
+  GoerliContractsStore,
+  MainnetContractsStore,
+} from 'stores/ContractsStore'
 import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
-import ContractsStore from 'stores/ContractsStore'
+import Network from 'models/Network'
 import TokenOwnersStore from 'stores/TokenOwnersStore'
+import networkPick from 'helpers/networkPick'
 import walletStore from 'stores/WalletStore'
 
-export default function (derivativeAddress: string, tokenId: string) {
-  const { connectedAccounts } = useSnapshot(ContractsStore)
+export default function (
+  derivativeAddress: string,
+  tokenId: string,
+  network: Network
+) {
+  const { addressToTokenIds } = useSnapshot(
+    networkPick(network, GoerliContractsStore, MainnetContractsStore)
+  )
   const { account } = useSnapshot(walletStore)
   const { addressOwnerMap } = useSnapshot(TokenOwnersStore)
 
-  const contractSynchronizer = account && connectedAccounts[account]
-
-  const addressToTokenIds =
-    contractSynchronizer &&
-    contractSynchronizer.addressToTokenIds[derivativeAddress]
-
-  const hasTokenId = addressToTokenIds && addressToTokenIds.has(tokenId)
+  const hasTokenId = addressToTokenIds && addressToTokenIds[derivativeAddress]
 
   useEffect(() => {
     if (!hasTokenId) TokenOwnersStore.fetchAddress(derivativeAddress, tokenId)

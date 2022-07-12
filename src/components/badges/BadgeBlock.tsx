@@ -1,3 +1,4 @@
+import { GoerliContractsStore } from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import BadgeCard from 'components/badges/BadgeCard'
@@ -5,7 +6,6 @@ import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import BaseProof from 'helpers/BaseProof'
 import Button from 'components/Button'
-import ContractsStore from 'stores/ContractsStore'
 import EmailBadge from 'icons/EmailBadge'
 import EmailProof from 'helpers/EmailProof'
 import Erc721Badge from 'icons/Erc721Badge'
@@ -34,10 +34,11 @@ function Badge({
     try {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
-
       const transaction = await WalletStore.mintDerivative(proof)
       const mintedBadge =
-        ContractsStore.connectedAccounts[account].applyTransaction(transaction)
+        GoerliContractsStore.connectedAccounts[account].applyTransaction(
+          transaction
+        )
       ProofStore.deleteProof(proof)
       if (onMinted) onMinted(mintedBadge)
     } catch (error) {
@@ -50,7 +51,7 @@ function Badge({
         if (onMintFailed) onMintFailed()
         handleError(
           new Error(
-            'The ZK proof is invalid. This is a test net bug, please, regenerate the proof.'
+            'The ZK proof has been used before. Please, regenerate the proof.'
           )
         )
       } else {

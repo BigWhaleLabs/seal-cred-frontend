@@ -1,66 +1,54 @@
+import BalanceSignature from 'models/BalanceSignature'
+import Network from 'models/Network'
+import PublicKey from 'models/PublicKey'
+import Signature from 'models/Signature'
 import axios from 'axios'
 import env from 'helpers/env'
 
-const baseURL = `${env.VITE_VERIFY_URL}/v0.2/verify`
+const baseURL = `${env.VITE_VERIFY_URL}/v0.2.1/verify`
 
-interface SendVerifyResponse {
-  signature: string
-  message: string
-}
-export async function requestERC721Attestation(
+export async function requestAddressOwnershipAttestation(
   signature: string,
-  tokenAddress: string,
   message: string
 ) {
-  const { data } = await axios.post<SendVerifyResponse>(
-    `${baseURL}/erc721`,
-    {
-      signature,
-      tokenAddress,
-      message,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  )
-
+  const { data } = await axios.post<Signature>(`${baseURL}/ethereum-address`, {
+    signature,
+    message,
+  })
   return data
 }
 
-interface GetPublicKeyResponse {
-  x: string
-  y: string
-}
-export async function getPublicKey() {
-  const { data } = await axios.get<GetPublicKeyResponse>(
-    `${baseURL}/eddsa-public-key`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  )
-
+export async function requestBalanceAttestation(
+  tokenAddress: string,
+  network: Network,
+  ownerAddress: string
+) {
+  const { data } = await axios.post<BalanceSignature>(`${baseURL}/balance`, {
+    tokenAddress,
+    network,
+    ownerAddress,
+  })
   return data
 }
 
-export async function sendEmail(email: string) {
-  const data = await axios.post<SendVerifyResponse>(
-    `${baseURL}/email`,
-    {
-      email,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  )
-
+export async function requestContractMetadata(
+  network: Network,
+  tokenAddress: string
+) {
+  const { data } = await axios.post<Signature>(`${baseURL}/contract-metadata`, {
+    tokenAddress,
+    network,
+  })
   return data
+}
+
+export async function getEddsaPublicKey() {
+  const { data } = await axios.get<PublicKey>(`${baseURL}/eddsa-public-key`)
+  return data
+}
+
+export function sendEmail(email: string) {
+  return axios.post(`${baseURL}/email`, {
+    email,
+  })
 }

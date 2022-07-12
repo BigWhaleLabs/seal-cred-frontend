@@ -2,6 +2,7 @@ import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
 import { utils } from 'ethers'
 import ContractNamesStore from 'stores/ContractNamesStore'
+import Network from 'models/Network'
 import SealCredStore from 'stores/SealCredStore'
 import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
@@ -26,6 +27,7 @@ interface ContractNameProps {
   truncate?: boolean
   clearType?: boolean
   hyphens?: boolean
+  network: Network
 }
 
 const wrappedWord = (name: string) => {
@@ -39,12 +41,13 @@ function ContractNameSuspended({
   hyphens,
   truncate,
   clearType,
+  network,
 }: ContractNameProps) {
   const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
     useSnapshot(SealCredStore)
   const { contractNames } = useSnapshot(ContractNamesStore)
   let contractName = contractNames[address]
-  if (!contractName) ContractNamesStore.fetchContractName(address)
+  if (!contractName) ContractNamesStore.fetchContractName(address, network)
 
   if (clearType) {
     if (contractName && emailDerivativeContracts.includes(address))
@@ -71,21 +74,14 @@ function ContractNameSuspended({
   )
 }
 
-export default memo<ContractNameProps>(
-  ({ address, hyphens, truncate, clearType }) => (
-    <Suspense
-      fallback={
-        <span className={addressText}>
-          {truncate ? truncateMiddleIfNeeded(address, 17) : address}
-        </span>
-      }
-    >
-      <ContractNameSuspended
-        address={address}
-        hyphens={hyphens}
-        truncate={truncate}
-        clearType={clearType}
-      />
-    </Suspense>
-  )
-)
+export default memo<ContractNameProps>(({ address, truncate, ...rest }) => (
+  <Suspense
+    fallback={
+      <span className={addressText}>
+        {truncate ? truncateMiddleIfNeeded(address, 17) : address}
+      </span>
+    }
+  >
+    <ContractNameSuspended address={address} truncate={truncate} {...rest} />
+  </Suspense>
+))

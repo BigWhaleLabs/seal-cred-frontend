@@ -15,7 +15,7 @@ import classnames, {
   transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
-import colorToTailwindBackground from 'helpers/colorToTailwindBackground'
+import colorToTailwindBackground from 'helpers/colors/colorToTailwindBackground'
 import useScrollPercent from 'hooks/useScrollPercent'
 
 const orbBoxes = classnames(

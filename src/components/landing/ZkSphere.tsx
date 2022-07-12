@@ -13,8 +13,8 @@ import classnames, {
   transitionProperty,
   width,
 } from 'classnames/tailwind'
-import colorToDropShadow from 'helpers/colorToDropShadow'
-import colorToTailwindBackground from 'helpers/colorToTailwindBackground'
+import colorToDropShadow from 'helpers/colors/colorToDropShadow'
+import colorToTailwindBackground from 'helpers/colors/colorToTailwindBackground'
 import useScrollPercent from 'hooks/useScrollPercent'
 
 const sphereStyles = classnames(

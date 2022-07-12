@@ -1,42 +1,30 @@
-import { AccentText, BodyText, HintText } from 'components/Text'
+import { AccentText, BodyText } from 'components/Text'
+import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import AvailableProofsList from 'components/proofs/AvailableProofsList'
+import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
 import EmailProof from 'components/proofs/EmailProof'
-import HintCard from 'components/badges/HintCard'
+import Network from 'models/Network'
 import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
-import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 import Scrollbar from 'components/Scrollbar'
-import proofStore from 'stores/ProofStore'
-import walletStore from 'stores/WalletStore'
+import WalletStore from 'stores/WalletStore'
 
-export default function ({ avaliableToProof }: { avaliableToProof: string[] }) {
-  const { account } = useSnapshot(walletStore)
-  const { emailProofsCompleted } = useSnapshot(ProofStore)
-  const { ERC721ProofsCompleted } = useSnapshot(proofStore)
-  const { proofsCompleted } = useSnapshot(proofStore)
-
-  const nothingToGenerate =
-    ERC721ProofsCompleted.length === 0 && avaliableToProof.length === 0
+export function ProofListSuspended() {
+  const { account } = useSnapshot(WalletStore)
+  const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
 
   return (
     <>
       <Scrollbar>
         <div className={space('space-y-2')}>
-          <ProofSection title={<BodyText>NFTs</BodyText>}>
-            <ReadyERC721ProofsList />
-            {account && <AvailableProofsList proofs={avaliableToProof} />}
-            {nothingToGenerate && (
-              <HintCard small>
-                <HintText bold center>
-                  No NFTs to proof
-                </HintText>
-              </HintCard>
-            )}
-          </ProofSection>
-
+          {account && (
+            <>
+              <ERC721ProofSection account={account} network={Network.Mainnet} />
+              <ERC721ProofSection account={account} network={Network.Goerli} />
+            </>
+          )}
           <ProofSection
             title={
               <BodyText>
@@ -60,5 +48,13 @@ export default function ({ avaliableToProof }: { avaliableToProof: string[] }) {
         </AccentText>
       )}
     </>
+  )
+}
+
+export default function () {
+  return (
+    <Suspense fallback={<div>Fetching proofs</div>}>
+      <ProofListSuspended />
+    </Suspense>
   )
 }

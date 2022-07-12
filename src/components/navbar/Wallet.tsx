@@ -2,6 +2,7 @@ import { AccentText, SocialLink } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Discord from 'icons/Discord'
 import EnsAddress from 'components/EnsAddress'
+import Network from 'models/Network'
 import SealWallet from 'icons/SealWallet'
 import Twitter from 'icons/Twitter'
 import WalletStore from 'stores/WalletStore'
@@ -72,7 +73,9 @@ export default function () {
         className={accountLinkContainer}
         onClick={async () => {
           if (account) {
-            window.open(getEtherscanAddressUrl(account), '_blank')?.focus()
+            window
+              .open(getEtherscanAddressUrl(account, Network.Goerli), '_blank')
+              ?.focus()
           } else {
             await WalletStore.connect(true)
           }
@@ -82,7 +85,11 @@ export default function () {
           <AccentText
             color={account ? 'text-accent' : 'text-primary-semi-dimmed'}
           >
-            {account ? <EnsAddress address={account} /> : 'No wallet connected'}
+            {account ? (
+              <EnsAddress address={account} network={Network.Goerli} />
+            ) : (
+              'No wallet connected'
+            )}
           </AccentText>
         </div>
         <div className={width('w-fit')}>

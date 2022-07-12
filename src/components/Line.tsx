@@ -5,7 +5,7 @@ import classnames, {
   height,
   width,
 } from 'classnames/tailwind'
-import colorsToGradientColorStops from 'helpers/colorsToGradientColorStops'
+import colorsToGradientColorStops from 'helpers/colors/colorsToGradientColorStops'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const line = (

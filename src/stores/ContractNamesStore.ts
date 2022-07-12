@@ -1,7 +1,13 @@
 import { ERC721__factory } from '@big-whale-labs/seal-cred-ledger-contract'
+import {
+  goerliDefaultProvider,
+  mainnetDefaultProvider,
+} from 'helpers/providers/defaultProvider'
 import { proxy } from 'valtio'
+import { reservedContractMetadata } from '@big-whale-labs/constants'
+import Network from 'models/Network'
 import PersistableStore from 'stores/persistence/PersistableStore'
-import defaultProvider from 'helpers/defaultProvider'
+import networkPick from 'helpers/networkPick'
 
 class ContractNamesStore extends PersistableStore {
   savedContractNames = {} as {
@@ -24,11 +30,17 @@ class ContractNamesStore extends PersistableStore {
     return disallowList.includes(key) ? undefined : value
   }
 
-  fetchContractName(address: string) {
-    if (this.contractNames[address]) {
+  fetchContractName(address: string, network: Network) {
+    if (this.contractNames[address]) return
+
+    if (reservedContractMetadata[address]) {
+      this.savedContractNames[address] = reservedContractMetadata[address].name
       return
     }
-    const contract = ERC721__factory.connect(address, defaultProvider)
+    const contract = ERC721__factory.connect(
+      address,
+      networkPick(network, goerliDefaultProvider, mainnetDefaultProvider)
+    )
     this.requestedNames[address] = contract
       .name()
       .then((result) => {

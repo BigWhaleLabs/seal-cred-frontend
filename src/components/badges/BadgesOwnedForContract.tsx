@@ -1,7 +1,7 @@
+import { GoerliContractsStore } from 'stores/ContractsStore'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import BadgesOwnedForContractLoading from 'components/badges/BadgesOwnedForContractLoading'
-import ContractsStore from 'stores/ContractsStore'
 import MintedBadgeBlock from 'components/badges/MintedBadgeBlock'
 import WalletStore from 'stores/WalletStore'
 
@@ -10,16 +10,15 @@ function BadgesOwnedForContractSuspended({
 }: {
   contractAddress: string
 }) {
-  const { connectedAccounts } = useSnapshot(ContractsStore)
+  const { addressToTokenIds } = useSnapshot(GoerliContractsStore)
   const { account } = useSnapshot(WalletStore)
   if (!account) {
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
   }
-  const contractSynchronizer = connectedAccounts[account]
-  if (!contractSynchronizer) {
+  if (!addressToTokenIds) {
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
   }
-  const ownedIds = contractSynchronizer.tokenIds(contractAddress)
+  const ownedIds = addressToTokenIds[contractAddress]
   return (
     <>
       {ownedIds.map((tokenId) => (

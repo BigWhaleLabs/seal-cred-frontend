@@ -1,8 +1,8 @@
 import { BigNumber } from 'ethers'
 import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-contract'
+import { goerliDefaultProvider } from 'helpers/providers/defaultProvider'
 import { proxy } from 'valtio'
 import TokenOwnersStore from 'stores/TokenOwnersStore'
-import defaultProvider from 'helpers/defaultProvider'
 import getOwnerByTokenId from 'helpers/getOwnerByTokenId'
 
 export default proxy({
@@ -14,7 +14,7 @@ export default proxy({
   fetchAddress(contract: string, tokenId: string) {
     const derivativeContract = SCERC721Derivative__factory.connect(
       contract,
-      defaultProvider
+      goerliDefaultProvider
     )
     if (!TokenOwnersStore.addressOwnerMap[contract])
       TokenOwnersStore.addressOwnerMap[contract] = {}

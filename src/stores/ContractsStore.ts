@@ -1,16 +1,40 @@
-import { proxyWithComputed, subscribeKey } from 'valtio/utils'
+import {
+  goerliDefaultProvider,
+  mainnetDefaultProvider,
+} from 'helpers/providers/defaultProvider'
+import { providers } from 'ethers'
+import { proxy } from 'valtio'
+import { subscribeKey } from 'valtio/utils'
 import ContractSynchronizer, {
   ContractSynchronizerSchema,
 } from 'helpers/ContractSynchronizer'
+import Network from 'models/Network'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import WalletStore from 'stores/WalletStore'
-import defaultProvider from 'helpers/defaultProvider'
 import transformObjectValues from 'helpers/transformObjectValues'
-import walletStore from 'stores/WalletStore'
 
 class ContractsStore extends PersistableStore {
   connectedAccounts: { [account: string]: ContractSynchronizer } = {}
   currentBlock?: number
+  addressToTokenIds?: Promise<{ [address: string]: string[] } | undefined>
+
+  get persistanceName() {
+    return `${this.constructor.name}_${this.network}`
+  }
+
+  provider: providers.Provider
+  network: Network
+
+  constructor(provider: providers.Provider, network: Network) {
+    super()
+    this.provider = provider
+    this.network = network
+  }
+
+  replacer = (key: string, value: unknown) => {
+    const disallowList = ['addressToTokenIds', 'connectedAccounts']
+    return disallowList.includes(key) ? undefined : value
+  }
 
   reviver = (key: string, value: unknown) => {
     if (key === 'connectedAccounts') {
@@ -23,10 +47,10 @@ class ContractsStore extends PersistableStore {
   }
 
   fetchBlockNumber() {
-    return defaultProvider.getBlockNumber()
+    return this.provider.getBlockNumber()
   }
 
-  async fetchMoreContractsOwned() {
+  async fetchMoreContractsOwned(accountChange?: boolean) {
     if (!WalletStore.account) return
     if (!this.currentBlock) this.currentBlock = await this.fetchBlockNumber()
 
@@ -35,26 +59,41 @@ class ContractsStore extends PersistableStore {
         WalletStore.account
       )
 
-    await this.connectedAccounts[WalletStore.account].getOwnedERC721(
-      this.currentBlock
-    )
+    if (!this.addressToTokenIds || accountChange) {
+      this.addressToTokenIds = this.connectedAccounts[
+        WalletStore.account
+      ].syncAddressToTokenIds(this.currentBlock, this.network)
+      return
+    }
+
+    const result = await this.connectedAccounts[
+      WalletStore.account
+    ].syncAddressToTokenIds(this.currentBlock, this.network)
+
+    this.addressToTokenIds = Promise.resolve(result)
   }
 }
 
-const contractsStore = proxyWithComputed(new ContractsStore(), {
-  contractsOwned: (state) =>
-    walletStore.account && state.connectedAccounts[walletStore.account]
-      ? state.connectedAccounts[walletStore.account].contractsOwned
-      : [],
-}).makePersistent(true)
+export const GoerliContractsStore = proxy(
+  new ContractsStore(goerliDefaultProvider, Network.Goerli)
+).makePersistent(true)
 
-subscribeKey(WalletStore, 'account', () =>
-  contractsStore.fetchMoreContractsOwned()
-)
+export const MainnetContractsStore = proxy(
+  new ContractsStore(mainnetDefaultProvider, Network.Mainnet)
+).makePersistent(true)
 
-defaultProvider.on('block', async (blockNumber: number) => {
-  contractsStore.currentBlock = blockNumber
-  await contractsStore.fetchMoreContractsOwned()
+subscribeKey(WalletStore, 'account', () => {
+  void GoerliContractsStore.fetchMoreContractsOwned(true)
+  void MainnetContractsStore.fetchMoreContractsOwned(true)
 })
 
-export default contractsStore
+goerliDefaultProvider.on('block', async (blockNumber: number) => {
+  GoerliContractsStore.currentBlock = blockNumber
+  await GoerliContractsStore.fetchMoreContractsOwned()
+})
+mainnetDefaultProvider.on('block', async (blockNumber: number) => {
+  MainnetContractsStore.currentBlock = blockNumber
+  await MainnetContractsStore.fetchMoreContractsOwned()
+})
+
+export default ContractsStore

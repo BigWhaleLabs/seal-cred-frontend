@@ -1,36 +1,45 @@
-import { BodyText } from 'components/Text'
-import { Suspense } from 'react'
+import { GoerliContractsStore } from 'stores/ContractsStore'
+import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgeSection from 'components/badges/BadgeSection'
-import ContractsStore from 'stores/ContractsStore'
 import DoxNotification from 'components/badges/DoxNotification'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
+import Network from 'models/Network'
 import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
 import proofStore from 'stores/ProofStore'
+import useContractsOwned from 'hooks/useContractsOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 import walletStore from 'stores/WalletStore'
 
 function BadgeListSuspended() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
-  const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
-    useSnapshot(SealCredStore)
-  const { contractsOwned } = useSnapshot(ContractsStore)
+  const {
+    emailDerivativeContracts = [],
+    ERC721derivativeContracts = [],
+    externalERC721derivativeContracts = [],
+  } = useSnapshot(SealCredStore)
+  const contractsOwned = useContractsOwned(GoerliContractsStore)
 
   const ownedEmailDerivativeContracts = emailDerivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
   )
 
+  const ownedExternalERC721DerivativeContracts =
+    externalERC721derivativeContracts.filter((contractAddress) =>
+      contractsOwned.includes(contractAddress)
+    )
   const ownedERC721DerivativeContracts = ERC721derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
   )
 
   const proofsAvailableToMint = useProofsAvailableToMint()
   const isEmpty =
+    !ownedExternalERC721DerivativeContracts.length &&
     !ownedEmailDerivativeContracts.length &&
     !ownedERC721DerivativeContracts.length &&
     !proofsAvailableToMint.length
@@ -48,10 +57,19 @@ function BadgeListSuspended() {
     <Scrollbar>
       <div className={space('space-y-2')}>
         <BadgeSection
-          title="NFT derivatives"
+          title="Mainnet NFT derivatives"
+          minted={ownedExternalERC721DerivativeContracts}
+          proofs={proofsAvailableToMint.filter(
+            (proof) =>
+              proof instanceof ERC721Proof && proof.network === Network.Mainnet
+          )}
+        />
+        <BadgeSection
+          title="Goerli NFT derivatives"
           minted={ownedERC721DerivativeContracts}
           proofs={proofsAvailableToMint.filter(
-            (proof) => proof instanceof ERC721Proof
+            (proof) =>
+              proof instanceof ERC721Proof && proof.network === Network.Goerli
           )}
         />
         <BadgeSection
@@ -68,7 +86,7 @@ function BadgeListSuspended() {
 
 export default function () {
   return (
-    <Suspense fallback={<BodyText>Fetching derivative NFTs...</BodyText>}>
+    <Suspense fallback={<div>Fetching derivatives...</div>}>
       <BadgeListSuspended />
     </Suspense>
   )

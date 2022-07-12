@@ -11,11 +11,15 @@ export default class {
   reviver = (_: string, value: unknown) => value
   replacer = (_: string, value: unknown) => value
 
+  get persistanceName() {
+    return this.constructor.name
+  }
+
   persist(encrypt: boolean) {
     const json = JSON.stringify(this, this.replacer)
     encrypt
-      ? ls.set(this.constructor.name, json)
-      : localStorage.setItem(this.constructor.name, json)
+      ? ls.set(this.persistanceName, json)
+      : localStorage.setItem(this.persistanceName, json)
   }
 
   makePersistent(encrypt = false) {
@@ -24,12 +28,12 @@ export default class {
       this.persist(encrypt)
     })
     // Recover the store
-    if (encrypt && this.checkIfJsonFormat(this.constructor.name)) {
-      ls.set(this.constructor.name, localStorage.getItem(this.constructor.name))
+    if (encrypt && this.checkIfJsonFormat(this.persistanceName)) {
+      ls.set(this.persistanceName, localStorage.getItem(this.persistanceName))
     }
     const savedString = encrypt
-      ? ls.get(this.constructor.name)
-      : localStorage.getItem(this.constructor.name)
+      ? ls.get(this.persistanceName)
+      : localStorage.getItem(this.persistanceName)
     if (savedString) {
       const savedState = JSON.parse(savedString, this.reviver)
       Object.assign(this, savedState)

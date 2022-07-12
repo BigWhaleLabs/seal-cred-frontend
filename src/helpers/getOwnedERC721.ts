@@ -1,6 +1,14 @@
+import {
+  goerliDefaultProvider,
+  mainnetDefaultProvider,
+} from 'helpers/providers/defaultProvider'
+import {
+  goerliHeavyProvider,
+  mainnetHeavyProvider,
+} from 'helpers/providers/heavyProvider'
 import { utils } from 'ethers'
-import defaultProvider from 'helpers/defaultProvider'
-import heavyProvider from 'helpers/heavyProvider'
+import Network from 'models/Network'
+import networkPick from 'helpers/networkPick'
 
 const transferEventInterface = new utils.Interface([
   'event Transfer(address indexed from, address indexed to, uint indexed tokenId)',
@@ -27,10 +35,14 @@ export default async function (
   account: string,
   fromBlock = 0,
   toBlock: number,
-  addressToTokenIds: { [address: string]: Set<string> },
-  skipTransactions: Set<string>
+  addressToTokenIds: { [address: string]: string[] },
+  skipTransactions: Set<string>,
+  network: Network
 ) {
-  const provider = fromBlock === 0 ? heavyProvider : defaultProvider
+  const provider =
+    fromBlock === 0
+      ? networkPick(network, goerliHeavyProvider, mainnetHeavyProvider)
+      : networkPick(network, goerliDefaultProvider, mainnetDefaultProvider)
   const receivedLogs = await provider.getLogs({
     fromBlock,
     toBlock,
@@ -60,12 +72,17 @@ export default async function (
     const value = tokenId.toString()
 
     if (!addressToTokenIds[address]) {
-      addressToTokenIds[address] = new Set([value])
-    } else if (addressToTokenIds[address].has(value)) {
-      addressToTokenIds[address].delete(value)
-      if (!addressToTokenIds[address].size) delete addressToTokenIds[address]
+      addressToTokenIds[address] = [value]
+      continue
+    }
+
+    if (addressToTokenIds[address].includes(value)) {
+      addressToTokenIds[address] = addressToTokenIds[address].filter(
+        (tokenId) => tokenId !== value
+      )
+      if (!addressToTokenIds[address].length) delete addressToTokenIds[address]
     } else {
-      addressToTokenIds[address].add(value)
+      addressToTokenIds[address].push(value)
     }
   }
 

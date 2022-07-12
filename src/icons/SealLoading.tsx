@@ -1,7 +1,7 @@
 import Color from 'models/Color'
 import classnames from 'classnames/tailwind'
-import colorToDropShadow from 'helpers/colorToDropShadow'
-import colorToTextColor from 'helpers/colorToTextColor'
+import colorToDropShadow from 'helpers/colors/colorToDropShadow'
+import colorToTextColor from 'helpers/colors/colorToTextColor'
 
 export default function ({ color }: { color: Color }) {
   const textColor = colorToTextColor(color)

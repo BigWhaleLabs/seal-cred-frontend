@@ -1,8 +1,7 @@
-import env from 'helpers/env'
+import Network from 'models/Network'
 
-const network =
-  env.VITE_ETH_NETWORK !== 'mainnet' ? `${env.VITE_ETH_NETWORK}.` : ''
-
-export default function (address: string) {
-  return `https://${network}etherscan.io/address/${address}`
+export default function (address: string, network: Network) {
+  return `https://${
+    network === Network.Mainnet ? '' : `${network.toLowerCase()}.`
+  }etherscan.io/address/${address}`
 }

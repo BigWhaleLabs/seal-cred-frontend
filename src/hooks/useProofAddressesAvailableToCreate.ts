@@ -1,13 +1,37 @@
+import {
+  GoerliContractsStore,
+  MainnetContractsStore,
+} from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
-import ContractsStore from 'stores/ContractsStore'
+import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
+import networkPick from 'helpers/networkPick'
+import useContractsOwned from 'hooks/useContractsOwned'
 
-export default function () {
-  const { ERC721ProofsCompleted } = useSnapshot(ProofStore)
-  const { contractsOwned } = useSnapshot(ContractsStore)
+export default function (network?: Network) {
+  const { goerliERC721ProofsCompleted, mainnetERC721ProofsCompleted } =
+    useSnapshot(ProofStore)
+  let contractsOwned: readonly string[]
+  switch (network) {
+    case Network.Mainnet:
+    case Network.Goerli: {
+      contractsOwned = useContractsOwned(
+        networkPick(network, GoerliContractsStore, MainnetContractsStore)
+      )
+      break
+    }
+    default: {
+      const goerliContractsOwned = useContractsOwned(GoerliContractsStore)
+      const mainnetContractsOwned = useContractsOwned(MainnetContractsStore)
+      contractsOwned = [...goerliContractsOwned, ...mainnetContractsOwned]
+    }
+  }
   const { derivativeContracts = [] } = useSnapshot(SealCredStore)
-  const completedERC721ProofAddressesMap = [...ERC721ProofsCompleted].reduce(
+  const completedERC721ProofAddressesMap = [
+    ...goerliERC721ProofsCompleted,
+    ...mainnetERC721ProofsCompleted,
+  ].reduce(
     (result, proof) => ({
       ...result,
       [proof.contract]: true,

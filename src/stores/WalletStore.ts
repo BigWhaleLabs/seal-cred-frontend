@@ -1,10 +1,13 @@
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
+import { requestContractMetadata } from 'helpers/attestor'
 import BaseProof from 'helpers/BaseProof'
 import ERC721BadgeBuilder from 'helpers/ERC721BadgeBuilder'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailBadgeBuilder from 'helpers/EmailBadgeBuilder'
 import EmailProof from 'helpers/EmailProof'
+import ExternalERC721BadgeBuilder from 'helpers/ExternalERC721BadgeBuilder'
+import Network from 'models/Network'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
@@ -60,7 +63,7 @@ class WalletStore extends PersistableStore {
     return signature
   }
 
-  mintDerivative(proof: BaseProof) {
+  async mintDerivative(proof: BaseProof) {
     if (!provider) {
       throw new Error('No provider found')
     }
@@ -69,8 +72,18 @@ class WalletStore extends PersistableStore {
     }
 
     if (proof instanceof ERC721Proof) {
-      const builder = new ERC721BadgeBuilder(provider)
-      return builder.create(proof)
+      if (proof.network === Network.Goerli) {
+        const builder = new ERC721BadgeBuilder(provider)
+        return builder.create(proof)
+      } else {
+        const builder = new ExternalERC721BadgeBuilder(provider)
+
+        const signature = await requestContractMetadata(
+          proof.network,
+          proof.contract
+        )
+        return builder.create(proof, signature.message, signature.signature)
+      }
     }
 
     if (proof instanceof EmailProof) {
