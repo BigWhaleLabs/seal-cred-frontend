@@ -71,7 +71,8 @@ export default class ContractSynchronizer {
         address,
         tokenId,
       })
-      this.addressToTokenIds[address].push(value)
+      if (!this.addressToTokenIds[address].includes(value))
+        this.addressToTokenIds[address].push(value)
       this.skipTransactions.add(transactionHash)
     }
     return minted
