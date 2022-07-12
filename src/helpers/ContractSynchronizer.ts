@@ -17,12 +17,13 @@ export default class ContractSynchronizer {
   account: string
   locked = false
   synchronizedBlockId?: number
-  addressToTokenIds: { [address: string]: Set<string> } = {}
+  addressToTokenIds?: { [address: string]: Set<string> }
+  requestedAddressToTokenIds?: Promise<{ [address: string]: Set<string> }>
   skipTransactions = new Set<string>()
 
   constructor(
     account: string,
-    addressToTokenIds: { [address: string]: Set<string> } = {},
+    addressToTokenIds?: { [address: string]: Set<string> },
     synchronizedBlockId?: number
   ) {
     this.account = account
@@ -55,7 +56,7 @@ export default class ContractSynchronizer {
       account: this.account,
       synchronizedBlockId: this.synchronizedBlockId,
       addressToTokenIds: transformObjectValues(
-        this.addressToTokenIds,
+        this.addressToTokenIds || {},
         Array.from
       ),
     }
@@ -70,6 +71,7 @@ export default class ContractSynchronizer {
         args: { tokenId },
       } = parseLogData({ data, topics })
 
+      if (!this.addressToTokenIds) this.addressToTokenIds = {}
       if (!this.addressToTokenIds[address])
         this.addressToTokenIds[address] = new Set()
 
@@ -85,35 +87,40 @@ export default class ContractSynchronizer {
   }
 
   tokenIds(address: string) {
-    if (!this.addressToTokenIds[address]) return []
+    if (!this.addressToTokenIds || !this.addressToTokenIds[address]) return []
     return Array.from(this.addressToTokenIds[address])
   }
 
-  async getOwnedERC721(blockId: number, network: Network) {
+  getOwnedERC721(blockId: number, network: Network) {
     if (!this.locked && blockId !== this.synchronizedBlockId) {
       this.locked = true
-      try {
-        this.addressToTokenIds = await getOwnedERC721(
-          this.account,
-          typeof this.synchronizedBlockId !== 'undefined'
-            ? this.synchronizedBlockId + 1
-            : 0,
-          blockId,
-          this.addressToTokenIds,
-          this.skipTransactions,
-          network
-        )
-
+      this.requestedAddressToTokenIds = getOwnedERC721(
+        this.account,
+        typeof this.synchronizedBlockId !== 'undefined'
+          ? this.synchronizedBlockId + 1
+          : 0,
+        blockId,
+        this.addressToTokenIds || {},
+        this.skipTransactions,
+        network
+      ).then((result) => {
+        this.addressToTokenIds = result
         this.synchronizedBlockId = blockId
-      } finally {
         this.locked = false
-      }
+        return result
+      })
     }
 
     return this.contractsOwned
   }
 
   get contractsOwned() {
-    return Object.keys(this.addressToTokenIds)
+    if (!this.addressToTokenIds) {
+      if (!this.requestedAddressToTokenIds) return Promise.resolve([])
+      return this.requestedAddressToTokenIds?.then((result) =>
+        Object.keys(result)
+      )
+    }
+    return Promise.resolve(Object.keys(this.addressToTokenIds))
   }
 }

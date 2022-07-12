@@ -1,71 +1,30 @@
-import { AccentText, BodyText, HintText } from 'components/Text'
+import { AccentText, BodyText } from 'components/Text'
 import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import AvailableProofsList from 'components/proofs/AvailableProofsList'
+import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
 import EmailProof from 'components/proofs/EmailProof'
-import HintCard from 'components/badges/HintCard'
 import Network from 'models/Network'
 import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
-import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
-import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 export function ProofListSuspended() {
   const { account } = useSnapshot(WalletStore)
   const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
-  const goerliProofAddressesAvailableToCreate =
-    useProofAddressesAvailableToCreate(Network.Goerli)
-  const mainnetProofAddressesAvailableToCreate =
-    useProofAddressesAvailableToCreate(Network.Mainnet)
-
-  const nothingToGenerateMainnet =
-    proofsCompleted.length === 0 &&
-    mainnetProofAddressesAvailableToCreate.length === 0
-
-  const nothingToGenerateGoerli =
-    proofsCompleted.length === 0 &&
-    goerliProofAddressesAvailableToCreate.length === 0
 
   return (
     <>
       <Scrollbar>
         <div className={space('space-y-2')}>
-          <ProofSection title={<BodyText>Mainnet NFTs</BodyText>}>
-            <ReadyERC721ProofsList network={Network.Mainnet} />
-            {account && (
-              <AvailableProofsList
-                proofs={mainnetProofAddressesAvailableToCreate}
-                network={Network.Mainnet}
-              />
-            )}
-            {nothingToGenerateMainnet && (
-              <HintCard small>
-                <HintText bold center>
-                  No NFTs to proof
-                </HintText>
-              </HintCard>
-            )}
-          </ProofSection>
-          <ProofSection title={<BodyText>Goerli NFTs</BodyText>}>
-            <ReadyERC721ProofsList network={Network.Goerli} />
-            {account && (
-              <AvailableProofsList
-                proofs={goerliProofAddressesAvailableToCreate}
-                network={Network.Goerli}
-              />
-            )}
-            {nothingToGenerateGoerli && (
-              <HintCard small>
-                <HintText bold center>
-                  No NFTs to proof
-                </HintText>
-              </HintCard>
-            )}
-          </ProofSection>
+          {account && (
+            <>
+              <ERC721ProofSection account={account} network={Network.Mainnet} />
+              <ERC721ProofSection account={account} network={Network.Goerli} />
+            </>
+          )}
           <ProofSection
             title={
               <BodyText>

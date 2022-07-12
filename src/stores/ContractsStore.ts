@@ -16,6 +16,7 @@ import transformObjectValues from 'helpers/transformObjectValues'
 class ContractsStore extends PersistableStore {
   connectedAccounts: { [account: string]: ContractSynchronizer } = {}
   currentBlock?: number
+  contractsOwned: Promise<string[]> = Promise.resolve([])
 
   get persistanceName() {
     return `${this.constructor.name}_${this.network}`
@@ -28,6 +29,11 @@ class ContractsStore extends PersistableStore {
     super()
     this.provider = provider
     this.network = network
+  }
+
+  replacer = (key: string, value: unknown) => {
+    const disallowList = ['contractsOwned']
+    return disallowList.includes(key) ? undefined : value
   }
 
   reviver = (key: string, value: unknown) => {
@@ -44,12 +50,6 @@ class ContractsStore extends PersistableStore {
     return this.provider.getBlockNumber()
   }
 
-  get contractsOwned() {
-    return WalletStore.account && this.connectedAccounts[WalletStore.account]
-      ? this.connectedAccounts[WalletStore.account].contractsOwned
-      : []
-  }
-
   async fetchMoreContractsOwned() {
     if (!WalletStore.account) return
     if (!this.currentBlock) this.currentBlock = await this.fetchBlockNumber()
@@ -59,10 +59,9 @@ class ContractsStore extends PersistableStore {
         WalletStore.account
       )
 
-    await this.connectedAccounts[WalletStore.account].getOwnedERC721(
-      this.currentBlock,
-      this.network
-    )
+    this.contractsOwned = this.connectedAccounts[
+      WalletStore.account
+    ].getOwnedERC721(this.currentBlock, this.network)
   }
 }
 
