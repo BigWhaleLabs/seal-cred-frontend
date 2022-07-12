@@ -50,7 +50,7 @@ export class ContractsStore extends PersistableStore {
     return this.provider.getBlockNumber()
   }
 
-  async fetchMoreContractsOwned() {
+  async fetchMoreContractsOwned(accountChange?: boolean) {
     if (!WalletStore.account) return
     if (!this.currentBlock) this.currentBlock = await this.fetchBlockNumber()
 
@@ -59,14 +59,16 @@ export class ContractsStore extends PersistableStore {
         WalletStore.account
       )
 
-    if (!this.addressToTokenIds) {
+    if (!this.addressToTokenIds || accountChange) {
       this.addressToTokenIds = this.connectedAccounts[
         WalletStore.account
       ].syncAddressToTokenIds(this.currentBlock, this.network)
     } else {
-      this.addressToTokenIds = await this.connectedAccounts[
+      const result = await this.connectedAccounts[
         WalletStore.account
       ].syncAddressToTokenIds(this.currentBlock, this.network)
+
+      this.addressToTokenIds = Promise.resolve(result)
     }
   }
 }
@@ -80,8 +82,8 @@ export const MainnetContractsStore = proxy(
 ).makePersistent(true)
 
 subscribeKey(WalletStore, 'account', () => {
-  void GoerliContractsStore.fetchMoreContractsOwned()
-  void MainnetContractsStore.fetchMoreContractsOwned()
+  void GoerliContractsStore.fetchMoreContractsOwned(true)
+  void MainnetContractsStore.fetchMoreContractsOwned(true)
 })
 
 goerliDefaultProvider.on('block', async (blockNumber: number) => {
