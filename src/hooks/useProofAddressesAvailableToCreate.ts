@@ -7,6 +7,7 @@ import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
 import networkPick from 'helpers/networkPick'
+import useContractsOwned from 'hooks/useContractsOwned'
 
 export default function (network?: Network) {
   const { goerliERC721ProofsCompleted, mainnetERC721ProofsCompleted } =
@@ -15,18 +16,14 @@ export default function (network?: Network) {
   switch (network) {
     case Network.Mainnet:
     case Network.Goerli: {
-      const { contractsOwned: temp } = useSnapshot(
+      contractsOwned = useContractsOwned(
         networkPick(network, GoerliContractsStore, MainnetContractsStore)
       )
-      contractsOwned = temp
       break
     }
     default: {
-      const { contractsOwned: goerliContractsOwned } =
-        useSnapshot(GoerliContractsStore)
-      const { contractsOwned: mainnetContractsOwned } = useSnapshot(
-        MainnetContractsStore
-      )
+      const goerliContractsOwned = useContractsOwned(GoerliContractsStore)
+      const mainnetContractsOwned = useContractsOwned(MainnetContractsStore)
       contractsOwned = [...goerliContractsOwned, ...mainnetContractsOwned]
     }
   }

@@ -12,6 +12,7 @@ import Network from 'models/Network'
 import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
 import proofStore from 'stores/ProofStore'
+import useContractsOwned from 'hooks/useContractsOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 import walletStore from 'stores/WalletStore'
 
@@ -23,7 +24,7 @@ function BadgeListSuspended() {
     ERC721derivativeContracts = [],
     externalERC721derivativeContracts = [],
   } = useSnapshot(SealCredStore)
-  const { contractsOwned } = useSnapshot(GoerliContractsStore)
+  const contractsOwned = useContractsOwned(GoerliContractsStore)
 
   const ownedEmailDerivativeContracts = emailDerivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)

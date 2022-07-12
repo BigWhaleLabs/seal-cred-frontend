@@ -13,10 +13,10 @@ import PersistableStore from 'stores/persistence/PersistableStore'
 import WalletStore from 'stores/WalletStore'
 import transformObjectValues from 'helpers/transformObjectValues'
 
-class ContractsStore extends PersistableStore {
+export class ContractsStore extends PersistableStore {
   connectedAccounts: { [account: string]: ContractSynchronizer } = {}
   currentBlock?: number
-  contractsOwned: Promise<string[]> = Promise.resolve([])
+  addressToTokenIds?: Promise<{ [address: string]: string[] } | undefined>
 
   get persistanceName() {
     return `${this.constructor.name}_${this.network}`
@@ -32,7 +32,7 @@ class ContractsStore extends PersistableStore {
   }
 
   replacer = (key: string, value: unknown) => {
-    const disallowList = ['contractsOwned']
+    const disallowList = ['addressToTokenIds', 'connectedAccounts']
     return disallowList.includes(key) ? undefined : value
   }
 
@@ -59,9 +59,15 @@ class ContractsStore extends PersistableStore {
         WalletStore.account
       )
 
-    this.contractsOwned = this.connectedAccounts[
-      WalletStore.account
-    ].getOwnedERC721(this.currentBlock, this.network)
+    if (!this.addressToTokenIds) {
+      this.addressToTokenIds = this.connectedAccounts[
+        WalletStore.account
+      ].syncAddressToTokenIds(this.currentBlock, this.network)
+    } else {
+      this.addressToTokenIds = await this.connectedAccounts[
+        WalletStore.account
+      ].syncAddressToTokenIds(this.currentBlock, this.network)
+    }
   }
 }
 

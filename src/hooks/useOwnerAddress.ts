@@ -14,18 +14,13 @@ export default function (
   tokenId: string,
   network: Network
 ) {
-  const { connectedAccounts } = useSnapshot(
+  const { addressToTokenIds } = useSnapshot(
     networkPick(network, GoerliContractsStore, MainnetContractsStore)
   )
   const { account } = useSnapshot(walletStore)
   const { addressOwnerMap } = useSnapshot(TokenOwnersStore)
 
-  const contractSynchronizer = account && connectedAccounts[account]
-
-  const addressToTokenIds =
-    contractSynchronizer && contractSynchronizer.tokenIds(derivativeAddress)
-
-  const hasTokenId = addressToTokenIds && addressToTokenIds.includes(tokenId)
+  const hasTokenId = addressToTokenIds && addressToTokenIds[derivativeAddress]
 
   useEffect(() => {
     if (!hasTokenId) TokenOwnersStore.fetchAddress(derivativeAddress, tokenId)
