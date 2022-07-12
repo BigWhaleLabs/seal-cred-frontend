@@ -73,7 +73,10 @@ export default async function (
 
     if (!addressToTokenIds[address]) {
       addressToTokenIds[address] = [value]
-    } else if (addressToTokenIds[address].includes(value)) {
+      continue
+    }
+
+    if (addressToTokenIds[address].includes(value)) {
       addressToTokenIds[address] = addressToTokenIds[address].filter(
         (tokenId) => tokenId !== value
       )
