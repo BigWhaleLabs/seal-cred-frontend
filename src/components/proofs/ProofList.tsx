@@ -1,10 +1,12 @@
 import { AccentText, BodyText, HintText } from 'components/Text'
+import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import EmailProof from 'components/proofs/EmailProof'
 import HintCard from 'components/badges/HintCard'
 import ListTitle from 'components/proofs/ListTitle'
+import LoadingCard from 'components/proofs/LoadingCard'
 import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
@@ -14,7 +16,7 @@ import Section from 'components/Section'
 import WalletStore from 'stores/WalletStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-export default function () {
+function ProofListSuspended() {
   const { account } = useSnapshot(WalletStore)
   const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
   const availableToProofList = useProofAddressesAvailableToCreate()
@@ -91,5 +93,13 @@ export default function () {
         </AccentText>
       )}
     </>
+  )
+}
+
+export default function () {
+  return (
+    <Suspense fallback={<LoadingCard />}>
+      <ProofListSuspended />
+    </Suspense>
   )
 }
