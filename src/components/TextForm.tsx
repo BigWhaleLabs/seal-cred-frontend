@@ -38,7 +38,6 @@ export default function ({
       <Button
         gradientFont={submitType !== 'primary'}
         loading={loading}
-        loadingOverflow
         fullWidth
         center
         small={submitType !== 'primary'}
@@ -46,7 +45,7 @@ export default function ({
         disabled={text.length === 0}
         onClick={() => onSubmit(text)}
       >
-        {submitText}
+        {loading ? 'Generating...' : submitText}
       </Button>
     </>
   )
