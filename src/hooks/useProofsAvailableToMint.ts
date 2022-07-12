@@ -19,14 +19,17 @@ export default function () {
       )
     }
     if (proof instanceof ERC721Proof) {
-      return (
-        (!ERC721Ledger[proof.contract] &&
-          !externalERC721Ledger[proof.contract]) ||
-        !contractsOwned.includes(
-          ERC721Ledger[proof.contract].derivativeContract ||
-            externalERC721Ledger[proof.contract].derivativeContract
+      const hasDerivative =
+        ERC721Ledger[proof.contract] &&
+        contractsOwned.includes(ERC721Ledger[proof.contract].derivativeContract)
+
+      const hasDerivativeInExternal =
+        externalERC721Ledger[proof.contract] &&
+        contractsOwned.includes(
+          externalERC721Ledger[proof.contract].derivativeContract
         )
-      )
+
+      return !hasDerivative || !hasDerivativeInExternal
     }
     return false
   })
