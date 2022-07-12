@@ -1,13 +1,11 @@
 import { useSnapshot } from 'valtio'
 import CardTitle from 'components/CardTitle'
 import ProofStore from 'stores/ProofStore'
+import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-export default function ({
-  availableToProofList,
-}: {
-  availableToProofList: string[]
-}) {
+export default function () {
   const { proofsCompleted } = useSnapshot(ProofStore)
+  const availableToProofList = useProofAddressesAvailableToCreate()
 
   const allGenerated =
     proofsCompleted.length > 0 && availableToProofList.length === 0

@@ -5,9 +5,9 @@ import { useSnapshot } from 'valtio'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import EmailProof from 'components/proofs/EmailProof'
 import HintCard from 'components/badges/HintCard'
-import ListTitle from 'components/proofs/ListTitle'
-import LoadingCard from 'components/proofs/LoadingCard'
+import ListTitleSuspended from 'components/proofs/ListTitleSuspended'
 import Network from 'models/Network'
+import ProofSectionLoading from 'components/proofs/ProofSectionLoading'
 import ProofStore from 'stores/ProofStore'
 import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
@@ -16,12 +16,9 @@ import Section from 'components/Section'
 import WalletStore from 'stores/WalletStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-function ProofListSuspended() {
+const MainnetSectionSuspended = () => {
   const { account } = useSnapshot(WalletStore)
-  const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
-  const availableToProofList = useProofAddressesAvailableToCreate()
-  const goerliProofAddressesAvailableToCreate =
-    useProofAddressesAvailableToCreate(Network.Goerli)
+  const { proofsCompleted } = useSnapshot(ProofStore)
   const mainnetProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(Network.Mainnet)
 
@@ -29,46 +26,102 @@ function ProofListSuspended() {
     proofsCompleted.length === 0 &&
     mainnetProofAddressesAvailableToCreate.length === 0
 
+  return (
+    <>
+      <ReadyERC721ProofsList network={Network.Mainnet} />
+      {account && (
+        <AvailableProofsList
+          proofs={mainnetProofAddressesAvailableToCreate}
+          network={Network.Mainnet}
+        />
+      )}
+      {nothingToGenerateMainnet && (
+        <HintCard small>
+          <HintText bold center>
+            No NFTs to proof
+          </HintText>
+        </HintCard>
+      )}
+    </>
+  )
+}
+
+const GoerliSectionSuspended = () => {
+  const { account } = useSnapshot(WalletStore)
+  const { proofsCompleted } = useSnapshot(ProofStore)
+  const goerliProofAddressesAvailableToCreate =
+    useProofAddressesAvailableToCreate(Network.Goerli)
+
   const nothingToGenerateGoerli =
     proofsCompleted.length === 0 &&
     goerliProofAddressesAvailableToCreate.length === 0
 
   return (
     <>
-      <ListTitle availableToProofList={availableToProofList} />
+      <ReadyERC721ProofsList network={Network.Goerli} />
+      {account && (
+        <AvailableProofsList
+          proofs={goerliProofAddressesAvailableToCreate}
+          network={Network.Goerli}
+        />
+      )}
+      {nothingToGenerateGoerli && (
+        <HintCard small>
+          <HintText bold center>
+            No NFTs to proof
+          </HintText>
+        </HintCard>
+      )}
+    </>
+  )
+}
+
+const AdditionalSectionSuspended = () => {
+  const { emailProofsCompleted } = useSnapshot(ProofStore)
+
+  return (
+    <>
+      <Suspense fallback={<div>loading...</div>}>
+        {Array.from(emailProofsCompleted).map((proof, index) => (
+          <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
+        ))}
+        <EmailProof />
+      </Suspense>
+    </>
+  )
+}
+
+const SavedProofsMessageSuspended = () => {
+  const { proofsCompleted } = useSnapshot(ProofStore)
+
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      {proofsCompleted.length > 0 ? (
+        <AccentText small primary color="text-primary">
+          Created ZK proofs are saved in the browser even if you switch wallets.
+        </AccentText>
+      ) : null}
+    </Suspense>
+  )
+}
+
+export default function () {
+  return (
+    <>
+      <Suspense fallback={<div>Start proofing!</div>}>
+        <ListTitleSuspended />
+      </Suspense>
       <Scrollbar>
         <div className={space('space-y-2')}>
           <Section title={<BodyText>Mainnet NFTs</BodyText>}>
-            <ReadyERC721ProofsList network={Network.Mainnet} />
-            {account && (
-              <AvailableProofsList
-                proofs={mainnetProofAddressesAvailableToCreate}
-                network={Network.Mainnet}
-              />
-            )}
-            {nothingToGenerateMainnet && (
-              <HintCard small>
-                <HintText bold center>
-                  No NFTs to proof
-                </HintText>
-              </HintCard>
-            )}
+            <ProofSectionLoading>
+              <MainnetSectionSuspended />
+            </ProofSectionLoading>
           </Section>
           <Section title={<BodyText>Goerli NFTs</BodyText>}>
-            <ReadyERC721ProofsList network={Network.Goerli} />
-            {account && (
-              <AvailableProofsList
-                proofs={goerliProofAddressesAvailableToCreate}
-                network={Network.Goerli}
-              />
-            )}
-            {nothingToGenerateGoerli && (
-              <HintCard small>
-                <HintText bold center>
-                  No NFTs to proof
-                </HintText>
-              </HintCard>
-            )}
+            <Suspense fallback={<div>loading...</div>}>
+              <GoerliSectionSuspended />
+            </Suspense>
           </Section>
           <Section
             title={
@@ -80,26 +133,11 @@ function ProofListSuspended() {
               </BodyText>
             }
           >
-            {Array.from(emailProofsCompleted).map((proof, index) => (
-              <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
-            ))}
-            <EmailProof />
+            <AdditionalSectionSuspended />
           </Section>
         </div>
       </Scrollbar>
-      {proofsCompleted.length > 0 && (
-        <AccentText small primary color="text-primary">
-          Created ZK proofs are saved in the browser even if you switch wallets.
-        </AccentText>
-      )}
+      <SavedProofsMessageSuspended />
     </>
-  )
-}
-
-export default function () {
-  return (
-    <Suspense fallback={<LoadingCard />}>
-      <ProofListSuspended />
-    </Suspense>
   )
 }
