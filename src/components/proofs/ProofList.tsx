@@ -4,6 +4,7 @@ import { useSnapshot } from 'valtio'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
 import EmailProof from 'components/proofs/EmailProof'
 import HintCard from 'components/badges/HintCard'
+import ListTitle from 'components/proofs/ListTitle'
 import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
@@ -16,6 +17,7 @@ import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailable
 export default function () {
   const { account } = useSnapshot(WalletStore)
   const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
+  const availableToProofList = useProofAddressesAvailableToCreate()
   const goerliProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(Network.Goerli)
   const mainnetProofAddressesAvailableToCreate =
@@ -31,6 +33,7 @@ export default function () {
 
   return (
     <>
+      <ListTitle availableToProofList={availableToProofList} />
       <Scrollbar>
         <div className={space('space-y-2')}>
           <Section title={<BodyText>Mainnet NFTs</BodyText>}>
