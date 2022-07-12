@@ -86,7 +86,7 @@ function BadgeListSuspended() {
 
 export default function () {
   return (
-    <Suspense fallback={<div>Fetching ownedERC721DerivativeContracts...</div>}>
+    <Suspense fallback={<div>Fetching derivatives...</div>}>
       <BadgeListSuspended />
     </Suspense>
   )
