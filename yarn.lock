@@ -1521,28 +1521,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/constants@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@big-whale-labs/constants@npm:0.1.0"
-  checksum: fc17f0de1c7e003f9000df30a33eefea84f86c2f156d9a2f2435c86f8afadbc1ec40f90a2b42e7c98a1e123993edb56d074e6900e260d87131c6d449d8585c38
+"@big-whale-labs/constants@npm:^0.1.9":
+  version: 0.1.9
+  resolution: "@big-whale-labs/constants@npm:0.1.9"
+  checksum: c74160b481e585ac7d99121306ac7876c05c41e7c443241d47d88eeeebedebb13783f38ea4ac7b431bcef512ed75a1539ebce5f254ab5dfb17bbb651aff3c28d
   languageName: node
   linkType: hard
 
-"@big-whale-labs/constants@npm:^0.1.8":
-  version: 0.1.8
-  resolution: "@big-whale-labs/constants@npm:0.1.8"
-  checksum: 8dacc04a367d73dc13b4aaa7f083525edd73cd4c0cf27720dc08309977ed31f30e7dd84a22e91ead822555b4b8f3fd589dbcafa4ae282f307fa1cbce5da29de7
-  languageName: node
-  linkType: hard
-
-"@big-whale-labs/seal-cred-ledger-contract@npm:^0.2.3":
-  version: 0.2.3
-  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.2.3"
+"@big-whale-labs/seal-cred-ledger-contract@npm:^0.2.4":
+  version: 0.2.4
+  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.2.4"
   dependencies:
-    "@big-whale-labs/constants": ^0.1.0
+    "@big-whale-labs/constants": ^0.1.9
     entropy-string: ^4.2.0
     prompt: ^1.3.0
-  checksum: 58bbc1b882f7d034668e4f8068d03e23a66a21a1907257dbb3506ff0cb23802e105dfb75c072872f3e909b648a007bb1f187d46da531e62acf76d7115cc95f60
+  checksum: 904e1876c9dbf99191063d7a24a478fc6d6abf5bae08fc40320f17ddae908684bf8a7ddbe7b92e8a3611353a30e56ea128f70403353faaadd50c1225a85b0633
   languageName: node
   linkType: hard
 
@@ -14173,8 +14166,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "seal-cred-frontend@workspace:."
   dependencies:
-    "@big-whale-labs/constants": ^0.1.8
-    "@big-whale-labs/seal-cred-ledger-contract": ^0.2.3
+    "@big-whale-labs/constants": ^0.1.9
+    "@big-whale-labs/seal-cred-ledger-contract": ^0.2.4
     "@coinbase/wallet-sdk": ^3.3.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@originjs/vite-plugin-commonjs": ^1.0.3

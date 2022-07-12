@@ -1,4 +1,5 @@
 import { GoerliContractsStore } from 'stores/ContractsStore'
+import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgeSection from 'components/badges/BadgeSection'
@@ -14,7 +15,7 @@ import useDerivativeContracts from 'hooks/useDerivativeContracts'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 import walletStore from 'stores/WalletStore'
 
-export default function () {
+function BadgeListSuspended() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
   const {
@@ -80,5 +81,13 @@ export default function () {
         />
       </div>
     </Scrollbar>
+  )
+}
+
+export default function () {
+  return (
+    <Suspense fallback={<div>Fetching ownedERC721DerivativeContracts...</div>}>
+      <BadgeListSuspended />
+    </Suspense>
   )
 }
