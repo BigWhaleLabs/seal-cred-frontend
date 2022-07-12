@@ -26,7 +26,10 @@ const badgeBody = classnames(
   textOverflow('text-ellipsis')
 )
 
-const badgeBlockName = classnames(width('w-full'), textOverflow('truncate'))
+const badgeBlockName = classnames(
+  width('w-full'),
+  whitespace('whitespace-normal')
+)
 
 export default function BadgeCard({
   top,
