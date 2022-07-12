@@ -1,5 +1,4 @@
 import { AccentText, BodyText, HintText } from 'components/Text'
-import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
@@ -14,7 +13,7 @@ import Section from 'components/Section'
 import WalletStore from 'stores/WalletStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-export function ProofListSuspended() {
+export default function () {
   const { account } = useSnapshot(WalletStore)
   const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
   const goerliProofAddressesAvailableToCreate =
@@ -89,13 +88,5 @@ export function ProofListSuspended() {
         </AccentText>
       )}
     </>
-  )
-}
-
-export default function () {
-  return (
-    <Suspense fallback={<div>Fetching proofs</div>}>
-      <ProofListSuspended />
-    </Suspense>
   )
 }
