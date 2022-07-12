@@ -4,12 +4,13 @@ import { useSnapshot } from 'valtio'
 import CardTitle from 'components/CardTitle'
 import LoadingCard from 'components/badges/LoadingCard'
 import SealCredStore from 'stores/SealCredStore'
+import useContractsOwned from 'hooks/useContractsOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
   const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
-  const { contractsOwned } = useSnapshot(GoerliContractsStore)
+  const contractsOwned = useContractsOwned(GoerliContractsStore)
 
   const ownedDerivativeContracts = derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)

@@ -10,16 +10,15 @@ function BadgesOwnedForContractSuspended({
 }: {
   contractAddress: string
 }) {
-  const { connectedAccounts } = useSnapshot(GoerliContractsStore)
+  const { addressToTokenIds } = useSnapshot(GoerliContractsStore)
   const { account } = useSnapshot(WalletStore)
   if (!account) {
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
   }
-  const contractSynchronizer = connectedAccounts[account]
-  if (!contractSynchronizer) {
+  if (!addressToTokenIds) {
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
   }
-  const ownedIds = contractSynchronizer.tokenIds(contractAddress)
+  const ownedIds = addressToTokenIds[contractAddress]
   return (
     <>
       {ownedIds.map((tokenId) => (

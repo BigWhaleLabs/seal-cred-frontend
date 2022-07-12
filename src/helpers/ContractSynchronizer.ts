@@ -5,7 +5,6 @@ import getOwnedERC721, {
   isTransferEvent,
   parseLogData,
 } from 'helpers/getOwnedERC721'
-import transformObjectValues from 'helpers/transformObjectValues'
 
 export interface ContractSynchronizerSchema {
   account: string
@@ -17,12 +16,13 @@ export default class ContractSynchronizer {
   account: string
   locked = false
   synchronizedBlockId?: number
-  addressToTokenIds: { [address: string]: Set<string> } = {}
+  addressToTokenIds?: { [address: string]: string[] }
+
   skipTransactions = new Set<string>()
 
   constructor(
     account: string,
-    addressToTokenIds: { [address: string]: Set<string> } = {},
+    addressToTokenIds?: { [address: string]: string[] },
     synchronizedBlockId?: number
   ) {
     this.account = account
@@ -39,13 +39,9 @@ export default class ContractSynchronizer {
     synchronizedBlockId: number
     addressToTokenIds: { [address: string]: string[] }
   }) {
-    const addressToTokenSetIds = transformObjectValues(
-      addressToTokenIds,
-      (tokenIds) => new Set(tokenIds)
-    )
     return new ContractSynchronizer(
       account,
-      addressToTokenSetIds,
+      addressToTokenIds,
       synchronizedBlockId
     )
   }
@@ -54,10 +50,7 @@ export default class ContractSynchronizer {
     return {
       account: this.account,
       synchronizedBlockId: this.synchronizedBlockId,
-      addressToTokenIds: transformObjectValues(
-        this.addressToTokenIds,
-        Array.from
-      ),
+      addressToTokenIds: this.addressToTokenIds,
     }
   }
 
@@ -70,50 +63,38 @@ export default class ContractSynchronizer {
         args: { tokenId },
       } = parseLogData({ data, topics })
 
-      if (!this.addressToTokenIds[address])
-        this.addressToTokenIds[address] = new Set()
+      if (!this.addressToTokenIds) this.addressToTokenIds = {}
+      if (!this.addressToTokenIds[address]) this.addressToTokenIds[address] = []
 
       const value = tokenId.toString()
       minted.push({
         address,
         tokenId,
       })
-      this.addressToTokenIds[address].add(value)
+      this.addressToTokenIds[address].push(value)
       this.skipTransactions.add(transactionHash)
     }
     return minted
   }
 
-  tokenIds(address: string) {
-    if (!this.addressToTokenIds[address]) return []
-    return Array.from(this.addressToTokenIds[address])
-  }
-
-  async getOwnedERC721(blockId: number, network: Network) {
+  async syncAddressToTokenIds(blockId: number, network: Network) {
     if (!this.locked && blockId !== this.synchronizedBlockId) {
       this.locked = true
-      try {
-        this.addressToTokenIds = await getOwnedERC721(
-          this.account,
-          typeof this.synchronizedBlockId !== 'undefined'
-            ? this.synchronizedBlockId + 1
-            : 0,
-          blockId,
-          this.addressToTokenIds,
-          this.skipTransactions,
-          network
-        )
+      this.addressToTokenIds = await getOwnedERC721(
+        this.account,
+        typeof this.synchronizedBlockId !== 'undefined'
+          ? this.synchronizedBlockId + 1
+          : 0,
+        blockId,
+        this.addressToTokenIds || {},
+        this.skipTransactions,
+        network
+      )
 
-        this.synchronizedBlockId = blockId
-      } finally {
-        this.locked = false
-      }
+      this.synchronizedBlockId = blockId
+      this.locked = false
     }
 
-    return this.contractsOwned
-  }
-
-  get contractsOwned() {
-    return Object.keys(this.addressToTokenIds)
+    return this.addressToTokenIds
   }
 }

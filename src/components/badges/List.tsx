@@ -1,6 +1,4 @@
-import { BodyText } from 'components/Text'
 import { GoerliContractsStore } from 'stores/ContractsStore'
-import { Suspense } from 'react'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgeSection from 'components/badges/BadgeSection'
@@ -12,10 +10,11 @@ import Network from 'models/Network'
 import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
 import proofStore from 'stores/ProofStore'
+import useContractsOwned from 'hooks/useContractsOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 import walletStore from 'stores/WalletStore'
 
-function BadgeListSuspended() {
+export default function () {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
   const {
@@ -23,7 +22,7 @@ function BadgeListSuspended() {
     ERC721derivativeContracts = [],
     externalERC721derivativeContracts = [],
   } = useSnapshot(SealCredStore)
-  const { contractsOwned } = useSnapshot(GoerliContractsStore)
+  const contractsOwned = useContractsOwned(GoerliContractsStore)
 
   const ownedEmailDerivativeContracts = emailDerivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
@@ -81,13 +80,5 @@ function BadgeListSuspended() {
         />
       </div>
     </Scrollbar>
-  )
-}
-
-export default function () {
-  return (
-    <Suspense fallback={<BodyText>Fetching derivative NFTs...</BodyText>}>
-      <BadgeListSuspended />
-    </Suspense>
   )
 }

@@ -35,7 +35,7 @@ export default async function (
   account: string,
   fromBlock = 0,
   toBlock: number,
-  addressToTokenIds: { [address: string]: Set<string> },
+  addressToTokenIds: { [address: string]: string[] },
   skipTransactions: Set<string>,
   network: Network
 ) {
@@ -72,12 +72,17 @@ export default async function (
     const value = tokenId.toString()
 
     if (!addressToTokenIds[address]) {
-      addressToTokenIds[address] = new Set([value])
-    } else if (addressToTokenIds[address].has(value)) {
-      addressToTokenIds[address].delete(value)
-      if (!addressToTokenIds[address].size) delete addressToTokenIds[address]
+      addressToTokenIds[address] = [value]
+      continue
+    }
+
+    if (addressToTokenIds[address].includes(value)) {
+      addressToTokenIds[address] = addressToTokenIds[address].filter(
+        (tokenId) => tokenId !== value
+      )
+      if (!addressToTokenIds[address].length) delete addressToTokenIds[address]
     } else {
-      addressToTokenIds[address].add(value)
+      addressToTokenIds[address].push(value)
     }
   }
 
