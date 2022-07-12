@@ -63,13 +63,14 @@ class ContractsStore extends PersistableStore {
       this.addressToTokenIds = this.connectedAccounts[
         WalletStore.account
       ].syncAddressToTokenIds(this.currentBlock, this.network)
-    } else {
-      const result = await this.connectedAccounts[
-        WalletStore.account
-      ].syncAddressToTokenIds(this.currentBlock, this.network)
-
-      this.addressToTokenIds = Promise.resolve(result)
+      return
     }
+
+    const result = await this.connectedAccounts[
+      WalletStore.account
+    ].syncAddressToTokenIds(this.currentBlock, this.network)
+
+    this.addressToTokenIds = Promise.resolve(result)
   }
 }
 
