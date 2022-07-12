@@ -59,7 +59,6 @@ export default function ERC721ProofSectionSuspended({
     <Suspense
       fallback={
         <ProofSection title={<BodyText>{network} NFTs</BodyText>}>
-          {' '}
           <HintCard small>
             <HintText bold center>
               Loading...

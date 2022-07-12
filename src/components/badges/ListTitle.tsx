@@ -11,7 +11,6 @@ function ListTitleSuspended() {
   const { derivativeContracts = [] } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
   const contractsOwned = useContractsOwned(GoerliContractsStore)
-  // const { contractsOwned } = useSnapshot(GoerliContractsStore)
 
   const ownedDerivativeContracts = derivativeContracts.filter(
     (contractAddress) => contractsOwned.includes(contractAddress)
