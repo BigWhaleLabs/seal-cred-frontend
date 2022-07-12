@@ -3,7 +3,6 @@ import { useSnapshot } from 'valtio'
 import { utils } from 'ethers'
 import ContractNamesStore from 'stores/ContractNamesStore'
 import Network from 'models/Network'
-import SealCredStore from 'stores/SealCredStore'
 import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   display,
@@ -13,6 +12,7 @@ import classnames, {
   wordBreak,
 } from 'classnames/tailwind'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
+import useDerivativeContracts from 'hooks/useDerivativeContracts'
 
 const addressText = wordBreak('break-all')
 const badgeNameWrapper = classnames(
@@ -43,8 +43,11 @@ function ContractNameSuspended({
   clearType,
   network,
 }: ContractNameProps) {
-  const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
-    useSnapshot(SealCredStore)
+  const {
+    emailDerivativeContracts = [],
+    ERC721derivativeContracts = [],
+    externalERC721derivativeContracts = [],
+  } = useDerivativeContracts()
   const { contractNames } = useSnapshot(ContractNamesStore)
   let contractName = contractNames[address]
   if (!contractName) ContractNamesStore.fetchContractName(address, network)
@@ -54,6 +57,9 @@ function ContractNameSuspended({
       contractName = contractName.replace(' email', '')
 
     if (contractName && ERC721derivativeContracts.includes(address))
+      contractName = contractName.replace(' (derivative)', '')
+
+    if (contractName && externalERC721derivativeContracts.includes(address))
       contractName = contractName.replace(' (derivative)', '')
   }
 

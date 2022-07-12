@@ -8,9 +8,9 @@ import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
 import Network from 'models/Network'
 import Scrollbar from 'components/Scrollbar'
-import SealCredStore from 'stores/SealCredStore'
 import proofStore from 'stores/ProofStore'
 import useContractsOwned from 'hooks/useContractsOwned'
+import useDerivativeContracts from 'hooks/useDerivativeContracts'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 import walletStore from 'stores/WalletStore'
 
@@ -21,7 +21,7 @@ export default function () {
     emailDerivativeContracts = [],
     ERC721derivativeContracts = [],
     externalERC721derivativeContracts = [],
-  } = useSnapshot(SealCredStore)
+  } = useDerivativeContracts()
   const contractsOwned = useContractsOwned(GoerliContractsStore)
 
   const ownedEmailDerivativeContracts = emailDerivativeContracts.filter(

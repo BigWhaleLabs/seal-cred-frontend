@@ -3,7 +3,6 @@ import {
   SCERC721LedgerContract,
   SCEmailLedgerContract,
 } from 'helpers/contracts/sealCredContracts'
-import { derive } from 'valtio/utils'
 import { proxy } from 'valtio'
 import ERC721Ledger from 'models/ERC721Ledger'
 import EmailLedger from 'models/EmailLedger'
@@ -19,49 +18,13 @@ interface SealCredStoreType {
   emailLedger: Promise<EmailLedger>
 }
 
-interface ComputedSealCredStoreType {
-  derivativeContracts: Promise<string[]>
-  externalERC721derivativeContracts: Promise<string[]>
-  ERC721derivativeContracts: Promise<string[]>
-  emailDerivativeContracts: Promise<string[]>
-}
-
-const state = proxy<SealCredStoreType>({
+const SealCredStore = proxy<SealCredStoreType>({
   externalERC721Ledger: getExternalSCERC721Ledger(
     ExternalSCERC721LedgerContract
   ),
   ERC721Ledger: getERC721Ledger(SCERC721LedgerContract),
   emailLedger: getEmailLedger(SCEmailLedgerContract),
 })
-
-const SealCredStore = derive<SealCredStoreType, ComputedSealCredStoreType>(
-  {
-    externalERC721derivativeContracts: async (get) =>
-      Object.values(await get(state).externalERC721Ledger).map(
-        ({ derivativeContract }) => derivativeContract
-      ),
-    ERC721derivativeContracts: async (get) =>
-      Object.values(await get(state).ERC721Ledger).map(
-        ({ derivativeContract }) => derivativeContract
-      ),
-    emailDerivativeContracts: async (get) =>
-      Object.values(await get(state).emailLedger).map(
-        ({ derivativeContract }) => derivativeContract
-      ),
-    derivativeContracts: async (get) => [
-      ...Object.values(await get(state).ERC721Ledger).map(
-        ({ derivativeContract }) => derivativeContract
-      ),
-      ...Object.values(await get(state).externalERC721Ledger).map(
-        ({ derivativeContract }) => derivativeContract
-      ),
-      ...Object.values(await get(state).emailLedger).map(
-        ({ derivativeContract }) => derivativeContract
-      ),
-    ],
-  },
-  { proxy: state }
-)
 
 SCERC721LedgerContract.on(
   SCERC721LedgerContract.filters.CreateDerivativeContract(),

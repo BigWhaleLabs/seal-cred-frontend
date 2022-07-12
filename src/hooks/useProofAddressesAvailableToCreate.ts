@@ -5,9 +5,9 @@ import {
 import { useSnapshot } from 'valtio'
 import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
-import SealCredStore from 'stores/SealCredStore'
 import networkPick from 'helpers/networkPick'
 import useContractsOwned from 'hooks/useContractsOwned'
+import useDerivativesContracts from 'hooks/useDerivativesContracts'
 
 export default function (network?: Network) {
   const { goerliERC721ProofsCompleted, mainnetERC721ProofsCompleted } =
@@ -27,7 +27,8 @@ export default function (network?: Network) {
       contractsOwned = [...goerliContractsOwned, ...mainnetContractsOwned]
     }
   }
-  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
+  const derivativeContracts = useDerivativesContracts()
+
   const completedERC721ProofAddressesMap = [
     ...goerliERC721ProofsCompleted,
     ...mainnetERC721ProofsCompleted,
