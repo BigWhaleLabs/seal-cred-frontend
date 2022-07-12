@@ -20,10 +20,10 @@ interface SealCredStoreType {
 }
 
 interface ComputedSealCredStoreType {
-  derivativeContracts: string[]
-  externalERC721derivativeContracts: string[]
-  ERC721derivativeContracts: string[]
-  emailDerivativeContracts: string[]
+  derivativeContracts: Promise<string[]>
+  externalERC721derivativeContracts: Promise<string[]>
+  ERC721derivativeContracts: Promise<string[]>
+  emailDerivativeContracts: Promise<string[]>
 }
 
 const state = proxy<SealCredStoreType>({
@@ -36,26 +36,26 @@ const state = proxy<SealCredStoreType>({
 
 const SealCredStore = derive<SealCredStoreType, ComputedSealCredStoreType>(
   {
-    externalERC721derivativeContracts: (get) =>
-      Object.values(get(state).externalERC721Ledger).map(
+    externalERC721derivativeContracts: async (get) =>
+      Object.values(await get(state).externalERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract
       ),
-    ERC721derivativeContracts: (get) =>
-      Object.values(get(state).ERC721Ledger).map(
+    ERC721derivativeContracts: async (get) =>
+      Object.values(await get(state).ERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract
       ),
-    emailDerivativeContracts: (get) =>
-      Object.values(get(state).emailLedger).map(
+    emailDerivativeContracts: async (get) =>
+      Object.values(await get(state).emailLedger).map(
         ({ derivativeContract }) => derivativeContract
       ),
-    derivativeContracts: (get) => [
-      ...Object.values(get(state).ERC721Ledger).map(
+    derivativeContracts: async (get) => [
+      ...Object.values(await get(state).ERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract
       ),
-      ...Object.values(get(state).externalERC721Ledger).map(
+      ...Object.values(await get(state).externalERC721Ledger).map(
         ({ derivativeContract }) => derivativeContract
       ),
-      ...Object.values(get(state).emailLedger).map(
+      ...Object.values(await get(state).emailLedger).map(
         ({ derivativeContract }) => derivativeContract
       ),
     ],
