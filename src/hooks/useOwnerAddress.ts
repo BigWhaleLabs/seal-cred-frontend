@@ -23,10 +23,9 @@ export default function (
   const contractSynchronizer = account && connectedAccounts[account]
 
   const addressToTokenIds =
-    contractSynchronizer &&
-    contractSynchronizer.addressToTokenIds[derivativeAddress]
+    contractSynchronizer && contractSynchronizer.tokenIds(derivativeAddress)
 
-  const hasTokenId = addressToTokenIds && addressToTokenIds.has(tokenId)
+  const hasTokenId = addressToTokenIds && addressToTokenIds.includes(tokenId)
 
   useEffect(() => {
     if (!hasTokenId) TokenOwnersStore.fetchAddress(derivativeAddress, tokenId)
