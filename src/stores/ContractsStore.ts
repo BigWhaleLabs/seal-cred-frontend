@@ -13,7 +13,7 @@ import PersistableStore from 'stores/persistence/PersistableStore'
 import WalletStore from 'stores/WalletStore'
 import transformObjectValues from 'helpers/transformObjectValues'
 
-export class ContractsStore extends PersistableStore {
+class ContractsStore extends PersistableStore {
   connectedAccounts: { [account: string]: ContractSynchronizer } = {}
   currentBlock?: number
   addressToTokenIds?: Promise<{ [address: string]: string[] } | undefined>
