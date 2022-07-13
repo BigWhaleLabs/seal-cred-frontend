@@ -1,13 +1,27 @@
 import ChildrenProp from 'models/ChildrenProp'
 import Fade from 'components/Fade'
-import classnames, { overflow, position } from 'classnames/tailwind'
+import classnames, {
+  borderColor,
+  borderStyle,
+  borderWidth,
+  overflow,
+  position,
+} from 'classnames/tailwind'
 import useHasWebkit from 'hooks/useHasWebkit'
 import useIsOverflow from 'hooks/useIsOverflow'
 
-const wrapperStyles = classnames(
-  overflow('overflow-y-auto', 'overflow-x-hidden'),
-  position('relative')
+const ffScrollbarSpace = classnames(
+  borderWidth('border-r-24'),
+  borderStyle('border-solid'),
+  borderColor('border-primary-dark')
 )
+
+const wrapperStyles = (isFirefox?: boolean) =>
+  classnames(
+    overflow('overflow-y-auto', 'overflow-x-hidden'),
+    position('relative'),
+    isFirefox ? ffScrollbarSpace : undefined
+  )
 
 type FadeType = 'top' | 'bottom' | 'both'
 
@@ -22,13 +36,12 @@ export default function ({
   const hasWebKit = useHasWebkit()
   const { isOverflow, wrapperRef } = useIsOverflow()
 
-  const ffBorderRight =
-    isOverflow && !hasWebKit ? '1.5rem solid #0d0030' : 'none'
+  const isFirefox = isOverflow && !hasWebKit
   const wrapperRight = isOverflow && hasWebKit ? '0.7rem' : '0rem'
 
   return (
     <div
-      className={wrapperStyles}
+      className={wrapperStyles()}
       ref={wrapperRef}
       style={{
         marginRight: `-${wrapperRight}`,
@@ -36,14 +49,7 @@ export default function ({
       }}
     >
       {(fade === 'both' || fade === 'top') && <Fade />}
-      <div
-        className={wrapperStyles}
-        style={{
-          borderRight: ffBorderRight,
-        }}
-      >
-        {children}
-      </div>
+      <div className={wrapperStyles(isFirefox)}>{children}</div>
       {(fade === 'both' || fade === 'bottom') && <Fade bottom />}
     </div>
   )

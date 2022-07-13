@@ -51,6 +51,9 @@ module.exports = {
         sm: '28.125rem',
         md: '37.5rem',
       },
+      borderWidth: {
+        24: '1.5rem',
+      },
       animation: {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
         'rotate-180': 'rotate-180 0.5s ease-in-out forwards',
