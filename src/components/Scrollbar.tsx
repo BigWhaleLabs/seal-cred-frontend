@@ -35,7 +35,7 @@ export default function ({
       <div
         className={wrapperStyles}
         style={{
-          borderRight: isOverflow && !hasWebKit ? '22px solid #0d0030' : 'none',
+          borderRight: isOverflow && !hasWebKit ? '24px solid #0d0030' : 'none',
         }}
       >
         {children}
