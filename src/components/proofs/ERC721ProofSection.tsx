@@ -38,7 +38,7 @@ export function ERC721ProofSection({
         />
       )}
       {nothingToGenerateMainnet && (
-        <HintCard small>
+        <HintCard small marginY={false}>
           <HintText bold center>
             No NFTs to proof
           </HintText>
@@ -59,7 +59,7 @@ export default function ERC721ProofSectionSuspended({
     <Suspense
       fallback={
         <ProofSection title={<BodyText>{network} NFTs</BodyText>}>
-          <HintCard small>
+          <HintCard small marginY={false}>
             <HintText bold center>
               Loading...
             </HintText>
