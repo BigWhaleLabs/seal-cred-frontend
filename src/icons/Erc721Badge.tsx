@@ -1,3 +1,4 @@
+import { useMemo } from 'preact/hooks'
 import classnames, {
   borderRadius,
   boxShadow,
@@ -27,7 +28,9 @@ const pathClasses = classnames(
 )
 
 export default function () {
-  return Math.random() > 0.5 ? (
+  const random = useMemo(() => Math.random() > 0.5, [])
+
+  return random ? (
     <svg
       viewBox="0 0 64 64"
       fill="none"
