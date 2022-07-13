@@ -22,20 +22,24 @@ export default function ({
   const hasWebKit = useHasWebkit()
   const { isOverflow, wrapperRef } = useIsOverflow()
 
+  const ffBorderRight =
+    isOverflow && !hasWebKit ? '1.5rem solid #0d0030' : 'none'
+  const wrapperRight = isOverflow && hasWebKit ? '0.7rem' : '0rem'
+
   return (
     <div
       className={wrapperStyles}
       ref={wrapperRef}
       style={{
-        marginRight: isOverflow && hasWebKit ? '-0.7rem' : '0rem',
-        paddingRight: isOverflow && hasWebKit ? '0.7rem' : '0rem',
+        marginRight: `-${wrapperRight}`,
+        paddingRight: wrapperRight,
       }}
     >
       {(fade === 'both' || fade === 'top') && <Fade />}
       <div
         className={wrapperStyles}
         style={{
-          borderRight: isOverflow && !hasWebKit ? '24px solid #0d0030' : 'none',
+          borderRight: ffBorderRight,
         }}
       >
         {children}
