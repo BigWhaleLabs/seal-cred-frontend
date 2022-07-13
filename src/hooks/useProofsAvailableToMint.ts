@@ -30,7 +30,7 @@ export default function () {
           externalERC721Ledger[proof.contract].derivativeContract
         )
 
-      return !hasDerivative || !hasDerivativeInExternal
+      return !hasDerivative && !hasDerivativeInExternal
     }
     return false
   })
