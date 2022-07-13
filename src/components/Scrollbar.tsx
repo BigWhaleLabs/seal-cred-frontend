@@ -31,16 +31,16 @@ export default function ({
         paddingRight: isOverflow && hasWebKit ? '0.7rem' : '0rem',
       }}
     >
+      {(fade === 'both' || fade === 'top') && <Fade />}
       <div
         className={wrapperStyles}
         style={{
           borderRight: isOverflow && !hasWebKit ? '22px solid #0d0030' : 'none',
         }}
       >
-        {(fade === 'both' || fade === 'top') && <Fade />}
         {children}
-        {(fade === 'both' || fade === 'bottom') && <Fade bottom />}
       </div>
+      {(fade === 'both' || fade === 'bottom') && <Fade bottom />}
     </div>
   )
 }
