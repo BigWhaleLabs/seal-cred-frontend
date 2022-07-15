@@ -96,6 +96,7 @@ module.exports = {
         lg: '0rem 0rem 1rem 0rem rgb(0 0 0 / 0.25)',
         md: '0rem 0rem 0.375rem 0rem rgb(0 0 0 / 0.25)',
         button: '0rem 0rem 1.625rem rgb(0 0 0 / 1)',
+        'button-active': '0rem 0rem 0.375rem rgb(0 0 0 / 1)',
       },
       height: {
         'noisy-rectangle': '0.688rem',

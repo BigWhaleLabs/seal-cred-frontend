@@ -4074,6 +4074,7 @@ export type TBoxShadow =
   | 'shadow-inner'
   | 'shadow-none'
   | 'shadow-button'
+  | 'shadow-button-active'
 
 export type TBoxShadowColor =
   | 'shadow-inherit'
