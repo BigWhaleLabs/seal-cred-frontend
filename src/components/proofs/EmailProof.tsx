@@ -46,8 +46,8 @@ const getStartedText = (open: boolean) =>
     fontFamily('font-primary'),
     lineHeight('leading-5'),
     fontSize('text-sm'),
-    opacity(open ? 'opacity-0' : 'opacity-100'),
-    visibility(open ? 'invisible' : 'visible'),
+    opacity({ 'opacity-0': open }),
+    visibility({ invisible: open }),
     transitionDuration('duration-300')
   )
 
@@ -71,8 +71,8 @@ const emailTitleLeft = classnames(
 
 const questionBlock = (open: boolean) =>
   classnames(
-    opacity(open ? 'opacity-100' : 'opacity-0'),
-    visibility(open ? 'visible' : 'invisible'),
+    opacity({ 'opacity-0': !open }),
+    visibility({ invisible: !open }),
     transitionDuration('duration-300')
   )
 

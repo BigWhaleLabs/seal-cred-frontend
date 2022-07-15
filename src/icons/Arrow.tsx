@@ -13,8 +13,8 @@ const arrowAnimation = (
   open?: boolean
 ) =>
   classnames(
-    animation(pulseDisabled ? undefined : 'animate-pulse-horizontal'),
-    rotate(openDisabled ? undefined : open ? 'rotate-180' : 'rotate-0'),
+    animation({ 'animate-pulse-horizontal': !pulseDisabled }),
+    rotate({ 'rotate-180': !openDisabled && open }),
     transitionDuration('duration-300')
   )
 const svgInnerWrapper = classnames(
