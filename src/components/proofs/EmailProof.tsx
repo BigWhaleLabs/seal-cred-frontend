@@ -9,7 +9,6 @@ import QuestionMark from 'components/QuestionMark'
 import ToolTip from 'components/ToolTip'
 import classnames, {
   alignItems,
-  animation,
   backgroundClip,
   backgroundImage,
   display,
@@ -20,9 +19,12 @@ import classnames, {
   gradientColorStops,
   justifyContent,
   lineHeight,
+  opacity,
   space,
   textColor,
+  transitionDuration,
   transitionProperty,
+  visibility,
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
@@ -44,7 +46,9 @@ const getStartedText = (open: boolean) =>
     fontFamily('font-primary'),
     lineHeight('leading-5'),
     fontSize('text-sm'),
-    animation(open ? 'animate-unreveal' : 'animate-reveal')
+    opacity({ 'opacity-0': open }),
+    visibility({ invisible: open }),
+    transitionDuration('duration-300')
   )
 
 const emailTitleContainer = classnames(
@@ -66,7 +70,11 @@ const emailTitleLeft = classnames(
 )
 
 const questionBlock = (open: boolean) =>
-  animation(open ? 'animate-reveal' : 'animate-unreveal')
+  classnames(
+    opacity({ 'opacity-0': !open }),
+    visibility({ invisible: !open }),
+    transitionDuration('duration-300')
+  )
 
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 

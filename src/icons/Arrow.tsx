@@ -2,7 +2,8 @@ import classnames, {
   animation,
   dropShadow,
   height,
-  transitionProperty,
+  rotate,
+  transitionDuration,
   width,
 } from 'classnames/tailwind'
 
@@ -12,16 +13,9 @@ const arrowAnimation = (
   open?: boolean
 ) =>
   classnames(
-    animation(
-      pulseDisabled
-        ? openDisabled
-          ? undefined
-          : open
-          ? 'animate-rotate-180'
-          : 'animate-rotate-0'
-        : 'animate-pulse-horizontal'
-    ),
-    transitionProperty('transition-all')
+    animation({ 'animate-pulse-horizontal': !pulseDisabled }),
+    rotate({ 'rotate-180': !openDisabled && open }),
+    transitionDuration('duration-300')
   )
 const svgInnerWrapper = classnames(
   width('w-full'),
