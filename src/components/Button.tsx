@@ -174,7 +174,7 @@ export default function ({
         type,
         small,
       })}
-      disabled={available}
+      disabled={!available}
       {...rest}
     >
       {loading && <Loading small={small} />}
