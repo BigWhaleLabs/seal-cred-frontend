@@ -35,11 +35,10 @@ import Loading from 'icons/Loading'
 import React from 'react'
 
 const commonClasses = (
-  type: 'primary' | 'secondary' | 'tertiary',
+  type: ButtonType,
   fullWidth?: boolean,
   center?: boolean,
-  loading?: boolean,
-  disabled?: boolean,
+  available?: boolean,
   small?: boolean
 ) =>
   classnames(
@@ -52,10 +51,14 @@ const commonClasses = (
     transitionProperty('transition-all'),
     transitionTimingFunction('ease-in-out'),
     transitionDuration('duration-100'),
-    cursor(loading || disabled ? 'cursor-not-allowed' : undefined),
+    cursor({ 'cursor-not-allowed': !available }),
     outlineStyle('focus:outline-none'),
-    opacity(loading || disabled ? 'opacity-50' : undefined),
-    boxShadow('shadow-2xl', 'hover:shadow-lg', 'active:shadow-md'),
+    opacity({ 'opacity-50': !available }),
+    boxShadow({
+      'shadow-2xl': available,
+      'hover:shadow-lg': available,
+      'active:shadow-button-active': available,
+    }),
     width(fullWidth ? 'w-full' : 'w-fit'),
     textAlign(center ? 'text-center' : undefined),
     fontSize(small ? 'text-sm' : 'text-lg'),
@@ -72,19 +75,17 @@ const commonClasses = (
 
 const button = ({
   fullWidth,
+  available,
   center,
   type,
-  loading,
-  disabled,
   small,
-  gradientFont,
-}: ButtonProps) =>
+}: ButtonProps & { available?: boolean }) =>
   classnames(
-    commonClasses(type, fullWidth, center, loading, disabled, small),
-    colorClasses({ type, loading, disabled, gradientFont })
+    commonClasses(type, fullWidth, center, available, small),
+    colorClasses(type, available)
   )
 
-const colorClasses = ({ type, loading, disabled }: ButtonProps) =>
+const colorClasses = (type: ButtonType, available?: boolean) =>
   classnames(
     type === 'primary'
       ? classnames(
@@ -96,11 +97,11 @@ const colorClasses = ({ type, loading, disabled }: ButtonProps) =>
             'hover:shadow-tertiary',
             'active:shadow-tertiary'
           ),
-          boxShadow('shadow-button'),
-          brightness(
-            loading || disabled ? undefined : 'hover:brightness-75',
-            loading || disabled ? undefined : 'active:brightness-50'
-          )
+          boxShadow({ 'shadow-button': available }),
+          brightness({
+            'hover:brightness-95': available,
+            'active:brightness-90': available,
+          })
         )
       : type === 'secondary'
       ? classnames(
@@ -113,22 +114,22 @@ const colorClasses = ({ type, loading, disabled }: ButtonProps) =>
           ),
           backgroundImage('bg-gradient-to-r'),
           textColor('text-secondary'),
-          gradientColorStops(
-            'hover:from-accent-light-transparent',
-            'hover:to-secondary-light-transparent',
-            'active:from-accent-light-active-transparent',
-            'active:to-secondary-light-active-transparent'
-          )
+          gradientColorStops({
+            'hover:from-accent-light-transparent': available,
+            'hover:to-secondary-light-transparent': available,
+            'active:from-accent-light-active-transparent': available,
+            'active:to-secondary-light-active-transparent': available,
+          })
         )
       : backgroundColor('bg-transparent')
   )
 
-const textGradient = ({ loading, disabled }: ButtonProps) =>
+const textGradient = (available?: boolean) =>
   classnames(
-    textColor(
-      'text-transparent',
-      loading || disabled ? undefined : 'active:text-accent'
-    ),
+    textColor({
+      'text-transparent': true,
+      'active:text-accent': available,
+    }),
     backgroundClip('bg-clip-text'),
     backgroundImage('bg-gradient-to-r'),
     gradientColorStops('from-secondary', 'to-accent')
@@ -137,7 +138,7 @@ const textGradient = ({ loading, disabled }: ButtonProps) =>
 interface ButtonProps {
   fullWidth?: boolean
   center?: boolean
-  type: 'primary' | 'secondary' | 'tertiary'
+  type: ButtonType
   disabled?: boolean
   loading?: boolean
   small?: boolean
@@ -146,12 +147,14 @@ interface ButtonProps {
   loadingOverflow?: boolean
 }
 
+type ButtonType = 'primary' | 'secondary' | 'tertiary'
+
 export default function ({
   fullWidth,
   center,
   small,
   withArrow,
-  type,
+  type = 'tertiary',
   loading,
   disabled,
   children,
@@ -160,27 +163,25 @@ export default function ({
   ...rest
 }: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   const showContent = !loadingOverflow || !loading
+  const available = !loading && !disabled
 
   return (
     <button
       className={button({
         fullWidth,
+        available,
         center,
         type,
-        loading,
-        disabled,
         small,
       })}
-      disabled={loading || disabled}
+      disabled={available}
       {...rest}
     >
       {loading && <Loading small={small} />}
       {showContent && (
         <>
           {typeof children === 'string' && gradientFont ? (
-            <span className={textGradient({ type, loading, disabled })}>
-              {children}
-            </span>
+            <span className={textGradient(available)}>{children}</span>
           ) : (
             <div>{children}</div>
           )}
