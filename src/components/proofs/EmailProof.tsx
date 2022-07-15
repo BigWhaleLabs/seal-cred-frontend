@@ -47,7 +47,8 @@ const getStartedText = (open: boolean) =>
     lineHeight('leading-5'),
     fontSize('text-sm'),
     opacity(open ? 'opacity-0' : 'opacity-100'),
-    visibility(open ? 'invisible' : 'visible')
+    visibility(open ? 'invisible' : 'visible'),
+    transitionDuration('duration-300')
   )
 
 const emailTitleContainer = classnames(
