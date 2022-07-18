@@ -32,7 +32,7 @@ class ContractsStore extends PersistableStore {
   }
 
   replacer = (key: string, value: unknown) => {
-    const disallowList = ['addressToTokenIds', 'connectedAccounts']
+    const disallowList = ['addressToTokenIds']
     return disallowList.includes(key) ? undefined : value
   }
 
@@ -58,6 +58,15 @@ class ContractsStore extends PersistableStore {
       this.connectedAccounts[WalletStore.account] = new ContractSynchronizer(
         WalletStore.account
       )
+
+    if (
+      !this.addressToTokenIds &&
+      this.connectedAccounts[WalletStore.account].mapAddressToTokenIds
+    ) {
+      this.addressToTokenIds = Promise.resolve(
+        this.connectedAccounts[WalletStore.account].mapAddressToTokenIds
+      )
+    }
 
     if (!this.addressToTokenIds || accountChange) {
       this.addressToTokenIds = this.connectedAccounts[

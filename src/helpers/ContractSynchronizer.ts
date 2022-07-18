@@ -9,39 +9,39 @@ import getOwnedERC721, {
 export interface ContractSynchronizerSchema {
   account: string
   synchronizedBlockId: number
-  addressToTokenIds: { [address: string]: string[] }
+  mapAddressToTokenIds: { [address: string]: string[] }
 }
 
 export default class ContractSynchronizer {
   account: string
   locked = false
   synchronizedBlockId?: number
-  addressToTokenIds?: { [address: string]: string[] }
+  mapAddressToTokenIds?: { [address: string]: string[] }
 
   skipTransactions = new Set<string>()
 
   constructor(
     account: string,
-    addressToTokenIds?: { [address: string]: string[] },
+    mapAddressToTokenIds?: { [address: string]: string[] },
     synchronizedBlockId?: number
   ) {
     this.account = account
     this.synchronizedBlockId = synchronizedBlockId
-    this.addressToTokenIds = addressToTokenIds
+    this.mapAddressToTokenIds = mapAddressToTokenIds
   }
 
   static fromJSON({
     account,
     synchronizedBlockId,
-    addressToTokenIds,
+    mapAddressToTokenIds,
   }: {
     account: string
     synchronizedBlockId: number
-    addressToTokenIds: { [address: string]: string[] }
+    mapAddressToTokenIds: { [address: string]: string[] }
   }) {
     return new ContractSynchronizer(
       account,
-      addressToTokenIds,
+      mapAddressToTokenIds,
       synchronizedBlockId
     )
   }
@@ -50,7 +50,7 @@ export default class ContractSynchronizer {
     return {
       account: this.account,
       synchronizedBlockId: this.synchronizedBlockId,
-      addressToTokenIds: this.addressToTokenIds,
+      mapAddressToTokenIds: this.mapAddressToTokenIds,
     }
   }
 
@@ -63,16 +63,17 @@ export default class ContractSynchronizer {
         args: { tokenId },
       } = parseLogData({ data, topics })
 
-      if (!this.addressToTokenIds) this.addressToTokenIds = {}
-      if (!this.addressToTokenIds[address]) this.addressToTokenIds[address] = []
+      if (!this.mapAddressToTokenIds) this.mapAddressToTokenIds = {}
+      if (!this.mapAddressToTokenIds[address])
+        this.mapAddressToTokenIds[address] = []
 
       const value = tokenId.toString()
       minted.push({
         address,
         tokenId,
       })
-      if (!this.addressToTokenIds[address].includes(value))
-        this.addressToTokenIds[address].push(value)
+      if (!this.mapAddressToTokenIds[address].includes(value))
+        this.mapAddressToTokenIds[address].push(value)
       this.skipTransactions.add(transactionHash)
     }
     return minted
@@ -81,13 +82,13 @@ export default class ContractSynchronizer {
   async syncAddressToTokenIds(blockId: number, network: Network) {
     if (!this.locked && blockId !== this.synchronizedBlockId) {
       this.locked = true
-      this.addressToTokenIds = await getOwnedERC721(
+      this.mapAddressToTokenIds = await getOwnedERC721(
         this.account,
         typeof this.synchronizedBlockId !== 'undefined'
           ? this.synchronizedBlockId + 1
           : 0,
         blockId,
-        this.addressToTokenIds || {},
+        { ...this.mapAddressToTokenIds },
         this.skipTransactions,
         network
       )
@@ -96,6 +97,6 @@ export default class ContractSynchronizer {
       this.locked = false
     }
 
-    return this.addressToTokenIds
+    return this.mapAddressToTokenIds
   }
 }
