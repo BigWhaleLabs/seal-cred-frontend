@@ -10,6 +10,7 @@ import ExternalLink from 'components/ExternalLink'
 import Line from 'components/proofs/Line'
 import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
+import ToolTip from 'components/ToolTip'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
@@ -64,12 +65,18 @@ function useProofContent(
     return {
       color: 'text-accent',
       content: (
-        <span className={textWithIcon}>
-          <span>Generating...</span>
-          <div className={animation('animate-spin')}>
-            <Star />
-          </div>
-        </span>
+        <ToolTip
+          fitContainer
+          position="top"
+          text="Proof generation is a power-hungry process, so don’t sweat if it gets stuck. Your proof will generate if given time."
+        >
+          <span className={textWithIcon}>
+            <span>Generating...</span>
+            <div className={animation('animate-spin')}>
+              <Star />
+            </div>
+          </span>
+        </ToolTip>
       ),
     }
 
