@@ -6,7 +6,7 @@ import Footer from 'components/Footer'
 import LazyComponent from 'components/LazyComponent'
 import Navbar from 'components/navbar/Navbar'
 import Root from 'components/Root'
-import classnames, { overflow, space } from 'classnames/tailwind'
+import classnames, { space } from 'classnames/tailwind'
 
 const NotFound = lazy(() => import('pages/NotFound'))
 const OwnedBadge = lazy(() => import('pages/OwnedBadge'))
