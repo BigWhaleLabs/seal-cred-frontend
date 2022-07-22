@@ -51,11 +51,10 @@ export default function () {
   const onScroll = useCallback(() => {
     setBackgroundVisible(window.scrollY > 20)
   }, [])
-  const throttledScroll = useThrottle(onScroll, 20)
   useMemo(() => {
-    window.addEventListener('scroll', throttledScroll, { passive: true })
-    return () => window.removeEventListener('scroll', throttledScroll)
-  }, [throttledScroll])
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [onScroll])
 
   return (
     <nav className={navbar(backgroundVisible, withoutWallet)}>
