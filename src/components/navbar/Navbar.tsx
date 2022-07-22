@@ -18,7 +18,6 @@ import classnames, {
   transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
-import useThrottle from 'hooks/useThrottle'
 
 const navbar = (visible?: boolean, withoutWallet?: boolean) =>
   classnames(
