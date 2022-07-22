@@ -169,9 +169,10 @@ export function LogoSubText({ children }: ChildrenProp) {
 }
 
 const badgeText = (small?: boolean) =>
-  classnames(
+  classNamesToString(
     textColor('text-formal-accent'),
-    fontSize(small ? 'text-sm' : undefined)
+    fontSize(small ? 'text-sm' : undefined),
+    'hyphensAuto'
   )
 export function BadgeText({
   small,
