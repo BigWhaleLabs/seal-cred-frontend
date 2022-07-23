@@ -33,6 +33,9 @@ body {
 
 /* Add hyphens to the text block */
 .hyphensAuto {
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
   hyphens: auto;
   line-height: initial;
 }
