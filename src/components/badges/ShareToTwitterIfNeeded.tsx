@@ -10,12 +10,14 @@ import classnames, {
   flexDirection,
   gridColumn,
   padding,
+  space,
 } from 'classnames/tailwind'
 import shareToTwitter from 'helpers/shareToTwitter'
 
 const wideBlock = classnames(
   display('flex'),
   flexDirection('flex-row'),
+  space('space-x-2'),
   alignItems('items-center'),
   borderRadius('rounded-2xl'),
   backgroundColor('bg-primary-dimmed'),
@@ -43,6 +45,7 @@ export default function () {
           WalletStore.firstBadge.twitted = true
           shareToTwitter({
             text: 'Create zero knowledge proof and build your pseudonymous wallet with SealCred 🦭 sealcred.xyz',
+            hashtags: ['zk', 'zkWallet', 'Eth'],
           })
         }}
         textMaxWidth

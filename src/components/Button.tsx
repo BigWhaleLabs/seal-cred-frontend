@@ -185,7 +185,9 @@ export default function ({
           {typeof children === 'string' && gradientFont ? (
             <span className={textGradient(available)}>{children}</span>
           ) : (
-            <div className={width({ 'w-max': textMaxWidth })}>{children}</div>
+            <div className={width({ 'tiny:w-max': textMaxWidth })}>
+              {children}
+            </div>
           )}
           {withArrow && (
             <div className={width('w-4')}>
