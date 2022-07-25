@@ -3,7 +3,6 @@ import BadgeCard from 'components/badges/BadgeCard'
 import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import Complete from 'icons/Complete'
-import ConfettiIfNeeded from 'components/badges/ConfettiIfNeeded'
 import QRCode from 'components/QRCode'
 import classnames, {
   alignItems,
@@ -48,7 +47,6 @@ function Badge({
             Minted
           </AccentText>
           <Complete />
-          <ConfettiIfNeeded />
         </div>
       }
     />

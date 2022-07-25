@@ -3,6 +3,7 @@ import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgeSection from 'components/badges/BadgeSection'
+import ConfettiIfNeeded from 'components/badges/ConfettiIfNeeded'
 import DoxNotification from 'components/badges/DoxNotification'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
@@ -54,33 +55,37 @@ function BadgeListSuspended() {
   ) : isEmpty ? (
     <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
   ) : (
-    <Scrollbar>
-      <div className={space('space-y-2')}>
-        <BadgeSection
-          title="Mainnet NFT derivatives"
-          minted={ownedExternalERC721DerivativeContracts}
-          proofs={proofsAvailableToMint.filter(
-            (proof) =>
-              proof instanceof ERC721Proof && proof.network === Network.Mainnet
-          )}
-        />
-        <BadgeSection
-          title="Goerli NFT derivatives"
-          minted={ownedERC721DerivativeContracts}
-          proofs={proofsAvailableToMint.filter(
-            (proof) =>
-              proof instanceof ERC721Proof && proof.network === Network.Goerli
-          )}
-        />
-        <BadgeSection
-          title="Email derivatives"
-          minted={ownedEmailDerivativeContracts}
-          proofs={proofsAvailableToMint.filter(
-            (proof) => proof instanceof EmailProof
-          )}
-        />
-      </div>
-    </Scrollbar>
+    <>
+      <ConfettiIfNeeded />
+      <Scrollbar>
+        <div className={space('space-y-2')}>
+          <BadgeSection
+            title="Mainnet NFT derivatives"
+            minted={ownedExternalERC721DerivativeContracts}
+            proofs={proofsAvailableToMint.filter(
+              (proof) =>
+                proof instanceof ERC721Proof &&
+                proof.network === Network.Mainnet
+            )}
+          />
+          <BadgeSection
+            title="Goerli NFT derivatives"
+            minted={ownedERC721DerivativeContracts}
+            proofs={proofsAvailableToMint.filter(
+              (proof) =>
+                proof instanceof ERC721Proof && proof.network === Network.Goerli
+            )}
+          />
+          <BadgeSection
+            title="Email derivatives"
+            minted={ownedEmailDerivativeContracts}
+            proofs={proofsAvailableToMint.filter(
+              (proof) => proof instanceof EmailProof
+            )}
+          />
+        </div>
+      </Scrollbar>
+    </>
   )
 }
 

@@ -1,10 +1,15 @@
 import { useEffect, useRef } from 'preact/hooks'
 import { useSnapshot } from 'valtio'
-import classnames, { inset, position } from 'classnames/tailwind'
+import classnames, { height, inset, position, width } from 'classnames/tailwind'
 import confetti from 'canvas-confetti'
 import walletStore from 'stores/WalletStore'
 
-const confettiCanvas = classnames(position('absolute'), inset('bottom-0'))
+const confettiCanvas = classnames(
+  position('absolute'),
+  inset('top-0', 'left-0'),
+  width('w-full'),
+  height('h-full')
+)
 
 export default function () {
   const { firstBadge } = useSnapshot(walletStore)
@@ -26,8 +31,6 @@ export default function () {
   return shouldDisplay ? (
     <canvas
       ref={canvasRef}
-      height="500"
-      width="700"
       className={confettiCanvas}
       disabled={shouldDisplay}
     />
