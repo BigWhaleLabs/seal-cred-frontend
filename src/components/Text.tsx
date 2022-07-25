@@ -223,29 +223,26 @@ export function LinkText({
       href={url}
       title={title}
       target={targetBlank ? '_blank' : '_self'}
+      rel="noopener noreferrer"
     >
       {children}
     </a>
   )
 }
 
-const socialLink = (tertiary?: boolean) =>
-  classnames(
-    lineHeight('leading-6'),
-    fontSize('text-base'),
-    textDecoration('no-underline', 'active:underline'),
-    textColor(tertiary ? 'active:text-tertiary' : 'text-formal-accent')
-  )
-export function SocialLink({
-  url,
-  tertiary,
-  children,
-}: ChildrenProp & { url: string; tertiary?: boolean }) {
+const socialLink = classnames(
+  lineHeight('leading-6'),
+  fontSize('text-base'),
+  textDecoration('no-underline', 'active:underline'),
+  textColor('active:text-tertiary', 'text-formal-accent')
+)
+export function SocialLink({ url, children }: ChildrenProp & { url: string }) {
   return (
     <a
-      className={classNamesToString(socialLink(tertiary), 'hover-tertiary')}
+      className={classNamesToString(socialLink, 'hover-tertiary')}
       href={url}
       target="_blank"
+      rel="noopener noreferrer"
     >
       {children}
     </a>

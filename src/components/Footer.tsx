@@ -48,10 +48,10 @@ export default function () {
           </BodyText>
         </div>
         <div className={socialContainer}>
-          <SocialLink tertiary url="https://discord.gg/NHk96pPZUV">
+          <SocialLink url="https://discord.gg/NHk96pPZUV">
             <Discord />
           </SocialLink>
-          <SocialLink tertiary url="https://twitter.com/bigwhalelabs">
+          <SocialLink url="https://twitter.com/bigwhalelabs">
             <Twitter />
           </SocialLink>
         </div>

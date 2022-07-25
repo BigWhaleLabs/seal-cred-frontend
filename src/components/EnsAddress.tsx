@@ -13,7 +13,8 @@ interface EnsAddressProps {
 function EnsAddressSuspended({
   address,
   truncate,
-}: EnsAddressProps & { truncate?: boolean }) {
+  truncateSize,
+}: EnsAddressProps & { truncate?: boolean; truncateSize: number }) {
   const { ensNames } = useSnapshot(GoerliEnsStore)
   const ensName = ensNames[address]
   if (!ensName) GoerliEnsStore.fetchEnsName(address)
@@ -21,19 +22,24 @@ function EnsAddressSuspended({
   return (
     <>
       {truncate
-        ? truncateMiddleIfNeeded(ensName || address, 17)
-        : ensName || truncateMiddleIfNeeded(address, 25)}
+        ? truncateMiddleIfNeeded(ensName || address, truncateSize)
+        : ensName || truncateMiddleIfNeeded(address, truncateSize)}
     </>
   )
 }
 
 export default memo<EnsAddressProps>(({ address, network }) => {
-  const { lg } = useBreakpoints()
+  const { md, lg } = useBreakpoints()
+  const truncateSize = md ? (lg ? 25 : 17) : 11
+
   return (
-    <Suspense
-      fallback={<>{!lg ? truncateMiddleIfNeeded(address, 17) : address}</>}
-    >
-      <EnsAddressSuspended address={address} truncate={!lg} network={network} />
+    <Suspense fallback={truncateMiddleIfNeeded(address, truncateSize)}>
+      <EnsAddressSuspended
+        address={address}
+        truncateSize={truncateSize}
+        truncate={!lg}
+        network={network}
+      />
     </Suspense>
   )
 })
