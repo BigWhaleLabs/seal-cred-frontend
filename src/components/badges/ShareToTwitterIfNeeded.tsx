@@ -1,7 +1,7 @@
 import { BodyText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
-import WalletStore from 'stores/WalletStore'
+import NotificationsStore from 'stores/NotificationsStore'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -26,13 +26,9 @@ const wideBlock = classnames(
 )
 
 export default function () {
-  const { firstBadge } = useSnapshot(WalletStore)
+  const { shareToTwitterClosed } = useSnapshot(NotificationsStore)
 
-  const showShareToTwitter = firstBadge.minted && !firstBadge.twitted
-
-  if (!showShareToTwitter) return null
-
-  setTimeout(() => (WalletStore.firstBadge.notified = true), 2000)
+  if (shareToTwitterClosed) return null
 
   return (
     <div className={wideBlock}>
@@ -42,7 +38,7 @@ export default function () {
       <Button
         type="secondary"
         onClick={() => {
-          WalletStore.firstBadge.twitted = true
+          NotificationsStore.shareToTwitterClosed = true
           shareToTwitter({
             text: 'Create zero knowledge proof and build your pseudonymous wallet with SealCred 🦭 sealcred.xyz',
             hashtags: ['zk', 'zkWallet', 'Eth'],

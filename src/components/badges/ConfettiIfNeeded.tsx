@@ -1,5 +1,8 @@
+import { GoerliContractsStore } from 'stores/ContractsStore'
 import { useEffect, useRef } from 'preact/hooks'
 import { useSnapshot } from 'valtio'
+import NotificationsStore from 'stores/NotificationsStore'
+import SealCredStore from 'stores/SealCredStore'
 import classnames, {
   height,
   inset,
@@ -9,7 +12,7 @@ import classnames, {
   zIndex,
 } from 'classnames/tailwind'
 import confetti from 'canvas-confetti'
-import walletStore from 'stores/WalletStore'
+import useContractsOwned from 'hooks/useContractsOwned'
 
 const confettiCanvas = classnames(
   position('absolute'),
@@ -21,23 +24,49 @@ const confettiCanvas = classnames(
 )
 
 export default function () {
-  const { firstBadge } = useSnapshot(walletStore)
+  const { shareToTwitterClosed } = useSnapshot(NotificationsStore)
+
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const {
+    emailDerivativeContracts = [],
+    ERC721derivativeContracts = [],
+    externalERC721derivativeContracts = [],
+  } = useSnapshot(SealCredStore)
+
+  const contractsOwned = useContractsOwned(GoerliContractsStore)
+
+  const ownedEmailDerivativeContracts = emailDerivativeContracts.filter(
+    (contractAddress) => contractsOwned.includes(contractAddress)
+  )
+
+  const ownedExternalERC721DerivativeContracts =
+    externalERC721derivativeContracts.filter((contractAddress) =>
+      contractsOwned.includes(contractAddress)
+    )
+  const ownedERC721DerivativeContracts = ERC721derivativeContracts.filter(
+    (contractAddress) => contractsOwned.includes(contractAddress)
+  )
+
+  const totalMinted =
+    ownedExternalERC721DerivativeContracts.length +
+    ownedEmailDerivativeContracts.length +
+    ownedERC721DerivativeContracts.length
+
+  const userMintedOne = totalMinted > 0 && totalMinted < 2
+
+  const shouldDisplay = userMintedOne && !shareToTwitterClosed
 
   useEffect(() => {
-    if (!canvasRef.current) return
-    const mintConfetti = confetti.create(canvasRef.current, { resize: true })
+    if (!canvasRef.current || !shouldDisplay) return
 
+    const mintConfetti = confetti.create(canvasRef.current, { resize: true })
     void mintConfetti({
       spread: 80,
       decay: 0.8,
       particleCount: 150,
       colors: ['#fed823', '#ff7bed', '#15a1fc', '#01feb6'],
     })
-  }, [canvasRef, firstBadge])
-
-  const shouldDisplay =
-    firstBadge.minted && !firstBadge.notified && !firstBadge.twitted
+  }, [canvasRef, shouldDisplay])
 
   return shouldDisplay ? (
     <canvas

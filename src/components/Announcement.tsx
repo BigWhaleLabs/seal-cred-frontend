@@ -4,7 +4,7 @@ import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Button from 'components/proofs/Button'
 import Cross from 'icons/Cross'
-import announcementStore from 'stores/AnnouncementStore'
+import NotificationsStore from 'stores/NotificationsStore'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -43,7 +43,7 @@ const crossWrapper = classnames(
 
 export default function ({ redirectTo }: { redirectTo: string }) {
   const { account } = useSnapshot(walletStore)
-  const { announcementClosed } = useSnapshot(announcementStore)
+  const { announcementClosed } = useSnapshot(NotificationsStore)
   const [animate, setAnimate] = useState(false)
   const location = useLocation()
 
@@ -67,7 +67,7 @@ export default function ({ redirectTo }: { redirectTo: string }) {
         <Button
           onClick={() => {
             setTimeout(() => {
-              announcementStore.announcementClosed = true
+              NotificationsStore.announcementClosed = true
             }, 75)
             setAnimate(true)
           }}

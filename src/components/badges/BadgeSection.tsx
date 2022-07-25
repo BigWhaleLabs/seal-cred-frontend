@@ -5,7 +5,6 @@ import BaseProof from 'helpers/BaseProof'
 import ChildrenProp from 'models/ChildrenProp'
 import Section from 'components/Section'
 import ShareToTwitterIfNeeded from 'components/badges/ShareToTwitterIfNeeded'
-import WalletStore from 'stores/WalletStore'
 import classnames, {
   display,
   gap,
@@ -42,11 +41,7 @@ export default function ({
         ))}
         <ShareToTwitterIfNeeded />
         {proofs.map((proof) => (
-          <BadgeBlock
-            onMinted={() => (WalletStore.firstBadge.minted = true)}
-            key={proof.key}
-            proof={proof}
-          />
+          <BadgeBlock key={proof.key} proof={proof} />
         ))}
       </div>
     </Section>
