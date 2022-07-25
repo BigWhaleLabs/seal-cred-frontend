@@ -9,7 +9,6 @@ import classnames, {
   display,
   flexWrap,
   minWidth,
-  padding,
   wordBreak,
 } from 'classnames/tailwind'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
@@ -18,8 +17,7 @@ const addressText = wordBreak('break-all')
 const badgeNameWrapper = classnames(
   minWidth('min-w-fit'),
   display('inline-flex'),
-  flexWrap('flex-wrap'),
-  padding('pr-2')
+  flexWrap('flex-wrap')
 )
 
 interface ContractNameProps {
