@@ -30,6 +30,8 @@ export default function () {
 
   if (!showShareToTwitter) return null
 
+  setTimeout(() => (WalletStore.firstBadge.notified = true), 2000)
+
   return (
     <div className={wideBlock}>
       <BodyText bold fontPrimary>

@@ -3,12 +3,14 @@ import BadgeCard from 'components/badges/BadgeCard'
 import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import Complete from 'icons/Complete'
+import ConfettiIfNeeded from 'components/badges/ConfettiIfNeeded'
 import QRCode from 'components/QRCode'
 import classnames, {
   alignItems,
   display,
   flexDirection,
   justifyContent,
+  position,
   space,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
@@ -16,6 +18,7 @@ import useBreakpoints from 'hooks/useBreakpoints'
 const mintPassed = (small?: boolean) =>
   classnames(
     display('flex'),
+    position('relative'),
     flexDirection('flex-row'),
     justifyContent(
       small ? 'justify-start' : 'justify-center',
@@ -45,6 +48,7 @@ function Badge({
             Minted
           </AccentText>
           <Complete />
+          <ConfettiIfNeeded />
         </div>
       }
     />

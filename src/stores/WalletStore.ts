@@ -21,7 +21,7 @@ class WalletStore extends PersistableStore {
   walletsToNotifiedOfBeingDoxxed = {} as {
     [address: string]: boolean
   }
-  firstBadge = { minted: false, twitted: false }
+  firstBadge = { minted: false, notified: false, twitted: false }
 
   replacer = (key: string, value: unknown) => {
     const disallowList = ['account', 'walletLoading']
