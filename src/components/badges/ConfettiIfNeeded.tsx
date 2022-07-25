@@ -36,7 +36,8 @@ export default function () {
     })
   }, [canvasRef, firstBadge])
 
-  const shouldDisplay = firstBadge.minted && !firstBadge.notified
+  const shouldDisplay =
+    firstBadge.minted && !firstBadge.notified && !firstBadge.twitted
 
   return shouldDisplay ? (
     <canvas
