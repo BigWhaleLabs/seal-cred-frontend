@@ -13,8 +13,8 @@ import walletStore from 'stores/WalletStore'
 
 const confettiCanvas = classnames(
   position('absolute'),
-  inset('top-0', 'left-0'),
-  width('w-full'),
+  inset('lg:-left-32', 'left-0'),
+  width('lg:w-full-125', 'w-full'),
   height('h-full'),
   zIndex('z-50'),
   pointerEvents('pointer-events-none')
@@ -29,7 +29,7 @@ export default function () {
     const mintConfetti = confetti.create(canvasRef.current, { resize: true })
 
     void mintConfetti({
-      spread: 120,
+      spread: 80,
       decay: 0.8,
       particleCount: 150,
       colors: ['#fed823', '#ff7bed', '#15a1fc', '#01feb6'],

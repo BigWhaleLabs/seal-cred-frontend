@@ -7201,6 +7201,13 @@ export type TInset =
   | '-right-40'
   | '-bottom-40'
   | '-left-40'
+  | '-inset-32'
+  | '-inset-x-32'
+  | '-inset-y-32'
+  | '-top-32'
+  | '-right-32'
+  | '-bottom-32'
+  | '-left-32'
   | '-inset-28'
   | '-inset-x-28'
   | '-inset-y-28'
@@ -7378,6 +7385,7 @@ export type TWidth =
   | 'w-thin-card'
   | 'w-card'
   | 'w-mobile-card'
+  | 'w-full-125'
   | 'w-small'
 
 export type TMinWidth =
