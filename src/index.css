@@ -36,6 +36,9 @@ body {
   hyphens: auto;
   line-height: initial;
 }
+.hyphensAuto > span + span {
+  padding-left: 6px;
+}
 /* Grid for mobiles */
 @media screen and (max-width: 600px) {
   body {
