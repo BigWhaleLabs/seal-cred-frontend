@@ -17,7 +17,7 @@ const wideBlock = classnames(
   display('flex'),
   flexDirection('flex-row'),
   alignItems('items-center'),
-  borderRadius('rounded-lg'),
+  borderRadius('rounded-2xl'),
   backgroundColor('bg-primary-dimmed'),
   padding('lg:px-6', 'px-4', 'py-4'),
   gridColumn('lg:col-span-2', 'col-span-1')
