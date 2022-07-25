@@ -1,6 +1,12 @@
 import { useEffect, useRef } from 'preact/hooks'
 import { useSnapshot } from 'valtio'
-import classnames, { height, inset, position, width } from 'classnames/tailwind'
+import classnames, {
+  height,
+  inset,
+  position,
+  width,
+  zIndex,
+} from 'classnames/tailwind'
 import confetti from 'canvas-confetti'
 import walletStore from 'stores/WalletStore'
 
@@ -8,7 +14,8 @@ const confettiCanvas = classnames(
   position('absolute'),
   inset('top-0', 'left-0'),
   width('w-full'),
-  height('h-full')
+  height('h-full'),
+  zIndex('z-50')
 )
 
 export default function () {
