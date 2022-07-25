@@ -137,6 +137,7 @@ const textGradient = (available?: boolean) =>
 
 interface ButtonProps {
   fullWidth?: boolean
+  textMaxWidth?: boolean
   center?: boolean
   type: ButtonType
   disabled?: boolean
@@ -151,6 +152,7 @@ type ButtonType = 'primary' | 'secondary' | 'tertiary'
 
 export default function ({
   fullWidth,
+  textMaxWidth,
   center,
   small,
   withArrow,
@@ -183,7 +185,7 @@ export default function ({
           {typeof children === 'string' && gradientFont ? (
             <span className={textGradient(available)}>{children}</span>
           ) : (
-            <div>{children}</div>
+            <div className={width({ 'w-max': textMaxWidth })}>{children}</div>
           )}
           {withArrow && (
             <div className={width('w-4')}>
