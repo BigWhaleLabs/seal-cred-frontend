@@ -35,8 +35,7 @@ const accountLinkContainer = classnames(
 )
 const walletAccount = classnames(
   textAlign('text-right'),
-  lineHeight('leading-5'),
-  display('sm:flex', 'hidden')
+  lineHeight('leading-5')
 )
 const socialContainer = classnames(
   display('inline-flex'),
@@ -72,18 +71,14 @@ export default function () {
       <div
         className={accountLinkContainer}
         onClick={async () => {
-          if (account) {
-            const newWindow = window.open(
-              getEtherscanAddressUrl(account, Network.Goerli),
-              '_blank'
-            )
-            if (newWindow) {
-              newWindow.focus()
-              newWindow.opener = null
-            }
-            return
-          }
-          await WalletStore.connect(true)
+          if (!account) return await WalletStore.connect(true)
+          const newWindow = window.open(
+            getEtherscanAddressUrl(account, Network.Goerli),
+            '_blank'
+          )
+          if (!newWindow) return
+          newWindow.focus()
+          newWindow.opener = null
         }}
       >
         <div className={walletAccount}>
