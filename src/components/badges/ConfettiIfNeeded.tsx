@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio'
 import classnames, {
   height,
   inset,
+  pointerEvents,
   position,
   width,
   zIndex,
@@ -15,7 +16,8 @@ const confettiCanvas = classnames(
   inset('top-0', 'left-0'),
   width('w-full'),
   height('h-full'),
-  zIndex('z-50')
+  zIndex('z-50'),
+  pointerEvents('pointer-events-none')
 )
 
 export default function () {
@@ -27,8 +29,9 @@ export default function () {
     const mintConfetti = confetti.create(canvasRef.current, { resize: true })
 
     void mintConfetti({
-      spread: 80,
+      spread: 120,
       decay: 0.8,
+      particleCount: 150,
       colors: ['#fed823', '#ff7bed', '#15a1fc', '#01feb6'],
     })
   }, [canvasRef, firstBadge])
