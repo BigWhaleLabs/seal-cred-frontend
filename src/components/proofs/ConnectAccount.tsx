@@ -8,6 +8,7 @@ import classnames, {
   flexDirection,
   height,
   justifyContent,
+  margin,
   space,
   width,
 } from 'classnames/tailwind'
@@ -17,7 +18,8 @@ const walletContainer = classnames(
   flexDirection('flex-col'),
   alignItems('items-center'),
   justifyContent('justify-center'),
-  height('h-full')
+  height('h-full'),
+  margin('my-auto')
 )
 
 const contentWrapper = classnames(
