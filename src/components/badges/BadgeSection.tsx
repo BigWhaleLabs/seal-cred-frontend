@@ -3,6 +3,7 @@ import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
 import BaseProof from 'helpers/BaseProof'
 import ChildrenProp from 'models/ChildrenProp'
+import NotificationsStore from 'stores/NotificationsStore'
 import Section from 'components/Section'
 import ShareToTwitterIfNeeded from 'components/badges/ShareToTwitterIfNeeded'
 import classnames, {
@@ -41,7 +42,11 @@ export default function ({
         ))}
         <ShareToTwitterIfNeeded />
         {proofs.map((proof) => (
-          <BadgeBlock key={proof.key} proof={proof} />
+          <BadgeBlock
+            onMinted={() => (NotificationsStore.shareToTwitterClosed = false)}
+            key={proof.key}
+            proof={proof}
+          />
         ))}
       </div>
     </Section>
