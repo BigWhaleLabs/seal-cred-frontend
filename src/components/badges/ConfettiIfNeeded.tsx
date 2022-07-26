@@ -27,32 +27,15 @@ export default function () {
   const { shareToTwitterClosed } = useSnapshot(NotificationsStore)
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const {
-    emailDerivativeContracts = [],
-    ERC721derivativeContracts = [],
-    externalERC721derivativeContracts = [],
-  } = useSnapshot(SealCredStore)
+  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
 
-  const contractsOwned = useContractsOwned(GoerliContractsStore)
+  const supportedContracts = useContractsOwned(GoerliContractsStore)
 
-  const ownedEmailDerivativeContracts = emailDerivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
-  )
+  const totalOwnedDerivatives = derivativeContracts.filter((contractAddress) =>
+    supportedContracts.includes(contractAddress)
+  ).length
 
-  const ownedExternalERC721DerivativeContracts =
-    externalERC721derivativeContracts.filter((contractAddress) =>
-      contractsOwned.includes(contractAddress)
-    )
-  const ownedERC721DerivativeContracts = ERC721derivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
-  )
-
-  const totalMinted =
-    ownedExternalERC721DerivativeContracts.length +
-    ownedEmailDerivativeContracts.length +
-    ownedERC721DerivativeContracts.length
-
-  const userMintedOne = totalMinted > 0 && totalMinted < 2
+  const userMintedOne = totalOwnedDerivatives > 0 && totalOwnedDerivatives < 2
 
   const shouldDisplay = userMintedOne && !shareToTwitterClosed
 
@@ -68,11 +51,13 @@ export default function () {
     })
   }, [canvasRef, shouldDisplay])
 
-  return shouldDisplay ? (
+  if (!shouldDisplay) return null
+
+  return (
     <canvas
       ref={canvasRef}
       className={confettiCanvas}
       disabled={shouldDisplay}
     />
-  ) : null
+  )
 }
