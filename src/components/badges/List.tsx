@@ -9,8 +9,10 @@ import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
 import Network from 'models/Network'
+import NotificationsStore from 'stores/NotificationsStore'
 import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
+import ShareToTwitterIfNeeded from 'components/badges/ShareToTwitterIfNeeded'
 import proofStore from 'stores/ProofStore'
 import useContractsOwned from 'hooks/useContractsOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
@@ -39,16 +41,23 @@ function BadgeListSuspended() {
   )
 
   const proofsAvailableToMint = useProofsAvailableToMint()
-  const isEmpty =
-    !ownedExternalERC721DerivativeContracts.length &&
-    !ownedEmailDerivativeContracts.length &&
-    !ownedERC721DerivativeContracts.length &&
-    !proofsAvailableToMint.length
+
+  const hasProofs = proofsAvailableToMint.length
+  const hasDerivatives =
+    ownedExternalERC721DerivativeContracts.length +
+    ownedEmailDerivativeContracts.length +
+    ownedERC721DerivativeContracts.length
+  const isEmpty = !hasProofs && !hasDerivatives
 
   const shouldNotify =
     !!account &&
     !walletsToNotifiedOfBeingDoxxed[account] &&
     proofsCompleted.length > 0
+
+  const onMinted = () => {
+    if (hasProofs && !hasDerivatives)
+      NotificationsStore.shareToTwitterClosed = false
+  }
 
   return shouldNotify ? (
     <DoxNotification account={account} />
@@ -67,6 +76,7 @@ function BadgeListSuspended() {
                 proof instanceof ERC721Proof &&
                 proof.network === Network.Mainnet
             )}
+            onMinted={onMinted}
           />
           <BadgeSection
             title="Goerli NFT derivatives"
@@ -75,6 +85,7 @@ function BadgeListSuspended() {
               (proof) =>
                 proof instanceof ERC721Proof && proof.network === Network.Goerli
             )}
+            onMinted={onMinted}
           />
           <BadgeSection
             title="Email derivatives"
@@ -82,7 +93,9 @@ function BadgeListSuspended() {
             proofs={proofsAvailableToMint.filter(
               (proof) => proof instanceof EmailProof
             )}
+            onMinted={onMinted}
           />
+          <ShareToTwitterIfNeeded />
         </div>
       </Scrollbar>
     </>

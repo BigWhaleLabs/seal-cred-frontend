@@ -3,9 +3,7 @@ import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
 import BaseProof from 'helpers/BaseProof'
 import ChildrenProp from 'models/ChildrenProp'
-import NotificationsStore from 'stores/NotificationsStore'
 import Section from 'components/Section'
-import ShareToTwitterIfNeeded from 'components/badges/ShareToTwitterIfNeeded'
 import classnames, {
   display,
   gap,
@@ -24,13 +22,14 @@ export default function ({
   title,
   minted,
   proofs,
+  onMinted,
 }: ChildrenProp & {
   title?: ComponentChildren
   minted: string[]
   proofs: BaseProof[]
+  onMinted?: () => void
 }) {
-  const zeroMinted = minted.length === 0
-  if (zeroMinted && proofs.length === 0) return null
+  if (minted.length === 0 && proofs.length === 0) return null
 
   return (
     <Section title={title}>
@@ -41,15 +40,8 @@ export default function ({
             contractAddress={contractAddress}
           />
         ))}
-        <ShareToTwitterIfNeeded />
         {proofs.map((proof) => (
-          <BadgeBlock
-            onMinted={() => {
-              if (zeroMinted) NotificationsStore.shareToTwitterClosed = false
-            }}
-            key={proof.key}
-            proof={proof}
-          />
+          <BadgeBlock onMinted={onMinted} key={proof.key} proof={proof} />
         ))}
       </div>
     </Section>
