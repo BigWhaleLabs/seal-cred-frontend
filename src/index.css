@@ -170,25 +170,6 @@ body {
   }
 }
 
-.custom-scrollbar-thumb {
-  position: absolute;
-  left: 1.5px;
-  background: #fed823;
-  width: 0.5rem;
-  border-radius: 10rem;
-  filter: drop-shadow(0rem 0rem 0.625rem #fed823);
-  z-index: 20;
-  transition: all;
-}
-.custom-scrollbar-body {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0.5rem;
-  height: 100%;
-  /* Creates background with less than thumb width */
-  background: url('/img/scrollbarBg.png');
-}
 .custom-qr-code canvas {
   max-width: 8.75rem;
 }
