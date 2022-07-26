@@ -3,6 +3,7 @@ import Button from 'components/Button'
 import Card from 'components/Card'
 import PrivacyDeath from 'components/landing/PrivacyDeath'
 import classnames, { margin } from 'classnames/tailwind'
+import openNewTabAndFocus from 'helpers/openNewTabAndFocus'
 
 const bigWhaleLabsText = classnames(margin('mt-6'))
 const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
@@ -31,9 +32,7 @@ export default function () {
             small
             withArrow
             gradientFont
-            onClick={() =>
-              window.open('https://bigwhalelabs.com/', '_blank')?.focus()
-            }
+            onClick={() => openNewTabAndFocus('https://bigwhalelabs.com/')}
           >
             Learn more about us
           </Button>

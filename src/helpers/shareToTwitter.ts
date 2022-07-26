@@ -1,3 +1,5 @@
+import openNewTabAndFocus from 'helpers/openNewTabAndFocus'
+
 export default function ({
   text,
   hashtags,
@@ -11,5 +13,5 @@ export default function ({
 
   const shareEncoded = `${twitterUrl}?text=${text}${hashtagsEncoded}`
 
-  window.open(shareEncoded, '_blank')?.focus()
+  openNewTabAndFocus(shareEncoded)
 }
