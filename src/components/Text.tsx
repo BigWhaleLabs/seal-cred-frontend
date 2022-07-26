@@ -159,6 +159,28 @@ const logoText = classnames(
 export function LogoText({ children }: ChildrenProp) {
   return <span className={logoText}>{children}</span>
 }
+
+const subheaderCardText = classnames(
+  textColor('text-formal-accent'),
+  fontFamily('font-primary'),
+  fontWeight('font-bold'),
+  fontSize('text-lg'),
+  lineHeight('leading-7')
+)
+export function SubheaderCardText({ children }: ChildrenProp) {
+  return <p className={subheaderCardText}>{children}</p>
+}
+
+const cardParagraphText = classnames(
+  textColor('text-formal-accent'),
+  fontFamily('font-primary'),
+  fontSize('text-sm', 'sm:text-base'),
+  lineHeight('leading-6')
+)
+export function CardParagraphText({ children }: ChildrenProp) {
+  return <p className={cardParagraphText}>{children}</p>
+}
+
 const logoSubText = classnames(
   textColor('text-primary-semi-dimmed', 'selection:text-primary'),
   fontWeight('font-bold'),
