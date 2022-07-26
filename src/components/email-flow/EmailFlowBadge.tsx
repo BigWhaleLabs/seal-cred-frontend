@@ -32,7 +32,7 @@ export default function ({
       >
         Try another email
       </Button>
-      <HorizontalRule color="formal-accent" />
+      <HorizontalRule color="formal-accent-semi-transparent" />
       <BodyText center>
         Interested in confessions from verified but anonymous work emails?
       </BodyText>
