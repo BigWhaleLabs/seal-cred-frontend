@@ -6,12 +6,12 @@ import ContractName from 'components/ContractName'
 import ERC721BadgeContract from 'helpers/ERC721BadgeContract'
 import EmailBadgeContract from 'helpers/EmailBadgeContract'
 import ExternalLink from 'components/ExternalLink'
+import HorizontalRule from 'components/HorizontalRule'
 import Network from 'models/Network'
 import OwnedBadgeAddress from 'components/owned/OwnedBadgeAddress'
 import Smile from 'icons/Smile'
 import classnames, {
   alignItems,
-  borderColor,
   display,
   flexDirection,
   space,
@@ -135,7 +135,7 @@ export default function ({
     >
       <BadgeTitle badge={badge} />
       <BadgeContent badge={badge} />
-      <hr className={borderColor('border-primary-semi-dimmed')} />
+      <HorizontalRule color="primary-semi-dimmed" />
       <div className={walletBox}>
         <Smile />
         <div className={walletAddress}>

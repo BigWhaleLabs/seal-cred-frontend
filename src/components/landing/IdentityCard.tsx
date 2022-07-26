@@ -48,7 +48,7 @@ export default function ({
 }: IdentityCardProps & ChildrenProp) {
   const { xs } = useBreakpoints()
   return (
-    <Card color="formal-accent" shadow thin small onlyWrap>
+    <Card color="formal-accent" shadow thin paddingType="small" onlyWrap>
       <div className={innerId}>
         <div className={rectangleMargin(left)}>
           {left ? (

@@ -35,6 +35,7 @@ interface CardProps {
   nospace?: boolean
   useAppStyles?: boolean
   mobileSpinnerOnRight?: boolean
+  paddingType?: 'small' | 'normal'
 }
 
 const cardColor = (color?: Color) => {
@@ -82,16 +83,22 @@ const cardContainer = (
   color?: Color,
   onlyWrap = false,
   thin = false,
-  small?: boolean,
   nospace?: boolean,
-  useAppStyles?: boolean
+  useAppStyles?: boolean,
+  paddingType?: 'small' | 'normal'
 ) => {
   return classnames(
     position('relative'),
     borderRadius('rounded-2xl'),
     backgroundColor('bg-primary-dark'),
     cardColor(shadow ? color : undefined),
-    padding(small ? 'p-small' : 'p-6'),
+    padding({
+      'px-small': paddingType === 'small',
+      'py-small': paddingType === 'small',
+      'px-5': paddingType !== 'small',
+      'py-5': paddingType === 'normal',
+      'py-8': typeof paddingType === 'undefined',
+    }),
     width(
       thin ? 'sm:!w-thin-card' : 'sm:w-card',
       thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
@@ -102,7 +109,7 @@ const cardContainer = (
       onlyWrap ? undefined : 'sm:max-h-card',
       onlyWrap ? undefined : 'max-h-mobile-card'
     ),
-    space(nospace ? undefined : 'space-y-4'),
+    space(nospace ? undefined : 'space-y-6'),
     wordBreak('break-words'),
     zIndex('z-30'),
     useAppStyles ? appStyles : undefined
@@ -123,7 +130,7 @@ export default function ({
   spinner,
   thin,
   children,
-  small,
+  paddingType,
   nospace,
   useAppStyles,
   mobileSpinnerOnRight,
@@ -136,9 +143,9 @@ export default function ({
           color,
           onlyWrap,
           thin,
-          small,
           nospace,
-          useAppStyles
+          useAppStyles,
+          paddingType
         )}
       >
         {children}

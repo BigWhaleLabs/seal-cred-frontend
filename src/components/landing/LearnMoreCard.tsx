@@ -26,17 +26,11 @@ export default function () {
           </BodyText>
         </div>
         <div className={learnMoreText}>
-          <Button
-            type="tertiary"
-            small
-            withArrow
-            gradientFont
-            onClick={() =>
-              window.open('https://bigwhalelabs.com/', '_blank')?.focus()
-            }
-          >
-            Learn more about us
-          </Button>
+          <LinkText url="https://bigwhalelabs.com/">
+            <Button type="tertiary" small withArrow gradientFont>
+              Learn more about us
+            </Button>
+          </LinkText>
         </div>
       </Card>
     </div>
