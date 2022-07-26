@@ -101,7 +101,7 @@ class WalletStore extends PersistableStore {
     this.walletLoading = true
     const accounts = await provider.listAccounts()
     this.account = accounts[0]
-    NotificationsStore.shareToTwitterClosed = true
+    NotificationsStore.showTwitterShare = false
     this.walletLoading = false
   }
 
@@ -130,7 +130,7 @@ class WalletStore extends PersistableStore {
   }
 
   private clearData() {
-    NotificationsStore.shareToTwitterClosed = true
+    NotificationsStore.showTwitterShare = false
     web3Modal.clearCachedProvider()
     this.account = undefined
   }

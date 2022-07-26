@@ -21,11 +21,11 @@ const confettiCanvas = classnames(
 )
 
 export default function () {
-  const { shareToTwitterClosed } = useSnapshot(NotificationsStore)
+  const { showTwitterShare } = useSnapshot(NotificationsStore)
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  if (shareToTwitterClosed) return null
+  if (!showTwitterShare) return null
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -37,7 +37,7 @@ export default function () {
       particleCount: 150,
       colors: ['#fed823', '#ff7bed', '#15a1fc', '#01feb6'],
     })
-  }, [canvasRef, shareToTwitterClosed])
+  }, [canvasRef, showTwitterShare])
 
   return <canvas ref={canvasRef} className={confettiCanvas} />
 }

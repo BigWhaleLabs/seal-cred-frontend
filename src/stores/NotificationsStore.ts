@@ -4,11 +4,11 @@ import setBeforeUnload from 'helpers/setBeforeUnload'
 
 class NotificationsStore extends PersistableStore {
   announcementClosed = false
-  shareToTwitterClosed = true
+  showTwitterShare = false
 }
 
 const storeProxy = proxy(new NotificationsStore()).makePersistent(true)
 
-setBeforeUnload(() => (storeProxy.shareToTwitterClosed = true))
+setBeforeUnload(() => (storeProxy.showTwitterShare = false))
 
 export default storeProxy

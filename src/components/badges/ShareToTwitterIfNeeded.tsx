@@ -26,9 +26,9 @@ const wideBlock = classnames(
 )
 
 export default function () {
-  const { shareToTwitterClosed } = useSnapshot(NotificationsStore)
+  const { showTwitterShare } = useSnapshot(NotificationsStore)
 
-  if (shareToTwitterClosed) return null
+  if (!showTwitterShare) return null
 
   return (
     <div className={wideBlock}>
@@ -38,7 +38,7 @@ export default function () {
       <Button
         type="secondary"
         onClick={() => {
-          NotificationsStore.shareToTwitterClosed = true
+          NotificationsStore.showTwitterShare = false
           shareToTwitter({
             text: 'Create zero knowledge proof and build your pseudonymous wallet with SealCred 🦭 sealcred.xyz',
             hashtags: ['zk', 'zkWallet', 'Eth'],

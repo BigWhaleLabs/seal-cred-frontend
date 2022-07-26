@@ -55,8 +55,7 @@ function BadgeListSuspended() {
     proofsCompleted.length > 0
 
   const onMinted = () => {
-    if (hasProofs && !hasDerivatives)
-      NotificationsStore.shareToTwitterClosed = false
+    if (hasProofs && !hasDerivatives) NotificationsStore.showTwitterShare = true
   }
 
   return shouldNotify ? (
