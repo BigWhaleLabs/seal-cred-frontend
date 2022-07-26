@@ -35,12 +35,11 @@ function Badge({
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
       const transaction = await WalletStore.mintDerivative(proof)
-      const mintedBadge =
-        GoerliContractsStore.connectedAccounts[account].applyTransaction(
-          transaction
-        )
+      if (onMinted) onMinted()
+      GoerliContractsStore.connectedAccounts[account].applyTransaction(
+        transaction
+      )
       ProofStore.deleteProof(proof)
-      if (onMinted) onMinted(mintedBadge)
     } catch (error) {
       if (
         proof &&

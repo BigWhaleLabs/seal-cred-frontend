@@ -29,7 +29,8 @@ export default function ({
   minted: string[]
   proofs: BaseProof[]
 }) {
-  if (minted.length === 0 && proofs.length === 0) return null
+  const zeroMinted = minted.length === 0
+  if (zeroMinted && proofs.length === 0) return null
 
   return (
     <Section title={title}>
@@ -43,7 +44,9 @@ export default function ({
         <ShareToTwitterIfNeeded />
         {proofs.map((proof) => (
           <BadgeBlock
-            onMinted={() => (NotificationsStore.shareToTwitterClosed = false)}
+            onMinted={() => {
+              if (zeroMinted) NotificationsStore.shareToTwitterClosed = false
+            }}
             key={proof.key}
             proof={proof}
           />
