@@ -1,6 +1,6 @@
 import { proxy } from 'valtio'
 import PersistableStore from 'stores/persistence/PersistableStore'
-import useBeforeUnload from 'hooks/useBeforeUnload'
+import setBeforeUnload from 'helpers/setBeforeUnload'
 
 class NotificationsStore extends PersistableStore {
   announcementClosed = false
@@ -9,6 +9,6 @@ class NotificationsStore extends PersistableStore {
 
 const storeProxy = proxy(new NotificationsStore()).makePersistent(true)
 
-useBeforeUnload(() => (storeProxy.shareToTwitterClosed = true))
+setBeforeUnload(() => (storeProxy.shareToTwitterClosed = true))
 
 export default storeProxy
