@@ -16,7 +16,7 @@ const textStyle = (thinText?: boolean) =>
     textTransform('uppercase'),
     fontWeight('font-semibold'),
     thinText ? fontSize('text-2xl') : fontSize('text-3xl'),
-    letterSpacing('tracking-widest', 'md:!tracking-normal')
+    letterSpacing('tracking-arc')
   )
 
 const svgBox = (mobile?: boolean) =>

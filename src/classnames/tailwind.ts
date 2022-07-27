@@ -7929,6 +7929,7 @@ export type TLetterSpacing =
   | 'tracking-wide'
   | 'tracking-wider'
   | 'tracking-widest'
+  | 'tracking-arc'
 
 export type TLineHeight =
   | 'leading-3'
