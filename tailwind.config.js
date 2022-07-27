@@ -7,6 +7,9 @@ module.exports = {
       primary: ['"Space Grotesk"', 'sans-serif'],
     },
     extend: {
+      letterSpacing: {
+        arc: '1rem',
+      },
       minHeight: {
         card: '31.75rem',
       },
