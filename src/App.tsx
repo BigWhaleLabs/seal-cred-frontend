@@ -5,7 +5,9 @@ import Announcement from 'components/Announcement'
 import Footer from 'components/Footer'
 import LazyComponent from 'components/LazyComponent'
 import Navbar from 'components/navbar/Navbar'
+import Privacy from 'pages/Privacy'
 import Root from 'components/Root'
+import Terms from 'pages/Terms'
 import classnames, { space } from 'classnames/tailwind'
 
 const NotFound = lazy(() => import('pages/NotFound'))
@@ -41,6 +43,14 @@ export default function () {
               <Route
                 path="/app"
                 element={<LazyComponent lazyImported={<Main />} />}
+              />
+              <Route
+                path="/terms"
+                element={<LazyComponent lazyImported={<Terms />} />}
+              />
+              <Route
+                path="/privacy"
+                element={<LazyComponent lazyImported={<Privacy />} />}
               />
               <Route
                 path="*"
