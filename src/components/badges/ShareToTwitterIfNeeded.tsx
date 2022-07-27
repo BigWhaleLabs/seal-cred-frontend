@@ -11,6 +11,7 @@ import classnames, {
   gridColumn,
   padding,
   space,
+  width,
 } from 'classnames/tailwind'
 import shareToTwitter from 'helpers/shareToTwitter'
 
@@ -44,10 +45,9 @@ export default function () {
             hashtags: ['zk', 'zkWallet', 'Eth'],
           })
         }}
-        textMaxWidth
         small
       >
-        Share a Tweet
+        <div className={width('tiny:w-max')}>Share a Tweet</div>
       </Button>
     </div>
   )
