@@ -3,13 +3,16 @@ import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgeSection from 'components/badges/BadgeSection'
+import ConfettiIfNeeded from 'components/badges/ConfettiIfNeeded'
 import DoxNotification from 'components/badges/DoxNotification'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
 import Network from 'models/Network'
+import NotificationsStore from 'stores/NotificationsStore'
 import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
+import ShareToTwitterIfNeeded from 'components/badges/ShareToTwitterIfNeeded'
 import proofStore from 'stores/ProofStore'
 import useContractsOwned from 'hooks/useContractsOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
@@ -38,49 +41,63 @@ function BadgeListSuspended() {
   )
 
   const proofsAvailableToMint = useProofsAvailableToMint()
-  const isEmpty =
-    !ownedExternalERC721DerivativeContracts.length &&
-    !ownedEmailDerivativeContracts.length &&
-    !ownedERC721DerivativeContracts.length &&
-    !proofsAvailableToMint.length
+
+  const hasProofs = proofsAvailableToMint.length
+  const hasDerivatives =
+    ownedExternalERC721DerivativeContracts.length +
+    ownedEmailDerivativeContracts.length +
+    ownedERC721DerivativeContracts.length
+  const isEmpty = !hasProofs && !hasDerivatives
 
   const shouldNotify =
     !!account &&
     !walletsToNotifiedOfBeingDoxxed[account] &&
     proofsCompleted.length > 0
 
+  const onMinted = () => {
+    if (hasProofs && !hasDerivatives) NotificationsStore.showTwitterShare = true
+  }
+
   return shouldNotify ? (
     <DoxNotification account={account} />
   ) : isEmpty ? (
     <HintCard text="You don't own any derivatives and you don't have any ZK proofs ready to use. Generate a ZK proof first!" />
   ) : (
-    <Scrollbar>
-      <div className={space('space-y-2')}>
-        <BadgeSection
-          title="Mainnet NFT derivatives"
-          minted={ownedExternalERC721DerivativeContracts}
-          proofs={proofsAvailableToMint.filter(
-            (proof) =>
-              proof instanceof ERC721Proof && proof.network === Network.Mainnet
-          )}
-        />
-        <BadgeSection
-          title="Goerli NFT derivatives"
-          minted={ownedERC721DerivativeContracts}
-          proofs={proofsAvailableToMint.filter(
-            (proof) =>
-              proof instanceof ERC721Proof && proof.network === Network.Goerli
-          )}
-        />
-        <BadgeSection
-          title="Email derivatives"
-          minted={ownedEmailDerivativeContracts}
-          proofs={proofsAvailableToMint.filter(
-            (proof) => proof instanceof EmailProof
-          )}
-        />
-      </div>
-    </Scrollbar>
+    <>
+      <ConfettiIfNeeded />
+      <Scrollbar>
+        <div className={space('space-y-2')}>
+          <BadgeSection
+            title="Mainnet NFT derivatives"
+            minted={ownedExternalERC721DerivativeContracts}
+            proofs={proofsAvailableToMint.filter(
+              (proof) =>
+                proof instanceof ERC721Proof &&
+                proof.network === Network.Mainnet
+            )}
+            onMinted={onMinted}
+          />
+          <BadgeSection
+            title="Goerli NFT derivatives"
+            minted={ownedERC721DerivativeContracts}
+            proofs={proofsAvailableToMint.filter(
+              (proof) =>
+                proof instanceof ERC721Proof && proof.network === Network.Goerli
+            )}
+            onMinted={onMinted}
+          />
+          <BadgeSection
+            title="Email derivatives"
+            minted={ownedEmailDerivativeContracts}
+            proofs={proofsAvailableToMint.filter(
+              (proof) => proof instanceof EmailProof
+            )}
+            onMinted={onMinted}
+          />
+          <ShareToTwitterIfNeeded />
+        </div>
+      </Scrollbar>
+    </>
   )
 }
 

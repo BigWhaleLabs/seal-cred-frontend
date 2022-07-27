@@ -8,6 +8,7 @@ import EmailBadgeBuilder from 'helpers/EmailBadgeBuilder'
 import EmailProof from 'helpers/EmailProof'
 import ExternalERC721BadgeBuilder from 'helpers/ExternalERC721BadgeBuilder'
 import Network from 'models/Network'
+import NotificationsStore from 'stores/NotificationsStore'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
@@ -100,6 +101,7 @@ class WalletStore extends PersistableStore {
     this.walletLoading = true
     const accounts = await provider.listAccounts()
     this.account = accounts[0]
+    NotificationsStore.showTwitterShare = false
     this.walletLoading = false
   }
 
@@ -128,6 +130,7 @@ class WalletStore extends PersistableStore {
   }
 
   private clearData() {
+    NotificationsStore.showTwitterShare = false
     web3Modal.clearCachedProvider()
     this.account = undefined
   }

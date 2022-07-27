@@ -97,12 +97,14 @@ const bodyText = (
   bold?: boolean,
   small?: boolean,
   center?: boolean,
-  color?: TTextColor
+  color?: TTextColor,
+  fontPrimary?: boolean
 ) =>
   classnames(
-    color ? textColor(color) : textColor('text-formal-accent'),
-    textAlign(center ? 'text-center' : undefined),
-    fontWeight(bold ? 'font-bold' : 'font-normal'),
+    fontFamily({ 'font-primary': fontPrimary }),
+    textColor(color ? color : 'text-formal-accent'),
+    textAlign({ 'text-center': center }),
+    fontWeight({ 'font-bold': bold }),
     fontSize(small ? 'text-xs' : 'text-sm', 'sm:text-base'),
     lineHeight('leading-6')
   )
@@ -112,13 +114,19 @@ export function BodyText({
   center,
   children,
   color,
+  fontPrimary,
 }: ChildrenProp & {
   bold?: boolean
   small?: boolean
   center?: boolean
   color?: TTextColor
+  fontPrimary?: boolean
 }) {
-  return <p className={bodyText(bold, small, center, color)}>{children}</p>
+  return (
+    <p className={bodyText(bold, small, center, color, fontPrimary)}>
+      {children}
+    </p>
+  )
 }
 
 const proofText = classnames(
