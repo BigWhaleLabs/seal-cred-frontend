@@ -96,10 +96,12 @@ module.exports = {
         'thin-card': '11.688rem',
         card: '24.875rem',
         'mobile-card': '92%',
+        'full-125': '125%',
       },
       inset: {
         '-78': '-19.5rem',
         '-40': '-10rem',
+        '-32': '-8rem',
         '-28': '-7rem',
         '-24': '-6rem',
         '-4': '-1rem',

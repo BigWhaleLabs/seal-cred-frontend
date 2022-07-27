@@ -97,12 +97,14 @@ const bodyText = (
   bold?: boolean,
   small?: boolean,
   center?: boolean,
-  color?: TTextColor
+  color?: TTextColor,
+  fontPrimary?: boolean
 ) =>
   classnames(
-    color ? textColor(color) : textColor('text-formal-accent'),
-    textAlign(center ? 'text-center' : undefined),
-    fontWeight(bold ? 'font-bold' : 'font-normal'),
+    fontFamily({ 'font-primary': fontPrimary }),
+    textColor(color ? color : 'text-formal-accent'),
+    textAlign({ 'text-center': center }),
+    fontWeight({ 'font-bold': bold }),
     fontSize(small ? 'text-xs' : 'text-sm', 'sm:text-base'),
     lineHeight('leading-6')
   )
@@ -112,13 +114,19 @@ export function BodyText({
   center,
   children,
   color,
+  fontPrimary,
 }: ChildrenProp & {
   bold?: boolean
   small?: boolean
   center?: boolean
   color?: TTextColor
+  fontPrimary?: boolean
 }) {
-  return <p className={bodyText(bold, small, center, color)}>{children}</p>
+  return (
+    <p className={bodyText(bold, small, center, color, fontPrimary)}>
+      {children}
+    </p>
+  )
 }
 
 const proofText = classnames(
@@ -159,6 +167,28 @@ const logoText = classnames(
 export function LogoText({ children }: ChildrenProp) {
   return <span className={logoText}>{children}</span>
 }
+
+const subheaderCardText = classnames(
+  textColor('text-formal-accent'),
+  fontFamily('font-primary'),
+  fontWeight('font-bold'),
+  fontSize('text-lg'),
+  lineHeight('leading-7')
+)
+export function SubheaderCardText({ children }: ChildrenProp) {
+  return <p className={subheaderCardText}>{children}</p>
+}
+
+const cardParagraphText = classnames(
+  textColor('text-formal-accent'),
+  fontFamily('font-primary'),
+  fontSize('text-sm', 'sm:text-base'),
+  lineHeight('leading-6')
+)
+export function CardParagraphText({ children }: ChildrenProp) {
+  return <p className={cardParagraphText}>{children}</p>
+}
+
 const logoSubText = classnames(
   textColor('text-primary-semi-dimmed', 'selection:text-primary'),
   fontWeight('font-bold'),

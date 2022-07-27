@@ -22,10 +22,12 @@ export default function ({
   title,
   minted,
   proofs,
+  onMinted,
 }: ChildrenProp & {
   title?: ComponentChildren
   minted: string[]
   proofs: BaseProof[]
+  onMinted?: () => void
 }) {
   if (minted.length === 0 && proofs.length === 0) return null
 
@@ -39,7 +41,7 @@ export default function ({
           />
         ))}
         {proofs.map((proof) => (
-          <BadgeBlock key={proof.key} proof={proof} />
+          <BadgeBlock onMinted={onMinted} key={proof.key} proof={proof} />
         ))}
       </div>
     </Section>

@@ -9,6 +9,7 @@ import classnames, {
   display,
   flexDirection,
   justifyContent,
+  position,
   space,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
@@ -16,6 +17,7 @@ import useBreakpoints from 'hooks/useBreakpoints'
 const mintPassed = (small?: boolean) =>
   classnames(
     display('flex'),
+    position('relative'),
     flexDirection('flex-row'),
     justifyContent(
       small ? 'justify-start' : 'justify-center',
