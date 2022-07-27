@@ -11,6 +11,7 @@ import Line from 'components/proofs/Line'
 import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import Star from 'icons/Star'
+import ToolTip from 'components/ToolTip'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
@@ -62,18 +63,23 @@ function useProofContent(
   const { account } = useSnapshot(WalletStore)
   const [isGenerating, setIsGenerating] = useState(false)
 
-  if (isGenerating)
+  if (isGenerating) {
+    const powerProofTooltip =
+      'Proof generation is a power-hungry process, so don’t sweat if it gets stuck. Your proof will generate if given time.'
     return {
       color: 'text-accent',
       content: (
         <span className={textWithIcon}>
-          <span>Generating...</span>
+          <ToolTip position="floating" fitContainer text={powerProofTooltip}>
+            <span>Generating...</span>
+          </ToolTip>
           <div className={animation('animate-spin')}>
             <Star />
           </div>
         </span>
       ),
     }
+  }
 
   if (!proof)
     return {
