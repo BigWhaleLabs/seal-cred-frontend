@@ -15,7 +15,7 @@ export default function () {
     <div className={cardWrapper}>
       <Card shadow onlyWrap color="primary">
         <div className={space('space-y-4')}>
-          <HeaderText>Terms of Use</HeaderText>
+          <HeaderText>Terms of Service</HeaderText>
           <div className={space('space-y-4')}>
             <Section>
               <SubheaderCardText>Terms</SubheaderCardText>

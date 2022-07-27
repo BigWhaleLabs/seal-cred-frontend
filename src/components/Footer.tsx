@@ -47,16 +47,20 @@ export default function () {
       <Spacer />
       <div className={socialContainerCard}>
         <div className={linkContainer}>
-          <LinkText url="https://blog.bigwhalelabs.com/">
+          <LinkText url="https://blog.bigwhalelabs.com/" targetBlank>
             <div className={footerLogo}>
               <FooterLogo />
               <span>Blog</span>
             </div>
           </LinkText>
           <Delimiter />
-          <LinkText url="/terms">Terms of service</LinkText>
+          <LinkText url="/terms" targetBlank>
+            Terms of service
+          </LinkText>
           <Delimiter />
-          <LinkText url="/privacy">Privacy policy</LinkText>
+          <LinkText url="/privacy" targetBlank>
+            Privacy policy
+          </LinkText>
         </div>
         {!md && (
           <>
