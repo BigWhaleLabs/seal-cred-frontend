@@ -121,7 +121,7 @@ class ProofStore extends PersistableStore {
       const balanceSignature = await requestBalanceAttestation(
         contract,
         network,
-        WalletStore.account
+        account
       )
       // Get the proof
       const newERC721Proof = new ERC721Proof(contract, account, network)
