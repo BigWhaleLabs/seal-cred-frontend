@@ -14,7 +14,7 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import shareToTwitter from 'helpers/shareToTwitter'
+import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
 
 const wideBlock = classnames(
   display('flex'),
@@ -34,24 +34,21 @@ export default function () {
 
   const closeNotification = () => (NotificationsStore.showTwitterShare = false)
 
+  const twitterLink = getShareToTwitterLink({
+    text: 'Create zero knowledge proof and build your pseudonymous wallet with SealCred 🦭 sealcred.xyz',
+    hashtags: ['zk', 'zkWallet', 'Eth'],
+  })
+
   return (
     <div className={wideBlock}>
       <BodyText bold fontPrimary>
         You minted your first badge!
       </BodyText>
-      <Button
-        type="secondary"
-        onClick={() => {
-          closeNotification()
-          shareToTwitter({
-            text: 'Create zero knowledge proof and build your pseudonymous wallet with SealCred 🦭 sealcred.xyz',
-            hashtags: ['zk', 'zkWallet', 'Eth'],
-          })
-        }}
-        small
-      >
-        <div className={width('tiny:w-max')}>Share a Tweet</div>
-      </Button>
+      <a href={twitterLink}>
+        <Button type="secondary" onClick={closeNotification} small>
+          <div className={width('tiny:w-max')}>Share a Tweet</div>
+        </Button>
+      </a>
       <button onClick={closeNotification}>
         <Cross />
       </button>

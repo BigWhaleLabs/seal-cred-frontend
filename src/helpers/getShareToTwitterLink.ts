@@ -1,5 +1,3 @@
-import openNewTabAndFocus from 'helpers/openNewTabAndFocus'
-
 export default function ({
   text,
   hashtags,
@@ -11,7 +9,5 @@ export default function ({
   const twitterUrl = 'https://twitter.com/intent/tweet'
   const hashtagsEncoded = hashtags ? `&hashtags=${hashtags.join(',')}` : ''
 
-  const shareEncoded = `${twitterUrl}?text=${text}${hashtagsEncoded}`
-
-  openNewTabAndFocus(shareEncoded)
+  return `${twitterUrl}?text=${text}${hashtagsEncoded}`
 }

@@ -19,7 +19,6 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
-import openNewTabAndFocus from 'helpers/openNewTabAndFocus'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const walletContainer = classnames(
@@ -43,12 +42,46 @@ const socialContainer = classnames(
   alignItems('items-center'),
   space('space-x-4')
 )
-const delimeterContainer = classnames(
+const delimiterContainer = classnames(
   borderWidth('border-0'),
   backgroundColor('bg-primary-dimmed'),
   width('w-px'),
   height('h-4')
 )
+
+const AccountContainer = ({ account }: { account?: string }) => {
+  if (account)
+    return (
+      <a href={getEtherscanAddressUrl(account, Network.Goerli)}>
+        <div className={accountLinkContainer}>
+          <div className={walletAccount}>
+            <AccentText color="text-accent">
+              <EnsAddress address={account} network={Network.Goerli} />
+            </AccentText>
+          </div>
+          <div className={width('w-fit')}>
+            <SealWallet connected={true} />
+          </div>
+        </div>
+      </a>
+    )
+
+  return (
+    <div
+      className={accountLinkContainer}
+      onClick={async () => await WalletStore.connect(true)}
+    >
+      <div className={walletAccount}>
+        <AccentText color="text-primary-semi-dimmed">
+          No wallet connected
+        </AccentText>
+      </div>
+      <div className={width('w-fit')}>
+        <SealWallet connected={false} />
+      </div>
+    </div>
+  )
+}
 
 export default function () {
   const { account } = useSnapshot(WalletStore)
@@ -66,31 +99,11 @@ export default function () {
               <Twitter />
             </SocialLink>
           </div>
-          <hr className={delimeterContainer} />
+          <hr className={delimiterContainer} />
         </>
       )}
-      <div
-        className={accountLinkContainer}
-        onClick={async () => {
-          if (!account) return await WalletStore.connect(true)
-          openNewTabAndFocus(getEtherscanAddressUrl(account, Network.Goerli))
-        }}
-      >
-        <div className={walletAccount}>
-          <AccentText
-            color={account ? 'text-accent' : 'text-primary-semi-dimmed'}
-          >
-            {account ? (
-              <EnsAddress address={account} network={Network.Goerli} />
-            ) : (
-              'No wallet connected'
-            )}
-          </AccentText>
-        </div>
-        <div className={width('w-fit')}>
-          <SealWallet connected={!!account} />
-        </div>
-      </div>
+
+      <AccountContainer account={account} />
     </div>
   )
 }
