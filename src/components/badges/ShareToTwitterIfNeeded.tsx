@@ -45,7 +45,7 @@ export default function () {
         You minted your first badge!
       </BodyText>
       <a href={twitterLink}>
-        <Button type="secondary" onClick={() => closeNotification()} small>
+        <Button type="secondary" onClick={closeNotification} small>
           <div className={width('tiny:w-max')}>Share a Tweet</div>
         </Button>
       </a>
