@@ -101,12 +101,11 @@ class ProofStore extends PersistableStore {
 
   async generateERC721(contract: string, network: Network) {
     try {
-      if (!WalletStore.account) {
-        throw new Error('No account selected')
-      }
       // Get the account
       const account = WalletStore.account
-      if (!account) throw new Error('No account found')
+      if (!account) {
+        throw new Error('No account selected')
+      }
       // Get public key
       const eddsaPublicKey = await getEddsaPublicKey()
       // Get nullifier signature
