@@ -3,6 +3,7 @@ type Color =
   | 'secondary'
   | 'tertiary'
   | 'primary'
+  | 'primary-dark'
   | 'formal-accent'
   | 'primary-semi-dimmed'
   | 'formal-accent-semi-transparent'

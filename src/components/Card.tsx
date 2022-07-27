@@ -1,7 +1,6 @@
 import {
   alignItems,
   backgroundColor,
-  borderColor,
   borderRadius,
   borderWidth,
   boxShadow,
@@ -24,6 +23,7 @@ import ArcText from 'icons/ArcText'
 import CardContext from 'components/CardContext'
 import ChildrenProp from 'models/ChildrenProp'
 import Color from 'models/Color'
+import colorToBorderColor from 'helpers/colors/colorToBorderColor'
 
 interface CardProps {
   shadow?: boolean
@@ -41,19 +41,7 @@ interface CardProps {
 const cardColor = (color?: Color) => {
   return classnames(
     borderWidth('border'),
-    borderColor(
-      color === 'accent'
-        ? 'border-accent'
-        : color === 'tertiary'
-        ? 'border-tertiary'
-        : color === 'secondary'
-        ? 'border-secondary'
-        : color === 'formal-accent'
-        ? 'border-formal-accent'
-        : color === 'primary'
-        ? 'border-primary'
-        : 'border-primary-dark'
-    ),
+    colorToBorderColor(color || 'primary-dark'),
     boxShadow('shadow-2xl'),
     boxShadowColor(
       color === 'accent'
@@ -102,14 +90,11 @@ const cardContainer = (
     width(
       thin ? 'sm:!w-thin-card' : 'sm:w-card',
       thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
-      thin ? 'w-32' : undefined
+      { 'w-32': thin }
     ),
-    margin(thin ? undefined : 'mx-auto', 'lg:mx-0'),
-    maxHeight(
-      onlyWrap ? undefined : 'sm:max-h-card',
-      onlyWrap ? undefined : 'max-h-mobile-card'
-    ),
-    space(nospace ? undefined : 'space-y-6'),
+    margin({ 'mx-auto': !thin }, 'lg:mx-0'),
+    maxHeight({ 'sm:max-h-card': !onlyWrap, 'max-h-mobile-card': !onlyWrap }),
+    space({ 'space-y-6': !nospace }),
     wordBreak('break-words'),
     zIndex('z-30'),
     useAppStyles ? appStyles : undefined
