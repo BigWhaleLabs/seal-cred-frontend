@@ -1,6 +1,7 @@
 import { BodyText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
+import Cross from 'icons/Cross'
 import NotificationsStore from 'stores/NotificationsStore'
 import classnames, {
   alignItems,
@@ -18,7 +19,7 @@ import shareToTwitter from 'helpers/shareToTwitter'
 const wideBlock = classnames(
   display('flex'),
   flexDirection('flex-row'),
-  space('space-x-2'),
+  space('space-x-1'),
   alignItems('items-center'),
   borderRadius('rounded-2xl'),
   backgroundColor('bg-primary-dimmed'),
@@ -31,6 +32,8 @@ export default function () {
 
   if (!showTwitterShare) return null
 
+  const closeNotification = () => (NotificationsStore.showTwitterShare = false)
+
   return (
     <div className={wideBlock}>
       <BodyText bold fontPrimary>
@@ -39,7 +42,7 @@ export default function () {
       <Button
         type="secondary"
         onClick={() => {
-          NotificationsStore.showTwitterShare = false
+          closeNotification()
           shareToTwitter({
             text: 'Create zero knowledge proof and build your pseudonymous wallet with SealCred 🦭 sealcred.xyz',
             hashtags: ['zk', 'zkWallet', 'Eth'],
@@ -49,6 +52,9 @@ export default function () {
       >
         <div className={width('tiny:w-max')}>Share a Tweet</div>
       </Button>
+      <button onClick={closeNotification}>
+        <Cross />
+      </button>
     </div>
   )
 }
