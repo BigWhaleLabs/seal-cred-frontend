@@ -29,9 +29,6 @@ export default function () {
       spinner={!xs ? 'One Identity to rule them all' : undefined}
     >
       <div className={initialCardWrapper}>
-        <div className={alphaSealWrapper}>
-          <AlphaSeal />
-        </div>
         <HeaderText extraLeading>
           Build your pseudonymous identity with ZK badges
         </HeaderText>
@@ -41,6 +38,9 @@ export default function () {
           prove ownership of an NFT without it tracing back to you.
         </BodyText>
         <GetStartedButton />
+        <div className={alphaSealWrapper}>
+          <AlphaSeal />
+        </div>
       </div>
     </Card>
   )

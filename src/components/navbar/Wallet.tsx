@@ -19,6 +19,7 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import openLinkInNewTab from 'helpers/openLinkInNewTab'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const walletContainer = classnames(
@@ -72,13 +73,7 @@ export default function () {
         className={accountLinkContainer}
         onClick={async () => {
           if (!account) return await WalletStore.connect(true)
-          const newWindow = window.open(
-            getEtherscanAddressUrl(account, Network.Goerli),
-            '_blank'
-          )
-          if (!newWindow) return
-          newWindow.focus()
-          newWindow.opener = null
+          openLinkInNewTab(getEtherscanAddressUrl(account, Network.Goerli))
         }}
       >
         <div className={walletAccount}>

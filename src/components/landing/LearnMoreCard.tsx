@@ -3,7 +3,6 @@ import Button from 'components/Button'
 import Card from 'components/Card'
 import PrivacyDeath from 'components/landing/PrivacyDeath'
 import classnames, { margin } from 'classnames/tailwind'
-import openNewTabAndFocus from 'helpers/openNewTabAndFocus'
 
 const bigWhaleLabsText = classnames(margin('mt-6'))
 const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
@@ -27,15 +26,11 @@ export default function () {
           </BodyText>
         </div>
         <div className={learnMoreText}>
-          <Button
-            type="tertiary"
-            small
-            withArrow
-            gradientFont
-            onClick={() => openNewTabAndFocus('https://bigwhalelabs.com/')}
-          >
-            Learn more about us
-          </Button>
+          <LinkText url="https://bigwhalelabs.com/">
+            <Button type="tertiary" small withArrow gradientFont>
+              Learn more about us
+            </Button>
+          </LinkText>
         </div>
       </Card>
     </div>

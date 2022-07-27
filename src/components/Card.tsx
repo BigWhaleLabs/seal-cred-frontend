@@ -1,7 +1,6 @@
 import {
   alignItems,
   backgroundColor,
-  borderColor,
   borderRadius,
   borderWidth,
   boxShadow,
@@ -24,6 +23,7 @@ import ArcText from 'icons/ArcText'
 import CardContext from 'components/CardContext'
 import ChildrenProp from 'models/ChildrenProp'
 import Color from 'models/Color'
+import colorToBorderColor from 'helpers/colors/colorToBorderColor'
 
 interface CardProps {
   shadow?: boolean
@@ -35,24 +35,13 @@ interface CardProps {
   nospace?: boolean
   useAppStyles?: boolean
   mobileSpinnerOnRight?: boolean
+  paddingType?: 'small' | 'normal'
 }
 
 const cardColor = (color?: Color) => {
   return classnames(
     borderWidth('border'),
-    borderColor(
-      color === 'accent'
-        ? 'border-accent'
-        : color === 'tertiary'
-        ? 'border-tertiary'
-        : color === 'secondary'
-        ? 'border-secondary'
-        : color === 'formal-accent'
-        ? 'border-formal-accent'
-        : color === 'primary'
-        ? 'border-primary'
-        : 'border-primary-dark'
-    ),
+    colorToBorderColor(color || 'primary-dark'),
     boxShadow('shadow-2xl'),
     boxShadowColor(
       color === 'accent'
@@ -82,27 +71,30 @@ const cardContainer = (
   color?: Color,
   onlyWrap = false,
   thin = false,
-  small?: boolean,
   nospace?: boolean,
-  useAppStyles?: boolean
+  useAppStyles?: boolean,
+  paddingType?: 'small' | 'normal'
 ) => {
   return classnames(
     position('relative'),
     borderRadius('rounded-2xl'),
     backgroundColor('bg-primary-dark'),
     cardColor(shadow ? color : undefined),
-    padding(small ? 'p-small' : 'p-6'),
+    padding({
+      'px-small': paddingType === 'small',
+      'py-small': paddingType === 'small',
+      'px-5': paddingType !== 'small',
+      'py-5': paddingType === 'normal',
+      'py-8': typeof paddingType === 'undefined',
+    }),
     width(
       thin ? 'sm:!w-thin-card' : 'sm:w-card',
       thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
-      thin ? 'w-32' : undefined
+      { 'w-32': thin }
     ),
-    margin(thin ? undefined : 'mx-auto', 'lg:mx-0'),
-    maxHeight(
-      onlyWrap ? undefined : 'sm:max-h-card',
-      onlyWrap ? undefined : 'max-h-mobile-card'
-    ),
-    space(nospace ? undefined : 'space-y-4'),
+    margin({ 'mx-auto': !thin }, 'lg:mx-0'),
+    maxHeight({ 'sm:max-h-card': !onlyWrap, 'max-h-mobile-card': !onlyWrap }),
+    space({ 'space-y-6': !nospace }),
     wordBreak('break-words'),
     zIndex('z-30'),
     useAppStyles ? appStyles : undefined
@@ -123,7 +115,7 @@ export default function ({
   spinner,
   thin,
   children,
-  small,
+  paddingType,
   nospace,
   useAppStyles,
   mobileSpinnerOnRight,
@@ -136,9 +128,9 @@ export default function ({
           color,
           onlyWrap,
           thin,
-          small,
           nospace,
-          useAppStyles
+          useAppStyles,
+          paddingType
         )}
       >
         {children}
