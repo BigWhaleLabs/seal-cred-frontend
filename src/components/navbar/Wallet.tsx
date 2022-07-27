@@ -19,7 +19,6 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
-import openNewTabAndFocus from 'helpers/openNewTabAndFocus'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const walletContainer = classnames(
@@ -69,28 +68,33 @@ export default function () {
           <hr className={delimeterContainer} />
         </>
       )}
-      <div
-        className={accountLinkContainer}
-        onClick={async () => {
-          if (!account) return await WalletStore.connect(true)
-          openNewTabAndFocus(getEtherscanAddressUrl(account, Network.Goerli))
-        }}
+      <a
+        href={
+          account ? getEtherscanAddressUrl(account, Network.Goerli) : undefined
+        }
       >
-        <div className={walletAccount}>
-          <AccentText
-            color={account ? 'text-accent' : 'text-primary-semi-dimmed'}
-          >
-            {account ? (
-              <EnsAddress address={account} network={Network.Goerli} />
-            ) : (
-              'No wallet connected'
-            )}
-          </AccentText>
+        <div
+          className={accountLinkContainer}
+          onClick={async () => {
+            if (!account) return await WalletStore.connect(true)
+          }}
+        >
+          <div className={walletAccount}>
+            <AccentText
+              color={account ? 'text-accent' : 'text-primary-semi-dimmed'}
+            >
+              {account ? (
+                <EnsAddress address={account} network={Network.Goerli} />
+              ) : (
+                'No wallet connected'
+              )}
+            </AccentText>
+          </div>
+          <div className={width('w-fit')}>
+            <SealWallet connected={!!account} />
+          </div>
         </div>
-        <div className={width('w-fit')}>
-          <SealWallet connected={!!account} />
-        </div>
-      </div>
+      </a>
     </div>
   )
 }
