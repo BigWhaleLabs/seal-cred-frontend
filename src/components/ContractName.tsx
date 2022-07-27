@@ -60,6 +60,9 @@ function ContractNameSuspended({
   if (truncate) content = truncateMiddleIfNeeded(content, 17)
   if (utils.isAddress(content)) content = truncateMiddleIfNeeded(content, 17)
 
+  // Removes NULL symbols caused by Solidity -> JS string conversion
+  content = content.replaceAll('\u0000', '')
+
   return (
     <span
       className={classNamesToString(
