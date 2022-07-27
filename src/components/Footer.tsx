@@ -54,13 +54,9 @@ export default function () {
             </div>
           </LinkText>
           <Delimiter />
-          <LinkText url="/terms" targetBlank>
-            Terms of service
-          </LinkText>
+          <LinkText url="/terms">Terms of service</LinkText>
           <Delimiter />
-          <LinkText url="/privacy" targetBlank>
-            Privacy policy
-          </LinkText>
+          <LinkText url="/privacy">Privacy policy</LinkText>
         </div>
         {!md && (
           <>
