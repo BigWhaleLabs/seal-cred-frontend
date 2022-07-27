@@ -1,3 +1,7 @@
-export default function (url: string) {
-  return window.open(url, '_blank')?.focus()
+export default function (link: string) {
+  const newWindow = window.open(link, '_blank')
+  if (newWindow) {
+    newWindow.focus()
+    newWindow.opener = null
+  }
 }
