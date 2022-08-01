@@ -84,14 +84,11 @@ class ProofStore extends PersistableStore {
     try {
       // Get public key
       const eddsaPublicKey = await getEddsaPublicKey()
-      // Get nullifier signature
-      const nullifierMessage = getNullifierMessage()
-      const nullifierSignature = await WalletStore.signMessage(nullifierMessage)
       // Check navigator availability
       checkNavigator()
       // Create proof
       const newEmailProof = new EmailProof(domain)
-      await newEmailProof.build(signature, eddsaPublicKey, nullifierSignature)
+      await newEmailProof.build(signature, eddsaPublicKey)
       this.proofsCompleted.push(newEmailProof)
       return newEmailProof
     } catch (e) {
@@ -128,7 +125,6 @@ class ProofStore extends PersistableStore {
       await newERC721Proof.build(
         ownershipSignature,
         balanceSignature,
-        nullifierSignature,
         eddsaPublicKey
       )
       this.proofsCompleted.push(newERC721Proof)
