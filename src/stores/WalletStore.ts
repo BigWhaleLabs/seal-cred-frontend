@@ -39,17 +39,19 @@ class WalletStore extends PersistableStore {
     this.walletLoading = true
     try {
       if (clearCachedProvider) web3Modal.clearCachedProvider()
-      if (this.needNetworkChange) await this.requestChangeNetwork()
 
       const instance = await web3Modal.connect()
       provider = new Web3Provider(instance)
-      const userNetwork = (await provider.getNetwork()).name
-      if (userNetwork !== env.VITE_ETH_NETWORK && env.VITE_ETH_NETWORK) {
-        this.needNetworkChange = true
+
+      await this.checkNetwork(provider)
+      if (this.needNetworkChange)
         throw new Error(
-          ErrorList.wrongNetwork(userNetwork, env.VITE_ETH_NETWORK)
+          ErrorList.wrongNetwork(
+            (await provider.getNetwork()).name,
+            env.VITE_ETH_NETWORK
+          )
         )
-      }
+
       this.account = (await provider.listAccounts())[0]
       this.subscribeProvider(instance)
     } catch (error) {
@@ -100,10 +102,15 @@ class WalletStore extends PersistableStore {
     throw new Error('Unknown proof type')
   }
 
-  private async requestChangeNetwork() {
-    if (!provider && !this.needNetworkChange) return
+  private async checkNetwork(provider: Web3Provider, chainId?: string) {
+    const requiredChainId = hexValue(env.VITE_CHAIN_ID)
+    if (chainId === requiredChainId) return
 
-    const chainId = hexValue(env.VITE_CHAIN_ID)
+    this.needNetworkChange = true
+    await this.requestChangeNetwork(provider, requiredChainId)
+  }
+
+  private async requestChangeNetwork(provider: Web3Provider, chainId: string) {
     const network = env.VITE_ETH_NETWORK
     const networkName = network.charAt(0).toUpperCase() + network.slice(1)
     const currency = `${networkName}ETH`
@@ -164,8 +171,9 @@ class WalletStore extends PersistableStore {
       handleError(error)
       this.clearData()
     })
-    provider.on('chainChanged', async () => {
+    provider.on('chainChanged', async (chainId: string) => {
       this.account = undefined
+      await this.checkNetwork(provider, chainId)
       await this.connect()
     })
   }
