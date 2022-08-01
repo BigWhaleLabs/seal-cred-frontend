@@ -106,10 +106,11 @@ export default class ERC721Proof
   async generateInputs(
     ownershipSignature: Signature,
     balanceSignature: BalanceSignature,
-    nullifierSignature: string,
     eddsaPublicKey: PublicKey
   ) {
-    const { r: r2, s: s2 } = utils.splitSignature(nullifierSignature)
+    const randomNumbersArray = crypto.getRandomValues(new BigUint64Array(2))
+    const r2 = randomNumbersArray[0].toString()
+    const s2 = randomNumbersArray[1].toString()
     const addressInputs = await this.inputsForSignature(
       eddsaPublicKey,
       ownershipSignature,
@@ -131,13 +132,11 @@ export default class ERC721Proof
   async build(
     ownershipSignature: Signature,
     balanceSignature: BalanceSignature,
-    nullifierSignature: string,
     eddsaPublicKey: PublicKey
   ) {
     const inputs = await this.generateInputs(
       ownershipSignature,
       balanceSignature,
-      nullifierSignature,
       eddsaPublicKey
     )
     this.result = await snarkjs.groth16.fullProve(

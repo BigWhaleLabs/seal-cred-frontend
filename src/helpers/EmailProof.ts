@@ -60,15 +60,16 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
   async generateInput(
     domain: string,
     signature: string,
-    eddsaPublicKey: PublicKey,
-    nullifierSignature: string
+    eddsaPublicKey: PublicKey
   ) {
     const maxDomainLength = 90
     const messageUInt8 = this.padZeroesOnRightUint8(
       utils.toUtf8Bytes(domain),
       maxDomainLength
     )
-    const { r: r2, s: s2 } = utils.splitSignature(nullifierSignature)
+    const randomNumbersArray = crypto.getRandomValues(new BigUint64Array(2))
+    const r2 = randomNumbersArray[0].toString()
+    const s2 = randomNumbersArray[1].toString()
     return {
       message: Array.from(messageUInt8),
       pubKeyX: eddsaPublicKey.x,
@@ -79,18 +80,9 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
     }
   }
 
-  async build(
-    signature: string,
-    eddsaPublicKey: PublicKey,
-    nullifierSignature: string
-  ) {
+  async build(signature: string, eddsaPublicKey: PublicKey) {
     this.result = await snarkjs.groth16.fullProve(
-      await this.generateInput(
-        this.domain,
-        signature,
-        eddsaPublicKey,
-        nullifierSignature
-      ),
+      await this.generateInput(this.domain, signature, eddsaPublicKey),
       'zk/EmailOwnershipChecker.wasm',
       'zk/EmailOwnershipChecker_final.zkey'
     )
