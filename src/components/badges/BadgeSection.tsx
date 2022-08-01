@@ -1,4 +1,5 @@
-import { ComponentChildren } from 'preact'
+import { ComponentChildren, Ref } from 'preact'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
 import BaseProof from 'helpers/BaseProof'
@@ -30,10 +31,11 @@ export default function ({
   onMinted?: () => void
 }) {
   if (minted.length === 0 && proofs.length === 0) return null
+  const listRef = useAutoAnimate({})
 
   return (
     <Section title={title}>
-      <div className={badgesList}>
+      <div className={badgesList} ref={listRef as Ref<HTMLDivElement>}>
         {minted.map((contractAddress) => (
           <BadgesOwnedForContract
             key={contractAddress}

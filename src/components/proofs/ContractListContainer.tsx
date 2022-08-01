@@ -1,3 +1,5 @@
+import { Ref } from 'preact'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import ChildrenProp from 'models/ChildrenProp'
 import classnames, { display, flexDirection, space } from 'classnames/tailwind'
 
@@ -8,5 +10,10 @@ const container = classnames(
 )
 
 export default function ({ children }: ChildrenProp) {
-  return <div className={container}>{children}</div>
+  const listRef = useAutoAnimate({})
+  return (
+    <div className={container} ref={listRef as Ref<HTMLDivElement>}>
+      {children}
+    </div>
+  )
 }
