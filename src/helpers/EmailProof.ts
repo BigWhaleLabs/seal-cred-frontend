@@ -67,9 +67,7 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
       utils.toUtf8Bytes(domain),
       maxDomainLength
     )
-    const randomNumbersArray = crypto.getRandomValues(new BigUint64Array(2))
-    const r2 = randomNumbersArray[0].toString()
-    const s2 = randomNumbersArray[1].toString()
+    const [r2, s2] = crypto.getRandomValues(new BigUint64Array(2))
     return {
       message: Array.from(messageUInt8),
       pubKeyX: eddsaPublicKey.x,
