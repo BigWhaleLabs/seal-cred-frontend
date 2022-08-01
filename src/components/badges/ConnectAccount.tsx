@@ -1,10 +1,13 @@
 import { AccentText } from 'components/Text'
+import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import CardTitle from 'components/CardTitle'
 import HintCard from 'components/badges/HintCard'
 import WalletStore from 'stores/WalletStore'
 
 export default function () {
+  const { needNetworkChange } = useSnapshot(WalletStore)
+
   return (
     <>
       <CardTitle
@@ -33,7 +36,9 @@ export default function () {
             await WalletStore.connect(true)
           }}
         >
-          Connect your anonymous wallet
+          {needNetworkChange
+            ? 'Change your network'
+            : 'Connect your anonymous wallet'}
         </Button>
       </HintCard>
     </>

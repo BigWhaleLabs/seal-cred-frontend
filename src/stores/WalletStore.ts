@@ -1,6 +1,8 @@
 import { Web3Provider } from '@ethersproject/providers'
+import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
+import { serializeError } from 'eth-rpc-errors'
 import BaseProof from 'helpers/BaseProof'
 import ERC721BadgeBuilder from 'helpers/ERC721BadgeBuilder'
 import ERC721Proof from 'helpers/ERC721Proof'
@@ -10,6 +12,7 @@ import ExternalERC721BadgeBuilder from 'helpers/ExternalERC721BadgeBuilder'
 import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
 import PersistableStore from 'stores/persistence/PersistableStore'
+import chainForWallet from 'helpers/chainForWallet'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
 import web3Modal from 'helpers/web3Modal'
@@ -19,6 +22,7 @@ let provider: Web3Provider
 class WalletStore extends PersistableStore {
   account?: string
   walletLoading = false
+  needNetworkChange = false
   walletsToNotifiedOfBeingDoxxed = {} as {
     [address: string]: boolean
   }
@@ -39,18 +43,22 @@ class WalletStore extends PersistableStore {
 
       const instance = await web3Modal.connect()
       provider = new Web3Provider(instance)
-      const userNetwork = (await provider.getNetwork()).name
-      if (userNetwork !== env.VITE_ETH_NETWORK && env.VITE_ETH_NETWORK)
+
+      await this.checkNetwork(provider)
+      if (this.needNetworkChange)
         throw new Error(
-          ErrorList.wrongNetwork(userNetwork, env.VITE_ETH_NETWORK)
+          ErrorList.wrongNetwork(
+            (await provider.getNetwork()).name,
+            env.VITE_ETH_NETWORK
+          )
         )
+
       this.account = (await provider.listAccounts())[0]
       this.subscribeProvider(instance)
     } catch (error) {
-      if (error !== 'Modal closed by user') {
-        handleError(error)
-        this.clearData()
-      }
+      if (error === 'Modal closed by user') return
+      handleError(error)
+      this.clearData()
     } finally {
       this.walletLoading = false
     }
@@ -93,6 +101,30 @@ class WalletStore extends PersistableStore {
     }
 
     throw new Error('Unknown proof type')
+  }
+
+  private async checkNetwork(provider: Web3Provider) {
+    const network = env.VITE_ETH_NETWORK
+    const userNetwork = (await provider.getNetwork()).name
+    if (userNetwork === network) return (this.needNetworkChange = false)
+
+    this.needNetworkChange = true
+    await this.requestChangeNetwork(provider)
+  }
+
+  private async requestChangeNetwork(provider: Web3Provider) {
+    const chainId = hexValue(env.VITE_CHAIN_ID)
+
+    try {
+      await provider.send('wallet_switchEthereumChain', [{ chainId }])
+      this.needNetworkChange = false
+    } catch (error) {
+      const code = serializeError(error).code
+      if (code !== 4902) return
+
+      await provider.send('wallet_addEthereumChain', [chainForWallet()])
+      this.needNetworkChange = false
+    }
   }
 
   private async handleAccountChanged() {
