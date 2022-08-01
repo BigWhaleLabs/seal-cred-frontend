@@ -12,6 +12,7 @@ import ExternalERC721BadgeBuilder from 'helpers/ExternalERC721BadgeBuilder'
 import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
 import PersistableStore from 'stores/persistence/PersistableStore'
+import chainForWallet from 'helpers/chainForWallet'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
 import web3Modal from 'helpers/web3Modal'
@@ -108,18 +109,11 @@ class WalletStore extends PersistableStore {
     if (userNetwork === network) return (this.needNetworkChange = false)
 
     this.needNetworkChange = true
-    await this.requestChangeNetwork(provider, network)
+    await this.requestChangeNetwork(provider)
   }
 
-  private async requestChangeNetwork(provider: Web3Provider, network: string) {
-    const networkName = network.charAt(0).toUpperCase() + network.slice(1)
-    const currency = `${networkName}ETH`
+  private async requestChangeNetwork(provider: Web3Provider) {
     const chainId = hexValue(env.VITE_CHAIN_ID)
-
-    const blockExplorerUrl =
-      network === 'mainnet'
-        ? 'https://etherscan.io/'
-        : `https://${network}.etherscan.io/`
 
     try {
       await provider.send('wallet_switchEthereumChain', [{ chainId }])
@@ -128,18 +122,7 @@ class WalletStore extends PersistableStore {
       const code = serializeError(error).code
       if (code !== 4902) return
 
-      await provider.send('wallet_addEthereumChain', [
-        {
-          chainId,
-          rpcUrls: [`https://${network}.infura.io/v3/`],
-          chainName: `${networkName} Test Network`,
-          nativeCurrency: {
-            name: currency,
-            symbol: currency,
-          },
-          blockExplorerUrls: [blockExplorerUrl],
-        },
-      ])
+      await provider.send('wallet_addEthereumChain', [chainForWallet()])
       this.needNetworkChange = false
     }
   }
