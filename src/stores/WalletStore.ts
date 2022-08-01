@@ -102,18 +102,19 @@ class WalletStore extends PersistableStore {
     throw new Error('Unknown proof type')
   }
 
-  private async checkNetwork(provider: Web3Provider, chainId?: string) {
-    const requiredChainId = hexValue(env.VITE_CHAIN_ID)
-    if (chainId === requiredChainId) return
+  private async checkNetwork(provider: Web3Provider) {
+    const network = env.VITE_ETH_NETWORK
+    const userNetwork = (await provider.getNetwork()).name
+    if (userNetwork === network) return (this.needNetworkChange = false)
 
     this.needNetworkChange = true
-    await this.requestChangeNetwork(provider, requiredChainId)
+    await this.requestChangeNetwork(provider, network)
   }
 
-  private async requestChangeNetwork(provider: Web3Provider, chainId: string) {
-    const network = env.VITE_ETH_NETWORK
+  private async requestChangeNetwork(provider: Web3Provider, network: string) {
     const networkName = network.charAt(0).toUpperCase() + network.slice(1)
     const currency = `${networkName}ETH`
+    const chainId = hexValue(env.VITE_CHAIN_ID)
 
     const blockExplorerUrl =
       network === 'mainnet'
@@ -171,9 +172,8 @@ class WalletStore extends PersistableStore {
       handleError(error)
       this.clearData()
     })
-    provider.on('chainChanged', async (chainId: string) => {
+    provider.on('chainChanged', async () => {
       this.account = undefined
-      await this.checkNetwork(provider, chainId)
       await this.connect()
     })
   }
