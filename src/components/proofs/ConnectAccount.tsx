@@ -39,7 +39,8 @@ const bottomWrapper = classnames(
 )
 
 export default function () {
-  const { walletLoading } = useSnapshot(WalletStore)
+  const { walletLoading, needNetworkChange } = useSnapshot(WalletStore)
+
   return (
     <div className={walletContainer}>
       <div className={contentWrapper}>
@@ -54,11 +55,11 @@ export default function () {
           <Button
             type="primary"
             loading={walletLoading}
-            onClick={async () => {
-              await WalletStore.connect(true)
-            }}
+            onClick={async () => await WalletStore.connect(true)}
           >
-            <span>Connect a wallet</span>
+            <span>
+              {needNetworkChange ? 'Change network' : 'Connect a wallet'}
+            </span>
           </Button>
         </div>
       </div>

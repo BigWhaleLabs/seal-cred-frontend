@@ -1,6 +1,8 @@
 import { Web3Provider } from '@ethersproject/providers'
+import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
+import { serializeError } from 'eth-rpc-errors'
 import BaseProof from 'helpers/BaseProof'
 import ERC721BadgeBuilder from 'helpers/ERC721BadgeBuilder'
 import ERC721Proof from 'helpers/ERC721Proof'
@@ -19,6 +21,7 @@ let provider: Web3Provider
 class WalletStore extends PersistableStore {
   account?: string
   walletLoading = false
+  needNetworkChange = false
   walletsToNotifiedOfBeingDoxxed = {} as {
     [address: string]: boolean
   }
@@ -36,21 +39,23 @@ class WalletStore extends PersistableStore {
     this.walletLoading = true
     try {
       if (clearCachedProvider) web3Modal.clearCachedProvider()
+      if (this.needNetworkChange) await this.requestChangeNetwork()
 
       const instance = await web3Modal.connect()
       provider = new Web3Provider(instance)
       const userNetwork = (await provider.getNetwork()).name
-      if (userNetwork !== env.VITE_ETH_NETWORK && env.VITE_ETH_NETWORK)
+      if (userNetwork !== env.VITE_ETH_NETWORK && env.VITE_ETH_NETWORK) {
+        this.needNetworkChange = true
         throw new Error(
           ErrorList.wrongNetwork(userNetwork, env.VITE_ETH_NETWORK)
         )
+      }
       this.account = (await provider.listAccounts())[0]
       this.subscribeProvider(instance)
     } catch (error) {
-      if (error !== 'Modal closed by user') {
-        handleError(error)
-        this.clearData()
-      }
+      if (error === 'Modal closed by user') return
+      handleError(error)
+      this.clearData()
     } finally {
       this.walletLoading = false
     }
@@ -93,6 +98,42 @@ class WalletStore extends PersistableStore {
     }
 
     throw new Error('Unknown proof type')
+  }
+
+  private async requestChangeNetwork() {
+    if (!provider && !this.needNetworkChange) return
+
+    const chainId = hexValue(env.VITE_CHAIN_ID)
+    const network = env.VITE_ETH_NETWORK
+    const networkName = network.charAt(0).toUpperCase() + network.slice(1)
+    const currency = `${networkName}ETH`
+
+    const blockExplorerUrl =
+      network === 'mainnet'
+        ? 'https://etherscan.io/'
+        : `https://${network}.etherscan.io/`
+
+    try {
+      await provider.send('wallet_switchEthereumChain', [{ chainId }])
+      this.needNetworkChange = false
+    } catch (error) {
+      const code = serializeError(error).code
+      if (code !== 4902) return
+
+      await provider.send('wallet_addEthereumChain', [
+        {
+          chainId,
+          rpcUrls: [`https://${network}.infura.io/v3/`],
+          chainName: `${networkName} Test Network`,
+          nativeCurrency: {
+            name: currency,
+            symbol: currency,
+          },
+          blockExplorerUrls: [blockExplorerUrl],
+        },
+      ])
+      this.needNetworkChange = false
+    }
   }
 
   private async handleAccountChanged() {

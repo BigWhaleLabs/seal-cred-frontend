@@ -50,6 +50,8 @@ const delimiterContainer = classnames(
 )
 
 const AccountContainer = ({ account }: { account?: string }) => {
+  const { needNetworkChange } = useSnapshot(WalletStore)
+
   if (account)
     return (
       <a href={getEtherscanAddressUrl(account, Network.Goerli)}>
@@ -73,7 +75,7 @@ const AccountContainer = ({ account }: { account?: string }) => {
     >
       <div className={walletAccount}>
         <AccentText color="text-primary-semi-dimmed">
-          No wallet connected
+          {needNetworkChange ? 'Change network' : 'No wallet connected'}
         </AccentText>
       </div>
       <div className={width('w-fit')}>
