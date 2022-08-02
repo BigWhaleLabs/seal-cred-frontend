@@ -16,6 +16,7 @@ import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
   animation,
+  cursor,
   display,
   flex,
   flexDirection,
@@ -71,7 +72,7 @@ function useProofContent(
       content: (
         <span className={textWithIcon}>
           <ToolTip position="floating" fitContainer text={powerProofTooltip}>
-            <span>Generating...</span>
+            <span className={cursor('cursor-help')}>Generating...</span>
           </ToolTip>
           <div className={animation('animate-spin')}>
             <Star />
