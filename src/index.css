@@ -178,3 +178,25 @@ body {
 .web3modal-modal-lightbox {
   z-index: 100 !important;
 }
+
+#testgrid {
+  /* 2 row grid that fill left width on a new*/
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.flex-item {
+  width: calc(50% - 0.5rem);
+  height: auto;
+  flex-grow: 1;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  margin-right: 0.5rem;
+}
+.flex-item > * {
+  height: 100%;
+}

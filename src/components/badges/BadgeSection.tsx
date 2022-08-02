@@ -6,18 +6,18 @@ import ChildrenProp from 'models/ChildrenProp'
 import Section from 'components/Section'
 import classnames, {
   display,
+  flexGrow,
   gap,
+  gridAutoFlow,
   gridAutoRows,
+  gridColumnEnd,
+  gridColumnStart,
   gridTemplateColumns,
+  space,
 } from 'classnames/tailwind'
 import useAutoAnimate from 'hooks/useAutoAnimate'
 
-const badgesList = classnames(
-  display('grid'),
-  gap('gap-2'),
-  gridAutoRows('auto-rows-auto'),
-  gridTemplateColumns('grid-cols-1', 'lg:grid-cols-2')
-)
+const badgesList = classnames(display('flex'))
 
 export default function ({
   title,
@@ -35,15 +35,19 @@ export default function ({
 
   return (
     <Section title={title}>
-      <div className={badgesList} ref={listRef}>
+      <div class="container" ref={listRef}>
         {minted.map((contractAddress) => (
-          <BadgesOwnedForContract
-            key={contractAddress}
-            contractAddress={contractAddress}
-          />
+          <div class="flex-item">
+            <BadgesOwnedForContract
+              key={contractAddress}
+              contractAddress={contractAddress}
+            />
+          </div>
         ))}
         {proofs.map((proof) => (
-          <BadgeBlock onMinted={onMinted} key={proof.key} proof={proof} />
+          <div class="flex-item">
+            <BadgeBlock onMinted={onMinted} key={proof.key} proof={proof} />
+          </div>
         ))}
       </div>
     </Section>
