@@ -178,36 +178,3 @@ body {
 .web3modal-modal-lightbox {
   z-index: 100 !important;
 }
-
-#testgrid {
-  /* 2 row grid that fill left width on a new*/
-}
-
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-}
-
-@media only screen and (min-width: 600px) {
-  .flex-item {
-    width: calc(50% - 0.5rem);
-  }
-}
-
-@media only screen and (max-width: 599px) {
-  .flex-item {
-    width: 100%;
-  }
-}
-
-.flex-item {
-  height: auto;
-  flex-grow: 1;
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-  margin-right: 0.5rem;
-}
-.flex-item > * {
-  height: 100%;
-}
