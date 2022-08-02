@@ -7386,6 +7386,7 @@ export type TWidth =
   | 'w-card'
   | 'w-mobile-card'
   | 'w-full-125'
+  | 'w-card-with-gaps'
   | 'w-small'
 
 export type TMinWidth =

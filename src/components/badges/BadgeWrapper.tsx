@@ -5,6 +5,7 @@ import classnames, {
   borderRadius,
   display,
   flexDirection,
+  height,
   justifyContent,
   padding,
   space,
@@ -19,7 +20,8 @@ const badgeWrapper = (minted: boolean) =>
     alignItems('items-center'),
     borderRadius('rounded-lg'),
     backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
-    padding('px-4', 'py-4')
+    padding('px-4', 'py-4'),
+    height('h-full')
   )
 
 export default function ({

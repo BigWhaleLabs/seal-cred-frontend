@@ -100,6 +100,7 @@ module.exports = {
         card: '24.875rem',
         'mobile-card': '92%',
         'full-125': '125%',
+        'card-with-gaps': 'calc(50% - 0.5rem)',
       },
       inset: {
         '-78': '-19.5rem',

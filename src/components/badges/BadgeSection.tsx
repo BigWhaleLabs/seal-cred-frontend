@@ -4,20 +4,30 @@ import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
 import BaseProof from 'helpers/BaseProof'
 import ChildrenProp from 'models/ChildrenProp'
 import Section from 'components/Section'
+import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
+  boxSizing,
   display,
   flexGrow,
-  gap,
-  gridAutoFlow,
-  gridAutoRows,
-  gridColumnEnd,
-  gridColumnStart,
-  gridTemplateColumns,
-  space,
+  flexWrap,
+  height,
+  margin,
+  width,
 } from 'classnames/tailwind'
 import useAutoAnimate from 'hooks/useAutoAnimate'
 
-const badgesList = classnames(display('flex'))
+const badgesList = classnames(
+  display('flex'),
+  flexWrap('flex-wrap'),
+  boxSizing('box-border')
+)
+
+const badgeWrapper = classnames(
+  height('h-auto'),
+  flexGrow('grow'),
+  margin('my-1', 'mr-1.5'),
+  width('md:w-card-with-gaps', 'w-full')
+)
 
 export default function ({
   title,
@@ -35,9 +45,9 @@ export default function ({
 
   return (
     <Section title={title}>
-      <div class="container" ref={listRef}>
+      <div className={badgesList} ref={listRef}>
         {minted.map((contractAddress) => (
-          <div class="flex-item">
+          <div className={classNamesToString(badgeWrapper)}>
             <BadgesOwnedForContract
               key={contractAddress}
               contractAddress={contractAddress}
@@ -45,7 +55,7 @@ export default function ({
           </div>
         ))}
         {proofs.map((proof) => (
-          <div class="flex-item">
+          <div className={classNamesToString(badgeWrapper)}>
             <BadgeBlock onMinted={onMinted} key={proof.key} proof={proof} />
           </div>
         ))}
