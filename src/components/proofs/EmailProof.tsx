@@ -2,10 +2,12 @@ import { ProofText, TextButton } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
+import Button from 'components/Button'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import Line from 'components/proofs/Line'
 import QuestionMark from 'components/QuestionMark'
+import SimpleArrow from 'icons/SimpleArrow'
 import ToolTip from 'components/ToolTip'
 import classnames, {
   alignItems,
@@ -83,6 +85,7 @@ export default function () {
   const [domain, setDomain] = useState('')
   const [open, setOpen] = useState(false)
   const [error, setError] = useState<string | undefined>()
+  const [generation, setGeneration] = useState(false)
   const { xs } = useBreakpoints()
   const { emailDomain } = useSnapshot(EmailDomainStore)
   const [containerRef] = useAutoAnimate<HTMLDivElement>()
@@ -90,6 +93,11 @@ export default function () {
   function onCreate() {
     setOpen(false)
     setDomain('')
+    setGeneration(false)
+  }
+
+  function onGeneration() {
+    setGeneration(true)
   }
 
   function jumpToToken() {
@@ -105,6 +113,19 @@ export default function () {
       <div className={proofLineContainer} ref={containerRef}>
         <div className={emailTitleContainer}>
           <div className={emailTitleLeft}>
+            {domain && (
+              <Button
+                disabled={generation}
+                type={'tertiary'}
+                onClick={() => {
+                  setDomain('')
+                }}
+              >
+                <div>
+                  <SimpleArrow />
+                </div>
+              </Button>
+            )}
             <ProofText>Work email</ProofText>
             <div className={tooltipWrapper}>
               <ToolTip
@@ -149,6 +170,7 @@ export default function () {
             onCreate={onCreate}
             onChange={setDomain}
             onError={setError}
+            onGeneration={onGeneration}
             error={error}
           />
         )}
