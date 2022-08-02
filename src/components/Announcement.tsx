@@ -55,7 +55,7 @@ export default function ({ redirectTo }: { redirectTo: string }) {
       <div className={flex('flex-1')} />
       <LinkText url={redirectTo}>
         <AccentText small bold color="text-formal-accent">
-          Now introducing zk proof for your work email!{' '}
+          Now introducing zk proofs for your work email!{' '}
           {!onPage
             ? 'Get started'
             : account

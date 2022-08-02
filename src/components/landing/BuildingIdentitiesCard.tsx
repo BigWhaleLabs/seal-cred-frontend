@@ -9,7 +9,7 @@ export default function () {
         Building your identities with ZK Badges
       </HeaderText>
       <BodyText>
-        Once you have ZK proof, you can add create ZK badges for an anonymous
+        Once you have a ZK proof, you can create ZK badges for an anonymous
         wallet.
       </BodyText>
       <BodyText>
