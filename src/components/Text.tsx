@@ -239,7 +239,6 @@ export function LinkText({
   gradientTo,
   children,
   targetBlank,
-  internal,
 }: ChildrenProp & {
   url: string
   targetBlank?: boolean
@@ -248,20 +247,40 @@ export function LinkText({
   color?: TTextColor
   gradientFrom?: TGradientColorStops
   gradientTo?: TGradientColorStops
-  internal?: boolean
 }) {
-  const stylesClassname = linkText(bold, color, gradientFrom, gradientTo)
+  return (
+    <a
+      className={linkText(bold, color, gradientFrom, gradientTo)}
+      href={url}
+      title={title}
+      target={targetBlank ? '_blank' : '_self'}
+      rel="noopener noreferrer"
+    >
+      {children}
+    </a>
+  )
+}
 
+const footerLink = classnames(
+  fontSize('text-sm'),
+  fontWeight('font-semibold'),
+  textDecoration('no-underline', 'hover:underline'),
+  textColor('text-formal-accent', 'hover:text-accent')
+)
+export function FooterlLink({
+  url,
+  children,
+  internal,
+}: ChildrenProp & { url: string; internal?: boolean }) {
   return internal ? (
-    <Link to={url} className={stylesClassname} title={title}>
+    <Link to={url} className={footerLink}>
       {children}
     </Link>
   ) : (
     <a
-      className={stylesClassname}
+      className={footerLink}
       href={url}
-      title={title}
-      target={targetBlank ? '_blank' : '_self'}
+      target="_blank"
       rel="noopener noreferrer"
     >
       {children}
