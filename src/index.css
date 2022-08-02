@@ -189,8 +189,19 @@ body {
   box-sizing: border-box;
 }
 
+@media only screen and (min-width: 600px) {
+  .flex-item {
+    width: calc(50% - 0.5rem);
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .flex-item {
+    width: 100%;
+  }
+}
+
 .flex-item {
-  width: calc(50% - 0.5rem);
   height: auto;
   flex-grow: 1;
   margin-top: 0.25rem;
