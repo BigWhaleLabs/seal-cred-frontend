@@ -239,6 +239,7 @@ export function LinkText({
   gradientTo,
   children,
   targetBlank,
+  internal,
 }: ChildrenProp & {
   url: string
   targetBlank?: boolean
@@ -247,11 +248,17 @@ export function LinkText({
   color?: TTextColor
   gradientFrom?: TGradientColorStops
   gradientTo?: TGradientColorStops
+  internal?: boolean
 }) {
-  const isExternalUrl = url.startsWith('https://')
-  return isExternalUrl ? (
+  const stylesClassname = linkText(bold, color, gradientFrom, gradientTo)
+
+  return internal ? (
+    <Link to={url} className={stylesClassname} title={title}>
+      {children}
+    </Link>
+  ) : (
     <a
-      className={linkText(bold, color, gradientFrom, gradientTo)}
+      className={stylesClassname}
       href={url}
       title={title}
       target={targetBlank ? '_blank' : '_self'}
@@ -259,14 +266,6 @@ export function LinkText({
     >
       {children}
     </a>
-  ) : (
-    <Link
-      to={url}
-      className={linkText(bold, color, gradientFrom, gradientTo)}
-      title={title}
-    >
-      {children}
-    </Link>
   )
 }
 
