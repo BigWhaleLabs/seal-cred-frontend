@@ -85,7 +85,7 @@ export default function () {
   const [domain, setDomain] = useState('')
   const [open, setOpen] = useState(false)
   const [error, setError] = useState<string | undefined>()
-  const [generation, setGeneration] = useState(false)
+  const [generationStarted, setGenerationStarted] = useState(false)
   const { xs } = useBreakpoints()
   const { emailDomain } = useSnapshot(EmailDomainStore)
   const [containerRef] = useAutoAnimate<HTMLDivElement>()
@@ -93,11 +93,11 @@ export default function () {
   function onCreate() {
     setOpen(false)
     setDomain('')
-    setGeneration(false)
+    setGenerationStarted(false)
   }
 
-  function onGeneration() {
-    setGeneration(true)
+  function onGenerationStarted() {
+    setGenerationStarted(true)
   }
 
   function jumpToToken() {
@@ -115,7 +115,7 @@ export default function () {
           <div className={emailTitleLeft}>
             {domain && (
               <Button
-                disabled={generation}
+                disabled={generationStarted}
                 type={'tertiary'}
                 onClick={() => {
                   setDomain('')
@@ -170,7 +170,7 @@ export default function () {
             onCreate={onCreate}
             onChange={setDomain}
             onError={setError}
-            onGeneration={onGeneration}
+            onGenerationStarted={onGenerationStarted}
             error={error}
           />
         )}

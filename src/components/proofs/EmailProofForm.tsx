@@ -18,7 +18,7 @@ export default function ({
   onError,
   onCreate,
   onChange,
-  onGeneration,
+  onGenerationStarted,
 }: {
   domain: string
   submitType?: 'primary' | 'secondary' | 'tertiary'
@@ -27,7 +27,7 @@ export default function ({
   onError: (error: string | undefined) => void
   onCreate: (proof: EmailProof) => void
   onChange: (domain: string) => void
-  onGeneration: () => void
+  onGenerationStarted?: () => void
 }) {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState<string>('')
@@ -55,7 +55,10 @@ export default function ({
     if (!checkDomainToken(secret))
       return onError('This is an invalid token. Please try again.')
 
-    onGeneration()
+    if (onGenerationStarted) {
+      onGenerationStarted()
+    }
+
     setLoading(true)
     onError(undefined)
     try {
