@@ -112,7 +112,7 @@ export default function () {
             {domain && (
               <Button
                 disabled={generationStarted}
-                type={'tertiary'}
+                type="tertiary"
                 onClick={() => {
                   setDomain('')
                 }}
@@ -154,11 +154,11 @@ export default function () {
                 Add your work email and we’ll send you a token for that email
                 (check the spam folder). Then, use the token here to create zk
                 proof.{' '}
-                {emailDomain ? (
+                {!!emailDomain && (
                   <TextButton onClick={jumpToToken}>
                     Have an existing token?
                   </TextButton>
-                ) : null}
+                )}
               </>
             }
             onCreate={onCreate}
