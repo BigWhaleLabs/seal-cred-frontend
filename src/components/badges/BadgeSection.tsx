@@ -1,5 +1,4 @@
-import { ComponentChildren, Ref } from 'preact'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { ComponentChildren } from 'preact'
 import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
 import BaseProof from 'helpers/BaseProof'
@@ -11,6 +10,7 @@ import classnames, {
   gridAutoRows,
   gridTemplateColumns,
 } from 'classnames/tailwind'
+import useAutoAnimate from 'hooks/useAutoAnimate'
 
 const badgesList = classnames(
   display('grid'),
@@ -31,11 +31,11 @@ export default function ({
   onMinted?: () => void
 }) {
   if (minted.length === 0 && proofs.length === 0) return null
-  const listRef = useAutoAnimate({})
+  const [listRef] = useAutoAnimate<HTMLDivElement>()
 
   return (
     <Section title={title}>
-      <div className={badgesList} ref={listRef as Ref<HTMLDivElement>}>
+      <div className={badgesList} ref={listRef}>
         {minted.map((contractAddress) => (
           <BadgesOwnedForContract
             key={contractAddress}
