@@ -55,9 +55,7 @@ export default function ({
     if (!checkDomainToken(secret))
       return onError('This is an invalid token. Please try again.')
 
-    if (onGenerationStarted) {
-      onGenerationStarted()
-    }
+    if (onGenerationStarted) onGenerationStarted()
 
     setLoading(true)
     onError(undefined)

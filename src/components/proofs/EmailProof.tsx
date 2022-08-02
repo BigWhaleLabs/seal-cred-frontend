@@ -68,7 +68,7 @@ const proofLineContainer = classnames(
 
 const emailTitleLeft = classnames(
   display('flex'),
-  space('space-x-2'),
+  space('space-x-3'),
   alignItems('items-center')
 )
 
@@ -96,10 +96,6 @@ export default function () {
     setGenerationStarted(false)
   }
 
-  function onGenerationStarted() {
-    setGenerationStarted(true)
-  }
-
   function jumpToToken() {
     setError(undefined)
     setDomain(emailDomain)
@@ -121,9 +117,7 @@ export default function () {
                   setDomain('')
                 }}
               >
-                <div>
-                  <SimpleArrow />
-                </div>
+                <SimpleArrow />
               </Button>
             )}
             <ProofText>Work email</ProofText>
@@ -170,7 +164,9 @@ export default function () {
             onCreate={onCreate}
             onChange={setDomain}
             onError={setError}
-            onGenerationStarted={onGenerationStarted}
+            onGenerationStarted={() => {
+              setGenerationStarted(true)
+            }}
             error={error}
           />
         )}
