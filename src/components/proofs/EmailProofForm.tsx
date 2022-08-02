@@ -75,7 +75,7 @@ export default function ({
   return (
     <>
       <div className={margin('mt-4')}>
-        <BodyText>
+        <BodyText smallOnBig>
           {domain ? (
             <>
               A token has been sent to <b>{email ? email : `@${domain}`}</b>.
