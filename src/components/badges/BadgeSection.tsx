@@ -30,8 +30,8 @@ export default function ({
   proofs: BaseProof[]
   onMinted?: () => void
 }) {
-  if (minted.length === 0 && proofs.length === 0) return null
   const [listRef] = useAutoAnimate<HTMLDivElement>()
+  if (minted.length === 0 && proofs.length === 0) return null
 
   return (
     <Section title={title}>
