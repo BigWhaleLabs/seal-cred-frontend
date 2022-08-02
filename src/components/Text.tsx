@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import {
   TDropShadow,
   TGradientColorStops,
@@ -247,7 +248,8 @@ export function LinkText({
   gradientFrom?: TGradientColorStops
   gradientTo?: TGradientColorStops
 }) {
-  return (
+  const isExternalUrl = url.startsWith('https://')
+  return isExternalUrl ? (
     <a
       className={linkText(bold, color, gradientFrom, gradientTo)}
       href={url}
@@ -257,6 +259,14 @@ export function LinkText({
     >
       {children}
     </a>
+  ) : (
+    <Link
+      to={url}
+      className={linkText(bold, color, gradientFrom, gradientTo)}
+      title={title}
+    >
+      {children}
+    </Link>
   )
 }
 
