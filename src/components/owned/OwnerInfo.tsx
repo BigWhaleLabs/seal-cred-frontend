@@ -131,7 +131,7 @@ export default function ({
       color="secondary"
       shadow
       onlyWrap
-      spinner="Certified with SealCred ZK Proof"
+      spinner="Certified with SealCred ZK Proofs"
     >
       <BadgeTitle badge={badge} />
       <BadgeContent badge={badge} />

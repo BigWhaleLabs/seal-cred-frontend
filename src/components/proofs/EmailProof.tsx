@@ -102,7 +102,7 @@ export default function () {
   }
 
   const popoverText =
-    'When you submit your email, we create a token out of your email’s domain. You can then use that token to create zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
+    'When you submit your email, we create a token out of your email’s domain. You can then use that token to create a zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
 
   return (
     <Line breakWords>

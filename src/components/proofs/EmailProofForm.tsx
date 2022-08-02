@@ -77,7 +77,7 @@ export default function ({
           {domain ? (
             <>
               A token has been sent to <b>{email ? email : `@${domain}`}</b>.
-              Copy the token and add it here to create zk proof. Or{' '}
+              Copy the token and add it here to create a zk proof. Or{' '}
               <TextButton onClick={() => resetEmail()} disabled={loading}>
                 re-enter email
               </TextButton>

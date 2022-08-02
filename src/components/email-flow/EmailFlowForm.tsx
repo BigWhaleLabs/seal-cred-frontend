@@ -42,10 +42,10 @@ export default function EmailFlowForm({
         <BodyText>
           <span>
             <AccentText color="text-accent">SealCred</AccentText>
-            <AccentText color="text-secondary">|work</AccentText>
+            <AccentText color="text-secondary">|echo</AccentText>
           </span>{' '}
           allows you to create and add a zkBadge to your wallet that proves you
-          work somewhere without exposing your identity
+          work somewhere without exposing your identity.
         </BodyText>
       )}
       <div className={proofLineContainer}>
