@@ -1,6 +1,6 @@
 export default interface SCEmailLedger {
-  [domain: string]: {
+  [originalContract: string]: {
+    originalContract: string
     derivativeContract: string
-    domain: string
   }
 }

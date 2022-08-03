@@ -5,19 +5,13 @@ import getSRC721LedgerRecord from 'helpers/contracts/getERC721LedgerRecord'
 export default async function (
   ledger: ExternalSCERC721Ledger
 ): Promise<ERC721Ledger> {
-  const eventsFilter = ledger.filters.CreateDerivativeContract()
+  const eventsFilter = ledger.filters.CreateDerivative()
   const events = await ledger.queryFilter(eventsFilter)
-  const result = events.reduce(
-    (prev, { args: { originalContract, derivativeContract } }) => {
-      return {
-        ...prev,
-        [originalContract]: getSRC721LedgerRecord(
-          originalContract,
-          derivativeContract
-        ),
-      }
-    },
-    {}
-  )
+  const result = events.reduce((prev, { args: { original, derivative } }) => {
+    return {
+      ...prev,
+      [original]: getSRC721LedgerRecord(original, derivative),
+    }
+  }, {})
   return result
 }

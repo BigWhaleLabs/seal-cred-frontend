@@ -1,6 +1,6 @@
-export default function (derivativeContract: string, domain: string) {
+export default function (originalContract: string, derivativeContract: string) {
   return {
-    domain,
+    originalContract,
     derivativeContract,
   }
 }
