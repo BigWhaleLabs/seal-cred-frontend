@@ -8,10 +8,9 @@ import { proxy } from 'valtio'
 import ERC721Ledger from 'models/ERC721Ledger'
 import EmailLedger from 'models/EmailLedger'
 import getERC721Ledger from 'helpers/contracts/getERC721Ledger'
-import getERC721LedgerRecord from 'helpers/contracts/getERC721LedgerRecord'
 import getEmailLedger from 'helpers/contracts/getEmailLedger'
-import getEmailLedgerRecord from 'helpers/contracts/getEmailLedgerRecord'
 import getExternalSCERC721Ledger from 'helpers/contracts/getExternalSCERC721Ledger'
+import getLedgerRecord from 'helpers/contracts/getLedgerRecord'
 
 interface SealCredStoreType {
   externalERC721Ledger: Promise<ERC721Ledger>
@@ -69,7 +68,7 @@ SCERC721LedgerContract.on(
     console.info('CreateDerivative event', originalContract, derivativeContract)
     const ledger = await SealCredStore.ERC721Ledger
     if (!ledger[originalContract]) {
-      ledger[originalContract] = getERC721LedgerRecord(
+      ledger[originalContract] = getLedgerRecord(
         originalContract,
         derivativeContract
       )
@@ -98,7 +97,7 @@ ExternalSCERC721LedgerContract.on(
     )
     const ledger = await SealCredStore.externalERC721Ledger
     if (!ledger[originalContract]) {
-      ledger[originalContract] = getERC721LedgerRecord(
+      ledger[originalContract] = getLedgerRecord(
         originalContract,
         derivativeContract
       )
@@ -123,7 +122,7 @@ SCEmailLedgerContract.on(
     console.info('CreateDerivative event', originalContract, derivativeContract)
     const ledger = await SealCredStore.emailLedger
     if (!ledger[originalContract]) {
-      ledger[originalContract] = getEmailLedgerRecord(
+      ledger[originalContract] = getLedgerRecord(
         originalContract,
         derivativeContract
       )

@@ -1,6 +1,6 @@
 import { ExternalSCERC721Ledger } from '@big-whale-labs/seal-cred-ledger-contract'
 import ERC721Ledger from 'models/ERC721Ledger'
-import getSRC721LedgerRecord from 'helpers/contracts/getERC721LedgerRecord'
+import getLedgerRecord from 'helpers/contracts/getLedgerRecord'
 
 export default async function (
   ledger: ExternalSCERC721Ledger
@@ -10,7 +10,7 @@ export default async function (
   const result = events.reduce((prev, { args: { original, derivative } }) => {
     return {
       ...prev,
-      [original]: getSRC721LedgerRecord(original, derivative),
+      [original]: getLedgerRecord(original, derivative),
     }
   }, {})
   return result
