@@ -2,7 +2,6 @@ import { Eip1193Bridge } from '@ethersproject/experimental'
 import { RelayProvider } from '@opengsn/provider'
 import { Web3Provider } from '@ethersproject/providers'
 import { WrapBridge } from '@opengsn/provider/dist/WrapContract'
-import { ethers } from 'ethers'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
@@ -91,10 +90,12 @@ class WalletStore extends PersistableStore {
             new Eip1193Bridge(provider.getSigner(), provider)
           ),
           config: {
-            paymasterAddress: '0xd6bb542f9240ecbace7cc1a91a4e7c9d302837cb',
+            paymasterAddress: env.VITE_PAYMASTER_ADDRESS,
+            preferredRelays: [env.VITE_RELAY_HUB_CONTRACT_ADDRESS],
           },
         }).init()
-        const ethersProvider = new ethers.providers.Web3Provider(relayProvider)
+
+        const ethersProvider = new Web3Provider(relayProvider)
         const builder = new ERC721BadgeBuilder(ethersProvider)
         return builder.create(proof)
       } else {
