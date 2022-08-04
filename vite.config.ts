@@ -6,6 +6,7 @@ import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 import inject from '@rollup/plugin-inject'
 import nodePolyfills from 'rollup-plugin-node-polyfills'
 import removeConsole from 'vite-plugin-remove-console'
+import { builtinModules } from 'module'
 
 export default defineConfig({
   plugins: [preact(), tsconfigPaths()],
@@ -24,9 +25,10 @@ export default defineConfig({
           global: 'global',
           stream: 'stream',
           _stream_duplex: 'duplex',
-        }),
+        }) as unknown as Plugin,
         removeConsole(),
       ],
+      external: builtinModules,
     },
     commonjsOptions: {
       transformMixedEsModules: true,
@@ -39,16 +41,17 @@ export default defineConfig({
       },
       plugins: [
         GlobalsPolyfills({
-          process: true,
           buffer: true,
         }),
       ],
     },
   },
+  server: { port: 3000 },
   resolve: {
     alias: {
+      http: 'rollup-plugin-node-polyfills/polyfills/http',
+      https: 'rollup-plugin-node-polyfills/polyfills/http',
       stream: 'stream-browserify',
-      https: 'agent-base',
       assert: 'assert-browserify',
     },
   },
