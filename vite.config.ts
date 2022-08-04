@@ -54,8 +54,9 @@ export default defineConfig({
     alias: {
       http: 'rollup-plugin-node-polyfills/polyfills/http',
       https: 'rollup-plugin-node-polyfills/polyfills/http',
-      stream: 'stream-browserify',
-      assert: 'assert-browserify',
+      util: 'rollup-plugin-node-polyfills/polyfills/util',
+      stream: 'rollup-plugin-node-polyfills/polyfills/stream',
+      assert: 'rollup-plugin-node-polyfills/polyfills/assert',
     },
   },
 })
