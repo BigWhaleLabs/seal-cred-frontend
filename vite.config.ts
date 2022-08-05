@@ -4,9 +4,10 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import { visualizer } from 'rollup-plugin-visualizer'
 import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 import inject from '@rollup/plugin-inject'
-import nodePolyfills from 'rollup-plugin-node-polyfills'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
 import removeConsole from 'vite-plugin-remove-console'
 import { builtinModules } from 'module'
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 
 export default defineConfig({
   plugins: [preact(), tsconfigPaths()],
@@ -43,6 +44,7 @@ export default defineConfig({
         GlobalsPolyfills({
           buffer: true,
         }),
+        NodeModulesPolyfillPlugin(),
       ],
     },
   },
@@ -50,13 +52,4 @@ export default defineConfig({
     logOverride: { 'this-is-undefined-in-esm': 'silent' },
   },
   server: { port: 3000 },
-  resolve: {
-    alias: {
-      http: 'rollup-plugin-node-polyfills/polyfills/http',
-      https: 'rollup-plugin-node-polyfills/polyfills/http',
-      util: 'rollup-plugin-node-polyfills/polyfills/util',
-      stream: 'rollup-plugin-node-polyfills/polyfills/stream',
-      assert: 'rollup-plugin-node-polyfills/polyfills/assert',
-    },
-  },
 })

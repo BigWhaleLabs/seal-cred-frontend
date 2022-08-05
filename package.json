@@ -8,7 +8,6 @@
     "preview": "yarn build && yarn vite preview",
     "pretty": "prettier --check src",
     "lint": "yarn pretty && eslint --max-warnings 0 --ext ts,tsx,json src",
-    "postinstall": "yarn generate-css-types",
     "generate-css-types": "tailwindcss-classnames -o src/classnames/tailwind.ts && prettier --write src/classnames/tailwind.ts"
   },
   "browserslist": {
@@ -24,10 +23,11 @@
     ]
   },
   "dependencies": {
-    "@big-whale-labs/constants": "^0.1.13",
+    "@big-whale-labs/constants": "^0.1.15",
     "@big-whale-labs/seal-cred-ledger-contract": "^0.2.6",
     "@coinbase/wallet-sdk": "^3.4.0",
     "@formkit/auto-animate": "^1.0.0-beta.1",
+    "@opengsn/provider": "^3.0.0-beta.1",
     "@walletconnect/web3-provider": "^1.8.0",
     "axios": "^0.27.2",
     "canvas-confetti": "^1.5.1",
@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@preact/preset-vite": "^2.3.0",
     "@rollup/plugin-inject": "^4.0.4",
@@ -57,7 +58,6 @@
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.32.0",
     "@vitejs/plugin-react": "^2.0.0",
-    "assert-browserify": "^2.0.0",
     "autoprefixer": "^10.4.8",
     "cross-env": "^7.0.3",
     "eslint": "^8.21.0",
@@ -72,7 +72,7 @@
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "react-scripts": "^5.0.1",
-    "rollup-plugin-node-polyfills": "^0.2.1",
+    "rollup-plugin-polyfill-node": "^0.10.2",
     "rollup-plugin-visualizer": "^5.7.1",
     "tailwindcss": "^3.1.7",
     "tailwindcss-classnames": "^3.0.5",
