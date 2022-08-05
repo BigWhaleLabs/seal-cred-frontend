@@ -1,6 +1,6 @@
 import { Eip1193Bridge } from '@ethersproject/experimental'
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import { RelayProvider } from '@opengsn/provider'
-import { Web3Provider } from '@ethersproject/providers'
 import { WrapBridge } from '@opengsn/provider/dist/WrapContract'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
@@ -98,7 +98,9 @@ class WalletStore extends PersistableStore {
           },
         }).init()
 
-        const ethersProvider = new Web3Provider(relayProvider)
+        const ethersProvider = new Web3Provider(
+          relayProvider as unknown as ExternalProvider
+        )
         const builder = new ERC721BadgeBuilder(ethersProvider)
         return builder.create(proof)
       } else {
