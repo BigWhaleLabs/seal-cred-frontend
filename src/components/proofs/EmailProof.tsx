@@ -29,7 +29,6 @@ import classnames, {
   visibility,
   width,
 } from 'classnames/tailwind'
-import useAutoAnimate from 'hooks/useAutoAnimate'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const arrowContainer = classnames(
@@ -88,7 +87,6 @@ export default function () {
   const [generationStarted, setGenerationStarted] = useState(false)
   const { xs } = useBreakpoints()
   const { emailDomain } = useSnapshot(EmailDomainStore)
-  const [containerRef] = useAutoAnimate<HTMLDivElement>()
 
   function onCreate() {
     setOpen(false)
@@ -106,7 +104,7 @@ export default function () {
 
   return (
     <Line breakWords>
-      <div className={proofLineContainer} ref={containerRef}>
+      <div className={proofLineContainer}>
         <div className={emailTitleContainer}>
           <div className={emailTitleLeft}>
             {domain && (

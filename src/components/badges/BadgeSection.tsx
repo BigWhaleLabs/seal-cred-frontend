@@ -10,7 +10,6 @@ import classnames, {
   gridAutoRows,
   gridTemplateColumns,
 } from 'classnames/tailwind'
-import useAutoAnimate from 'hooks/useAutoAnimate'
 
 const badgesList = classnames(
   display('grid'),
@@ -30,12 +29,11 @@ export default function ({
   proofs: BaseProof[]
   onMinted?: () => void
 }) {
-  const [listRef] = useAutoAnimate<HTMLDivElement>()
   if (minted.length === 0 && proofs.length === 0) return null
 
   return (
     <Section title={title}>
-      <div className={badgesList} ref={listRef}>
+      <div className={badgesList}>
         {minted.map((contractAddress) => (
           <BadgesOwnedForContract
             key={contractAddress}
