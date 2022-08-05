@@ -81,8 +81,5 @@
     "vite-plugin-remove-console": "^1.1.0",
     "vite-tsconfig-paths": "^3.5.0"
   },
-  "packageManager": "yarn@3.2.1",
-  "resolutions": {
-    "@opengsn/common@3.0.0-beta.1": "patch:@opengsn/common@npm:3.0.0-beta.1#.yarn/patches/@opengsn-common-npm-3.0.0-beta.1-79cb41f503.patch"
-  }
+  "packageManager": "yarn@3.2.1"
 }
