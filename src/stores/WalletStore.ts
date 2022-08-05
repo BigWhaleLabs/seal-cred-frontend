@@ -1,7 +1,4 @@
-import { Eip1193Bridge } from '@ethersproject/experimental'
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
-import { RelayProvider } from '@opengsn/provider'
-import { WrapBridge } from '@opengsn/provider/dist/WrapContract'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
