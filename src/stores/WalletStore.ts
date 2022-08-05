@@ -1,18 +1,18 @@
-import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
+import { Web3Provider } from '@ethersproject/providers'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
 import { serializeError } from 'eth-rpc-errors'
 import BaseProof from 'helpers/BaseProof'
-import ERC721BadgeBuilder from 'helpers/ERC721BadgeBuilder'
 import ERC721Proof from 'helpers/ERC721Proof'
-import EmailBadgeBuilder from 'helpers/EmailBadgeBuilder'
 import EmailProof from 'helpers/EmailProof'
-import ExternalERC721BadgeBuilder from 'helpers/ExternalERC721BadgeBuilder'
 import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import chainForWallet from 'helpers/chainForWallet'
+import createERC721Badge from 'helpers/createERC721Badge'
+import createEmailBadge from 'helpers/createEmailBadge'
+import createExternalERC721Badge from 'helpers/createExternalERC721Badge'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
 import relayProvider from 'helpers/providers/relayProvider'
@@ -81,28 +81,27 @@ class WalletStore extends PersistableStore {
       throw new Error('No account found')
     }
 
-    const ethersProvider = new Web3Provider(
-      (await relayProvider(provider)) as unknown as ExternalProvider
-    )
+    const ethersProvider = new Web3Provider(await relayProvider(provider))
 
     if (proof instanceof ERC721Proof) {
       if (proof.network === Network.Goerli) {
-        const builder = new ERC721BadgeBuilder(ethersProvider)
-        return builder.create(proof)
+        return createERC721Badge(ethersProvider, proof)
       } else {
-        const builder = new ExternalERC721BadgeBuilder(provider)
-
         const signature = await requestContractMetadata(
           proof.network,
           proof.contract
         )
-        return builder.create(proof, signature.message, signature.signature)
+        return createExternalERC721Badge(
+          ethersProvider,
+          proof,
+          signature.message,
+          signature.signature
+        )
       }
     }
 
     if (proof instanceof EmailProof) {
-      const builder = new EmailBadgeBuilder(ethersProvider)
-      return builder.create(proof)
+      return createEmailBadge(ethersProvider, proof)
     }
 
     throw new Error('Unknown proof type')
