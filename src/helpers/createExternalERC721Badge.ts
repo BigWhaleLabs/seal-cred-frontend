@@ -22,7 +22,7 @@ export default async function (
 
   const tx = await contract[
     'mint((uint256[2],uint256[2][2],uint256[2],uint256[46]),bytes,bytes)'
-  ](txData, message || '', signature || '')
+  ](txData, message, signature)
 
   return tx.wait()
 }
