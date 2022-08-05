@@ -18,6 +18,7 @@ import PersistableStore from 'stores/persistence/PersistableStore'
 import chainForWallet from 'helpers/chainForWallet'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
+import relayProvider from 'helpers/providers/relayProvider'
 import web3Modal from 'helpers/web3Modal'
 
 let provider: Web3Provider
@@ -83,24 +84,12 @@ class WalletStore extends PersistableStore {
       throw new Error('No account found')
     }
 
+    const ethersProvider = new Web3Provider(
+      (await relayProvider(provider)) as unknown as ExternalProvider
+    )
+
     if (proof instanceof ERC721Proof) {
       if (proof.network === Network.Goerli) {
-        const relayProvider = await RelayProvider.newProvider({
-          provider: new WrapBridge(
-            new Eip1193Bridge(provider.getSigner(), provider)
-          ),
-          config: {
-            paymasterAddress: env.VITE_PAYMASTER_ADDRESS,
-            preferredRelays: [env.VITE_GSN_SC_RELAY],
-            loggerConfiguration: {
-              logLevel: 'debug',
-            },
-          },
-        }).init()
-
-        const ethersProvider = new Web3Provider(
-          relayProvider as unknown as ExternalProvider
-        )
         const builder = new ERC721BadgeBuilder(ethersProvider)
         return builder.create(proof)
       } else {
@@ -115,7 +104,7 @@ class WalletStore extends PersistableStore {
     }
 
     if (proof instanceof EmailProof) {
-      const builder = new EmailBadgeBuilder(provider)
+      const builder = new EmailBadgeBuilder(ethersProvider)
       return builder.create(proof)
     }
 
