@@ -91,7 +91,7 @@ class WalletStore extends PersistableStore {
           ),
           config: {
             paymasterAddress: env.VITE_PAYMASTER_ADDRESS,
-            preferredRelays: [`https://gsn.sealcred.xyz`],
+            preferredRelays: [env.VITE_GSN_SC_RELAY],
             loggerConfiguration: {
               logLevel: 'debug',
             },
