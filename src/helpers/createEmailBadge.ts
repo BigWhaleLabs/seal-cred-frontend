@@ -11,9 +11,14 @@ function createContract(provider: Web3Provider) {
   )
 }
 
-export default async function (provider: Web3Provider, proof: EmailProof) {
+export default async function (
+  provider: Web3Provider,
+  proof: EmailProof,
+  maxFeePerGas?: string
+) {
+  if (!proof.result) throw new Error('Invalid proof')
   const contract = createContract(provider)
-  const txData = makeTransaction(proof.result)
+  const txData = makeTransaction(proof.result, maxFeePerGas)
 
   const tx = await contract.mint(txData)
 

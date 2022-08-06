@@ -1,4 +1,4 @@
-import { Web3Provider } from '@ethersproject/providers'
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
@@ -81,11 +81,18 @@ class WalletStore extends PersistableStore {
       throw new Error('No account found')
     }
 
-    const ethersProvider = new Web3Provider(await relayProvider(provider))
+    const gsnProvider = relayProvider(provider)
+    await gsnProvider.init()
+
+    const ethersProvider = new Web3Provider(
+      gsnProvider as unknown as ExternalProvider
+    )
+
+    const gasFees = await gsnProvider.calculateGasFees()
 
     if (proof instanceof ERC721Proof) {
       if (proof.network === Network.Goerli) {
-        return createERC721Badge(ethersProvider, proof)
+        return createERC721Badge(ethersProvider, proof, gasFees.maxFeePerGas)
       } else {
         const signature = await requestContractMetadata(
           proof.network,
@@ -95,13 +102,14 @@ class WalletStore extends PersistableStore {
           ethersProvider,
           proof,
           signature.message,
-          signature.signature
+          signature.signature,
+          gasFees.maxFeePerGas
         )
       }
     }
 
     if (proof instanceof EmailProof) {
-      return createEmailBadge(ethersProvider, proof)
+      return createEmailBadge(ethersProvider, proof, gasFees.maxFeePerGas)
     }
 
     throw new Error('Unknown proof type')
