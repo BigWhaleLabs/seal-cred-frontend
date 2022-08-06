@@ -29,7 +29,7 @@ export default function relayProvider(provider: Web3Provider) {
   return RelayProvider.newProvider({
     provider: new WrapBridge(new Eip1193Bridge(provider.getSigner(), provider)),
     config: {
-      paymasterAddress: env.VITE_PAYMASTER_CONTRACT_ADDRESS,
+      paymasterAddress: env.VITE_GSN_PAYMASTER_CONTRACT_ADDRESS,
       preferredRelays: [env.VITE_GSN_SC_RELAY],
     },
     overrideDependencies: {
