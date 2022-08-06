@@ -10,8 +10,7 @@ const GasPricePingFilter: PingFilter = (
   gsnTransactionDetails
 ) => {
   if (
-    pingResponse.relayManagerAddress !==
-      env.VITE_GSN_RELAY_MANAGER_CONTRACT_ADDRESS &&
+    pingResponse.relayManagerAddress !== env.VITE_GSN_RELAY_MANAGER_ADDRESS &&
     gsnTransactionDetails.maxPriorityFeePerGas != null &&
     parseInt(pingResponse.minMaxPriorityFeePerGas) >
       parseInt(gsnTransactionDetails.maxPriorityFeePerGas)
