@@ -47,7 +47,7 @@ export default function () {
         <HeaderText accent>First</HeaderText>
         <div className={bottomWrapper}>
           <BodyText center>
-            Connect a wallet with supported NFTs to create ZK proofs.
+            Connect a wallet with NFTs to create a ZK proof.
           </BodyText>
           <BodyText center color="text-primary">
             Keep in mind this project is still in Alpha
