@@ -280,11 +280,11 @@ const footerLink = (active?: boolean) =>
   classnames(
     fontSize('text-sm'),
     fontWeight('font-semibold'),
-    textDecoration(active ? 'underline' : 'no-underline', 'hover:underline'),
-    textColor(
-      active ? 'text-accent' : 'text-formal-accent',
-      'hover:text-accent'
-    ),
+    textDecoration({ underline: active, 'hover:underline': true }),
+    textColor({
+      'text-accent': active,
+      'hover:text-accent': true,
+    }),
     transitionProperty('transition-colors')
   )
 export function FooterLink({
