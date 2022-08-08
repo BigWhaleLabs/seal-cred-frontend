@@ -6,7 +6,6 @@ import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 import inject from '@rollup/plugin-inject'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
 import removeConsole from 'vite-plugin-remove-console'
-import { builtinModules } from 'module'
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 
 export default defineConfig({
@@ -29,7 +28,6 @@ export default defineConfig({
         }),
         removeConsole(),
       ] as unknown[] as Plugin[],
-      external: builtinModules,
     },
     commonjsOptions: {
       transformMixedEsModules: true,
