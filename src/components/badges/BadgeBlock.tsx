@@ -1,6 +1,6 @@
 import { GoerliContractsStore } from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
-import { useState } from 'react'
+import { useState } from 'preact/hooks'
 import BadgeCard from 'components/badges/BadgeCard'
 import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
@@ -23,14 +23,14 @@ function Badge({
   onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {
-  const { account } = useSnapshot(WalletStore)
+  const { account, mintLoading } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
 
   const isEmailProof = proof instanceof EmailProof
 
   const checkProofAndMint = async () => {
+    WalletStore.mintLoading = true
     setLoading(true)
-
     try {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
@@ -58,6 +58,7 @@ function Badge({
       }
     } finally {
       setLoading(false)
+      WalletStore.mintLoading = false
     }
   }
 
@@ -70,7 +71,7 @@ function Badge({
           small
           type="primary"
           loading={loading}
-          disabled={!proof}
+          disabled={!proof || mintLoading}
           onClick={checkProofAndMint}
         >
           {proof ? 'Mint badge' : 'Minted!'}
