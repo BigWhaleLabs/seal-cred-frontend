@@ -9,20 +9,18 @@ const GasPricePingFilter: PingFilter = (
   pingResponse,
   gsnTransactionDetails
 ) => {
+  const maxPriorityFeePerGas = gsnTransactionDetails.maxPriorityFeePerGas
+  const maxFeePerGasNumber = parseInt(maxPriorityFeePerGas)
+  const minMaxFeePerGas = pingResponse.minMaxPriorityFeePerGas
+  const minMaxFeePerGasNumber = parseInt(minMaxFeePerGas)
   if (
     pingResponse.relayManagerAddress !== env.VITE_GSN_RELAY_MANAGER_ADDRESS &&
-    gsnTransactionDetails.maxPriorityFeePerGas != null &&
-    parseInt(pingResponse.minMaxPriorityFeePerGas) >
-      parseInt(gsnTransactionDetails.maxPriorityFeePerGas)
-  ) {
+    maxPriorityFeePerGas !== null &&
+    minMaxFeePerGasNumber > maxFeePerGasNumber
+  )
     throw new Error(
-      `Proposed priority gas fee: ${parseInt(
-        gsnTransactionDetails.maxPriorityFeePerGas
-      )}; relay's minMaxPriorityFeePerGas: ${
-        pingResponse.minMaxPriorityFeePerGas
-      }`
+      `Proposed priority gas fee: ${maxFeePerGasNumber}; relay's minMaxPriorityFeePerGas: ${minMaxFeePerGasNumber}`
     )
-  }
 }
 
 export default function relayProvider(provider: Web3Provider) {
