@@ -29,7 +29,7 @@ const zkProofButton = classnames(
 
 export default function () {
   const popoverText =
-    'In your wallet(s), you have NFTs that can point back to your identity (aka, getting doxxed). But with ZK proof, you can verify ownership of NFTs while staying pseudonymous.'
+    'In your wallet(s), you have NFTs that can point back to your identity (aka, getting doxxed). But with ZK proofs, you can verify ownership of NFTs while staying pseudonymous.'
 
   return (
     <ToolTip arrow position="top" text={popoverText}>
