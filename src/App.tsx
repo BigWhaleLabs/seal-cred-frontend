@@ -7,6 +7,7 @@ import LazyComponent from 'components/LazyComponent'
 import Navbar from 'components/navbar/Navbar'
 import Privacy from 'pages/Privacy'
 import Root from 'components/Root'
+import ScrollToTop from 'components/ScrollToTop'
 import Terms from 'pages/Terms'
 import classnames, { space } from 'classnames/tailwind'
 
@@ -26,39 +27,41 @@ export default function () {
         <div className={pageContainer}>
           <Navbar />
           <ToastContainer position="bottom-right" theme="dark" />
-          <div className={space('space-y-4')}>
-            <Routes>
-              <Route
-                path="/email"
-                element={<LazyComponent lazyImported={<EmailProof />} />}
-              />
-              <Route
-                path="/:derivativeAddress/:tokenId"
-                element={<LazyComponent lazyImported={<OwnedBadge />} />}
-              />
-              <Route
-                path="/"
-                element={<LazyComponent lazyImported={<Landing />} />}
-              />
-              <Route
-                path="/app"
-                element={<LazyComponent lazyImported={<Main />} />}
-              />
-              <Route
-                path="/terms"
-                element={<LazyComponent lazyImported={<Terms />} />}
-              />
-              <Route
-                path="/privacy"
-                element={<LazyComponent lazyImported={<Privacy />} />}
-              />
-              <Route
-                path="*"
-                element={<LazyComponent lazyImported={<NotFound />} />}
-              />
-            </Routes>
-            <Footer />
-          </div>
+          <ScrollToTop>
+            <div className={space('space-y-4')}>
+              <Routes>
+                <Route
+                  path="/email"
+                  element={<LazyComponent lazyImported={<EmailProof />} />}
+                />
+                <Route
+                  path="/:derivativeAddress/:tokenId"
+                  element={<LazyComponent lazyImported={<OwnedBadge />} />}
+                />
+                <Route
+                  path="/"
+                  element={<LazyComponent lazyImported={<Landing />} />}
+                />
+                <Route
+                  path="/app"
+                  element={<LazyComponent lazyImported={<Main />} />}
+                />
+                <Route
+                  path="/terms"
+                  element={<LazyComponent lazyImported={<Terms />} />}
+                />
+                <Route
+                  path="/privacy"
+                  element={<LazyComponent lazyImported={<Privacy />} />}
+                />
+                <Route
+                  path="*"
+                  element={<LazyComponent lazyImported={<NotFound />} />}
+                />
+              </Routes>
+              <Footer />
+            </div>
+          </ScrollToTop>
         </div>
       </Router>
     </Root>
