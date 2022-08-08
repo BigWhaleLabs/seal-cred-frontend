@@ -14,7 +14,6 @@ const GasPricePingFilter: PingFilter = (
   const minMaxFeePerGas = pingResponse.minMaxPriorityFeePerGas
   const minMaxFeePerGasNumber = parseInt(minMaxFeePerGas)
   if (
-    pingResponse.relayManagerAddress !== env.VITE_GSN_RELAY_MANAGER_ADDRESS &&
     maxPriorityFeePerGas !== null &&
     minMaxFeePerGasNumber > maxFeePerGasNumber
   )
