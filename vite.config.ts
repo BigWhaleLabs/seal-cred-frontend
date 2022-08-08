@@ -17,8 +17,8 @@ export default defineConfig({
         visualizer({
           gzipSize: true,
           brotliSize: true,
-        }) as unknown as Plugin,
-        nodePolyfills() as unknown as Plugin,
+        }),
+        nodePolyfills(),
         inject({
           assert: 'assert',
           process: 'process',
@@ -26,9 +26,9 @@ export default defineConfig({
           global: 'global',
           stream: 'stream',
           _stream_duplex: 'duplex',
-        }) as unknown as Plugin,
+        }),
         removeConsole(),
-      ],
+      ] as unknown[] as Plugin[],
       external: builtinModules,
     },
     commonjsOptions: {
@@ -45,7 +45,7 @@ export default defineConfig({
           buffer: true,
         }),
         NodeModulesPolyfillPlugin(),
-      ],
+      ] as any[],
     },
   },
   esbuild: {
