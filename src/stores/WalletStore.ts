@@ -74,12 +74,8 @@ class WalletStore extends PersistableStore {
   }
 
   async mintDerivative(proof: BaseProof) {
-    if (!provider) {
-      throw new Error('No provider found')
-    }
-    if (!this.account) {
-      throw new Error('No account found')
-    }
+    if (!provider) throw new Error('No provider found')
+    if (!this.account) throw new Error('No account found')
 
     const gsnProvider = relayProvider(provider)
     await gsnProvider.init()
@@ -88,29 +84,27 @@ class WalletStore extends PersistableStore {
       gsnProvider as unknown as ExternalProvider
     )
 
-    const gasFees = await gsnProvider.calculateGasFees()
+    const maxFeePerGas = (await gsnProvider.calculateGasFees()).maxFeePerGas
 
     if (proof instanceof ERC721Proof) {
-      if (proof.network === Network.Goerli) {
-        return createERC721Badge(ethersProvider, proof, gasFees.maxFeePerGas)
-      } else {
-        const signature = await requestContractMetadata(
-          proof.network,
-          proof.contract
-        )
-        return createExternalERC721Badge(
-          ethersProvider,
-          proof,
-          signature.message,
-          signature.signature,
-          gasFees.maxFeePerGas
-        )
-      }
+      if (proof.network === Network.Goerli)
+        return createERC721Badge(ethersProvider, proof, maxFeePerGas)
+
+      const signature = await requestContractMetadata(
+        proof.network,
+        proof.contract
+      )
+      return createExternalERC721Badge(
+        ethersProvider,
+        proof,
+        signature.message,
+        signature.signature,
+        maxFeePerGas
+      )
     }
 
-    if (proof instanceof EmailProof) {
-      return createEmailBadge(ethersProvider, proof, gasFees.maxFeePerGas)
-    }
+    if (proof instanceof EmailProof)
+      return createEmailBadge(ethersProvider, proof, maxFeePerGas)
 
     throw new Error('Unknown proof type')
   }
