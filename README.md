@@ -23,6 +23,9 @@
 | `VITE_EXTERNAL_SC_ERC721_LEDGER_CONTRACT_ADDRESS` | External SealCred ERC721 Ledger contract address (defaults to @bwl/constants) |
 | `VITE_SC_ERC721_LEDGER_CONTRACT_ADDRESS`          | SealCred ERC721 Ledger contract address (defaults to @bwl/constants)          |
 | `VITE_SC_EMAIL_LEDGER_CONTRACT_ADDRESS`           | SealCred Email Ledger contract address (defaults to @bwl/constants)           |
+| `VITE_GSN_PAYMASTER_CONTRACT_ADDRESS`             | Relay paymaster contract address                                              |
+| `VITE_GSN_RELAY_MANAGER_ADDRESS`                  | Relay manager address                                                         |
+| `VITE_GSN_SC_RELAY`                               | Relay url                                                                     |
 | `VITE_VERIFY_URL`                                 | Proof verification URL                                                        |
 
 Also, please, consider looking at `.env.sample`.
