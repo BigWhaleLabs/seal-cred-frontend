@@ -145,6 +145,7 @@ interface ButtonProps {
   withArrow?: boolean
   gradientFont?: boolean
   loadingOverflow?: boolean
+  url?: string
 }
 
 type ButtonType = 'primary' | 'secondary' | 'tertiary'
@@ -160,6 +161,7 @@ export default function ({
   children,
   gradientFont,
   loadingOverflow,
+  url,
   ...rest
 }: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   const showContent = !loadingOverflow || !loading
@@ -174,13 +176,16 @@ export default function ({
         type,
         small,
       })}
+      onClick={() => {
+        if (url) window.open(url, '_blank')
+      }}
       disabled={!available}
       {...rest}
     >
       {loading && <Loading small={small} />}
       {showContent && (
         <>
-          {typeof children === 'string' && gradientFont ? (
+          {gradientFont ? (
             <span className={textGradient(available)}>{children}</span>
           ) : (
             <div>{children}</div>
