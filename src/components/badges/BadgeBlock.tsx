@@ -24,13 +24,13 @@ function Badge({
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {
   const { account, mintLoading } = useSnapshot(WalletStore)
-  const [localLoading, setLocalLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const isEmailProof = proof instanceof EmailProof
 
   const checkProofAndMint = async () => {
     WalletStore.mintLoading = true
-    setLocalLoading(true)
+    setLoading(true)
     try {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
@@ -57,7 +57,7 @@ function Badge({
         handleError(error)
       }
     } finally {
-      setLocalLoading(false)
+      setLoading(false)
       WalletStore.mintLoading = false
     }
   }
@@ -70,7 +70,7 @@ function Badge({
         <Button
           small
           type="primary"
-          loading={localLoading}
+          loading={loading}
           disabled={!proof || mintLoading}
           onClick={checkProofAndMint}
         >
