@@ -33,5 +33,5 @@ export default function relayProvider(provider: Web3Provider) {
     overrideDependencies: {
       pingFilter: GasPricePingFilter,
     },
-  })
+  }).init()
 }

@@ -77,8 +77,7 @@ class WalletStore extends PersistableStore {
     if (!provider) throw new Error('No provider found')
     if (!this.account) throw new Error('No account found')
 
-    const gsnProvider = relayProvider(provider)
-    await gsnProvider.init()
+    const gsnProvider = await relayProvider(provider)
 
     const ethersProvider = new Web3Provider(
       gsnProvider as unknown as ExternalProvider
