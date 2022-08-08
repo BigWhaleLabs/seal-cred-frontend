@@ -2,8 +2,10 @@ import { BalanceProofStruct } from '@big-whale-labs/seal-cred-ledger-contract/di
 import { BigNumber } from 'ethers'
 import ProofResult from 'models/ProofResult'
 
-export default function makeTransaction(proofResult?: ProofResult) {
-  if (!proofResult) throw new Error('Invalid proof')
+export default function makeTransaction(
+  proofResult: ProofResult,
+  maxFeePerGas?: string
+) {
   // This is a hacky way to get rid of the third arguments that are unnecessary and convert to BigNumber
   // Also pay attention to array indexes
   return {
@@ -26,5 +28,7 @@ export default function makeTransaction(proofResult?: ProofResult) {
       BigNumber.from(proofResult.proof.pi_c[1]),
     ],
     input: proofResult.publicSignals.map(BigNumber.from),
+    maxFeePerGas,
+    maxPriorityFeePerGas: maxFeePerGas,
   } as BalanceProofStruct
 }

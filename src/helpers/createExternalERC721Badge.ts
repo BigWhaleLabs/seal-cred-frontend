@@ -15,10 +15,12 @@ export default async function (
   provider: Web3Provider,
   proof: ERC721Proof,
   message: string,
-  signature: string
+  signature: string,
+  maxFeePerGas?: string
 ) {
+  if (!proof.result) throw new Error('Invalid proof')
   const contract = createContract(provider)
-  const txData = makeTransaction(proof.result)
+  const txData = makeTransaction(proof.result, maxFeePerGas)
 
   const tx = await contract[
     'mint((uint256[2],uint256[2][2],uint256[2],uint256[46]),bytes,bytes)'
