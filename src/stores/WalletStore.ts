@@ -1,4 +1,4 @@
-import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
+import { Web3Provider } from '@ethersproject/providers'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
@@ -15,7 +15,6 @@ import createEmailBadge from 'helpers/createEmailBadge'
 import createExternalERC721Badge from 'helpers/createExternalERC721Badge'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
-import relayProvider from 'helpers/providers/relayProvider'
 import web3Modal from 'helpers/web3Modal'
 
 let provider: Web3Provider
@@ -77,33 +76,23 @@ class WalletStore extends PersistableStore {
   async mintDerivative(proof: BaseProof) {
     if (!provider) throw new Error('No provider found')
 
-    const gsnProvider = await relayProvider(provider)
-
-    const ethersProvider = new Web3Provider(
-      gsnProvider as unknown as ExternalProvider
-    )
-
-    const maxFeePerGas = (await gsnProvider.calculateGasFees()).maxFeePerGas
-
     if (proof instanceof ERC721Proof) {
       if (proof.network === Network.Goerli)
-        return createERC721Badge(ethersProvider, proof, maxFeePerGas)
+        return createERC721Badge(provider, proof)
 
       const signature = await requestContractMetadata(
         proof.network,
         proof.contract
       )
       return createExternalERC721Badge(
-        ethersProvider,
+        provider,
         proof,
         signature.message,
-        signature.signature,
-        maxFeePerGas
+        signature.signature
       )
     }
 
-    if (proof instanceof EmailProof)
-      return createEmailBadge(ethersProvider, proof, maxFeePerGas)
+    if (proof instanceof EmailProof) return createEmailBadge(provider, proof)
 
     throw new Error('Unknown proof type')
   }
