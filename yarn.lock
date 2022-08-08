@@ -1799,10 +1799,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/constants@npm:^0.1.15":
-  version: 0.1.15
-  resolution: "@big-whale-labs/constants@npm:0.1.15"
-  checksum: b831c4796d73fd772c81df98e49ab0bc219d3b1d5b3a3b6a6bf00bcd493f7d9616502745f72a4ac911e47578dd21c00f5883d53ed611a917a12501b51a4d9763
+"@big-whale-labs/constants@npm:^0.1.17":
+  version: 0.1.17
+  resolution: "@big-whale-labs/constants@npm:0.1.17"
+  checksum: c4b6686d3e1f653d386936ead75fe3dd5f2c3641409308e25a0ffb7f45c8339c6013bd072727ca7f70344d5f236b3b07b91754f9c9f378d87d45567e79765878
   languageName: node
   linkType: hard
 
@@ -14740,6 +14740,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8.4.16":
+  version: 8.4.16
+  resolution: "postcss@npm:8.4.16"
+  dependencies:
+    nanoid: ^3.3.4
+    picocolors: ^1.0.0
+    source-map-js: ^1.0.2
+  checksum: 10eee25efd77868036403858577da0cefaf2e0905feeaba5770d5438ccdddba3d01cba8063e96b8aac4c6daa0ed413dd5ae0554a433a3c4db38df1d134cffc1f
+  languageName: node
+  linkType: hard
+
 "preact@npm:10.4.1":
   version: 10.4.1
   resolution: "preact@npm:10.4.1"
@@ -14747,10 +14758,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:^10.10.0":
-  version: 10.10.0
-  resolution: "preact@npm:10.10.0"
-  checksum: ec34f0e7a8677080debb5e7035a749d30a23694a68389e6f577e051e91a1e1014913c56845a615d1f9a4f2cd0321c46faaded4d4a0457c755d637a3a811fd69e
+"preact@npm:^10.10.1":
+  version: 10.10.1
+  resolution: "preact@npm:10.10.1"
+  checksum: a79a196770064eb4d5a533e5b407f5eb842e47ea143bd4687e436ad3faf634efd4fda1185fab7b8c687a0889f1dea61349f1a01d6d6dfe1db3e0f4361f65c1d3
   languageName: node
   linkType: hard
 
@@ -15331,15 +15342,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-toastify@npm:^9.0.7":
-  version: 9.0.7
-  resolution: "react-toastify@npm:9.0.7"
+"react-toastify@npm:^9.0.8":
+  version: 9.0.8
+  resolution: "react-toastify@npm:9.0.8"
   dependencies:
     clsx: ^1.1.1
   peerDependencies:
     react: ">=16"
     react-dom: ">=16"
-  checksum: c10753ec242c0f91247633504a6ffc8199a8d4eff5f7e28edd63521236bffda57317438e8e1abe3a25c4296860375fe51d96361480232f1c8d86ed1fcf77ce62
+  checksum: d48fa369b3d19c63f9b6b1ecef076911aa97a43bb84ecdb1532e6f32932e3625c1c3e12a4c63e7eb211d33b8aa962e9b9a81ab6a47fef2c51185ce8c9a780336
   languageName: node
   linkType: hard
 
@@ -16109,7 +16120,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "seal-cred-frontend@workspace:."
   dependencies:
-    "@big-whale-labs/constants": ^0.1.15
+    "@big-whale-labs/constants": ^0.1.17
     "@big-whale-labs/seal-cred-ledger-contract": ^0.2.6
     "@coinbase/wallet-sdk": ^3.4.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
@@ -16145,18 +16156,18 @@ __metadata:
     eth-rpc-errors: ^4.0.3
     ethers: ^5.6.9
     ffjavascript: ^0.2.55
-    postcss: ^8.4.14
-    preact: ^10.10.0
+    postcss: ^8.4.16
+    preact: ^10.10.1
     prettier: ^2.7.1
     qr-code-styling: ^1.6.0-rc.1
     react-resize-detector: ^7.1.2
     react-router-dom: ^6.3.0
     react-scripts: ^5.0.1
-    react-toastify: ^9.0.7
+    react-toastify: ^9.0.8
     rollup-plugin-polyfill-node: ^0.10.2
     rollup-plugin-visualizer: ^5.7.1
     secure-ls: ^1.2.6
-    tailwindcss: ^3.1.7
+    tailwindcss: ^3.1.8
     tailwindcss-classnames: ^3.0.5
     typescript: ^4.7.4
     valtio: ^1.6.3
@@ -17121,9 +17132,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.1.7":
-  version: 3.1.7
-  resolution: "tailwindcss@npm:3.1.7"
+"tailwindcss@npm:^3.1.8":
+  version: 3.1.8
+  resolution: "tailwindcss@npm:3.1.8"
   dependencies:
     arg: ^5.0.2
     chokidar: ^3.5.3
@@ -17152,7 +17163,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: adbc9869b72f741e9a0fc281b79710863617a588fd5d897316b676f789b6482c79f46f324223300ca962afbe55bed3ec16a37a6ccf4bb2c99c53cf8c5dd9700d
+  checksum: 86480301fc6ae1e392c2aba8264ab425bd919078176b010fda724518a7c265e950da5f4120c69c9041509c318207985fa9d680b6f5021e23f8214135a61a54b6
   languageName: node
   linkType: hard
 
