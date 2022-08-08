@@ -1,18 +1,10 @@
 import { SCEmailLedger } from '@big-whale-labs/seal-cred-ledger-contract'
 import EmailLedger from 'models/EmailLedger'
-import getEmailLedgerRecord from 'helpers/contracts/getEmailLedgerRecord'
+import getDataFromEvents from 'helpers/contracts/getDataFromEvents'
 
 export default async function (ledger: SCEmailLedger): Promise<EmailLedger> {
-  const eventsFilter = ledger.filters.CreateDerivativeContract()
+  const eventsFilter = ledger.filters.CreateDerivative()
   const events = await ledger.queryFilter(eventsFilter)
-  const result = events.reduce(
-    (prev, { args: { domain, derivativeContract } }) => {
-      return {
-        ...prev,
-        [domain]: getEmailLedgerRecord(derivativeContract, domain),
-      }
-    },
-    {}
-  )
+  const result = getDataFromEvents(events)
   return result
 }

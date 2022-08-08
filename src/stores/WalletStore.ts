@@ -1,20 +1,21 @@
-import { Web3Provider } from '@ethersproject/providers'
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
 import { serializeError } from 'eth-rpc-errors'
 import BaseProof from 'helpers/BaseProof'
-import ERC721BadgeBuilder from 'helpers/ERC721BadgeBuilder'
 import ERC721Proof from 'helpers/ERC721Proof'
-import EmailBadgeBuilder from 'helpers/EmailBadgeBuilder'
 import EmailProof from 'helpers/EmailProof'
-import ExternalERC721BadgeBuilder from 'helpers/ExternalERC721BadgeBuilder'
 import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
 import PersistableStore from 'stores/persistence/PersistableStore'
 import chainForWallet from 'helpers/chainForWallet'
+import createERC721Badge from 'helpers/createERC721Badge'
+import createEmailBadge from 'helpers/createEmailBadge'
+import createExternalERC721Badge from 'helpers/createExternalERC721Badge'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
+import relayProvider from 'helpers/providers/relayProvider'
 import web3Modal from 'helpers/web3Modal'
 
 let provider: Web3Provider
@@ -22,6 +23,7 @@ let provider: Web3Provider
 class WalletStore extends PersistableStore {
   account?: string
   walletLoading = false
+  mintLoading = false
   needNetworkChange = false
   walletsToNotifiedOfBeingDoxxed = {} as {
     [address: string]: boolean
@@ -73,32 +75,35 @@ class WalletStore extends PersistableStore {
   }
 
   async mintDerivative(proof: BaseProof) {
-    if (!provider) {
-      throw new Error('No provider found')
-    }
-    if (!this.account) {
-      throw new Error('No account found')
-    }
+    if (!provider) throw new Error('No provider found')
+
+    const gsnProvider = await relayProvider(provider)
+
+    const ethersProvider = new Web3Provider(
+      gsnProvider as unknown as ExternalProvider
+    )
+
+    const maxFeePerGas = (await gsnProvider.calculateGasFees()).maxFeePerGas
 
     if (proof instanceof ERC721Proof) {
-      if (proof.network === Network.Goerli) {
-        const builder = new ERC721BadgeBuilder(provider)
-        return builder.create(proof)
-      } else {
-        const builder = new ExternalERC721BadgeBuilder(provider)
+      if (proof.network === Network.Goerli)
+        return createERC721Badge(ethersProvider, proof, maxFeePerGas)
 
-        const signature = await requestContractMetadata(
-          proof.network,
-          proof.contract
-        )
-        return builder.create(proof, signature.message, signature.signature)
-      }
+      const signature = await requestContractMetadata(
+        proof.network,
+        proof.contract
+      )
+      return createExternalERC721Badge(
+        ethersProvider,
+        proof,
+        signature.message,
+        signature.signature,
+        maxFeePerGas
+      )
     }
 
-    if (proof instanceof EmailProof) {
-      const builder = new EmailBadgeBuilder(provider)
-      return builder.create(proof)
-    }
+    if (proof instanceof EmailProof)
+      return createEmailBadge(ethersProvider, proof, maxFeePerGas)
 
     throw new Error('Unknown proof type')
   }

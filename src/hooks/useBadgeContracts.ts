@@ -14,11 +14,11 @@ export default function () {
     let result: { [address: string]: BaseBadgeContract } = {}
 
     result = Object.values(emailLedger).reduce(
-      (result, { derivativeContract, domain }) => ({
+      (result, { derivativeContract, originalContract }) => ({
         ...result,
         [derivativeContract]: new EmailBadgeContract(
           derivativeContract,
-          domain
+          originalContract
         ),
       }),
       result

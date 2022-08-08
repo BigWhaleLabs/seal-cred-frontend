@@ -8,10 +8,9 @@ import { proxy } from 'valtio'
 import ERC721Ledger from 'models/ERC721Ledger'
 import EmailLedger from 'models/EmailLedger'
 import getERC721Ledger from 'helpers/contracts/getERC721Ledger'
-import getERC721LedgerRecord from 'helpers/contracts/getERC721LedgerRecord'
 import getEmailLedger from 'helpers/contracts/getEmailLedger'
-import getEmailLedgerRecord from 'helpers/contracts/getEmailLedgerRecord'
 import getExternalSCERC721Ledger from 'helpers/contracts/getExternalSCERC721Ledger'
+import getLedgerRecord from 'helpers/contracts/getLedgerRecord'
 
 interface SealCredStoreType {
   externalERC721Ledger: Promise<ERC721Ledger>
@@ -64,19 +63,12 @@ const SealCredStore = derive<SealCredStoreType, ComputedSealCredStoreType>(
 )
 
 SCERC721LedgerContract.on(
-  SCERC721LedgerContract.filters.CreateDerivativeContract(),
-  async (originalContract, derivativeContract) => {
-    console.info(
-      'CreateDerivativeContract event',
-      originalContract,
-      derivativeContract
-    )
+  SCERC721LedgerContract.filters.CreateDerivative(),
+  async (origin, derivative) => {
+    console.info('CreateDerivative event', origin, derivative)
     const ledger = await SealCredStore.ERC721Ledger
-    if (!ledger[originalContract]) {
-      ledger[originalContract] = getERC721LedgerRecord(
-        originalContract,
-        derivativeContract
-      )
+    if (!ledger[origin]) {
+      ledger[origin] = getLedgerRecord(origin, derivative)
       SealCredStore.ERC721Ledger = Promise.resolve({
         ...ledger,
       })
@@ -84,28 +76,21 @@ SCERC721LedgerContract.on(
   }
 )
 SCERC721LedgerContract.on(
-  SCERC721LedgerContract.filters.DeleteOriginalContract(),
-  async (originalContract) => {
-    console.info('DeleteOriginalContract event', originalContract)
+  SCERC721LedgerContract.filters.DeleteOriginal(),
+  async (origin) => {
+    console.info('DeleteOriginal event', origin)
     const ledger = await SealCredStore.ERC721Ledger
-    delete ledger[originalContract]
+    delete ledger[origin]
   }
 )
 
 ExternalSCERC721LedgerContract.on(
-  ExternalSCERC721LedgerContract.filters.CreateDerivativeContract(),
-  async (originalContract, derivativeContract) => {
-    console.info(
-      'CreateDerivativeContract event (external)',
-      originalContract,
-      derivativeContract
-    )
+  ExternalSCERC721LedgerContract.filters.CreateDerivative(),
+  async (origin, derivative) => {
+    console.info('CreateDerivative event (external)', origin, derivative)
     const ledger = await SealCredStore.externalERC721Ledger
-    if (!ledger[originalContract]) {
-      ledger[originalContract] = getERC721LedgerRecord(
-        originalContract,
-        derivativeContract
-      )
+    if (!ledger[origin]) {
+      ledger[origin] = getLedgerRecord(origin, derivative)
       SealCredStore.externalERC721Ledger = Promise.resolve({
         ...ledger,
       })
@@ -113,21 +98,21 @@ ExternalSCERC721LedgerContract.on(
   }
 )
 ExternalSCERC721LedgerContract.on(
-  ExternalSCERC721LedgerContract.filters.DeleteOriginalContract(),
-  async (originalContract) => {
-    console.info('DeleteOriginalContract event (external)', originalContract)
+  ExternalSCERC721LedgerContract.filters.DeleteOriginal(),
+  async (origin) => {
+    console.info('DeleteOriginal event (external)', origin)
     const ledger = await SealCredStore.externalERC721Ledger
-    delete ledger[originalContract]
+    delete ledger[origin]
   }
 )
 
 SCEmailLedgerContract.on(
-  SCEmailLedgerContract.filters.CreateDerivativeContract(),
-  async (domain, derivativeContract) => {
-    console.info('CreateDerivativeContract event', domain, derivativeContract)
+  SCEmailLedgerContract.filters.CreateDerivative(),
+  async (origin, derivative) => {
+    console.info('CreateDerivative event', origin, derivative)
     const ledger = await SealCredStore.emailLedger
-    if (!ledger[domain]) {
-      ledger[domain] = getEmailLedgerRecord(derivativeContract, domain)
+    if (!ledger[origin]) {
+      ledger[origin] = getLedgerRecord(origin, derivative)
       SealCredStore.emailLedger = Promise.resolve({
         ...ledger,
       })
@@ -135,11 +120,11 @@ SCEmailLedgerContract.on(
   }
 )
 SCEmailLedgerContract.on(
-  SCEmailLedgerContract.filters.DeleteEmail(),
-  async (domain) => {
-    console.info('DeleteOriginalContract event', domain)
+  SCEmailLedgerContract.filters.DeleteOriginal(),
+  async (origin) => {
+    console.info('DeleteOriginal event (email)', origin)
     const ledger = await SealCredStore.emailLedger
-    delete ledger[domain]
+    delete ledger[origin]
   }
 )
 
