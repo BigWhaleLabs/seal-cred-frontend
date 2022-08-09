@@ -10,6 +10,7 @@ import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfil
 
 export default defineConfig({
   plugins: [preact(), tsconfigPaths()],
+  resolve: { alias: { assert: 'assert-browserify' } },
   build: {
     rollupOptions: {
       plugins: [
