@@ -99,7 +99,8 @@ class WalletStore extends PersistableStore {
       )
     }
 
-    if (proof instanceof EmailProof) return createEmailBadge(provider, proof)
+    if (proof instanceof EmailProof)
+      return createEmailBadge(ethersProvider, proof)
 
     throw new Error('Unknown proof type')
   }
