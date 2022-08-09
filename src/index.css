@@ -3,35 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --orb: '#ffffff',
-  --accent: '#fed823',
-  --primary: '#15a1fc',
-  --secondary: '#ff7bed',
-  --tertiary: '#01feb6',
-  --formal-accent: '#efecd6',
+  --orb: #ffffff;
+  --accent: #fed823;
+  --accent-hover: #fed950;
+  --primary: #15a1fc;
+  --secondary: #ff7bed;
+  --tertiary: #01feb6;
+  --formal-accent: #efecd6;
 
-  --error: '#FF7B83',
-  --error-dark: '#3E1B1E',
+  --error: #ff7b83;
+  --error-dark: #3e1b1e;
 
-  --primary-dark: '#0d0030',
-  --primary-light: '#bff5fa',
-  --primary-dimmed: '#3a00d6',
-  --primary-semi-dimmed: '#4b61d5',
-  --primary-background: '#1a0259',
-  --primary-dark-red: '#210030',
+  --primary-dark: #0d0030;
+  --primary-light: #bff5fa;
+  --primary-dimmed: #3a00d6;
+  --primary-semi-dimmed: #4b61d5;
+  --primary-background: #1a0259;
+  --primary-dark-red: #210030;
 
-  --accent-light-transparent: '#FF7BED69',
-  --secondary-light-transparent: '#FED82369',
-  --accent-light-active-transparent: '#FF7BED9e',
-  --secondary-light-active-transparent: '#FED8239e',
+  --accent-light-transparent: #ff7bed69;
+  --secondary-light-transparent: #fed82369;
+  --accent-light-active-transparent: #ff7bed9e;
+  --secondary-light-active-transparent: #fed8239e;
 
-  --accent-semi-transparent: 'rgba(254, 216, 35, 0.4)',
-  --primary-semi-transparent: 'rgba(21, 161, 252, 0.5)',
-  --secondary-semi-transparent: 'rgba(255, 123, 237, 0.5)',
-  --tertiary-semi-transparent: 'rgba(1, 254, 182, 0.4)',
-  --formal-accent-semi-transparent: 'rgba(239, 236, 214, 0.4)',
-  --error-semi-transparent: 'rgba(255, 123, 131, .2)',
-  --selection: #ff7bed35
+  --accent-semi-transparent: rgba(254, 216, 35, 0.4);
+  --primary-semi-transparent: rgba(21, 161, 252, 0.5);
+  --secondary-semi-transparent: rgba(255, 123, 237, 0.5);
+  --tertiary-semi-transparent: rgba(1, 254, 182, 0.4);
+  --formal-accent-semi-transparent: rgba(239, 236, 214, 0.4);
+  --error-semi-transparent: rgba(255, 123, 131, 0.2);
+  --selection: #ff7bed35;
+  --transparent: #00000000;
 }
 
 html {
@@ -96,10 +98,10 @@ body {
 ::-webkit-scrollbar-track {
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0) 47%,
+    var(--transparent) 47%,
     var(--accent) 47%,
     var(--accent) 51%,
-    rgba(0, 0, 0, 0) 52%
+    var(--transparent) 52%
   );
 }
 ::-webkit-scrollbar-thumb {
@@ -109,7 +111,7 @@ body {
   border: 8px solid transparent;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: var(--accent-hover);
   border-radius: 20px;
   background-clip: content-box;
   border: 7.5px solid transparent;

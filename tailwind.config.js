@@ -55,7 +55,7 @@ module.exports = {
       colors: {
         orb: 'var(--orb)',
         accent: 'var(--accent)',
-        primary: 'var(--secondary)',
+        primary: 'var(--primary)',
         secondary: 'var(--secondary)',
         tertiary: 'var(--tertiary)',
         'formal-accent': 'var(--formal-accent)',
@@ -71,9 +71,9 @@ module.exports = {
         'primary-dark-red': 'var(--primary-dark-red)',
 
         'accent-light-transparent': 'var(--accent-light-transparent)',
-        'secondary-light-transparent': 'var(--secondary-light-transparent)',
         'accent-light-active-transparent':
           'var(--accent-light-active-transparent)',
+        'secondary-light-transparent': 'var(--secondary-light-transparent)',
         'secondary-light-active-transparent':
           'var(--secondary-light-active-transparent)',
 
