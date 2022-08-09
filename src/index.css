@@ -33,7 +33,6 @@
   --formal-accent-semi-transparent: rgba(239, 236, 214, 0.4);
   --error-semi-transparent: rgba(255, 123, 131, 0.2);
   --selection: #ff7bed35;
-  --transparent: #00000000;
 }
 
 html {
@@ -98,10 +97,10 @@ body {
 ::-webkit-scrollbar-track {
   background: linear-gradient(
     90deg,
-    var(--transparent) 47%,
+    transparent 47%,
     var(--accent) 47%,
     var(--accent) 51%,
-    var(--transparent) 52%
+    transparent 52%
   );
 }
 ::-webkit-scrollbar-thumb {
