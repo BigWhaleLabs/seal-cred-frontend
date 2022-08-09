@@ -1799,13 +1799,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/constants@npm:^0.1.17":
-  version: 0.1.17
-  resolution: "@big-whale-labs/constants@npm:0.1.17"
-  checksum: c4b6686d3e1f653d386936ead75fe3dd5f2c3641409308e25a0ffb7f45c8339c6013bd072727ca7f70344d5f236b3b07b91754f9c9f378d87d45567e79765878
-  languageName: node
-  linkType: hard
-
 "@big-whale-labs/constants@npm:^0.1.19":
   version: 0.1.19
   resolution: "@big-whale-labs/constants@npm:0.1.19"
@@ -1820,16 +1813,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/stores@npm:^0.1.7":
-  version: 0.1.7
-  resolution: "@big-whale-labs/stores@npm:0.1.7"
+"@big-whale-labs/stores@npm:^0.1.10":
+  version: 0.1.10
+  resolution: "@big-whale-labs/stores@npm:0.1.10"
   dependencies:
     "@big-whale-labs/constants": ^0.1.19
     "@big-whale-labs/seal-cred-ledger-contract": ^0.2.6
     ethers: ^5.6.9
     secure-ls: ^1.2.6
     valtio: ^1.6.3
-  checksum: cad3ec6a50933c085aa3633c212afed1a8b2bad2533cdfed509a209f5de87e036aa8e5797442411430e80ebc51d75da05c2988b786c95b4f704d781c402dab75
+  checksum: e79670a3d0d8dcb5306eb87785c0c03acd6a77b4418f2602720e07a24bf59887e5c43ec9c62cdfc6b9b18380adc0b084dca5cbd80c50646ccf31de24de96ced1
   languageName: node
   linkType: hard
 
@@ -16140,9 +16133,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "seal-cred-frontend@workspace:."
   dependencies:
-    "@big-whale-labs/constants": ^0.1.17
+    "@big-whale-labs/constants": ^0.1.19
     "@big-whale-labs/seal-cred-ledger-contract": ^0.2.6
-    "@big-whale-labs/stores": ^0.1.7
+    "@big-whale-labs/stores": ^0.1.10
     "@coinbase/wallet-sdk": ^3.4.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@esbuild-plugins/node-modules-polyfill": ^0.1.4
@@ -16192,7 +16185,7 @@ __metadata:
     tailwindcss-classnames: ^3.0.5
     typescript: ^4.7.4
     valtio: ^1.6.3
-    vite: ^3.0.4
+    vite: ^3.0.5
     vite-plugin-remove-console: ^1.1.0
     vite-tsconfig-paths: ^3.5.0
     web3modal: ^1.9.8
@@ -18007,13 +18000,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "vite@npm:3.0.4"
+"vite@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "vite@npm:3.0.5"
   dependencies:
     esbuild: ^0.14.47
     fsevents: ~2.3.2
-    postcss: ^8.4.14
+    postcss: ^8.4.16
     resolve: ^1.22.1
     rollup: ^2.75.6
   peerDependencies:
@@ -18035,7 +18028,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: f13eceb94f7b399942ce5e7c10df73314f7b073171d6594228b078cc1203042c4cdb9e8356fe64ad444c3533c31437abb3c64ac56478f0865fab598e924cf68b
+  checksum: c00ec43356469032fa261872b028740526d5a5726132cb306741e2d9dca241dcb7b0b5d39181d5ebc39c5e82396511080640fa302c66e713a622e8bfa1f14a8d
   languageName: node
   linkType: hard
 

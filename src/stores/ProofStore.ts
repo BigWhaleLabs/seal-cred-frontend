@@ -136,7 +136,4 @@ class ProofStore extends PersistableStore {
   }
 }
 
-export default proxy(new ProofStore()).makePersistent(
-  true,
-  env.VITE_ENCRYPT_KEY
-)
+export default proxy(new ProofStore()).makePersistent(env.VITE_ENCRYPT_KEY)

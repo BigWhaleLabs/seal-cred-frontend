@@ -86,11 +86,11 @@ class ContractsStore extends PersistableStore {
 
 export const GoerliContractsStore = proxy(
   new ContractsStore(goerliDefaultProvider, Network.Goerli)
-).makePersistent(true, env.VITE_ENCRYPT_KEY)
+).makePersistent(env.VITE_ENCRYPT_KEY)
 
 export const MainnetContractsStore = proxy(
   new ContractsStore(mainnetDefaultProvider, Network.Mainnet)
-).makePersistent(true, env.VITE_ENCRYPT_KEY)
+).makePersistent(env.VITE_ENCRYPT_KEY)
 
 subscribeKey(WalletStore, 'account', () => {
   void GoerliContractsStore.fetchMoreContractsOwned(true)

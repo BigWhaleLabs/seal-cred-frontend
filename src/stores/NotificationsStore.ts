@@ -9,7 +9,6 @@ class NotificationsStore extends PersistableStore {
 }
 
 const storeProxy = proxy(new NotificationsStore()).makePersistent(
-  true,
   env.VITE_ENCRYPT_KEY
 )
 

@@ -163,7 +163,6 @@ class WalletStore extends PersistableStore {
 }
 
 const walletStore = proxy(new WalletStore()).makePersistent(
-  true,
   env.VITE_ENCRYPT_KEY
 )
 

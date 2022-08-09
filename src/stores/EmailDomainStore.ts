@@ -7,6 +7,5 @@ class EmailDomainStore extends PersistableStore {
 }
 
 export default proxy(new EmailDomainStore()).makePersistent(
-  true,
   env.VITE_ENCRYPT_KEY
 )
