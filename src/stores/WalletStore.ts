@@ -83,11 +83,9 @@ class WalletStore extends PersistableStore {
       gsnProvider as unknown as ExternalProvider
     )
 
-    const maxFeePerGas = (await gsnProvider.calculateGasFees()).maxFeePerGas
-
     if (proof instanceof ERC721Proof) {
       if (proof.network === Network.Goerli)
-        return createERC721Badge(ethersProvider, proof, maxFeePerGas)
+        return createERC721Badge(ethersProvider, proof)
 
       const signature = await requestContractMetadata(
         proof.network,
