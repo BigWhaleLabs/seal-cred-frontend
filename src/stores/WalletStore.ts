@@ -1,4 +1,4 @@
-import { PersistableStore } from '@big-whale-labs/store-utils'
+import { PersistableStore } from '@big-whale-labs/stores'
 import { Web3Provider } from '@ethersproject/providers'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'

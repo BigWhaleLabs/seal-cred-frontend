@@ -1,4 +1,4 @@
-import { PersistableStore } from '@big-whale-labs/store-utils'
+import { PersistableStore } from '@big-whale-labs/stores'
 import {
   goerliDefaultProvider,
   mainnetDefaultProvider,

@@ -1,4 +1,4 @@
-import { EnsStore } from '@big-whale-labs/store-utils'
+import { EnsStore } from '@big-whale-labs/stores'
 import {
   goerliDefaultProvider,
   mainnetDefaultProvider,
