@@ -83,26 +83,31 @@ class WalletStore extends PersistableStore {
       gsnProvider as unknown as ExternalProvider
     )
 
-    if (proof instanceof ERC721Proof) {
-      if (proof.network === Network.Goerli)
-        return createERC721Badge(ethersProvider, proof)
+    try {
+      if (proof instanceof ERC721Proof) {
+        if (proof.network === Network.Goerli)
+          return createERC721Badge(ethersProvider, proof)
 
-      const signature = await requestContractMetadata(
-        proof.network,
-        proof.contract
-      )
-      return createExternalERC721Badge(
-        ethersProvider,
-        proof,
-        signature.message,
-        signature.signature
-      )
+        const signature = await requestContractMetadata(
+          proof.network,
+          proof.contract
+        )
+        return createExternalERC721Badge(
+          ethersProvider,
+          proof,
+          signature.message,
+          signature.signature
+        )
+      }
+
+      if (proof instanceof EmailProof)
+        return createEmailBadge(ethersProvider, proof)
+
+      throw new Error('Unknown proof type')
+    } catch (error) {
+      handleError(error)
+      throw error
     }
-
-    if (proof instanceof EmailProof)
-      return createEmailBadge(ethersProvider, proof)
-
-    throw new Error('Unknown proof type')
   }
 
   private async checkNetwork(provider: Web3Provider) {
