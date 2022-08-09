@@ -1,4 +1,4 @@
-import { FooterlLink, SocialLink } from 'components/Text'
+import { FooterLink, SocialLink } from 'components/Text'
 import Delimiter from 'components/Delimiter'
 import Discord from 'icons/Discord'
 import FooterLogo from 'icons/FooterLogo'
@@ -47,20 +47,20 @@ export default function () {
       <Spacer />
       <div className={socialContainerCard}>
         <div className={linkContainer}>
-          <FooterlLink url="https://blog.bigwhalelabs.com/">
+          <FooterLink url="https://blog.bigwhalelabs.com/">
             <div className={footerLogo}>
               <FooterLogo />
               <span>Blog</span>
             </div>
-          </FooterlLink>
+          </FooterLink>
           <Delimiter />
-          <FooterlLink internal url="/terms">
+          <FooterLink internal url="/terms">
             Terms of service
-          </FooterlLink>
+          </FooterLink>
           <Delimiter />
-          <FooterlLink internal url="/privacy">
+          <FooterLink internal url="/privacy">
             Privacy policy
-          </FooterlLink>
+          </FooterLink>
         </div>
         {!md && (
           <>

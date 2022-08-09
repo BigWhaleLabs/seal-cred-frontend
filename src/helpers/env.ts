@@ -33,4 +33,5 @@ export default cleanEnv(import.meta.env, {
     default: GSN_SC_RELAY,
   }),
   VITE_VERIFY_URL: str(),
+  VITE_GSN_RELAY_MANAGER_ADDRESS: str(),
 })

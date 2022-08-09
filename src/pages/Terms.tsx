@@ -89,7 +89,10 @@ export default function () {
               <SubheaderCardText>Your Privacy</SubheaderCardText>
               <CardParagraphText>
                 Please read our{' '}
-                <LinkText url="/privacy">Privacy Policy</LinkText>.
+                <LinkText internal url="/privacy">
+                  Privacy Policy
+                </LinkText>
+                .
               </CardParagraphText>
             </Section>
             <Section>
