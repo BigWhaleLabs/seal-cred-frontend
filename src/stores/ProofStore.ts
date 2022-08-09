@@ -1,3 +1,4 @@
+import { PersistableStore } from '@big-whale-labs/store-utils'
 import {
   getEddsaPublicKey,
   requestAddressOwnershipAttestation,
@@ -8,10 +9,10 @@ import BaseProof from 'helpers/BaseProof'
 import ERC721Proof, { ERC721ProofSchema } from 'helpers/ERC721Proof'
 import EmailProof, { EmailProofSchema } from 'helpers/EmailProof'
 import Network from 'models/Network'
-import PersistableStore from 'stores/persistence/PersistableStore'
 import ProofResult from 'models/ProofResult'
 import WalletStore from 'stores/WalletStore'
 import checkNavigator from 'helpers/checkNavigator'
+import env from 'helpers/env'
 import getNullifierMessage from 'helpers/getNullifierMessage'
 import handleError from 'helpers/handleError'
 
@@ -135,4 +136,7 @@ class ProofStore extends PersistableStore {
   }
 }
 
-export default proxy(new ProofStore()).makePersistent(true)
+export default proxy(new ProofStore()).makePersistent(
+  true,
+  env.VITE_ENCRYPT_KEY
+)

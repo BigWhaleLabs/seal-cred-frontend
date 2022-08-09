@@ -1806,10 +1806,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@big-whale-labs/constants@npm:^0.1.19":
+  version: 0.1.19
+  resolution: "@big-whale-labs/constants@npm:0.1.19"
+  checksum: d33edd13e91c28d867d7f25cecc640fc417f89ffd4915418508024e40de7111787e68f0f98d51a49b403cb3beaec16946c66d1d9d706579c1476cb58d56da1aa
+  languageName: node
+  linkType: hard
+
 "@big-whale-labs/seal-cred-ledger-contract@npm:^0.2.6":
   version: 0.2.6
   resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.2.6"
   checksum: b93e75d70ba522fe41fb64b838ff368ce32e58b71eac55b21c3f33887a11fcaf46d55cfbc42c5b79d4653a6833645247dde0e7f094a818d2d3e5064548ea9494
+  languageName: node
+  linkType: hard
+
+"@big-whale-labs/store-utils@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "@big-whale-labs/store-utils@npm:0.1.5"
+  dependencies:
+    "@big-whale-labs/constants": ^0.1.19
+    "@big-whale-labs/seal-cred-ledger-contract": ^0.2.6
+    ethers: ^5.6.9
+    secure-ls: ^1.2.6
+    valtio: ^1.6.3
+  checksum: 4200df619fff7ca13c21918ad706f9a5322b48c43c6cf76f5c8f02e8e238813851e9d989ba2a729a7f7ed2903384429089311907802fe81c33936ecb605f332a
   languageName: node
   linkType: hard
 
@@ -16122,6 +16142,7 @@ __metadata:
   dependencies:
     "@big-whale-labs/constants": ^0.1.17
     "@big-whale-labs/seal-cred-ledger-contract": ^0.2.6
+    "@big-whale-labs/store-utils": ^0.1.5
     "@coinbase/wallet-sdk": ^3.4.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@esbuild-plugins/node-modules-polyfill": ^0.1.4
@@ -17626,11 +17647,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>":
   version: 4.7.4
-  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 9096d8f6c16cb80ef3bf96fcbbd055bf1c4a43bd14f3b7be45a9fbe7ada46ec977f604d5feed3263b4f2aa7d4c7477ce5f9cd87de0d6feedec69a983f3a4f93e
+  checksum: 96d3030cb01143570567cb4f3a616b10df65f658f0e74e853e77a089a6a954e35c800be7db8b9bfe9a1ae05d9c2897e281359f65e4caa1caf266368e1c4febd3
   languageName: node
   linkType: hard
 

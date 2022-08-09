@@ -25,6 +25,7 @@
   "dependencies": {
     "@big-whale-labs/constants": "^0.1.17",
     "@big-whale-labs/seal-cred-ledger-contract": "^0.2.6",
+    "@big-whale-labs/store-utils": "^0.1.5",
     "@coinbase/wallet-sdk": "^3.4.0",
     "@formkit/auto-animate": "^1.0.0-beta.1",
     "@opengsn/provider": "^3.0.0-beta.1",

@@ -1,58 +1,10 @@
-import { ERC721__factory } from '@big-whale-labs/seal-cred-ledger-contract'
-import { RESERVED_CONTRACT_METADATA } from '@big-whale-labs/constants'
-import {
-  goerliDefaultProvider,
-  mainnetDefaultProvider,
-} from 'helpers/providers/defaultProvider'
+import { ContractNamesStore } from '@big-whale-labs/store-utils'
 import { proxy } from 'valtio'
-import Network from 'models/Network'
-import PersistableStore from 'stores/persistence/PersistableStore'
-import networkPick from 'helpers/networkPick'
+import env from 'helpers/env'
 
-class ContractNamesStore extends PersistableStore {
-  savedContractNames = {} as {
-    [contractAddress: string]: string | undefined
-  }
+const disallowedNames = ['requestedNames', 'contractNames']
 
-  requestedNames = {} as {
-    [contractAddress: string]: Promise<string | undefined> | undefined
-  }
-
-  get contractNames() {
-    return {
-      ...this.savedContractNames,
-      ...this.requestedNames,
-    }
-  }
-
-  replacer = (key: string, value: unknown) => {
-    const disallowList = ['requestedNames', 'contractNames']
-    return disallowList.includes(key) ? undefined : value
-  }
-
-  fetchContractName(address: string, network: Network) {
-    if (this.contractNames[address]) return
-
-    if (RESERVED_CONTRACT_METADATA[address]) {
-      this.savedContractNames[address] =
-        RESERVED_CONTRACT_METADATA[address].name
-      return
-    }
-    const contract = ERC721__factory.connect(
-      address,
-      networkPick(network, goerliDefaultProvider, mainnetDefaultProvider)
-    )
-    this.requestedNames[address] = contract
-      .name()
-      .then((result) => {
-        this.savedContractNames[address] = result || address
-        return result || address
-      })
-      .catch(() => {
-        this.savedContractNames[address] = address
-        return address
-      })
-  }
-}
-
-export default proxy(new ContractNamesStore()).makePersistent(true)
+export default proxy(new ContractNamesStore(disallowedNames)).makePersistent(
+  true,
+  env.VITE_ENCRYPT_KEY
+)
