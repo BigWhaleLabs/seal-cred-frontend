@@ -1,3 +1,4 @@
+import { PersistableStore } from '@big-whale-labs/stores'
 import {
   goerliDefaultProvider,
   mainnetDefaultProvider,
@@ -9,8 +10,8 @@ import ContractSynchronizer, {
   ContractSynchronizerSchema,
 } from 'helpers/ContractSynchronizer'
 import Network from 'models/Network'
-import PersistableStore from 'stores/persistence/PersistableStore'
 import WalletStore from 'stores/WalletStore'
+import env from 'helpers/env'
 import transformObjectValues from 'helpers/transformObjectValues'
 
 class ContractsStore extends PersistableStore {
@@ -85,11 +86,11 @@ class ContractsStore extends PersistableStore {
 
 export const GoerliContractsStore = proxy(
   new ContractsStore(goerliDefaultProvider, Network.Goerli)
-).makePersistent(true)
+).makePersistent(env.VITE_ENCRYPT_KEY)
 
 export const MainnetContractsStore = proxy(
   new ContractsStore(mainnetDefaultProvider, Network.Mainnet)
-).makePersistent(true)
+).makePersistent(env.VITE_ENCRYPT_KEY)
 
 subscribeKey(WalletStore, 'account', () => {
   void GoerliContractsStore.fetchMoreContractsOwned(true)

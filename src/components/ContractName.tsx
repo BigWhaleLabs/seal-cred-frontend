@@ -1,4 +1,8 @@
 import { Suspense, memo } from 'react'
+import {
+  goerliDefaultProvider,
+  mainnetDefaultProvider,
+} from 'helpers/providers/defaultProvider'
 import { useSnapshot } from 'valtio'
 import { utils } from 'ethers'
 import ContractNamesStore from 'stores/ContractNamesStore'
@@ -11,6 +15,7 @@ import classnames, {
   minWidth,
   wordBreak,
 } from 'classnames/tailwind'
+import networkPick from 'helpers/networkPick'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
 const addressText = wordBreak('break-all')
@@ -45,7 +50,11 @@ function ContractNameSuspended({
     useSnapshot(SealCredStore)
   const { contractNames } = useSnapshot(ContractNamesStore)
   let contractName = contractNames[address]
-  if (!contractName) ContractNamesStore.fetchContractName(address, network)
+  if (!contractName)
+    ContractNamesStore.fetchContractName(
+      address,
+      networkPick(network, goerliDefaultProvider, mainnetDefaultProvider)
+    )
 
   if (clearType) {
     if (contractName && emailDerivativeContracts.includes(address))

@@ -23,8 +23,9 @@
     ]
   },
   "dependencies": {
-    "@big-whale-labs/constants": "^0.1.17",
+    "@big-whale-labs/constants": "^0.1.19",
     "@big-whale-labs/seal-cred-ledger-contract": "^0.2.6",
+    "@big-whale-labs/stores": "^0.1.10",
     "@coinbase/wallet-sdk": "^3.4.0",
     "@formkit/auto-animate": "^1.0.0-beta.1",
     "@opengsn/provider": "^3.0.0-beta.1",
@@ -77,7 +78,7 @@
     "tailwindcss": "^3.1.8",
     "tailwindcss-classnames": "^3.0.5",
     "typescript": "^4.7.4",
-    "vite": "^3.0.4",
+    "vite": "^3.0.5",
     "vite-plugin-remove-console": "^1.1.0",
     "vite-tsconfig-paths": "^3.5.0"
   },

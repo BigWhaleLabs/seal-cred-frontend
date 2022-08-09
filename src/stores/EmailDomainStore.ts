@@ -1,8 +1,11 @@
+import { PersistableStore } from '@big-whale-labs/stores'
 import { proxy } from 'valtio'
-import PersistableStore from 'stores/persistence/PersistableStore'
+import env from 'helpers/env'
 
 class EmailDomainStore extends PersistableStore {
   emailDomain = ''
 }
 
-export default proxy(new EmailDomainStore()).makePersistent(true)
+export default proxy(new EmailDomainStore()).makePersistent(
+  env.VITE_ENCRYPT_KEY
+)
