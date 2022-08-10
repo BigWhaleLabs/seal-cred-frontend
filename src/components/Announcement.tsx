@@ -12,27 +12,36 @@ import classnames, {
   flex,
   fontSize,
   fontWeight,
+  height,
   justifyContent,
   lineHeight,
   margin,
+  opacity,
   padding,
+  transitionDuration,
   transitionProperty,
-  translate,
+  transitionTimingFunction,
 } from 'classnames/tailwind'
 import walletStore from 'stores/WalletStore'
+
+const commonTransition = classnames(
+  transitionDuration('duration-75'),
+  transitionTimingFunction('ease-linear')
+)
 
 const announceWrapper = (animate?: boolean) =>
   classnames(
     backgroundColor('bg-primary-dimmed'),
-    padding('px-6', 'py-4'),
+    padding(animate ? 'px-0' : 'px-6', animate ? 'py-0' : 'py-4'),
     display('flex'),
     alignItems('items-center'),
     justifyContent('justify-center'),
     fontWeight('font-bold'),
     fontSize('text-sm'),
     lineHeight('leading-5'),
-    transitionProperty('transition-transform'),
-    translate(animate ? '-translate-y-full' : undefined)
+    height(animate ? 'h-0' : undefined),
+    transitionProperty('transition-height', 'transition-padding'),
+    commonTransition
   )
 
 const crossWrapper = classnames(
@@ -51,18 +60,26 @@ export default function ({ redirectTo }: { redirectTo: string }) {
   const onPage = location.pathname === redirectTo
 
   return (
-    <div id="bottom-bar" className={announceWrapper(animate)}>
+    <div className={announceWrapper(animate)}>
       <div className={flex('flex-1')} />
-      <LinkText url={redirectTo}>
-        <AccentText small bold color="text-formal-accent">
-          Now introducing zk proofs for your work email!{' '}
-          {!onPage
-            ? 'Get started'
-            : account
-            ? 'Get started below.'
-            : 'Connect wallet to get started.'}
-        </AccentText>
-      </LinkText>
+      <div
+        className={classnames(
+          opacity(animate ? 'opacity-0' : undefined),
+          transitionProperty('transition-opacity'),
+          commonTransition
+        )}
+      >
+        <LinkText url={redirectTo}>
+          <AccentText small bold color="text-formal-accent">
+            Now introducing zk proofs for your work email!{' '}
+            {!onPage
+              ? 'Get started'
+              : account
+              ? 'Get started below.'
+              : 'Connect wallet to get started.'}
+          </AccentText>
+        </LinkText>
+      </div>
       <div className={crossWrapper}>
         <Button
           onClick={() => {

@@ -139,10 +139,14 @@ module.exports = {
       translate: {
         '-5.5': '-0.35rem',
         '-7': '-0.45rem',
-        '-full': '-100%',
       },
       backgroundImage: {
         noise: 'url("/img/noise50.png")',
+      },
+      transitionProperty: {
+        height: 'height',
+        'line-height': 'line-height',
+        padding: 'padding',
       },
     },
   },
