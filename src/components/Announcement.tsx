@@ -32,15 +32,15 @@ const commonTransition = classnames(
 const announceWrapper = (animate?: boolean) =>
   classnames(
     backgroundColor('bg-primary-dimmed'),
-    padding(animate ? 'px-0' : 'px-6', animate ? 'py-0' : 'py-4'),
+    padding({ 'px-6': !animate, 'py-4': !animate }),
     display('flex'),
     alignItems('items-center'),
     justifyContent('justify-center'),
     fontWeight('font-bold'),
     fontSize('text-sm'),
     lineHeight('leading-5'),
-    height(animate ? 'h-0' : undefined),
-    transitionProperty('transition-height', 'transition-padding'),
+    height({ 'h-0': animate }),
+    transitionProperty('transition-all'),
     commonTransition
   )
 
@@ -49,6 +49,13 @@ const crossWrapper = classnames(
   flex('flex-1'),
   margin('ml-auto')
 )
+
+const textWrapper = (animate?: boolean) =>
+  classnames(
+    opacity({ 'opacity-0': animate }),
+    transitionProperty('transition-all'),
+    commonTransition
+  )
 
 export default function ({ redirectTo }: { redirectTo: string }) {
   const { account } = useSnapshot(walletStore)
@@ -59,24 +66,18 @@ export default function ({ redirectTo }: { redirectTo: string }) {
   if (announcementClosed) return null
   const onPage = location.pathname === redirectTo
 
+  const hasAccount = account
+    ? 'Get started below.'
+    : 'Connect wallet to get started'
+
   return (
     <div className={announceWrapper(animate)}>
       <div className={flex('flex-1')} />
-      <div
-        className={classnames(
-          opacity(animate ? 'opacity-0' : undefined),
-          transitionProperty('transition-opacity'),
-          commonTransition
-        )}
-      >
+      <div className={textWrapper(animate)}>
         <LinkText url={redirectTo}>
           <AccentText small bold color="text-formal-accent">
             Now introducing zk proofs for your work email!{' '}
-            {!onPage
-              ? 'Get started'
-              : account
-              ? 'Get started below.'
-              : 'Connect wallet to get started.'}
+            {onPage ? hasAccount : 'Get started'}
           </AccentText>
         </LinkText>
       </div>

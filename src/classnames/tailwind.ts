@@ -4359,9 +4359,6 @@ export type TTransitionProperty =
   | 'transition-opacity'
   | 'transition-shadow'
   | 'transition-transform'
-  | 'transition-height'
-  | 'transition-line-height'
-  | 'transition-padding'
 
 export type TTransitionDuration =
   | 'duration-75'

@@ -143,11 +143,6 @@ module.exports = {
       backgroundImage: {
         noise: 'url("/img/noise50.png")',
       },
-      transitionProperty: {
-        height: 'height',
-        'line-height': 'line-height',
-        padding: 'padding',
-      },
     },
   },
 }
