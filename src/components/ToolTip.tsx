@@ -99,6 +99,11 @@ export default function ({
 
   const [node, setNode] = useState<VNode | null>(null)
 
+  const onTouchMove = useCallback(() => {
+    setIsShow(false)
+    setNode(null)
+  }, [])
+
   const positionTooltip = useCallback(
     (event: MouseEvent) => {
       if (position !== 'floating') return
@@ -107,10 +112,12 @@ export default function ({
       const y = event.pageY
       const element = document.getElementById('root')
       const parent = childrenRef.current
-      const positionX = (xs ? 0 : x * 0.95) + 'px;'
+      let positionX = (xs ? 0 : x * 0.95) + 'px;'
       const positionY = y + 0.5 + 'px;'
       const portalWrapper = width('lg:w-card', xs ? 'w-full' : 'w-6/12')
-
+      if (parseInt(positionX) * 2 > window.innerWidth) {
+        positionX = (window.innerWidth - parent.offsetWidth) / 2 + 'px;'
+      }
       const portalStyles =
         `position:absolute; z-index: 49;` +
         'left:' +
@@ -166,14 +173,16 @@ export default function ({
     document.addEventListener('mouseover', positionTooltip)
     document.addEventListener('mouseout', positionTooltip)
     document.addEventListener('click', positionTooltip)
+    document.addEventListener('touchmove', onTouchMove)
 
     return () => {
       if (!isFloating) return
       document.removeEventListener('mouseover', positionTooltip)
-      document.addEventListener('mouseout', positionTooltip)
-      document.addEventListener('click', positionTooltip)
+      document.removeEventListener('mouseout', positionTooltip)
+      document.removeEventListener('click', positionTooltip)
+      document.removeEventListener('touchmove', onTouchMove)
     }
-  }, [isFloating, positionTooltip])
+  }, [isFloating, positionTooltip, onTouchMove])
 
   return (
     <div className={tooltip(fitContainer)} ref={childrenRef}>
