@@ -99,11 +99,6 @@ export default function ({
 
   const [node, setNode] = useState<VNode | null>(null)
 
-  const onTouchMove = useCallback(() => {
-    setIsShow(false)
-    setNode(null)
-  }, [])
-
   const positionTooltip = useCallback(
     (event: MouseEvent) => {
       if (position !== 'floating') return
