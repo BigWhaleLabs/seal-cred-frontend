@@ -28,6 +28,7 @@
     "@big-whale-labs/stores": "^0.1.10",
     "@coinbase/wallet-sdk": "^3.4.0",
     "@formkit/auto-animate": "^1.0.0-beta.1",
+    "@material-tailwind/react": "^1.2.3",
     "@opengsn/provider": "^3.0.0-beta.1",
     "@walletconnect/web3-provider": "^1.8.0",
     "axios": "^0.27.2",
