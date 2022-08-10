@@ -35,10 +35,12 @@ export default function () {
   return (
     <Root>
       <Router>
-        <Announcement redirectTo="/email" />
         <ToastContainer position="bottom-right" theme="dark" />
         <div className={pageContainer}>
-          <Navbar />
+          <div>
+            <Announcement redirectTo="/email" />
+            <Navbar />
+          </div>
           <ScrollToTop>
             <div className={space('space-y-4')}>
               <Routes>
