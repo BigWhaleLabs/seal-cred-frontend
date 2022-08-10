@@ -170,19 +170,13 @@ export default function ({
     const element = childrenRef.current
     if (!element) return
 
-    document.addEventListener('mouseover', positionTooltip)
-    document.addEventListener('mouseout', positionTooltip)
-    document.addEventListener('click', positionTooltip)
-    document.addEventListener('touchmove', onTouchMove)
+    document.addEventListener('mousemove', positionTooltip)
 
     return () => {
       if (!isFloating) return
-      document.removeEventListener('mouseover', positionTooltip)
-      document.removeEventListener('mouseout', positionTooltip)
-      document.removeEventListener('click', positionTooltip)
-      document.removeEventListener('touchmove', onTouchMove)
+      document.removeEventListener('mousemove', positionTooltip)
     }
-  }, [isFloating, positionTooltip, onTouchMove])
+  }, [isFloating, positionTooltip])
 
   return (
     <div className={tooltip(fitContainer)} ref={childrenRef}>
