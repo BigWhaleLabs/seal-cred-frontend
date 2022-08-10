@@ -348,7 +348,7 @@ export function HintText({
   return <div className={hintText(bold, center)}>{children}</div>
 }
 
-const highlightedText = (bold?: boolean, center?: boolean) =>
+export const highlightedText = (bold?: boolean, center?: boolean) =>
   classnames(
     width('w-fit'),
     textColor('text-primary-dark'),
