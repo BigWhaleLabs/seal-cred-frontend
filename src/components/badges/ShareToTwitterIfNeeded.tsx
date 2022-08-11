@@ -2,6 +2,7 @@ import { BodyText } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import Cross from 'icons/Cross'
+import ExternalLink from 'components/ExternalLink'
 import NotificationsStore from 'stores/NotificationsStore'
 import classnames, {
   alignItems,
@@ -44,11 +45,11 @@ export default function () {
       <BodyText bold fontPrimary>
         You minted your first badge!
       </BodyText>
-      <a href={twitterLink}>
+      <ExternalLink url={twitterLink}>
         <Button type="secondary" onClick={closeNotification} small>
           <div className={width('tiny:w-max')}>Share a Tweet</div>
         </Button>
-      </a>
+      </ExternalLink>
       <button onClick={closeNotification}>
         <Cross />
       </button>
