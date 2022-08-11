@@ -133,6 +133,7 @@ export default function ({
     <Card
       color="secondary"
       shadow
+      paddingType="normal"
       onlyWrap
       spinner="Certified with SealCred ZK Proofs"
     >
