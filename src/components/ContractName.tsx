@@ -5,7 +5,7 @@ import {
 } from 'helpers/providers/defaultProvider'
 import { useSnapshot } from 'valtio'
 import { utils } from 'ethers'
-import ContractNamesStore from 'stores/ContractNamesStore'
+import ContractNamesStore from 'stores/ContractMetadataStore'
 import Network from 'models/Network'
 import SealCredStore from 'stores/SealCredStore'
 import classNamesToString from 'helpers/classNamesToString'

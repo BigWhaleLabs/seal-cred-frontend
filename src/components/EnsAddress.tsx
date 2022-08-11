@@ -1,4 +1,4 @@
-import { GoerliEnsStore } from 'stores/EnsStore'
+import { GoerliEnsStore } from 'stores/ENSStore'
 import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
 import Network from 'models/Network'
