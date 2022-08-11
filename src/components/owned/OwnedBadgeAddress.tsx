@@ -1,7 +1,7 @@
 import { LinkText } from 'components/Text'
 import { Suspense } from 'react'
 import { wordBreak } from 'classnames/tailwind'
-import EnsAddress from 'components/EnsAddress'
+import ENSAddress from 'components/ENSAddress'
 import Network from 'models/Network'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import useOwnerAddress from 'hooks/useOwnerAddress'
@@ -29,7 +29,7 @@ function OwnedBadgeAddressSuspended({
           title={owner}
           bold
         >
-          <EnsAddress address={owner} network={network} />
+          <ENSAddress address={owner} network={network} />
         </LinkText>
       )}
     </span>

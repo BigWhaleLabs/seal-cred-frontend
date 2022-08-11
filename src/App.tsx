@@ -24,7 +24,7 @@ const Main = lazy(() => import('pages/Main'))
 const EmailProof = lazy(() => import('pages/EmailProof'))
 
 const pageContainer = classnames(
-  space('space-y-6', 'sm:space-y-10'),
+  space('space-y-6', 'sm:space-y-0'),
   display('flex'),
   flexDirection('flex-col'),
   minHeight('min-h-screen'),

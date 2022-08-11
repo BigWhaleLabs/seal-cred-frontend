@@ -7,7 +7,7 @@ export default function () {
   const navigate = useNavigate()
 
   return (
-    <Card color="tertiary" shadow onlyWrap>
+    <Card color="tertiary" paddingType="normal" shadow onlyWrap>
       <AccentText color="text-tertiary">
         Create more zkBadges with SealCred.
       </AccentText>

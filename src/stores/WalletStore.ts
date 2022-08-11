@@ -1,5 +1,5 @@
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import { PersistableStore } from '@big-whale-labs/stores'
-import { Web3Provider } from '@ethersproject/providers'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
@@ -15,6 +15,7 @@ import createEmailBadge from 'helpers/createEmailBadge'
 import createExternalERC721Badge from 'helpers/createExternalERC721Badge'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
+import relayProvider from 'helpers/providers/relayProvider'
 import web3Modal from 'helpers/web3Modal'
 
 let provider: Web3Provider
@@ -76,25 +77,37 @@ class WalletStore extends PersistableStore {
   async mintDerivative(proof: BaseProof) {
     if (!provider) throw new Error('No provider found')
 
-    if (proof instanceof ERC721Proof) {
-      if (proof.network === Network.Goerli)
-        return createERC721Badge(provider, proof)
+    const gsnProvider = await relayProvider(provider)
 
-      const signature = await requestContractMetadata(
-        proof.network,
-        proof.contract
-      )
-      return createExternalERC721Badge(
-        provider,
-        proof,
-        signature.message,
-        signature.signature
-      )
+    const ethersProvider = new Web3Provider(
+      gsnProvider as unknown as ExternalProvider
+    )
+
+    try {
+      if (proof instanceof ERC721Proof) {
+        if (proof.network === Network.Goerli)
+          return createERC721Badge(ethersProvider, proof)
+
+        const signature = await requestContractMetadata(
+          proof.network,
+          proof.contract
+        )
+        return createExternalERC721Badge(
+          ethersProvider,
+          proof,
+          signature.message,
+          signature.signature
+        )
+      }
+
+      if (proof instanceof EmailProof)
+        return createEmailBadge(ethersProvider, proof)
+
+      throw new Error('Unknown proof type')
+    } catch (error) {
+      handleError(error)
+      throw error
     }
-
-    if (proof instanceof EmailProof) return createEmailBadge(provider, proof)
-
-    throw new Error('Unknown proof type')
   }
 
   private async checkNetwork(provider: Web3Provider) {

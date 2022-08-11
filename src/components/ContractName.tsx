@@ -43,7 +43,6 @@ function ContractNameSuspended({
 }: ContractNameProps) {
   const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
     useSnapshot(SealCredStore)
-
   // We will always get a string
   let contractName = getContractName(address, network) as string
 

@@ -73,7 +73,8 @@ const cardContainer = (
   thin = false,
   nospace?: boolean,
   useAppStyles?: boolean,
-  paddingType?: 'small' | 'normal'
+  paddingType?: 'small' | 'normal',
+  spinner?: string
 ) => {
   return classnames(
     position('relative'),
@@ -95,6 +96,7 @@ const cardContainer = (
     margin({ 'mx-auto': !thin }, 'lg:mx-0'),
     maxHeight({ 'sm:max-h-card': !onlyWrap, 'max-h-mobile-card': !onlyWrap }),
     space({ 'space-y-6': !nospace }),
+    margin(spinner ? 'mt-4' : undefined),
     wordBreak('break-words'),
     zIndex('z-30'),
     useAppStyles ? appStyles : undefined
@@ -130,7 +132,8 @@ export default function ({
           thin,
           nospace,
           useAppStyles,
-          paddingType
+          paddingType,
+          spinner
         )}
       >
         {children}
