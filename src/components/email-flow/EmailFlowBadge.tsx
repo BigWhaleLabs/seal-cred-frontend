@@ -37,7 +37,7 @@ export default function ({
         Interested in confessions from verified but anonymous work emails?
       </BodyText>
       <div>
-        <LinkText url="https://work.sealcred.xyz/how-it-works">
+        <LinkText targetBlank url="https://work.sealcred.xyz/how-it-works">
           <Button type="tertiary" small withArrow gradientFont fullWidth center>
             Try SealCred Work
           </Button>
