@@ -12,7 +12,7 @@ import Terms from 'pages/Terms'
 import classnames, {
   display,
   flexDirection,
-  justifyContent,
+  margin,
   minHeight,
   space,
 } from 'classnames/tailwind'
@@ -27,9 +27,9 @@ const pageContainer = classnames(
   space('space-y-6', 'sm:space-y-0'),
   display('flex'),
   flexDirection('flex-col'),
-  minHeight('min-h-screen'),
-  justifyContent('justify-between')
+  minHeight('min-h-screen')
 )
+const mainContent = classnames(space('space-y-4'), margin('sm:!my-auto'))
 
 export default function () {
   return (
@@ -37,12 +37,10 @@ export default function () {
       <Router>
         <ToastContainer position="bottom-right" theme="dark" />
         <div className={pageContainer}>
-          <div>
-            <Announcement redirectTo="/email" />
-            <Navbar />
-          </div>
+          <Announcement redirectTo="/email" />
+          <Navbar />
           <ScrollToTop>
-            <div className={space('space-y-4')}>
+            <div className={mainContent}>
               <Routes>
                 <Route
                   path="/email"
