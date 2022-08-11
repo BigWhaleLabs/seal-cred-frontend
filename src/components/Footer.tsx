@@ -17,7 +17,7 @@ const commonClasses = classnames(display('flex'), alignItems('items-center'))
 const socialContainerCard = classnames(
   commonClasses,
   flexDirection('flex-col', 'md:flex-row'),
-  padding('py-8', 'px-4', 'lg:px-25'),
+  padding('py-4', 'px-4', 'lg:px-25'),
   space('space-y-4', 'md:space-x-4', 'md:space-y-0')
 )
 

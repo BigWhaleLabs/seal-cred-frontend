@@ -19,7 +19,7 @@ const container = classnames(
   flexDirection('flex-col'),
   justifyContent('justify-center'),
   alignItems('items-center'),
-  space('space-y-6'),
+  space('space-y-4'),
   padding('pb-2')
 )
 export default function () {
