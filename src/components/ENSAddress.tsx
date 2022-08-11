@@ -1,23 +1,23 @@
-import { GoerliEnsStore } from 'stores/ENSStore'
+import { GoerliENSStore } from 'stores/ENSStore'
 import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
 import Network from 'models/Network'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 import useBreakpoints from 'hooks/useBreakpoints'
 
-interface EnsAddressProps {
+interface ENSAddressProps {
   address: string
   network: Network
 }
 
-function EnsAddressSuspended({
+function ENSAddressSuspended({
   address,
   truncate,
   truncateSize,
-}: EnsAddressProps & { truncate?: boolean; truncateSize: number }) {
-  const { ensNames } = useSnapshot(GoerliEnsStore)
-  const ensName = ensNames[address]
-  if (!ensName) GoerliEnsStore.fetchEnsName(address)
+}: ENSAddressProps & { truncate?: boolean; truncateSize: number }) {
+  const { ENSNames } = useSnapshot(GoerliENSStore)
+  const ensName = ENSNames[address]
+  if (!ensName) GoerliENSStore.fetchENSName(address)
 
   return (
     <>
@@ -28,13 +28,13 @@ function EnsAddressSuspended({
   )
 }
 
-export default memo<EnsAddressProps>(({ address, network }) => {
+export default memo<ENSAddressProps>(({ address, network }) => {
   const { md, lg } = useBreakpoints()
   const truncateSize = md ? (lg ? 25 : 17) : 11
 
   return (
     <Suspense fallback={truncateMiddleIfNeeded(address, truncateSize)}>
-      <EnsAddressSuspended
+      <ENSAddressSuspended
         address={address}
         truncateSize={truncateSize}
         truncate={!lg}

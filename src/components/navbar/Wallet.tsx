@@ -1,7 +1,7 @@
 import { AccentText, SocialLink } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Discord from 'icons/Discord'
-import EnsAddress from 'components/EnsAddress'
+import ENSAddress from 'components/ENSAddress'
 import ExternalLink from 'components/ExternalLink'
 import Network from 'models/Network'
 import SealWallet from 'icons/SealWallet'
@@ -62,7 +62,7 @@ const AccountContainer = ({ account }: { account?: string }) => {
         <div className={accountLinkContainer}>
           <div className={walletAccount}>
             <AccentText extraSmall={xs} color="text-accent">
-              <EnsAddress address={account} network={Network.Goerli} />
+              <ENSAddress address={account} network={Network.Goerli} />
             </AccentText>
           </div>
           <div className={width('w-fit')}>

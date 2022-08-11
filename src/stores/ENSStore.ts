@@ -5,5 +5,5 @@ import {
 } from 'helpers/providers/defaultProvider'
 import { proxy } from 'valtio'
 
-export const GoerliEnsStore = proxy(new ENSStore(goerliDefaultProvider))
-export const MainnetEnsStore = proxy(new ENSStore(mainnetDefaultProvider))
+export const GoerliENSStore = proxy(new ENSStore(goerliDefaultProvider))
+export const MainnetENSStore = proxy(new ENSStore(mainnetDefaultProvider))
