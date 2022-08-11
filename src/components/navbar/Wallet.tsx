@@ -83,7 +83,11 @@ const AccountContainer = ({ account }: { account?: string }) => {
     >
       <div className={walletAccount}>
         <AccentText extraSmall={xs} color="text-primary-semi-dimmed">
-          {needNetworkChange ? 'Change network' : 'No wallet connected'}
+          {needNetworkChange
+            ? 'Change network'
+            : xs
+            ? 'No wallet'
+            : 'No wallet connected'}
         </AccentText>
       </div>
       <div className={width('w-fit')}>
