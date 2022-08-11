@@ -32,7 +32,7 @@ const walletContainer = classnames(
 const accountLinkContainer = classnames(
   display('inline-flex'),
   alignItems('items-center'),
-  space('tiny:space-x-4', 'space-x-1'),
+  space('tiny:space-x-4', 'space-x-2'),
   cursor('cursor-pointer')
 )
 const walletAccount = classnames(
@@ -66,7 +66,11 @@ const AccountContainer = ({ account }: { account?: string }) => {
             </AccentText>
           </div>
           <div className={width('w-fit')}>
-            {xs ? <SmallSeal /> : <SealWallet connected={true} />}
+            {xs ? (
+              <SmallSeal connected={true} />
+            ) : (
+              <SealWallet connected={true} />
+            )}
           </div>
         </div>
       </ExternalLink>
@@ -78,12 +82,16 @@ const AccountContainer = ({ account }: { account?: string }) => {
       onClick={async () => await WalletStore.connect(true)}
     >
       <div className={walletAccount}>
-        <AccentText color="text-primary-semi-dimmed">
+        <AccentText extraSmall={xs} color="text-primary-semi-dimmed">
           {needNetworkChange ? 'Change network' : 'No wallet connected'}
         </AccentText>
       </div>
       <div className={width('w-fit')}>
-        <SealWallet connected={false} />
+        {xs ? (
+          <SmallSeal connected={false} />
+        ) : (
+          <SealWallet connected={false} />
+        )}
       </div>
     </div>
   )
