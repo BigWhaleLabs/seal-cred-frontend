@@ -1,11 +1,5 @@
 import { Suspense, memo } from 'react'
-import {
-  goerliDefaultProvider,
-  mainnetDefaultProvider,
-} from 'helpers/providers/defaultProvider'
 import { useSnapshot } from 'valtio'
-import { utils } from 'ethers'
-import ContractNamesStore from 'stores/ContractNamesStore'
 import Network from 'models/Network'
 import SealCredStore from 'stores/SealCredStore'
 import classNamesToString from 'helpers/classNamesToString'
@@ -15,7 +9,7 @@ import classnames, {
   minWidth,
   wordBreak,
 } from 'classnames/tailwind'
-import networkPick from 'helpers/networkPick'
+import getContractName from 'helpers/getContractName'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
 const addressText = wordBreak('break-all')
@@ -48,13 +42,8 @@ function ContractNameSuspended({
 }: ContractNameProps) {
   const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
     useSnapshot(SealCredStore)
-  const { contractNames } = useSnapshot(ContractNamesStore)
-  let contractName = contractNames[address]
-  if (!contractName)
-    ContractNamesStore.fetchContractName(
-      address,
-      networkPick(network, goerliDefaultProvider, mainnetDefaultProvider)
-    )
+
+  let contractName = getContractName(address, network, truncate)
 
   if (clearType) {
     if (contractName && emailDerivativeContracts.includes(address))
@@ -64,14 +53,6 @@ function ContractNameSuspended({
       contractName = contractName.replace(' (derivative)', '')
   }
 
-  let content = contractName || address
-
-  if (truncate) content = truncateMiddleIfNeeded(content, 17)
-  if (utils.isAddress(content)) content = truncateMiddleIfNeeded(content, 17)
-
-  // Removes NULL symbols caused by Solidity -> JS string conversion
-  content = content.replaceAll('\u0000', '')
-
   return (
     <span
       className={classNamesToString(
@@ -79,7 +60,7 @@ function ContractNameSuspended({
         hyphens ? 'hyphensAuto' : undefined
       )}
     >
-      {hyphens ? wrappedWord(content) : content}
+      {hyphens ? wrappedWord(contractName) : contractName}
     </span>
   )
 }

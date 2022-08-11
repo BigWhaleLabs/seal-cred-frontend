@@ -2,6 +2,7 @@ import { toast } from 'react-toastify'
 import { useLocation } from 'react-router-dom'
 import Button from 'components/Button'
 import LinkChain from 'icons/LinkChain'
+import Network from 'models/Network'
 import Twitter from 'icons/Twitter'
 import classnames, {
   alignItems,
@@ -12,6 +13,7 @@ import classnames, {
   space,
   textColor,
 } from 'classnames/tailwind'
+import getContractName from 'helpers/getContractName'
 
 const buttonContentWrapper = classnames(
   display('flex'),
@@ -32,8 +34,16 @@ async function copy(pathname: string) {
   await navigator.clipboard.writeText('sealcred.xyz' + pathname)
 }
 
-export default function () {
+export default function ({
+  address,
+  network,
+}: {
+  address: string
+  network: Network
+}) {
   const { pathname } = useLocation()
+
+  const contractName = getContractName(address, network)
 
   return (
     <div className={buttonWrapper}>
@@ -42,7 +52,7 @@ export default function () {
         type="secondary"
         small
         url={`http://twitter.com/share?url=${encodeURIComponent(
-          `I minted a zk Badge using SealCred. Check out this privacy-preserving protocol at sealcred.xyz`
+          `I minted a ZK badge for ${contractName} using @SealCred. Check it out 🦭 ${window.location}`
         )}`}
       >
         <div className={buttonContentWrapper}>
