@@ -15,8 +15,8 @@ function ENSAddressSuspended({
   truncate,
   truncateSize,
 }: ENSAddressProps & { truncate?: boolean; truncateSize: number }) {
-  const { ENSNames } = useSnapshot(GoerliENSStore)
-  const ensName = ENSNames[address]
+  const { eNSNames } = useSnapshot(GoerliENSStore)
+  const ensName = eNSNames[address]
   if (!ensName) GoerliENSStore.fetchENSName(address)
 
   return (
