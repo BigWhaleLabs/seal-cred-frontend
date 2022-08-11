@@ -26,7 +26,7 @@ export default function () {
           </BodyText>
         </div>
         <div className={learnMoreText}>
-          <LinkText url="https://bigwhalelabs.com/">
+          <LinkText targetBlank url="https://bigwhalelabs.com/">
             <Button type="tertiary" small withArrow gradientFont>
               Learn more about us
             </Button>
