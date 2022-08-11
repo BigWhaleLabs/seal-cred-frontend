@@ -2,6 +2,7 @@ import { AccentText, SocialLink } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import Discord from 'icons/Discord'
 import EnsAddress from 'components/EnsAddress'
+import ExternalLink from 'components/ExternalLink'
 import Network from 'models/Network'
 import SealWallet from 'icons/SealWallet'
 import Twitter from 'icons/Twitter'
@@ -54,7 +55,7 @@ const AccountContainer = ({ account }: { account?: string }) => {
 
   if (account)
     return (
-      <a href={getEtherscanAddressUrl(account, Network.Goerli)}>
+      <ExternalLink url={getEtherscanAddressUrl(account, Network.Goerli)}>
         <div className={accountLinkContainer}>
           <div className={walletAccount}>
             <AccentText color="text-accent">
@@ -65,7 +66,7 @@ const AccountContainer = ({ account }: { account?: string }) => {
             <SealWallet connected={true} />
           </div>
         </div>
-      </a>
+      </ExternalLink>
     )
 
   return (
