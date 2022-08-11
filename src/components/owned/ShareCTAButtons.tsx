@@ -14,6 +14,7 @@ import classnames, {
   textColor,
 } from 'classnames/tailwind'
 import getContractName from 'helpers/getContractName'
+import prettifyContractName from 'helpers/prettifyContractName'
 
 const buttonContentWrapper = classnames(
   display('flex'),
@@ -43,7 +44,16 @@ export default function ({
 }) {
   const { pathname } = useLocation()
 
-  const contractName = getContractName(address, network)
+  let contractName = getContractName(address, network)
+
+  if (contractName) {
+    contractName = prettifyContractName(contractName)
+  }
+
+  let text = `I minted a ZK badge for ${contractName} using @SealCred. Check it out 🦭 ${window.location}`
+  if (!contractName || text.length - String(window.location).length > 280) {
+    text = `I minted a ZK badge using @SealCred. Check it out 🦭 ${window.location}`
+  }
 
   return (
     <div className={buttonWrapper}>
@@ -51,9 +61,7 @@ export default function ({
         gradientFont
         type="secondary"
         small
-        url={`http://twitter.com/share?url=${encodeURIComponent(
-          `I minted a ZK badge for ${contractName} using @SealCred. Check it out 🦭 ${window.location}`
-        )}`}
+        url={`http://twitter.com/share?url=${encodeURIComponent(text)}`}
       >
         <div className={buttonContentWrapper}>
           <div className="text-white">

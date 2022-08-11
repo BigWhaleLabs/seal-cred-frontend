@@ -10,6 +10,7 @@ import classnames, {
   wordBreak,
 } from 'classnames/tailwind'
 import getContractName from 'helpers/getContractName'
+import prettifyContractName from 'helpers/prettifyContractName'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
 
 const addressText = wordBreak('break-all')
@@ -43,7 +44,8 @@ function ContractNameSuspended({
   const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
     useSnapshot(SealCredStore)
 
-  let contractName = getContractName(address, network, truncate)
+  // We will always get a string
+  let contractName = getContractName(address, network) as string
 
   if (clearType) {
     if (contractName && emailDerivativeContracts.includes(address))
@@ -52,6 +54,8 @@ function ContractNameSuspended({
     if (contractName && ERC721derivativeContracts.includes(address))
       contractName = contractName.replace(' (derivative)', '')
   }
+
+  contractName = prettifyContractName(contractName, truncate)
 
   return (
     <span
