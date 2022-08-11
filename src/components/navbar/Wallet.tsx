@@ -52,12 +52,14 @@ const delimiterContainer = classnames(
 const AccountContainer = ({ account }: { account?: string }) => {
   const { needNetworkChange } = useSnapshot(WalletStore)
 
+  const { xs } = useBreakpoints()
+
   if (account)
     return (
       <a href={getEtherscanAddressUrl(account, Network.Goerli)}>
         <div className={accountLinkContainer}>
           <div className={walletAccount}>
-            <AccentText color="text-accent">
+            <AccentText extraSmall={xs} color="text-accent">
               <EnsAddress address={account} network={Network.Goerli} />
             </AccentText>
           </div>
