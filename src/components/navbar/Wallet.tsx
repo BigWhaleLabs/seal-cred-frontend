@@ -4,6 +4,7 @@ import Discord from 'icons/Discord'
 import EnsAddress from 'components/EnsAddress'
 import Network from 'models/Network'
 import SealWallet from 'icons/SealWallet'
+import SmallSeal from 'icons/SmallSeal'
 import Twitter from 'icons/Twitter'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -30,7 +31,7 @@ const walletContainer = classnames(
 const accountLinkContainer = classnames(
   display('inline-flex'),
   alignItems('items-center'),
-  space('space-x-4'),
+  space('tiny:space-x-4', 'space-x-1'),
   cursor('cursor-pointer')
 )
 const walletAccount = classnames(
@@ -64,7 +65,7 @@ const AccountContainer = ({ account }: { account?: string }) => {
             </AccentText>
           </div>
           <div className={width('w-fit')}>
-            <SealWallet connected={true} />
+            {xs ? <SmallSeal /> : <SealWallet connected={true} />}
           </div>
         </div>
       </a>
