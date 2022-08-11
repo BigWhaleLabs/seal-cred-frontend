@@ -2,9 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --orb: #ffffff;
+  --accent: #fed823;
+  --accent-hover: #fed950;
+  --primary: #15a1fc;
+  --secondary: #ff7bed;
+  --tertiary: #01feb6;
+  --formal-accent: #efecd6;
+
+  --error: #ff7b83;
+  --error-dark: #3e1b1e;
+
+  --primary-dark: #0d0030;
+  --primary-light: #bff5fa;
+  --primary-dimmed: #3a00d6;
+  --primary-semi-dimmed: #4b61d5;
+  --primary-background: #1a0259;
+  --primary-dark-red: #210030;
+
+  --accent-light-transparent: #ff7bed69;
+  --secondary-light-transparent: #fed82369;
+  --accent-light-active-transparent: #ff7bed9e;
+  --secondary-light-active-transparent: #fed8239e;
+
+  --accent-semi-transparent: rgba(254, 216, 35, 0.4);
+  --primary-semi-transparent: rgba(21, 161, 252, 0.5);
+  --secondary-semi-transparent: rgba(255, 123, 237, 0.5);
+  --tertiary-semi-transparent: rgba(1, 254, 182, 0.4);
+  --formal-accent-semi-transparent: rgba(239, 236, 214, 0.4);
+  --error-semi-transparent: rgba(255, 123, 131, 0.2);
+  --selection: #ff7bed35;
+}
+
 html {
-  background-color: #0d0030;
-  scrollbar-color: #fed823 transparent;
+  background-color: var(--primary-dark);
+  scrollbar-color: var(--accent) transparent;
   scrollbar-width: thin;
 }
 body {
@@ -14,21 +47,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'JetBrains Mono', monospace;
-  color: #efecd6;
+  color: var(--formal-accent);
   /* Grid */
   background: conic-gradient(
       from 90deg at 0.06rem 0.06rem,
-      #0d0030 90deg,
-      #1a0259 0
+      var(--primary-dark) 90deg,
+      var(--primary-background) 0
     )
     0 0/3rem 3rem;
 }
 
 ::selection {
-  background: #ff7bed35;
+  background: var(--selection);
 }
 ::-moz-selection {
-  background: #ff7bed35;
+  background: var(--selection);
 }
 
 /* Add hyphens to the text block */
@@ -44,15 +77,15 @@ body {
   body {
     background: conic-gradient(
         from 90deg at 0.06rem 0.06rem,
-        #0d0030 90deg,
-        #1a0259 0
+        var(--primary-dark) 90deg,
+        var(--primary-background) 0
       )
       0 0/2rem 2rem;
   }
 }
 @media (hover: hover) and (pointer: fine) {
   .hover-tertiary:hover {
-    color: #01feb6;
+    color: var(--tertiary);
     text-decoration: underline;
   }
 }
@@ -64,20 +97,20 @@ body {
 ::-webkit-scrollbar-track {
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0) 47%,
-    #fed823 47%,
-    #fed823 51%,
-    rgba(0, 0, 0, 0) 52%
+    transparent 47%,
+    var(--accent) 47%,
+    var(--accent) 51%,
+    transparent 52%
   );
 }
 ::-webkit-scrollbar-thumb {
-  background: #fed823;
+  background: var(--accent);
   border-radius: 20px;
   background-clip: content-box;
   border: 8px solid transparent;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #fed950;
+  background: var(--accent-hover);
   border-radius: 20px;
   background-clip: content-box;
   border: 7.5px solid transparent;

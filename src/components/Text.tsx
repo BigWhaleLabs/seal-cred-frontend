@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import {
   TDropShadow,
   TGradientColorStops,
@@ -17,6 +17,7 @@ import {
   textColor,
   textDecoration,
   textTransform,
+  transitionProperty,
   width,
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
@@ -240,6 +241,7 @@ export function LinkText({
   bold,
   title,
   color,
+  internal,
   gradientFrom,
   gradientTo,
   children,
@@ -250,10 +252,18 @@ export function LinkText({
   bold?: boolean
   title?: string
   color?: TTextColor
+  internal?: boolean
   gradientFrom?: TGradientColorStops
   gradientTo?: TGradientColorStops
 }) {
-  return (
+  return internal ? (
+    <NavLink
+      to={url}
+      className={linkText(bold, color, gradientFrom, gradientTo)}
+    >
+      {children}
+    </NavLink>
+  ) : (
     <a
       className={linkText(bold, color, gradientFrom, gradientTo)}
       href={url}
@@ -266,24 +276,33 @@ export function LinkText({
   )
 }
 
-const footerLink = classnames(
-  fontSize('text-sm'),
-  fontWeight('font-semibold'),
-  textDecoration('no-underline', 'hover:underline'),
-  textColor('text-formal-accent', 'hover:text-accent')
-)
-export function FooterlLink({
+const footerLink = (active?: boolean) =>
+  classnames(
+    fontSize('text-sm'),
+    fontWeight('font-semibold'),
+    textDecoration({ underline: active, 'hover:underline': true }),
+    textColor({
+      'text-accent': active,
+      'hover:text-accent': true,
+    }),
+    transitionProperty('transition-colors')
+  )
+export function FooterLink({
   url,
   children,
   internal,
 }: ChildrenProp & { url: string; internal?: boolean }) {
   return internal ? (
-    <Link to={url} className={footerLink}>
+    <NavLink
+      replace
+      to={url}
+      className={({ isActive }: { isActive?: boolean }) => footerLink(isActive)}
+    >
       {children}
-    </Link>
+    </NavLink>
   ) : (
     <a
-      className={footerLink}
+      className={footerLink()}
       href={url}
       target="_blank"
       rel="noopener noreferrer"
@@ -329,7 +348,7 @@ export function HintText({
   return <div className={hintText(bold, center)}>{children}</div>
 }
 
-const highlightedText = (bold?: boolean, center?: boolean) =>
+export const highlightedText = (bold?: boolean, center?: boolean) =>
   classnames(
     width('w-fit'),
     textColor('text-primary-dark'),

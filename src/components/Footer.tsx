@@ -1,8 +1,7 @@
-import { FooterlLink, SocialLink } from 'components/Text'
+import { FooterLink, SocialLink } from 'components/Text'
 import Delimiter from 'components/Delimiter'
 import Discord from 'icons/Discord'
 import FooterLogo from 'icons/FooterLogo'
-import Spacer from 'components/Spacer'
 import Twitter from 'icons/Twitter'
 import classnames, {
   alignItems,
@@ -43,39 +42,34 @@ export default function () {
   const { md } = useBreakpoints()
 
   return (
-    <>
-      <Spacer />
-      <div className={socialContainerCard}>
-        <div className={linkContainer}>
-          <FooterlLink url="https://blog.bigwhalelabs.com/">
-            <div className={footerLogo}>
-              <FooterLogo />
-              <span>Blog</span>
-            </div>
-          </FooterlLink>
-          <Delimiter />
-          <FooterlLink internal url="/terms">
-            Terms of service
-          </FooterlLink>
-          <Delimiter />
-          <FooterlLink internal url="/privacy">
-            Privacy policy
-          </FooterlLink>
-        </div>
-        {!md && (
-          <>
-            <div className={socialContainer}>
-              <SocialLink url="https://discord.gg/NHk96pPZUV">
-                <Discord />
-              </SocialLink>
-              <Delimiter />
-              <SocialLink url="https://twitter.com/bigwhalelabs">
-                <Twitter />
-              </SocialLink>
-            </div>
-          </>
-        )}
+    <div className={socialContainerCard}>
+      <div className={linkContainer}>
+        <FooterLink url="https://blog.bigwhalelabs.com/">
+          <div className={footerLogo}>
+            <FooterLogo />
+            <span>Blog</span>
+          </div>
+        </FooterLink>
+        <Delimiter />
+        <FooterLink internal url="/terms">
+          Terms of service
+        </FooterLink>
+        <Delimiter />
+        <FooterLink internal url="/privacy">
+          Privacy policy
+        </FooterLink>
       </div>
-    </>
+      {!md && (
+        <div className={socialContainer}>
+          <SocialLink url="https://discord.gg/NHk96pPZUV">
+            <Discord />
+          </SocialLink>
+          <Delimiter />
+          <SocialLink url="https://twitter.com/bigwhalelabs">
+            <Twitter />
+          </SocialLink>
+        </div>
+      )}
+    </div>
   )
 }

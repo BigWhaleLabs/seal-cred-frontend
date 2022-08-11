@@ -1,4 +1,5 @@
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
+import { PersistableStore } from '@big-whale-labs/stores'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
@@ -8,7 +9,6 @@ import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
-import PersistableStore from 'stores/persistence/PersistableStore'
 import chainForWallet from 'helpers/chainForWallet'
 import createERC721Badge from 'helpers/createERC721Badge'
 import createEmailBadge from 'helpers/createEmailBadge'
@@ -175,7 +175,9 @@ class WalletStore extends PersistableStore {
   }
 }
 
-const walletStore = proxy(new WalletStore()).makePersistent(true)
+const walletStore = proxy(new WalletStore()).makePersistent(
+  env.VITE_ENCRYPT_KEY
+)
 
 if (walletStore.cachedProvider) void walletStore.connect()
 

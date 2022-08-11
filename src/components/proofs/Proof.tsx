@@ -71,7 +71,7 @@ function useProofContent(
       color: 'text-accent',
       content: (
         <span className={textWithIcon}>
-          <ToolTip position="floating" fitContainer text={powerProofTooltip}>
+          <ToolTip position="top" fitContainer text={powerProofTooltip}>
             <span className={cursor('cursor-help')}>Generating...</span>
           </ToolTip>
           <div className={animation('animate-spin')}>

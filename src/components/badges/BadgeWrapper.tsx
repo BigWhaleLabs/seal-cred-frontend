@@ -1,4 +1,5 @@
 import ChildrenProp from 'models/ChildrenProp'
+import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -26,5 +27,14 @@ export default function ({
   children,
   minted,
 }: ChildrenProp & { minted: boolean }) {
-  return <div className={badgeWrapper(minted)}>{children}</div>
+  return (
+    <div
+      className={classNamesToString(
+        badgeWrapper(minted),
+        'last:odd:col-span-full'
+      )}
+    >
+      {children}
+    </div>
+  )
 }

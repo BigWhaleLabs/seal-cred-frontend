@@ -20,7 +20,6 @@ export default defineConfig({
         }),
         nodePolyfills(),
         inject({
-          assert: 'assert',
           process: 'process',
           Buffer: ['buffer', 'Buffer'],
           global: 'global',
