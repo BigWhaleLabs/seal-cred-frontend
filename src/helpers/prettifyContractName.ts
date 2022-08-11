@@ -6,7 +6,7 @@ export default function (contractName: string, truncate = false) {
   if (utils.isAddress(contractName))
     contractName = truncateMiddleIfNeeded(contractName, 17)
 
-  // Removes NULL symbols caused by Solidity -> JS string conversion
+  // Removes \0 caused by old versions of the contracts
   contractName = contractName.replaceAll('\u0000', '')
   return contractName
 }
