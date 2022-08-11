@@ -16,8 +16,10 @@ import classnames, {
   position,
   space,
   transitionProperty,
+  width,
   zIndex,
 } from 'classnames/tailwind'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const navbar = (visible?: boolean, withoutWallet?: boolean) =>
   classnames(
@@ -27,7 +29,7 @@ const navbar = (visible?: boolean, withoutWallet?: boolean) =>
     alignItems('items-center'),
     justifyContent(withoutWallet ? 'sm:justify-center' : 'justify-between'),
     padding('py-4', 'px-4', 'lg:px-25'),
-    space('space-x-9', 'lg:space-x-0'),
+    space('tiny:space-x-4', 'sm:space-x-9', 'lg:space-x-0'),
     zIndex('z-50'),
     backgroundColor(visible ? 'bg-primary-dark' : 'bg-transparent'),
     transitionProperty('transition-all')
@@ -36,15 +38,19 @@ const navbar = (visible?: boolean, withoutWallet?: boolean) =>
 const logoContainer = classnames(
   display('inline-flex'),
   alignItems('items-center'),
-  space('space-x-4'),
+  space('sm:space-x-4', 'space-x-1'),
   margin('mt-2')
 )
 
 const logoWithVersion = classnames(display('flex'), flexDirection('flex-col'))
 
+const logoWrapper = classnames(display('flex'), width('w-1/4', 'sm:w-full'))
+
 export default function () {
   const { pathname } = useLocation()
   const withoutWallet = pathname.split('/').length >= 3
+
+  const { xs } = useBreakpoints()
 
   const [backgroundVisible, setBackgroundVisible] = useState(false)
   const onScroll = useCallback(() => {
@@ -59,9 +65,11 @@ export default function () {
     <nav className={navbar(backgroundVisible, withoutWallet)}>
       <Link to="/">
         <div className={logoContainer}>
-          <Logo />
+          <div className={logoWrapper}>
+            <Logo />
+          </div>
           <div className={logoWithVersion}>
-            <LogoText>SealCred</LogoText>
+            <LogoText small={xs}>SealCred</LogoText>
             <LogoSubText>(ALPHA)</LogoSubText>
           </div>
         </div>

@@ -61,7 +61,8 @@ const accentText = (
   bold?: boolean,
   small?: boolean,
   primary?: boolean,
-  shadow?: TDropShadow
+  shadow?: TDropShadow,
+  extraSmall?: boolean
 ) =>
   classnames(
     textColor(
@@ -71,7 +72,7 @@ const accentText = (
     ),
     fontFamily(primary ? 'font-primary' : undefined),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize(small ? 'text-sm' : undefined),
+    fontSize({ 'text-sm': small, 'text-xs': extraSmall }),
     dropShadow(shadow)
   )
 export function AccentText({
@@ -81,15 +82,19 @@ export function AccentText({
   primary,
   shadow,
   children,
+  extraSmall,
 }: ChildrenProp & {
   color: TTextColor
   bold?: boolean
   small?: boolean
   primary?: boolean
   shadow?: TDropShadow
+  extraSmall?: boolean
 }) {
   return (
-    <span className={accentText(color, bold, small, primary, shadow)}>
+    <span
+      className={accentText(color, bold, small, primary, shadow, extraSmall)}
+    >
       {children}
     </span>
   )
@@ -165,14 +170,18 @@ export function CardDescription({ children }: ChildrenProp) {
   return <p className={cardDescription}>{children}</p>
 }
 
-const logoText = classnames(
-  textColor('text-accent'),
-  fontWeight('font-bold'),
-  fontSize('text-lg'),
-  lineHeight('leading-none')
-)
-export function LogoText({ children }: ChildrenProp) {
-  return <span className={logoText}>{children}</span>
+const logoText = (small?: boolean) =>
+  classnames(
+    textColor('text-accent'),
+    fontWeight('font-bold'),
+    fontSize({ 'text-sm': small, 'text-lg': !small }),
+    lineHeight('leading-none')
+  )
+export function LogoText({
+  children,
+  small = false,
+}: ChildrenProp & { small?: boolean }) {
+  return <span className={logoText(small)}>{children}</span>
 }
 
 const subheaderCardText = classnames(
