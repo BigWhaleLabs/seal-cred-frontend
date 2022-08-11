@@ -2,6 +2,7 @@ import { toast } from 'react-toastify'
 import { useLocation } from 'react-router-dom'
 import Button from 'components/Button'
 import LinkChain from 'icons/LinkChain'
+import Network from 'models/Network'
 import Twitter from 'icons/Twitter'
 import classnames, {
   alignItems,
@@ -12,6 +13,8 @@ import classnames, {
   space,
   textColor,
 } from 'classnames/tailwind'
+import getContractName from 'helpers/getContractName'
+import prettifyContractName from 'helpers/prettifyContractName'
 
 const buttonContentWrapper = classnames(
   display('flex'),
@@ -32,8 +35,25 @@ async function copy(pathname: string) {
   await navigator.clipboard.writeText('sealcred.xyz' + pathname)
 }
 
-export default function () {
+export default function ({
+  address,
+  network,
+}: {
+  address: string
+  network: Network
+}) {
   const { pathname } = useLocation()
+
+  let contractName = getContractName(address, network)
+
+  if (contractName) {
+    contractName = prettifyContractName(contractName)
+  }
+
+  let text = `I minted a ZK badge for ${contractName} using @SealCred. Check it out 🦭 ${window.location}`
+  if (!contractName || text.length - String(window.location).length > 280) {
+    text = `I minted a ZK badge using @SealCred. Check it out 🦭 ${window.location}`
+  }
 
   return (
     <div className={buttonWrapper}>
@@ -41,9 +61,7 @@ export default function () {
         gradientFont
         type="secondary"
         small
-        url={`http://twitter.com/share?url=${encodeURIComponent(
-          `I minted a zk Badge using SealCred. Check out this privacy-preserving protocol at sealcred.xyz`
-        )}`}
+        url={`http://twitter.com/share?url=${encodeURIComponent(text)}`}
       >
         <div className={buttonContentWrapper}>
           <div className="text-white">
