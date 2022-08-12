@@ -1,6 +1,5 @@
 import { serializeError } from 'eth-rpc-errors'
 import { toast } from 'react-toastify'
-import { transformRelayErrorMessage } from 'helpers/providers/relayProvider'
 import axios, { AxiosError } from 'axios'
 import parseRevertReason from 'helpers/parseRevertReason'
 
@@ -11,6 +10,14 @@ export const ErrorList = {
     `Looks like you're using ${userNetwork} network, try switching to ${contractNetwork}`,
   unknown: 'An unknown error occurred, please, contact us',
   clear: '',
+}
+
+function transformRelayErrorMessage(message: string) {
+  // Removes stack trace information
+  return message
+    .split('stack')
+    .filter((_, i) => i % 2 === 0)
+    .join('\n')
 }
 
 export default function (error: unknown) {
@@ -30,5 +37,8 @@ export default function (error: unknown) {
   }
   if (!displayedError) displayedError = ErrorList.unknown
 
-  toast.error(transformRelayErrorMessage(displayedError))
+  if (/^Failed to relay call/.test(displayedError))
+    displayedError = transformRelayErrorMessage(displayedError)
+
+  toast.error(displayedError)
 }

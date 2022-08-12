@@ -4,18 +4,6 @@ import { Web3Provider } from '@ethersproject/providers'
 import { WrapBridge } from '@opengsn/provider/dist/WrapContract'
 import env from 'helpers/env'
 
-export function transformRelayErrorMessage(message: string) {
-  if (/^Failed to relay call/.test(message)) {
-    // Removes stack trace information
-    message = message
-      .split('stack')
-      .filter((_, i) => i % 2 === 0)
-      .join('\n')
-  }
-
-  return message
-}
-
 export default function relayProvider(provider: Web3Provider) {
   return RelayProvider.newProvider({
     provider: new WrapBridge(new Eip1193Bridge(provider.getSigner(), provider)),
