@@ -2,9 +2,16 @@ import { useLayoutEffect, useRef } from 'react'
 import QRCodeStyling, { Options } from 'qr-code-styling'
 import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
+  alignItems,
+  backgroundColor,
   borderRadius,
+  display,
+  inset,
+  justifyContent,
   minWidth,
   overflow,
+  position,
+  width,
 } from 'classnames/tailwind'
 
 interface QRCodeProps {
@@ -13,15 +20,26 @@ interface QRCodeProps {
 }
 
 const qrCodeContainer = classnames(
+  position('relative'),
   borderRadius('rounded-2xl'),
   overflow('overflow-hidden'),
   minWidth('min-w-fit')
 )
+const qrCodeLogoContainer = classnames(
+  position('absolute'),
+  display('flex'),
+  alignItems('items-center'),
+  justifyContent('justify-center'),
+  inset('inset-0')
+)
+const qrCodeLogo = classnames(width('w-8'), backgroundColor('bg-primary-dark'))
 
 const QRCodeOptions: Options = {
   type: 'canvas',
   margin: 10,
-  image: '/img/logo.svg',
+  width: 200,
+  height: 200,
+  image: '',
   dotsOptions: {
     color: '#fed823',
     type: 'dots',
@@ -39,7 +57,7 @@ const QRCodeOptions: Options = {
 }
 
 export default function ({ derivativeAddress, tokenId }: QRCodeProps) {
-  const ref = useRef<HTMLAnchorElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const url = `${window.location.origin}/${derivativeAddress}/${tokenId}`
 
   useLayoutEffect(() => {
@@ -54,10 +72,14 @@ export default function ({ derivativeAddress, tokenId }: QRCodeProps) {
   return (
     <a
       href={url}
-      ref={ref}
       className={classNamesToString(qrCodeContainer, 'custom-qr-code')}
       target="_blank"
       rel="noopener noreferrer"
-    />
+    >
+      <div ref={ref} />
+      <div className={qrCodeLogoContainer}>
+        <img src="/img/logo.svg" className={qrCodeLogo} />
+      </div>
+    </a>
   )
 }
