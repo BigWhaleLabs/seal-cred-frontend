@@ -1,5 +1,6 @@
 import { serializeError } from 'eth-rpc-errors'
 import { toast } from 'react-toastify'
+import { transformRelayErrorMessage } from 'helpers/providers/relayProvider'
 import axios, { AxiosError } from 'axios'
 import parseRevertReason from 'helpers/parseRevertReason'
 
@@ -29,5 +30,5 @@ export default function (error: unknown) {
   }
   if (!displayedError) displayedError = ErrorList.unknown
 
-  toast.error(displayedError)
+  toast.error(transformRelayErrorMessage(displayedError))
 }
