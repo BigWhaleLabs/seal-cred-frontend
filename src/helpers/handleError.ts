@@ -12,6 +12,14 @@ export const ErrorList = {
   clear: '',
 }
 
+function transformRelayErrorMessage(message: string) {
+  // Removes stack trace information
+  return message
+    .split('stack')
+    .filter((_, i) => i % 2 === 0)
+    .join('\n')
+}
+
 export default function (error: unknown) {
   console.error(error)
 
@@ -28,6 +36,9 @@ export default function (error: unknown) {
     displayedError = error.response?.data?.message
   }
   if (!displayedError) displayedError = ErrorList.unknown
+
+  if (/^Failed to relay call/.test(displayedError))
+    displayedError = transformRelayErrorMessage(displayedError)
 
   toast.error(displayedError)
 }
