@@ -1,88 +1,13 @@
-import { PersistableStore } from '@big-whale-labs/stores'
+import { ContractsStore } from '@big-whale-labs/stores'
 import {
   goerliDefaultProvider,
   mainnetDefaultProvider,
 } from 'helpers/providers/defaultProvider'
-import { providers } from 'ethers'
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
-import ContractSynchronizer, {
-  ContractSynchronizerSchema,
-} from 'helpers/ContractSynchronizer'
 import Network from 'models/Network'
 import WalletStore from 'stores/WalletStore'
 import env from 'helpers/env'
-import transformObjectValues from 'helpers/transformObjectValues'
-
-class ContractsStore extends PersistableStore {
-  connectedAccounts: { [account: string]: ContractSynchronizer } = {}
-  currentBlock?: number
-  addressToTokenIds?: Promise<{ [address: string]: string[] } | undefined>
-
-  get persistanceName() {
-    return `${this.constructor.name}_${this.network}`
-  }
-
-  provider: providers.Provider
-  network: Network
-
-  constructor(provider: providers.Provider, network: Network) {
-    super()
-    this.provider = provider
-    this.network = network
-  }
-
-  replacer = (key: string, value: unknown) => {
-    const disallowList = ['addressToTokenIds']
-    return disallowList.includes(key) ? undefined : value
-  }
-
-  reviver = (key: string, value: unknown) => {
-    if (key === 'connectedAccounts') {
-      return transformObjectValues(
-        value as { [account: string]: ContractSynchronizerSchema },
-        ContractSynchronizer.fromJSON
-      )
-    }
-    return value
-  }
-
-  fetchBlockNumber() {
-    return this.provider.getBlockNumber()
-  }
-
-  async fetchMoreContractsOwned(accountChange?: boolean) {
-    if (!WalletStore.account) return
-    if (!this.currentBlock) this.currentBlock = await this.fetchBlockNumber()
-
-    if (!this.connectedAccounts[WalletStore.account])
-      this.connectedAccounts[WalletStore.account] = new ContractSynchronizer(
-        WalletStore.account
-      )
-
-    if (
-      !this.addressToTokenIds &&
-      this.connectedAccounts[WalletStore.account].mapAddressToTokenIds
-    ) {
-      this.addressToTokenIds = Promise.resolve(
-        this.connectedAccounts[WalletStore.account].mapAddressToTokenIds
-      )
-    }
-
-    if (!this.addressToTokenIds || accountChange) {
-      this.addressToTokenIds = this.connectedAccounts[
-        WalletStore.account
-      ].syncAddressToTokenIds(this.currentBlock, this.network)
-      return
-    }
-
-    const result = await this.connectedAccounts[
-      WalletStore.account
-    ].syncAddressToTokenIds(this.currentBlock, this.network)
-
-    this.addressToTokenIds = Promise.resolve(result)
-  }
-}
 
 export const GoerliContractsStore = proxy(
   new ContractsStore(goerliDefaultProvider, Network.Goerli)
@@ -92,18 +17,24 @@ export const MainnetContractsStore = proxy(
   new ContractsStore(mainnetDefaultProvider, Network.Mainnet)
 ).makePersistent(env.VITE_ENCRYPT_KEY)
 
-subscribeKey(WalletStore, 'account', () => {
-  void GoerliContractsStore.fetchMoreContractsOwned(true)
-  void MainnetContractsStore.fetchMoreContractsOwned(true)
+subscribeKey(WalletStore, 'account', (account) => {
+  if (account) {
+    void GoerliContractsStore.fetchMoreContractsOwned(account, true)
+    void MainnetContractsStore.fetchMoreContractsOwned(account, true)
+  }
 })
 
 goerliDefaultProvider.on('block', async (blockNumber: number) => {
   GoerliContractsStore.currentBlock = blockNumber
-  await GoerliContractsStore.fetchMoreContractsOwned()
+  if (WalletStore.account) {
+    await GoerliContractsStore.fetchMoreContractsOwned(WalletStore.account)
+  }
 })
 mainnetDefaultProvider.on('block', async (blockNumber: number) => {
   MainnetContractsStore.currentBlock = blockNumber
-  await MainnetContractsStore.fetchMoreContractsOwned()
+  if (WalletStore.account) {
+    await MainnetContractsStore.fetchMoreContractsOwned(WalletStore.account)
+  }
 })
 
 export default ContractsStore
