@@ -21,26 +21,24 @@ export default function () {
   const { lg } = useBreakpoints()
 
   return (
-    <>
-      <div className={mainBlock}>
-        <ProofsCard />
-        <CardSeparator
-          numberOfLines={3}
-          gradient="accent-to-secondary"
-          vertical={!lg}
-        />
-        <Badges />
-        {!lg && (
-          <>
-            <CardSeparator
-              numberOfLines={1}
-              gradient="secondary-to-transparent"
-              vertical
-            />
-            <ZkProofHint />
-          </>
-        )}
-      </div>
-    </>
+    <div className={mainBlock}>
+      <ProofsCard />
+      <CardSeparator
+        numberOfLines={3}
+        gradient="accent-to-secondary"
+        vertical={!lg}
+      />
+      <Badges />
+      {!lg && (
+        <>
+          <CardSeparator
+            numberOfLines={1}
+            gradient="secondary-to-transparent"
+            vertical
+          />
+          <ZkProofHint />
+        </>
+      )}
+    </div>
   )
 }

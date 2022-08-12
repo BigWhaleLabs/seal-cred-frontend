@@ -12,9 +12,8 @@ import Terms from 'pages/Terms'
 import classnames, {
   display,
   flexDirection,
-  justifyContent,
+  margin,
   minHeight,
-  space,
 } from 'classnames/tailwind'
 
 const NotFound = lazy(() => import('pages/NotFound'))
@@ -24,25 +23,26 @@ const Main = lazy(() => import('pages/Main'))
 const EmailProof = lazy(() => import('pages/EmailProof'))
 
 const pageContainer = classnames(
-  space('space-y-6', 'sm:space-y-0'),
   display('flex'),
   flexDirection('flex-col'),
-  minHeight('min-h-screen'),
-  justifyContent('justify-between')
+  minHeight('min-h-screen')
+)
+
+const bodyContainer = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  margin('mx-auto', 'my-6', 'md:mt-0', 'md:mb-auto')
 )
 
 export default function () {
   return (
     <Root>
       <Router>
-        <ToastContainer position="bottom-right" theme="dark" />
-        <div className={pageContainer}>
-          <div>
+        <ScrollToTop>
+          <div className={pageContainer}>
             <Announcement redirectTo="/email" />
             <Navbar />
-          </div>
-          <ScrollToTop>
-            <div className={space('space-y-4')}>
+            <div className={bodyContainer}>
               <Routes>
                 <Route
                   path="/email"
@@ -75,8 +75,9 @@ export default function () {
               </Routes>
             </div>
             <Footer />
-          </ScrollToTop>
-        </div>
+          </div>
+        </ScrollToTop>
+        <ToastContainer position="bottom-right" theme="dark" />
       </Router>
     </Root>
   )
