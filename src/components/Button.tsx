@@ -91,8 +91,10 @@ const colorClasses = (
   type: ButtonType,
   available?: boolean,
   gradientFont?: boolean
-) =>
-  classnames(
+) => {
+  const hasNoGradient = !gradientFont
+
+  return classnames(
     type === 'primary'
       ? classnames(
           textColor('text-primary-dark'),
@@ -115,9 +117,9 @@ const colorClasses = (
           borderRadius('rounded-full'),
           borderColor({
             'border-transparent': gradientFont,
-            'border-secondary': !gradientFont,
-            'hover:border-secondary': !gradientFont,
-            'active:border-secondary': !gradientFont,
+            'border-secondary': hasNoGradient,
+            'hover:border-secondary': hasNoGradient,
+            'active:border-secondary': hasNoGradient,
           }),
           backgroundImage('bg-gradient-to-r'),
           textColor('text-secondary'),
@@ -132,6 +134,7 @@ const colorClasses = (
         )
       : backgroundColor('bg-transparent')
   )
+}
 
 const textGradient = (available?: boolean) =>
   classnames(
