@@ -7398,6 +7398,7 @@ export type TMinWidth =
 export type TMaxWidth =
   | 'max-w-0'
   | 'max-w-100'
+  | 'max-w-1244'
   | 'max-w-none'
   | 'max-w-xs'
   | 'max-w-sm'
@@ -7484,6 +7485,7 @@ export type THeight =
   | 'h-noisy-rectangle'
   | 'h-mobile-card'
   | 'h-card'
+  | 'h-big-card'
   | 'h-small'
 
 export type TMinHeight =
@@ -7540,6 +7542,7 @@ export type TMaxHeight =
   | 'max-h-card'
   | 'max-h-mobile-card'
   | 'max-h-badges-list'
+  | 'max-h-big-card'
   | 'max-h-small'
 
 export type TSizing =

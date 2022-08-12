@@ -8,6 +8,7 @@ import {
   classnames,
   display,
   flexDirection,
+  height,
   inset,
   margin,
   maxHeight,
@@ -36,6 +37,7 @@ interface CardProps {
   useAppStyles?: boolean
   mobileSpinnerOnRight?: boolean
   paddingType?: 'small' | 'normal'
+  bigCard?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -74,7 +76,8 @@ const cardContainer = (
   nospace?: boolean,
   useAppStyles?: boolean,
   paddingType?: 'small' | 'normal',
-  spinner?: string
+  spinner?: string,
+  bigCard?: boolean
 ) => {
   return classnames(
     position('relative'),
@@ -88,15 +91,20 @@ const cardContainer = (
       'py-5': paddingType === 'normal',
       'py-8': typeof paddingType === 'undefined',
     }),
-    width(
-      thin ? 'sm:!w-thin-card' : 'sm:w-card',
-      thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
-      { 'w-32': thin }
-    ),
+    bigCard
+      ? width('w-full')
+      : thin
+      ? width('sm:!w-thin-card', 'tiny:w-thin-mobile', 'w-32')
+      : width('sm:w-card', 'w-mobile-card'),
+    height({ 'h-big-card': bigCard }),
     margin({ 'mx-auto': !thin }, 'lg:mx-0'),
-    maxHeight({ 'sm:max-h-card': !onlyWrap, 'max-h-mobile-card': !onlyWrap }),
+    maxHeight({
+      'max-h-big-card': bigCard,
+      'sm:max-h-card': !onlyWrap && !bigCard,
+      'max-h-mobile-card': !onlyWrap && !bigCard,
+    }),
     space({ 'space-y-6': !nospace }),
-    margin(spinner ? 'mt-4' : undefined),
+    margin({ 'mt-4': spinner != null }),
     wordBreak('break-words'),
     zIndex('z-30'),
     useAppStyles ? appStyles : undefined
@@ -121,6 +129,7 @@ export default function ({
   nospace,
   useAppStyles,
   mobileSpinnerOnRight,
+  bigCard,
 }: ChildrenProp & CardProps) {
   return (
     <CardContext.Provider value={{ cardColor: color }}>
@@ -133,7 +142,8 @@ export default function ({
           nospace,
           useAppStyles,
           paddingType,
-          spinner
+          spinner,
+          bigCard
         )}
       >
         {children}

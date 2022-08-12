@@ -17,9 +17,11 @@ module.exports = {
         card: '31.75rem',
         'mobile-card': '41rem',
         'badges-list': '21.25rem',
+        'big-card': '77.75rem',
       },
       maxWidth: {
         100: '6.25rem',
+        1244: '77.75rem',
       },
       keyframes: {
         'pulse-horizontal': {
@@ -96,6 +98,7 @@ module.exports = {
         'noisy-rectangle': '0.688rem',
         'mobile-card': '22.813rem',
         card: '31.75rem',
+        'big-card': '70vh',
       },
       width: {
         'thin-mobile': '10.75rem',

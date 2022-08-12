@@ -18,10 +18,10 @@ const zkProofButton = classnames(
   display('flex'),
   flexDirection('flex-row'),
   justifyContent('justify-center'),
-  width('w-mobile-card', 'sm:w-card'),
+  width('w-fit'),
   backgroundColor('bg-primary-background'),
   space('space-x-2'),
-  padding('py-4'),
+  padding('py-4', 'px-2', 'lg:px-8'),
   margin('mx-auto'),
   cursor('cursor-pointer'),
   borderRadius('rounded-2xl')
