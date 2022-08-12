@@ -6,9 +6,11 @@ import classnames, {
   boxShadow,
   gradientColorStops,
   padding,
+  width,
 } from 'classnames/tailwind'
 
 const parentButtonWrapper = classnames(
+  width('w-fit'),
   borderRadius('rounded-full'),
   backgroundImage('bg-gradient-to-r'),
   padding('p-px'),
@@ -16,6 +18,7 @@ const parentButtonWrapper = classnames(
   boxShadow('shadow-2xl', 'hover:shadow-lg', 'active:shadow-button-active')
 )
 const innerButtonWrapper = classnames(
+  width('w-full'),
   borderRadius('rounded-full'),
   backgroundColor('bg-primary-dark')
 )
