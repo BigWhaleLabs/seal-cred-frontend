@@ -39,7 +39,8 @@ const commonClasses = (
   fullWidth?: boolean,
   center?: boolean,
   available?: boolean,
-  small?: boolean
+  small?: boolean,
+  gradientFont?: boolean
 ) =>
   classnames(
     display('flex'),
@@ -57,7 +58,7 @@ const commonClasses = (
     boxShadow({
       'shadow-2xl': available,
       'hover:shadow-lg': available,
-      'active:shadow-button-active': available,
+      'active:shadow-button-active': available && !gradientFont,
     }),
     width(fullWidth ? 'w-full' : 'w-fit'),
     textAlign(center ? 'text-center' : undefined),
@@ -79,14 +80,21 @@ const button = ({
   center,
   type,
   small,
+  gradientFont,
 }: ButtonProps & { available?: boolean }) =>
   classnames(
-    commonClasses(type, fullWidth, center, available, small),
-    colorClasses(type, available)
+    commonClasses(type, fullWidth, center, available, small, gradientFont),
+    colorClasses(type, available, gradientFont)
   )
 
-const colorClasses = (type: ButtonType, available?: boolean) =>
-  classnames(
+const colorClasses = (
+  type: ButtonType,
+  available?: boolean,
+  gradientFont?: boolean
+) => {
+  const hasNoGradient = !gradientFont
+
+  return classnames(
     type === 'primary'
       ? classnames(
           textColor('text-primary-dark'),
@@ -107,14 +115,17 @@ const colorClasses = (type: ButtonType, available?: boolean) =>
       ? classnames(
           borderWidth('border'),
           borderRadius('rounded-full'),
-          borderColor(
-            'border-secondary',
-            'hover:border-secondary',
-            'active:border-secondary'
-          ),
+          borderColor({
+            'border-transparent': gradientFont,
+            'border-secondary': hasNoGradient,
+            'hover:border-secondary': hasNoGradient,
+            'active:border-secondary': hasNoGradient,
+          }),
           backgroundImage('bg-gradient-to-r'),
           textColor('text-secondary'),
           gradientColorStops({
+            'from-primary-dark': gradientFont,
+            'to-primary-dark': gradientFont,
             'hover:from-accent-light-transparent': available,
             'hover:to-secondary-light-transparent': available,
             'active:from-accent-light-active-transparent': available,
@@ -123,6 +134,7 @@ const colorClasses = (type: ButtonType, available?: boolean) =>
         )
       : backgroundColor('bg-transparent')
   )
+}
 
 const textGradient = (available?: boolean) =>
   classnames(
@@ -175,6 +187,7 @@ export default function ({
         center,
         type,
         small,
+        gradientFont,
       })}
       onClick={() => {
         if (url) window.open(url, '_blank')

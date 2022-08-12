@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify'
 import { useLocation } from 'react-router-dom'
 import Button from 'components/Button'
+import GradientButton from 'components/GradientButton'
 import LinkChain from 'icons/LinkChain'
 import Network from 'models/Network'
 import Twitter from 'icons/Twitter'
@@ -26,8 +27,9 @@ const buttonContentWrapper = classnames(
 
 const buttonWrapper = classnames(
   display('flex'),
-  flexDirection('flex-row'),
-  space('space-x-3'),
+  flexDirection('flex-col', 'tiny:flex-row'),
+  alignItems('items-center'),
+  space('space-y-3', 'tiny:space-y-0', 'tiny:space-x-3'),
   margin('my-4')
 )
 
@@ -57,35 +59,39 @@ export default function ({
 
   return (
     <div className={buttonWrapper}>
-      <Button
-        gradientFont
-        type="secondary"
-        small
-        url={`http://twitter.com/share?url=${encodeURIComponent(text)}`}
-      >
-        <div className={buttonContentWrapper}>
-          <div className="text-white">
-            <Twitter />
+      <GradientButton>
+        <Button
+          gradientFont
+          type="secondary"
+          small
+          url={`http://twitter.com/share?url=${encodeURIComponent(text)}`}
+        >
+          <div className={buttonContentWrapper}>
+            <div className="text-white">
+              <Twitter />
+            </div>
+            Tweet
           </div>
-          Tweet
-        </div>
-      </Button>
-      <Button
-        gradientFont
-        type="secondary"
-        small
-        onClick={async () => {
-          await copy(pathname)
-          toast('Link copied 👍')
-        }}
-      >
-        <div className={buttonContentWrapper}>
-          <div className="text-white">
-            <LinkChain />
+        </Button>
+      </GradientButton>
+      <GradientButton>
+        <Button
+          gradientFont
+          type="secondary"
+          small
+          onClick={async () => {
+            await copy(pathname)
+            toast('Link copied 👍')
+          }}
+        >
+          <div className={buttonContentWrapper}>
+            <div className="text-white">
+              <LinkChain />
+            </div>
+            Copy link
           </div>
-          Copy link
-        </div>
-      </Button>
+        </Button>
+      </GradientButton>
     </div>
   )
 }
