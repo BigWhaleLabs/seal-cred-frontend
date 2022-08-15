@@ -37,7 +37,6 @@ interface CardProps {
   useAppStyles?: boolean
   mobileSpinnerOnRight?: boolean
   paddingType?: 'small' | 'normal'
-  bigCard?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -65,8 +64,15 @@ const appStyles = classnames(
   display('flex'),
   flexDirection('flex-col'),
   alignItems('items-stretch'),
-  minHeight('sm:min-h-card', 'min-h-fit')
+  minHeight('sm:min-h-card', 'min-h-fit'),
+  maxHeight('max-h-app-card'),
+  height('h-app-card'),
+  width('w-full')
 )
+
+const thinWidthStyles = width('sm:!w-thin-card', 'tiny:w-thin-mobile', 'w-32')
+
+const defaultWidthStyles = width('sm:w-card', 'w-mobile-card')
 
 const cardContainer = (
   shadow?: boolean,
@@ -76,8 +82,7 @@ const cardContainer = (
   nospace?: boolean,
   useAppStyles?: boolean,
   paddingType?: 'small' | 'normal',
-  spinner?: string,
-  bigCard?: boolean
+  spinner?: string
 ) => {
   return classnames(
     position('relative'),
@@ -91,20 +96,14 @@ const cardContainer = (
       'py-5': paddingType === 'normal',
       'py-8': typeof paddingType === 'undefined',
     }),
-    bigCard
-      ? width('w-full')
-      : thin
-      ? width('sm:!w-thin-card', 'tiny:w-thin-mobile', 'w-32')
-      : width('sm:w-card', 'w-mobile-card'),
-    height({ 'h-big-card': bigCard }),
+    !useAppStyles ? (thin ? thinWidthStyles : defaultWidthStyles) : undefined,
     margin({ 'mx-auto': !thin }, 'lg:mx-0'),
     maxHeight({
-      'max-h-big-card': bigCard,
-      'sm:max-h-card': !onlyWrap && !bigCard,
-      'max-h-mobile-card': !onlyWrap && !bigCard,
+      'sm:max-h-card': !onlyWrap && !useAppStyles,
+      'max-h-mobile-card': !onlyWrap && !useAppStyles,
     }),
     space({ 'space-y-6': !nospace }),
-    margin({ 'mt-4': spinner != null }),
+    margin({ 'mt-4': spinner !== null }),
     wordBreak('break-words'),
     zIndex('z-30'),
     useAppStyles ? appStyles : undefined
@@ -129,7 +128,6 @@ export default function ({
   nospace,
   useAppStyles,
   mobileSpinnerOnRight,
-  bigCard,
 }: ChildrenProp & CardProps) {
   return (
     <CardContext.Provider value={{ cardColor: color }}>
@@ -142,8 +140,7 @@ export default function ({
           nospace,
           useAppStyles,
           paddingType,
-          spinner,
-          bigCard
+          spinner
         )}
       >
         {children}

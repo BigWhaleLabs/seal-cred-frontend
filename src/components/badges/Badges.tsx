@@ -25,7 +25,6 @@ export default function () {
       color="secondary"
       useAppStyles
       nospace
-      bigCard
       onlyWrap
     >
       {account ? (

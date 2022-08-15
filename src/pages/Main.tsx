@@ -24,7 +24,7 @@ const cardsContainer = classnames(
   margin('mx-10')
 )
 
-const mainContainer = classnames(width('w-full'), maxWidth('max-w-1244'))
+const mainContainer = classnames(width('w-full'), maxWidth('max-w-app-content'))
 
 const proofHintContainer = classnames(
   position('lg:relative'),

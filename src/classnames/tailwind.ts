@@ -7398,7 +7398,6 @@ export type TMinWidth =
 export type TMaxWidth =
   | 'max-w-0'
   | 'max-w-100'
-  | 'max-w-1244'
   | 'max-w-none'
   | 'max-w-xs'
   | 'max-w-sm'
@@ -7421,6 +7420,7 @@ export type TMaxWidth =
   | 'max-w-screen-lg'
   | 'max-w-screen-xl'
   | 'max-w-screen-2xl'
+  | 'max-w-app-content'
   | 'max-w-screen-fold'
   | 'max-w-screen-tiny'
 
@@ -7485,7 +7485,7 @@ export type THeight =
   | 'h-noisy-rectangle'
   | 'h-mobile-card'
   | 'h-card'
-  | 'h-big-card'
+  | 'h-app-card'
   | 'h-small'
 
 export type TMinHeight =
@@ -7542,7 +7542,7 @@ export type TMaxHeight =
   | 'max-h-card'
   | 'max-h-mobile-card'
   | 'max-h-badges-list'
-  | 'max-h-big-card'
+  | 'max-h-app-card'
   | 'max-h-small'
 
 export type TSizing =

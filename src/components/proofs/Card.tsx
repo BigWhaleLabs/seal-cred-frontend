@@ -15,7 +15,6 @@ export default function () {
       shadow
       useAppStyles
       nospace
-      bigCard
       onlyWrap
     >
       {walletLoading ? (
