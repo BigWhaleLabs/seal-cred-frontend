@@ -1544,16 +1544,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/stores@npm:^0.1.15":
-  version: 0.1.15
-  resolution: "@big-whale-labs/stores@npm:0.1.15"
+"@big-whale-labs/stores@npm:^0.1.16":
+  version: 0.1.16
+  resolution: "@big-whale-labs/stores@npm:0.1.16"
   dependencies:
     "@big-whale-labs/constants": ^0.1.19
     "@big-whale-labs/seal-cred-ledger-contract": ^0.2.6
     ethers: ^5.6.9
     secure-ls: ^1.2.6
     valtio: ^1.6.3
-  checksum: e5c4e038aea9bec5d16f3f4973ace9cf943470885b052dd07e265dba369003454f6211e04a215f5912e669dae109e1eed463b8133af18f1e7cd88ea720637c3b
+  checksum: bc99157b4b5880f0e63e00c55bb13374624a8b847389d77d172a122f4b553fde9a06be997c47c7d075202755d0d15b6f073d12b6b3ab397cd38318abdd04221f
   languageName: node
   linkType: hard
 
@@ -15550,7 +15550,7 @@ __metadata:
   dependencies:
     "@big-whale-labs/constants": ^0.1.21
     "@big-whale-labs/seal-cred-ledger-contract": ^0.2.6
-    "@big-whale-labs/stores": ^0.1.15
+    "@big-whale-labs/stores": ^0.1.16
     "@coinbase/wallet-sdk": ^3.4.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@esbuild-plugins/node-modules-polyfill": ^0.1.4

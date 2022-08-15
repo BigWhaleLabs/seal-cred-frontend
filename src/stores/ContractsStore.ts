@@ -3,6 +3,10 @@ import {
   goerliDefaultProvider,
   mainnetDefaultProvider,
 } from 'helpers/providers/defaultProvider'
+import {
+  goerliHeavyProvider,
+  mainnetHeavyProvider,
+} from 'helpers/providers/heavyProvider'
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
 import Network from 'models/Network'
@@ -10,11 +14,15 @@ import WalletStore from 'stores/WalletStore'
 import env from 'helpers/env'
 
 export const GoerliContractsStore = proxy(
-  new ContractsStore(goerliDefaultProvider, Network.Goerli)
+  new ContractsStore(goerliDefaultProvider, goerliHeavyProvider, Network.Goerli)
 ).makePersistent(env.VITE_ENCRYPT_KEY)
 
 export const MainnetContractsStore = proxy(
-  new ContractsStore(mainnetDefaultProvider, Network.Mainnet)
+  new ContractsStore(
+    mainnetDefaultProvider,
+    mainnetHeavyProvider,
+    Network.Mainnet
+  )
 ).makePersistent(env.VITE_ENCRYPT_KEY)
 
 subscribeKey(WalletStore, 'account', (account) => {
