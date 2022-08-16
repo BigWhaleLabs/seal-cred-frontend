@@ -123,7 +123,7 @@ export default function ({
   if (!badge) {
     handleError('Looks like this contract was removed')
     return (
-      <Card color="secondary" shadow onlyWrap>
+      <Card color="secondary" shadow onlyWrap mobileSpinnerOnRight={true}>
         <CardTitle
           title="Unsupported NFT"
           subtitle="This NFT is not supported"
@@ -139,6 +139,7 @@ export default function ({
       paddingType="normal"
       onlyWrap
       spinner="Certified with SealCred ZK Proofs"
+      mobileSpinnerOnRight
     >
       <BadgeTitle badge={badge} />
       <BadgeContent badge={badge} />
