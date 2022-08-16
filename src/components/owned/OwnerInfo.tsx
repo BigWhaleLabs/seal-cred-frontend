@@ -123,7 +123,7 @@ export default function ({
   if (!badge) {
     handleError('Looks like this contract was removed')
     return (
-      <Card color="secondary" shadow onlyWrap mobileSpinnerOnRight>
+      <Card color="secondary" shadow onlyWrap>
         <CardTitle
           title="Unsupported NFT"
           subtitle="This NFT is not supported"
