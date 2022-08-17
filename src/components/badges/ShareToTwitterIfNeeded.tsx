@@ -37,13 +37,15 @@ const wideBlock = classnames(
   gridColumn('lg:col-span-2', 'col-span-1')
 )
 
+interface ShareToTwitterProps {
+  derivativeAddress: string
+  network: Network
+}
+
 function ShareToTwitterIfNeededSuespended({
   derivativeAddress,
   network,
-}: {
-  derivativeAddress: string
-  network: Network
-}) {
+}: ShareToTwitterProps) {
   const { showTwitterShare } = useSnapshot(NotificationsStore)
   const { addressToTokenIds } = useSnapshot(
     networkPick(network, GoerliContractsStore, MainnetContractsStore)
@@ -90,13 +92,7 @@ function ShareToTwitterIfNeededSuespended({
   )
 }
 
-export default function ({
-  derivativeAddress,
-  network,
-}: {
-  derivativeAddress: string
-  network: Network
-}) {
+export default function ({ derivativeAddress, network }: ShareToTwitterProps) {
   return (
     <Suspense fallback={<>Fetching contract ids...</>}>
       <ShareToTwitterIfNeededSuespended
