@@ -1,8 +1,14 @@
 import { BodyText } from 'components/Text'
+import {
+  GoerliContractsStore,
+  MainnetContractsStore,
+} from 'stores/ContractsStore'
+import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
 import Cross from 'icons/Cross'
 import ExternalLink from 'components/ExternalLink'
+import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
 import classnames, {
   alignItems,
@@ -15,7 +21,10 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
+import getContractName from 'helpers/getContractName'
 import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
+import networkPick from 'helpers/networkPick'
+import prettifyContractName from 'helpers/prettifyContractName'
 
 const wideBlock = classnames(
   display('flex'),
@@ -28,24 +37,48 @@ const wideBlock = classnames(
   gridColumn('lg:col-span-2', 'col-span-1')
 )
 
-export default function () {
+function ShareToTwitterIfNeededSuespended({
+  derivativeAddress,
+  network,
+}: {
+  derivativeAddress: string
+  network: Network
+}) {
   const { showTwitterShare } = useSnapshot(NotificationsStore)
+  const { addressToTokenIds } = useSnapshot(
+    networkPick(network, GoerliContractsStore, MainnetContractsStore)
+  )
 
   if (!showTwitterShare) return null
 
+  const tokenId = addressToTokenIds
+    ? addressToTokenIds[derivativeAddress][0]
+    : undefined
   const closeNotification = () => (NotificationsStore.showTwitterShare = false)
 
-  const twitterLink = getShareToTwitterLink({
-    text: 'Create zero knowledge proof and build your pseudonymous wallet with SealCred 🦭 sealcred.xyz',
-    hashtags: ['zk', 'zkWallet', 'Eth'],
-  })
+  let contractName = getContractName(derivativeAddress, network)
+
+  if (contractName) {
+    contractName = prettifyContractName(contractName)
+  }
+
+  const url = `${window.location.origin}/${derivativeAddress}/${tokenId}`
+
+  let text = `I minted a ZK badge for ${contractName} using @SealCred. Check it out 🦭 ${url}`
+  if (!contractName || text.length - String(window.location).length > 280) {
+    text = `I minted a ZK badge using @SealCred. Check it out 🦭 ${url}`
+  }
+  if (!tokenId) {
+    text =
+      'Create zero knowledge proof and build your pseudonymous wallet with SealCred 🦭 sealcred.xyz'
+  }
 
   return (
     <div className={wideBlock}>
       <BodyText bold fontPrimary>
         You minted your first badge!
       </BodyText>
-      <ExternalLink url={twitterLink}>
+      <ExternalLink url={getShareToTwitterLink({ text })}>
         <Button type="secondary" onClick={closeNotification} small>
           <div className={width('tiny:w-max')}>Share a Tweet</div>
         </Button>
@@ -54,5 +87,22 @@ export default function () {
         <Cross />
       </button>
     </div>
+  )
+}
+
+export default function ({
+  derivativeAddress,
+  network,
+}: {
+  derivativeAddress: string
+  network: Network
+}) {
+  return (
+    <Suspense fallback={<>Fetching contract ids...</>}>
+      <ShareToTwitterIfNeededSuespended
+        derivativeAddress={derivativeAddress}
+        network={network}
+      />
+    </Suspense>
   )
 }
