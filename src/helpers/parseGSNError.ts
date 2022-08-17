@@ -6,10 +6,13 @@ function transformRelayErrorMessage(message: string) {
     ?.join('\n')
 }
 
-export default function (gSNError: string) {
+function extractMetamaskReason(gSNError: string) {
   const metaMaskMessage = 'MetaMask Message Signature:'
   if (gSNError.includes(metaMaskMessage)) {
     return gSNError.split(metaMaskMessage)[1]?.split(' stack:')[0]
   }
-  return transformRelayErrorMessage(gSNError)
+}
+
+export default function (gSNError: string) {
+  return extractMetamaskReason(gSNError) || transformRelayErrorMessage(gSNError)
 }
