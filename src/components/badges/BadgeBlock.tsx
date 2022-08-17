@@ -53,11 +53,6 @@ function Badge({
             'The ZK proof has been used before. Please, regenerate the proof.'
           )
         )
-      } else if (
-        error instanceof Error &&
-        error.message.includes('Proposed priority gas fee')
-      ) {
-        handleError(new Error('Oops, something went wrong. Please, try again.'))
       } else {
         handleError(error)
       }

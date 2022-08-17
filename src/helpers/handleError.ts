@@ -1,6 +1,7 @@
 import { serializeError } from 'eth-rpc-errors'
 import { toast } from 'react-toastify'
 import axios, { AxiosError } from 'axios'
+import parseGSNError from 'helpers/parseGSNError'
 import parseRevertReason from 'helpers/parseRevertReason'
 
 export const ProofGenerationErrors = {}
@@ -10,14 +11,6 @@ export const ErrorList = {
     `Looks like you're using ${userNetwork} network, try switching to ${contractNetwork}`,
   unknown: 'An unknown error occurred, please, contact us',
   clear: '',
-}
-
-function transformRelayErrorMessage(message: string) {
-  // Removes stack trace information
-  return message
-    .split('stack')
-    .filter((_, i) => i % 2 === 0)
-    .join('\n')
 }
 
 export default function (error: unknown) {
@@ -30,15 +23,14 @@ export default function (error: unknown) {
     displayedError = error.message
   const message = serializeError(error).message
   if (message) {
-    displayedError = parseRevertReason(message) ?? message
+    const gSNMessage = parseGSNError(message)
+    const revertMessage = parseRevertReason(message)
+    displayedError = gSNMessage || revertMessage || message
   }
   if (error instanceof AxiosError && error.response?.data?.message) {
     displayedError = error.response?.data?.message
   }
   if (!displayedError) displayedError = ErrorList.unknown
-
-  if (/^Failed to relay call/.test(displayedError))
-    displayedError = transformRelayErrorMessage(displayedError)
 
   toast.error(displayedError)
 }
