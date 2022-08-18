@@ -103,6 +103,7 @@ module.exports = {
         card: '24.875rem',
         'mobile-card': '92%',
         'full-125': '125%',
+        'screen-80': '80vw',
       },
       inset: {
         '-78': '-19.5rem',

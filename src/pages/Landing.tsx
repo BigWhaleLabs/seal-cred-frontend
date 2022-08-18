@@ -67,10 +67,10 @@ const topConnectorsWrapper = classnames(
 const createZkProofWrapper = classnames(
   position('absolute'),
   zIndex('z-40'),
-  inset('tiny:top-1/4', 'top-48'),
+  inset('top-52'),
   width('w-screen', 'md:w-fit')
 )
-const middleConnetorsBlock = classnames(
+const middleConnectorsBlock = classnames(
   position('relative'),
   display('flex'),
   flexDirection('flex-col'),
@@ -102,7 +102,7 @@ export default function () {
 
       <OrbsInBoxes />
 
-      <div className={middleConnetorsBlock}>
+      <div className={middleConnectorsBlock}>
         <div className={createZkProofWrapper}>
           <CreatingZKProofCard />
         </div>
