@@ -1,5 +1,6 @@
 import Button from 'components/Button'
 import Email from 'icons/Email'
+import GradientBorder from 'components/GradientBorder'
 import Input from 'components/Input'
 import useEmailForm from 'hooks/useEmailForm'
 
@@ -30,19 +31,21 @@ export default function ({
           event.code === 'Enter' && emailIsValid ? onSubmit(email) : undefined
         }
       />
-      <Button
-        gradientFont={submitType !== 'primary'}
-        loading={loading}
-        loadingOverflow
-        fullWidth
-        center
-        small={submitType !== 'primary'}
-        type={submitType}
-        disabled={!emailIsValid}
-        onClick={() => onSubmit(email)}
-      >
-        {submitText}
-      </Button>
+      <GradientBorder>
+        <Button
+          gradientFont={submitType !== 'primary'}
+          loading={loading}
+          loadingOverflow
+          fullWidth
+          center
+          small={submitType !== 'primary'}
+          type={submitType}
+          disabled={!emailIsValid}
+          onClick={() => onSubmit(email)}
+        >
+          {submitText}
+        </Button>
+      </GradientBorder>
     </>
   )
 }
