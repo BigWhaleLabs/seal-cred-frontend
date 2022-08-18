@@ -1,6 +1,6 @@
 import Button from 'components/Button'
 import Email from 'icons/Email'
-import GradientButton from 'components/GradientButton'
+import GradientBorder from 'components/GradientBorder'
 import Input from 'components/Input'
 import useEmailForm from 'hooks/useEmailForm'
 
@@ -31,7 +31,7 @@ export default function ({
           event.code === 'Enter' && emailIsValid ? onSubmit(email) : undefined
         }
       />
-      <GradientButton>
+      <GradientBorder>
         <Button
           gradientFont={submitType !== 'primary'}
           loading={loading}
@@ -45,7 +45,7 @@ export default function ({
         >
           {submitText}
         </Button>
-      </GradientButton>
+      </GradientBorder>
     </>
   )
 }
