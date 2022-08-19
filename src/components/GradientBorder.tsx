@@ -10,7 +10,6 @@ import classnames, {
 } from 'classnames/tailwind'
 
 const parentButtonWrapper = classnames(
-  width('w-fit'),
   borderRadius('rounded-full'),
   backgroundImage('bg-gradient-to-r'),
   padding('p-px'),

@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify'
 import { useLocation } from 'react-router-dom'
 import Button from 'components/Button'
-import GradientButton from 'components/GradientButton'
+import GradientBorder from 'components/GradientBorder'
 import LinkChain from 'icons/LinkChain'
 import Network from 'models/Network'
 import Twitter from 'icons/Twitter'
@@ -59,7 +59,7 @@ export default function ({
 
   return (
     <div className={buttonWrapper}>
-      <GradientButton>
+      <GradientBorder>
         <Button
           gradientFont
           type="secondary"
@@ -73,8 +73,8 @@ export default function ({
             Tweet
           </div>
         </Button>
-      </GradientButton>
-      <GradientButton>
+      </GradientBorder>
+      <GradientBorder>
         <Button
           gradientFont
           type="secondary"
@@ -91,7 +91,7 @@ export default function ({
             Copy link
           </div>
         </Button>
-      </GradientButton>
+      </GradientBorder>
     </div>
   )
 }
