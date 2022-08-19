@@ -3,13 +3,11 @@ import { PersistableStore } from '@big-whale-labs/stores'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
 import { requestContractMetadata } from 'helpers/attestor'
-import { serializeError } from 'eth-rpc-errors'
 import BaseProof from 'helpers/BaseProof'
 import ERC721Proof from 'helpers/ERC721Proof'
 import EmailProof from 'helpers/EmailProof'
 import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
-import chainForWallet from 'helpers/chainForWallet'
 import createERC721Badge from 'helpers/createERC721Badge'
 import createEmailBadge from 'helpers/createEmailBadge'
 import createExternalERC721Badge from 'helpers/createExternalERC721Badge'
@@ -38,24 +36,39 @@ class WalletStore extends PersistableStore {
     return web3Modal.cachedProvider
   }
 
+  private async getUserNetworkName() {
+    return (await provider.getNetwork()).name
+  }
+
+  private async isNetworkRight() {
+    const network = env.VITE_ETH_NETWORK
+    const userNetwork = await this.getUserNetworkName()
+    return network === userNetwork
+  }
+
   async connect(clearCachedProvider = false) {
     this.walletLoading = true
     try {
+      if (provider) this.cleanListeners(provider)
       if (clearCachedProvider) web3Modal.clearCachedProvider()
 
       const instance = await web3Modal.connect()
-      provider = new Web3Provider(instance)
+      // We need this "any" networks so we could handle when users switch between networks with listeners without errors
+      provider = new Web3Provider(instance, 'any')
 
-      await this.checkNetwork(provider)
-      if (this.needNetworkChange)
-        throw new Error(
-          ErrorList.wrongNetwork(
-            (await provider.getNetwork()).name,
-            env.VITE_ETH_NETWORK
+      this.account = await this.getAccount()
+      if (!(await this.isNetworkRight())) {
+        this.needNetworkChange = true
+        this.account = undefined
+        handleError(
+          new Error(
+            ErrorList.wrongNetwork(
+              await this.getUserNetworkName(),
+              env.VITE_ETH_NETWORK
+            )
           )
         )
-
-      this.account = (await provider.listAccounts())[0]
+      }
       this.subscribeProvider(instance)
     } catch (error) {
       if (error === 'Modal closed by user') return
@@ -110,43 +123,29 @@ class WalletStore extends PersistableStore {
     }
   }
 
-  private async checkNetwork(provider: Web3Provider) {
-    const network = env.VITE_ETH_NETWORK
-    const userNetwork = (await provider.getNetwork()).name
-    if (userNetwork === network) return (this.needNetworkChange = false)
-
-    this.needNetworkChange = true
-    await this.requestChangeNetwork(provider)
-  }
-
-  private async requestChangeNetwork(provider: Web3Provider) {
-    const chainId = hexValue(env.VITE_CHAIN_ID)
-
-    try {
-      await provider.send('wallet_switchEthereumChain', [{ chainId }])
-      this.needNetworkChange = false
-    } catch (error) {
-      const code = serializeError(error).code
-      if (code !== 4902) return
-
-      await provider.send('wallet_addEthereumChain', [chainForWallet()])
-      this.needNetworkChange = false
-    }
-  }
-
   private async handleAccountChanged() {
     if (!provider) return
 
     this.walletLoading = true
-    const accounts = await provider.listAccounts()
-    this.account = accounts[0]
+    this.account = await this.getAccount()
     NotificationsStore.showTwitterShare = false
     this.walletLoading = false
   }
 
-  private subscribeProvider(provider: Web3Provider) {
-    if (!provider.on) return
+  cleanListeners(provider: Web3Provider) {
+    provider.removeAllListeners()
+  }
 
+  private async getAccount() {
+    return (await provider.listAccounts())[0]
+  }
+
+  async switchNetwork() {
+    const chainId = hexValue(env.VITE_CHAIN_ID)
+    await provider.send('wallet_switchEthereumChain', [{ chainId }])
+  }
+
+  private subscribeProvider(provider: Web3Provider) {
     provider.on('error', (error: Error) => {
       handleError(error)
     })
@@ -158,13 +157,27 @@ class WalletStore extends PersistableStore {
       void this.handleAccountChanged()
     })
     provider.on('disconnect', (error: unknown) => {
+      // Sometimes this error fires when user switching between networks too fast, we should not clean data in this case
+      if (
+        error instanceof Error &&
+        error.message.includes('Attempting to connect.')
+      ) {
+        handleError(error)
+        return
+      }
+
       if (provider) provider.removeAllListeners()
       handleError(error)
       this.clearData()
     })
     provider.on('chainChanged', async () => {
+      if (await this.isNetworkRight()) {
+        this.needNetworkChange = false
+        this.account = await this.getAccount()
+        return
+      }
       this.account = undefined
-      await this.connect()
+      this.needNetworkChange = true
     })
   }
 
