@@ -84,6 +84,8 @@ const cardContainer = (
   paddingType?: 'small' | 'normal',
   spinner?: string
 ) => {
+  const defaultSpacing = !onlyWrap && !useAppStyles
+
   return classnames(
     position('relative'),
     borderRadius('rounded-2xl'),
@@ -96,14 +98,14 @@ const cardContainer = (
       'py-5': paddingType === 'normal',
       'py-8': typeof paddingType === 'undefined',
     }),
-    !useAppStyles ? (thin ? thinWidthStyles : defaultWidthStyles) : undefined,
+    useAppStyles ? undefined : thin ? thinWidthStyles : defaultWidthStyles,
     margin({ 'mx-auto': !thin }, 'lg:mx-0'),
     maxHeight({
-      'sm:max-h-card': !onlyWrap && !useAppStyles,
-      'max-h-mobile-card': !onlyWrap && !useAppStyles,
+      'sm:max-h-card': defaultSpacing,
+      'max-h-mobile-card': defaultSpacing,
     }),
     space({ 'space-y-6': !nospace }),
-    margin({ 'mt-4': spinner !== null }),
+    margin({ 'mt-4': !!spinner }),
     wordBreak('break-words'),
     zIndex('z-30'),
     useAppStyles ? appStyles : undefined
