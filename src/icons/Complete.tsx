@@ -1,16 +1,14 @@
 import classnames, {
   borderRadius,
-  boxShadow,
-  boxShadowColor,
+  dropShadow,
   fill,
   stroke,
 } from 'classnames/tailwind'
 
 const svgClasses = (accent?: boolean) =>
   classnames(
-    borderRadius('rounded-3xl'),
-    boxShadow('shadow-lg'),
-    boxShadowColor(accent ? 'shadow-accent' : 'shadow-secondary')
+    borderRadius('rounded-full'),
+    dropShadow(accent ? 'drop-shadow-accent' : 'drop-shadow-secondary')
   )
 const circleClasses = (accent?: boolean) =>
   fill(accent ? 'fill-accent' : 'fill-secondary')
