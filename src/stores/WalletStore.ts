@@ -146,6 +146,8 @@ class WalletStore extends PersistableStore {
   }
 
   private subscribeProvider(provider: Web3Provider) {
+    if (!provider.on) return
+
     provider.on('error', (error: Error) => {
       handleError(error)
     })
