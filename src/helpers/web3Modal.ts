@@ -1,4 +1,3 @@
-import { ETH_RPC } from '@big-whale-labs/constants'
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk'
 import WalletConnect from '@walletconnect/web3-provider'
 import Web3Modal from 'web3modal'
