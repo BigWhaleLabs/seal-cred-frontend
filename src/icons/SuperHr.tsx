@@ -14,7 +14,7 @@ import classnames, {
 } from 'classnames/tailwind'
 
 const svgBox = classnames(
-  width('w-5/6'),
+  width('w-screen-80'),
   margin('my-24'),
   position('relative'),
   display('flex'),

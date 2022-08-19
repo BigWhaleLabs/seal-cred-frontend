@@ -1,10 +1,9 @@
-import { ETH_RPC } from '@big-whale-labs/constants'
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk'
 import WalletConnect from '@walletconnect/web3-provider'
 import Web3Modal from 'web3modal'
 import env from 'helpers/env'
 
-const rpc = ETH_RPC
+const rpc = env.VITE_ETH_RPC
 const network = env.VITE_ETH_NETWORK
 const appName = env.VITE_APP_NAME
 
