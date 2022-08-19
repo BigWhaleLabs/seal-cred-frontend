@@ -4,9 +4,12 @@ import WalletConnect from '@walletconnect/web3-provider'
 import Web3Modal from 'web3modal'
 import env from 'helpers/env'
 
-const rpc = ETH_RPC
 const network = env.VITE_ETH_NETWORK
 const appName = env.VITE_APP_NAME
+
+const rpc = env.VITE_ETH_RPC.includes('alchemy')
+  ? env.VITE_ETH_RPC.replace('https://eth-goerli.g.alchemy.com/v2/', '')
+  : env.VITE_ETH_RPC
 
 export default new Web3Modal({
   cacheProvider: true,
