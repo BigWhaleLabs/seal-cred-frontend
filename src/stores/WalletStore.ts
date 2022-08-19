@@ -49,7 +49,7 @@ class WalletStore extends PersistableStore {
   async connect(clearCachedProvider = false) {
     this.walletLoading = true
     try {
-      if (provider) this.cleanListeners(provider)
+      if (provider) provider.removeAllListeners()
       if (clearCachedProvider) web3Modal.clearCachedProvider()
 
       const instance = await web3Modal.connect()
@@ -130,10 +130,6 @@ class WalletStore extends PersistableStore {
     this.account = await this.getAccount()
     NotificationsStore.showTwitterShare = false
     this.walletLoading = false
-  }
-
-  cleanListeners(provider: Web3Provider) {
-    provider.removeAllListeners()
   }
 
   private async getAccount() {
