@@ -7,6 +7,7 @@ import {
   SC_EMAIL_LEDGER_CONTRACT_ADDRESS,
   SC_ERC721_LEDGER_CONTRACT_ADDRESS,
   SC_EXTERNAL_ERC721_LEDGER_CONTRACT_ADDRESS,
+  VERIFY_URL,
 } from '@big-whale-labs/constants'
 import { cleanEnv, num, str } from 'envalid'
 
@@ -32,5 +33,5 @@ export default cleanEnv(import.meta.env, {
   VITE_GSN_SC_RELAY: str({
     default: GSN_SC_RELAY,
   }),
-  VITE_VERIFY_URL: str(),
+  VITE_VERIFY_URL: str({ default: VERIFY_URL }),
 })
