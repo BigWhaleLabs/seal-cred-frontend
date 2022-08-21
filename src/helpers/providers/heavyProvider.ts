@@ -5,7 +5,7 @@ function alchemyOrJsonProvider(network: string, url: string) {
   return url.includes('alchemy')
     ? new providers.AlchemyProvider(
         network,
-        url.replace('https://eth-goerli.g.alchemy.com/v2/', '')
+        url.replace(/https:\/\/.+alchemy\.com\/v2\//gi, '')
       )
     : new providers.JsonRpcProvider(url, network)
 }
