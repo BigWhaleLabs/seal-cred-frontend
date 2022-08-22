@@ -1,12 +1,9 @@
-import {
-  GoerliContractsStore,
-  MainnetContractsStore,
-} from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
+import ContractsStore from 'stores/ContractsStore'
 import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
-import networkPick from 'helpers/network/networkPick'
+import useAllContractsOwned from 'hooks/useAllContractsOwned'
 import useContractsOwned from 'hooks/useContractsOwned'
 
 export default function (network?: Network) {
@@ -16,15 +13,11 @@ export default function (network?: Network) {
   switch (network) {
     case Network.Mainnet:
     case Network.Goerli: {
-      contractsOwned = useContractsOwned(
-        networkPick(network, GoerliContractsStore, MainnetContractsStore)
-      )
+      contractsOwned = useContractsOwned(ContractsStore.networks[network])
       break
     }
     default: {
-      const goerliContractsOwned = useContractsOwned(GoerliContractsStore)
-      const mainnetContractsOwned = useContractsOwned(MainnetContractsStore)
-      contractsOwned = [...goerliContractsOwned, ...mainnetContractsOwned]
+      contractsOwned = useAllContractsOwned()
     }
   }
   const { derivativeContracts = [] } = useSnapshot(SealCredStore)

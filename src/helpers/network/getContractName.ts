@@ -1,11 +1,7 @@
-import {
-  goerliDefaultProvider,
-  mainnetDefaultProvider,
-} from 'helpers/providers/defaultProvider'
 import { useSnapshot } from 'valtio'
 import ContractMetadataStore from 'stores/ContractMetadataStore'
 import Network from 'models/Network'
-import networkPick from 'helpers/network/networkPick'
+import networks from 'networks'
 
 export default function (address: string, network: Network, onlyName = false) {
   const { contractNames } = useSnapshot(ContractMetadataStore)
@@ -13,7 +9,7 @@ export default function (address: string, network: Network, onlyName = false) {
   if (!contractName)
     ContractMetadataStore.fetchContractName(
       address,
-      networkPick(network, goerliDefaultProvider, mainnetDefaultProvider)
+      networks[network].defaultProvider
     )
 
   if (onlyName) return contractName

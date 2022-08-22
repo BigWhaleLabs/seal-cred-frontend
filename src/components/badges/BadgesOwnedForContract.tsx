@@ -1,4 +1,4 @@
-import { GoerliContractsStore } from 'stores/ContractsStore'
+import { BadgesContractsStore } from 'stores/ContractsStore'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import BadgesOwnedForContractLoading from 'components/badges/BadgesOwnedForContractLoading'
@@ -11,7 +11,7 @@ function BadgesOwnedForContractSuspended({
 }: {
   contractAddress: string
 }) {
-  const ownedIds = useContractTokens(contractAddress, GoerliContractsStore)
+  const ownedIds = useContractTokens(contractAddress, BadgesContractsStore)
   const { account } = useSnapshot(WalletStore)
   if (!account) {
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />

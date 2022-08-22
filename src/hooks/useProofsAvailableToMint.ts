@@ -1,4 +1,4 @@
-import { GoerliContractsStore } from 'stores/ContractsStore'
+import { BadgesContractsStore } from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
@@ -6,7 +6,7 @@ import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import useContractsOwned from 'hooks/useContractsOwned'
 
 export default function () {
-  const contractsOwned = useContractsOwned(GoerliContractsStore)
+  const contractsOwned = useContractsOwned(BadgesContractsStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
   const { ledgers } = useSnapshot(SealCredStore)
 

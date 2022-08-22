@@ -1,11 +1,8 @@
 import { BodyText } from 'components/Text'
-import {
-  GoerliContractsStore,
-  MainnetContractsStore,
-} from 'stores/ContractsStore'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import Button from 'components/Button'
+import ContractsStore from 'stores/ContractsStore'
 import Cross from 'icons/Cross'
 import ExternalLink from 'components/ExternalLink'
 import Network from 'models/Network'
@@ -23,7 +20,6 @@ import classnames, {
 } from 'classnames/tailwind'
 import getContractName from 'helpers/network/getContractName'
 import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
-import networkPick from 'helpers/network/networkPick'
 import prettifyContractName from 'helpers/network/prettifyContractName'
 import useContractTokens from 'hooks/useContractTokens'
 
@@ -50,7 +46,7 @@ function ShareToTwitterIfNeededSuespended({
   const { showTwitterShare } = useSnapshot(NotificationsStore)
   const tokenIds = useContractTokens(
     derivativeAddress,
-    networkPick(network, GoerliContractsStore, MainnetContractsStore)
+    ContractsStore.networks[network]
   )
 
   const tokenId = tokenIds[0]

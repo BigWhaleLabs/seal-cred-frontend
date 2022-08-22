@@ -1,4 +1,4 @@
-import { GoerliContractsStore } from 'stores/ContractsStore'
+import { BadgesContractsStore } from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import BadgeCard from 'components/badges/BadgeCard'
@@ -37,7 +37,7 @@ function Badge({
       const transaction = await WalletStore.mintDerivative(proof)
       ProofStore.deleteProof(proof)
       if (onMinted) onMinted()
-      GoerliContractsStore.connectedAccounts[account].applyTransaction(
+      BadgesContractsStore.connectedAccounts[account].applyTransaction(
         transaction
       )
     } catch (error) {

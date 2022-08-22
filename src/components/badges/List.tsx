@@ -1,4 +1,4 @@
-import { GoerliContractsStore } from 'stores/ContractsStore'
+import { BadgesContractsStore } from 'stores/ContractsStore'
 import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
@@ -22,7 +22,7 @@ function BadgeListSuspended() {
   const { proofsCompleted } = useSnapshot(proofStore)
   const { derivativeContracts } = useSnapshot(SealCredStore)
 
-  const contractsOwned = useContractsOwned(GoerliContractsStore)
+  const contractsOwned = useContractsOwned(BadgesContractsStore)
 
   const ownedContractsByKey = dataShapeObject((ledgerName: string) =>
     derivativeContracts[ledgerName].filter((contractAddress) =>

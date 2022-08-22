@@ -1,5 +1,5 @@
+import { ContractsStore } from '@big-whale-labs/stores'
 import { useSnapshot } from 'valtio'
-import ContractsStore from 'stores/ContractsStore'
 
 export default function (store: ContractsStore) {
   const { addressToTokenIds } = useSnapshot(store)

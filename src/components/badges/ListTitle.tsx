@@ -1,4 +1,4 @@
-import { GoerliContractsStore } from 'stores/ContractsStore'
+import { BadgesContractsStore } from 'stores/ContractsStore'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import CardTitle from 'components/CardTitle'
@@ -10,7 +10,7 @@ import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 function ListTitleSuspended() {
   const { derivativeContracts } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
-  const contractsOwned = useContractsOwned(GoerliContractsStore)
+  const contractsOwned = useContractsOwned(BadgesContractsStore)
 
   const ownedDerivativeContracts = Object.values(derivativeContracts).reduce(
     (chain, contracts) =>
