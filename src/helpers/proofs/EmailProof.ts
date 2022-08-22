@@ -1,10 +1,10 @@
 import { utils } from 'ethers'
-import BaseProof from 'helpers/BaseProof'
+import BaseProof from 'helpers/proofs/BaseProof'
 import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import PublicKey from 'models/PublicKey'
 import data from 'data'
-import unpackSignature from 'helpers/unpackSignature'
+import unpackSignature from 'helpers/proofs/unpackSignature'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const snarkjs: any

@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import { wordBreak } from 'classnames/tailwind'
 import ENSAddress from 'components/ENSAddress'
 import Network from 'models/Network'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 import useOwnerAddress from 'hooks/useOwnerAddress'
 
 const container = wordBreak('break-all')

@@ -3,17 +3,17 @@ import {
   getEddsaPublicKey,
   requestAddressOwnershipAttestation,
   requestBalanceAttestation,
-} from 'helpers/attestor'
+} from 'helpers/proofs/attestor'
 import { proxy } from 'valtio'
-import BaseProof from 'helpers/BaseProof'
-import ERC721Proof, { ERC721ProofSchema } from 'helpers/ERC721Proof'
-import EmailProof, { EmailProofSchema } from 'helpers/EmailProof'
+import BaseProof from 'helpers/proofs/BaseProof'
+import ERC721Proof, { ERC721ProofSchema } from 'helpers/proofs/ERC721Proof'
+import EmailProof, { EmailProofSchema } from 'helpers/proofs/EmailProof'
 import Network from 'models/Network'
 import ProofResult from 'models/ProofResult'
 import WalletStore from 'stores/WalletStore'
-import checkNavigator from 'helpers/checkNavigator'
+import checkNavigator from 'helpers/proofs/checkNavigator'
 import env from 'helpers/env'
-import getNullifierMessage from 'helpers/getNullifierMessage'
+import getNullifierMessage from 'helpers/proofs/getNullifierMessage'
 import handleError from 'helpers/handleError'
 
 class ProofStore extends PersistableStore {

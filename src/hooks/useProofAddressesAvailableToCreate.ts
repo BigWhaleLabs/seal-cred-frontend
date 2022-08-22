@@ -6,7 +6,7 @@ import { useSnapshot } from 'valtio'
 import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
-import networkPick from 'helpers/networkPick'
+import networkPick from 'helpers/network/networkPick'
 import useContractsOwned from 'hooks/useContractsOwned'
 
 export default function (network?: Network) {

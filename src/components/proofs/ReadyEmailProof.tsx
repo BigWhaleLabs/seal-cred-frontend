@@ -1,6 +1,6 @@
 import { AccentText, ProofText } from 'components/Text'
 import Complete from 'icons/Complete'
-import EmailProof from 'helpers/EmailProof'
+import EmailProof from 'helpers/proofs/EmailProof'
 import Line from 'components/proofs/Line'
 import classnames, {
   alignItems,

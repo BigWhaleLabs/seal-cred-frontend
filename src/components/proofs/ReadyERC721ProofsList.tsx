@@ -3,7 +3,7 @@ import ContractListContainer from 'components/proofs/ContractListContainer'
 import Network from 'models/Network'
 import Proof from 'components/proofs/Proof'
 import ProofStore from 'stores/ProofStore'
-import networkPick from 'helpers/networkPick'
+import networkPick from 'helpers/network/networkPick'
 
 export default function ({ network }: { network: Network }) {
   const { goerliERC721ProofsCompleted, mainnetERC721ProofsCompleted } =

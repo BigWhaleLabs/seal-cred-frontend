@@ -1,8 +1,8 @@
 import { ExternalSCERC721Ledger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
-import ERC721Proof from 'helpers/ERC721Proof'
+import ERC721Proof from 'helpers/proofs/ERC721Proof'
 import env from 'helpers/env'
-import makeTransaction from 'helpers/makeTransaction'
+import makeTransaction from 'helpers/contracts/makeTransaction'
 
 function createContract(provider: Web3Provider) {
   return ExternalSCERC721Ledger__factory.connect(

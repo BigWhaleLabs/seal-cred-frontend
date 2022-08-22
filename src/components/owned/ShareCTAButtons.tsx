@@ -14,8 +14,8 @@ import classnames, {
   space,
   textColor,
 } from 'classnames/tailwind'
-import getContractName from 'helpers/getContractName'
-import prettifyContractName from 'helpers/prettifyContractName'
+import getContractName from 'helpers/network/getContractName'
+import prettifyContractName from 'helpers/network/prettifyContractName'
 
 const buttonContentWrapper = classnames(
   display('flex'),

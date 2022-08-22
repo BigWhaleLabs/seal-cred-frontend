@@ -5,7 +5,7 @@ import ContractName from 'components/ContractName'
 import Erc721Badge from 'icons/Erc721Badge'
 import ExternalLink from 'components/ExternalLink'
 import Network from 'models/Network'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
 export default function ({ contractAddress }: { contractAddress: string }) {
   return (

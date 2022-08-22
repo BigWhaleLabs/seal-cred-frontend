@@ -1,10 +1,10 @@
-import BaseProof from 'helpers/BaseProof'
+import BaseProof from 'helpers/proofs/BaseProof'
 import ContractName from 'components/ContractName'
-import ERC721Proof from 'helpers/ERC721Proof'
-import EmailProof from 'helpers/EmailProof'
+import ERC721Proof from 'helpers/proofs/ERC721Proof'
+import EmailProof from 'helpers/proofs/EmailProof'
 import ExternalLink from 'components/ExternalLink'
 import Network from 'models/Network'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
 function ProofName({ badge }: { badge: BaseProof }) {
   if (badge instanceof ERC721Proof)

@@ -1,6 +1,6 @@
 import { BodyText, HeaderText } from 'components/Text'
 import BadgeBlock from 'components/badges/BadgeBlock'
-import EmailProof from 'helpers/EmailProof'
+import EmailProof from 'helpers/proofs/EmailProof'
 import MintedToken from 'models/MintedToken'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 

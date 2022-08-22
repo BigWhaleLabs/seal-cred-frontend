@@ -5,7 +5,7 @@ import { useState } from 'react'
 import Button from 'components/proofs/Button'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
-import ERC721Proof from 'helpers/ERC721Proof'
+import ERC721Proof from 'helpers/proofs/ERC721Proof'
 import ExternalLink from 'components/ExternalLink'
 import Line from 'components/proofs/Line'
 import Network from 'models/Network'
@@ -28,7 +28,7 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const proofName = classnames(display('flex'), flex('flex-1'))

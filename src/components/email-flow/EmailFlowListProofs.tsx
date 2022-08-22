@@ -1,7 +1,7 @@
 import { BodyText } from 'components/Text'
 import { cursor } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import EmailProof from 'helpers/EmailProof'
+import EmailProof from 'helpers/proofs/EmailProof'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 import proofStore from 'stores/ProofStore'
 

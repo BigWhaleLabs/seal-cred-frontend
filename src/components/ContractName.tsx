@@ -7,9 +7,9 @@ import classnames, {
   minWidth,
   wordBreak,
 } from 'classnames/tailwind'
-import getContractName from 'helpers/getContractName'
-import prettifyContractName from 'helpers/prettifyContractName'
-import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
+import getContractName from 'helpers/network/getContractName'
+import prettifyContractName from 'helpers/network/prettifyContractName'
+import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 
 const addressText = wordBreak('break-all')
 const badgeNameWrapper = classnames(

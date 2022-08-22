@@ -20,7 +20,7 @@ import classnames, {
   textAlign,
   width,
 } from 'classnames/tailwind'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const walletContainer = classnames(

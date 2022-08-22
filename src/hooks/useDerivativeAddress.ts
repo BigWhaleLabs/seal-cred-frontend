@@ -1,7 +1,7 @@
 import { useSnapshot } from 'valtio'
-import BaseProof from 'helpers/BaseProof'
-import ERC721Proof from 'helpers/ERC721Proof'
-import EmailProof from 'helpers/EmailProof'
+import BaseProof from 'helpers/proofs/BaseProof'
+import ERC721Proof from 'helpers/proofs/ERC721Proof'
+import EmailProof from 'helpers/proofs/EmailProof'
 import SealCredStore from 'stores/SealCredStore'
 
 export default function useDerivativeAddress(proof: BaseProof) {

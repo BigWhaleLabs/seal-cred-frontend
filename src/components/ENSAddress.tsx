@@ -2,7 +2,7 @@ import { GoerliENSStore } from 'stores/ENSStore'
 import { Suspense, memo } from 'react'
 import { useSnapshot } from 'valtio'
 import Network from 'models/Network'
-import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
+import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 interface ENSAddressProps {

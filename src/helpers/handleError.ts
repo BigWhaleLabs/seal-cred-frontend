@@ -1,8 +1,8 @@
 import { serializeError } from 'eth-rpc-errors'
 import { toast } from 'react-toastify'
 import axios, { AxiosError } from 'axios'
-import parseGSNError from 'helpers/parseGSNError'
-import parseRevertReason from 'helpers/parseRevertReason'
+import parseGSNError from 'helpers/providers/parseGSNError'
+import parseRevertReason from 'helpers/providers/parseRevertReason'
 
 export const ProofGenerationErrors = {}
 

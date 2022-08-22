@@ -21,10 +21,10 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import getContractName from 'helpers/getContractName'
+import getContractName from 'helpers/network/getContractName'
 import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
-import networkPick from 'helpers/networkPick'
-import prettifyContractName from 'helpers/prettifyContractName'
+import networkPick from 'helpers/network/networkPick'
+import prettifyContractName from 'helpers/network/prettifyContractName'
 import useContractTokens from 'hooks/useContractTokens'
 
 const wideBlock = classnames(

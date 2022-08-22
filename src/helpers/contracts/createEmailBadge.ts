@@ -1,8 +1,8 @@
 import { SCEmailLedger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
-import EmailProof from 'helpers/EmailProof'
+import EmailProof from 'helpers/proofs/EmailProof'
 import env from 'helpers/env'
-import makeTransaction from 'helpers/makeTransaction'
+import makeTransaction from 'helpers/contracts/makeTransaction'
 
 function createContract(provider: Web3Provider) {
   return SCEmailLedger__factory.connect(

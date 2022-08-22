@@ -3,7 +3,7 @@ import { SCERC721Derivative__factory } from '@big-whale-labs/seal-cred-ledger-co
 import { goerliDefaultProvider } from 'helpers/providers/defaultProvider'
 import { proxy } from 'valtio'
 import TokenOwnersStore from 'stores/TokenOwnersStore'
-import getOwnerByTokenId from 'helpers/getOwnerByTokenId'
+import getOwnerByTokenId from 'helpers/contracts/getOwnerByTokenId'
 
 export default proxy({
   addressOwnerMap: {} as {

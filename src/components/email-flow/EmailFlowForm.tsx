@@ -8,7 +8,7 @@ import {
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
-import EmailProof from 'helpers/EmailProof'
+import EmailProof from 'helpers/proofs/EmailProof'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import classnames, { space, width } from 'classnames/tailwind'
 

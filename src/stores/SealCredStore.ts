@@ -2,7 +2,7 @@ import { proxy } from 'valtio'
 import SCLedger from 'models/SCLedger'
 import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import getLedger from 'helpers/contracts/getLedger'
-import ledgerContracts from 'helpers/ledgerContracts'
+import ledgerContracts from 'helpers/contracts/ledgerContracts'
 
 interface SealCredStoreType {
   ledgers: Promise<{

@@ -5,7 +5,7 @@ import {
 import { useSnapshot } from 'valtio'
 import ContractMetadataStore from 'stores/ContractMetadataStore'
 import Network from 'models/Network'
-import networkPick from 'helpers/networkPick'
+import networkPick from 'helpers/network/networkPick'
 
 export default function (address: string, network: Network, onlyName = false) {
   const { contractNames } = useSnapshot(ContractMetadataStore)

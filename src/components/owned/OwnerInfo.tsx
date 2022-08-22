@@ -15,7 +15,7 @@ import classnames, {
   space,
 } from 'classnames/tailwind'
 import data from 'data'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
 import useBadgeContracts, { BaseBadgeContract } from 'hooks/useBadgeContracts'
 

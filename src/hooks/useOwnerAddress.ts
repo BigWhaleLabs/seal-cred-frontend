@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 import Network from 'models/Network'
 import TokenOwnersStore from 'stores/TokenOwnersStore'
-import networkPick from 'helpers/networkPick'
+import networkPick from 'helpers/network/networkPick'
 import useContractTokens from 'hooks/useContractTokens'
 import walletStore from 'stores/WalletStore'
 
