@@ -6,7 +6,7 @@ export default abstract class BaseProof implements Proof {
   result?: ProofResult
 
   abstract get dataType(): keyof typeof data
-  abstract get key(): string
+  abstract get origin(): string
   abstract toJSON(): object
   abstract equal(proof: BaseProof): boolean
 }

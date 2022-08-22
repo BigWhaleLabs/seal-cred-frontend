@@ -15,7 +15,7 @@ export default function () {
       const proofLedgerName = proof.dataType
       if (proofLedgerName !== ledgerKey) return false
       const ledger = ledgers[proofLedgerName]
-      const record = ledger[proof.key]
+      const record = ledger[proof.origin]
       return (
         !record || !contractsOwned.includes(record.derivative.toLowerCase())
       )

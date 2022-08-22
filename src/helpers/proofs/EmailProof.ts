@@ -20,7 +20,7 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
     return 'Email' as keyof typeof data
   }
 
-  get key() {
+  get origin() {
     return this.domain
   }
 

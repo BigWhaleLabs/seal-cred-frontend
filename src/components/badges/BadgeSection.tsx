@@ -41,7 +41,7 @@ export default function ({
           />
         ))}
         {proofs.map((proof) => (
-          <BadgeBlock onMinted={onMinted} key={proof.key} proof={proof} />
+          <BadgeBlock onMinted={onMinted} key={proof.origin} proof={proof} />
         ))}
       </div>
     </Section>

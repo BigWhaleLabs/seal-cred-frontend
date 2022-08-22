@@ -32,7 +32,7 @@ export default class ERC721Proof
     ) as keyof typeof data
   }
 
-  get key() {
+  get origin() {
     return this.contract
   }
 
