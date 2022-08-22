@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify'
 import { useLocation } from 'react-router-dom'
 import Button from 'components/Button'
+import CTAText from 'helpers/CTAText'
 import GradientBorder from 'components/GradientBorder'
 import LinkChain from 'icons/LinkChain'
-import Network from 'models/Network'
 import Twitter from 'icons/Twitter'
 import classnames, {
   alignItems,
@@ -14,8 +14,7 @@ import classnames, {
   space,
   textColor,
 } from 'classnames/tailwind'
-import getContractName from 'helpers/getContractName'
-import prettifyContractName from 'helpers/prettifyContractName'
+import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
 
 const buttonContentWrapper = classnames(
   display('flex'),
@@ -37,25 +36,8 @@ async function copy(pathname: string) {
   await navigator.clipboard.writeText('sealcred.xyz' + pathname)
 }
 
-export default function ({
-  address,
-  network,
-}: {
-  address: string
-  network: Network
-}) {
+export default function () {
   const { pathname } = useLocation()
-
-  let contractName = getContractName(address, network)
-
-  if (contractName) {
-    contractName = prettifyContractName(contractName)
-  }
-
-  let text = `I minted a ZK badge for ${contractName} using @SealCred. Check it out 🦭 ${window.location}`
-  if (!contractName || text.length - String(window.location).length > 280) {
-    text = `I minted a ZK badge using @SealCred. Check it out 🦭 ${window.location}`
-  }
 
   return (
     <div className={buttonWrapper}>
@@ -64,7 +46,7 @@ export default function ({
           gradientFont
           type="secondary"
           small
-          url={`http://twitter.com/share?url=${encodeURIComponent(text)}`}
+          url={getShareToTwitterLink({ text: CTAText })}
         >
           <div className={buttonContentWrapper}>
             <div className="text-white">

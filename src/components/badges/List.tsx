@@ -58,11 +58,6 @@ function BadgeListSuspended() {
     if (hasProofs && !hasDerivatives) NotificationsStore.showTwitterShare = true
   }
 
-  const firstDerivative =
-    ownedExternalERC721DerivativeContracts[0] ||
-    ownedERC721DerivativeContracts[0] ||
-    ownedEmailDerivativeContracts[0]
-
   return shouldNotify ? (
     <DoxNotification account={account} />
   ) : isEmpty ? (
@@ -99,14 +94,7 @@ function BadgeListSuspended() {
             )}
             onMinted={onMinted}
           />
-          <ShareToTwitterIfNeeded
-            derivativeAddress={firstDerivative}
-            network={
-              ownedExternalERC721DerivativeContracts.length
-                ? Network.Mainnet
-                : Network.Goerli
-            }
-          />
+          <ShareToTwitterIfNeeded />
         </div>
       </Scrollbar>
     </>

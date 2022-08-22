@@ -78,7 +78,7 @@ function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
         This is a zkNFT derivative of an email. It means this person has been
         verified own a ‘
         <AccentText color="text-secondary">{badge.domain}</AccentText>‘ email.
-        <ShareCTAButtons address={badge.address} network={Network.Goerli} />
+        <ShareCTAButtons />
       </BodyText>
     )
   }
@@ -99,10 +99,7 @@ function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
           </AccentText>
         </ExternalLink>
         ‘ {badge.network[0].toUpperCase() + badge.network.slice(1)} NFT.
-        <ShareCTAButtons
-          address={badge.originalERC721}
-          network={Network.Goerli}
-        />
+        <ShareCTAButtons />
       </BodyText>
     )
   }
