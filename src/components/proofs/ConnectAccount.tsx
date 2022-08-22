@@ -56,7 +56,10 @@ export default function () {
             type="primary"
             loading={walletLoading}
             onClick={async () => {
-              await WalletStore.connectOrChangeNetwork(true, needNetworkChange)
+              await WalletStore.changeNetworkOrConnect({
+                clearCachedProvider: true,
+                needNetworkChange,
+              })
             }}
           >
             <span>

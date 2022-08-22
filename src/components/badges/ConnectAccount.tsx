@@ -33,7 +33,9 @@ export default function () {
           withArrow
           gradientFont
           onClick={async () => {
-            await WalletStore.connectOrChangeNetwork(true)
+            await WalletStore.changeNetworkOrConnect({
+              clearCachedProvider: true,
+            })
           }}
         >
           {needNetworkChange

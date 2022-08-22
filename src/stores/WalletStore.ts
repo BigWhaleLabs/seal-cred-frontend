@@ -13,7 +13,6 @@ import createEmailBadge from 'helpers/createEmailBadge'
 import createExternalERC721Badge from 'helpers/createExternalERC721Badge'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
-import isSwitchingNetworkError from 'helpers/isSwitchingNetworkError'
 import relayProvider from 'helpers/providers/relayProvider'
 import web3Modal from 'helpers/web3Modal'
 
@@ -37,13 +36,13 @@ class WalletStore extends PersistableStore {
     return web3Modal.cachedProvider
   }
 
-  private async getUserNetworkName() {
+  private async getUserNetworkName(provider: Web3Provider) {
     return (await provider.getNetwork()).name
   }
 
-  private async isNetworkRight() {
+  private async isNetworkRight(provider: Web3Provider) {
     const network = env.VITE_ETH_NETWORK
-    const userNetwork = await this.getUserNetworkName()
+    const userNetwork = await this.getUserNetworkName(provider)
     return network === userNetwork
   }
 
@@ -71,34 +70,40 @@ class WalletStore extends PersistableStore {
     await provider.send('wallet_switchEthereumChain', [{ chainId }])
   }
 
-  private subscribeProvider(provider: Web3Provider) {
-    if (!provider.on) return
+  private setNetworkAndDropAccount() {
+    this.needNetworkChange = true
+    this.account = undefined
+  }
 
-    provider.on('error', (error: Error) => {
+  private subscribeProvider(localProvider: Web3Provider) {
+    if (!localProvider.on) return
+
+    localProvider.on('error', (error: Error) => {
       handleError(error)
     })
 
-    provider.on('accountsChanged', (accounts: string[]) => {
+    localProvider.on('accountsChanged', (accounts: string[]) => {
       if (!accounts.length) this.clearData()
 
       this.account = undefined
       void this.handleAccountChanged()
     })
-    provider.on('disconnect', (error: unknown) => {
-      if (isSwitchingNetworkError(error)) return handleError(error)
+    localProvider.on('disconnect', (error: Error) => {
+      // Sometimes this error fires when user switching between networks too fast, we should not clean data in this case
+      if (error.message.includes('Attempting to connect.'))
+        return handleError(error)
 
-      if (provider) provider.removeAllListeners()
+      if (localProvider) localProvider.removeAllListeners()
       handleError(error)
       this.clearData()
     })
-    provider.on('chainChanged', async () => {
-      if (await this.isNetworkRight()) {
+    localProvider.on('chainChanged', async () => {
+      if (await this.isNetworkRight(provider)) {
         this.needNetworkChange = false
         this.account = await this.getAccount()
         return
       }
-      this.account = undefined
-      this.needNetworkChange = true
+      this.setNetworkAndDropAccount()
     })
   }
 
@@ -113,14 +118,12 @@ class WalletStore extends PersistableStore {
       provider = new Web3Provider(instance, 'any')
 
       this.account = await this.getAccount()
-      const isNetworkNotRight = !(await this.isNetworkRight())
-      if (isNetworkNotRight) {
-        this.needNetworkChange = true
-        this.account = undefined
+      if (!(await this.isNetworkRight(provider))) {
+        this.setNetworkAndDropAccount()
         handleError(
           new Error(
             ErrorList.wrongNetwork(
-              await this.getUserNetworkName(),
+              await this.getUserNetworkName(provider),
               env.VITE_ETH_NETWORK
             )
           )
@@ -136,10 +139,13 @@ class WalletStore extends PersistableStore {
     }
   }
 
-  connectOrChangeNetwork(
-    clearCachedProvider = false,
+  changeNetworkOrConnect({
+    clearCachedProvider,
+    needNetworkChange,
+  }: {
+    clearCachedProvider: boolean
     needNetworkChange?: boolean
-  ) {
+  }) {
     if (needNetworkChange) return this.switchNetwork()
     return this.connect(clearCachedProvider)
   }
@@ -193,6 +199,7 @@ const walletStore = proxy(new WalletStore()).makePersistent(
   env.VITE_ENCRYPT_KEY
 )
 
-if (walletStore.cachedProvider) void walletStore.connectOrChangeNetwork()
+if (walletStore.cachedProvider)
+  void walletStore.changeNetworkOrConnect({ clearCachedProvider: false })
 
 export default walletStore

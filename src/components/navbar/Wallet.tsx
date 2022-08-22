@@ -80,7 +80,10 @@ const AccountContainer = ({ account }: { account?: string }) => {
     <div
       className={accountLinkContainer}
       onClick={async () => {
-        await WalletStore.connectOrChangeNetwork(true, needNetworkChange)
+        await WalletStore.changeNetworkOrConnect({
+          clearCachedProvider: true,
+          needNetworkChange,
+        })
       }}
     >
       <div className={walletAccount}>
