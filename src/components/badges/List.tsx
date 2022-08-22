@@ -65,14 +65,9 @@ function BadgeListSuspended() {
                 proofs={proofsAvailableToMint[key]}
                 onMinted={onMinted}
               />
-              {contracts[0] && (
-                <ShareToTwitterIfNeeded
-                  derivativeAddress={contracts[0]}
-                  network={data[key as keyof typeof data].source.network}
-                />
-              )}
             </>
           ))}
+          <ShareToTwitterIfNeeded />
         </div>
       </Scrollbar>
     </>
