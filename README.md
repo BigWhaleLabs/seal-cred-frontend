@@ -20,7 +20,7 @@
 | `VITE_CHAIN_ID`                                   | ID of the network (defaults to 5)                                             |
 | `VITE_ETH_RPC`                                    | Ethereum RPC URI (defaults to @bwl/constants)                                 |
 | `VITE_ETH_RPC_MAINNET`                            | Ethereum RPC URI mainnet (defaults to @bwl/constants)                         |
-| `VITE_EXTERNAL_SC_ERC721_LEDGER_CONTRACT_ADDRESS` | External SealCred ERC721 Ledger contract address (defaults to @bwl/constants) |
+| `VITE_SC_EXTERNAL_ERC721_LEDGER_CONTRACT_ADDRESS` | External SealCred ERC721 Ledger contract address (defaults to @bwl/constants) |
 | `VITE_SC_ERC721_LEDGER_CONTRACT_ADDRESS`          | SealCred ERC721 Ledger contract address (defaults to @bwl/constants)          |
 | `VITE_SC_EMAIL_LEDGER_CONTRACT_ADDRESS`           | SealCred Email Ledger contract address (defaults to @bwl/constants)           |
 | `VITE_GSN_PAYMASTER_CONTRACT_ADDRESS`             | Relay paymaster contract address                                              |

@@ -5,14 +5,13 @@ import { useSnapshot } from 'valtio'
 import BadgeSection from 'components/badges/BadgeSection'
 import ConfettiIfNeeded from 'components/badges/ConfettiIfNeeded'
 import DoxNotification from 'components/badges/DoxNotification'
-import ERC721Proof from 'helpers/ERC721Proof'
-import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
-import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
 import Scrollbar from 'components/Scrollbar'
 import SealCredStore from 'stores/SealCredStore'
 import ShareToTwitterIfNeeded from 'components/badges/ShareToTwitterIfNeeded'
+import data from 'data'
+import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import proofStore from 'stores/ProofStore'
 import useContractsOwned from 'hooks/useContractsOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
@@ -21,32 +20,23 @@ import walletStore from 'stores/WalletStore'
 function BadgeListSuspended() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
-  const {
-    emailDerivativeContracts = [],
-    ERC721derivativeContracts = [],
-    externalERC721derivativeContracts = [],
-  } = useSnapshot(SealCredStore)
+  const { derivativeContracts } = useSnapshot(SealCredStore)
+
   const contractsOwned = useContractsOwned(GoerliContractsStore)
 
-  const ownedEmailDerivativeContracts = emailDerivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
-  )
-
-  const ownedExternalERC721DerivativeContracts =
-    externalERC721derivativeContracts.filter((contractAddress) =>
+  const ownedContractsByKey = dataShapeObject((ledgerName: string) =>
+    derivativeContracts[ledgerName].filter((contractAddress) =>
       contractsOwned.includes(contractAddress)
     )
-  const ownedERC721DerivativeContracts = ERC721derivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
   )
 
   const proofsAvailableToMint = useProofsAvailableToMint()
 
   const hasProofs = proofsAvailableToMint.length
-  const hasDerivatives =
-    ownedExternalERC721DerivativeContracts.length +
-    ownedEmailDerivativeContracts.length +
-    ownedERC721DerivativeContracts.length
+  const hasDerivatives = Object.values(ownedContractsByKey).reduce(
+    (sum, contracts) => sum + contracts.length,
+    0
+  )
   const isEmpty = !hasProofs && !hasDerivatives
 
   const shouldNotify =
@@ -58,11 +48,6 @@ function BadgeListSuspended() {
     if (hasProofs && !hasDerivatives) NotificationsStore.showTwitterShare = true
   }
 
-  const firstDerivative =
-    ownedExternalERC721DerivativeContracts[0] ||
-    ownedERC721DerivativeContracts[0] ||
-    ownedEmailDerivativeContracts[0]
-
   return shouldNotify ? (
     <DoxNotification account={account} />
   ) : isEmpty ? (
@@ -72,41 +57,22 @@ function BadgeListSuspended() {
       <ConfettiIfNeeded />
       <Scrollbar>
         <div className={space('space-y-2')}>
-          <BadgeSection
-            title="Mainnet NFT derivatives"
-            minted={ownedExternalERC721DerivativeContracts}
-            proofs={proofsAvailableToMint.filter(
-              (proof) =>
-                proof instanceof ERC721Proof &&
-                proof.network === Network.Mainnet
-            )}
-            onMinted={onMinted}
-          />
-          <BadgeSection
-            title="Goerli NFT derivatives"
-            minted={ownedERC721DerivativeContracts}
-            proofs={proofsAvailableToMint.filter(
-              (proof) =>
-                proof instanceof ERC721Proof && proof.network === Network.Goerli
-            )}
-            onMinted={onMinted}
-          />
-          <BadgeSection
-            title="Email derivatives"
-            minted={ownedEmailDerivativeContracts}
-            proofs={proofsAvailableToMint.filter(
-              (proof) => proof instanceof EmailProof
-            )}
-            onMinted={onMinted}
-          />
-          <ShareToTwitterIfNeeded
-            derivativeAddress={firstDerivative}
-            network={
-              ownedExternalERC721DerivativeContracts.length
-                ? Network.Mainnet
-                : Network.Goerli
-            }
-          />
+          {Object.entries(ownedContractsByKey).map(([key, contracts]) => (
+            <>
+              <BadgeSection
+                title={data[key as keyof typeof data].title}
+                minted={contracts}
+                proofs={proofsAvailableToMint[key]}
+                onMinted={onMinted}
+              />
+              {contracts[0] && (
+                <ShareToTwitterIfNeeded
+                  derivativeAddress={contracts[0]}
+                  network={data[key as keyof typeof data].source.network}
+                />
+              )}
+            </>
+          ))}
         </div>
       </Scrollbar>
     </>

@@ -25,6 +25,7 @@ import getContractName from 'helpers/getContractName'
 import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
 import networkPick from 'helpers/networkPick'
 import prettifyContractName from 'helpers/prettifyContractName'
+import useContractTokens from 'hooks/useContractTokens'
 
 const wideBlock = classnames(
   display('flex'),
@@ -47,15 +48,15 @@ function ShareToTwitterIfNeededSuespended({
   network,
 }: ShareToTwitterProps) {
   const { showTwitterShare } = useSnapshot(NotificationsStore)
-  const { addressToTokenIds } = useSnapshot(
+  const tokenIds = useContractTokens(
+    derivativeAddress,
     networkPick(network, GoerliContractsStore, MainnetContractsStore)
   )
 
+  const tokenId = tokenIds && tokenIds[0]
+
   if (!showTwitterShare) return null
 
-  const tokenId = addressToTokenIds
-    ? addressToTokenIds[derivativeAddress][0]
-    : undefined
   const closeNotification = () => (NotificationsStore.showTwitterShare = false)
 
   let contractName = getContractName(derivativeAddress, network)

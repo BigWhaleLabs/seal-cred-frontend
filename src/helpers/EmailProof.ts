@@ -3,6 +3,7 @@ import BaseProof from 'helpers/BaseProof'
 import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import PublicKey from 'models/PublicKey'
+import data from 'data'
 import unpackSignature from 'helpers/unpackSignature'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,6 +15,10 @@ export interface EmailProofSchema extends Proof {
 
 export default class EmailProof extends BaseProof implements EmailProofSchema {
   domain: string
+
+  get dataType() {
+    return 'Email' as keyof typeof data
+  }
 
   get key() {
     return this.domain

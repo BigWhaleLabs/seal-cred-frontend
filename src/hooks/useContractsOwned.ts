@@ -6,5 +6,5 @@ export default function (store: ContractsStore) {
 
   if (!addressToTokenIds) return []
 
-  return Object.keys(addressToTokenIds)
+  return Object.keys(addressToTokenIds).map((address) => address.toLowerCase())
 }

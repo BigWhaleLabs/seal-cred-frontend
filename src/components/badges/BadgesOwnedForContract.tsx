@@ -4,21 +4,21 @@ import { useSnapshot } from 'valtio'
 import BadgesOwnedForContractLoading from 'components/badges/BadgesOwnedForContractLoading'
 import MintedBadgeBlock from 'components/badges/MintedBadgeBlock'
 import WalletStore from 'stores/WalletStore'
+import useContractTokens from 'hooks/useContractTokens'
 
 function BadgesOwnedForContractSuspended({
   contractAddress,
 }: {
   contractAddress: string
 }) {
-  const { addressToTokenIds } = useSnapshot(GoerliContractsStore)
+  const ownedIds = useContractTokens(contractAddress, GoerliContractsStore)
   const { account } = useSnapshot(WalletStore)
   if (!account) {
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
   }
-  if (!addressToTokenIds) {
+  if (!ownedIds) {
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
   }
-  const ownedIds = addressToTokenIds[contractAddress]
   return (
     <>
       {ownedIds.map((tokenId) => (

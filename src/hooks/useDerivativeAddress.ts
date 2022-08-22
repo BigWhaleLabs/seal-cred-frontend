@@ -5,15 +5,17 @@ import EmailProof from 'helpers/EmailProof'
 import SealCredStore from 'stores/SealCredStore'
 
 export default function useDerivativeAddress(proof: BaseProof) {
-  const { emailLedger, ERC721Ledger, externalERC721Ledger } =
-    useSnapshot(SealCredStore)
-  if (proof instanceof EmailProof && emailLedger[proof.domain]) {
-    return emailLedger[proof.domain].derivativeContract
+  const { ledgers } = useSnapshot(SealCredStore)
+  const origin =
+    proof instanceof EmailProof
+      ? proof.domain
+      : proof instanceof ERC721Proof
+      ? proof.contract
+      : ''
+
+  for (const ledger of Object.values(ledgers)) {
+    if (ledger[origin]) return ledger[origin]
   }
-  if (proof instanceof ERC721Proof && ERC721Ledger[proof.contract]) {
-    return ERC721Ledger[proof.contract].derivativeContract
-  }
-  if (proof instanceof ERC721Proof && externalERC721Ledger[proof.contract]) {
-    return externalERC721Ledger[proof.contract].derivativeContract
-  }
+
+  return null
 }

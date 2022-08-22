@@ -8,15 +8,23 @@ import useContractsOwned from 'hooks/useContractsOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
-  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
+  const { derivativeContracts } = useSnapshot(SealCredStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
   const contractsOwned = useContractsOwned(GoerliContractsStore)
 
-  const ownedDerivativeContracts = derivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
+  const ownedDerivativeContracts = Object.values(derivativeContracts).reduce(
+    (chain, contracts) =>
+      chain.concat(
+        contracts.filter((contractAddress) =>
+          contractsOwned.includes(contractAddress)
+        )
+      ),
+    []
   )
 
-  const hasUnminted = proofsAvailableToMint.length > 0
+  const hasUnminted = Object.values(proofsAvailableToMint).some(
+    (proofs) => proofs.length > 0
+  )
 
   return (
     <CardTitle

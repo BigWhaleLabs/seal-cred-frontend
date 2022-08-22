@@ -1,7 +1,5 @@
 import { Suspense, memo } from 'react'
-import { useSnapshot } from 'valtio'
 import Network from 'models/Network'
-import SealCredStore from 'stores/SealCredStore'
 import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   display,
@@ -41,17 +39,11 @@ function ContractNameSuspended({
   clearType,
   network,
 }: ContractNameProps) {
-  const { emailDerivativeContracts = [], ERC721derivativeContracts = [] } =
-    useSnapshot(SealCredStore)
   // We will always get a string
   let contractName = getContractName(address, network) as string
 
   if (clearType) {
-    if (contractName && emailDerivativeContracts.includes(address))
-      contractName = contractName.replace(' email', '')
-
-    if (contractName && ERC721derivativeContracts.includes(address))
-      contractName = contractName.replace(' (derivative)', '')
+    contractName = contractName.replace(/ (email|\(derivative\))$/, '')
   }
 
   contractName = prettifyContractName(contractName, truncate)

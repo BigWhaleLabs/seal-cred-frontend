@@ -28,6 +28,12 @@ export default function (network?: Network) {
     }
   }
   const { derivativeContracts = [] } = useSnapshot(SealCredStore)
+
+  const allContracts = Object.values(derivativeContracts).reduce(
+    (chain, contracts) => chain.concat(contracts),
+    []
+  )
+
   const completedERC721ProofAddressesMap = [
     ...goerliERC721ProofsCompleted,
     ...mainnetERC721ProofsCompleted,
@@ -41,7 +47,7 @@ export default function (network?: Network) {
   return (
     contractsOwned.filter(
       (address) =>
-        !derivativeContracts.includes(address) &&
+        !allContracts.includes(address) &&
         !completedERC721ProofAddressesMap[address]
     ) || []
   )

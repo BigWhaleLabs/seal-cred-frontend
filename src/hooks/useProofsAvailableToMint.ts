@@ -1,37 +1,24 @@
 import { GoerliContractsStore } from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
-import ERC721Proof from 'helpers/ERC721Proof'
-import EmailProof from 'helpers/EmailProof'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
+import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import useContractsOwned from 'hooks/useContractsOwned'
 
 export default function () {
   const contractsOwned = useContractsOwned(GoerliContractsStore)
   const { proofsCompleted } = useSnapshot(ProofStore)
-  const { ERC721Ledger, externalERC721Ledger, emailLedger } =
-    useSnapshot(SealCredStore)
+  const { ledgers } = useSnapshot(SealCredStore)
 
-  return proofsCompleted.filter((proof) => {
-    if (proof instanceof EmailProof) {
+  return dataShapeObject((ledgerKey) =>
+    proofsCompleted.filter((proof) => {
+      const proofLedgerName = proof.dataType
+      if (proofLedgerName !== ledgerKey) return false
+      const ledger = ledgers[proofLedgerName]
+      const record = ledger[proof.key]
       return (
-        !emailLedger[proof.domain] ||
-        !contractsOwned.includes(emailLedger[proof.domain].derivativeContract)
+        !record || !contractsOwned.includes(record.derivative.toLowerCase())
       )
-    }
-    if (proof instanceof ERC721Proof) {
-      const hasDerivative =
-        ERC721Ledger[proof.contract] &&
-        contractsOwned.includes(ERC721Ledger[proof.contract].derivativeContract)
-
-      const hasDerivativeInExternal =
-        externalERC721Ledger[proof.contract] &&
-        contractsOwned.includes(
-          externalERC721Ledger[proof.contract].derivativeContract
-        )
-
-      return !hasDerivative && !hasDerivativeInExternal
-    }
-    return false
-  })
+    })
+  )
 }

@@ -6,7 +6,7 @@ import makeTransaction from 'helpers/makeTransaction'
 
 function createContract(provider: Web3Provider) {
   return ExternalSCERC721Ledger__factory.connect(
-    env.VITE_EXTERNAL_SC_ERC721_LEDGER_CONTRACT_ADDRESS,
+    env.VITE_SC_EXTERNAL_ERC721_LEDGER_CONTRACT_ADDRESS,
     provider.getSigner(0)
   )
 }

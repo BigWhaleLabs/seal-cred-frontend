@@ -6,7 +6,7 @@ export default function (
   provider: providers.JsonRpcSigner | providers.Provider
 ) {
   return ExternalSCERC721Ledger__factory.connect(
-    env.VITE_EXTERNAL_SC_ERC721_LEDGER_CONTRACT_ADDRESS,
+    env.VITE_SC_EXTERNAL_ERC721_LEDGER_CONTRACT_ADDRESS,
     provider
   )
 }
