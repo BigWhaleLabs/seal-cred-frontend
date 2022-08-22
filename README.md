@@ -25,7 +25,7 @@
 | `VITE_SC_EMAIL_LEDGER_CONTRACT_ADDRESS`           | SealCred Email Ledger contract address (defaults to @bwl/constants)           |
 | `VITE_GSN_PAYMASTER_CONTRACT_ADDRESS`             | Relay paymaster contract address                                              |
 | `VITE_GSN_SC_RELAY`                               | Relay URL                                                                     |
-| `VITE_VERIFY_URL`                                 | Proof verification URL                                                        |
+| `VITE_VERIFY_URL`                                 | Proof verification URL (defaults to @bwl/constants)                           |
 
 Also, please, consider looking at `.env.sample`.
 
