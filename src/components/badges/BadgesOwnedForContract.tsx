@@ -16,7 +16,7 @@ function BadgesOwnedForContractSuspended({
   if (!account) {
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
   }
-  if (!ownedIds) {
+  if (ownedIds.length === 0) {
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
   }
   return (

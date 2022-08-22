@@ -10,5 +10,5 @@ export default function (address: string, store: ContractsStore) {
     (storeAddress) => address.toLowerCase() === storeAddress.toLowerCase()
   )
 
-  return key ? addressToTokenIds[key] : null
+  return key ? addressToTokenIds[key] : []
 }

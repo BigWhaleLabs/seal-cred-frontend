@@ -22,7 +22,7 @@ export default function (
   const { account } = useSnapshot(walletStore)
   const { addressOwnerMap } = useSnapshot(TokenOwnersStore)
 
-  const hasTokenId = !!tokenIds
+  const hasTokenId = tokenIds.length > 0
 
   useEffect(() => {
     if (!hasTokenId) TokenOwnersStore.fetchAddress(derivativeAddress, tokenId)

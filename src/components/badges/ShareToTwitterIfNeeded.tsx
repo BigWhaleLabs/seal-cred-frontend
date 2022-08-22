@@ -53,7 +53,7 @@ function ShareToTwitterIfNeededSuespended({
     networkPick(network, GoerliContractsStore, MainnetContractsStore)
   )
 
-  const tokenId = tokenIds && tokenIds[0]
+  const tokenId = tokenIds[0]
 
   if (!showTwitterShare) return null
 
