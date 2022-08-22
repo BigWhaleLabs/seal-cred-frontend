@@ -13,6 +13,7 @@ import createEmailBadge from 'helpers/createEmailBadge'
 import createExternalERC721Badge from 'helpers/createExternalERC721Badge'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
+import isSwitchingNetworkError from 'helpers/isSwitchingNetworkError'
 import relayProvider from 'helpers/providers/relayProvider'
 import web3Modal from 'helpers/web3Modal'
 
@@ -46,7 +47,62 @@ class WalletStore extends PersistableStore {
     return network === userNetwork
   }
 
-  async connect(clearCachedProvider = false) {
+  private async handleAccountChanged() {
+    if (!provider) return
+
+    this.walletLoading = true
+    this.account = await this.getAccount()
+    NotificationsStore.showTwitterShare = false
+    this.walletLoading = false
+  }
+
+  private async getAccount() {
+    return (await provider.listAccounts())[0]
+  }
+
+  private clearData() {
+    NotificationsStore.showTwitterShare = false
+    web3Modal.clearCachedProvider()
+    this.account = undefined
+  }
+
+  private async switchNetwork() {
+    const chainId = hexValue(env.VITE_CHAIN_ID)
+    await provider.send('wallet_switchEthereumChain', [{ chainId }])
+  }
+
+  private subscribeProvider(provider: Web3Provider) {
+    if (!provider.on) return
+
+    provider.on('error', (error: Error) => {
+      handleError(error)
+    })
+
+    provider.on('accountsChanged', (accounts: string[]) => {
+      if (!accounts.length) this.clearData()
+
+      this.account = undefined
+      void this.handleAccountChanged()
+    })
+    provider.on('disconnect', (error: unknown) => {
+      if (isSwitchingNetworkError(error)) return handleError(error)
+
+      if (provider) provider.removeAllListeners()
+      handleError(error)
+      this.clearData()
+    })
+    provider.on('chainChanged', async () => {
+      if (await this.isNetworkRight()) {
+        this.needNetworkChange = false
+        this.account = await this.getAccount()
+        return
+      }
+      this.account = undefined
+      this.needNetworkChange = true
+    })
+  }
+
+  private async connect(clearCachedProvider = false) {
     this.walletLoading = true
     try {
       if (provider) provider.removeAllListeners()
@@ -57,7 +113,8 @@ class WalletStore extends PersistableStore {
       provider = new Web3Provider(instance, 'any')
 
       this.account = await this.getAccount()
-      if (!(await this.isNetworkRight())) {
+      const isNetworkNotRight = !(await this.isNetworkRight())
+      if (isNetworkNotRight) {
         this.needNetworkChange = true
         this.account = undefined
         handleError(
@@ -77,6 +134,14 @@ class WalletStore extends PersistableStore {
     } finally {
       this.walletLoading = false
     }
+  }
+
+  connectOrChangeNetwork(
+    clearCachedProvider = false,
+    needNetworkChange?: boolean
+  ) {
+    if (needNetworkChange) return this.switchNetwork()
+    return this.connect(clearCachedProvider)
   }
 
   async signMessage(message: string) {
@@ -122,74 +187,12 @@ class WalletStore extends PersistableStore {
       throw error
     }
   }
-
-  private async handleAccountChanged() {
-    if (!provider) return
-
-    this.walletLoading = true
-    this.account = await this.getAccount()
-    NotificationsStore.showTwitterShare = false
-    this.walletLoading = false
-  }
-
-  private async getAccount() {
-    return (await provider.listAccounts())[0]
-  }
-
-  async switchNetwork() {
-    const chainId = hexValue(env.VITE_CHAIN_ID)
-    await provider.send('wallet_switchEthereumChain', [{ chainId }])
-  }
-
-  private subscribeProvider(provider: Web3Provider) {
-    if (!provider.on) return
-
-    provider.on('error', (error: Error) => {
-      handleError(error)
-    })
-
-    provider.on('accountsChanged', (accounts: string[]) => {
-      if (!accounts.length) this.clearData()
-
-      this.account = undefined
-      void this.handleAccountChanged()
-    })
-    provider.on('disconnect', (error: unknown) => {
-      // Sometimes this error fires when user switching between networks too fast, we should not clean data in this case
-      if (
-        error instanceof Error &&
-        error.message.includes('Attempting to connect.')
-      ) {
-        handleError(error)
-        return
-      }
-
-      if (provider) provider.removeAllListeners()
-      handleError(error)
-      this.clearData()
-    })
-    provider.on('chainChanged', async () => {
-      if (await this.isNetworkRight()) {
-        this.needNetworkChange = false
-        this.account = await this.getAccount()
-        return
-      }
-      this.account = undefined
-      this.needNetworkChange = true
-    })
-  }
-
-  private clearData() {
-    NotificationsStore.showTwitterShare = false
-    web3Modal.clearCachedProvider()
-    this.account = undefined
-  }
 }
 
 const walletStore = proxy(new WalletStore()).makePersistent(
   env.VITE_ENCRYPT_KEY
 )
 
-if (walletStore.cachedProvider) void walletStore.connect()
+if (walletStore.cachedProvider) void walletStore.connectOrChangeNetwork()
 
 export default walletStore
