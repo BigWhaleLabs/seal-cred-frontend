@@ -103,8 +103,6 @@ const cardContainer = (
     useAppStyles ? appStyles : undefined
   )
 }
-const spinnerBoxPosition = (noArcTextSpace?: boolean) =>
-  inset(noArcTextSpace ? '-top-32' : '-top-24', 'md:-top-28', 'md:-right-40')
 const spinnerBox = (
   mobileSpinnerOnRight?: boolean,
   noArcTextSpace?: boolean
@@ -112,8 +110,12 @@ const spinnerBox = (
   return classnames(
     position('absolute'),
     margin({ '!mt-0': noArcTextSpace }),
-    mobileSpinnerOnRight ? inset('-right-28') : inset('-right-4'),
-    spinnerBoxPosition(noArcTextSpace)
+    inset(
+      noArcTextSpace ? '-top-32' : '-top-24',
+      mobileSpinnerOnRight ? '-right-28' : '-right-4',
+      'md:-top-28',
+      'md:-right-40'
+    )
   )
 }
 export default function ({
