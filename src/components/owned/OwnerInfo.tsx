@@ -54,7 +54,7 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
   return (
     <>
       <HeaderText extraLeading>
-        This wallet owns a{' '}
+        <span className={display('md:block')}>This wallet owns </span>a{' '}
         <ExternalLink
           url={getEtherscanAddressUrl(badge.address, Network.Goerli)}
         >
@@ -138,6 +138,7 @@ export default function ({
       shadow
       paddingType="normal"
       onlyWrap
+      noArcTextSpace
       spinner="Certified with SealCred ZK Proofs"
     >
       <BadgeTitle badge={badge} />

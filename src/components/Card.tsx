@@ -34,6 +34,7 @@ interface CardProps {
   small?: boolean
   nospace?: boolean
   useAppStyles?: boolean
+  noArcTextSpace?: boolean
   mobileSpinnerOnRight?: boolean
   paddingType?: 'small' | 'normal'
 }
@@ -102,12 +103,17 @@ const cardContainer = (
     useAppStyles ? appStyles : undefined
   )
 }
-const spinnerBoxPosition = inset('-top-24', 'md:-top-28', 'md:-right-40')
-const spinnerBox = (mobileSpinnerOnRight?: boolean) => {
+const spinnerBoxPosition = (noArcTextSpace?: boolean) =>
+  inset(noArcTextSpace ? '-top-32' : '-top-24', 'md:-top-28', 'md:-right-40')
+const spinnerBox = (
+  mobileSpinnerOnRight?: boolean,
+  noArcTextSpace?: boolean
+) => {
   return classnames(
     position('absolute'),
+    margin({ '!mt-0': noArcTextSpace }),
     mobileSpinnerOnRight ? inset('-right-28') : inset('-right-4'),
-    spinnerBoxPosition
+    spinnerBoxPosition(noArcTextSpace)
   )
 }
 export default function ({
@@ -120,6 +126,7 @@ export default function ({
   paddingType,
   nospace,
   useAppStyles,
+  noArcTextSpace,
   mobileSpinnerOnRight,
 }: ChildrenProp & CardProps) {
   return (
@@ -138,7 +145,7 @@ export default function ({
       >
         {children}
         {!!spinner && (
-          <div className={spinnerBox(mobileSpinnerOnRight)}>
+          <div className={spinnerBox(mobileSpinnerOnRight, noArcTextSpace)}>
             <ArcText text={spinner} />
           </div>
         )}
