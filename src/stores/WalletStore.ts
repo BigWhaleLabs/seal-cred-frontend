@@ -18,6 +18,8 @@ import web3Modal from 'helpers/web3Modal'
 
 let provider: Web3Provider
 
+const networkName = env.VITE_ETH_NETWORK
+
 class WalletStore extends PersistableStore {
   account?: string
   walletLoading = false
@@ -41,9 +43,8 @@ class WalletStore extends PersistableStore {
   }
 
   private async isNetworkRight(provider: Web3Provider) {
-    const network = env.VITE_ETH_NETWORK
     const userNetwork = await this.getUserNetworkName(provider)
-    return network === userNetwork
+    return networkName === userNetwork
   }
 
   private async handleAccountChanged() {
@@ -124,7 +125,7 @@ class WalletStore extends PersistableStore {
           new Error(
             ErrorList.wrongNetwork(
               await this.getUserNetworkName(provider),
-              env.VITE_ETH_NETWORK
+              networkName
             )
           )
         )
@@ -140,7 +141,7 @@ class WalletStore extends PersistableStore {
   }
 
   changeNetworkOrConnect({
-    clearCachedProvider,
+    clearCachedProvider = false,
     needNetworkChange,
   }: {
     clearCachedProvider: boolean
