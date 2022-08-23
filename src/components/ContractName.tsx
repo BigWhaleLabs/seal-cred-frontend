@@ -8,7 +8,6 @@ import classnames, {
   wordBreak,
 } from 'classnames/tailwind'
 import getContractName from 'helpers/network/getContractName'
-import prettifyContractName from 'helpers/network/prettifyContractName'
 import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 
 const addressText = wordBreak('break-all')
@@ -40,13 +39,11 @@ function ContractNameSuspended({
   network,
 }: ContractNameProps) {
   // We will always get a string
-  let contractName = getContractName(address, network) as string
+  let contractName = getContractName(address, network, truncate) as string
 
   if (clearType) {
     contractName = contractName.replace(/ (email|\(derivative\))$/, '')
   }
-
-  contractName = prettifyContractName(contractName, truncate)
 
   return (
     <span
