@@ -1,4 +1,5 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
+import { JSXInternal } from 'preact/src/jsx'
 import Card from 'components/Card'
 import CardTitle from 'components/CardTitle'
 import ContractName from 'components/ContractName'
@@ -27,72 +28,65 @@ const walletBox = classnames(
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
 
-function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
-  if (badge.type === 'Email') {
-    return (
-      <>
-        <HeaderText extraLeading>
-          This wallet belongs to someone with{' '}
-          <ExternalLink
-            url={getEtherscanAddressUrl(badge.derivative, Network.Goerli)}
-          >
-            <AccentText bold color="text-secondary">
-              <ContractName
-                hyphens
-                address={badge.derivative}
-                network={Network.Goerli}
-              />
-            </AccentText>
-          </ExternalLink>
-        </HeaderText>
-      </>
+function replace(
+  template: string,
+  keyword: string,
+  element: JSXInternal.Element
+) {
+  return template
+    .split(keyword)
+    .reduce(
+      (chain, part, index) =>
+        index === 0 ? chain.concat(part) : chain.concat(element).concat(part),
+      [] as (JSXInternal.Element | string)[]
     )
-  }
+}
 
-  return (
-    <>
-      <HeaderText extraLeading>
-        <span className={display('md:block')}>This wallet owns </span>a{' '}
-        <ExternalLink
-          url={getEtherscanAddressUrl(badge.derivative, Network.Goerli)}
-        >
-          <AccentText bold color="text-secondary">
-            <ContractName
-              hyphens
-              address={badge.derivative}
-              network={Network.Goerli}
-            />
-          </AccentText>
-        </ExternalLink>
-      </HeaderText>
-    </>
+function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
+  const { ownerTitle } = data[badge.type]
+
+  if (!ownerTitle) return null
+
+  const derivativeLink = (
+    <ExternalLink
+      url={getEtherscanAddressUrl(badge.derivative, Network.Goerli)}
+    >
+      <AccentText bold color="text-secondary">
+        <ContractName
+          hyphens
+          address={badge.derivative}
+          network={Network.Goerli}
+        />
+      </AccentText>
+    </ExternalLink>
   )
+
+  const title = replace(ownerTitle, '{derivative}', derivativeLink)
+
+  return <HeaderText extraLeading>{title}</HeaderText>
 }
 
 function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
-  if (badge.type === 'Email') {
-    return (
-      <BodyText>
-        This is a zkNFT derivative of an email. It means this person has been
-        verified own a ‘
-        <AccentText color="text-secondary">{badge.original}</AccentText>‘ email.
-        <ShareCTAButtons />
-      </BodyText>
-    )
-  }
+  const {
+    ownerContent,
+    source: { network },
+  } = data[badge.type]
 
-  const network = data[badge.type].source.network
+  if (!ownerContent) return null
+
+  const originalLink = (
+    <ExternalLink url={getEtherscanAddressUrl(badge.original, network)}>
+      <AccentText color="text-secondary">
+        <ContractName address={badge.original} network={network} />
+      </AccentText>
+    </ExternalLink>
+  )
+
+  const content = replace(ownerContent, '{original}', originalLink)
 
   return (
     <BodyText>
-      This is a zkNFT derivative. It means this person has been verified to own
-      at least one ‘
-      <ExternalLink url={getEtherscanAddressUrl(badge.original, network)}>
-        <AccentText color="text-secondary">
-          <ContractName address={badge.original} network={network} />
-        </AccentText>
-      </ExternalLink>
-      ‘ {network[0].toUpperCase() + network.slice(1)} NFT.
+      {content}
       <ShareCTAButtons />
     </BodyText>
   )
