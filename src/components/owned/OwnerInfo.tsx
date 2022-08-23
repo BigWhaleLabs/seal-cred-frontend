@@ -28,7 +28,7 @@ const walletBox = classnames(
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
 
-function replace(
+function replaceKeywordsInString(
   template: string,
   keyword: string,
   element: JSXInternal.Element
@@ -38,7 +38,7 @@ function replace(
     .reduce(
       (chain, part, index) =>
         index === 0 ? chain.concat(part) : chain.concat(element).concat(part),
-      [] as (Element | string)[]
+      [] as (JSXInternal.Element | string)[]
     )
 }
 
@@ -59,7 +59,11 @@ function BadgeTitle({
     </ExternalLink>
   )
 
-  const title = replace(ownerTitle, '{derivative}', derivativeLink)
+  const title = replaceKeywordsInString(
+    ownerTitle,
+    '{derivative}',
+    derivativeLink
+  )
 
   return <HeaderText extraLeading>{title}</HeaderText>
 }
@@ -81,7 +85,11 @@ function BadgeContent({
     </ExternalLink>
   )
 
-  const content = replace(ownerContent, '{original}', originalLink)
+  const content = replaceKeywordsInString(
+    ownerContent,
+    '{original}',
+    originalLink
+  )
 
   return (
     <BodyText>
