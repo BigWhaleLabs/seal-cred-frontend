@@ -5,6 +5,7 @@ import ProofResult from 'models/ProofResult'
 
 export default abstract class BaseProof implements Proof {
   result?: ProofResult
+  account?: string
 
   abstract get type(): BadgeSourceType
   abstract get dataType(): DataKeys

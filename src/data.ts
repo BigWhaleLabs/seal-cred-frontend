@@ -16,7 +16,6 @@ export default {
     ownerContent:
       'This is a zkNFT derivative. It means this person has been verified to own at least one ‘{original}‘ Mainnet NFT.',
     proofIcon: Erc721Badge,
-
     badgeType: BadgeSourceType.ERC721,
     network: Network.Mainnet,
   },

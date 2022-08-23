@@ -1,6 +1,6 @@
 import { BodyText, HeaderText } from 'components/Text'
 import BadgeBlock from 'components/badges/BadgeBlock'
-import EmailProof from 'helpers/proofs/EmailProof'
+import BaseProof from 'helpers/proofs/BaseProof'
 import MintedToken from 'models/MintedToken'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 
@@ -9,7 +9,7 @@ export default function ({
   onMinted,
   onMintFailed,
 }: {
-  proof: EmailProof
+  proof: BaseProof
   onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {

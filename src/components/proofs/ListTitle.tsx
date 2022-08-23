@@ -5,11 +5,12 @@ import ProofStore from 'stores/ProofStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 export function ListTitleSuspended() {
-  const { proofsCompleted } = useSnapshot(ProofStore)
+  const stores = useSnapshot(ProofStore)
   const avaliableToProof = useProofAddressesAvailableToCreate()
 
   const allGenerated =
-    proofsCompleted.length > 0 && avaliableToProof.length === 0
+    Object.values(stores).some((store) => store.proofsCompleted.length > 0) &&
+    avaliableToProof.length === 0
 
   return (
     <CardTitle

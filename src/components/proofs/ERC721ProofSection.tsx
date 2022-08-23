@@ -1,4 +1,5 @@
 import { BodyText, HintText } from 'components/Text'
+import { DataKeys } from 'models/DataKeys'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import AvailableProofsList from 'components/proofs/AvailableProofsList'
@@ -7,37 +8,36 @@ import Network from 'models/Network'
 import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
 import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
+import data from 'data'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 export function ERC721ProofSection({
   account,
+  dataKey,
   network,
 }: {
   account: string
+  dataKey: DataKeys
   network: Network
 }) {
-  const { eRC721ProofsCompleted } = useSnapshot(ProofStore)
+  const { proofsCompleted } = useSnapshot(ProofStore[dataKey])
   const networkProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(network)
 
-  const networkProofsCompleted = eRC721ProofsCompleted.filter(
-    (proof) => proof.network === network
-  )
-
-  const nothingToGenerateMainnet =
-    networkProofsCompleted.length === 0 &&
+  const nothingToGenerate =
+    proofsCompleted.length === 0 &&
     networkProofAddressesAvailableToCreate.length === 0
 
   return (
     <ProofSection title={<BodyText>{network} NFTs</BodyText>}>
-      <ReadyERC721ProofsList network={network} />
+      <ReadyERC721ProofsList dataKey={dataKey} />
       {account && (
         <AvailableProofsList
+          dataKey={dataKey}
           proofs={networkProofAddressesAvailableToCreate}
-          network={network}
         />
       )}
-      {nothingToGenerateMainnet && (
+      {nothingToGenerate && (
         <HintCard small marginY={false}>
           <HintText bold center>
             No NFTs to proof
@@ -50,11 +50,12 @@ export function ERC721ProofSection({
 
 export default function ERC721ProofSectionSuspended({
   account,
-  network,
+  dataKey,
 }: {
   account: string
-  network: Network
+  dataKey: DataKeys
 }) {
+  const network = data[dataKey].network
   return (
     <Suspense
       fallback={
@@ -67,7 +68,11 @@ export default function ERC721ProofSectionSuspended({
         </ProofSection>
       }
     >
-      <ERC721ProofSection account={account} network={network} />
+      <ERC721ProofSection
+        dataKey={dataKey}
+        account={account}
+        network={network}
+      />
     </Suspense>
   )
 }

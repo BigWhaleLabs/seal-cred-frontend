@@ -1,15 +1,15 @@
 import { AccentText, ProofText } from 'components/Text'
+import { DataKeys } from 'models/DataKeys'
 import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
+import BaseProof from 'helpers/proofs/BaseProof'
 import Button from 'components/proofs/Button'
 import Complete from 'icons/Complete'
 import ContractName from 'components/ContractName'
-import ERC721Proof from 'helpers/proofs/ERC721Proof'
 import ExternalLink from 'components/ExternalLink'
 import Line from 'components/proofs/Line'
-import Network from 'models/Network'
-import ProofStore from 'stores/ProofStore'
+import ProofStore, { generateERC721 } from 'stores/ProofStore'
 import Star from 'icons/Star'
 import ToolTip from 'components/ToolTip'
 import WalletStore from 'stores/WalletStore'
@@ -28,6 +28,7 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
+import data from 'data'
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -54,9 +55,9 @@ const textWithIcon = classnames(
 )
 
 function useProofContent(
+  dataKey: DataKeys,
   contractAddress: string,
-  network: Network,
-  proof?: ERC721Proof
+  proof?: BaseProof
 ): {
   color: 'text-accent' | 'text-secondary' | 'text-tertiary'
   content: JSX.Element | null
@@ -91,7 +92,11 @@ function useProofContent(
           disabled={isGenerating}
           onClick={async () => {
             setIsGenerating(true)
-            await ProofStore.generateERC721(contractAddress, network)
+            await generateERC721(
+              ProofStore[dataKey],
+              contractAddress,
+              data[dataKey].network
+            )
             setIsGenerating(false)
           }}
         >
@@ -104,7 +109,7 @@ function useProofContent(
     color: 'text-accent',
     content: (
       <span className={textWithIcon}>
-        <span>Proof {proof.account === account ? 'made' : 'saved'}</span>
+        <span>Proof {proof?.account === account ? 'made' : 'saved'}</span>
         <Complete accent />
       </span>
     ),
@@ -114,14 +119,15 @@ function useProofContent(
 export default function ({
   proof,
   contractAddress,
-  network,
+  dataKey,
 }: {
-  proof?: ERC721Proof
+  proof?: BaseProof
   contractAddress: string
-  network: Network
+  dataKey: DataKeys
 }) {
+  const network = data[dataKey].network
   const { xs } = useBreakpoints()
-  const { color, content } = useProofContent(contractAddress, network, proof)
+  const { color, content } = useProofContent(dataKey, contractAddress, proof)
 
   return (
     <Line breakWords>

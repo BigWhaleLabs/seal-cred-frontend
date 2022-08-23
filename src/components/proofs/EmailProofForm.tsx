@@ -6,7 +6,7 @@ import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/EmailForm'
 import EmailProof from 'helpers/proofs/EmailProof'
-import ProofStore from 'stores/ProofStore'
+import ProofStore, { generateEmail } from 'stores/ProofStore'
 import TextForm from 'components/TextForm'
 import checkDomainToken from 'helpers/proofs/checkDomainToken'
 
@@ -61,7 +61,7 @@ export default function ({
     onError(undefined)
     try {
       if (secret) {
-        const proof = await ProofStore.generateEmail(domain, secret)
+        const proof = await generateEmail(ProofStore['Email'], domain, secret)
         if (proof) onCreate(proof)
       }
     } finally {

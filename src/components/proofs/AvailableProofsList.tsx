@@ -1,23 +1,20 @@
+import { DataKeys } from 'models/DataKeys'
 import ContractListContainer from 'components/proofs/ContractListContainer'
-import Network from 'models/Network'
 import Proof from 'components/proofs/Proof'
 
 export default function ({
   proofs,
-  network,
+  dataKey,
 }: {
   proofs: string[]
-  network: Network
+  dataKey: DataKeys
 }) {
+  if (proofs.length === 0) return null
   return (
-    <>
-      {!!proofs.length && (
-        <ContractListContainer>
-          {proofs.map((address) => (
-            <Proof contractAddress={address} key={address} network={network} />
-          ))}
-        </ContractListContainer>
-      )}
-    </>
+    <ContractListContainer>
+      {proofs.map((address) => (
+        <Proof dataKey={dataKey} contractAddress={address} key={address} />
+      ))}
+    </ContractListContainer>
   )
 }

@@ -31,7 +31,7 @@ function Badge({
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
       const transaction = await WalletStore.mintDerivative(proof)
-      ProofStore.deleteProof(proof)
+      ProofStore[proof.dataType].deleteProof(proof)
       if (onMinted) onMinted()
       BadgesContractsStore.connectedAccounts[account].applyTransaction(
         transaction
@@ -42,7 +42,7 @@ function Badge({
         error instanceof Error &&
         error.message.includes('This ZK proof has already been used')
       ) {
-        ProofStore.deleteProof(proof)
+        ProofStore[proof.dataType].deleteProof(proof)
         if (onMintFailed) onMintFailed()
         handleError(
           new Error(

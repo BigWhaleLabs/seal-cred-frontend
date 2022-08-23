@@ -7,8 +7,8 @@ import {
 } from 'components/Text'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
+import BaseProof from 'helpers/proofs/BaseProof'
 import EmailDomainStore from 'stores/EmailDomainStore'
-import EmailProof from 'helpers/proofs/EmailProof'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import classnames, { space, width } from 'classnames/tailwind'
 
@@ -21,7 +21,7 @@ export default function EmailFlowForm({
 }: {
   domain: string
   onUpdateDomain: (domain: string) => void
-  onSelectProof: (proof: EmailProof) => void
+  onSelectProof: (proof: BaseProof) => void
 }) {
   const { emailDomain } = useSnapshot(EmailDomainStore)
   const [error, setError] = useState<string | undefined>()

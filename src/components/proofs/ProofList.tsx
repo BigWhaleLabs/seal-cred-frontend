@@ -1,4 +1,5 @@
 import { AccentText, BodyText } from 'components/Text'
+import { DataKeys } from 'models/DataKeys'
 import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
@@ -13,17 +14,21 @@ import data, { BadgeSourceType } from 'data'
 
 export function ProofListSuspended() {
   const { account } = useSnapshot(WalletStore)
-  const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
+  const stores = useSnapshot(ProofStore)
+
+  const hasCompletedProofs = Object.values(stores).some(
+    (store) => store.proofsCompleted.length > 0
+  )
 
   return (
     <>
       <Scrollbar>
         <div className={space('space-y-2')}>
           {account &&
-            Object.values(data).map(
-              ({ badgeType, network }) =>
-                badgeType === BadgeSourceType.ERC721 && (
-                  <ERC721ProofSection account={account} network={network} />
+            (Object.keys(data) as DataKeys[]).map(
+              (ledgerName) =>
+                data[ledgerName].badgeType === BadgeSourceType.ERC721 && (
+                  <ERC721ProofSection dataKey={ledgerName} account={account} />
                 )
             )}
           <ProofSection
@@ -36,14 +41,14 @@ export function ProofListSuspended() {
               </BodyText>
             }
           >
-            {Array.from(emailProofsCompleted).map((proof, index) => (
-              <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
+            {Array.from(stores['Email'].proofsCompleted).map((proof, index) => (
+              <ReadyEmailProof proof={proof} key={`${proof.origin}-${index}`} />
             ))}
             <EmailProof />
           </ProofSection>
         </div>
       </Scrollbar>
-      {proofsCompleted.length > 0 && (
+      {hasCompletedProofs && (
         <AccentText small primary color="text-primary">
           Created ZK proofs are saved in the browser even if you switch wallets.
         </AccentText>

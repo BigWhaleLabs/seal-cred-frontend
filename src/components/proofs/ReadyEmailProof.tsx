@@ -1,6 +1,6 @@
 import { AccentText, ProofText } from 'components/Text'
+import BaseProof from 'helpers/proofs/BaseProof'
 import Complete from 'icons/Complete'
-import EmailProof from 'helpers/proofs/EmailProof'
 import Line from 'components/proofs/Line'
 import classnames, {
   alignItems,
@@ -39,13 +39,13 @@ const textWithIcon = classnames(
   space('space-x-2')
 )
 
-export default function ({ proof }: { proof: EmailProof }) {
+export default function ({ proof }: { proof: BaseProof }) {
   const { xs } = useBreakpoints()
 
   return (
     <Line>
       <div className={proofName}>
-        <ProofText>@{proof.domain}</ProofText>
+        <ProofText>@{proof.origin}</ProofText>
       </div>
 
       <div className={proofText(xs)}>

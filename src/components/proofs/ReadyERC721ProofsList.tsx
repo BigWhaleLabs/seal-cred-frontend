@@ -1,29 +1,25 @@
+import { DataKeys } from 'models/DataKeys'
 import { useSnapshot } from 'valtio'
+import BaseProof from 'helpers/proofs/BaseProof'
 import ContractListContainer from 'components/proofs/ContractListContainer'
-import ERC721Proof from 'helpers/proofs/ERC721Proof'
-import Network from 'models/Network'
 import Proof from 'components/proofs/Proof'
 import ProofStore from 'stores/ProofStore'
 
-export default function ({ network }: { network: Network }) {
-  const { proofsCompleted } = useSnapshot(ProofStore)
+export default function ({ dataKey }: { dataKey: DataKeys }) {
+  const { proofsCompleted } = useSnapshot(ProofStore[dataKey])
 
-  const allERC721ProofsByNetwork = proofsCompleted.filter(
-    (proof) => proof instanceof ERC721Proof && proof.network === network
-  ) as ERC721Proof[]
-
-  if (allERC721ProofsByNetwork.length === 0) return null
+  if (proofsCompleted.length === 0) return null
 
   return (
     <ContractListContainer>
-      {Array.from(allERC721ProofsByNetwork)
+      {(Array.from(proofsCompleted) as BaseProof[])
         .sort((a, b) => (a.account === b.account ? 0 : -1))
         .map((proof) => (
           <Proof
+            dataKey={dataKey}
             proof={proof}
-            contractAddress={proof.contract}
-            key={`${proof.contract}-${proof.account}`}
-            network={network}
+            contractAddress={proof.origin}
+            key={`${proof.origin}-${proof.account}`}
           />
         ))}
     </ContractListContainer>
