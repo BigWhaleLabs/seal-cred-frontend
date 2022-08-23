@@ -57,11 +57,15 @@ class ProofStore extends PersistableStore {
   }
 
   get emailProofsCompleted() {
-    return this.proofsCompleted.filter((proof) => proof instanceof EmailProof)
+    return this.proofsCompleted.filter(
+      (proof) => proof instanceof EmailProof
+    ) as EmailProof[]
   }
 
   get eRC721ProofsCompleted() {
-    return this.proofsCompleted.filter((proof) => proof instanceof ERC721Proof)
+    return this.proofsCompleted.filter(
+      (proof) => proof instanceof ERC721Proof
+    ) as ERC721Proof[]
   }
 
   async generateEmail(domain: string, signature: string) {
