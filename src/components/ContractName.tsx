@@ -38,10 +38,10 @@ function ContractNameSuspended({
   clearType,
   network,
 }: ContractNameProps) {
-  let contractName = getContractName(address, network, truncate)
-
-  if (clearType)
-    contractName = contractName.replace(/ (email|\(derivative\))$/, '')
+  const contractName = getContractName(address, network, {
+    truncate,
+    clearType,
+  })
 
   return (
     <span
