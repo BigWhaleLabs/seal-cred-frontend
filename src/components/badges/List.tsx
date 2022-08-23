@@ -25,16 +25,15 @@ function BadgeListSuspended() {
   const contractsOwned = useContractsOwned(BadgesContractsStore)
   const proofsAvailableToMint = useProofsAvailableToMint()
 
-  const ownedContractsByKey = dataShapeObject((ledgerName: string) =>
+  const ownedContractsByLedger = dataShapeObject((ledgerName: string) =>
     derivativeContracts[ledgerName].filter((contractAddress) =>
       contractsOwned.includes(contractAddress)
     )
   )
 
   const hasProofs = proofsAvailableToMint.length
-  const hasDerivatives = Object.values(ownedContractsByKey).reduce(
-    (sum, contracts) => sum + contracts.length,
-    0
+  const hasDerivatives = Object.values(ownedContractsByLedger).some(
+    (contracts) => contracts.length > 0
   )
   const isEmpty = !hasProofs && !hasDerivatives
 
