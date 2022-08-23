@@ -1,3 +1,5 @@
+import EmailBadge from 'icons/EmailBadge'
+import Erc721Badge from 'icons/Erc721Badge'
 import Network from 'models/Network'
 import env from 'helpers/env'
 
@@ -13,6 +15,8 @@ export default {
     ownerTitle: 'This wallet owns a {derivative}',
     ownerContent:
       'This is a zkNFT derivative. It means this person has been verified to own at least one ‘{original}‘ Mainnet NFT.',
+    proofIcon: Erc721Badge,
+
     badgeType: BadgeSourceType.ERC721,
     network: Network.Mainnet,
   },
@@ -22,6 +26,7 @@ export default {
     ownerTitle: 'This wallet belongs to someone with {derivative}',
     ownerContent:
       'This is a zkNFT derivative of an email. It means this person has been verified own a ‘{original}‘ email.',
+    proofIcon: EmailBadge,
     badgeType: BadgeSourceType.Email,
     network: Network.Goerli,
   },
@@ -31,6 +36,7 @@ export default {
     ownerTitle: 'This wallet owns a {derivative}',
     ownerContent:
       'This is a zkNFT derivative. It means this person has been verified to own at least one ‘{original}‘ Goerli NFT.',
+    proofIcon: Erc721Badge,
     badgeType: BadgeSourceType.ERC721,
     network: Network.Goerli,
   },

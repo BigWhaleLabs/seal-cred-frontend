@@ -6,12 +6,10 @@ import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import BaseProof from 'helpers/proofs/BaseProof'
 import Button from 'components/Button'
-import EmailBadge from 'icons/EmailBadge'
-import EmailProof from 'helpers/proofs/EmailProof'
-import Erc721Badge from 'icons/Erc721Badge'
 import MintedToken from 'models/MintedToken'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
+import data from 'data'
 import handleError from 'helpers/handleError'
 
 function Badge({
@@ -25,8 +23,6 @@ function Badge({
 }) {
   const { account, mintLoading } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
-
-  const isEmailProof = proof instanceof EmailProof
 
   const checkProofAndMint = async () => {
     WalletStore.mintLoading = true
@@ -62,9 +58,11 @@ function Badge({
     }
   }
 
+  const ProofIcon = data[proof.dataType].proofIcon
+
   return (
     <BadgeCard
-      top={isEmailProof ? <EmailBadge /> : <Erc721Badge />}
+      top={<ProofIcon />}
       text={<BadgeTitle proof={proof} />}
       bottom={
         <Button

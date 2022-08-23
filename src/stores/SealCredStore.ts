@@ -38,7 +38,7 @@ SealCredStore.ledgers = Promise.all(
     result[name] = await ledger
     SealCredStore.ledgerToDerivativeAddresses[name] = Object.values(
       result[name]
-    ).map(({ derivative }) => derivative)
+    )
   }
 
   return result
@@ -51,10 +51,7 @@ for (const name of Object.keys(data) as DataKeys[]) {
     async (original, derivative) => {
       const ledgers = await SealCredStore.ledgers
 
-      ledgers[name][original] = {
-        original,
-        derivative,
-      }
+      ledgers[name][original] = derivative
     }
   )
   ledgerContract.on(

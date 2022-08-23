@@ -12,7 +12,7 @@ export default function () {
 
   const ledgerToUnmintedProofs = dataShapeObject((ledgerName) =>
     ledgerToProofs[ledgerName].filter(({ origin }) => {
-      const derivative = ledgers[ledgerName][origin]?.derivative
+      const derivative = ledgers[ledgerName][origin]
       return !derivative || !ownedAddresses.includes(derivative)
     })
   )

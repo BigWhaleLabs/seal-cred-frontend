@@ -1,3 +1,4 @@
+import { BadgeSourceType } from 'data'
 import { DataKeys } from 'models/DataKeys'
 import { utils } from 'ethers'
 import BaseProof from 'helpers/proofs/BaseProof'
@@ -24,8 +25,12 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
     return this.domain
   }
 
+  get type() {
+    return BadgeSourceType.Email
+  }
+
   static get type() {
-    return 'email'
+    return BadgeSourceType.Email
   }
 
   equal(proof: BaseProof): boolean {

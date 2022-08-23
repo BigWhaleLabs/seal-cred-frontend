@@ -1,3 +1,4 @@
+import { BadgeSourceType } from 'data'
 import { DataKeys } from 'models/DataKeys'
 import { utils } from 'ethers'
 import BalanceSignature from 'models/BalanceSignature'
@@ -36,8 +37,12 @@ export default class ERC721Proof
     return this.contract
   }
 
+  get type() {
+    return BadgeSourceType.ERC721
+  }
+
   static get type() {
-    return 'ERC721'
+    return BadgeSourceType.ERC721
   }
 
   equal(proof: BaseProof): boolean {

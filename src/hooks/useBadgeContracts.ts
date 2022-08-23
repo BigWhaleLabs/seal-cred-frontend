@@ -15,8 +15,8 @@ export default function () {
   return useMemo(() => {
     return Object.entries(ledgers).reduce(
       (res, [key, ledger]) =>
-        Object.values(ledger).reduce(
-          (result, { derivative, original }) => ({
+        Object.entries(ledger).reduce(
+          (result, [original, derivative]) => ({
             ...result,
             [derivative]: {
               type: key as DataKeys,

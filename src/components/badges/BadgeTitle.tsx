@@ -1,17 +1,16 @@
+import { BadgeSourceType } from 'data'
 import BaseProof from 'helpers/proofs/BaseProof'
 import ContractName from 'components/ContractName'
-import ERC721Proof from 'helpers/proofs/ERC721Proof'
-import EmailProof from 'helpers/proofs/EmailProof'
 import ExternalLink from 'components/ExternalLink'
 import Network from 'models/Network'
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
 function ProofName({ badge }: { badge: BaseProof }) {
-  if (badge instanceof ERC721Proof)
+  if (badge.type === BadgeSourceType.ERC721)
     return (
-      <ContractName hyphens address={badge.contract} network={Network.Goerli} />
+      <ContractName hyphens address={badge.origin} network={Network.Goerli} />
     )
-  if (badge instanceof EmailProof) return <>@{badge.domain}</>
+  if (badge.type === BadgeSourceType.Email) return <>@{badge.origin}</>
   return <>Unknown</>
 }
 
