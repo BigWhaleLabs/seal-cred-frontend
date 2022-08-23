@@ -1,9 +1,9 @@
-import { Entropy } from 'entropy-string'
 import { utils } from 'ethers'
 import BaseProof from 'helpers/BaseProof'
 import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import PublicKey from 'models/PublicKey'
+import generateR2AndS2 from 'helpers/generateR2AndS2'
 import unpackSignature from 'helpers/unpackSignature'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,17 +68,7 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
       utils.toUtf8Bytes(domain),
       maxDomainLength
     )
-    const hexadecimalCharset = '0123456789ABCDEF'
-    const randomHexadecimalNumber1 = new Entropy({
-      charset: hexadecimalCharset,
-      bits: 64,
-    }).string()
-    const randomHexadecimalNumber2 = new Entropy({
-      charset: hexadecimalCharset,
-      bits: 64,
-    }).string()
-    const r2 = BigInt('0x' + randomHexadecimalNumber1).toString(10)
-    const s2 = BigInt('0x' + randomHexadecimalNumber2).toString(10)
+    const { r2, s2 } = generateR2AndS2()
     return {
       message: Array.from(messageUInt8),
       pubKeyX: eddsaPublicKey.x,
