@@ -78,7 +78,12 @@ const AccountContainer = ({ account }: { account?: string }) => {
   return (
     <div
       className={accountLinkContainer}
-      onClick={async () => await WalletStore.connect(true)}
+      onClick={async () => {
+        await WalletStore.changeNetworkOrConnect({
+          clearCachedProvider: true,
+          needNetworkChange,
+        })
+      }}
     >
       <div className={walletAccount}>
         <AccentText extraSmall={xs} color="text-primary-semi-dimmed">

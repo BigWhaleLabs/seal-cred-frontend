@@ -8,6 +8,7 @@ import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import PublicKey from 'models/PublicKey'
 import Signature from 'models/Signature'
+import generateR2AndS2 from 'helpers/proofs/generateR2AndS2'
 import unpackSignature from 'helpers/proofs/unpackSignature'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -120,7 +121,7 @@ export default class ERC721Proof
     balanceSignature: BalanceSignature,
     eddsaPublicKey: PublicKey
   ) {
-    const [r2, s2] = crypto.getRandomValues(new BigUint64Array(2))
+    const { r2, s2 } = generateR2AndS2()
     const addressInputs = await this.inputsForSignature(
       eddsaPublicKey,
       ownershipSignature,

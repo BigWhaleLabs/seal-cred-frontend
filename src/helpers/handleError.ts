@@ -1,13 +1,14 @@
 import { serializeError } from 'eth-rpc-errors'
 import { toast } from 'react-toastify'
 import axios, { AxiosError } from 'axios'
+import env from 'helpers/env'
 import parseGSNError from 'helpers/providers/parseGSNError'
 import parseRevertReason from 'helpers/providers/parseRevertReason'
 
 export const ProofGenerationErrors = {}
 
 export const ErrorList = {
-  wrongNetwork: (userNetwork: string, contractNetwork: string) =>
+  wrongNetwork: (userNetwork: string, contractNetwork = env.VITE_ETH_NETWORK) =>
     `Looks like you're using ${userNetwork} network, try switching to ${contractNetwork}`,
   unknown: 'An unknown error occurred, please, contact us',
   clear: '',

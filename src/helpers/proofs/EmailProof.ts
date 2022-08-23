@@ -5,6 +5,7 @@ import BaseProof from 'helpers/proofs/BaseProof'
 import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import PublicKey from 'models/PublicKey'
+import generateR2AndS2 from 'helpers/proofs/generateR2AndS2'
 import unpackSignature from 'helpers/proofs/unpackSignature'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,7 +78,7 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
       utils.toUtf8Bytes(domain),
       maxDomainLength
     )
-    const [r2, s2] = crypto.getRandomValues(new BigUint64Array(2))
+    const { r2, s2 } = generateR2AndS2()
     return {
       message: Array.from(messageUInt8),
       pubKeyX: eddsaPublicKey.x,
