@@ -1,4 +1,4 @@
-import Network from '@big-whale-labs/stores/dist/models/Network'
+import Network from 'models/Network'
 import env from 'helpers/env'
 
 export enum BadgeSourceType {
@@ -13,10 +13,8 @@ export default {
     ownerTitle: 'This wallet owns a {derivative}',
     ownerContent:
       'This is a zkNFT derivative. It means this person has been verified to own at least one ‘{original}‘ Mainnet NFT.',
-    source: {
-      type: BadgeSourceType.ERC721,
-      network: Network.Mainnet,
-    },
+    badgeType: BadgeSourceType.ERC721,
+    network: Network.Mainnet,
   },
   Email: {
     ledger: env.VITE_SC_EMAIL_LEDGER_CONTRACT_ADDRESS,
@@ -24,10 +22,9 @@ export default {
     ownerTitle: 'This wallet belongs to someone with {derivative}',
     ownerContent:
       'This is a zkNFT derivative of an email. It means this person has been verified own a ‘{original}‘ email.',
-    source: {
-      type: BadgeSourceType.Email,
-      network: Network.Goerli,
-    },
+
+    badgeType: BadgeSourceType.Email,
+    network: Network.Goerli,
   },
   ERC721: {
     ledger: env.VITE_SC_ERC721_LEDGER_CONTRACT_ADDRESS,
@@ -35,9 +32,7 @@ export default {
     ownerTitle: 'This wallet owns a {derivative}',
     ownerContent:
       'This is a zkNFT derivative. It means this person has been verified to own at least one ‘{original}‘ Goerli NFT.',
-    source: {
-      type: BadgeSourceType.ERC721,
-      network: Network.Goerli,
-    },
+    badgeType: BadgeSourceType.ERC721,
+    network: Network.Goerli,
   },
 }

@@ -1,22 +1,21 @@
-import {
-  goerliDefaultProvider,
-  mainnetDefaultProvider,
-} from 'helpers/providers/defaultProvider'
-import {
-  goerliHeavyProvider,
-  mainnetHeavyProvider,
-} from 'helpers/providers/heavyProvider'
-import Network from '@big-whale-labs/stores/dist/models/Network'
+import { ETH_RPC, ETH_RPC_MAINNET } from '@big-whale-labs/constants'
+import Network from 'models/Network'
+import createProvider from 'helpers/providers/createProvider'
+import env from 'helpers/env'
 
 export default {
   [Network.Mainnet]: {
     network: Network.Mainnet,
-    defaultProvider: mainnetDefaultProvider,
-    heavyProvider: mainnetHeavyProvider,
+    ...createProvider(Network.Mainnet, {
+      default: ETH_RPC_MAINNET,
+      heavy: env.VITE_ETH_RPC_MAINNET,
+    }),
   },
   [Network.Goerli]: {
     network: Network.Goerli,
-    defaultProvider: goerliDefaultProvider,
-    heavyProvider: goerliHeavyProvider,
+    ...createProvider(Network.Goerli, {
+      default: ETH_RPC,
+      heavy: env.VITE_ETH_RPC,
+    }),
   },
 }

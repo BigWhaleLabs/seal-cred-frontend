@@ -20,13 +20,10 @@ export function ProofListSuspended() {
       <Scrollbar>
         <div className={space('space-y-2')}>
           {Object.values(data).map(
-            ({ source }) =>
-              source.type === BadgeSourceType.ERC721 &&
+            ({ badgeType, network }) =>
+              badgeType === BadgeSourceType.ERC721 &&
               account && (
-                <ERC721ProofSection
-                  account={account}
-                  network={source.network}
-                />
+                <ERC721ProofSection account={account} network={network} />
               )
           )}
           <ProofSection

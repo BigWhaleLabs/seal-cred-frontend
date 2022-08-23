@@ -1,7 +1,7 @@
 import { ContractsStore } from '@big-whale-labs/stores'
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
-import Network from '@big-whale-labs/stores/dist/models/Network'
+import Network from 'models/Network'
 import WalletStore from 'stores/WalletStore'
 import env from 'helpers/env'
 import networks from 'networks'

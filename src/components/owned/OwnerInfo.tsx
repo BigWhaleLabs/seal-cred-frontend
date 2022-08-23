@@ -69,10 +69,7 @@ function BadgeContent({
 }: {
   badge: BaseBadgeContract
 }) {
-  const {
-    ownerContent,
-    source: { network },
-  } = data[type]
+  const { ownerContent, network } = data[type]
 
   if (!ownerContent) return null
 
