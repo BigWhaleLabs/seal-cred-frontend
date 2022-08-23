@@ -13,8 +13,8 @@ export default function (
       network.toLowerCase()
     ),
     heavyProvider: alchemyOrJsonProvider(
-      network.toLowerCase(),
-      networkToRPC.heavy
+      networkToRPC.heavy,
+      network.toLowerCase()
     ),
   }
 }

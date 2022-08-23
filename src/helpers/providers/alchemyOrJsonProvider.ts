@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-export default function alchemyOrJsonProvider(network: string, url: string) {
+export default function alchemyOrJsonProvider(url: string, network: string) {
   return url.includes('alchemy')
     ? new providers.AlchemyProvider(
         network,
