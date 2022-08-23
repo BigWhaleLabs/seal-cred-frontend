@@ -42,21 +42,19 @@ function replace(
     )
 }
 
-function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
-  const { ownerTitle } = data[badge.type]
+function BadgeTitle({
+  badge: { type, derivative },
+}: {
+  badge: BaseBadgeContract
+}) {
+  const { ownerTitle } = data[type]
 
   if (!ownerTitle) return null
 
   const derivativeLink = (
-    <ExternalLink
-      url={getEtherscanAddressUrl(badge.derivative, Network.Goerli)}
-    >
+    <ExternalLink url={getEtherscanAddressUrl(derivative, Network.Goerli)}>
       <AccentText bold color="text-secondary">
-        <ContractName
-          hyphens
-          address={badge.derivative}
-          network={Network.Goerli}
-        />
+        <ContractName hyphens address={derivative} network={Network.Goerli} />
       </AccentText>
     </ExternalLink>
   )
@@ -66,18 +64,22 @@ function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
   return <HeaderText extraLeading>{title}</HeaderText>
 }
 
-function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
+function BadgeContent({
+  badge: { type, original },
+}: {
+  badge: BaseBadgeContract
+}) {
   const {
     ownerContent,
     source: { network },
-  } = data[badge.type]
+  } = data[type]
 
   if (!ownerContent) return null
 
   const originalLink = (
-    <ExternalLink url={getEtherscanAddressUrl(badge.original, network)}>
+    <ExternalLink url={getEtherscanAddressUrl(original, network)}>
       <AccentText color="text-secondary">
-        <ContractName address={badge.original} network={network} />
+        <ContractName address={original} network={network} />
       </AccentText>
     </ExternalLink>
   )
