@@ -1,12 +1,12 @@
+import { DataKeys } from 'models/DataKeys'
 import data from 'data'
 
 type ValueOf<T> = T[keyof T]
-type DataKey = keyof typeof data
 
 export default function <V>(
-  transformer: (contractName: DataKey, record: ValueOf<typeof data>) => V
+  transformer: (contractName: DataKeys, record: ValueOf<typeof data>) => V
 ) {
-  const contractName = Object.keys(data) as DataKey[]
+  const contractName = Object.keys(data) as DataKeys[]
 
   return contractName.reduce(
     (res, contractName) => ({

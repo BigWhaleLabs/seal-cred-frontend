@@ -1,4 +1,5 @@
 import { BadgesContractsStore } from 'stores/ContractsStore'
+import { DataKeys } from 'models/DataKeys'
 import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
@@ -59,7 +60,7 @@ function BadgeListSuspended() {
         <div className={space('space-y-2')}>
           {Object.entries(ownedContractsByKey).map(([key, contracts]) => (
             <BadgeSection
-              title={data[key as keyof typeof data].title}
+              title={data[key as DataKeys].title}
               minted={contracts}
               proofs={proofsAvailableToMint[key]}
               onMinted={onMinted}

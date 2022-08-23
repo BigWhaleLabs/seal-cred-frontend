@@ -1,9 +1,9 @@
+import { DataKeys } from 'models/DataKeys'
 import { utils } from 'ethers'
 import BaseProof from 'helpers/proofs/BaseProof'
 import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import PublicKey from 'models/PublicKey'
-import data from 'data'
 import unpackSignature from 'helpers/proofs/unpackSignature'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,7 +17,7 @@ export default class EmailProof extends BaseProof implements EmailProofSchema {
   domain: string
 
   get dataType() {
-    return 'Email' as keyof typeof data
+    return 'Email' as DataKeys
   }
 
   get origin() {

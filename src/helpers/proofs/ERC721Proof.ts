@@ -1,3 +1,4 @@
+import { DataKeys } from 'models/DataKeys'
 import { utils } from 'ethers'
 import BalanceSignature from 'models/BalanceSignature'
 import BaseProof from 'helpers/proofs/BaseProof'
@@ -6,7 +7,6 @@ import Proof from 'models/Proof'
 import ProofResult from 'models/ProofResult'
 import PublicKey from 'models/PublicKey'
 import Signature from 'models/Signature'
-import data from 'data'
 import unpackSignature from 'helpers/proofs/unpackSignature'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,7 +29,7 @@ export default class ERC721Proof
   get dataType() {
     return (
       this.network === Network.Mainnet ? 'ExternalERC721' : 'ERC721'
-    ) as keyof typeof data
+    ) as DataKeys
   }
 
   get origin() {

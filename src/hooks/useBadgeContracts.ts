@@ -1,10 +1,10 @@
+import { DataKeys } from 'models/DataKeys'
 import { useMemo } from 'preact/hooks'
 import { useSnapshot } from 'valtio'
 import SealCredStore from 'stores/SealCredStore'
-import data from 'data'
 
 export interface BaseBadgeContract {
-  type: keyof typeof data
+  type: DataKeys
   derivative: string
   original: string
 }
@@ -19,7 +19,7 @@ export default function () {
           (result, { derivative, original }) => ({
             ...result,
             [derivative]: {
-              type: key as keyof typeof data,
+              type: key as DataKeys,
               derivative,
               original,
             },
@@ -28,7 +28,7 @@ export default function () {
         ),
       {} as {
         [address: string]: {
-          type: keyof typeof data
+          type: DataKeys
           derivative: string
           original: string
         }
