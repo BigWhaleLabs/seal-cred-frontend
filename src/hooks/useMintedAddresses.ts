@@ -6,10 +6,10 @@ import useContractsOwned from 'hooks/useContractsOwned'
 
 export default function () {
   const ownedAddresses = useContractsOwned(BadgesNetwork)
-  const { ledgerToDerivativeAddresses } = useSnapshot(SealCredStore)
+  const { ledgers } = useSnapshot(SealCredStore)
 
   const ledgerToMintedAddresses = dataShapeObject((ledgerName) =>
-    ledgerToDerivativeAddresses[ledgerName].filter((contractAddress) =>
+    Object.values(ledgers[ledgerName]).filter((contractAddress) =>
       ownedAddresses.includes(contractAddress)
     )
   )

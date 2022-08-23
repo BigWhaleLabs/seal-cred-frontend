@@ -18,7 +18,7 @@ import classnames, {
 import data from 'data'
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
-import useBadgeContracts, { BaseBadgeContract } from 'hooks/useBadgeContracts'
+import useBadge from 'hooks/useBadge'
 
 const walletBox = classnames(
   display('flex'),
@@ -43,13 +43,13 @@ function replaceKeywordsInString(
 }
 
 function BadgeTitle({
-  badge: { type, derivative },
+  template,
+  derivative,
 }: {
-  badge: BaseBadgeContract
+  template: string
+  derivative: string
 }) {
-  const { ownerTitle } = data[type]
-
-  if (!ownerTitle) return null
+  if (!template) return null
 
   const derivativeLink = (
     <ExternalLink url={getEtherscanAddressUrl(derivative, Network.Goerli)}>
@@ -60,7 +60,7 @@ function BadgeTitle({
   )
 
   const title = replaceKeywordsInString(
-    ownerTitle,
+    template,
     '{derivative}',
     derivativeLink
   )
@@ -69,13 +69,15 @@ function BadgeTitle({
 }
 
 function BadgeContent({
-  badge: { type, original },
+  template,
+  original,
+  network,
 }: {
-  badge: BaseBadgeContract
+  template: string
+  original: string
+  network: Network
 }) {
-  const { ownerContent, network } = data[type]
-
-  if (!ownerContent) return null
+  if (!template) return null
 
   const originalLink = (
     <ExternalLink url={getEtherscanAddressUrl(original, network)}>
@@ -85,11 +87,7 @@ function BadgeContent({
     </ExternalLink>
   )
 
-  const content = replaceKeywordsInString(
-    ownerContent,
-    '{original}',
-    originalLink
-  )
+  const content = replaceKeywordsInString(template, '{original}', originalLink)
 
   return (
     <BodyText>
@@ -106,8 +104,7 @@ export default function ({
   derivativeAddress: string
   tokenId: string
 }) {
-  const contractToBadge = useBadgeContracts()
-  const badge = contractToBadge[derivativeAddress]
+  const badge = useBadge(derivativeAddress)
 
   if (!badge) {
     handleError('Looks like this contract was removed')
@@ -121,6 +118,9 @@ export default function ({
     )
   }
 
+  const { type, original } = badge
+  const { ownerTitle, ownerContent, network } = data[type]
+
   return (
     <Card
       color="secondary"
@@ -130,8 +130,12 @@ export default function ({
       noArcTextSpace
       spinner="Certified with SealCred ZK Proofs"
     >
-      <BadgeTitle badge={badge} />
-      <BadgeContent badge={badge} />
+      <BadgeTitle template={ownerTitle} derivative={derivativeAddress} />
+      <BadgeContent
+        template={ownerContent}
+        original={original}
+        network={network}
+      />
       <HorizontalRule color="primary-semi-dimmed" />
       <div className={walletBox}>
         <Smile />
