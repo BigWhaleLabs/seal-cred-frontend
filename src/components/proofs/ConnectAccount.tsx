@@ -55,7 +55,12 @@ export default function () {
           <Button
             type="primary"
             loading={walletLoading}
-            onClick={async () => await WalletStore.connect(true)}
+            onClick={async () => {
+              await WalletStore.changeNetworkOrConnect({
+                clearCachedProvider: true,
+                needNetworkChange,
+              })
+            }}
           >
             <span>
               {needNetworkChange ? 'Change network' : 'Connect a wallet'}
