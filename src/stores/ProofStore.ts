@@ -57,7 +57,7 @@ class ProofStore extends PersistableStore {
     return selected
   }
 
-  get ERC721ProofsCompleted() {
+  get eRC721ProofsCompleted() {
     const selected = []
     for (const proof of this.proofsCompleted) {
       if (proof instanceof ERC721Proof) selected.push(proof)
@@ -65,17 +65,17 @@ class ProofStore extends PersistableStore {
     return selected
   }
 
-  get goerliERC721ProofsCompleted() {
+  get goerlieRC721ProofsCompleted() {
     const selected = []
-    for (const proof of this.ERC721ProofsCompleted) {
+    for (const proof of this.eRC721ProofsCompleted) {
       if (proof.network === Network.Goerli) selected.push(proof)
     }
     return selected
   }
 
-  get mainnetERC721ProofsCompleted() {
+  get mainneteRC721ProofsCompleted() {
     const selected = []
-    for (const proof of this.ERC721ProofsCompleted) {
+    for (const proof of this.eRC721ProofsCompleted) {
       if (proof.network === Network.Mainnet) selected.push(proof)
     }
     return selected

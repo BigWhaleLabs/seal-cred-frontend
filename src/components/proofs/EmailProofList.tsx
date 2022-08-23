@@ -7,6 +7,7 @@ import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 
 export default function () {
   const { emailProofsCompleted } = useSnapshot(ProofStore)
+
   return (
     <ProofSection
       title={

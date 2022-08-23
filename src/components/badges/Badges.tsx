@@ -18,6 +18,7 @@ function BadgesSuspended() {
 
 export default function () {
   const { account } = useSnapshot(WalletStore)
+
   return (
     <Card shadow paddingType="normal" color="secondary" useAppStyles nospace>
       {account ? (

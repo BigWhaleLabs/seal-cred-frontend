@@ -22,7 +22,6 @@ const confettiCanvas = classnames(
 
 export default function () {
   const { showTwitterShare } = useSnapshot(NotificationsStore)
-
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   if (!showTwitterShare) return null

@@ -32,6 +32,7 @@ const wideBlock = classnames(
 
 function ShareToTwitterIfNeededSuespended() {
   const { showTwitterShare } = useSnapshot(NotificationsStore)
+
   if (!showTwitterShare) return null
 
   const closeNotification = () => (NotificationsStore.showTwitterShare = false)

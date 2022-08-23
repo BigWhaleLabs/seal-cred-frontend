@@ -22,16 +22,14 @@ function BadgeListSuspended() {
   const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
   const { proofsCompleted } = useSnapshot(proofStore)
   const { derivativeContracts } = useSnapshot(SealCredStore)
-
   const contractsOwned = useContractsOwned(BadgesContractsStore)
+  const proofsAvailableToMint = useProofsAvailableToMint()
 
   const ownedContractsByKey = dataShapeObject((ledgerName: string) =>
     derivativeContracts[ledgerName].filter((contractAddress) =>
       contractsOwned.includes(contractAddress)
     )
   )
-
-  const proofsAvailableToMint = useProofsAvailableToMint()
 
   const hasProofs = proofsAvailableToMint.length
   const hasDerivatives = Object.values(ownedContractsByKey).reduce(

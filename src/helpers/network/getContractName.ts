@@ -6,6 +6,7 @@ import prettifyContractName from 'helpers/network/prettifyContractName'
 
 export default function (address: string, network: Network, truncate = false) {
   const { contractNames } = useSnapshot(ContractMetadataStore)
+
   const contractName = contractNames[address]
   if (!contractName)
     ContractMetadataStore.fetchContractName(

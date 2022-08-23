@@ -16,11 +16,11 @@ export function ERC721ProofSection({
   account: string
   network: Network
 }) {
-  const { ERC721ProofsCompleted } = useSnapshot(ProofStore)
+  const { eRC721ProofsCompleted } = useSnapshot(ProofStore)
   const networkProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(network)
 
-  const networkProofsCompleted = ERC721ProofsCompleted.filter(
+  const networkProofsCompleted = eRC721ProofsCompleted.filter(
     (proof) => proof.network === network
   )
 

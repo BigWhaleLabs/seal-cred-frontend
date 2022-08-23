@@ -53,7 +53,6 @@ const delimiterContainer = classnames(
 
 const AccountContainer = ({ account }: { account?: string }) => {
   const { needNetworkChange } = useSnapshot(WalletStore)
-
   const { xs } = useBreakpoints()
 
   if (account)
