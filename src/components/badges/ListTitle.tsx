@@ -8,29 +8,19 @@ import useContractsOwned from 'hooks/useContractsOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
-  const { derivativeContracts } = useSnapshot(SealCredStore)
-  const proofsAvailableToMint = useProofsAvailableToMint()
+  const { allDerivativeContracts } = useSnapshot(SealCredStore)
+  const { hasUnmintedProofs } = useProofsAvailableToMint()
   const contractsOwned = useContractsOwned(BadgesContractsStore)
 
-  const ownedDerivativeContracts = Object.values(derivativeContracts).reduce(
-    (chain, contracts) =>
-      chain.concat(
-        contracts.filter((contractAddress) =>
-          contractsOwned.includes(contractAddress)
-        )
-      ),
-    []
-  )
-
-  const hasUnminted = Object.values(proofsAvailableToMint).some(
-    (proofs) => proofs.length > 0
+  const ownedDerivativeContracts = allDerivativeContracts.filter(
+    (contractAddress) => contractsOwned.includes(contractAddress)
   )
 
   return (
     <CardTitle
       title="Create ZK badges"
       subtitle={
-        hasUnminted
+        hasUnmintedProofs
           ? 'Looks like you can create ZK badges for this wallet'
           : ownedDerivativeContracts.length
           ? 'You’ve minted all of your available badges'

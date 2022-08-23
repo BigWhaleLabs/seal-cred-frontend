@@ -1,4 +1,3 @@
-import { BadgesContractsStore } from 'stores/ContractsStore'
 import { DataKeys } from 'models/DataKeys'
 import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
@@ -9,41 +8,25 @@ import DoxNotification from 'components/badges/DoxNotification'
 import HintCard from 'components/badges/HintCard'
 import NotificationsStore from 'stores/NotificationsStore'
 import Scrollbar from 'components/Scrollbar'
-import SealCredStore from 'stores/SealCredStore'
 import ShareToTwitterIfNeeded from 'components/badges/ShareToTwitterIfNeeded'
 import data from 'data'
-import dataShapeObject from 'helpers/contracts/dataShapeObject'
-import proofStore from 'stores/ProofStore'
-import useContractsOwned from 'hooks/useContractsOwned'
+import useMintedAddresses from 'hooks/useMintedAddresses'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 import walletStore from 'stores/WalletStore'
 
 function BadgeListSuspended() {
-  const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
-  const { proofsCompleted } = useSnapshot(proofStore)
-  const { derivativeContracts } = useSnapshot(SealCredStore)
-  const contractsOwned = useContractsOwned(BadgesContractsStore)
-  const proofsAvailableToMint = useProofsAvailableToMint()
+  const { account, isAccountNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
+  const { ledgerToUnmintedProofs, hasUnmintedProofs } =
+    useProofsAvailableToMint()
+  const { hasMinted, ledgerToOwnedAddresses } = useMintedAddresses()
 
-  const ownedContractsByLedger = dataShapeObject((ledgerName: string) =>
-    derivativeContracts[ledgerName].filter((contractAddress) =>
-      contractsOwned.includes(contractAddress)
-    )
-  )
-
-  const hasProofs = proofsAvailableToMint.length
-  const hasDerivatives = Object.values(ownedContractsByLedger).some(
-    (contracts) => contracts.length > 0
-  )
-  const isEmpty = !hasProofs && !hasDerivatives
-
+  const isEmpty = !hasUnmintedProofs && !hasMinted
   const shouldNotify =
-    !!account &&
-    !walletsToNotifiedOfBeingDoxxed[account] &&
-    proofsCompleted.length > 0
+    account && !isAccountNotifiedOfBeingDoxxed && hasUnmintedProofs
 
   const onMinted = () => {
-    if (hasProofs && !hasDerivatives) NotificationsStore.showTwitterShare = true
+    if (hasUnmintedProofs && !hasMinted)
+      NotificationsStore.showTwitterShare = true
   }
 
   return shouldNotify ? (
@@ -55,11 +38,11 @@ function BadgeListSuspended() {
       <ConfettiIfNeeded />
       <Scrollbar>
         <div className={space('space-y-2')}>
-          {Object.entries(ownedContractsByLedger).map(([key, contracts]) => (
+          {(Object.keys(data) as DataKeys[]).map((ledgerName) => (
             <BadgeSection
-              title={data[key as DataKeys].title}
-              minted={contracts}
-              proofs={proofsAvailableToMint[key]}
+              title={data[ledgerName].title}
+              minted={ledgerToOwnedAddresses[ledgerName]}
+              proofs={ledgerToUnmintedProofs[ledgerName]}
               onMinted={onMinted}
             />
           ))}

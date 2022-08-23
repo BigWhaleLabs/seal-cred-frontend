@@ -1,4 +1,4 @@
-import { proxy } from 'valtio'
+import { proxyWithComputed } from 'valtio/utils'
 import SCLedger from 'models/SCLedger'
 import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import getLedger from 'helpers/contracts/getLedger'
@@ -8,15 +8,31 @@ interface SealCredStoreType {
   ledgers: Promise<{
     [ledger: string]: SCLedger
   }>
-  derivativeContracts: {
+  ledgerToDerivativeContracts: {
     [ledger: string]: string[]
   }
 }
 
-const SealCredStore = proxy<SealCredStoreType>({
-  ledgers: Promise.resolve({}),
-  derivativeContracts: dataShapeObject(() => []),
-})
+interface SealCredStoreTypeComputed {
+  allDerivativeContracts: readonly string[]
+}
+
+const SealCredStore = proxyWithComputed<
+  SealCredStoreType,
+  SealCredStoreTypeComputed
+>(
+  {
+    ledgers: Promise.resolve({}),
+    ledgerToDerivativeContracts: dataShapeObject(() => []),
+  },
+  {
+    allDerivativeContracts: (state) =>
+      Object.values(state.ledgerToDerivativeContracts).reduce(
+        (allContracts, contracts) => allContracts.concat(contracts),
+        []
+      ),
+  }
+)
 
 SealCredStore.ledgers = Promise.all(
   Object.keys(ledgerContracts).map((name) => ({
@@ -30,9 +46,9 @@ SealCredStore.ledgers = Promise.all(
 
   for (const { name, ledger } of Object.values(records)) {
     result[name] = await ledger
-    SealCredStore.derivativeContracts[name] = Object.values(result[name]).map(
-      ({ derivative }) => derivative
-    )
+    SealCredStore.ledgerToDerivativeContracts[name] = Object.values(
+      result[name]
+    ).map(({ derivative }) => derivative)
   }
 
   return result

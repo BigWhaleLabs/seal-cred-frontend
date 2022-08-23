@@ -6,19 +6,21 @@ import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import useContractsOwned from 'hooks/useContractsOwned'
 
 export default function () {
-  const contractsOwned = useContractsOwned(BadgesContractsStore)
-  const { proofsCompleted } = useSnapshot(ProofStore)
   const { ledgers } = useSnapshot(SealCredStore)
+  const { ledgerToProofs } = useSnapshot(ProofStore)
+  const ownedAddresses = useContractsOwned(BadgesContractsStore)
 
-  return dataShapeObject((ledgerKey) =>
-    proofsCompleted.filter((proof) => {
-      const proofLedgerName = proof.dataType
-      if (proofLedgerName !== ledgerKey) return false
-      const ledger = ledgers[proofLedgerName]
-      const record = ledger[proof.origin]
-      return (
-        !record || !contractsOwned.includes(record.derivative.toLowerCase())
-      )
+  const ledgerToUnmintedProofs = dataShapeObject((ledgerName) =>
+    ledgerToProofs[ledgerName].filter(({ origin }) => {
+      const derivative = ledgers[ledgerName][origin]?.derivative
+      return !derivative || !ownedAddresses.includes(derivative)
     })
   )
+
+  return {
+    ledgerToUnmintedProofs,
+    hasUnmintedProofs: Object.values(ledgerToUnmintedProofs).some(
+      (proofs) => proofs.length > 0
+    ),
+  }
 }

@@ -8,7 +8,7 @@ import useContractsOwned from 'hooks/useContractsOwned'
 
 export default function (network?: Network) {
   const { eRC721ProofsCompleted } = useSnapshot(ProofStore)
-  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
+  const { allDerivativeContracts = [] } = useSnapshot(SealCredStore)
 
   let contractsOwned: readonly string[]
   switch (network) {
@@ -22,11 +22,6 @@ export default function (network?: Network) {
     }
   }
 
-  const allContracts = Object.values(derivativeContracts).reduce(
-    (chain, contracts) => chain.concat(contracts),
-    []
-  )
-
   const completedERC721ProofAddressesMap = eRC721ProofsCompleted.reduce(
     (result, proof) => ({
       ...result,
@@ -38,7 +33,7 @@ export default function (network?: Network) {
   return (
     contractsOwned.filter(
       (address) =>
-        !allContracts.includes(address) &&
+        !allDerivativeContracts.includes(address) &&
         !completedERC721ProofAddressesMap[address]
     ) || []
   )

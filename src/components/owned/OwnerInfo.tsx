@@ -38,7 +38,7 @@ function replace(
     .reduce(
       (chain, part, index) =>
         index === 0 ? chain.concat(part) : chain.concat(element).concat(part),
-      [] as (JSXInternal.Element | string)[]
+      [] as (Element | string)[]
     )
 }
 

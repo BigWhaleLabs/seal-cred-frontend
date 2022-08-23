@@ -12,22 +12,20 @@ export default function ({ network }: { network: Network }) {
     (proof) => proof instanceof ERC721Proof && proof.network === network
   ) as ERC721Proof[]
 
+  if (allERC721ProofsByNetwork.length === 0) return null
+
   return (
-    <>
-      {!!allERC721ProofsByNetwork?.length && (
-        <ContractListContainer>
-          {Array.from(allERC721ProofsByNetwork)
-            .sort((a, b) => (a.account === b.account ? 0 : -1))
-            .map((proof) => (
-              <Proof
-                proof={proof}
-                contractAddress={proof.contract}
-                key={`${proof.contract}-${proof.account}`}
-                network={network}
-              />
-            ))}
-        </ContractListContainer>
-      )}
-    </>
+    <ContractListContainer>
+      {Array.from(allERC721ProofsByNetwork)
+        .sort((a, b) => (a.account === b.account ? 0 : -1))
+        .map((proof) => (
+          <Proof
+            proof={proof}
+            contractAddress={proof.contract}
+            key={`${proof.contract}-${proof.account}`}
+            network={network}
+          />
+        ))}
+    </ContractListContainer>
   )
 }

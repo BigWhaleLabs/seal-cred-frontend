@@ -3,18 +3,18 @@ import data from 'data'
 
 type ValueOf<T> = T[keyof T]
 
-export default function <V>(
-  transformer: (contractName: DataKeys, record: ValueOf<typeof data>) => V
+export default function dataShapeObject<V>(
+  transformer: (ledgerName: DataKeys, record: ValueOf<typeof data>) => V
 ) {
-  const contractName = Object.keys(data) as DataKeys[]
+  const ledgersName = Object.keys(data) as DataKeys[]
 
-  return contractName.reduce(
-    (res, contractName) => ({
+  return ledgersName.reduce(
+    (res, ledgerName) => ({
       ...res,
-      [contractName]: transformer(contractName, data[contractName]),
+      [ledgerName]: transformer(ledgerName, data[ledgerName]),
     }),
     {} as {
-      [contractName: string]: V
+      [ledgerName in DataKeys]: V
     }
   )
 }

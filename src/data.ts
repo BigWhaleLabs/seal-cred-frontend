@@ -22,7 +22,6 @@ export default {
     ownerTitle: 'This wallet belongs to someone with {derivative}',
     ownerContent:
       'This is a zkNFT derivative of an email. It means this person has been verified own a ‘{original}‘ email.',
-
     badgeType: BadgeSourceType.Email,
     network: Network.Goerli,
   },

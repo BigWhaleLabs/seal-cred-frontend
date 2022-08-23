@@ -38,6 +38,10 @@ class WalletStore extends PersistableStore {
     return web3Modal.cachedProvider
   }
 
+  get isAccountNotifiedOfBeingDoxxed() {
+    return this.account && this.walletsToNotifiedOfBeingDoxxed[this.account]
+  }
+
   async connect(clearCachedProvider = false) {
     this.walletLoading = true
     try {

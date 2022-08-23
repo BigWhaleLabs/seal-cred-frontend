@@ -1,3 +1,4 @@
+import { DataKeys } from 'models/DataKeys'
 import { PersistableStore } from '@big-whale-labs/stores'
 import {
   getEddsaPublicKey,
@@ -12,6 +13,7 @@ import Network from 'models/Network'
 import ProofResult from 'models/ProofResult'
 import WalletStore from 'stores/WalletStore'
 import checkNavigator from 'helpers/proofs/checkNavigator'
+import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import env from 'helpers/env'
 import getNullifierMessage from 'helpers/proofs/getNullifierMessage'
 import handleError from 'helpers/handleError'
@@ -47,6 +49,12 @@ class ProofStore extends PersistableStore {
       })
     }
     return value
+  }
+
+  get ledgerToProofs() {
+    return dataShapeObject((ledgerName) =>
+      this.proofsCompleted.filter((proof) => proof.dataType === ledgerName)
+    )
   }
 
   get emailProofsCompleted() {
