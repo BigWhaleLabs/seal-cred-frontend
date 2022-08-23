@@ -1,1 +1,1 @@
-export default 'I minted a zk badge with @SealCred 🦭 Check it out at sealcred.xyz'
+export default 'I minted a zk badge with @SealCred 🦭 Mint yours at sealcred.xyz'
