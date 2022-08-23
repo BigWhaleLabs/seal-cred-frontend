@@ -1,6 +1,6 @@
 import { ExternalSCERC721Ledger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
-import ERC721Proof from 'helpers/proofs/ERC721Proof'
+import BaseProof from 'helpers/proofs/BaseProof'
 import env from 'helpers/env'
 import makeTransaction from 'helpers/contracts/makeTransaction'
 
@@ -13,7 +13,7 @@ function createContract(provider: Web3Provider) {
 
 export default async function (
   provider: Web3Provider,
-  proof: ERC721Proof,
+  proof: BaseProof,
   message: string,
   signature: string
 ) {

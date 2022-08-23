@@ -30,8 +30,7 @@ function Badge({
     try {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
-      const transaction = await WalletStore.mintDerivative(proof)
-      ProofStore[proof.dataType].deleteProof(proof)
+      const transaction = await ProofStore[proof.dataType].mint(proof)
       if (onMinted) onMinted()
       BadgesContractsStore.connectedAccounts[account].applyTransaction(
         transaction

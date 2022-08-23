@@ -2,15 +2,7 @@ import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import { PersistableStore } from '@big-whale-labs/stores'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
-import { requestContractMetadata } from 'helpers/proofs/attestor'
-import BaseProof from 'helpers/proofs/BaseProof'
-import ERC721Proof from 'helpers/proofs/ERC721Proof'
-import EmailProof from 'helpers/proofs/EmailProof'
-import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
-import createERC721Badge from 'helpers/contracts/createERC721Badge'
-import createEmailBadge from 'helpers/contracts/createEmailBadge'
-import createExternalERC721Badge from 'helpers/contracts/createExternalERC721Badge'
 import env from 'helpers/env'
 import handleError, { ErrorList } from 'helpers/handleError'
 import relayProvider from 'helpers/providers/relayProvider'
@@ -163,40 +155,12 @@ class WalletStore extends PersistableStore {
     return signature
   }
 
-  async mintDerivative(proof: BaseProof) {
+  async createGSNProvider() {
     if (!provider) throw new Error('No provider found')
 
     const gsnProvider = await relayProvider(provider)
 
-    const ethersProvider = new Web3Provider(
-      gsnProvider as unknown as ExternalProvider
-    )
-
-    try {
-      if (proof instanceof ERC721Proof) {
-        if (proof.network === Network.Goerli)
-          return createERC721Badge(ethersProvider, proof)
-
-        const signature = await requestContractMetadata(
-          proof.network,
-          proof.contract
-        )
-        return createExternalERC721Badge(
-          ethersProvider,
-          proof,
-          signature.message,
-          signature.signature
-        )
-      }
-
-      if (proof instanceof EmailProof)
-        return createEmailBadge(ethersProvider, proof)
-
-      throw new Error('Unknown proof type')
-    } catch (error) {
-      handleError(error)
-      throw error
-    }
+    return new Web3Provider(gsnProvider as unknown as ExternalProvider)
   }
 }
 

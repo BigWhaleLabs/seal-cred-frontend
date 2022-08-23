@@ -1,6 +1,6 @@
 import { SCEmailLedger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
-import EmailProof from 'helpers/proofs/EmailProof'
+import BaseProof from 'helpers/proofs/BaseProof'
 import env from 'helpers/env'
 import makeTransaction from 'helpers/contracts/makeTransaction'
 
@@ -11,7 +11,7 @@ function createContract(provider: Web3Provider) {
   )
 }
 
-export default async function (provider: Web3Provider, proof: EmailProof) {
+export default async function (provider: Web3Provider, proof: BaseProof) {
   if (!proof.result) throw new Error('Invalid proof')
   const contract = createContract(provider)
   const txData = makeTransaction(proof.result)
