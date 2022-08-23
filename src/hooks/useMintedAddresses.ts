@@ -2,10 +2,10 @@ import { BadgesNetwork } from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
 import SealCredStore from 'stores/SealCredStore'
 import dataShapeObject from 'helpers/contracts/dataShapeObject'
-import useContractsOwned from 'hooks/useContractsOwned'
+import useOwnedAddresses from 'hooks/useOwnedAddresses'
 
 export default function () {
-  const ownedAddresses = useContractsOwned(BadgesNetwork)
+  const ownedAddresses = useOwnedAddresses(BadgesNetwork)
   const { ledgers } = useSnapshot(SealCredStore)
 
   const ledgerToMintedAddresses = dataShapeObject((ledgerName) =>

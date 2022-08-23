@@ -2,13 +2,13 @@ import { useSnapshot } from 'valtio'
 import Network from 'models/Network'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
-import useContractsOwned from 'hooks/useContractsOwned'
+import useOwnedAddresses from 'hooks/useOwnedAddresses'
 
 export default function (network?: Network) {
   const { eRC721ProofsCompleted } = useSnapshot(ProofStore)
   const { allDerivativeAddresses = [] } = useSnapshot(SealCredStore)
 
-  const contractsOwned = useContractsOwned(network)
+  const ownedAddresses = useOwnedAddresses(network)
 
   const completedERC721ProofAddressesMap = eRC721ProofsCompleted.reduce(
     (result, proof) => ({
@@ -19,7 +19,7 @@ export default function (network?: Network) {
   )
 
   return (
-    contractsOwned.filter(
+    ownedAddresses.filter(
       (address) =>
         !allDerivativeAddresses.includes(address) &&
         !completedERC721ProofAddressesMap[address]

@@ -12,10 +12,8 @@ export default function (networkName?: Network) {
         ...combined,
         ...networks[networkName].addressToTokenIds,
       }),
-      {}
+      {} as { [address: string]: readonly string[] }
     )
 
-  if (!addressToTokenIds) return []
-
-  return Object.keys(addressToTokenIds).map((address) => address.toLowerCase())
+  return addressToTokenIds
 }

@@ -4,16 +4,16 @@ import { useSnapshot } from 'valtio'
 import CardTitle from 'components/CardTitle'
 import LoadingCard from 'components/badges/LoadingCard'
 import SealCredStore from 'stores/SealCredStore'
-import useContractsOwned from 'hooks/useContractsOwned'
+import useOwnedAddresses from 'hooks/useOwnedAddresses'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
   const { allDerivativeAddresses } = useSnapshot(SealCredStore)
   const { hasUnmintedProofs } = useProofsAvailableToMint()
-  const contractsOwned = useContractsOwned(BadgesNetwork)
+  const addressesOwned = useOwnedAddresses(BadgesNetwork)
 
   const ownedDerivativeContracts = allDerivativeAddresses.filter((address) =>
-    contractsOwned.includes(address)
+    addressesOwned.includes(address)
   )
 
   return (

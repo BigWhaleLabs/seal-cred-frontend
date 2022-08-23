@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
-import ContractsStore from 'stores/ContractsStore'
 import Network from 'models/Network'
 import TokenOwnersStore from 'stores/TokenOwnersStore'
 import useContractTokens from 'hooks/useContractTokens'
@@ -11,10 +10,7 @@ export default function (
   tokenId: string,
   network: Network
 ) {
-  const tokenIds = useContractTokens(
-    derivativeAddress,
-    ContractsStore.networks[network]
-  )
+  const tokenIds = useContractTokens(derivativeAddress, network)
   const { account } = useSnapshot(walletStore)
   const { addressOwnerMap } = useSnapshot(TokenOwnersStore)
 

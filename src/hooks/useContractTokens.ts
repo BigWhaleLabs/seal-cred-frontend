@@ -1,10 +1,8 @@
-import { ContractsStore } from '@big-whale-labs/stores'
-import { useSnapshot } from 'valtio'
+import Network from 'models/Network'
+import useContractsOwned from 'hooks/useContractsOwned'
 
-export default function (address: string, store: ContractsStore) {
-  const { addressToTokenIds } = useSnapshot(store)
-
-  if (!addressToTokenIds) return []
+export default function (address: string, store?: Network) {
+  const addressToTokenIds = useContractsOwned(store)
 
   const key = Object.keys(addressToTokenIds).find(
     (storeAddress) => address.toLowerCase() === storeAddress.toLowerCase()
