@@ -55,7 +55,7 @@ function BadgeListSuspended() {
       <ConfettiIfNeeded />
       <Scrollbar>
         <div className={space('space-y-2')}>
-          {Object.entries(ownedContractsByKey).map(([key, contracts]) => (
+          {Object.entries(ownedContractsByLedger).map(([key, contracts]) => (
             <BadgeSection
               title={data[key as DataKeys].title}
               minted={contracts}
