@@ -58,14 +58,12 @@ function BadgeListSuspended() {
       <Scrollbar>
         <div className={space('space-y-2')}>
           {Object.entries(ownedContractsByKey).map(([key, contracts]) => (
-            <>
-              <BadgeSection
-                title={data[key as keyof typeof data].title}
-                minted={contracts}
-                proofs={proofsAvailableToMint[key]}
-                onMinted={onMinted}
-              />
-            </>
+            <BadgeSection
+              title={data[key as keyof typeof data].title}
+              minted={contracts}
+              proofs={proofsAvailableToMint[key]}
+              onMinted={onMinted}
+            />
           ))}
           <ShareToTwitterIfNeeded />
         </div>
