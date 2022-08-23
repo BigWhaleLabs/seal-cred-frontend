@@ -13,11 +13,11 @@ const SealCredStore = proxyWithComputed(
         [ledger in DataKeys]: SCLedger
       }
     ),
-    ledgerToDerivativeContracts: dataShapeObject(() => [] as string[]),
+    ledgerToDerivativeAddresses: dataShapeObject(() => [] as string[]),
   },
   {
-    allDerivativeContracts: (state) =>
-      Object.values(state.ledgerToDerivativeContracts).reduce(
+    allDerivativeAddresses: (state) =>
+      Object.values(state.ledgerToDerivativeAddresses).reduce(
         (allContracts, contracts) => allContracts.concat(contracts),
         []
       ),
@@ -36,7 +36,7 @@ SealCredStore.ledgers = Promise.all(
 
   for (const { name, ledger } of Object.values(records)) {
     result[name] = await ledger
-    SealCredStore.ledgerToDerivativeContracts[name] = Object.values(
+    SealCredStore.ledgerToDerivativeAddresses[name] = Object.values(
       result[name]
     ).map(({ derivative }) => derivative)
   }

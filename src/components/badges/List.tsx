@@ -18,7 +18,7 @@ function BadgeListSuspended() {
   const { account, isAccountNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
   const { ledgerToUnmintedProofs, hasUnmintedProofs } =
     useProofsAvailableToMint()
-  const { hasMinted, ledgerToOwnedAddresses } = useMintedAddresses()
+  const { hasMinted, ledgerToMintedAddresses } = useMintedAddresses()
 
   const isEmpty = !hasUnmintedProofs && !hasMinted
   const shouldNotify =
@@ -41,7 +41,7 @@ function BadgeListSuspended() {
           {(Object.keys(data) as DataKeys[]).map((ledgerName) => (
             <BadgeSection
               title={data[ledgerName].title}
-              minted={ledgerToOwnedAddresses[ledgerName]}
+              minted={ledgerToMintedAddresses[ledgerName]}
               proofs={ledgerToUnmintedProofs[ledgerName]}
               onMinted={onMinted}
             />

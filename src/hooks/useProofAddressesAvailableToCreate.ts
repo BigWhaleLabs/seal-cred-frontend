@@ -8,7 +8,7 @@ import useContractsOwned from 'hooks/useContractsOwned'
 
 export default function (network?: Network) {
   const { eRC721ProofsCompleted } = useSnapshot(ProofStore)
-  const { allDerivativeContracts = [] } = useSnapshot(SealCredStore)
+  const { allDerivativeAddresses = [] } = useSnapshot(SealCredStore)
 
   let contractsOwned: readonly string[]
   switch (network) {
@@ -33,7 +33,7 @@ export default function (network?: Network) {
   return (
     contractsOwned.filter(
       (address) =>
-        !allDerivativeContracts.includes(address) &&
+        !allDerivativeAddresses.includes(address) &&
         !completedERC721ProofAddressesMap[address]
     ) || []
   )

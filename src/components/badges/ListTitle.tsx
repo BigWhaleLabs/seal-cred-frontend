@@ -8,12 +8,12 @@ import useContractsOwned from 'hooks/useContractsOwned'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
-  const { allDerivativeContracts } = useSnapshot(SealCredStore)
+  const { allDerivativeAddresses } = useSnapshot(SealCredStore)
   const { hasUnmintedProofs } = useProofsAvailableToMint()
   const contractsOwned = useContractsOwned(BadgesContractsStore)
 
-  const ownedDerivativeContracts = allDerivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
+  const ownedDerivativeContracts = allDerivativeAddresses.filter((address) =>
+    contractsOwned.includes(address)
   )
 
   return (

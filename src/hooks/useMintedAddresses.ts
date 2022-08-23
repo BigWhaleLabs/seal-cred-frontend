@@ -5,20 +5,21 @@ import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import useContractsOwned from 'hooks/useContractsOwned'
 
 export default function () {
-  const contractsOwned = useContractsOwned(BadgesContractsStore)
-  const { ledgerToDerivativeContracts } = useSnapshot(SealCredStore)
-  const ledgerToOwnedAddresses = dataShapeObject((ledgerName) =>
-    ledgerToDerivativeContracts[ledgerName].filter((contractAddress) =>
-      contractsOwned.includes(contractAddress)
+  const ownedAddresses = useContractsOwned(BadgesContractsStore)
+  const { ledgerToDerivativeAddresses } = useSnapshot(SealCredStore)
+
+  const ledgerToMintedAddresses = dataShapeObject((ledgerName) =>
+    ledgerToDerivativeAddresses[ledgerName].filter((contractAddress) =>
+      ownedAddresses.includes(contractAddress)
     )
   )
 
-  const hasMinted = Object.values(ledgerToOwnedAddresses).some(
-    (contracts) => contracts.length > 0
+  const hasMinted = Object.values(ledgerToMintedAddresses).some(
+    (addresses) => addresses.length > 0
   )
 
   return {
-    ledgerToOwnedAddresses,
+    ledgerToMintedAddresses,
     hasMinted,
   }
 }
