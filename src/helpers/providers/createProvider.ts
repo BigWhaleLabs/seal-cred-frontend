@@ -7,6 +7,7 @@ export default function (
   networkToRPC: { [network in 'heavy' | 'default']: string }
 ) {
   return {
+    network,
     defaultProvider: new providers.JsonRpcProvider(
       networkToRPC.default,
       network.toLowerCase()
