@@ -1,4 +1,4 @@
-import { BadgesContractsStore } from 'stores/ContractsStore'
+import { BadgesNetwork } from 'stores/ContractsStore'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import CardTitle from 'components/CardTitle'
@@ -10,7 +10,7 @@ import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 function ListTitleSuspended() {
   const { allDerivativeAddresses } = useSnapshot(SealCredStore)
   const { hasUnmintedProofs } = useProofsAvailableToMint()
-  const contractsOwned = useContractsOwned(BadgesContractsStore)
+  const contractsOwned = useContractsOwned(BadgesNetwork)
 
   const ownedDerivativeContracts = allDerivativeAddresses.filter((address) =>
     contractsOwned.includes(address)

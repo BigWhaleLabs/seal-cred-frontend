@@ -14,11 +14,12 @@ function ENSAddressSuspended({
   address,
   truncate,
   truncateSize,
+  network,
 }: ENSAddressProps & { truncate?: boolean; truncateSize: number }) {
-  const { eNSNames } = useSnapshot(ENSStore.networks[Network.Goerli])
+  const { eNSNames } = useSnapshot(ENSStore.networks[network])
   const ensName = eNSNames[address]
 
-  if (!ensName) ENSStore.networks[Network.Goerli].fetchENSName(address)
+  if (!ensName) ENSStore.networks[network].fetchENSName(address)
 
   return (
     <>

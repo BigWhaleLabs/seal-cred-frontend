@@ -1,4 +1,4 @@
-import { BadgesContractsStore } from 'stores/ContractsStore'
+import { BadgesNetwork } from 'stores/ContractsStore'
 import { useSnapshot } from 'valtio'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
@@ -8,7 +8,7 @@ import useContractsOwned from 'hooks/useContractsOwned'
 export default function () {
   const { ledgers } = useSnapshot(SealCredStore)
   const { ledgerToProofs } = useSnapshot(ProofStore)
-  const ownedAddresses = useContractsOwned(BadgesContractsStore)
+  const ownedAddresses = useContractsOwned(BadgesNetwork)
 
   const ledgerToUnmintedProofs = dataShapeObject((ledgerName) =>
     ledgerToProofs[ledgerName].filter(({ origin }) => {

@@ -19,8 +19,9 @@ const ContractsNetworkStore = proxy({
   networks: proxyNetworks,
 })
 
+export const BadgesNetwork = Network.Goerli
 export const BadgesContractsStore =
-  ContractsNetworkStore.networks[Network.Goerli]
+  ContractsNetworkStore.networks[BadgesNetwork]
 
 subscribeKey(WalletStore, 'account', (account) => {
   if (account) {

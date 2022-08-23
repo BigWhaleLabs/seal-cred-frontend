@@ -34,14 +34,14 @@ export default function ({
   return (
     <Section title={title}>
       <div className={badgesList}>
+        {proofs.map((proof) => (
+          <BadgeBlock onMinted={onMinted} key={proof.origin} proof={proof} />
+        ))}
         {minted.map((contractAddress) => (
           <BadgesOwnedForContract
             key={contractAddress}
             contractAddress={contractAddress}
           />
-        ))}
-        {proofs.map((proof) => (
-          <BadgeBlock onMinted={onMinted} key={proof.origin} proof={proof} />
         ))}
       </div>
     </Section>
