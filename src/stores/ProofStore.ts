@@ -1,4 +1,3 @@
-import { DataKeys } from 'models/DataKeys'
 import { PersistableStore } from '@big-whale-labs/stores'
 import {
   getEddsaPublicKey,
@@ -58,35 +57,11 @@ class ProofStore extends PersistableStore {
   }
 
   get emailProofsCompleted() {
-    const selected = []
-    for (const proof of this.proofsCompleted) {
-      if (proof instanceof EmailProof) selected.push(proof)
-    }
-    return selected
+    return this.proofsCompleted.filter((proof) => proof instanceof EmailProof)
   }
 
   get eRC721ProofsCompleted() {
-    const selected = []
-    for (const proof of this.proofsCompleted) {
-      if (proof instanceof ERC721Proof) selected.push(proof)
-    }
-    return selected
-  }
-
-  get goerlieRC721ProofsCompleted() {
-    const selected = []
-    for (const proof of this.eRC721ProofsCompleted) {
-      if (proof.network === Network.Goerli) selected.push(proof)
-    }
-    return selected
-  }
-
-  get mainneteRC721ProofsCompleted() {
-    const selected = []
-    for (const proof of this.eRC721ProofsCompleted) {
-      if (proof.network === Network.Mainnet) selected.push(proof)
-    }
-    return selected
+    return this.proofsCompleted.filter((proof) => proof instanceof ERC721Proof)
   }
 
   async generateEmail(domain: string, signature: string) {

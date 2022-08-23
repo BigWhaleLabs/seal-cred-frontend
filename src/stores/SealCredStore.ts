@@ -1,29 +1,19 @@
+import { DataKeys } from 'models/DataKeys'
 import { proxyWithComputed } from 'valtio/utils'
 import SCLedger from 'models/SCLedger'
+import data from 'data'
 import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import getLedger from 'helpers/contracts/getLedger'
 import ledgerContracts from 'helpers/contracts/ledgerContracts'
 
-interface SealCredStoreType {
-  ledgers: Promise<{
-    [ledger: string]: SCLedger
-  }>
-  ledgerToDerivativeContracts: {
-    [ledger: string]: string[]
-  }
-}
-
-interface SealCredStoreTypeComputed {
-  allDerivativeContracts: readonly string[]
-}
-
-const SealCredStore = proxyWithComputed<
-  SealCredStoreType,
-  SealCredStoreTypeComputed
->(
+const SealCredStore = proxyWithComputed(
   {
-    ledgers: Promise.resolve({}),
-    ledgerToDerivativeContracts: dataShapeObject(() => []),
+    ledgers: Promise.resolve(
+      {} as {
+        [ledger in DataKeys]: SCLedger
+      }
+    ),
+    ledgerToDerivativeContracts: dataShapeObject(() => [] as string[]),
   },
   {
     allDerivativeContracts: (state) =>
@@ -35,13 +25,13 @@ const SealCredStore = proxyWithComputed<
 )
 
 SealCredStore.ledgers = Promise.all(
-  Object.keys(ledgerContracts).map((name) => ({
+  (Object.keys(ledgerContracts) as DataKeys[]).map((name) => ({
     name,
     ledger: getLedger(ledgerContracts[name]),
   }))
 ).then(async (records) => {
   const result = {} as {
-    [ledger: string]: SCLedger
+    [ledger in DataKeys]: SCLedger
   }
 
   for (const { name, ledger } of Object.values(records)) {
@@ -54,13 +44,14 @@ SealCredStore.ledgers = Promise.all(
   return result
 })
 
-for (const [name, ledgerContract] of Object.entries(ledgerContracts)) {
+for (const name of Object.keys(data) as DataKeys[]) {
+  const ledgerContract = ledgerContracts[name]
   ledgerContract.on(
     ledgerContract.filters.CreateDerivative(),
     async (original, derivative) => {
-      const ledger = await SealCredStore.ledgers
+      const ledgers = await SealCredStore.ledgers
 
-      ledger[name][original] = {
+      ledgers[name][original] = {
         original,
         derivative,
       }
@@ -69,8 +60,8 @@ for (const [name, ledgerContract] of Object.entries(ledgerContracts)) {
   ledgerContract.on(
     ledgerContract.filters.DeleteOriginal(),
     async (original) => {
-      const ledger = await SealCredStore.ledgers
-      delete ledger[name][original]
+      const ledgers = await SealCredStore.ledgers
+      delete ledgers[name][original]
     }
   )
 }

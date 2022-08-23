@@ -33,11 +33,10 @@ subscribeKey(WalletStore, 'account', (account) => {
 for (const { defaultProvider, network } of Object.values(networks)) {
   defaultProvider.on('block', async (blockNumber: number) => {
     ContractsNetworkStore.networks[network].currentBlock = blockNumber
-    if (WalletStore.account) {
-      await ContractsNetworkStore.networks[network].fetchMoreContractsOwned(
-        WalletStore.account
-      )
-    }
+    if (!WalletStore.account) return
+    await ContractsNetworkStore.networks[network].fetchMoreContractsOwned(
+      WalletStore.account
+    )
   })
 }
 

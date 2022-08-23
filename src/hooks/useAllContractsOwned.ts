@@ -5,7 +5,10 @@ export default function () {
   const { networks } = useSnapshot(ContractsNetworkStore)
 
   const addressToTokenIds = Object.values(networks).reduce(
-    (res, network) => ({ ...res, ...network.addressToTokenIds }),
+    (combined, { addressToTokenIds }) => ({
+      ...combined,
+      ...addressToTokenIds,
+    }),
     {}
   )
 
