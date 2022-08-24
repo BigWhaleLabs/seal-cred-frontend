@@ -11,6 +11,7 @@ import {
   inset,
   margin,
   maxHeight,
+  maxWidth,
   minHeight,
   padding,
   position,
@@ -66,7 +67,8 @@ const appStyles = classnames(
   alignItems('items-stretch'),
   minHeight('sm:min-h-card', 'min-h-fit'),
   maxHeight('max-h-app-card'),
-  width('lg:!w-full', 'md:w-app-card', 'w-full')
+  width('w-full'),
+  maxWidth('max-w-app-card')
 )
 
 const thinWidthStyles = width('sm:!w-thin-card', 'tiny:w-thin-mobile', 'w-32')
