@@ -21,7 +21,7 @@ const cardsContainer = classnames(
   flexDirection('flex-col', 'lg:flex-row'),
   alignItems('items-center', 'lg:items-stretch'),
   justifyContent('lg:justify-center'),
-  margin('mx-10')
+  margin('mx-4')
 )
 
 const mainContainer = classnames(width('w-full'), maxWidth('max-w-app-content'))
