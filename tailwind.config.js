@@ -14,14 +14,13 @@ module.exports = {
         card: '31.75rem',
       },
       maxHeight: {
+        'badges-list': '21.25rem',
         card: '31.75rem',
         'mobile-card': '41rem',
-        'badges-list': '21.25rem',
-        'app-card': '77.75rem',
+        'app-card': '70vh',
       },
       maxWidth: {
         100: '6.25rem',
-        'app-content': '77.75rem',
       },
       keyframes: {
         'pulse-horizontal': {
@@ -98,7 +97,6 @@ module.exports = {
         'noisy-rectangle': '0.688rem',
         'mobile-card': '22.813rem',
         card: '31.75rem',
-        'app-card': '70vh',
       },
       width: {
         'thin-mobile': '10.75rem',
@@ -107,6 +105,7 @@ module.exports = {
         'mobile-card': '92%',
         'full-125': '125%',
         'screen-80': '80vw',
+        'app-card': '38.125rem',
       },
       inset: {
         '-78': '-19.5rem',

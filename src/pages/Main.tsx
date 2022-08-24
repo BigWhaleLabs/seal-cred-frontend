@@ -10,9 +10,7 @@ import classnames, {
   inset,
   justifyContent,
   margin,
-  maxWidth,
   position,
-  width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -24,8 +22,6 @@ const cardsContainer = classnames(
   margin('mx-4')
 )
 
-const mainContainer = classnames(width('w-full'), maxWidth('max-w-app-content'))
-
 const proofHintContainer = classnames(
   position('lg:relative'),
   inset('lg:right-1/4')
@@ -35,7 +31,7 @@ export default function () {
   const { lg } = useBreakpoints()
 
   return (
-    <div className={mainContainer}>
+    <div>
       <div className={cardsContainer}>
         <ProofsCard />
         <CardSeparator
