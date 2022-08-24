@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import Button from 'components/Button'
+import Button from 'components/ui/Button'
 import ChildrenProp from 'models/ChildrenProp'
 import useBreakpoints from 'hooks/useBreakpoints'
 

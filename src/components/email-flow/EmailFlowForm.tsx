@@ -4,7 +4,7 @@ import {
   HeaderText,
   TextButton,
   TinyText,
-} from 'components/Text'
+} from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import BaseProof from 'helpers/proofs/BaseProof'

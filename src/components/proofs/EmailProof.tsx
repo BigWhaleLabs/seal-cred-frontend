@@ -1,14 +1,14 @@
-import { ProofText, TextButton } from 'components/Text'
+import { ProofText, TextButton } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
-import Button from 'components/Button'
+import Button from 'components/ui/Button'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
-import Line from 'components/proofs/Line'
-import QuestionMark from 'components/QuestionMark'
+import Line from 'components/ui/Line'
+import QuestionMark from 'components/ui/QuestionMark'
 import SimpleArrow from 'icons/SimpleArrow'
-import ToolTip from 'components/ToolTip'
+import ToolTip from 'components/ui/ToolTip'
 import classnames, {
   alignItems,
   backgroundClip,

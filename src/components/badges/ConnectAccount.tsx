@@ -1,7 +1,7 @@
-import { AccentText } from 'components/Text'
+import { AccentText } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
-import Button from 'components/Button'
-import CardTitle from 'components/CardTitle'
+import Button from 'components/ui/Button'
+import CardTitle from 'components/ui/CardTitle'
 import HintCard from 'components/badges/HintCard'
 import WalletStore from 'stores/WalletStore'
 

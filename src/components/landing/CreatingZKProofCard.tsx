@@ -1,6 +1,6 @@
-import { BodyText, HeaderText } from 'components/Text'
+import { BodyText, HeaderText } from 'components/ui/Text'
 import { space } from 'classnames/tailwind'
-import Card from 'components/Card'
+import Card from 'components/ui/Card'
 
 const creatingZkCard = space('space-y-6')
 

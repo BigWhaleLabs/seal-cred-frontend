@@ -1,7 +1,7 @@
 import Badges from 'components/badges/Badges'
-import CardSeparator from 'components/CardSeparator'
+import CardSeparator from 'components/ui/CardSeparator'
 import ProofsCard from 'components/proofs/Card'
-import ZkProofHint from 'components/ZkProofHint'
+import ZkProofHint from 'components/proofs/ZkProofHint'
 import classnames, {
   alignItems,
   display,

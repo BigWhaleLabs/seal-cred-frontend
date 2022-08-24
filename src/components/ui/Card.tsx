@@ -20,7 +20,7 @@ import {
   zIndex,
 } from 'classnames/tailwind'
 import ArcText from 'icons/ArcText'
-import CardContext from 'components/CardContext'
+import CardContext from 'components/ui/CardContext'
 import ChildrenProp from 'models/ChildrenProp'
 import Color from 'models/Color'
 import colorToBorderColor from 'helpers/colors/colorToBorderColor'

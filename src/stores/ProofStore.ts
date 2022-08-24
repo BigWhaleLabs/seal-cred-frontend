@@ -50,6 +50,16 @@ abstract class ProofStore extends PersistableStore {
     return value
   }
 
+  deleteIfUsed(error: unknown, proof: BaseProof) {
+    if (
+      proof &&
+      error instanceof Error &&
+      error.message.includes('This ZK proof has already been used')
+    ) {
+      this.deleteProof(proof)
+    }
+  }
+
   abstract mint(proof: BaseProof): Promise<ContractReceipt>
 }
 
@@ -61,6 +71,7 @@ class EmailProofStore extends ProofStore {
       this.deleteProof(proof)
       return result
     } catch (error) {
+      this.deleteIfUsed(error, proof)
       handleError(error)
       throw error
     }
@@ -98,6 +109,7 @@ class ERC721ProofStore extends ProofStore {
 
       return result
     } catch (error) {
+      this.deleteIfUsed(error, proof)
       handleError(error)
       throw error
     }

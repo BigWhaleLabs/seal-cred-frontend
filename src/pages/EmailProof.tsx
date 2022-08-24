@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import Card from 'components/Card'
+import Card from 'components/ui/Card'
 import EmailFlowCard from 'components/email-flow/EmailFlowCard'
 import LoadingCard from 'components/proofs/LoadingCard'
 import SealCredCTM from 'components/email-flow/SealCredCTM'

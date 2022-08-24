@@ -1,5 +1,5 @@
-import { BodyText } from 'components/Text'
-import Card from 'components/Card'
+import { BodyText } from 'components/ui/Text'
+import Card from 'components/ui/Card'
 import ChildrenProp from 'models/ChildrenProp'
 import DoubleSmile from 'icons/DoubleSmile'
 import Grim from 'icons/Grin'

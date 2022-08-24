@@ -1,22 +1,20 @@
-import { BodyText, HintText } from 'components/Text'
+import { BodyText, HintText } from 'components/ui/Text'
 import { DataKeys } from 'models/DataKeys'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
-import AvailableProofsList from 'components/proofs/AvailableProofsList'
+import BaseProof from 'helpers/proofs/BaseProof'
 import HintCard from 'components/badges/HintCard'
 import Network from 'models/Network'
-import ProofSection from 'components/ProofSection'
-import ProofStore from 'stores/ProofStore'
-import ReadyERC721ProofsList from 'components/proofs/ReadyERC721ProofsList'
+import ProofSection from 'components/proofs/ProofSection'
+import ProofStore, { generateERC721 } from 'stores/ProofStore'
+import ProofsList from 'components/proofs/ProofsList'
 import data from 'data'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
 export function ERC721ProofSection({
-  account,
   dataKey,
   network,
 }: {
-  account: string
   dataKey: DataKeys
   network: Network
 }) {
@@ -24,55 +22,40 @@ export function ERC721ProofSection({
   const networkProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(network)
 
-  const nothingToGenerate =
-    proofsCompleted.length === 0 &&
-    networkProofAddressesAvailableToCreate.length === 0
+  async function onCreate(original: string) {
+    await generateERC721(ProofStore[dataKey], original)
+  }
 
   return (
-    <ProofSection title={<BodyText>{network} NFTs</BodyText>}>
-      <ReadyERC721ProofsList dataKey={dataKey} />
-      {account && (
-        <AvailableProofsList
-          dataKey={dataKey}
-          proofs={networkProofAddressesAvailableToCreate}
-        />
-      )}
-      {nothingToGenerate && (
-        <HintCard small marginY={false}>
-          <HintText bold center>
-            No NFTs to proof
-          </HintText>
-        </HintCard>
-      )}
-    </ProofSection>
+    <ProofsList
+      proofs={proofsCompleted as BaseProof[]}
+      originals={networkProofAddressesAvailableToCreate}
+      onCreate={onCreate}
+      dataKey={dataKey}
+      nothingToGenerateText="No NFTs to proof"
+    />
   )
 }
 
 export default function ERC721ProofSectionSuspended({
-  account,
   dataKey,
 }: {
-  account: string
   dataKey: DataKeys
 }) {
   const network = data[dataKey].network
   return (
-    <Suspense
-      fallback={
-        <ProofSection title={<BodyText>{network} NFTs</BodyText>}>
+    <ProofSection title={<BodyText>{network} NFTs</BodyText>}>
+      <Suspense
+        fallback={
           <HintCard small marginY={false}>
             <HintText bold center>
               Loading...
             </HintText>
           </HintCard>
-        </ProofSection>
-      }
-    >
-      <ERC721ProofSection
-        dataKey={dataKey}
-        account={account}
-        network={network}
-      />
-    </Suspense>
+        }
+      >
+        <ERC721ProofSection dataKey={dataKey} network={network} />
+      </Suspense>
+    </ProofSection>
   )
 }

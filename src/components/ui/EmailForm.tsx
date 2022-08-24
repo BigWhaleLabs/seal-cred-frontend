@@ -1,7 +1,7 @@
-import Button from 'components/Button'
+import Button from 'components/ui/Button'
 import Email from 'icons/Email'
-import GradientBorder from 'components/GradientBorder'
-import Input from 'components/Input'
+import GradientBorder from 'components/ui/GradientBorder'
+import Input from 'components/ui/Input'
 import useEmailForm from 'hooks/useEmailForm'
 
 export default function ({

@@ -1,6 +1,6 @@
-import { AccentText, ExtraBoldText } from 'components/Text'
+import { AccentText, ExtraBoldText } from 'components/ui/Text'
 import ChildrenProp from 'models/ChildrenProp'
-import Line from 'components/Line'
+import Line from 'components/ui/Line'
 import classnames, {
   alignItems,
   display,

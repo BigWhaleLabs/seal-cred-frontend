@@ -1,6 +1,6 @@
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
-import CardTitle from 'components/CardTitle'
+import CardTitle from 'components/ui/CardTitle'
 import ProofStore from 'stores/ProofStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 

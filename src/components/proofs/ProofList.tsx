@@ -1,51 +1,33 @@
-import { AccentText, BodyText } from 'components/Text'
+import { AccentText } from 'components/ui/Text'
 import { DataKeys } from 'models/DataKeys'
 import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
-import EmailProof from 'components/proofs/EmailProof'
-import ProofSection from 'components/ProofSection'
+import EmailProofSection from 'components/proofs/EmailProofSection'
 import ProofStore from 'stores/ProofStore'
-import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
-import Scrollbar from 'components/Scrollbar'
-import WalletStore from 'stores/WalletStore'
+import Scrollbar from 'components/ui/Scrollbar'
 import data, { BadgeSourceType } from 'data'
 
 export function ProofListSuspended() {
-  const { account } = useSnapshot(WalletStore)
   const stores = useSnapshot(ProofStore)
 
   const hasCompletedProofs = Object.values(stores).some(
     (store) => store.proofsCompleted.length > 0
   )
 
+  const eRC721Ledgers = (Object.keys(data) as DataKeys[]).filter(
+    (ledgerName) => data[ledgerName].badgeType === BadgeSourceType.ERC721
+  )
+
   return (
     <>
       <Scrollbar>
         <div className={space('space-y-2')}>
-          {account &&
-            (Object.keys(data) as DataKeys[]).map(
-              (ledgerName) =>
-                data[ledgerName].badgeType === BadgeSourceType.ERC721 && (
-                  <ERC721ProofSection dataKey={ledgerName} account={account} />
-                )
-            )}
-          <ProofSection
-            title={
-              <BodyText>
-                Additional proofs{' '}
-                <AccentText color="text-tertiary" bold>
-                  New!
-                </AccentText>
-              </BodyText>
-            }
-          >
-            {Array.from(stores['Email'].proofsCompleted).map((proof, index) => (
-              <ReadyEmailProof proof={proof} key={`${proof.origin}-${index}`} />
-            ))}
-            <EmailProof />
-          </ProofSection>
+          {eRC721Ledgers.map((ledgerName) => (
+            <ERC721ProofSection dataKey={ledgerName} />
+          ))}
+          <EmailProofSection dataKey={'Email'} />
         </div>
       </Scrollbar>
       {hasCompletedProofs && (

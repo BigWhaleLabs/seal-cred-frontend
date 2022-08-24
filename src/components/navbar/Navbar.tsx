@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { LogoSubText, LogoText } from 'components/Text'
+import { LogoSubText, LogoText } from 'components/ui/Text'
 import { useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Logo from 'icons/Logo'

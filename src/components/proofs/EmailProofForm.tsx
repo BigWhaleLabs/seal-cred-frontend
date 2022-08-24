@@ -1,13 +1,13 @@
-import { BodyText, TextButton } from 'components/Text'
+import { BodyText, TextButton } from 'components/ui/Text'
 import { ComponentChildren } from 'preact'
 import { margin } from 'classnames/tailwind'
 import { sendEmail } from 'helpers/proofs/attestor'
 import { useState } from 'preact/hooks'
 import BaseProof from 'helpers/proofs/BaseProof'
 import EmailDomainStore from 'stores/EmailDomainStore'
-import EmailForm from 'components/EmailForm'
+import EmailForm from 'components/ui/EmailForm'
 import ProofStore, { generateEmail } from 'stores/ProofStore'
-import TextForm from 'components/TextForm'
+import TextForm from 'components/ui/TextForm'
 import checkDomainToken from 'helpers/proofs/checkDomainToken'
 
 export default function ({

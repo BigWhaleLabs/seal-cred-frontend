@@ -1,5 +1,5 @@
-import { FooterLink, SocialLink } from 'components/Text'
-import Delimiter from 'components/Delimiter'
+import { FooterLink, SocialLink } from 'components/ui/Text'
+import Delimiter from 'components/ui/Delimiter'
 import Discord from 'icons/Discord'
 import FooterLogo from 'icons/FooterLogo'
 import Twitter from 'icons/Twitter'

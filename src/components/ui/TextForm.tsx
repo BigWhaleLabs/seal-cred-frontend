@@ -1,7 +1,7 @@
 import { useState } from 'preact/hooks'
-import Button from 'components/Button'
-import Input from 'components/Input'
-import TinyMessage from 'components/TinyMessage'
+import Button from 'components/ui/Button'
+import Input from 'components/ui/Input'
+import TinyMessage from 'components/ui/TinyMessage'
 
 export default function ({
   error,

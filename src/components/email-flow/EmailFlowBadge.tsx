@@ -1,6 +1,6 @@
-import { BodyText, HeaderText, LinkText } from 'components/Text'
-import Button from 'components/Button'
-import HorizontalRule from 'components/HorizontalRule'
+import { BodyText, HeaderText, LinkText } from 'components/ui/Text'
+import Button from 'components/ui/Button'
+import HorizontalRule from 'components/ui/HorizontalRule'
 import MintedBadgeBlock from 'components/badges/MintedBadgeBlock'
 import MintedToken from 'models/MintedToken'
 

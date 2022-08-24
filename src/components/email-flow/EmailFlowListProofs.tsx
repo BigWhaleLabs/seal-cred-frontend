@@ -1,8 +1,8 @@
-import { BodyText } from 'components/Text'
+import { BodyText } from 'components/ui/Text'
 import { cursor } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BaseProof from 'helpers/proofs/BaseProof'
-import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
+import Proof from 'components/proofs/Proof'
 import proofStore from 'stores/ProofStore'
 
 export default function ({
@@ -19,7 +19,12 @@ export default function ({
           onClick={() => onSelectProof(proof)}
           className={cursor('cursor-pointer')}
         >
-          <ReadyEmailProof proof={proof} key={`${proof.origin}-${index}`} />
+          <Proof
+            type="Email"
+            original={proof.origin}
+            proof={proof}
+            key={`${proof.origin}-${index}`}
+          />
         </div>
       ))}
     </>

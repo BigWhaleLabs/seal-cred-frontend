@@ -5,7 +5,7 @@ import BadgeCard from 'components/badges/BadgeCard'
 import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import BaseProof from 'helpers/proofs/BaseProof'
-import Button from 'components/Button'
+import Button from 'components/ui/Button'
 import MintedToken from 'models/MintedToken'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
@@ -36,21 +36,8 @@ function Badge({
         transaction
       )
     } catch (error) {
-      if (
-        proof &&
-        error instanceof Error &&
-        error.message.includes('This ZK proof has already been used')
-      ) {
-        ProofStore[proof.dataType].deleteProof(proof)
-        if (onMintFailed) onMintFailed()
-        handleError(
-          new Error(
-            'The ZK proof has been used before. Please, regenerate the proof.'
-          )
-        )
-      } else {
-        handleError(error)
-      }
+      if (onMintFailed) onMintFailed()
+      handleError(error)
     } finally {
       setLoading(false)
       WalletStore.mintLoading = false

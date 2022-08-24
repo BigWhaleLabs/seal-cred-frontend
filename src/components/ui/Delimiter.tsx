@@ -1,4 +1,4 @@
-import { AccentText } from 'components/Text'
+import { AccentText } from 'components/ui/Text'
 import classnames, { display, width } from 'classnames/tailwind'
 
 const bottomSeparator = classnames(

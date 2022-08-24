@@ -1,6 +1,6 @@
-import { CardDescription, CardHeader } from 'components/Text'
+import { CardDescription, CardHeader } from 'components/ui/Text'
 import Color from 'models/Color'
-import TitleContainer from 'components/TitleContainer'
+import TitleContainer from 'components/ui/TitleContainer'
 
 export default function ({
   title,

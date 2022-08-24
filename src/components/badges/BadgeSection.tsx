@@ -3,7 +3,7 @@ import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
 import BaseProof from 'helpers/proofs/BaseProof'
 import ChildrenProp from 'models/ChildrenProp'
-import Section from 'components/Section'
+import Section from 'components/ui/Section'
 import classnames, {
   display,
   gap,

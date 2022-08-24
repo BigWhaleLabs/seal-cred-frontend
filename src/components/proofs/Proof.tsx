@@ -1,17 +1,15 @@
-import { AccentText, ProofText } from 'components/Text'
+import { AccentText, ProofText } from 'components/ui/Text'
 import { DataKeys } from 'models/DataKeys'
 import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
 import BaseProof from 'helpers/proofs/BaseProof'
-import Button from 'components/proofs/Button'
 import Complete from 'icons/Complete'
-import ContractName from 'components/ContractName'
-import ExternalLink from 'components/ExternalLink'
-import Line from 'components/proofs/Line'
-import ProofStore, { generateERC721 } from 'stores/ProofStore'
+import Line from 'components/ui/Line'
+import ProofButton from 'components/proofs/ProofButton'
+import ProofTitle from 'components/proofs/ProofTitle'
 import Star from 'icons/Star'
-import ToolTip from 'components/ToolTip'
+import ToolTip from 'components/ui/ToolTip'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
@@ -28,8 +26,6 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import data from 'data'
-import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const proofName = classnames(display('flex'), flex('flex-1'))
@@ -55,8 +51,7 @@ const textWithIcon = classnames(
 )
 
 function useProofContent(
-  dataKey: DataKeys,
-  contractAddress: string,
+  onCreate?: () => Promise<void>,
   proof?: BaseProof
 ): {
   color: 'text-accent' | 'text-secondary' | 'text-tertiary'
@@ -83,21 +78,21 @@ function useProofContent(
     }
   }
 
-  if (!proof)
+  if (!proof && onCreate)
     return {
       color: 'text-tertiary',
       content: (
-        <Button
+        <ProofButton
           type="tertiary"
           disabled={isGenerating}
           onClick={async () => {
             setIsGenerating(true)
-            await generateERC721(ProofStore[dataKey], contractAddress)
+            await onCreate()
             setIsGenerating(false)
           }}
         >
           Create proof
-        </Button>
+        </ProofButton>
       ),
     }
 
@@ -113,25 +108,24 @@ function useProofContent(
 }
 
 export default function ({
+  type,
   proof,
-  contractAddress,
-  dataKey,
+  original,
+  onCreate,
 }: {
+  type: DataKeys
+  original: string
   proof?: BaseProof
-  contractAddress: string
-  dataKey: DataKeys
+  onCreate?: () => Promise<void>
 }) {
-  const network = data[dataKey].network
   const { xs } = useBreakpoints()
-  const { color, content } = useProofContent(dataKey, contractAddress, proof)
+  const { color, content } = useProofContent(onCreate, proof)
 
   return (
     <Line breakWords>
       <div className={proofName}>
         <ProofText>
-          <ExternalLink url={getEtherscanAddressUrl(contractAddress, network)}>
-            <ContractName address={contractAddress} network={network} />
-          </ExternalLink>
+          <ProofTitle type={type} original={original} />
         </ProofText>
       </div>
 

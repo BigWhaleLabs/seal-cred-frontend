@@ -1,6 +1,6 @@
 import { useContext } from 'preact/hooks'
-import CardContext from 'components/CardContext'
-import Title from 'components/Title'
+import CardContext from 'components/ui/CardContext'
+import Title from 'components/ui/Title'
 
 export default function ({
   title,

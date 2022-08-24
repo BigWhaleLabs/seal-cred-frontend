@@ -1,6 +1,6 @@
 import { ComponentChildren } from 'preact'
 import ChildrenProp from 'models/ChildrenProp'
-import Section from 'components/Section'
+import Section from 'components/ui/Section'
 
 export default function ({
   title,

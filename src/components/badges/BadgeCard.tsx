@@ -1,4 +1,4 @@
-import { BadgeText } from 'components/Text'
+import { BadgeText } from 'components/ui/Text'
 import { ComponentChild } from 'preact'
 import classnames, {
   alignItems,

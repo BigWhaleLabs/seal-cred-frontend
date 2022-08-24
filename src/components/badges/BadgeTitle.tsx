@@ -1,7 +1,7 @@
 import { BadgeSourceType } from 'data'
 import BaseProof from 'helpers/proofs/BaseProof'
-import ContractName from 'components/ContractName'
-import ExternalLink from 'components/ExternalLink'
+import ContractName from 'components/ui/ContractName'
+import ExternalLink from 'components/ui/ExternalLink'
 import Network from 'models/Network'
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 

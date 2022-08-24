@@ -1,8 +1,8 @@
-import { BodyText, HeaderText } from 'components/Text'
+import { BodyText, HeaderText } from 'components/ui/Text'
 import BadgeBlock from 'components/badges/BadgeBlock'
 import BaseProof from 'helpers/proofs/BaseProof'
 import MintedToken from 'models/MintedToken'
-import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
+import Proof from 'components/proofs/Proof'
 
 export default function ({
   proof,
@@ -25,7 +25,7 @@ export default function ({
     <>
       <HeaderText extraLeading>{headerTitle}</HeaderText>
       <BodyText>{statusText}</BodyText>
-      <ReadyEmailProof proof={proof} />
+      <Proof type="Email" original={proof.origin} proof={proof} />
       {proofCreated && (
         <BadgeBlock
           proof={proof}
