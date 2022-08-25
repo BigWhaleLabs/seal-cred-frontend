@@ -1,8 +1,8 @@
 import { ComponentChildren } from 'preact'
 import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
-import BaseProof from 'helpers/proofs/BaseProof'
 import ChildrenProp from 'models/ChildrenProp'
+import Proof from 'models/Proof'
 import Section from 'components/ui/Section'
 import classnames, {
   display,
@@ -26,7 +26,7 @@ export default function ({
 }: ChildrenProp & {
   title?: ComponentChildren
   minted: string[]
-  proofs: BaseProof[]
+  proofs: Proof[]
   onMinted?: () => void
 }) {
   if (minted.length === 0 && proofs.length === 0) return null

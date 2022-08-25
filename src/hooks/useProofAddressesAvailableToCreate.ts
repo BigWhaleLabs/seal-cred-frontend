@@ -1,6 +1,6 @@
 import { useSnapshot } from 'valtio'
-import BaseProof from 'helpers/proofs/BaseProof'
 import Network from 'models/Network'
+import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import SealCredStore from 'stores/SealCredStore'
 import useOwnedAddresses from 'hooks/useOwnedAddresses'
@@ -14,7 +14,7 @@ export default function (network?: Network) {
   const completedERC721ProofAddressesMap = Object.values(stores)
     .reduce(
       (chain, proofs) => chain.concat(proofs.proofsCompleted),
-      [] as BaseProof[]
+      [] as Proof[]
     )
     .reduce(
       (result, proof) => ({

@@ -3,12 +3,13 @@ import { ComponentChildren } from 'preact'
 import { margin } from 'classnames/tailwind'
 import { sendEmail } from 'helpers/proofs/attestor'
 import { useState } from 'preact/hooks'
-import BaseProof from 'helpers/proofs/BaseProof'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/ui/EmailForm'
-import ProofStore, { generateEmail } from 'stores/ProofStore'
+import ProofModel from 'models/Proof'
+import ProofStore from 'stores/ProofStore'
 import TextForm from 'components/ui/TextForm'
 import checkDomainToken from 'helpers/proofs/checkDomainToken'
+import generateEmail from 'helpers/proofs/generateEmail'
 
 export default function ({
   domain,
@@ -25,7 +26,7 @@ export default function ({
   description: ComponentChildren
   error: string | undefined
   onError: (error: string | undefined) => void
-  onCreate: (proof: BaseProof) => void
+  onCreate: (proof: ProofModel) => void
   onChange: (domain: string) => void
   onGenerationStarted?: () => void
 }) {

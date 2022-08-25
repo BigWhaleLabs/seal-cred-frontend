@@ -1,17 +1,16 @@
-import { BadgeSourceType } from 'data'
-import BaseProof from 'helpers/proofs/BaseProof'
+import { isAddress } from 'ethers/lib/utils'
 import ContractName from 'components/ui/ContractName'
 import ExternalLink from 'components/ui/ExternalLink'
 import Network from 'models/Network'
+import Proof from 'models/Proof'
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
-function ProofName({ badge }: { badge: BaseProof }) {
-  if (badge.type === BadgeSourceType.ERC721)
+function ProofName({ badge }: { badge: Proof }) {
+  if (isAddress(badge.origin))
     return (
       <ContractName hyphens address={badge.origin} network={Network.Goerli} />
     )
-  if (badge.type === BadgeSourceType.Email) return <>@{badge.origin}</>
-  return <>Unknown</>
+  return <>@{badge.origin}</>
 }
 
 export default function ({
@@ -19,7 +18,7 @@ export default function ({
   proof,
 }: {
   derivativeAddress?: string
-  proof?: BaseProof
+  proof?: Proof
 }) {
   if (derivativeAddress)
     return (

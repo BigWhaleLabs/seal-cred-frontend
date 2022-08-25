@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
-import BaseProof from 'helpers/proofs/BaseProof'
 import Card from 'components/ui/Card'
 import CardContainer from 'components/proofs/CardContainer'
 import ConnectAccount from 'components/proofs/ConnectAccount'
@@ -11,6 +10,7 @@ import EmailFlowListProofs from 'components/email-flow/EmailFlowListProofs'
 import EmailFlowProof from 'components/email-flow/EmailFlowProof'
 import LoadingCard from 'components/proofs/LoadingCard'
 import MintedToken from 'models/MintedToken'
+import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import Separator from 'components/ui/Separator'
 import WalletStore from 'stores/WalletStore'
@@ -19,7 +19,7 @@ export default function () {
   const { proofsCompleted } = useSnapshot(ProofStore['Email'])
   const { account } = useSnapshot(WalletStore)
   const [domain, setDomain] = useState('')
-  const [proof, setProof] = useState<BaseProof | undefined>()
+  const [proof, setProof] = useState<Proof | undefined>()
   const [minted, setMinted] = useState<MintedToken[] | undefined>()
 
   const hasProofsCompleted = proofsCompleted.length > 0

@@ -3,10 +3,10 @@ import { DataKeys } from 'models/DataKeys'
 import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
-import BaseProof from 'helpers/proofs/BaseProof'
 import Complete from 'icons/Complete'
 import Line from 'components/ui/Line'
 import ProofButton from 'components/proofs/ProofButton'
+import ProofModel from 'models/Proof'
 import ProofTitle from 'components/proofs/ProofTitle'
 import Star from 'icons/Star'
 import ToolTip from 'components/ui/ToolTip'
@@ -52,7 +52,7 @@ const textWithIcon = classnames(
 
 function useProofContent(
   onCreate?: () => Promise<void>,
-  proof?: BaseProof
+  proof?: ProofModel
 ): {
   color: 'text-accent' | 'text-secondary' | 'text-tertiary'
   content: JSX.Element | null
@@ -115,7 +115,7 @@ export default function ({
 }: {
   type: DataKeys
   original: string
-  proof?: BaseProof
+  proof?: ProofModel
   onCreate?: () => Promise<void>
 }) {
   const { xs } = useBreakpoints()

@@ -1,14 +1,14 @@
 import { BodyText } from 'components/ui/Text'
 import { cursor } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import BaseProof from 'helpers/proofs/BaseProof'
 import Proof from 'components/proofs/Proof'
+import ProofModel from 'models/Proof'
 import proofStore from 'stores/ProofStore'
 
 export default function ({
   onSelectProof,
 }: {
-  onSelectProof: (proof: BaseProof) => void
+  onSelectProof: (proof: ProofModel) => void
 }) {
   const { proofsCompleted } = useSnapshot(proofStore['Email'])
   return (

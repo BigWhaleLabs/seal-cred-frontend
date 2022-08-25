@@ -1,14 +1,16 @@
 import { AccentText, BodyText } from 'components/ui/Text'
 import { DataKeys } from 'models/DataKeys'
 import { useSnapshot } from 'valtio'
-import BaseProof from 'helpers/proofs/BaseProof'
 import EmailProof from 'components/proofs/EmailProof'
+import Proof from 'models/Proof'
 import ProofSection from 'components/proofs/ProofSection'
 import ProofStore from 'stores/ProofStore'
 import ProofsList from 'components/proofs/ProofsList'
 
 export default function ({ dataKey }: { dataKey: DataKeys }) {
   const { proofsCompleted } = useSnapshot(ProofStore[dataKey])
+
+  console.log(proofsCompleted)
 
   return (
     <ProofSection
@@ -21,7 +23,7 @@ export default function ({ dataKey }: { dataKey: DataKeys }) {
         </BodyText>
       }
     >
-      <ProofsList dataKey={dataKey} proofs={proofsCompleted as BaseProof[]} />
+      <ProofsList dataKey={dataKey} proofs={proofsCompleted as Proof[]} />
       <EmailProof />
     </ProofSection>
   )

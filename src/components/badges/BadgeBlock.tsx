@@ -4,9 +4,9 @@ import { useState } from 'preact/hooks'
 import BadgeCard from 'components/badges/BadgeCard'
 import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
-import BaseProof from 'helpers/proofs/BaseProof'
 import Button from 'components/ui/Button'
 import MintedToken from 'models/MintedToken'
+import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import data from 'data'
@@ -17,7 +17,7 @@ function Badge({
   onMinted,
   onMintFailed,
 }: {
-  proof: BaseProof
+  proof: Proof
   onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {
@@ -70,7 +70,7 @@ export default function ({
   onMinted,
   onMintFailed,
 }: {
-  proof: BaseProof
+  proof: Proof
   onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {

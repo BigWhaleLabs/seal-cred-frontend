@@ -1,8 +1,8 @@
 import { DataKeys } from 'models/DataKeys'
 import { HintText } from 'components/ui/Text'
-import BaseProof from 'helpers/proofs/BaseProof'
 import HintCard from 'components/badges/HintCard'
 import Proof from 'components/proofs/Proof'
+import ProofModel from 'models/Proof'
 import classnames, { display, flexDirection, space } from 'classnames/tailwind'
 
 const container = classnames(
@@ -19,7 +19,7 @@ export default function ({
   nothingToGenerateText,
 }: {
   originals?: string[]
-  proofs: BaseProof[]
+  proofs: ProofModel[]
   dataKey: DataKeys
   onCreate?: (original: string) => Promise<void>
   nothingToGenerateText?: string
@@ -36,7 +36,7 @@ export default function ({
 
   return (
     <div className={container}>
-      {(Array.from(proofs) as BaseProof[])
+      {Array.from(proofs)
         .sort((a, b) => (a.account === b.account ? 0 : -1))
         .map((proof) => (
           <Proof

@@ -1,5 +1,9 @@
+import { DataKeys } from 'models/DataKeys'
 import ProofResult from 'models/ProofResult'
 
 export default interface Proof {
-  result?: ProofResult
+  account?: string
+  origin: string
+  result: ProofResult
+  dataType: DataKeys
 }

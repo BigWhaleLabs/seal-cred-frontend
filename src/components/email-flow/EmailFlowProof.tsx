@@ -1,15 +1,15 @@
 import { BodyText, HeaderText } from 'components/ui/Text'
 import BadgeBlock from 'components/badges/BadgeBlock'
-import BaseProof from 'helpers/proofs/BaseProof'
 import MintedToken from 'models/MintedToken'
 import Proof from 'components/proofs/Proof'
+import ProofModel from 'models/Proof'
 
 export default function ({
   proof,
   onMinted,
   onMintFailed,
 }: {
-  proof: BaseProof
+  proof: ProofModel
   onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {
