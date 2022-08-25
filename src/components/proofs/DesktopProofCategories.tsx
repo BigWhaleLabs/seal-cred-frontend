@@ -1,4 +1,8 @@
-import { CategoriesTitles, categories } from 'models/Categories'
+import {
+  CategoriesComponentProps,
+  CategoriesTitles,
+  categories,
+} from 'models/Categories'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -14,7 +18,8 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 
-const menuWrapper = classnames(
+const desktopMenuWrapper = classnames(
+  display('md:block', 'hidden'),
   position('sticky'),
   inset('top-4'),
   backgroundColor('bg-primary-background'),
@@ -39,12 +44,9 @@ const iconWrapper = (active: boolean) =>
 export default function ({
   currentCategory,
   setCategory,
-}: {
-  currentCategory: CategoriesTitles
-  setCategory: (category: CategoriesTitles) => void
-}) {
+}: CategoriesComponentProps) {
   return (
-    <div className={menuWrapper}>
+    <div className={desktopMenuWrapper}>
       {Object.entries(categories).map(([title, { icon }]) => (
         <div
           className={iconWrapper(currentCategory === title)}

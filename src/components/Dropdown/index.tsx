@@ -1,7 +1,6 @@
 import { createRef } from 'preact'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
-import ItemContainer from 'components/Dropdown/ItemContainer'
 import Menu from 'components/Dropdown/Menu'
 import Option from 'components/Dropdown/Option'
 import classnames, {
@@ -10,26 +9,22 @@ import classnames, {
   gap,
   justifyContent,
   opacity,
-  padding,
   position,
   textColor,
   width,
 } from 'classnames/tailwind'
 import useClickOutside from 'hooks/useClickOutside'
 
-const button = (forZkBadges?: boolean) =>
-  classnames(
-    display('flex'),
-    justifyContent('justify-between'),
-    alignItems('items-center'),
-    width('w-full'),
-    gap('gap-x-2'),
-    padding({ 'p-3': forZkBadges }),
-    opacity('disabled:opacity-30')
-  )
+const button = classnames(
+  display('flex'),
+  justifyContent('justify-between'),
+  alignItems('items-center'),
+  width('w-full'),
+  gap('gap-x-2'),
+  opacity('disabled:opacity-30')
+)
 
-const container = (forZkBadges?: boolean) =>
-  classnames(position('relative'), width('md:w-fit', { 'w-full': forZkBadges }))
+const container = classnames(position('relative'), width('md:w-fit'))
 
 export default function <T>({
   disabled,
@@ -37,14 +32,12 @@ export default function <T>({
   placeholder,
   options,
   onChange,
-  forZkBadges,
 }: {
   disabled?: boolean
   currentValue?: T
   placeholder?: string
   options: Option<T>[]
   onChange: (selectedValue: T) => void
-  forZkBadges?: boolean
 }) {
   const [open, setOpen] = useState(false)
   const ref = createRef<HTMLDivElement>()
@@ -56,7 +49,7 @@ export default function <T>({
   const selectedElement = (
     <button
       onClick={() => options.length && setOpen(!open)}
-      className={button(forZkBadges)}
+      className={button}
       disabled={disabled}
     >
       {selectedOption?.label || placeholder}
@@ -67,12 +60,8 @@ export default function <T>({
   )
 
   return (
-    <div className={container(forZkBadges)} ref={ref}>
-      {forZkBadges ? (
-        <ItemContainer forZkBadges>{selectedElement}</ItemContainer>
-      ) : (
-        <span className={textColor('text-primary')}>{selectedElement}</span>
-      )}
+    <div className={container} ref={ref}>
+      <span className={textColor('text-primary')}>{selectedElement}</span>
       <Menu
         open={open}
         options={options}
@@ -81,7 +70,6 @@ export default function <T>({
           onChange(option.value)
           setOpen(false)
         }}
-        forZkBadges={forZkBadges}
       />
     </div>
   )

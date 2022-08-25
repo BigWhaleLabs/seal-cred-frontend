@@ -10,10 +10,11 @@ import {
   space,
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
+import DesktopProofCategories from 'components/proofs/DesktopProofCategories'
 import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
 import EmailProof from 'components/proofs/EmailProof'
+import MobileProofCategories from 'components/proofs/MobileProofCategories'
 import Network from 'models/Network'
-import ProofCategories from 'components/proofs/ProofCategories'
 import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
@@ -34,14 +35,20 @@ export function ProofListSuspended() {
 
   return (
     <>
+      <MobileProofCategories
+        currentCategory={category}
+        setCategory={setCategory}
+      />
       <Scrollbar>
         <div className={menuWrapper}>
-          <ProofCategories
+          <DesktopProofCategories
             currentCategory={category}
             setCategory={setCategory}
           />
           <div className={proofList}>
-            <BodyText>{category}</BodyText>
+            <div className={display('md:block', 'hidden')}>
+              <BodyText>{category}</BodyText>
+            </div>
             {account && category === 'NFTs' && (
               <>
                 <ERC721ProofSection

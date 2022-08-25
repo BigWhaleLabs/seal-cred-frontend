@@ -19,7 +19,7 @@ import classnames, {
 const container = (closed: boolean) =>
   classnames(
     position('absolute'),
-    inset('top-16', 'sm:left-0'),
+    inset('top-8', 'sm:left-0'),
     opacity({ 'opacity-0': closed }),
     visibility({ invisible: closed }),
     zIndex('z-40'),
@@ -42,17 +42,15 @@ export default function <T>({
   options,
   selected,
   onSelect,
-  forZkBadges,
 }: {
   open: boolean
   options: Option<T>[]
   selected?: Option<T>
   onSelect: (option: Option<T>) => void
-  forZkBadges?: boolean
 }) {
   return (
     <div className={container(!open)}>
-      <ItemContainer withPadding forZkBadges={forZkBadges}>
+      <ItemContainer withPadding>
         {options.map((option) => (
           <p
             key={option.value}
