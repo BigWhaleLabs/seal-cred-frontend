@@ -1,4 +1,4 @@
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import { HintText } from 'components/ui/Text'
 import HintCard from 'components/badges/HintCard'
 import Proof from 'components/proofs/Proof'
@@ -20,7 +20,7 @@ export default function ({
 }: {
   originals?: string[]
   proofs: ProofModel[]
-  dataKey: DataKeys
+  dataKey: DataKey
   onCreate?: (original: string) => Promise<void>
   nothingToGenerateText?: string
 }) {
@@ -40,9 +40,9 @@ export default function ({
         .sort((a, b) => (a.account === b.account ? 0 : -1))
         .map((proof) => (
           <Proof
-            key={`${proof.origin}-${proof.account}`}
+            key={`${proof.original}-${proof.account}`}
             type={dataKey}
-            original={proof.origin}
+            original={proof.original}
             proof={proof}
           />
         ))}

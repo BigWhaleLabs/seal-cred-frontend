@@ -1,5 +1,5 @@
 import { BodyText, HintText } from 'components/ui/Text'
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
 import HintCard from 'components/badges/HintCard'
@@ -10,8 +10,8 @@ import ProofsList from 'components/proofs/ProofsList'
 import data from 'data'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-export function ERC721ProofSection({ dataKey }: { dataKey: DataKeys }) {
-  const network = data[dataKey].network
+export function ERC721ProofSection({ dataKey }: { dataKey: DataKey }) {
+  const { network } = data[dataKey]
   const { proofsCompleted } = useSnapshot(ProofStore[dataKey])
   const networkProofAddressesAvailableToCreate =
     useProofAddressesAvailableToCreate(network)
@@ -34,10 +34,11 @@ export function ERC721ProofSection({ dataKey }: { dataKey: DataKeys }) {
 export default function ERC721ProofSectionSuspended({
   dataKey,
 }: {
-  dataKey: DataKeys
+  dataKey: DataKey
 }) {
+  const { proofTitle } = data[dataKey]
   return (
-    <ProofSection title={<BodyText>{data[dataKey].proofTitle}</BodyText>}>
+    <ProofSection title={<BodyText>{proofTitle}</BodyText>}>
       <Suspense
         fallback={
           <HintCard small marginY={false}>

@@ -31,7 +31,7 @@ export default {
     mint: async (provider: Web3Provider, proof: Proof) => {
       const signature = await requestContractMetadata(
         Network.Mainnet,
-        proof.origin
+        proof.original
       )
       return createExternalERC721Badge(
         provider,
@@ -61,7 +61,7 @@ export default {
         secret: string
       }
     ) => {
-      if (!options?.secret) return Promise.resolve()
+      if (!options?.secret) throw new Error('Secret not found!')
       return generateEmail(store, original, options.secret)
     },
   },

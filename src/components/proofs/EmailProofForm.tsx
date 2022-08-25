@@ -61,14 +61,12 @@ export default function ({
     setLoading(true)
     onError(undefined)
     try {
-      if (secret) {
-        const proof = await data['Email'].createProof(
-          proofStore['Email'],
-          domain,
-          { secret }
-        )
-        if (proof) onCreate(proof)
-      }
+      const proof = await data['Email'].createProof(
+        proofStore['Email'],
+        domain,
+        { secret }
+      )
+      if (proof) onCreate(proof)
     } finally {
       setLoading(false)
       resetEmail(true)

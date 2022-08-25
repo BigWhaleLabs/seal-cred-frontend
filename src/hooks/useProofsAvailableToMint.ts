@@ -11,8 +11,8 @@ export default function () {
   const ownedAddresses = useOwnedAddresses(BadgesNetwork)
 
   const ledgerToUnmintedProofs = dataShapeObject((ledgerName) =>
-    ledgerToProofs[ledgerName].proofsCompleted.filter(({ origin }) => {
-      const derivative = ledgers[ledgerName][origin]
+    ledgerToProofs[ledgerName].proofsCompleted.filter(({ original }) => {
+      const derivative = ledgers[ledgerName][original]
       return !derivative || !ownedAddresses.includes(derivative)
     })
   )

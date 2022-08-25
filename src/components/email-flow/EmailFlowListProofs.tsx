@@ -21,9 +21,9 @@ export default function ({
         >
           <Proof
             type="Email"
-            original={proof.origin}
+            original={proof.original}
             proof={proof}
-            key={`${proof.origin}-${index}`}
+            key={`${proof.original}-${index}`}
           />
         </div>
       ))}

@@ -19,7 +19,7 @@ export default function (network?: Network) {
     .reduce(
       (result, proof) => ({
         ...result,
-        [proof.origin]: true,
+        [proof.original]: true,
       }),
       {} as { [address: string]: boolean }
     )

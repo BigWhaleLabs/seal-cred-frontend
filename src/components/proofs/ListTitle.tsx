@@ -1,16 +1,13 @@
 import { Suspense } from 'preact/compat'
-import { useSnapshot } from 'valtio'
 import CardTitle from 'components/ui/CardTitle'
-import ProofStore from 'stores/ProofStore'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
+import useProofStore from 'hooks/useProofStore'
 
 export function ListTitleSuspended() {
-  const stores = useSnapshot(ProofStore)
+  const { hasAnyProof } = useProofStore()
   const avaliableToProof = useProofAddressesAvailableToCreate()
 
-  const allGenerated =
-    Object.values(stores).some((store) => store.proofsCompleted.length > 0) &&
-    avaliableToProof.length === 0
+  const allGenerated = hasAnyProof && avaliableToProof.length === 0
 
   return (
     <CardTitle

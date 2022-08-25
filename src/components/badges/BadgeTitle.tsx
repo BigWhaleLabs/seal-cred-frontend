@@ -5,12 +5,12 @@ import Network from 'models/Network'
 import Proof from 'models/Proof'
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
-function ProofName({ badge }: { badge: Proof }) {
-  if (isAddress(badge.origin))
+function ProofName({ proof }: { proof: Proof }) {
+  if (isAddress(proof.original))
     return (
-      <ContractName hyphens address={badge.origin} network={Network.Goerli} />
+      <ContractName hyphens address={proof.original} network={Network.Goerli} />
     )
-  return <>@{badge.origin}</>
+  return <>@{proof.original}</>
 }
 
 export default function ({
@@ -36,5 +36,5 @@ export default function ({
 
   if (!proof) return null
 
-  return <ProofName badge={proof} />
+  return <ProofName proof={proof} />
 }

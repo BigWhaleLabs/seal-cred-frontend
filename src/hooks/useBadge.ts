@@ -1,10 +1,10 @@
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import { useMemo } from 'preact/hooks'
 import { useSnapshot } from 'valtio'
 import SealCredStore from 'stores/SealCredStore'
 
 export interface BaseBadgeContract {
-  type: DataKeys
+  type: DataKey
   derivative: string
   original: string
 }

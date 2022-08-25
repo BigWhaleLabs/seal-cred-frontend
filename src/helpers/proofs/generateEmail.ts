@@ -1,4 +1,4 @@
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import { ProofStore } from 'stores/ProofStore'
 import { getEddsaPublicKey } from 'helpers/proofs/attestor'
 import buildEmailProof from 'helpers/proofs/buildEmailProof'
@@ -7,19 +7,16 @@ import handleError from 'helpers/handleError'
 
 export default async function generateEmail(
   store: ProofStore,
-  origin: string,
+  original: string,
   signature: string
 ) {
   try {
-    // Get public key
     const eddsaPublicKey = await getEddsaPublicKey()
-    // Check navigator availability
     checkNavigator()
-    // Create proof
-    const result = await buildEmailProof(origin, signature, eddsaPublicKey)
+    const result = await buildEmailProof(original, signature, eddsaPublicKey)
     const proof = {
-      origin,
-      dataType: 'Email' as DataKeys,
+      original,
+      dataType: 'Email' as DataKey,
       result,
     }
     store.proofsCompleted.push(proof)

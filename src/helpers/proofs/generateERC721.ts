@@ -13,40 +13,33 @@ import walletStore from 'stores/WalletStore'
 
 export default async function generateERC721(
   store: ProofStore,
-  origin: string,
+  original: string,
   network: Network
 ) {
   try {
-    // Get the account
     const account = walletStore.account
     if (!account) {
       throw new Error('No account selected')
     }
-    // Get public key
     const eddsaPublicKey = await getEddsaPublicKey()
-    // Get nullifier signature
     const nullifierMessage = getNullifierMessage()
     const nullifierSignature = await walletStore.signMessage(nullifierMessage)
-    // Get ownership EdDSA attestation
     const ownershipSignature = await requestAddressOwnershipAttestation(
       nullifierSignature,
       nullifierMessage
     )
-    // const network = data[store.dataKey].network
-    // Get balance EdDSA attestation
     const balanceSignature = await requestBalanceAttestation(
-      origin,
+      original,
       network,
       account
     )
-    // Get the proof
     const result = await buildERC721Proof(
       ownershipSignature,
       balanceSignature,
       eddsaPublicKey
     )
     const proof = {
-      origin,
+      original,
       result,
       account,
       dataType: store.dataKey,

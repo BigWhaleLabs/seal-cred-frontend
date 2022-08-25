@@ -35,7 +35,7 @@ export default function ({
     <Section title={title}>
       <div className={badgesList}>
         {proofs.map((proof) => (
-          <BadgeBlock onMinted={onMinted} key={proof.origin} proof={proof} />
+          <BadgeBlock onMinted={onMinted} key={proof.original} proof={proof} />
         ))}
         {minted.map((contractAddress) => (
           <BadgesOwnedForContract

@@ -1,4 +1,4 @@
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import { isAddress } from 'ethers/lib/utils'
 import ContractName from 'components/ui/ContractName'
 import ExternalLink from 'components/ui/ExternalLink'
@@ -10,7 +10,7 @@ export default function ({
   type,
 }: {
   original: string
-  type: DataKeys
+  type: DataKey
 }) {
   if (!isAddress(original)) return <>@{original}</>
   const network = data[type].network

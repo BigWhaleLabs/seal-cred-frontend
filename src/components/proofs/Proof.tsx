@@ -1,5 +1,5 @@
 import { AccentText, ProofText } from 'components/ui/Text'
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
 import { useState } from 'react'
@@ -113,7 +113,7 @@ export default function ({
   original,
   onCreate,
 }: {
-  type: DataKeys
+  type: DataKey
   original: string
   proof?: ProofModel
   onCreate?: () => Promise<void>

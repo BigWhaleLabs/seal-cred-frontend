@@ -1,5 +1,5 @@
 import { ContractReceipt } from 'ethers'
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import { PersistableStore } from '@big-whale-labs/stores'
 import { Web3Provider } from '@ethersproject/providers'
 import { proxy } from 'valtio'
@@ -11,14 +11,14 @@ import handleError from 'helpers/handleError'
 
 export class ProofStore extends PersistableStore {
   proofsCompleted: Proof[] = []
-  dataKey: DataKeys
+  dataKey: DataKey
   createBadge: (
     provider: Web3Provider,
     proof: Proof
   ) => Promise<ContractReceipt>
 
   constructor(
-    dataKey: DataKeys,
+    dataKey: DataKey,
     createBadge: (
       provider: Web3Provider,
       proof: Proof
@@ -29,16 +29,18 @@ export class ProofStore extends PersistableStore {
     this.createBadge = createBadge
   }
 
-  equal(a: Proof, b: Proof): boolean {
+  equalProof(a: Proof, b: Proof): boolean {
     return (
-      a.origin === b.origin &&
+      a.original === b.original &&
       a.account === b.account &&
       a.dataType === b.dataType
     )
   }
 
   deleteProof(a: Proof) {
-    this.proofsCompleted = this.proofsCompleted.filter((b) => !this.equal(a, b))
+    this.proofsCompleted = this.proofsCompleted.filter(
+      (b) => !this.equalProof(a, b)
+    )
   }
 
   deleteIfUsed(error: unknown, proof: Proof) {

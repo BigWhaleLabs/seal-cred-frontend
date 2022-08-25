@@ -25,7 +25,7 @@ export default function ({
     <>
       <HeaderText extraLeading>{headerTitle}</HeaderText>
       <BodyText>{statusText}</BodyText>
-      <Proof type="Email" original={proof.origin} proof={proof} />
+      <Proof type="Email" original={proof.original} proof={proof} />
       {proofCreated && (
         <BadgeBlock
           proof={proof}
