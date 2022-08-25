@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify'
 import { useLocation } from 'react-router-dom'
-import Button from 'components/Button'
+import Button from 'components/ui/Button'
 import CTAText from 'helpers/CTAText'
-import GradientBorder from 'components/GradientBorder'
+import GradientBorder from 'components/ui/GradientBorder'
 import LinkChain from 'icons/LinkChain'
 import Twitter from 'icons/Twitter'
 import classnames, {

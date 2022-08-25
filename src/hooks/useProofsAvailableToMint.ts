@@ -7,12 +7,12 @@ import useOwnedAddresses from 'hooks/useOwnedAddresses'
 
 export default function () {
   const { ledgers } = useSnapshot(SealCredStore)
-  const { ledgerToProofs } = useSnapshot(ProofStore)
+  const ledgerToProofs = useSnapshot(ProofStore)
   const ownedAddresses = useOwnedAddresses(BadgesNetwork)
 
   const ledgerToUnmintedProofs = dataShapeObject((ledgerName) =>
-    ledgerToProofs[ledgerName].filter(({ origin }) => {
-      const derivative = ledgers[ledgerName][origin]
+    ledgerToProofs[ledgerName].proofsCompleted.filter(({ original }) => {
+      const derivative = ledgers[ledgerName][original]
       return !derivative || !ownedAddresses.includes(derivative)
     })
   )

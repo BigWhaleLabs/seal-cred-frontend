@@ -1,12 +1,12 @@
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import data from 'data'
 
 type ValueOf<T> = T[keyof T]
 
 export default function dataShapeObject<V>(
-  transformer: (ledgerName: DataKeys, record: ValueOf<typeof data>) => V
+  transformer: (ledgerName: DataKey, record: ValueOf<typeof data>) => V
 ) {
-  const ledgersName = Object.keys(data) as DataKeys[]
+  const ledgersName = Object.keys(data) as DataKey[]
 
   return ledgersName.reduce(
     (res, ledgerName) => ({
@@ -14,7 +14,7 @@ export default function dataShapeObject<V>(
       [ledgerName]: transformer(ledgerName, data[ledgerName]),
     }),
     {} as {
-      [ledgerName in DataKeys]: V
+      [ledgerName in DataKey]: V
     }
   )
 }

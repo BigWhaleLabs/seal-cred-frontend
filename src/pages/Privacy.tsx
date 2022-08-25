@@ -3,9 +3,9 @@ import {
   HeaderText,
   LinkText,
   SubheaderCardText,
-} from 'components/Text'
-import Card from 'components/Card'
-import Section from 'components/Section'
+} from 'components/ui/Text'
+import Card from 'components/ui/Card'
+import Section from 'components/ui/Section'
 import classnames, { margin, space, width } from 'classnames/tailwind'
 
 const cardWrapper = classnames(margin('mx-auto'), width('w-fit'))

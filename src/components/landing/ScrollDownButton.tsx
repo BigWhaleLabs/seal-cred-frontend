@@ -1,4 +1,4 @@
-import { AccentText } from 'components/Text'
+import { AccentText } from 'components/ui/Text'
 import DownArrows from 'components/landing/DownArrows'
 import classnames, {
   alignItems,

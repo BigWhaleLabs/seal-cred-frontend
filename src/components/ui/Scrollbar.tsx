@@ -1,5 +1,5 @@
 import ChildrenProp from 'models/ChildrenProp'
-import Fade from 'components/Fade'
+import Fade from 'components/ui/Fade'
 import classnames, { overflow, position } from 'classnames/tailwind'
 import useHasWebkit from 'hooks/useHasWebkit'
 import useIsOverflow from 'hooks/useIsOverflow'

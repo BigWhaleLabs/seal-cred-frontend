@@ -1,4 +1,4 @@
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import { derive } from 'valtio/utils'
 import { proxy } from 'valtio'
 import SCLedger from 'models/SCLedger'
@@ -8,13 +8,13 @@ import ledgerContracts from 'helpers/contracts/ledgerContracts'
 
 const state = proxy({
   ledgers: Promise.all(
-    (Object.keys(ledgerContracts) as DataKeys[]).map((name) => ({
+    (Object.keys(ledgerContracts) as DataKey[]).map((name) => ({
       name,
       ledger: getLedger(ledgerContracts[name]),
     }))
   ).then(async (records) => {
     const result = {} as {
-      [ledger in DataKeys]: SCLedger
+      [ledger in DataKey]: SCLedger
     }
 
     for (const { name, ledger } of Object.values(records)) {
@@ -38,7 +38,7 @@ const SealCredStore = derive(
   }
 )
 
-for (const name of Object.keys(data) as DataKeys[]) {
+for (const name of Object.keys(data) as DataKey[]) {
   const ledgerContract = ledgerContracts[name]
   ledgerContract.on(
     ledgerContract.filters.CreateDerivative(),

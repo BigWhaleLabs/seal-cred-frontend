@@ -1,6 +1,6 @@
-import { AccentText } from 'components/Text'
-import QuestionMark from 'components/QuestionMark'
-import ToolTip from 'components/ToolTip'
+import { AccentText } from 'components/ui/Text'
+import QuestionMark from 'components/ui/QuestionMark'
+import ToolTip from 'components/ui/ToolTip'
 import classnames, {
   backgroundColor,
   borderRadius,

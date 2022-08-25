@@ -1,7 +1,7 @@
 import { useContext } from 'preact/hooks'
-import CardContext from 'components/CardContext'
+import CardContext from 'components/ui/CardContext'
 import SealLoading from 'icons/SealLoading'
-import Title from 'components/Title'
+import Title from 'components/ui/Title'
 import classnames, {
   alignItems,
   display,

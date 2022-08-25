@@ -1,4 +1,4 @@
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import { Suspense } from 'preact/compat'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
@@ -7,7 +7,7 @@ import ConfettiIfNeeded from 'components/badges/ConfettiIfNeeded'
 import DoxNotification from 'components/badges/DoxNotification'
 import HintCard from 'components/badges/HintCard'
 import NotificationsStore from 'stores/NotificationsStore'
-import Scrollbar from 'components/Scrollbar'
+import Scrollbar from 'components/ui/Scrollbar'
 import ShareToTwitterIfNeeded from 'components/badges/ShareToTwitterIfNeeded'
 import data from 'data'
 import useMintedAddresses from 'hooks/useMintedAddresses'
@@ -38,7 +38,7 @@ function BadgeListSuspended() {
       <ConfettiIfNeeded />
       <Scrollbar>
         <div className={space('space-y-2')}>
-          {(Object.keys(data) as DataKeys[]).map((ledgerName) => (
+          {(Object.keys(data) as DataKey[]).map((ledgerName) => (
             <BadgeSection
               title={data[ledgerName].title}
               minted={ledgerToMintedAddresses[ledgerName]}

@@ -1,15 +1,15 @@
-import { BodyText, HeaderText } from 'components/Text'
+import { BodyText, HeaderText } from 'components/ui/Text'
 import BadgeBlock from 'components/badges/BadgeBlock'
-import EmailProof from 'helpers/proofs/EmailProof'
 import MintedToken from 'models/MintedToken'
-import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
+import Proof from 'components/proofs/Proof'
+import ProofModel from 'models/Proof'
 
 export default function ({
   proof,
   onMinted,
   onMintFailed,
 }: {
-  proof: EmailProof
+  proof: ProofModel
   onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {
@@ -25,7 +25,7 @@ export default function ({
     <>
       <HeaderText extraLeading>{headerTitle}</HeaderText>
       <BodyText>{statusText}</BodyText>
-      <ReadyEmailProof proof={proof} />
+      <Proof type="Email" original={proof.original} proof={proof} />
       {proofCreated && (
         <BadgeBlock
           proof={proof}

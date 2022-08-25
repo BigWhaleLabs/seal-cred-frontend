@@ -4,9 +4,9 @@ import { useState } from 'preact/hooks'
 import BadgeCard from 'components/badges/BadgeCard'
 import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
-import BaseProof from 'helpers/proofs/BaseProof'
-import Button from 'components/Button'
+import Button from 'components/ui/Button'
 import MintedToken from 'models/MintedToken'
+import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import data from 'data'
@@ -17,7 +17,7 @@ function Badge({
   onMinted,
   onMintFailed,
 }: {
-  proof: BaseProof
+  proof: Proof
   onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {
@@ -30,28 +30,14 @@ function Badge({
     try {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
-      const transaction = await WalletStore.mintDerivative(proof)
-      ProofStore.deleteProof(proof)
+      const transaction = await ProofStore[proof.dataType].mint(proof)
       if (onMinted) onMinted()
       BadgesContractsStore.connectedAccounts[account].applyTransaction(
         transaction
       )
     } catch (error) {
-      if (
-        proof &&
-        error instanceof Error &&
-        error.message.includes('This ZK proof has already been used')
-      ) {
-        ProofStore.deleteProof(proof)
-        if (onMintFailed) onMintFailed()
-        handleError(
-          new Error(
-            'The ZK proof has been used before. Please, regenerate the proof.'
-          )
-        )
-      } else {
-        handleError(error)
-      }
+      if (onMintFailed) onMintFailed()
+      handleError(error)
     } finally {
       setLoading(false)
       WalletStore.mintLoading = false
@@ -84,7 +70,7 @@ export default function ({
   onMinted,
   onMintFailed,
 }: {
-  proof: BaseProof
+  proof: Proof
   onMinted?: (minted?: MintedToken[]) => void
   onMintFailed?: (minted?: MintedToken[]) => void
 }) {

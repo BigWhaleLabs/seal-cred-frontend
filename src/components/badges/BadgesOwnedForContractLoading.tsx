@@ -1,9 +1,9 @@
 import BadgeCard from 'components/badges/BadgeCard'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
-import Button from 'components/Button'
-import ContractName from 'components/ContractName'
+import Button from 'components/ui/Button'
+import ContractName from 'components/ui/ContractName'
 import Erc721Badge from 'icons/Erc721Badge'
-import ExternalLink from 'components/ExternalLink'
+import ExternalLink from 'components/ui/ExternalLink'
 import Network from 'models/Network'
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 

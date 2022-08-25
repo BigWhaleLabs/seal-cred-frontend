@@ -1,7 +1,7 @@
 import { BadgesNetwork } from 'stores/ContractsStore'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
-import CardTitle from 'components/CardTitle'
+import CardTitle from 'components/ui/CardTitle'
 import LoadingCard from 'components/badges/LoadingCard'
 import SealCredStore from 'stores/SealCredStore'
 import useOwnedAddresses from 'hooks/useOwnedAddresses'

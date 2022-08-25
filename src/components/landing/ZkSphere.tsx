@@ -1,4 +1,4 @@
-import { SphereText } from 'components/Text'
+import { SphereText } from 'components/ui/Text'
 import Color from 'models/Color'
 import classnames, {
   alignItems,

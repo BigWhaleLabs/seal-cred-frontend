@@ -1,4 +1,4 @@
-import { DataKeys } from 'models/DataKeys'
+import { DataKey } from 'models/DataKey'
 import {
   Ledger,
   Ledger__factory,
@@ -16,4 +16,4 @@ export default Object.entries(data).reduce(
     ),
   }),
   {}
-) as { [name in DataKeys]: Ledger }
+) as { [name in DataKey]: Ledger }

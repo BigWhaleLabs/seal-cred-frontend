@@ -1,4 +1,4 @@
-import { TinyText } from 'components/Text'
+import { TinyText } from 'components/ui/Text'
 import Exclamation from 'icons/Exclamation'
 import classnames, { display, flexDirection, space } from 'classnames/tailwind'
 

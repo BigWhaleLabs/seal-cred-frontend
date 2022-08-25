@@ -1,6 +1,6 @@
 import { SCERC721Ledger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
-import ERC721Proof from 'helpers/proofs/ERC721Proof'
+import Proof from 'models/Proof'
 import env from 'helpers/env'
 import makeTransaction from 'helpers/contracts/makeTransaction'
 
@@ -11,7 +11,7 @@ function createContract(provider: Web3Provider) {
   )
 }
 
-export default async function (provider: Web3Provider, proof: ERC721Proof) {
+export default async function (provider: Web3Provider, proof: Proof) {
   if (!proof.result) throw new Error('Invalid proof')
   const contract = createContract(provider)
   const txData = makeTransaction(proof.result)

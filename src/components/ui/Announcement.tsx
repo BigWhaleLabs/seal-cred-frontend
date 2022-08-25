@@ -1,8 +1,8 @@
-import { AccentText, LinkText } from 'components/Text'
+import { AccentText, LinkText } from 'components/ui/Text'
 import { useLocation } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
-import Button from 'components/proofs/Button'
+import Button from 'components/proofs/ProofButton'
 import Cross from 'icons/Cross'
 import NotificationsStore from 'stores/NotificationsStore'
 import classnames, {

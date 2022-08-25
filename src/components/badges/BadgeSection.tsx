@@ -1,9 +1,9 @@
 import { ComponentChildren } from 'preact'
 import BadgeBlock from 'components/badges/BadgeBlock'
 import BadgesOwnedForContract from 'components/badges/BadgesOwnedForContract'
-import BaseProof from 'helpers/proofs/BaseProof'
 import ChildrenProp from 'models/ChildrenProp'
-import Section from 'components/Section'
+import Proof from 'models/Proof'
+import Section from 'components/ui/Section'
 import classnames, {
   display,
   gap,
@@ -26,7 +26,7 @@ export default function ({
 }: ChildrenProp & {
   title?: ComponentChildren
   minted: string[]
-  proofs: BaseProof[]
+  proofs: Proof[]
   onMinted?: () => void
 }) {
   if (minted.length === 0 && proofs.length === 0) return null
@@ -35,7 +35,7 @@ export default function ({
     <Section title={title}>
       <div className={badgesList}>
         {proofs.map((proof) => (
-          <BadgeBlock onMinted={onMinted} key={proof.origin} proof={proof} />
+          <BadgeBlock onMinted={onMinted} key={proof.original} proof={proof} />
         ))}
         {minted.map((contractAddress) => (
           <BadgesOwnedForContract
