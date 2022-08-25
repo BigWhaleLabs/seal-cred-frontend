@@ -22,7 +22,7 @@ export default async function generateEmail(
       dataType: 'Email' as DataKeys,
       result,
     }
-    store.proofsCompleted.push()
+    store.proofsCompleted.push(proof)
     return proof
   } catch (e) {
     handleError(e)

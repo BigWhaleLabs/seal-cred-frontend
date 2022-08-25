@@ -54,14 +54,15 @@ export default {
     badgeType: BadgeSourceType.Email,
     network: Network.Goerli,
     mint: createEmailBadge,
-    createProof: async (
+    createProof: (
       store: ProofStore,
       original: string,
       options?: {
         secret: string
       }
     ) => {
-      if (options?.secret) await generateEmail(store, original, options.secret)
+      if (!options?.secret) return Promise.resolve()
+      return generateEmail(store, original, options.secret)
     },
   },
   ERC721: {

@@ -10,8 +10,6 @@ import ProofsList from 'components/proofs/ProofsList'
 export default function ({ dataKey }: { dataKey: DataKeys }) {
   const { proofsCompleted } = useSnapshot(ProofStore[dataKey])
 
-  console.log(proofsCompleted)
-
   return (
     <ProofSection
       title={
