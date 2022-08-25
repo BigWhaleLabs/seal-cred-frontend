@@ -1,6 +1,4 @@
-import Categories from 'models/Categorelies'
-import Email from 'icons/Email'
-import Nft from 'icons/Nft'
+import { CategoriesTitles, categories } from 'models/Categories'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -37,31 +35,24 @@ const iconWrapper = (active: boolean) =>
     width('w-9'),
     height('h-9')
   )
-const emailIconSizes = classnames(width('w-4'), height('h-3'))
 
 export default function ({
   currentCategory,
   setCategory,
 }: {
-  currentCategory: Categories
-  setCategory: (category: Categories) => void
+  currentCategory: CategoriesTitles
+  setCategory: (category: CategoriesTitles) => void
 }) {
   return (
     <div className={menuWrapper}>
-      <div
-        className={iconWrapper(currentCategory === Categories.NFTs)}
-        onClick={() => setCategory(Categories.NFTs)}
-      >
-        <Nft inheritStrokeColor />
-      </div>
-      <div
-        className={iconWrapper(currentCategory === Categories.Email)}
-        onClick={() => setCategory(Categories.Email)}
-      >
-        <div className={emailIconSizes}>
-          <Email customSize inheritStrokeColor />
+      {Object.entries(categories).map(([title, { icon }]) => (
+        <div
+          className={iconWrapper(currentCategory === title)}
+          onClick={() => setCategory(title as CategoriesTitles)}
+        >
+          {icon}
         </div>
-      </div>
+      ))}
     </div>
   )
 }

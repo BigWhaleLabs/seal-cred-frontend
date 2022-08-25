@@ -1,4 +1,5 @@
 import { AccentText, BodyText } from 'components/Text'
+import { CategoriesTitles } from 'models/Categories'
 import { Suspense, useState } from 'preact/compat'
 import {
   classnames,
@@ -9,7 +10,6 @@ import {
   space,
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import Categories from 'models/Categorelies'
 import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
 import EmailProof from 'components/proofs/EmailProof'
 import Network from 'models/Network'
@@ -30,7 +30,7 @@ const menuWrapper = classnames(display('flex'), gap('gap-x-4'))
 export function ProofListSuspended() {
   const { account } = useSnapshot(WalletStore)
   const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
-  const [category, setCategory] = useState<Categories>(Categories.NFTs)
+  const [category, setCategory] = useState<CategoriesTitles>('NFTs')
 
   return (
     <>
@@ -42,7 +42,7 @@ export function ProofListSuspended() {
           />
           <div className={proofList}>
             <BodyText>{category}</BodyText>
-            {account && category === Categories.NFTs && (
+            {account && category === 'NFTs' && (
               <>
                 <ERC721ProofSection
                   account={account}
@@ -54,7 +54,7 @@ export function ProofListSuspended() {
                 />
               </>
             )}
-            {category === Categories.Email && (
+            {category === 'Email' && (
               <ProofSection>
                 {Array.from(emailProofsCompleted).map((proof, index) => (
                   <ReadyEmailProof
