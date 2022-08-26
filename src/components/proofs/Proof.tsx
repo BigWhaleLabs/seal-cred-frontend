@@ -29,23 +29,21 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const proofName = classnames(display('flex'), flex('flex-1'))
 
-const proofText = (small?: boolean) =>
-  classnames(
-    display('flex'),
-    flexDirection('flex-row'),
-    space('space-x-2'),
-    small ? justifyContent('justify-between') : undefined,
-    width(small ? 'w-full' : 'w-fit'),
-    maxWidth('max-w-fit'),
-    alignItems('items-center'),
-    fontFamily('font-primary'),
-    lineHeight('leading-5'),
-    fontSize('text-sm')
-  )
+const proofText = classnames(
+  display('flex'),
+  flexDirection('flex-row'),
+  space('space-x-2'),
+  justifyContent('justify-start', 'xs:justify-between'),
+  width('w-full', 'xs:w-fit'),
+  maxWidth('max-w-fit'),
+  alignItems('items-center'),
+  fontFamily('font-primary'),
+  lineHeight('leading-5'),
+  fontSize('text-sm')
+)
 
 const textWithIcon = classnames(
   display('flex'),
@@ -120,7 +118,6 @@ export default function ({
   contractAddress: string
   network: Network
 }) {
-  const { xs } = useBreakpoints()
   const { color, content } = useProofContent(contractAddress, network, proof)
 
   return (
@@ -133,7 +130,7 @@ export default function ({
         </ProofText>
       </div>
 
-      <div className={proofText(xs)}>
+      <div className={proofText}>
         <AccentText bold color={color}>
           {content}
         </AccentText>

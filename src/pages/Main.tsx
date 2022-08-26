@@ -1,3 +1,4 @@
+import { displayFromLg, displayToLg } from 'helpers/visibilityClassnames'
 import Badges from 'components/badges/Badges'
 import CardSeparator from 'components/CardSeparator'
 import ProofsCard from 'components/proofs/Card'
@@ -8,7 +9,6 @@ import classnames, {
   flexDirection,
   justifyContent,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const mainBlock = classnames(
   display('flex'),
@@ -18,27 +18,31 @@ const mainBlock = classnames(
 )
 
 export default function () {
-  const { lg } = useBreakpoints()
-
   return (
     <div className={mainBlock}>
       <ProofsCard />
-      <CardSeparator
-        numberOfLines={3}
-        gradient="accent-to-secondary"
-        vertical={!lg}
-      />
+      <>
+        <CardSeparator
+          className={displayToLg}
+          numberOfLines={3}
+          gradient="accent-to-secondary"
+          vertical
+        />
+        <CardSeparator
+          className={displayFromLg}
+          numberOfLines={3}
+          gradient="accent-to-secondary"
+        />
+      </>
       <Badges />
-      {!lg && (
-        <>
-          <CardSeparator
-            numberOfLines={1}
-            gradient="secondary-to-transparent"
-            vertical
-          />
-          <ZkProofHint />
-        </>
-      )}
+      <div className={classnames(displayToLg, flexDirection('flex-col'))}>
+        <CardSeparator
+          numberOfLines={1}
+          gradient="secondary-to-transparent"
+          vertical
+        />
+        <ZkProofHint />
+      </div>
     </div>
   )
 }

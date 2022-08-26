@@ -15,16 +15,15 @@ import classnames, {
   width,
   wordBreak,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
-const contractContainer = (small?: boolean, breakWords?: boolean) =>
+const contractContainer = (breakWords?: boolean) =>
   classnames(
     display('flex'),
     flexWrap('flex-wrap'),
-    flexDirection(small ? 'flex-col' : 'flex-row'),
-    alignItems(small ? 'items-start' : 'items-center'),
+    flexDirection('flex-col', 'xs:flex-row'),
+    alignItems('items-start', 'xs:items-center'),
     justifyContent('justify-between'),
-    space(small ? 'space-y-1' : 'space-x-2'),
+    space('space-y-1', 'xs:space-y-0', 'xs:space-x-2'),
     backgroundColor('bg-primary-dimmed'),
     borderRadius('rounded-lg'),
     height('h-fit'),
@@ -39,7 +38,5 @@ export default function ({
   children,
   breakWords,
 }: ChildrenProp & { breakWords?: boolean }) {
-  const { xs } = useBreakpoints()
-
-  return <div className={contractContainer(xs, breakWords)}>{children}</div>
+  return <div className={contractContainer(breakWords)}>{children}</div>
 }

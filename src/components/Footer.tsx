@@ -1,4 +1,5 @@
 import { FooterLink, SocialLink } from 'components/Text'
+import { displayToMd } from 'helpers/visibilityClassnames'
 import Delimiter from 'components/Delimiter'
 import Discord from 'icons/Discord'
 import FooterLogo from 'icons/FooterLogo'
@@ -11,7 +12,6 @@ import classnames, {
   padding,
   space,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const commonClasses = classnames(display('flex'), alignItems('items-center'))
 const socialContainerCard = classnames(
@@ -39,8 +39,6 @@ const footerLogo = classnames(
 )
 
 export default function () {
-  const { md } = useBreakpoints()
-
   return (
     <div className={socialContainerCard}>
       <div className={linkContainer}>
@@ -59,7 +57,7 @@ export default function () {
           Privacy policy
         </FooterLink>
       </div>
-      {!md && (
+      <span className={displayToMd}>
         <div className={socialContainer}>
           <SocialLink url="https://discord.gg/NHk96pPZUV">
             <Discord />
@@ -69,7 +67,7 @@ export default function () {
             <Twitter />
           </SocialLink>
         </div>
-      )}
+      </span>
     </div>
   )
 }
