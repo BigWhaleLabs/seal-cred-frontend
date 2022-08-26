@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 
-const xsSize = 279
-const smSize = 375
+const xxsSize = 279
+const xsSize = 360
+const smSize = 450
 const mdSize = 600
+const lgSize = 1024
 
 export default function () {
   const [width, setWidth] = useState(window.innerWidth)
@@ -19,9 +21,10 @@ export default function () {
   }, [])
 
   return {
-    xxs: width > xsSize,
-    xs: width > xsSize && width <= smSize,
+    xxs: width > xxsSize,
+    xs: width > xxsSize && width <= xsSize,
     sm: width > smSize,
     md: width > mdSize,
+    lg: width > lgSize,
   }
 }

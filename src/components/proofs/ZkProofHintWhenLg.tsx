@@ -1,11 +1,13 @@
-import { displayFromLg } from 'helpers/visibilityClassnames'
+import { displayFrom } from 'helpers/visibilityClassnames'
 import CardSeparator from 'components/CardSeparator'
 import ZkProofHint from 'components/ZkProofHint'
 import classnames, { flexDirection } from 'classnames/tailwind'
 
+const container = classnames(displayFrom('lg'), flexDirection('flex-col'))
+
 export default function () {
   return (
-    <div className={classnames(displayFromLg, flexDirection('flex-col'))}>
+    <div className={container}>
       <CardSeparator
         numberOfLines={1}
         gradient="accent-to-transparent"

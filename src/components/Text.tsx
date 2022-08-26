@@ -70,7 +70,11 @@ const accentText = (
     ),
     fontFamily(primary ? 'font-primary' : undefined),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize({ 'text-sm': small, 'text-xs': extraSmall }),
+    fontSize({
+      'text-sm': small,
+      'text-xs': extraSmall,
+      'sm:text-base': extraSmall,
+    }),
     dropShadow(shadow)
   )
 export function AccentText({
@@ -231,13 +235,11 @@ const linkText = (
     textColor(
       gradientFrom && gradientTo ? 'text-transparent' : color || 'text-accent'
     ),
-    backgroundImage(
-      gradientFrom && gradientTo ? 'bg-gradient-to-r' : undefined
-    ),
-    backgroundClip(gradientFrom && gradientTo ? 'bg-clip-text' : undefined),
+    backgroundImage({ 'bg-gradient-to-r': !!gradientFrom && !!gradientTo }),
+    backgroundClip({ 'bg-clip-text': !!gradientFrom && !!gradientTo }),
     fontSize('text-sm', 'xs:text-base'),
     gradientColorStops(gradientFrom, gradientTo),
-    fontWeight(bold ? 'font-bold' : 'font-normal')
+    fontWeight({ 'font-bold': bold })
   )
 export function LinkText({
   url,

@@ -1,8 +1,8 @@
 import { AccentText } from 'components/Text'
-import { displayFromMd } from 'helpers/visibilityClassnames'
+import { displayFrom } from 'helpers/visibilityClassnames'
 import classnames, { width } from 'classnames/tailwind'
 
-const bottomSeparator = classnames(width('w-fit'), displayFromMd)
+const bottomSeparator = classnames(width('w-fit'), displayFrom('md'))
 
 export default function () {
   return (

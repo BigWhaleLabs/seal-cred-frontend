@@ -1,4 +1,6 @@
+import { displayFrom } from 'helpers/visibilityClassnames'
 import classnames, {
+  TArg,
   borderRadius,
   boxShadow,
   boxShadowColor,
@@ -7,11 +9,14 @@ import classnames, {
   strokeWidth,
 } from 'classnames/tailwind'
 
-const svgClasses = classnames(
-  boxShadow('shadow-lg'),
-  boxShadowColor('shadow-secondary'),
-  borderRadius('rounded-full')
-)
+const showOnMd = displayFrom('sm')
+const svgClasses = (show?: TArg) =>
+  classnames(
+    show,
+    boxShadow('shadow-lg'),
+    boxShadowColor('shadow-secondary'),
+    borderRadius('rounded-full')
+  )
 const walletClasses = (connected?: boolean, isFilled?: boolean) =>
   classnames(
     strokeWidth('stroke-2'),
@@ -27,7 +32,7 @@ export default function ({ connected }: { connected?: boolean }) {
       viewBox="0 0 42 42"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={svgClasses}
+      className={svgClasses(showOnMd)}
     >
       <circle
         cx="21"
@@ -83,6 +88,7 @@ export default function ({ connected }: { connected?: boolean }) {
       height="42"
       viewBox="0 0 42 42"
       fill="none"
+      className={showOnMd}
       xmlns="http://www.w3.org/2000/svg"
     >
       <circle

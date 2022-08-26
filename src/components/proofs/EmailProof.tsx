@@ -1,5 +1,5 @@
 import { ProofText, TextButton } from 'components/Text'
-import { displayFromXs } from 'helpers/visibilityClassnames'
+import { displayFrom } from 'helpers/visibilityClassnames'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
@@ -11,6 +11,7 @@ import QuestionMark from 'components/QuestionMark'
 import SimpleArrow from 'icons/SimpleArrow'
 import ToolTip from 'components/ToolTip'
 import classnames, {
+  TArg,
   alignItems,
   backgroundClip,
   backgroundImage,
@@ -37,8 +38,9 @@ const arrowContainer = classnames(
   space('space-x-2')
 )
 
-const getStartedText = (open: boolean) =>
+const getStartedText = (open: boolean, classes: TArg) =>
   classnames(
+    classes,
     textColor('text-transparent', 'active:text-accent'),
     transitionProperty('transition-colors'),
     backgroundClip('bg-clip-text'),
@@ -132,11 +134,9 @@ export default function () {
             </div>
           </div>
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
-            <div className={displayFromXs}>
-              <span className={getStartedText(open)}>
-                <span>{domain ? 'Set token' : 'Get started'}</span>
-              </span>
-            </div>
+            <span className={getStartedText(open, displayFrom('xs'))}>
+              <span>{domain ? 'Set token' : 'Get started'}</span>
+            </span>
             <div className={width('w-4')}>
               <Arrow pulseDisabled open={open} />
             </div>

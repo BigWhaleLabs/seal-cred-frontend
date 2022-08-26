@@ -1,6 +1,7 @@
 import { GoerliENSStore } from 'stores/ENSStore'
 import { Suspense, memo } from 'react'
 import { display } from 'classnames/tailwind'
+import { displayFrom, displayTo } from 'helpers/visibilityClassnames'
 import { useSnapshot } from 'valtio'
 import Network from 'models/Network'
 import truncateMiddleIfNeeded from 'helpers/truncateMiddleIfNeeded'
@@ -47,16 +48,16 @@ function ENSAddress({
 
 export default memo<ENSAddressProps>(({ address, network }) => {
   return (
-    <span>
-      <span className={display('block', 'md:hidden')}>
+    <>
+      <span className={displayTo('md')}>
         <ENSAddress address={address} network={network} truncateSize={11} />
       </span>
-      <span className={display('hidden', 'md:block', 'lg:hidden')}>
+      <span className={display(displayFrom('md'), 'lg:hidden')}>
         <ENSAddress address={address} network={network} truncateSize={17} />
       </span>
-      <span className={display('hidden', 'lg:block')}>
+      <span className={displayFrom('lg')}>
         <ENSAddress address={address} network={network} truncateSize={25} />
       </span>
-    </span>
+    </>
   )
 })

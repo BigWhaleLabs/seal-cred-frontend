@@ -1,5 +1,5 @@
 import { FooterLink, SocialLink } from 'components/Text'
-import { displayToMd } from 'helpers/visibilityClassnames'
+import { displayTo } from 'helpers/visibilityClassnames'
 import Delimiter from 'components/Delimiter'
 import Discord from 'icons/Discord'
 import FooterLogo from 'icons/FooterLogo'
@@ -37,6 +37,7 @@ const footerLogo = classnames(
   flexDirection('flex-row'),
   space('space-x-4')
 )
+const socialLinksContainer = classnames(displayTo('md'), socialContainer)
 
 export default function () {
   return (
@@ -57,17 +58,15 @@ export default function () {
           Privacy policy
         </FooterLink>
       </div>
-      <span className={displayToMd}>
-        <div className={socialContainer}>
-          <SocialLink url="https://discord.gg/NHk96pPZUV">
-            <Discord />
-          </SocialLink>
-          <Delimiter />
-          <SocialLink url="https://twitter.com/bigwhalelabs">
-            <Twitter />
-          </SocialLink>
-        </div>
-      </span>
+      <div className={socialLinksContainer}>
+        <SocialLink url="https://discord.gg/NHk96pPZUV">
+          <Discord />
+        </SocialLink>
+        <Delimiter />
+        <SocialLink url="https://twitter.com/bigwhalelabs">
+          <Twitter />
+        </SocialLink>
+      </div>
     </div>
   )
 }

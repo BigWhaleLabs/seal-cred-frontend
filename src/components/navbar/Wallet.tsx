@@ -1,14 +1,11 @@
 import { SocialLink } from 'components/Text'
-import { displayFromMd } from 'helpers/visibilityClassnames'
+import { displayFrom } from 'helpers/visibilityClassnames'
 import { useSnapshot } from 'valtio'
-import ConnectedAddress from 'components/navbar/Connected/Address'
-import ConnectedLogo from 'components/navbar/Connected/Logo'
+import AccountAndLogo from 'components/navbar/AccountAndLogo'
 import Discord from 'icons/Discord'
 import ExternalLink from 'components/ExternalLink'
 import Network from 'models/Network'
 import Twitter from 'icons/Twitter'
-import UnconnectedAddress from 'components/navbar/Unconnected/Address'
-import UnconnectedLogo from 'components/navbar/Unconnected/Logo'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
@@ -17,9 +14,7 @@ import classnames, {
   cursor,
   display,
   height,
-  lineHeight,
   space,
-  textAlign,
   width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
@@ -36,10 +31,6 @@ const accountLinkContainer = classnames(
   space('xs:space-x-4', 'space-x-2'),
   cursor('cursor-pointer')
 )
-const walletAccount = classnames(
-  textAlign('text-right'),
-  lineHeight('leading-5')
-)
 const socialContainer = classnames(
   display('inline-flex'),
   alignItems('items-center'),
@@ -51,6 +42,7 @@ const delimiterContainer = classnames(
   width('w-px'),
   height('h-4')
 )
+const socialLinksContainer = classnames(displayFrom('md'), socialContainer)
 
 const AccountContainer = ({ account }: { account?: string }) => {
   const { needNetworkChange } = useSnapshot(WalletStore)
@@ -59,12 +51,7 @@ const AccountContainer = ({ account }: { account?: string }) => {
     return (
       <ExternalLink url={getEtherscanAddressUrl(account, Network.Goerli)}>
         <div className={accountLinkContainer}>
-          <div className={walletAccount}>
-            <ConnectedAddress account={account} />
-          </div>
-          <div className={width('w-fit')}>
-            <ConnectedLogo />
-          </div>
+          <AccountAndLogo account={account} connected={true} />
         </div>
       </ExternalLink>
     )
@@ -79,12 +66,7 @@ const AccountContainer = ({ account }: { account?: string }) => {
         })
       }}
     >
-      <div className={walletAccount}>
-        <UnconnectedAddress needNetworkChange={needNetworkChange} />
-      </div>
-      <div className={width('w-fit')}>
-        <UnconnectedLogo />
-      </div>
+      <AccountAndLogo connected={false} />
     </div>
   )
 }
@@ -94,17 +76,15 @@ export default function () {
 
   return (
     <div className={walletContainer}>
-      <span className={displayFromMd}>
-        <div className={socialContainer}>
-          <SocialLink url="https://discord.gg/NHk96pPZUV">
-            <Discord />
-          </SocialLink>
-          <SocialLink url="https://twitter.com/bigwhalelabs">
-            <Twitter />
-          </SocialLink>
-          <hr className={delimiterContainer} />
-        </div>
-      </span>
+      <div className={socialLinksContainer}>
+        <SocialLink url="https://discord.gg/NHk96pPZUV">
+          <Discord />
+        </SocialLink>
+        <SocialLink url="https://twitter.com/bigwhalelabs">
+          <Twitter />
+        </SocialLink>
+        <hr className={delimiterContainer} />
+      </div>
 
       <AccountContainer account={account} />
     </div>

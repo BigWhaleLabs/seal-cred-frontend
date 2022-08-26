@@ -1,5 +1,5 @@
 import { BodyText } from 'components/Text'
-import { displayFromSm, displayFromXsToSm } from 'helpers/visibilityClassnames'
+import { displayFrom, displayTo } from 'helpers/visibilityClassnames'
 import Card from 'components/Card'
 import ChildrenProp from 'models/ChildrenProp'
 import DoubleSmile from 'icons/DoubleSmile'
@@ -57,12 +57,12 @@ export default function ({
           )}
           {left && <NoisyRectangle bgColor="bg-accent" />}
         </div>
-        <span className={displayFromXsToSm}>
+        <span className={displayTo('sm')}>
           <BodyText small center>
             {text}
           </BodyText>
         </span>
-        <span className={displayFromSm}>
+        <span className={displayFrom('sm')}>
           <BodyText center>{text}</BodyText>
         </span>
         {left ? <DoubleSmile /> : <Grim />}
