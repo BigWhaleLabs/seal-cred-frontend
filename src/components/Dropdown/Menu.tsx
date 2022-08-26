@@ -19,12 +19,12 @@ import classnames, {
 const container = (closed: boolean) =>
   classnames(
     position('absolute'),
-    inset('top-7'),
+    inset('top-7', '-left-2.5'),
     opacity({ 'opacity-0': closed }),
     visibility({ invisible: closed }),
     zIndex('z-40'),
     transitionProperty('transition-all'),
-    width('w-full')
+    width('w-full-105')
   )
 const menuItem = (selected?: boolean) =>
   classnames(
