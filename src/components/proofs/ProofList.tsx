@@ -44,11 +44,10 @@ export function ProofListSuspended() {
             <div className={display('md:block', 'hidden')}>
               <BodyText>{category}</BodyText>
             </div>
-            {account &&
-              category === 'NFTs' &&
-              categories['NFTs'].contentToRender(account)}
-            {category === 'Email' &&
-              categories['Email'].contentToRender(emailProofsCompleted)}
+            {categories[category].contentToRender(
+              account,
+              emailProofsCompleted
+            )}
           </div>
         </div>
       </Scrollbar>

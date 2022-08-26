@@ -1,3 +1,4 @@
+import { JSX } from 'preact/jsx-runtime'
 import { classnames, height, width } from 'classnames/tailwind'
 import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
 import Email from 'icons/Email'
@@ -15,15 +16,28 @@ export interface CategoriesComponentProps {
   setCategory: (category: CategoriesTitles) => void
 }
 
-export const categories = {
+interface Category {
+  [title: string]: {
+    icon: JSX.Element
+    contentToRender: (
+      account?: string,
+      emailProofsCompleted?: readonly EmailProofType[]
+    ) => JSX.Element | null
+  }
+}
+
+export const categories: Category = {
   ['NFTs']: {
     icon: <Nft inheritStrokeColor />,
-    contentToRender: (account: string) => (
-      <>
-        <ERC721ProofSection account={account} network={Network.Mainnet} />
-        <ERC721ProofSection account={account} network={Network.Goerli} />
-      </>
-    ),
+    contentToRender: (account) => {
+      if (!account) return null
+      return (
+        <>
+          <ERC721ProofSection account={account} network={Network.Mainnet} />
+          <ERC721ProofSection account={account} network={Network.Goerli} />
+        </>
+      )
+    },
   },
   ['Email']: {
     icon: (
@@ -31,7 +45,7 @@ export const categories = {
         <Email customSize inheritStrokeColor />
       </div>
     ),
-    contentToRender: (emailProofsCompleted?: readonly EmailProofType[]) => (
+    contentToRender: (_, emailProofsCompleted) => (
       <ProofSection>
         {emailProofsCompleted &&
           Array.from(emailProofsCompleted).map((proof, index) => (
