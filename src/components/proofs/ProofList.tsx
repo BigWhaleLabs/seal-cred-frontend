@@ -1,5 +1,5 @@
 import { AccentText, BodyText } from 'components/Text'
-import { CategoriesTitles } from 'models/Categories'
+import { CategoriesTitles, categories } from 'models/Categories'
 import { Suspense, useState } from 'preact/compat'
 import {
   classnames,
@@ -11,13 +11,8 @@ import {
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import DesktopProofCategories from 'components/proofs/DesktopProofCategories'
-import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
-import EmailProof from 'components/proofs/EmailProof'
 import MobileProofCategories from 'components/proofs/MobileProofCategories'
-import Network from 'models/Network'
-import ProofSection from 'components/ProofSection'
 import ProofStore from 'stores/ProofStore'
-import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
 
@@ -49,29 +44,11 @@ export function ProofListSuspended() {
             <div className={display('md:block', 'hidden')}>
               <BodyText>{category}</BodyText>
             </div>
-            {account && category === 'NFTs' && (
-              <>
-                <ERC721ProofSection
-                  account={account}
-                  network={Network.Mainnet}
-                />
-                <ERC721ProofSection
-                  account={account}
-                  network={Network.Goerli}
-                />
-              </>
-            )}
-            {category === 'Email' && (
-              <ProofSection>
-                {Array.from(emailProofsCompleted).map((proof, index) => (
-                  <ReadyEmailProof
-                    proof={proof}
-                    key={`${proof.domain}-${index}`}
-                  />
-                ))}
-                <EmailProof />
-              </ProofSection>
-            )}
+            {account &&
+              category === 'NFTs' &&
+              categories['NFTs'].contentToRender(account)}
+            {category === 'Email' &&
+              categories['Email'].contentToRender(emailProofsCompleted)}
           </div>
         </div>
       </Scrollbar>
