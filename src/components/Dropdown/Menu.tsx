@@ -8,6 +8,7 @@ import classnames, {
   opacity,
   padding,
   position,
+  textColor,
   transitionProperty,
   visibility,
   width,
@@ -62,6 +63,10 @@ export default function <T>({
             {option.label}
           </p>
         ))}
+        <p className={menuItem(false)} disabled>
+          <span className={opacity('opacity-30')}>Assets</span>{' '}
+          <span className={textColor('text-primary')}>(coming soon)</span>
+        </p>
       </ItemContainer>
     </div>
   )
