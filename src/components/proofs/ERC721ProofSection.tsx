@@ -29,7 +29,7 @@ export function ERC721ProofSection({
     networkProofAddressesAvailableToCreate.length === 0
 
   return (
-    <ProofSection title={<BodyText>{network} NFTs</BodyText>}>
+    <>
       <ReadyERC721ProofsList network={network} />
       {account && (
         <AvailableProofsList
@@ -44,7 +44,7 @@ export function ERC721ProofSection({
           </HintText>
         </HintCard>
       )}
-    </ProofSection>
+    </>
   )
 }
 
@@ -56,18 +56,18 @@ export default function ERC721ProofSectionSuspended({
   network: Network
 }) {
   return (
-    <Suspense
-      fallback={
-        <ProofSection title={<BodyText>{network} NFTs</BodyText>}>
+    <ProofSection title={<BodyText>{network}</BodyText>}>
+      <Suspense
+        fallback={
           <HintCard small marginY={false}>
             <HintText bold center>
               Loading...
             </HintText>
           </HintCard>
-        </ProofSection>
-      }
-    >
-      <ERC721ProofSection account={account} network={network} />
-    </Suspense>
+        }
+      >
+        <ERC721ProofSection account={account} network={network} />
+      </Suspense>
+    </ProofSection>
   )
 }
