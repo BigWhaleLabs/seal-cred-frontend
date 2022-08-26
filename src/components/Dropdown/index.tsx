@@ -17,11 +17,11 @@ import useClickOutside from 'hooks/useClickOutside'
 
 const button = classnames(
   display('flex'),
-  justifyContent('justify-between'),
+  justifyContent('justify-start'),
   alignItems('items-center'),
-  width('w-full'),
   gap('gap-x-2'),
-  opacity('disabled:opacity-30')
+  opacity('disabled:opacity-30'),
+  textColor('text-primary')
 )
 
 const container = classnames(position('relative'), width('md:w-fit'))
@@ -61,7 +61,7 @@ export default function <T>({
 
   return (
     <div className={container} ref={ref}>
-      <span className={textColor('text-primary')}>{selectedElement}</span>
+      {selectedElement}
       <Menu
         open={open}
         options={options}
