@@ -17,6 +17,10 @@ export class ProofStore extends PersistableStore {
     proof: Proof
   ) => Promise<ContractReceipt>
 
+  get persistanceName() {
+    return `ProofStore_${this.dataKey}`
+  }
+
   constructor(
     dataKey: DataKey,
     createBadge: (

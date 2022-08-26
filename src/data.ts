@@ -68,7 +68,7 @@ export default {
   ERC721: {
     ledger: env.VITE_SC_ERC721_LEDGER_CONTRACT_ADDRESS,
     title: 'Goerli NFT derivatives',
-    proofTitle: 'Additional proofs',
+    proofTitle: 'Goerli NFTs',
     ownerTitle: 'This wallet owns a {derivative}',
     ownerContent:
       'This is a zkNFT derivative. It means this person has been verified to own at least one ‘{original}‘ Goerli NFT.',
