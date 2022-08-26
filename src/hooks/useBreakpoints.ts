@@ -22,7 +22,7 @@ export default function () {
 
   return {
     xxs: width > xxsSize,
-    xs: width > xxsSize && width <= xsSize,
+    xs: width > xsSize,
     sm: width > smSize,
     md: width > mdSize,
     lg: width > lgSize,

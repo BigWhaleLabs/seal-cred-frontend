@@ -1,5 +1,4 @@
 import classnames, {
-  TArg,
   backgroundImage,
   display,
   flexDirection,
@@ -27,9 +26,9 @@ const getTailwindGradient = (gradient: Gradient) =>
       : undefined
   )
 
-const connectiveBlock = (vertical?: boolean, className?: TArg) =>
+const connectiveBlock = (vertical?: boolean) =>
   classnames(
-    className || display('flex'),
+    display('flex'),
     justifyContent(vertical ? 'justify-center' : 'justify-start'),
     flexDirection(vertical ? 'flex-row' : 'flex-col'),
     space(vertical ? 'space-x-2' : 'space-y-2'),
@@ -40,7 +39,6 @@ interface CardSeparatorProps {
   numberOfLines: number
   gradient: Gradient
   vertical?: boolean
-  className?: TArg
 }
 
 const connectiveLine = ({ gradient, vertical }: CardSeparatorProps) =>
@@ -53,7 +51,7 @@ const connectiveLine = ({ gradient, vertical }: CardSeparatorProps) =>
 
 export default function (props: CardSeparatorProps) {
   return (
-    <div className={connectiveBlock(props.vertical, props.className)}>
+    <div className={connectiveBlock(props.vertical)}>
       {Array(props.numberOfLines)
         .fill(null)
         .map((_, index) => (

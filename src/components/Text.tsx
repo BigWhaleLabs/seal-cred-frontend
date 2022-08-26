@@ -229,18 +229,19 @@ const linkText = (
   color?: TTextColor,
   gradientFrom?: TGradientColorStops,
   gradientTo?: TGradientColorStops
-) =>
-  classnames(
+) => {
+  const withGradients = !!gradientFrom && !!gradientTo
+
+  return classnames(
     textDecoration('no-underline'),
-    textColor(
-      gradientFrom && gradientTo ? 'text-transparent' : color || 'text-accent'
-    ),
-    backgroundImage({ 'bg-gradient-to-r': !!gradientFrom && !!gradientTo }),
-    backgroundClip({ 'bg-clip-text': !!gradientFrom && !!gradientTo }),
+    textColor(withGradients ? 'text-transparent' : color || 'text-accent'),
+    backgroundImage({ 'bg-gradient-to-r': withGradients }),
+    backgroundClip({ 'bg-clip-text': withGradients }),
     fontSize('text-sm', 'xs:text-base'),
     gradientColorStops(gradientFrom, gradientTo),
     fontWeight({ 'font-bold': bold })
   )
+}
 export function LinkText({
   url,
   bold,

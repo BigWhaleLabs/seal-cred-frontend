@@ -11,7 +11,6 @@ import QuestionMark from 'components/QuestionMark'
 import SimpleArrow from 'icons/SimpleArrow'
 import ToolTip from 'components/ToolTip'
 import classnames, {
-  TArg,
   alignItems,
   backgroundClip,
   backgroundImage,
@@ -38,9 +37,9 @@ const arrowContainer = classnames(
   space('space-x-2')
 )
 
-const getStartedText = (open: boolean, classes: TArg) =>
+const getStartedText = (open: boolean) =>
   classnames(
-    classes,
+    displayFrom('xs'),
     textColor('text-transparent', 'active:text-accent'),
     transitionProperty('transition-colors'),
     backgroundClip('bg-clip-text'),
@@ -134,7 +133,7 @@ export default function () {
             </div>
           </div>
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
-            <span className={getStartedText(open, displayFrom('xs'))}>
+            <span className={getStartedText(open)}>
               <span>{domain ? 'Set token' : 'Get started'}</span>
             </span>
             <div className={width('w-4')}>
