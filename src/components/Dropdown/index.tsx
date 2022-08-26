@@ -5,8 +5,13 @@ import Menu from 'components/Dropdown/Menu'
 import Option from 'components/Dropdown/Option'
 import classnames, {
   alignItems,
+  backgroundClip,
+  backgroundImage,
   display,
+  fontSize,
+  fontWeight,
   gap,
+  gradientColorStops,
   justifyContent,
   opacity,
   position,
@@ -15,16 +20,27 @@ import classnames, {
 } from 'classnames/tailwind'
 import useClickOutside from 'hooks/useClickOutside'
 
+const textStyles = classnames(
+  fontWeight('font-bold'),
+  fontSize('text-sm'),
+  textColor('text-transparent'),
+  backgroundImage('bg-gradient-to-r'),
+  backgroundClip('bg-clip-text'),
+  gradientColorStops('from-secondary', 'to-accent')
+)
 const button = classnames(
   display('flex'),
   justifyContent('justify-start'),
   alignItems('items-center'),
   gap('gap-x-2'),
-  opacity('disabled:opacity-30'),
-  textColor('text-primary')
+  opacity('disabled:opacity-30')
 )
 
-const container = classnames(position('relative'), width('md:w-fit'))
+const container = classnames(
+  position('relative'),
+  width('md:w-fit'),
+  display('md:hidden', 'block')
+)
 
 export default function <T>({
   disabled,
@@ -52,8 +68,8 @@ export default function <T>({
       className={button}
       disabled={disabled}
     >
-      {selectedOption?.label || placeholder}
-      <div className={width('w-5')}>
+      <span className={textStyles}>{selectedOption?.label || placeholder}</span>
+      <div className={width('w-4')}>
         <Arrow pulseDisabled open={open} />
       </div>
     </button>

@@ -8,7 +8,6 @@ import classnames, {
   opacity,
   padding,
   position,
-  textColor,
   transitionProperty,
   visibility,
   width,
@@ -19,7 +18,7 @@ import classnames, {
 const container = (closed: boolean) =>
   classnames(
     position('absolute'),
-    inset('top-8', 'sm:left-0'),
+    inset('top-7'),
     opacity({ 'opacity-0': closed }),
     visibility({ invisible: closed }),
     zIndex('z-40'),
@@ -32,8 +31,9 @@ const menuItem = (selected?: boolean) =>
     cursor('cursor-pointer'),
     borderRadius('rounded-md'),
     wordBreak('break-all'),
-    textColor({ 'text-primary': selected }),
-    backgroundColor('hover:bg-primary-background'),
+    backgroundColor('hover:bg-primary-background', {
+      'bg-primary-dimmed': selected,
+    }),
     transitionProperty('transition-colors')
   )
 

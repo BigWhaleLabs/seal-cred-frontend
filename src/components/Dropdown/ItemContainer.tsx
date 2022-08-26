@@ -12,12 +12,10 @@ import classnames, {
   overflow,
   padding,
   transitionProperty,
-  width,
 } from 'classnames/tailwind'
 
 export const boxStyles = (withPadding?: boolean) =>
   classnames(
-    width('w-52'),
     borderRadius('rounded-lg'),
     borderWidth('border'),
     borderColor('border-formal-accent', 'focus:border-formal-accent'),
