@@ -7391,6 +7391,7 @@ export type TWidth =
   | 'w-thin-mobile'
   | 'w-thin-card'
   | 'w-card'
+  | 'w-app-card'
   | 'w-mobile-card'
   | 'w-full-125'
   | 'w-full-105'
@@ -7429,7 +7430,6 @@ export type TMaxWidth =
   | 'max-w-screen-lg'
   | 'max-w-screen-xl'
   | 'max-w-screen-2xl'
-  | 'max-w-app-card'
   | 'max-w-screen-fold'
   | 'max-w-screen-tiny'
 

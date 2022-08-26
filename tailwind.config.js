@@ -21,7 +21,6 @@ module.exports = {
       },
       maxWidth: {
         100: '6.25rem',
-        'app-card': '38.125rem',
       },
       keyframes: {
         'pulse-horizontal': {
@@ -103,6 +102,7 @@ module.exports = {
         'thin-mobile': '10.75rem',
         'thin-card': '11.688rem',
         card: '24.875rem',
+        'app-card': '36.125rem',
         'mobile-card': '92%',
         'full-125': '125%',
         'full-105': '105%',
