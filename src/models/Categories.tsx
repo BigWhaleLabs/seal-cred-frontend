@@ -1,5 +1,6 @@
+import { AccentText } from 'components/Text'
 import { JSX } from 'preact/jsx-runtime'
-import { classnames, height, width } from 'classnames/tailwind'
+import Coin from 'icons/Coin'
 import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
 import Email from 'icons/Email'
 import EmailProof from 'components/proofs/EmailProof'
@@ -8,8 +9,6 @@ import Network from 'models/Network'
 import Nft from 'icons/Nft'
 import ProofSection from 'components/ProofSection'
 import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
-
-const emailIconSizes = classnames(width('w-4'), height('h-3'))
 
 export interface CategoriesComponentProps {
   currentCategory: CategoriesTitles
@@ -23,6 +22,7 @@ interface Category {
       account?: string,
       emailProofsCompleted?: readonly EmailProofType[]
     ) => JSX.Element | null
+    disabled?: boolean
   }
 }
 
@@ -40,11 +40,7 @@ export const categories: Category = {
     },
   },
   ['Email']: {
-    icon: (
-      <div className={emailIconSizes}>
-        <Email customSize inheritStrokeColor />
-      </div>
-    ),
+    icon: <Email inheritStrokeColor customSize={{ w: 16, h: 16 }} />,
     contentToRender: (_, emailProofsCompleted) => (
       <ProofSection>
         {emailProofsCompleted &&
@@ -54,6 +50,13 @@ export const categories: Category = {
         <EmailProof />
       </ProofSection>
     ),
+  },
+  ['Assets (coming soon)']: {
+    icon: <Coin inheritStrokeColor />,
+    contentToRender: () => {
+      return <></>
+    },
+    disabled: true,
   },
 }
 

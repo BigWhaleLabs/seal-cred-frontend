@@ -5,6 +5,8 @@ import classnames, {
   borderColor,
   borderRadius,
   borderWidth,
+  display,
+  flexDirection,
   fontFamily,
   maxHeight,
   outlineColor,
@@ -16,6 +18,8 @@ import classnames, {
 
 export const boxStyles = (withPadding?: boolean) =>
   classnames(
+    display('flex'),
+    flexDirection('flex-col'),
     borderRadius('rounded-lg'),
     borderWidth('border'),
     borderColor('border-formal-accent', 'focus:border-formal-accent'),

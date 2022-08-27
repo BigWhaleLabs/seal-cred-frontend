@@ -11,6 +11,7 @@ import classnames, {
   height,
   inset,
   justifyContent,
+  opacity,
   padding,
   position,
   stroke,
@@ -37,6 +38,7 @@ const iconWrapper = (active: boolean) =>
     backgroundColor({ 'bg-accent': active }),
     stroke(active ? 'stroke-primary-background' : 'stroke-formal-accent'),
     transitionProperty('transition-all'),
+    opacity('disabled:opacity-30'),
     width('w-9'),
     height('h-9')
   )
@@ -47,13 +49,15 @@ export default function ({
 }: CategoriesComponentProps) {
   return (
     <div className={desktopMenuWrapper}>
-      {Object.entries(categories).map(([title, { icon }]) => (
-        <div
+      {Object.entries(categories).map(([title, { icon, disabled }]) => (
+        <button
+          title={title}
           className={iconWrapper(currentCategory === title)}
           onClick={() => setCategory(title as CategoriesTitles)}
+          disabled={disabled}
         >
           {icon}
-        </div>
+        </button>
       ))}
     </div>
   )

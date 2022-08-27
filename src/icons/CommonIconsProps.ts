@@ -1,4 +1,4 @@
 export default interface CommonIconsProps {
   inheritStrokeColor?: boolean
-  customSize?: boolean
+  customSize?: { w: number; h: number }
 }

@@ -9,8 +9,8 @@ export default function ({ customSize, inheritStrokeColor }: CommonIconsProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={customSize ? undefined : '14'}
-      height={customSize ? undefined : '12'}
+      width={customSize?.w || '14'}
+      height={customSize?.h || '12'}
       viewBox="0 0 14 12"
       fill="none"
     >

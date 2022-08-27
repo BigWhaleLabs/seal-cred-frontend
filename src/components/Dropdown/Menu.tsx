@@ -8,7 +8,7 @@ import classnames, {
   opacity,
   padding,
   position,
-  textColor,
+  textAlign,
   transitionProperty,
   visibility,
   width,
@@ -35,6 +35,9 @@ const menuItem = (selected?: boolean) =>
     backgroundColor('hover:bg-primary-background', {
       'bg-primary-dimmed': selected,
     }),
+    width('w-full'),
+    textAlign('text-left'),
+    opacity('disabled:opacity-30'),
     transitionProperty('transition-colors')
   )
 
@@ -53,20 +56,17 @@ export default function <T>({
     <div className={container(!open)}>
       <ItemContainer withPadding>
         {options.map((option) => (
-          <p
+          <button
             key={option.value}
             className={menuItem(option.value === selected?.value)}
             onClick={() => {
               onSelect(option)
             }}
+            disabled={option.disabled}
           >
             {option.label}
-          </p>
+          </button>
         ))}
-        <p className={menuItem(false)} disabled>
-          <span className={opacity('opacity-30')}>Assets</span>{' '}
-          <span className={textColor('text-primary')}>(coming soon)</span>
-        </p>
       </ItemContainer>
     </div>
   )

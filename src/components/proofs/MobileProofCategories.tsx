@@ -16,6 +16,7 @@ export default function ({
       options={Object.keys(categories).map((title) => ({
         label: title,
         value: title,
+        disabled: categories[title].disabled,
       }))}
       onChange={(selectedValue) => {
         setCategory(selectedValue as CategoriesTitles)
