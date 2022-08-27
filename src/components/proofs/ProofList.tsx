@@ -42,7 +42,7 @@ export function ProofListSuspended() {
           />
           <div className={proofList}>
             <div className={display('md:block', 'hidden')}>
-              <BodyText>{category}</BodyText>
+              <BodyText bold>{category}</BodyText>
             </div>
             {categories[category].contentToRender(
               account,
