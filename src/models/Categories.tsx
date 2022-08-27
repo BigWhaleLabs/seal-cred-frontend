@@ -54,7 +54,7 @@ export const categories: Category = {
   ['Assets (coming soon)']: {
     icon: <Coin inheritStrokeColor />,
     contentToRender: () => {
-      return <></>
+      return null
     },
     disabled: true,
   },
