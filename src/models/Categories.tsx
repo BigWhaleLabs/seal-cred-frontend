@@ -1,4 +1,3 @@
-import { AccentText } from 'components/Text'
 import { JSX } from 'preact/jsx-runtime'
 import Coin from 'icons/Coin'
 import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
