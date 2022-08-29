@@ -18,9 +18,7 @@ export default async function generateERC721(
 ) {
   try {
     const account = walletStore.account
-    if (!account) {
-      throw new Error('No account selected')
-    }
+    if (!account) throw new Error('No account selected')
     const eddsaPublicKey = await getEddsaPublicKey()
     const nullifierMessage = getNullifierMessage()
     const nullifierSignature = await walletStore.signMessage(nullifierMessage)
