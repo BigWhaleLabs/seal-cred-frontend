@@ -59,7 +59,8 @@ body {
     )
     0 0/3rem 3rem;
 }
-path {
+path,
+circle {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
