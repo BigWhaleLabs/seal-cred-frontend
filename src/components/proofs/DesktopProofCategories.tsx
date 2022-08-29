@@ -8,6 +8,8 @@ import classnames, {
   backgroundColor,
   borderRadius,
   display,
+  flexDirection,
+  gap,
   height,
   inset,
   justifyContent,
@@ -20,13 +22,15 @@ import classnames, {
 } from 'classnames/tailwind'
 
 const desktopMenuWrapper = classnames(
-  display('md:block', 'hidden'),
+  display('md:flex', 'hidden'),
+  flexDirection('flex-col'),
   position('sticky'),
   inset('top-4'),
   backgroundColor('bg-primary-background'),
   height('h-fit'),
   width('w-fit'),
   padding('p-2'),
+  gap('gap-y-1'),
   borderRadius('rounded-full')
 )
 const iconWrapper = (active: boolean) =>
@@ -35,8 +39,11 @@ const iconWrapper = (active: boolean) =>
     justifyContent('justify-center'),
     alignItems('items-center'),
     borderRadius('rounded-full'),
-    backgroundColor({ 'bg-accent': active }),
-    stroke(active ? 'stroke-primary-background' : 'stroke-formal-accent'),
+    backgroundColor({ 'bg-accent': active }, 'hover:bg-primary-dimmed'),
+    stroke(
+      active ? 'stroke-primary-background' : 'stroke-formal-accent',
+      'hover:stroke-formal-accent'
+    ),
     transitionProperty('transition-all'),
     opacity('disabled:opacity-30'),
     width('w-9'),
