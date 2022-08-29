@@ -36,6 +36,7 @@ export default function ({
   openDisabled,
   open,
 }: ArrowProps) {
+  // same id of <linearGradient> will break multiple usage of this icon
   const strokeId = Math.random().toString()
 
   return (

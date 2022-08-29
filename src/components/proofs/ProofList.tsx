@@ -7,7 +7,6 @@ import {
   flex,
   flexDirection,
   gap,
-  space,
 } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import DesktopProofCategories from 'components/proofs/DesktopProofCategories'
@@ -17,9 +16,10 @@ import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
 
 const proofList = classnames(
+  display('flex'),
   flex('flex-1'),
   flexDirection('flex-col'),
-  space('space-y-2')
+  gap('gap-y-2')
 )
 const menuWrapper = classnames(display('flex'), gap('gap-x-4'))
 
@@ -41,7 +41,7 @@ export function ProofListSuspended() {
             setCategory={setCategory}
           />
           <div className={proofList}>
-            <div className={display('md:block', 'hidden')}>
+            <div className={display('hidden', 'md:block')}>
               <BodyText bold>{category}</BodyText>
             </div>
             {categories[category].contentToRender(

@@ -64,7 +64,7 @@ const appStyles = classnames(
   flexDirection('flex-col'),
   minHeight('sm:min-h-card', 'min-h-fit'),
   maxHeight('max-h-app-card'),
-  width('md:w-app-card', 'w-full')
+  width('w-full', 'md:w-app-card')
 )
 
 const thinWidthStyles = width('sm:!w-thin-card', 'tiny:w-thin-mobile', 'w-32')

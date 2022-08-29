@@ -1,4 +1,5 @@
 import { JSX } from 'preact/jsx-runtime'
+import { width } from 'classnames/tailwind'
 import Coin from 'icons/Coin'
 import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
 import Email from 'icons/Email'
@@ -39,7 +40,11 @@ export const categories: Category = {
     },
   },
   ['Email']: {
-    icon: <Email inheritStrokeColor customSize={{ w: 24, h: 16 }} />,
+    icon: (
+      <div className={width('w-4')}>
+        <Email inheritStrokeColor />
+      </div>
+    ),
     contentToRender: (_, emailProofsCompleted) => (
       <ProofSection>
         {emailProofsCompleted &&

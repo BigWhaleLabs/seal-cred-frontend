@@ -387,8 +387,8 @@ export function SphereText({ children }: ChildrenProp) {
   return <p className={sphereText}>{children}</p>
 }
 
+const sectionTitle = fontSize('text-sm')
 export function SectionTitle({ children }: ChildrenProp) {
-  const sectionTitle = fontSize('text-sm')
   return <p className={sectionTitle}>{children}</p>
 }
 
