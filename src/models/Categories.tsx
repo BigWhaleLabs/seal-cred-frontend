@@ -27,7 +27,7 @@ interface Category {
 }
 
 export const categories: Category = {
-  ['NFTs']: {
+  NFTs: {
     icon: <Nft inheritStrokeColor />,
     contentToRender: (account) => {
       if (!account) return null
@@ -39,7 +39,7 @@ export const categories: Category = {
       )
     },
   },
-  ['Email']: {
+  Email: {
     icon: (
       <div className={width('w-5')}>
         <Email inheritStrokeColor />
@@ -55,7 +55,7 @@ export const categories: Category = {
       </ProofSection>
     ),
   },
-  ['Assets (coming soon)']: {
+  'Assets (coming soon)': {
     icon: <Coin inheritStrokeColor />,
     contentToRender: () => {
       return null
