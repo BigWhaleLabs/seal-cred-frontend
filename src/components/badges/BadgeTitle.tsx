@@ -5,12 +5,10 @@ import Network from 'models/Network'
 import Proof from 'models/Proof'
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
-function ProofName({ proof }: { proof: Proof }) {
-  if (isAddress(proof.original))
-    return (
-      <ContractName hyphens address={proof.original} network={Network.Goerli} />
-    )
-  return <>@{proof.original}</>
+function ProofName({ original }: { original: string }) {
+  if (isAddress(original))
+    return <ContractName hyphens address={original} network={Network.Goerli} />
+  return <>@{original}</>
 }
 
 export default function ({
@@ -36,5 +34,5 @@ export default function ({
 
   if (!proof) return null
 
-  return <ProofName proof={proof} />
+  return <ProofName original={proof.original} />
 }
