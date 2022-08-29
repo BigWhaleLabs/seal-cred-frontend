@@ -42,6 +42,22 @@ function replaceKeywordsInString(
     )
 }
 
+function ContractNameByNetwork({
+  address,
+  network,
+}: {
+  address: string
+  network: Network
+}) {
+  return (
+    <ExternalLink url={getEtherscanAddressUrl(address, network)}>
+      <AccentText color="text-secondary">
+        <ContractName address={address} network={network} />
+      </AccentText>
+    </ExternalLink>
+  )
+}
+
 function BadgeTitle({
   template,
   derivative,
@@ -52,11 +68,7 @@ function BadgeTitle({
   if (!template) return null
 
   const derivativeLink = (
-    <ExternalLink url={getEtherscanAddressUrl(derivative, Network.Goerli)}>
-      <AccentText bold color="text-secondary">
-        <ContractName hyphens address={derivative} network={Network.Goerli} />
-      </AccentText>
-    </ExternalLink>
+    <ContractNameByNetwork address={derivative} network={Network.Goerli} />
   )
 
   const title = replaceKeywordsInString(
@@ -80,11 +92,7 @@ function BadgeContent({
   if (!template) return null
 
   const originalLink = (
-    <ExternalLink url={getEtherscanAddressUrl(original, network)}>
-      <AccentText color="text-secondary">
-        <ContractName address={original} network={network} />
-      </AccentText>
-    </ExternalLink>
+    <ContractNameByNetwork address={original} network={network} />
   )
 
   const content = replaceKeywordsInString(template, '{original}', originalLink)
