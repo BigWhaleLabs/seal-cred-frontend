@@ -4,6 +4,7 @@ import {
   requestAddressOwnershipAttestation,
   requestBalanceAttestation,
 } from 'helpers/attestor'
+import { handleError } from '@big-whale-labs/frontend-utils'
 import { proxy } from 'valtio'
 import BaseProof from 'helpers/BaseProof'
 import ERC721Proof, { ERC721ProofSchema } from 'helpers/ERC721Proof'
@@ -14,7 +15,6 @@ import WalletStore from 'stores/WalletStore'
 import checkNavigator from 'helpers/checkNavigator'
 import env from 'helpers/env'
 import getNullifierMessage from 'helpers/getNullifierMessage'
-import handleError from 'helpers/handleError'
 
 class ProofStore extends PersistableStore {
   proofsCompleted: BaseProof[] = []
