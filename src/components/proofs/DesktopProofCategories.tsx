@@ -30,7 +30,7 @@ const desktopMenuWrapper = classnames(
   height('h-fit'),
   width('w-fit'),
   padding('p-2'),
-  gap('gap-y-1'),
+  gap('gap-y-2'),
   borderRadius('rounded-full')
 )
 const iconWrapper = (active: boolean) =>
