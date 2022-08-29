@@ -3,6 +3,7 @@ import {
   CategoriesTitles,
   categories,
 } from 'models/Categories'
+import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -33,16 +34,16 @@ const desktopMenuWrapper = classnames(
   gap('gap-y-2'),
   borderRadius('rounded-full')
 )
-const iconWrapper = (active: boolean) =>
+const iconWrapper = (selected: boolean) =>
   classnames(
     display('flex'),
     justifyContent('justify-center'),
     alignItems('items-center'),
     borderRadius('rounded-full'),
-    backgroundColor({ 'bg-accent': active }, 'hover:bg-primary-dimmed'),
+    backgroundColor({ 'bg-accent': selected }, 'active:bg-primary-semi-dimmed'),
     stroke(
-      active ? 'stroke-primary-background' : 'stroke-formal-accent',
-      'hover:stroke-formal-accent'
+      selected ? 'stroke-primary-background' : 'stroke-formal-accent',
+      'active:stroke-formal-accent'
     ),
     transitionProperty('transition-all'),
     opacity('disabled:opacity-30'),
@@ -59,7 +60,10 @@ export default function ({
       {Object.entries(categories).map(([title, { icon, disabled }]) => (
         <button
           title={title}
-          className={iconWrapper(currentCategory === title)}
+          className={classNamesToString(
+            iconWrapper(currentCategory === title),
+            'hover-menu-element'
+          )}
           onClick={() => setCategory(title as CategoriesTitles)}
           disabled={disabled}
         >
