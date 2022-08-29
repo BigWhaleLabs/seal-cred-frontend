@@ -11,6 +11,7 @@ export default function ({
   onSelectProof: (proof: ProofModel) => void
 }) {
   const { proofsCompleted } = useSnapshot(proofStore['Email'])
+
   return (
     <>
       <BodyText center>Select a proof to continue</BodyText>
