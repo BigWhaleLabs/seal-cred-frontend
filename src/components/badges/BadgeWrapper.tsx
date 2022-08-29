@@ -33,7 +33,8 @@ export default function ({
     <div
       className={classNamesToString(
         badgeWrapper(minted),
-        'each-new-line:last:col-span-full'
+        'each-new-line:last:col-span-full',
+        'double-badge'
       )}
     >
       {children}

@@ -10,6 +10,7 @@ type AllowedExtraClassnames =
   | 'custom-qr-code'
   | 'hover-tertiary'
   | 'each-new-line:last:col-span-full'
+  | 'double-badge'
 
 export default function (
   ...classNames: (AllowedExtraClassnames | TTailwindString | undefined | null)[]
