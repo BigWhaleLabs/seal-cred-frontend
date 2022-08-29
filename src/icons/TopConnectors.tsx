@@ -19,7 +19,6 @@ export default function () {
           y2="240"
           fill="none"
           className={strokeTertiary}
-          stroke-linecap="round"
         />
         <line
           x1="192"
@@ -28,7 +27,6 @@ export default function () {
           y2="250"
           fill="none"
           className={strokeSecondary}
-          stroke-linecap="round"
         />
         <line
           x1="102"

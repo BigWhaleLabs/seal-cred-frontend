@@ -29,8 +29,6 @@ export default function ({ accent }: { accent?: boolean }) {
       <path
         d="M5 9L8 12L13 7"
         stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
         className={pathClasses(accent)}
       />
     </svg>

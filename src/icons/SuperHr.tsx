@@ -48,22 +48,14 @@ export default function () {
         xmlns="http://www.w3.org/2000/svg"
         className={zIndex('z-20')}
       >
-        <circle
-          cx="99.5"
-          cy="33.5"
-          r="32.5"
-          className={circleClasses}
-          stroke-linecap="round"
-        />
+        <circle cx="99.5" cy="33.5" r="32.5" className={circleClasses} />
         <path
           d="M99.5 59.9062C92.1484 59.9062 85.4985 56.902 80.7109 52.0543C76.0012 47.2853 73.0938 40.7322 73.0938 33.5C73.0938 26.2678 76.0012 19.7147 80.7109 14.9457M99.5 7.09375C106.852 7.09375 113.502 10.098 118.289 14.9457C122.999 19.7147 125.906 26.2678 125.906 33.5C125.906 40.7322 122.999 47.2853 118.289 52.0543"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <path
           d="M119.812 33.5C119.812 39.0361 117.598 44.0549 114.006 47.7188C110.319 51.4793 105.182 53.8125 99.5 53.8125C93.8178 53.8125 88.6805 51.4793 84.994 47.7188M79.1875 33.5C79.1875 27.8178 81.5207 22.6805 85.2812 18.994C88.9451 15.4022 93.9639 13.1875 99.5 13.1875C105.036 13.1875 110.055 15.4022 113.719 18.994"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <circle cx="99.5" cy="7.09375" r="1.01562" className={fillColor} />
         <circle cx="81.2188" cy="14.2031" r="1.01562" className={fillColor} />
@@ -79,7 +71,6 @@ export default function () {
           x2="72.5938"
           y2="34.0156"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <circle cx="81.2188" cy="42.6406" r="1.01562" className={fillColor} />
         <circle cx="117.781" cy="25.375" r="1.01562" className={fillColor} />
@@ -89,7 +80,6 @@ export default function () {
           x2="81.5636"
           y2="42.417"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <line
           x1="118.005"
@@ -97,7 +87,6 @@ export default function () {
           x2="128.282"
           y2="20.0733"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <line
           x1="67.5"
@@ -105,7 +94,6 @@ export default function () {
           x2="72.5938"
           y2="38.0781"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <line
           x1="126.406"
@@ -113,7 +101,6 @@ export default function () {
           x2="131.5"
           y2="38.0781"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <line
           x1="126.406"
@@ -121,7 +108,6 @@ export default function () {
           x2="131.5"
           y2="29.9531"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <line
           x1="67.5"
@@ -129,7 +115,6 @@ export default function () {
           x2="72.5938"
           y2="29.9531"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <line
           x1="126.406"
@@ -137,7 +122,6 @@ export default function () {
           x2="131.5"
           y2="34.0156"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <line
           x1="117.859"
@@ -145,7 +129,6 @@ export default function () {
           x2="122.27"
           y2="46.5279"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <line
           x1="76.8236"
@@ -153,7 +136,6 @@ export default function () {
           x2="81.235"
           y2="23.6764"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <line
           x1="109.571"
@@ -161,7 +143,6 @@ export default function () {
           x2="112.118"
           y2="11.2397"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <line
           x1="87.1295"
@@ -169,39 +150,22 @@ export default function () {
           x2="89.6764"
           y2="51.9643"
           className={strokeColor}
-          stroke-linecap="round"
         />
-        <line
-          x1="59.5"
-          y1="40.5"
-          x2="0.5"
-          y2="40.5"
-          className={strokeColor}
-          stroke-linecap="round"
-        />
+        <line x1="59.5" y1="40.5" x2="0.5" y2="40.5" className={strokeColor} />
         <line
           x1="198.5"
           y1="40.5"
           x2="139.5"
           y2="40.5"
           className={strokeColor}
-          stroke-linecap="round"
         />
-        <line
-          x1="59.5"
-          y1="28.5"
-          x2="0.5"
-          y2="28.5"
-          className={strokeColor}
-          stroke-linecap="round"
-        />
+        <line x1="59.5" y1="28.5" x2="0.5" y2="28.5" className={strokeColor} />
         <line
           x1="198.5"
           y1="28.5"
           x2="139.5"
           y2="28.5"
           className={strokeColor}
-          stroke-linecap="round"
         />
         <g filter="url(#filter0_d_90_6555)">
           <circle cx="99.5" cy="33.5" r="12.5" className={fillColor} />

@@ -50,8 +50,6 @@ export default function ({
           d="M10.75 1.25L6.25 5.75L1.75 1.25"
           stroke={`url(#${strokeId})`}
           stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
           transform={horizontal ? 'rotate(-90 7 7)' : undefined}
         />
         <defs>

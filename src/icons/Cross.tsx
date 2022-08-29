@@ -17,7 +17,6 @@ export default function () {
           y1="5"
           x2="19.0588"
           y2="18.6446"
-          stroke-linecap="round"
         />
         <line
           x1="4.94116"
@@ -25,7 +24,6 @@ export default function () {
           x2="18.5858"
           y2="5.00001"
           className={strokeStyle}
-          stroke-linecap="round"
         />
       </svg>
     </div>

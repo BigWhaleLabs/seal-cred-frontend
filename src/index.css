@@ -59,6 +59,10 @@ body {
     )
     0 0/3rem 3rem;
 }
+path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
 ::selection {
   background: var(--selection);

@@ -133,7 +133,6 @@ const SuperOrb = () => (
       cy="41"
       r="40"
       className={strokeWhite(true)}
-      stroke-linecap="round"
       stroke-width="2"
     />
     <g mask="url(#c)">
@@ -165,7 +164,6 @@ const SuperOrb = () => (
       transform="translate(-48.02 -4.86)"
       fill="none"
       className={strokeWhite()}
-      stroke-linecap="round"
       stroke-width="2"
     />
     <path
@@ -173,7 +171,6 @@ const SuperOrb = () => (
       transform="translate(-48.02 -4.86)"
       fill="none"
       className={strokeWhite()}
-      stroke-linecap="round"
       stroke-width="2"
     />
     <path
@@ -181,7 +178,6 @@ const SuperOrb = () => (
       transform="translate(-48.02 -4.86)"
       fill="none"
       className={strokeWhite()}
-      stroke-linecap="round"
       stroke-width="2"
     />
     <line
@@ -191,7 +187,6 @@ const SuperOrb = () => (
       y2="46.5"
       fill="none"
       className={strokeWhite()}
-      stroke-linecap="round"
     />
     <line
       x1="80.5"
@@ -200,7 +195,6 @@ const SuperOrb = () => (
       y2="46.5"
       fill="none"
       className={strokeWhite()}
-      stroke-linecap="round"
     />
     <line
       x1="0.5"
@@ -209,7 +203,6 @@ const SuperOrb = () => (
       y2="38.5"
       fill="none"
       className={strokeWhite()}
-      stroke-linecap="round"
     />
     <line
       x1="80.5"
@@ -218,7 +211,6 @@ const SuperOrb = () => (
       y2="38.5"
       fill="none"
       className={strokeWhite()}
-      stroke-linecap="round"
     />
     <path
       d="M109.35-364.21"
@@ -265,7 +257,6 @@ const UpperConnectors = () => (
       y2="724.5"
       fill="none"
       className={strokeTertiary}
-      stroke-linecap="round"
     />
     <line
       x1="9.5"
@@ -292,19 +283,16 @@ const BottomConnectors = () => (
       transform="translate(-4.25 0.5)"
       fill="none"
       className={strokeTertiary}
-      stroke-linecap="round"
     />
     <path
       d="M102.25,0V343l-81.5,81.5"
       transform="translate(-4.25 0.5)"
       fill="none"
-      stroke-linecap="round"
     />
     <path
       d="M118.25,0V343l81.5,81.5"
       transform="translate(-4.25 0.5)"
       fill="none"
-      stroke-linecap="round"
       className={strokeSecondary}
     />
     <path d="M109.35,235.28" transform="translate(-4.25 0.5)" fill="none" />

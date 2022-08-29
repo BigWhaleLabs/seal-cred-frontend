@@ -17,7 +17,6 @@ export default function ({ inheritStrokeColor }: CommonIconsProps) {
     >
       <path
         d="M11 5L14 5C17.866 5 21 8.13401 21 12C21 15.866 17.866 19 14 19L11 19"
-        stroke-linejoin="round"
         className={commonPathStyles}
       />
       <circle
@@ -25,7 +24,6 @@ export default function ({ inheritStrokeColor }: CommonIconsProps) {
         cy="12"
         r="7"
         transform="rotate(-90 11 12)"
-        stroke-linejoin="round"
         className={commonPathStyles}
       />
     </svg>
