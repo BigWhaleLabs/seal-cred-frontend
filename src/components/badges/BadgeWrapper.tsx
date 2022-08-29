@@ -6,6 +6,7 @@ import classnames, {
   borderRadius,
   display,
   flexDirection,
+  gridColumn,
   justifyContent,
   padding,
   space,
@@ -20,7 +21,8 @@ const badgeWrapper = (minted: boolean) =>
     alignItems('items-center'),
     borderRadius('rounded-lg'),
     backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
-    padding('px-4', 'py-4')
+    padding('px-4', 'py-4'),
+    gridColumn('col-span-1', 'md:col-span-2')
   )
 
 export default function ({
@@ -31,7 +33,7 @@ export default function ({
     <div
       className={classNamesToString(
         badgeWrapper(minted),
-        'last:odd:col-span-full'
+        'each-new-line:last:col-span-full'
       )}
     >
       {children}
