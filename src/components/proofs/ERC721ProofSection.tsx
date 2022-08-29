@@ -10,7 +10,7 @@ import ProofsList from 'components/proofs/ProofsList'
 import data from 'data'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
-export function ERC721ProofSection({ dataKey }: { dataKey: DataKey }) {
+function ERC721ProofSectionSuspended({ dataKey }: { dataKey: DataKey }) {
   const { network } = data[dataKey]
   const { proofsCompleted } = useSnapshot(ProofStore[dataKey])
   const networkProofAddressesAvailableToCreate =
@@ -44,7 +44,7 @@ export default function ({ dataKey }: { dataKey: DataKey }) {
           </HintCard>
         }
       >
-        <ERC721ProofSection dataKey={dataKey} />
+        <ERC721ProofSectionSuspended dataKey={dataKey} />
       </Suspense>
     </ProofSection>
   )
