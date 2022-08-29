@@ -90,9 +90,9 @@ body {
   }
 }
 
-/* 1st - for each before-last 1, 4, 7 */
-/* 2nd - for each not 1, 4, 7, not 3, 6, 9, but 2, 6, 8 and only last  */
+/* for each badge number 1, 4, 7 + before-last */
 .double-badge:nth-child(n + 1):nth-child(3n - 2):nth-last-child(2),
+/* for each badges number 2, 6, 8, not 1, 4, 7, not 3, 6, 9 + only last  */
 .double-badge:nth-child(n + 2):not(:nth-child(3n
       -
       2)):not(:nth-child(3n)):last-child {
