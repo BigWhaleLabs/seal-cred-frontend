@@ -1,3 +1,4 @@
+import { displayFrom } from 'helpers/visibilityClassnames'
 import classnames, {
   borderRadius,
   boxShadow,
@@ -8,6 +9,7 @@ import classnames, {
 } from 'classnames/tailwind'
 
 const svgClasses = classnames(
+  displayFrom('sm'),
   boxShadow('shadow-lg'),
   boxShadowColor('shadow-secondary'),
   borderRadius('rounded-full')
@@ -83,6 +85,7 @@ export default function ({ connected }: { connected?: boolean }) {
       height="42"
       viewBox="0 0 42 42"
       fill="none"
+      className={displayFrom('sm')}
       xmlns="http://www.w3.org/2000/svg"
     >
       <circle

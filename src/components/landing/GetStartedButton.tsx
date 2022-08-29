@@ -5,10 +5,10 @@ import useBreakpoints from 'hooks/useBreakpoints'
 
 export default function ({ children = 'Get started' }: ChildrenProp) {
   const navigate = useNavigate()
-  const { xs } = useBreakpoints()
+  const { sm } = useBreakpoints()
 
   return (
-    <Button type="primary" small={xs} onClick={() => navigate('/app')}>
+    <Button type="primary" small={!sm} onClick={() => navigate('/app')}>
       {children}
     </Button>
   )

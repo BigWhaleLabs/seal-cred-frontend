@@ -1,17 +1,19 @@
+import { displayFrom } from 'helpers/visibilityClassnames'
 import CardSeparator from 'components/CardSeparator'
 import ZkProofHint from 'components/ZkProofHint'
-import useBreakpoints from 'hooks/useBreakpoints'
+import classnames, { flexDirection } from 'classnames/tailwind'
+
+const container = classnames(displayFrom('lg'), flexDirection('flex-col'))
 
 export default function () {
-  const { lg } = useBreakpoints()
-  return lg ? (
-    <>
+  return (
+    <div className={container}>
       <CardSeparator
         numberOfLines={1}
         gradient="accent-to-transparent"
         vertical
       />
       <ZkProofHint />
-    </>
-  ) : null
+    </div>
+  )
 }

@@ -19,7 +19,6 @@ import classnames, {
   width,
   zIndex,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const navbar = (visible?: boolean, withoutWallet?: boolean) =>
   classnames(
@@ -29,7 +28,7 @@ const navbar = (visible?: boolean, withoutWallet?: boolean) =>
     alignItems('items-center'),
     justifyContent(withoutWallet ? 'sm:justify-center' : 'justify-between'),
     padding('py-4', 'px-4', 'lg:px-25'),
-    space('tiny:space-x-4', 'sm:space-x-9', 'lg:space-x-0'),
+    space('xs:space-x-4', 'sm:space-x-9', 'lg:space-x-0'),
     zIndex('z-50'),
     backgroundColor(visible ? 'bg-primary-dark' : 'bg-transparent'),
     transitionProperty('transition-all')
@@ -50,8 +49,6 @@ export default function () {
   const { pathname } = useLocation()
   const withoutWallet = pathname.split('/').length >= 3
 
-  const { xs } = useBreakpoints()
-
   const [backgroundVisible, setBackgroundVisible] = useState(false)
   const onScroll = useCallback(() => {
     setBackgroundVisible(window.scrollY > 20)
@@ -69,7 +66,7 @@ export default function () {
             <Logo />
           </div>
           <div className={logoWithVersion}>
-            <LogoText small={xs}>SealCred</LogoText>
+            <LogoText>SealCred</LogoText>
             <LogoSubText>(ALPHA)</LogoSubText>
           </div>
         </div>
