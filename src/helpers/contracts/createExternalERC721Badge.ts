@@ -1,12 +1,12 @@
 import { ExternalSCERC721Ledger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
 import Proof from 'models/Proof'
-import env from 'helpers/env'
+import data from 'data'
 import makeTransaction from 'helpers/contracts/makeTransaction'
 
 function createContract(provider: Web3Provider) {
   return ExternalSCERC721Ledger__factory.connect(
-    env.VITE_SC_EXTERNAL_ERC721_LEDGER_CONTRACT_ADDRESS,
+    data['ExternalERC721'].ledger,
     provider.getSigner(0)
   )
 }
