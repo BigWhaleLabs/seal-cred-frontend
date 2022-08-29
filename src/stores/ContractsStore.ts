@@ -24,10 +24,9 @@ export const BadgesContractsStore =
   ContractsNetworkStore.networks[BadgesNetwork]
 
 subscribeKey(WalletStore, 'account', (account) => {
-  if (account) {
-    for (const network of Object.values(ContractsNetworkStore.networks)) {
-      void network.fetchMoreContractsOwned(account, true)
-    }
+  if (!account) return
+  for (const network of Object.values(ContractsNetworkStore.networks)) {
+    void network.fetchMoreContractsOwned(account, true)
   }
 })
 
