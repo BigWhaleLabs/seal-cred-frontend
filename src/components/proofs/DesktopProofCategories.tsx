@@ -40,11 +40,8 @@ const iconWrapper = (selected: boolean) =>
     justifyContent('justify-center'),
     alignItems('items-center'),
     borderRadius('rounded-full'),
-    backgroundColor({ 'bg-accent': selected }, 'active:bg-primary-semi-dimmed'),
-    stroke(
-      selected ? 'stroke-primary-background' : 'stroke-formal-accent',
-      'active:stroke-formal-accent'
-    ),
+    backgroundColor({ 'bg-accent': selected }),
+    stroke(selected ? 'stroke-primary-background' : 'stroke-formal-accent'),
     transitionProperty('transition-all'),
     opacity('disabled:opacity-30'),
     width('w-9'),
