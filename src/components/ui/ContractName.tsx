@@ -38,7 +38,9 @@ function ContractNameSuspended({
   clearType,
   network,
 }: ContractNameProps) {
-  const contractName = getContractName(address, network, {
+  const contractName = getContractName({
+    address,
+    network,
     truncate,
     clearType,
   })

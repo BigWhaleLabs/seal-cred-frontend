@@ -4,17 +4,17 @@ import Network from 'models/Network'
 import networks from 'networks'
 import prettifyContractName from 'helpers/network/prettifyContractName'
 
-export default function (
-  address: string,
-  network: Network,
-  {
-    truncate,
-    clearType,
-  }: {
-    truncate?: boolean
-    clearType?: boolean
-  }
-) {
+export default function ({
+  address,
+  network,
+  truncate,
+  clearType,
+}: {
+  address: string
+  network: Network
+  truncate?: boolean
+  clearType?: boolean
+}) {
   const { contractNames } = useSnapshot(ContractMetadataStore)
 
   let contractName = contractNames[address]
