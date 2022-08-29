@@ -22,7 +22,7 @@ const badgeWrapper = (minted: boolean) =>
     borderRadius('rounded-lg'),
     backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
     padding('px-4', 'py-4'),
-    gridColumn('col-span-1', 'lg:col-span-2')
+    gridColumn('col-span-1', 'md:col-span-2')
   )
 
 export default function ({
@@ -33,7 +33,7 @@ export default function ({
     <div
       className={classNamesToString(
         badgeWrapper(minted),
-        'each-new-line:last:col-span-full',
+        'md:each-new-line:last:col-span-full',
         'double-badge'
       )}
     >

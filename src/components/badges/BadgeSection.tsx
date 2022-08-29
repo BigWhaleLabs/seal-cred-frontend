@@ -15,7 +15,7 @@ const badgesList = classnames(
   display('grid'),
   gap('gap-2'),
   gridAutoRows('auto-rows-auto'),
-  gridTemplateColumns('grid-cols-1', 'md:grid-cols-3', 'lg:!grid-cols-6')
+  gridTemplateColumns('grid-cols-1', 'md:!grid-cols-6')
 )
 
 export default function ({

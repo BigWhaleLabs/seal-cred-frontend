@@ -9,7 +9,7 @@ type AllowedExtraClassnames =
   | 'custom-scrollbar-thumb'
   | 'custom-qr-code'
   | 'hover-tertiary'
-  | 'lg:each-new-line:last:col-span-full'
+  | 'md:each-new-line:last:col-span-full'
   | 'double-badge'
 
 export default function (
