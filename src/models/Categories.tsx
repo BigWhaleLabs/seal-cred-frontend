@@ -39,7 +39,7 @@ export const categories: Category = {
     },
   },
   ['Email']: {
-    icon: <Email inheritStrokeColor customSize={{ w: 16, h: 16 }} />,
+    icon: <Email inheritStrokeColor customSize={{ w: 24, h: 16 }} />,
     contentToRender: (_, emailProofsCompleted) => (
       <ProofSection>
         {emailProofsCompleted &&
