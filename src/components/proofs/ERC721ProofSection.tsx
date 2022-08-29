@@ -31,11 +31,7 @@ export function ERC721ProofSection({ dataKey }: { dataKey: DataKey }) {
   )
 }
 
-export default function ERC721ProofSectionSuspended({
-  dataKey,
-}: {
-  dataKey: DataKey
-}) {
+export default function ({ dataKey }: { dataKey: DataKey }) {
   const { proofTitle } = data[dataKey]
   return (
     <ProofSection title={<BodyText>{proofTitle}</BodyText>}>
