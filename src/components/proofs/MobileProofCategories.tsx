@@ -13,10 +13,10 @@ export default function ({
     <Dropdown
       currentValue={currentCategory}
       placeholder="Select a category"
-      options={Object.keys(categories).map((title) => ({
+      options={Object.entries(categories).map(([title, { disabled }]) => ({
         label: title,
         value: title,
-        disabled: categories[title].disabled,
+        disabled,
       }))}
       onChange={(selectedValue) => {
         setCategory(selectedValue as CategoriesTitles)
