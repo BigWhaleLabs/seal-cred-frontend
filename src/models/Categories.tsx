@@ -41,7 +41,7 @@ export const categories: Category = {
   },
   ['Email']: {
     icon: (
-      <div className={width('w-4')}>
+      <div className={width('w-5')}>
         <Email inheritStrokeColor />
       </div>
     ),
