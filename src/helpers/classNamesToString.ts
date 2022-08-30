@@ -9,7 +9,10 @@ type AllowedExtraClassnames =
   | 'custom-scrollbar-thumb'
   | 'custom-qr-code'
   | 'hover-tertiary'
-  | 'hover-menu-element'
+  | 'xl:each-new-row-in-3-cols:last:col-span-full'
+  | 'xl:each-new-row-in-3-cols:pre-last:col-span-3'
+  | 'xl:each-2nd-element-in-3-cols:last:col-span-3'
+  | 'smToXl:odd:last:col-span-full'
 
 export default function (
   ...classNames: (AllowedExtraClassnames | TTailwindString | undefined | null)[]

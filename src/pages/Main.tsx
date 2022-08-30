@@ -10,25 +10,27 @@ import classnames, {
   inset,
   justifyContent,
   margin,
+  maxWidth,
   position,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const cardsContainer = classnames(
   display('flex'),
-  flexDirection('flex-col', 'xl:flex-row'),
-  alignItems('items-center', 'xl:items-stretch'),
-  justifyContent('xl:justify-center'),
-  margin('mx-4')
+  flexDirection('flex-col', 'tablet:flex-row'),
+  alignItems('items-center', 'tablet:items-stretch'),
+  justifyContent('tablet:justify-center'),
+  margin('mx-4'),
+  maxWidth('lg:max-w-app-content')
 )
 
 const proofHintContainer = classnames(
-  position('xl:relative'),
-  inset('xl:right-1/4')
+  position('tablet:relative'),
+  inset('tablet:right-1/4')
 )
 
 export default function () {
-  const { xl } = useBreakpoints()
+  const { tablet } = useBreakpoints()
 
   return (
     <div>
@@ -37,7 +39,7 @@ export default function () {
         <CardSeparator
           numberOfLines={3}
           gradient="accent-to-secondary"
-          vertical={!xl}
+          vertical={!tablet}
         />
         <Badges />
       </div>

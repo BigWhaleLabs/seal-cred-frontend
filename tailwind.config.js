@@ -1,7 +1,16 @@
 /** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
+let plugin = require('tailwindcss/plugin')
+
 module.exports = {
   content: ['./public/index.html', './src/**/!(tailwind).{ts,tsx}'],
-  plugins: [require('@tailwindcss/line-clamp')],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    plugin(function ({ addVariant }) {
+      addVariant('each-new-row-in-3-cols', '&:nth-child(3n - 2)'),
+        addVariant('pre-last', '&:nth-last-child(2)'),
+        addVariant('each-2nd-element-in-3-cols', '&:nth-child(3n + 2)')
+    }),
+  ],
   theme: {
     fontFamily: {
       primary: ['"Space Grotesk"', 'sans-serif'],
@@ -21,6 +30,8 @@ module.exports = {
       },
       maxWidth: {
         100: '6.25rem',
+        'app-card': '38.125rem',
+        'app-content': '77.75rem',
       },
       keyframes: {
         'pulse-horizontal': {
@@ -46,6 +57,8 @@ module.exports = {
         tiny: '22.5rem',
         sm: '28.125rem',
         md: '37.5rem',
+        tablet: '48rem',
+        smToXl: { min: '28.125rem', max: '80rem' },
       },
       borderWidth: {
         24: '1.5rem',

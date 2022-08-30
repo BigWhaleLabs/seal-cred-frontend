@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 const xsSize = 279
 const smSize = 375
 const mdSize = 600
+const tabletSize = 767
 const lgSize = 1023
 const xlSize = 1279
 
@@ -26,6 +27,7 @@ export default function () {
     xs: width > xsSize && width <= smSize,
     sm: width > smSize,
     md: width > mdSize,
+    tablet: width > tabletSize,
     lg: width > lgSize,
     xl: width > xlSize,
   }

@@ -10,6 +10,7 @@ import {
   inset,
   margin,
   maxHeight,
+  maxWidth,
   minHeight,
   padding,
   position,
@@ -64,7 +65,8 @@ const appStyles = classnames(
   flexDirection('flex-col'),
   minHeight('sm:min-h-card', 'min-h-fit'),
   maxHeight('max-h-app-card'),
-  width('w-full', 'md:w-app-card')
+  width('w-full'),
+  maxWidth('max-w-app-card', 'md:max-w-none')
 )
 
 const thinWidthStyles = width('sm:!w-thin-card', 'tiny:w-thin-mobile', 'w-32')
