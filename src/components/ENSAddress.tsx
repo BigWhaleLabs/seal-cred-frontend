@@ -48,7 +48,7 @@ function ENSAddress({
 
 export default memo<ENSAddressProps & { truncateSize?: number }>(
   ({ address, network, truncateSize }) => {
-    // It's needed because we use that component inside a gradient link that won't work if we wrap it with a span
+    // Used for gradient link. It won't work if we wrap it with a span
     if (truncateSize)
       return (
         <ENSAddress
