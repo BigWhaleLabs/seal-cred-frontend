@@ -9,6 +9,7 @@ import {
   flexDirection,
   gap,
 } from 'classnames/tailwind'
+import { displayFrom } from 'helpers/visibilityClassnames'
 import { useSnapshot } from 'valtio'
 import DesktopProofCategories from 'components/proofs/DesktopProofCategories'
 import MobileProofCategories from 'components/proofs/MobileProofCategories'
@@ -47,7 +48,7 @@ export function ProofListSuspended() {
             setCategory={setCategory}
           />
           <div className={proofList}>
-            <div className={display('hidden', 'md:block')}>
+            <div className={displayFrom('md')}>
               <BodyText bold>{category}</BodyText>
             </div>
             {categories[category].contentToRender(

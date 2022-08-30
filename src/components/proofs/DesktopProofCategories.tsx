@@ -3,6 +3,7 @@ import {
   CategoriesTitles,
   categories,
 } from 'models/Categories'
+import { displayFrom } from 'helpers/visibilityClassnames'
 import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   alignItems,
@@ -24,7 +25,7 @@ import classnames, {
 } from 'classnames/tailwind'
 
 const desktopMenuWrapper = classnames(
-  display('hidden', 'md:flex'),
+  displayFrom('md'),
   flexDirection('flex-col'),
   position('sticky'),
   inset('top-4'),

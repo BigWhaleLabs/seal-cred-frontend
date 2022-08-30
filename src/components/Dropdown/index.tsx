@@ -1,4 +1,5 @@
 import { createRef } from 'preact'
+import { displayTo } from 'helpers/visibilityClassnames'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import Menu from 'components/Dropdown/Menu'
@@ -38,7 +39,7 @@ const button = classnames(
 const container = classnames(
   position('relative'),
   width('md:w-fit'),
-  display('md:hidden', 'block')
+  displayTo('md')
 )
 
 export default function <T>({
