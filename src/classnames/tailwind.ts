@@ -7422,6 +7422,7 @@ export type TMaxWidth =
   | 'max-w-screen-xl'
   | 'max-w-screen-2xl'
   | 'max-w-app-card'
+  | 'max-w-app-content'
   | 'max-w-screen-fold'
   | 'max-w-screen-tiny'
 

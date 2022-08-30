@@ -10,6 +10,7 @@ import classnames, {
   inset,
   justifyContent,
   margin,
+  maxWidth,
   position,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
@@ -19,7 +20,8 @@ const cardsContainer = classnames(
   flexDirection('flex-col', 'lg:flex-row'),
   alignItems('items-center', 'lg:items-stretch'),
   justifyContent('lg:justify-center'),
-  margin('mx-4')
+  margin('mx-4'),
+  maxWidth('lg:max-w-app-content')
 )
 
 const proofHintContainer = classnames(

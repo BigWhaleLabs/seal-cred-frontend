@@ -22,6 +22,7 @@ module.exports = {
       maxWidth: {
         100: '6.25rem',
         'app-card': '38.125rem',
+        'app-content': '77.75rem',
       },
       keyframes: {
         'pulse-horizontal': {
