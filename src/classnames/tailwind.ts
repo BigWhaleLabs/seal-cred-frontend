@@ -7425,6 +7425,7 @@ export type TMaxWidth =
   | 'max-w-app-content'
   | 'max-w-screen-fold'
   | 'max-w-screen-tiny'
+  | 'max-w-screen-tailwindMd'
   | 'max-w-screen-smToLg'
 
 export type THeight =
@@ -8882,6 +8883,7 @@ export type TPseudoClassVariants =
   | '2xl:'
   | 'fold:'
   | 'tiny:'
+  | 'tailwindMd:'
   | 'smToLg:'
 
 //////////// Utility Function generic type

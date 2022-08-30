@@ -57,6 +57,7 @@ module.exports = {
         tiny: '22.5rem',
         sm: '28.125rem',
         md: '37.5rem',
+        tailwindMd: '48rem',
         smToLg: { min: '28.125rem', max: '64rem' },
       },
       borderWidth: {

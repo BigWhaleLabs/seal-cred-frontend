@@ -17,20 +17,20 @@ import useBreakpoints from 'hooks/useBreakpoints'
 
 const cardsContainer = classnames(
   display('flex'),
-  flexDirection('flex-col', 'md:flex-row'),
-  alignItems('items-center', 'md:items-stretch'),
-  justifyContent('md:justify-center'),
+  flexDirection('flex-col', 'tailwindMd:flex-row'),
+  alignItems('items-center', 'tailwindMd:items-stretch'),
+  justifyContent('tailwindMd:justify-center'),
   margin('mx-4'),
   maxWidth('lg:max-w-app-content')
 )
 
 const proofHintContainer = classnames(
-  position('md:relative'),
-  inset('md:right-1/4')
+  position('tailwindMd:relative'),
+  inset('tailwindMd:right-1/4')
 )
 
 export default function () {
-  const { md } = useBreakpoints()
+  const { tailwindMd } = useBreakpoints()
 
   return (
     <div>
@@ -39,7 +39,7 @@ export default function () {
         <CardSeparator
           numberOfLines={3}
           gradient="accent-to-secondary"
-          vertical={!md}
+          vertical={!tailwindMd}
         />
         <Badges />
       </div>
