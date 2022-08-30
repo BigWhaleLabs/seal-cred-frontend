@@ -12,20 +12,15 @@ import classnames, {
   position,
   space,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
-const mintPassed = (small?: boolean) =>
-  classnames(
-    display('flex'),
-    position('relative'),
-    flexDirection('flex-row'),
-    justifyContent(
-      small ? 'justify-start' : 'justify-center',
-      'lg:justify-center'
-    ),
-    space('space-x-2'),
-    alignItems('items-center')
-  )
+const mintPassed = classnames(
+  display('flex'),
+  position('relative'),
+  flexDirection('flex-row'),
+  justifyContent('justify-start', 'sm:justify-center'),
+  space('space-x-2'),
+  alignItems('items-center')
+)
 
 function Badge({
   derivativeAddress,
@@ -34,15 +29,12 @@ function Badge({
   derivativeAddress: string
   tokenId: number
 }) {
-  const { xxs, sm } = useBreakpoints()
-  const small = xxs && !sm
-
   return (
     <BadgeCard
       top={<QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />}
       text={<BadgeTitle derivativeAddress={derivativeAddress} />}
       bottom={
-        <div className={mintPassed(small)}>
+        <div className={mintPassed}>
           <AccentText bold small primary color="text-secondary">
             Minted
           </AccentText>

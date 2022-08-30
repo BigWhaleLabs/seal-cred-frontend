@@ -26,7 +26,7 @@ export default function () {
       color="accent"
       onlyWrap
       nospace
-      spinner={!xs ? 'One Identity to rule them all' : undefined}
+      spinner={xs ? 'One Identity to rule them all' : undefined}
     >
       <div className={initialCardWrapper}>
         <HeaderText extraLeading>
