@@ -1,3 +1,4 @@
+import { displayTo } from 'helpers/visibilityClassnames'
 import Badges from 'components/badges/Badges'
 import CardSeparator from 'components/CardSeparator'
 import ProofsCard from 'components/proofs/Card'
@@ -12,6 +13,7 @@ import classnames, {
   margin,
   maxWidth,
   position,
+  width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -27,6 +29,11 @@ const cardsContainer = classnames(
 const proofHintContainer = classnames(
   position('tablet:relative'),
   inset('tablet:right-1/4')
+)
+const bottomZkHint = classnames(
+  displayTo('lg'),
+  width('w-full'),
+  flexDirection('flex-col')
 )
 
 export default function () {
@@ -44,7 +51,7 @@ export default function () {
         <Badges />
       </div>
       <div className={proofHintContainer}>
-        <div className={display('lg:hidden')}>
+        <div className={bottomZkHint}>
           <CardSeparator
             numberOfLines={1}
             gradient="secondary-to-transparent"

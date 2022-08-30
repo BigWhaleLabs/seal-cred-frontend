@@ -1,11 +1,10 @@
-import { AccentText, SocialLink } from 'components/Text'
+import { SocialLink } from 'components/Text'
+import { displayFrom } from 'helpers/visibilityClassnames'
 import { useSnapshot } from 'valtio'
+import AccountAndLogo from 'components/navbar/AccountAndLogo'
 import Discord from 'icons/Discord'
-import ENSAddress from 'components/ENSAddress'
 import ExternalLink from 'components/ExternalLink'
 import Network from 'models/Network'
-import SealWallet from 'icons/SealWallet'
-import SmallSeal from 'icons/SmallSeal'
 import Twitter from 'icons/Twitter'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -15,13 +14,10 @@ import classnames, {
   cursor,
   display,
   height,
-  lineHeight,
   space,
-  textAlign,
   width,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const walletContainer = classnames(
   display('inline-flex'),
@@ -32,12 +28,8 @@ const walletContainer = classnames(
 const accountLinkContainer = classnames(
   display('inline-flex'),
   alignItems('items-center'),
-  space('tiny:space-x-4', 'space-x-2'),
+  space('xs:space-x-4', 'space-x-2'),
   cursor('cursor-pointer')
-)
-const walletAccount = classnames(
-  textAlign('text-right'),
-  lineHeight('leading-5')
 )
 const socialContainer = classnames(
   display('inline-flex'),
@@ -50,28 +42,16 @@ const delimiterContainer = classnames(
   width('w-px'),
   height('h-4')
 )
+const socialLinksContainer = classnames(displayFrom('md'), socialContainer)
 
 const AccountContainer = ({ account }: { account?: string }) => {
   const { needNetworkChange } = useSnapshot(WalletStore)
-
-  const { xs } = useBreakpoints()
 
   if (account)
     return (
       <ExternalLink url={getEtherscanAddressUrl(account, Network.Goerli)}>
         <div className={accountLinkContainer}>
-          <div className={walletAccount}>
-            <AccentText extraSmall={xs} color="text-accent">
-              <ENSAddress address={account} network={Network.Goerli} />
-            </AccentText>
-          </div>
-          <div className={width('w-fit')}>
-            {xs ? (
-              <SmallSeal connected={true} />
-            ) : (
-              <SealWallet connected={true} />
-            )}
-          </div>
+          <AccountAndLogo account={account} connected={true} />
         </div>
       </ExternalLink>
     )
@@ -86,45 +66,25 @@ const AccountContainer = ({ account }: { account?: string }) => {
         })
       }}
     >
-      <div className={walletAccount}>
-        <AccentText extraSmall={xs} color="text-primary-semi-dimmed">
-          {needNetworkChange
-            ? 'Change network'
-            : xs
-            ? 'No wallet'
-            : 'No wallet connected'}
-        </AccentText>
-      </div>
-      <div className={width('w-fit')}>
-        {xs ? (
-          <SmallSeal connected={false} />
-        ) : (
-          <SealWallet connected={false} />
-        )}
-      </div>
+      <AccountAndLogo connected={false} />
     </div>
   )
 }
 
 export default function () {
   const { account } = useSnapshot(WalletStore)
-  const { md } = useBreakpoints()
 
   return (
     <div className={walletContainer}>
-      {md && (
-        <>
-          <div className={socialContainer}>
-            <SocialLink url="https://discord.gg/NHk96pPZUV">
-              <Discord />
-            </SocialLink>
-            <SocialLink url="https://twitter.com/bigwhalelabs">
-              <Twitter />
-            </SocialLink>
-          </div>
-          <hr className={delimiterContainer} />
-        </>
-      )}
+      <div className={socialLinksContainer}>
+        <SocialLink url="https://discord.gg/NHk96pPZUV">
+          <Discord />
+        </SocialLink>
+        <SocialLink url="https://twitter.com/bigwhalelabs">
+          <Twitter />
+        </SocialLink>
+        <hr className={delimiterContainer} />
+      </div>
 
       <AccountContainer account={account} />
     </div>

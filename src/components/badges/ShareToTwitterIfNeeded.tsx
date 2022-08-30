@@ -30,7 +30,7 @@ const wideBlock = classnames(
   gridColumn('lg:col-span-2', 'col-span-1')
 )
 
-function ShareToTwitterIfNeededSuespended() {
+function ShareToTwitterIfNeededSuspended() {
   const { showTwitterShare } = useSnapshot(NotificationsStore)
 
   if (!showTwitterShare) return null
@@ -44,7 +44,7 @@ function ShareToTwitterIfNeededSuespended() {
       </BodyText>
       <ExternalLink url={getShareToTwitterLink({ text: CTAText })}>
         <Button type="secondary" onClick={closeNotification} small>
-          <div className={width('tiny:w-max')}>Share a Tweet</div>
+          <div className={width('xs:w-max')}>Share a Tweet</div>
         </Button>
       </ExternalLink>
       <button onClick={closeNotification}>
@@ -57,7 +57,7 @@ function ShareToTwitterIfNeededSuespended() {
 export default function () {
   return (
     <Suspense fallback={<>Fetching contract ids...</>}>
-      <ShareToTwitterIfNeededSuespended />
+      <ShareToTwitterIfNeededSuspended />
     </Suspense>
   )
 }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 
-const xsSize = 279
-const smSize = 375
+const xxsSize = 279
+const xsSize = 360
+const smSize = 450
 const mdSize = 600
 const tabletSize = 767
 const lgSize = 1023
@@ -22,9 +23,8 @@ export default function () {
   }, [])
 
   return {
-    iPhoneSizes: width > smSize && width < 400,
-    xxs: width > xsSize,
-    xs: width > xsSize && width <= smSize,
+    xxs: width > xxsSize,
+    xs: width > xsSize,
     sm: width > smSize,
     md: width > mdSize,
     tablet: width > tabletSize,

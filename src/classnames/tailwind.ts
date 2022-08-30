@@ -7431,8 +7431,8 @@ export type TMaxWidth =
   | 'max-w-screen-2xl'
   | 'max-w-app-card'
   | 'max-w-app-content'
-  | 'max-w-screen-fold'
-  | 'max-w-screen-tiny'
+  | 'max-w-screen-xxs'
+  | 'max-w-screen-xs'
   | 'max-w-screen-tablet'
   | 'max-w-screen-smToXl'
 
@@ -8889,8 +8889,8 @@ export type TPseudoClassVariants =
   | 'lg:'
   | 'xl:'
   | '2xl:'
-  | 'fold:'
-  | 'tiny:'
+  | 'xxs:'
+  | 'xs:'
   | 'tablet:'
   | 'smToXl:'
 
