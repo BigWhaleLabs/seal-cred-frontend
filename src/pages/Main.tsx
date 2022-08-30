@@ -8,6 +8,7 @@ import classnames, {
   display,
   flexDirection,
   justifyContent,
+  width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
@@ -17,7 +18,11 @@ const mainBlock = classnames(
   alignItems('items-center', 'lg:items-stretch'),
   justifyContent('lg:justify-center')
 )
-const bottomZkHint = classnames(displayTo('lg'), flexDirection('flex-col'))
+const bottomZkHint = classnames(
+  displayTo('lg'),
+  width('w-full'),
+  flexDirection('flex-col')
+)
 
 export default function () {
   const { lg } = useBreakpoints()

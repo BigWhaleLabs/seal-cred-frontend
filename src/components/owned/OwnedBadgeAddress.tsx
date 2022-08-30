@@ -1,12 +1,41 @@
 import { LinkText } from 'components/Text'
 import { Suspense } from 'react'
-import { wordBreak } from 'classnames/tailwind'
+import { display, wordBreak } from 'classnames/tailwind'
+import { displayFrom, displayTo } from 'helpers/visibilityClassnames'
 import ENSAddress from 'components/ENSAddress'
 import Network from 'models/Network'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import useOwnerAddress from 'hooks/useOwnerAddress'
 
 const container = wordBreak('break-all')
+
+function OwnerAddress({
+  owner,
+  network,
+  truncateSize,
+}: {
+  owner: string
+  network: Network
+  truncateSize: number
+}) {
+  return (
+    <LinkText
+      targetBlank
+      url={getEtherscanAddressUrl(owner, network)}
+      gradientFrom="from-secondary"
+      gradientTo="to-accent"
+      title={owner}
+      bold
+    >
+      <ENSAddress
+        address={owner}
+        network={network}
+        truncateSize={truncateSize}
+      />
+    </LinkText>
+  )
+}
+
 function OwnedBadgeAddressSuspended({
   derivativeAddress,
   tokenId,
@@ -21,16 +50,17 @@ function OwnedBadgeAddressSuspended({
   return (
     <span className={container}>
       {owner && (
-        <LinkText
-          targetBlank
-          url={getEtherscanAddressUrl(owner, network)}
-          gradientFrom="from-secondary"
-          gradientTo="to-accent"
-          title={owner}
-          bold
-        >
-          <ENSAddress address={owner} network={network} />
-        </LinkText>
+        <>
+          <span className={displayTo('md')}>
+            <OwnerAddress owner={owner} network={network} truncateSize={11} />
+          </span>
+          <span className={display(displayFrom('md'), 'lg:hidden')}>
+            <OwnerAddress owner={owner} network={network} truncateSize={17} />
+          </span>
+          <span className={displayFrom('lg')}>
+            <OwnerAddress owner={owner} network={network} truncateSize={25} />
+          </span>
+        </>
       )}
     </span>
   )
