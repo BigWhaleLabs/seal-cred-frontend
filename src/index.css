@@ -33,8 +33,6 @@
   --formal-accent-semi-transparent: rgba(239, 236, 214, 0.4);
   --error-semi-transparent: rgba(255, 123, 131, 0.2);
   --selection: #ff7bed35;
-
-  --col-span-full: 1 / -1;
 }
 
 html {
@@ -89,27 +87,6 @@ body {
   .hover-tertiary:hover {
     color: var(--tertiary);
     text-decoration: underline;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  /* take only 1, 4, 7 + before-last */
-  .last-row-modifier:nth-child(3n - 2):nth-last-child(2),
-/* take 2, 3, 4, exclude 1, 4, 7, exclude dividable by 3 + take only last */
-/* = take 2, 5, 8 only last of those */
-.last-row-modifier:nth-child(n + 2):not(:nth-child(3n
-      -
-      2)):not(:nth-child(3n)):last-child {
-    grid-column: span 3 / span 3;
-  }
-
-  .last-row-modifier:nth-child(3n - 2):last-child {
-    grid-column: var(--col-span-full);
-  }
-}
-@media screen and (min-width: 450px) and (max-width: 1024px) {
-  .last-row-modifier:nth-child(odd):last-child {
-    grid-column: var(--col-span-full);
   }
 }
 
