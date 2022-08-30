@@ -91,7 +91,7 @@ const cardContainer = (
     }),
     width(
       thin ? 'sm:!w-thin-card' : 'sm:w-card',
-      thin ? 'tiny:w-thin-mobile' : 'w-mobile-card',
+      thin ? 'xs:w-thin-mobile' : 'w-mobile-card',
       { 'w-32': thin }
     ),
     margin({ 'mx-auto': !thin }, 'lg:mx-0'),

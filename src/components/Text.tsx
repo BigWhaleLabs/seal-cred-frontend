@@ -24,13 +24,12 @@ import ChildrenProp from 'models/ChildrenProp'
 import Color from 'models/Color'
 import classNamesToString from 'helpers/classNamesToString'
 import colorToTextColor from 'helpers/colors/colorToTextColor'
-import useBreakpoints from 'hooks/useBreakpoints'
 
-const headerText = (accent = false, extraLeading = false, xs = false) =>
+const headerText = (accent = false, extraLeading = false) =>
   classnames(
     fontFamily('font-primary'),
     fontWeight('font-bold'),
-    fontSize(xs ? 'text-2xl' : 'text-3xl', 'sm:text-4xl'),
+    fontSize('text-2xl', 'xs:text-3xl', 'sm:text-4xl'),
     textColor(accent ? 'text-accent' : 'text-formal-accent'),
     extraLeading
       ? lineHeight('leading-9', 'sm:leading-10', 'md:leading-11')
@@ -44,8 +43,7 @@ export function HeaderText({
   accent?: boolean
   extraLeading?: boolean
 }) {
-  const { xs } = useBreakpoints()
-  return <h1 className={headerText(accent, extraLeading, xs)}>{children}</h1>
+  return <h1 className={headerText(accent, extraLeading)}>{children}</h1>
 }
 
 const subheaderText = classnames(
@@ -72,7 +70,11 @@ const accentText = (
     ),
     fontFamily(primary ? 'font-primary' : undefined),
     fontWeight(bold ? 'font-bold' : 'font-normal'),
-    fontSize({ 'text-sm': small, 'text-xs': extraSmall }),
+    fontSize({
+      'text-sm': small,
+      'text-xs': extraSmall,
+      'sm:text-base': extraSmall,
+    }),
     dropShadow(shadow)
   )
 export function AccentText({
@@ -170,18 +172,14 @@ export function CardDescription({ children }: ChildrenProp) {
   return <p className={cardDescription}>{children}</p>
 }
 
-const logoText = (small?: boolean) =>
-  classnames(
-    textColor('text-accent'),
-    fontWeight('font-bold'),
-    fontSize({ 'text-sm': small, 'text-lg': !small }),
-    lineHeight('leading-none')
-  )
-export function LogoText({
-  children,
-  small = false,
-}: ChildrenProp & { small?: boolean }) {
-  return <span className={logoText(small)}>{children}</span>
+const logoText = classnames(
+  textColor('text-accent'),
+  fontWeight('font-bold'),
+  fontSize('text-sm', 'xs:text-lg'),
+  lineHeight('leading-none')
+)
+export function LogoText({ children }: ChildrenProp) {
+  return <span className={logoText}>{children}</span>
 }
 
 const subheaderCardText = classnames(
@@ -231,20 +229,19 @@ const linkText = (
   color?: TTextColor,
   gradientFrom?: TGradientColorStops,
   gradientTo?: TGradientColorStops
-) =>
-  classnames(
+) => {
+  const withGradients = !!gradientFrom && !!gradientTo
+
+  return classnames(
     textDecoration('no-underline'),
-    textColor(
-      gradientFrom && gradientTo ? 'text-transparent' : color || 'text-accent'
-    ),
-    backgroundImage(
-      gradientFrom && gradientTo ? 'bg-gradient-to-r' : undefined
-    ),
-    backgroundClip(gradientFrom && gradientTo ? 'bg-clip-text' : undefined),
-    fontSize('text-sm', 'tiny:text-base'),
+    textColor(withGradients ? 'text-transparent' : color || 'text-accent'),
+    backgroundImage({ 'bg-gradient-to-r': withGradients }),
+    backgroundClip({ 'bg-clip-text': withGradients }),
+    fontSize('text-sm', 'xs:text-base'),
     gradientColorStops(gradientFrom, gradientTo),
-    fontWeight(bold ? 'font-bold' : 'font-normal')
+    fontWeight({ 'font-bold': bold })
   )
+}
 export function LinkText({
   url,
   bold,

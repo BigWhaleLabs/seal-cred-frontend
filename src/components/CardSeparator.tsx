@@ -26,7 +26,7 @@ const getTailwindGradient = (gradient: Gradient) =>
       : undefined
   )
 
-const connectiveBlock = (vertical = true) =>
+const connectiveBlock = (vertical?: boolean) =>
   classnames(
     display('flex'),
     justifyContent(vertical ? 'justify-center' : 'justify-start'),

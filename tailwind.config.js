@@ -41,8 +41,8 @@ module.exports = {
         11: '3.188rem',
       },
       screens: {
-        fold: '17.5rem',
-        tiny: '22.5rem',
+        xxs: '17.5rem',
+        xs: '22.5rem',
         sm: '28.125rem',
         md: '37.5rem',
       },
