@@ -6,12 +6,9 @@ module.exports = {
   plugins: [
     require('@tailwindcss/line-clamp'),
     plugin(function ({ addVariant }) {
-      addVariant('each-new-line-3', '&:nth-child(3n - 2)'),
-        addVariant('not-each-new-line-3', '&:not(:nth-child(3n - 2))'),
+      addVariant('each-new-row-in-3-cols', '&:nth-child(3n - 2)'),
         addVariant('pre-last', '&:nth-last-child(2)'),
-        addVariant('each-from-second', '&:nth-child(n + 2)'),
-        addVariant('thirds', '&:nth-child(3n)'),
-        addVariant('not-thirds', '&:not(:nth-child(3n))')
+        addVariant('each-2nd-element-in-3-cols', '&:nth-child(3n + 2)')
     }),
   ],
   theme: {

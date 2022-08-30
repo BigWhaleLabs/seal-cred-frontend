@@ -9,10 +9,9 @@ type AllowedExtraClassnames =
   | 'custom-scrollbar-thumb'
   | 'custom-qr-code'
   | 'hover-tertiary'
-  | 'last-row-modifier'
-  | 'lg:each-new-line-3:pre-last:col-span-3'
-  | 'lg:each-from-second:not-each-new-line-3:not-thirds:last:col-span-3'
-  | 'lg:each-new-line-3:last:col-span-full'
+  | 'lg:each-new-row-in-3-cols:last:col-span-full'
+  | 'lg:each-new-row-in-3-cols:pre-last:col-span-3'
+  | 'lg:each-2nd-element-in-3-cols:last:col-span-3'
   | 'smToLg:odd:last:col-span-full'
 
 export default function (
