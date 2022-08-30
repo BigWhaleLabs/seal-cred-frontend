@@ -46,18 +46,30 @@ function ENSAddress({
   )
 }
 
-export default memo<ENSAddressProps>(({ address, network }) => {
-  return (
-    <>
-      <span className={displayTo('md')}>
-        <ENSAddress address={address} network={network} truncateSize={11} />
-      </span>
-      <span className={display(displayFrom('md'), 'lg:hidden')}>
-        <ENSAddress address={address} network={network} truncateSize={17} />
-      </span>
-      <span className={displayFrom('lg')}>
-        <ENSAddress address={address} network={network} truncateSize={25} />
-      </span>
-    </>
-  )
-})
+export default memo<ENSAddressProps & { truncateSize?: number }>(
+  ({ address, network, truncateSize }) => {
+    // Used for gradient link. It won't work if we wrap it with a span
+    if (truncateSize)
+      return (
+        <ENSAddress
+          address={address}
+          network={network}
+          truncateSize={truncateSize}
+        />
+      )
+
+    return (
+      <>
+        <span className={displayTo('md')}>
+          <ENSAddress address={address} network={network} truncateSize={11} />
+        </span>
+        <span className={display(displayFrom('md'), 'lg:hidden')}>
+          <ENSAddress address={address} network={network} truncateSize={17} />
+        </span>
+        <span className={displayFrom('lg')}>
+          <ENSAddress address={address} network={network} truncateSize={25} />
+        </span>
+      </>
+    )
+  }
+)
