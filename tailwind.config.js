@@ -115,7 +115,6 @@ module.exports = {
         'thin-mobile': '10.75rem',
         'thin-card': '11.688rem',
         card: '24.875rem',
-        'app-card': '36.125rem',
         'mobile-card': '92%',
         'full-125': '125%',
         'full-105': '105%',

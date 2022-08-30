@@ -16,27 +16,25 @@ import classnames, {
   transitionProperty,
 } from 'classnames/tailwind'
 
-export const boxStyles = (withPadding?: boolean) =>
-  classnames(
-    display('flex'),
-    flexDirection('flex-col'),
-    borderRadius('rounded-lg'),
-    borderWidth('border'),
-    borderColor('border-formal-accent', 'focus:border-formal-accent'),
-    outlineColor('focus:outline-primary'),
-    outlineStyle('focus:outline'),
-    transitionProperty('transition-colors'),
-    backgroundColor('bg-primary-dark'),
-    alignItems('items-center'),
-    fontFamily('font-primary'),
-    padding({ 'p-3': withPadding }),
-    maxHeight('max-h-64'),
-    overflow('overflow-y-auto')
-  )
+export const boxStyles = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  borderRadius('rounded-lg'),
+  borderWidth('border'),
+  borderColor('border-formal-accent', 'focus:border-formal-accent'),
+  outlineColor('focus:outline-primary'),
+  outlineStyle('focus:outline'),
+  transitionProperty('transition-colors'),
+  backgroundColor('bg-primary-dark'),
+  alignItems('items-center'),
+  fontFamily('font-primary'),
+  padding('p-3'),
+  maxHeight('max-h-64'),
+  overflow('overflow-y-auto')
+)
 
 export default function ({
   children,
-  withPadding,
 }: ChildrenProp & { withPadding?: boolean }) {
-  return <div className={boxStyles(withPadding)}>{children}</div>
+  return <div className={boxStyles}>{children}</div>
 }

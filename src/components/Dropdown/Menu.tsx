@@ -54,7 +54,7 @@ export default function <T>({
 }) {
   return (
     <div className={container(!open)}>
-      <ItemContainer withPadding>
+      <ItemContainer>
         {options.map((option) => (
           <button
             key={option.value}
