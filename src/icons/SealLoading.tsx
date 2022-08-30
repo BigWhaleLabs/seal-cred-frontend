@@ -1,5 +1,5 @@
+import { classnames, fill, stroke, strokeWidth } from 'classnames/tailwind'
 import Color from 'models/Color'
-import classnames, { fill, stroke, strokeWidth } from 'classnames/tailwind'
 import colorToDropShadow from 'helpers/colors/colorToDropShadow'
 import colorToTextColor from 'helpers/colors/colorToTextColor'
 
