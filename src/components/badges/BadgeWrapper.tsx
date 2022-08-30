@@ -34,7 +34,7 @@ export default function ({
       className={classNamesToString(
         badgeWrapper(minted),
         'md:each-new-line:last:col-span-full',
-        'double-badge'
+        'double-badge-last-row'
       )}
     >
       {children}
