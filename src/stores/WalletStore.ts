@@ -1,3 +1,4 @@
+import { ErrorList, handleError } from '@big-whale-labs/frontend-utils'
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import { PersistableStore } from '@big-whale-labs/stores'
 import { hexValue } from 'ethers/lib/utils'
@@ -12,7 +13,6 @@ import createERC721Badge from 'helpers/createERC721Badge'
 import createEmailBadge from 'helpers/createEmailBadge'
 import createExternalERC721Badge from 'helpers/createExternalERC721Badge'
 import env from 'helpers/env'
-import handleError, { ErrorList } from 'helpers/handleError'
 import relayProvider from 'helpers/providers/relayProvider'
 import web3Modal from 'helpers/web3Modal'
 
