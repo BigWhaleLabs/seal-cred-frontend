@@ -1,5 +1,4 @@
-export default interface Option<T> {
+export default interface Option {
   label: string
-  value: T
   disabled: boolean | undefined
 }

@@ -41,24 +41,24 @@ const menuItem = (selected?: boolean) =>
     transitionProperty('transition-colors')
   )
 
-export default function <T>({
+export default function ({
   open,
   options,
   selected,
   onSelect,
 }: {
   open: boolean
-  options: Option<T>[]
-  selected?: Option<T>
-  onSelect: (option: Option<T>) => void
+  options: Option[]
+  selected?: string
+  onSelect: (option: Option) => void
 }) {
   return (
     <div className={container(!open)}>
       <ItemContainer>
         {options.map((option) => (
           <button
-            key={option.value}
-            className={menuItem(option.value === selected?.value)}
+            key={option.label}
+            className={menuItem(option.label === selected)}
             onClick={() => {
               onSelect(option)
             }}

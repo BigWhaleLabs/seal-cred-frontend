@@ -42,25 +42,21 @@ const container = classnames(
   displayTo('md')
 )
 
-export default function <T>({
+export default function ({
   disabled,
   currentValue,
-  placeholder,
   options,
   onChange,
 }: {
   disabled?: boolean
-  currentValue?: T
-  placeholder?: string
-  options: Option<T>[]
-  onChange: (selectedValue: T) => void
+  currentValue: string
+  options: Option[]
+  onChange: (selectedValue: string) => void
 }) {
   const [open, setOpen] = useState(false)
   const ref = createRef<HTMLDivElement>()
 
   useClickOutside(ref, () => setOpen(false))
-
-  const selectedOption = options.find((o) => o.value === currentValue)
 
   const selectedElement = (
     <button
@@ -68,7 +64,7 @@ export default function <T>({
       className={button}
       disabled={disabled}
     >
-      <span className={textStyles}>{selectedOption?.label || placeholder}</span>
+      <span className={textStyles}>{currentValue}</span>
       <div className={width('w-4')}>
         <Arrow pulseDisabled open={open} />
       </div>
@@ -81,9 +77,9 @@ export default function <T>({
       <Menu
         open={open}
         options={options}
-        selected={selectedOption}
+        selected={currentValue}
         onSelect={(option) => {
-          onChange(option.value)
+          onChange(option.label)
           setOpen(false)
         }}
       />

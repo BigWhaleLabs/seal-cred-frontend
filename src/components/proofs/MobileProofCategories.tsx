@@ -9,15 +9,14 @@ export default function ({
   currentCategory,
   setCategory,
 }: CategoriesComponentProps) {
-  const options = Object.entries(categories).map(([title, { disabled }]) => ({
-    label: title,
-    value: title,
+  const options = Object.entries(categories).map(([label, { disabled }]) => ({
+    label,
     disabled,
   }))
 
   return (
     <Dropdown
-      currentValue={currentCategory}
+      currentValue={currentCategory.toString()}
       placeholder="Select a category"
       options={options}
       onChange={(selectedValue) => {
