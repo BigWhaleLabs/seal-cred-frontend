@@ -1,4 +1,5 @@
 import { ProofText, TextButton } from 'components/ui/Text'
+import { displayFrom } from 'helpers/visibilityClassnames'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
@@ -29,7 +30,6 @@ import classnames, {
   visibility,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const arrowContainer = classnames(
   display('flex'),
@@ -39,6 +39,7 @@ const arrowContainer = classnames(
 
 const getStartedText = (open: boolean) =>
   classnames(
+    displayFrom('xs'),
     textColor('text-transparent', 'active:text-accent'),
     transitionProperty('transition-colors'),
     backgroundClip('bg-clip-text'),
@@ -85,7 +86,6 @@ export default function () {
   const [open, setOpen] = useState(false)
   const [error, setError] = useState<string | undefined>()
   const [generationStarted, setGenerationStarted] = useState(false)
-  const { xs } = useBreakpoints()
   const { emailDomain } = useSnapshot(EmailDomainStore)
 
   function onCreate() {
@@ -133,11 +133,9 @@ export default function () {
             </div>
           </div>
           <button className={arrowContainer} onClick={() => setOpen(!open)}>
-            {!xs && (
-              <span className={getStartedText(open)}>
-                <span>{domain ? 'Set token' : 'Get started'}</span>
-              </span>
-            )}
+            <span className={getStartedText(open)}>
+              <span>{domain ? 'Set token' : 'Get started'}</span>
+            </span>
             <div className={width('w-4')}>
               <Arrow pulseDisabled open={open} />
             </div>

@@ -31,21 +31,35 @@ export default function ({
           event.code === 'Enter' && emailIsValid ? onSubmit(email) : undefined
         }
       />
-      <GradientBorder>
+      {submitType === 'primary' ? (
         <Button
-          gradientFont={submitType !== 'primary'}
           loading={loading}
           loadingOverflow
           fullWidth
           center
-          small={submitType !== 'primary'}
           type={submitType}
           disabled={!emailIsValid}
           onClick={() => onSubmit(email)}
         >
           {submitText}
         </Button>
-      </GradientBorder>
+      ) : (
+        <GradientBorder>
+          <Button
+            gradientFont
+            loading={loading}
+            loadingOverflow
+            fullWidth
+            center
+            small
+            type={submitType}
+            disabled={!emailIsValid}
+            onClick={() => onSubmit(email)}
+          >
+            {submitText}
+          </Button>
+        </GradientBorder>
+      )}
     </>
   )
 }

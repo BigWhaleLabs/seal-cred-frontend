@@ -13,8 +13,7 @@ import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailable
 function ERC721ProofSectionSuspended({ dataKey }: { dataKey: DataKey }) {
   const { network } = data[dataKey]
   const { proofsCompleted } = useSnapshot(ProofStore[dataKey])
-  const networkProofAddressesAvailableToCreate =
-    useProofAddressesAvailableToCreate(network)
+  const originals = useProofAddressesAvailableToCreate(network)
 
   async function onCreate(original: string) {
     await data[dataKey].createProof(ProofStore[dataKey], original)
@@ -23,7 +22,7 @@ function ERC721ProofSectionSuspended({ dataKey }: { dataKey: DataKey }) {
   return (
     <ProofsList
       proofs={proofsCompleted as Proof[]}
-      originals={networkProofAddressesAvailableToCreate}
+      originals={originals}
       onCreate={onCreate}
       dataKey={dataKey}
       nothingToGenerateText="No NFTs to proof"

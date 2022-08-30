@@ -33,8 +33,8 @@ interface ArcTextProps {
 }
 
 export default function ({ text, smallCircle, thinText }: ArcTextProps) {
-  const { xxs, sm, md } = useBreakpoints()
-  const mobile = (xxs || sm) && !md
+  const { xxs, xs, md } = useBreakpoints()
+  const mobile = (xxs || xs) && !md
   const radius = mobile ? 85 : smallCircle ? 110 : 55
 
   const textLength = text.length

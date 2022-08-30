@@ -1,10 +1,8 @@
 import { AccentText } from 'components/ui/Text'
-import classnames, { display, width } from 'classnames/tailwind'
+import { displayFrom } from 'helpers/visibilityClassnames'
+import classnames, { width } from 'classnames/tailwind'
 
-const bottomSeparator = classnames(
-  width('w-fit'),
-  display('hidden', 'md:block')
-)
+const bottomSeparator = classnames(width('w-fit'), displayFrom('md'))
 
 export default function () {
   return (

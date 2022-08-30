@@ -1,4 +1,5 @@
 import { BodyText } from 'components/ui/Text'
+import { displayFrom, displayTo } from 'helpers/visibilityClassnames'
 import Card from 'components/ui/Card'
 import ChildrenProp from 'models/ChildrenProp'
 import DoubleSmile from 'icons/DoubleSmile'
@@ -14,7 +15,6 @@ import classnames, {
   transitionDuration,
   transitionProperty,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const innerId = classnames(
   display('flex'),
@@ -46,7 +46,6 @@ export default function ({
   text,
   children,
 }: IdentityCardProps & ChildrenProp) {
-  const { xs } = useBreakpoints()
   return (
     <Card color="formal-accent" shadow thin paddingType="small" onlyWrap>
       <div className={innerId}>
@@ -58,9 +57,14 @@ export default function ({
           )}
           {left && <NoisyRectangle bgColor="bg-accent" />}
         </div>
-        <BodyText small={xs} center>
-          {text}
-        </BodyText>
+        <span className={displayTo('sm')}>
+          <BodyText small center>
+            {text}
+          </BodyText>
+        </span>
+        <span className={displayFrom('sm')}>
+          <BodyText center>{text}</BodyText>
+        </span>
         {left ? <DoubleSmile /> : <Grim />}
         <div className={zkSpheresLeft(reveal)}>{children}</div>
       </div>

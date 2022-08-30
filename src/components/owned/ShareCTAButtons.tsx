@@ -26,9 +26,9 @@ const buttonContentWrapper = classnames(
 
 const buttonWrapper = classnames(
   display('flex'),
-  flexDirection('flex-col', 'tiny:flex-row'),
+  flexDirection('flex-col', 'xs:flex-row'),
   alignItems('items-center'),
-  space('space-y-3', 'tiny:space-y-0', 'tiny:space-x-3'),
+  space('space-y-3', 'xs:space-y-0', 'xs:space-x-3'),
   margin('my-4')
 )
 
