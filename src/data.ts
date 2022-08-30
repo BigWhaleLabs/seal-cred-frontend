@@ -43,6 +43,20 @@ export default {
     createProof: (store: ProofStore, original: string) =>
       generateERC721(store, original, Network.Mainnet),
   },
+  ERC721: {
+    ledger: env.VITE_SC_ERC721_LEDGER_CONTRACT_ADDRESS,
+    title: 'Goerli NFT derivatives',
+    proofTitle: 'Goerli NFTs',
+    ownerTitle: 'This wallet owns a {derivative}',
+    ownerContent:
+      'This is a zkNFT derivative. It means this person has been verified to own at least one ‘{original}‘ Goerli NFT.',
+    proofIcon: Erc721Badge,
+    badgeType: BadgeSourceType.ERC721,
+    network: Network.Goerli,
+    mint: createERC721Badge,
+    createProof: (store: ProofStore, original: string) =>
+      generateERC721(store, original, Network.Goerli),
+  },
   Email: {
     ledger: env.VITE_SC_EMAIL_LEDGER_CONTRACT_ADDRESS,
     title: 'Email derivatives',
@@ -64,19 +78,5 @@ export default {
       if (!options?.secret) throw new Error('Secret not found!')
       return generateEmail(store, original, options.secret)
     },
-  },
-  ERC721: {
-    ledger: env.VITE_SC_ERC721_LEDGER_CONTRACT_ADDRESS,
-    title: 'Goerli NFT derivatives',
-    proofTitle: 'Goerli NFTs',
-    ownerTitle: 'This wallet owns a {derivative}',
-    ownerContent:
-      'This is a zkNFT derivative. It means this person has been verified to own at least one ‘{original}‘ Goerli NFT.',
-    proofIcon: Erc721Badge,
-    badgeType: BadgeSourceType.ERC721,
-    network: Network.Goerli,
-    mint: createERC721Badge,
-    createProof: (store: ProofStore, original: string) =>
-      generateERC721(store, original, Network.Goerli),
   },
 }
