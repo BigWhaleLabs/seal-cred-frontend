@@ -1,4 +1,5 @@
 import { AccentText, BodyText, HeaderText } from 'components/Text'
+import { handleError } from '@big-whale-labs/frontend-utils'
 import BaseBadgeContract from 'helpers/BaseBadgeContract'
 import Card from 'components/Card'
 import CardTitle from 'components/CardTitle'
@@ -18,7 +19,6 @@ import classnames, {
   space,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
-import handleError from 'helpers/handleError'
 import useBadgeContracts from 'hooks/useBadgeContracts'
 
 const walletBox = classnames(

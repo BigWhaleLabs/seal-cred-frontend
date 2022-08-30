@@ -1,4 +1,5 @@
 import { GoerliContractsStore } from 'stores/ContractsStore'
+import { handleError } from '@big-whale-labs/frontend-utils'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import BadgeCard from 'components/badges/BadgeCard'
@@ -12,7 +13,6 @@ import Erc721Badge from 'icons/Erc721Badge'
 import MintedToken from 'models/MintedToken'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
-import handleError from 'helpers/handleError'
 
 function Badge({
   proof,
