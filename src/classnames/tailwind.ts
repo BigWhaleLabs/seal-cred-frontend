@@ -7391,7 +7391,6 @@ export type TWidth =
   | 'w-thin-mobile'
   | 'w-thin-card'
   | 'w-card'
-  | 'w-app-card'
   | 'w-mobile-card'
   | 'w-full-125'
   | 'w-full-105'

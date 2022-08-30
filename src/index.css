@@ -59,6 +59,9 @@ body {
     )
     0 0/3rem 3rem;
 }
+svg {
+  fill: none;
+}
 path,
 circle {
   stroke-linecap: round;
@@ -96,7 +99,7 @@ circle {
     color: var(--tertiary);
     text-decoration: underline;
   }
-  .hover-menu-element:hover {
+  .hover-menu-element:not(:disabled):hover {
     background-color: var(--primary-semi-dimmed);
     stroke: var(--formal-accent);
   }

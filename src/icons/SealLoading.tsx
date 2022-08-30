@@ -18,7 +18,6 @@ export default function ({ color }: { color: Color }) {
       width="202"
       height="202"
       viewBox="0 0 202 202"
-      fill="none"
       className={classnames(textColor, shadowColor)}
     >
       <circle cx="101" cy="101" r="66" className={circleStyles} />

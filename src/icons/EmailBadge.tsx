@@ -30,11 +30,10 @@ export default function () {
   return (
     <svg
       viewBox="0 0 64 64"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={svgClasses}
     >
-      <circle cx="32" cy="32" r="31" fill="#0D0030" className={circleClasses} />
+      <circle cx="32" cy="32" r="31" className={circleClasses} />
       <path
         d="M53.4828 54V28.2414C53.4828 16.5101 43.9727 7 32.2414 7C20.5101 7 11 16.5101 11 28.2414L11 54"
         className={lineClasses}

@@ -10,7 +10,7 @@ const svgWrapper = width('w-6')
 export default function () {
   return (
     <div className={svgWrapper}>
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <line
           className={strokeStyle}
           x1="5.41421"

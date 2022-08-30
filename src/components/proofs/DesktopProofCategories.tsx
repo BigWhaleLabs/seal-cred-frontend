@@ -8,6 +8,7 @@ import classnames, {
   alignItems,
   backgroundColor,
   borderRadius,
+  cursor,
   display,
   flexDirection,
   gap,
@@ -23,7 +24,7 @@ import classnames, {
 } from 'classnames/tailwind'
 
 const desktopMenuWrapper = classnames(
-  display('md:flex', 'hidden'),
+  display('hidden', 'md:flex'),
   flexDirection('flex-col'),
   position('sticky'),
   inset('top-4'),
@@ -34,7 +35,7 @@ const desktopMenuWrapper = classnames(
   gap('gap-y-2'),
   borderRadius('rounded-full')
 )
-const iconWrapper = (selected: boolean) =>
+const iconWrapper = (selected: boolean, disabled?: boolean) =>
   classnames(
     display('flex'),
     justifyContent('justify-center'),
@@ -44,6 +45,7 @@ const iconWrapper = (selected: boolean) =>
     stroke(selected ? 'stroke-primary-background' : 'stroke-formal-accent'),
     transitionProperty('transition-all'),
     opacity('disabled:opacity-30'),
+    cursor({ 'cursor-not-allowed': disabled }),
     width('w-9'),
     height('h-9')
   )
@@ -58,7 +60,7 @@ export default function ({
         <button
           title={title}
           className={classNamesToString(
-            iconWrapper(currentCategory === title),
+            iconWrapper(currentCategory === title, disabled),
             'hover-menu-element'
           )}
           onClick={() => setCategory(title as CategoriesTitles)}

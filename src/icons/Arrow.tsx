@@ -43,7 +43,6 @@ export default function ({
     <div className={svgInnerWrapper}>
       <svg
         viewBox={horizontal ? '0 0 14 14' : '0 0 14 7'}
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={arrowAnimation(pulseDisabled, openDisabled, open)}
       >

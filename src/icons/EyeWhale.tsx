@@ -19,7 +19,6 @@ export default function () {
       width="88"
       height="78"
       viewBox="0 0 88 78"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={svgShadow}
     >
