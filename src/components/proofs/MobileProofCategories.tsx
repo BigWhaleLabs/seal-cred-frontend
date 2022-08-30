@@ -17,7 +17,6 @@ export default function ({
   return (
     <Dropdown
       currentValue={currentCategory.toString()}
-      placeholder="Select a category"
       options={options}
       onChange={(selectedValue) => {
         setCategory(selectedValue as CategoriesTitles)
