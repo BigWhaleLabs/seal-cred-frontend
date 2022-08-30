@@ -4,6 +4,7 @@ import {
   gradientColorStops,
   height,
   inset,
+  pointerEvents,
   position,
   zIndex,
 } from 'classnames/tailwind'
@@ -18,7 +19,8 @@ const fade = (bottom = true) =>
     position('sticky'),
     inset(bottom ? '-bottom-2' : '-top-1', 'left-0', 'right-0'),
     height(bottom ? 'h-6' : 'h-4'),
-    zIndex('z-10')
+    zIndex('z-10'),
+    pointerEvents('pointer-events-none')
   )
 
 export default function ({ bottom }: { bottom?: boolean }) {

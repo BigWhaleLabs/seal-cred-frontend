@@ -11,7 +11,6 @@ export default function () {
       width="91"
       height="90"
       viewBox="0 0 91 90"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g filter="url(#filter0_d_90_6722)">

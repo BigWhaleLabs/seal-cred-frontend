@@ -1,5 +1,4 @@
 import {
-  alignItems,
   backgroundColor,
   borderRadius,
   borderWidth,
@@ -64,7 +63,6 @@ const cardColor = (color?: Color) => {
 const appStyles = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-stretch'),
   minHeight('sm:min-h-card', 'min-h-fit'),
   maxHeight('max-h-app-card'),
   width('w-full'),

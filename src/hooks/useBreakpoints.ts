@@ -5,6 +5,7 @@ const smSize = 375
 const mdSize = 600
 const tabletSize = 767
 const lgSize = 1023
+const xlSize = 1279
 
 export default function () {
   const [width, setWidth] = useState(window.innerWidth)
@@ -28,5 +29,6 @@ export default function () {
     md: width > mdSize,
     tablet: width > tabletSize,
     lg: width > lgSize,
+    xl: width > xlSize,
   }
 }

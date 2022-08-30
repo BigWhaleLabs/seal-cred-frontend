@@ -1,51 +1,69 @@
 import { AccentText, BodyText } from 'components/Text'
-import { Suspense } from 'preact/compat'
-import { space } from 'classnames/tailwind'
+import { CategoriesTitles, categories } from 'models/Categories'
+import { Suspense, useState } from 'preact/compat'
+import {
+  alignItems,
+  classnames,
+  display,
+  flex,
+  flexDirection,
+  gap,
+} from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
-import EmailProof from 'components/proofs/EmailProof'
-import Network from 'models/Network'
-import ProofSection from 'components/ProofSection'
+import DesktopProofCategories from 'components/proofs/DesktopProofCategories'
+import MobileProofCategories from 'components/proofs/MobileProofCategories'
 import ProofStore from 'stores/ProofStore'
-import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
 import Scrollbar from 'components/Scrollbar'
 import WalletStore from 'stores/WalletStore'
+
+const proofList = classnames(
+  display('flex'),
+  flex('flex-1'),
+  flexDirection('flex-col'),
+  gap('gap-y-2')
+)
+const menuWrapper = classnames(display('flex'), gap('gap-x-4'))
+const bottomWrapper = classnames(
+  display('flex'),
+  flex('flex-1'),
+  alignItems('items-end')
+)
 
 export function ProofListSuspended() {
   const { account } = useSnapshot(WalletStore)
   const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
+  const [category, setCategory] = useState<CategoriesTitles>('NFTs')
 
   return (
     <>
+      <MobileProofCategories
+        currentCategory={category}
+        setCategory={setCategory}
+      />
       <Scrollbar>
-        <div className={space('space-y-2')}>
-          {account && (
-            <>
-              <ERC721ProofSection account={account} network={Network.Mainnet} />
-              <ERC721ProofSection account={account} network={Network.Goerli} />
-            </>
-          )}
-          <ProofSection
-            title={
-              <BodyText>
-                Additional proofs{' '}
-                <AccentText color="text-tertiary" bold>
-                  New!
-                </AccentText>
-              </BodyText>
-            }
-          >
-            {Array.from(emailProofsCompleted).map((proof, index) => (
-              <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
-            ))}
-            <EmailProof />
-          </ProofSection>
+        <div className={menuWrapper}>
+          <DesktopProofCategories
+            currentCategory={category}
+            setCategory={setCategory}
+          />
+          <div className={proofList}>
+            <div className={display('hidden', 'md:block')}>
+              <BodyText bold>{category}</BodyText>
+            </div>
+            {categories[category].contentToRender(
+              account,
+              emailProofsCompleted
+            )}
+          </div>
         </div>
       </Scrollbar>
       {proofsCompleted.length > 0 && (
-        <AccentText small primary color="text-primary">
-          Created ZK proofs are saved in the browser even if you switch wallets.
-        </AccentText>
+        <div className={bottomWrapper}>
+          <AccentText small primary color="text-primary">
+            Created ZK proofs are saved in the browser even if you switch
+            wallets.
+          </AccentText>
+        </div>
       )}
     </>
   )

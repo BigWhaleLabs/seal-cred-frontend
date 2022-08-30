@@ -58,7 +58,7 @@ module.exports = {
         sm: '28.125rem',
         md: '37.5rem',
         tablet: '48rem',
-        smToLg: { min: '28.125rem', max: '64rem' },
+        smToXl: { min: '28.125rem', max: '80rem' },
       },
       borderWidth: {
         24: '1.5rem',
@@ -117,6 +117,7 @@ module.exports = {
         card: '24.875rem',
         'mobile-card': '92%',
         'full-125': '125%',
+        'full-105': '105%',
         'screen-80': '80vw',
       },
       inset: {
@@ -126,8 +127,9 @@ module.exports = {
         '-28': '-7rem',
         '-24': '-6rem',
         '-4': '-1rem',
-        '-1': '-1px',
+        '-2.5': '-0.65rem',
         '-2': '-2px',
+        '-1': '-1px',
       },
       rotate: {
         '-90': '-90deg',

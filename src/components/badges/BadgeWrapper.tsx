@@ -22,7 +22,7 @@ const badgeWrapper = (minted: boolean) =>
     borderRadius('rounded-lg'),
     backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
     padding('px-4', 'py-4'),
-    gridColumn('col-span-1', 'lg:col-span-2')
+    gridColumn('col-span-1', 'xl:col-span-2')
   )
 
 export default function ({
@@ -31,10 +31,10 @@ export default function ({
 }: ChildrenProp & { minted: boolean }) {
   const wrapper = classNamesToString(
     badgeWrapper(minted),
-    'lg:each-new-row-in-3-cols:last:col-span-full',
-    'lg:each-new-row-in-3-cols:pre-last:col-span-3',
-    'lg:each-2nd-element-in-3-cols:last:col-span-3',
-    'smToLg:odd:last:col-span-full'
+    'xl:each-new-row-in-3-cols:last:col-span-full',
+    'xl:each-new-row-in-3-cols:pre-last:col-span-3',
+    'xl:each-2nd-element-in-3-cols:last:col-span-3',
+    'smToXl:odd:last:col-span-full'
   )
 
   return <div className={wrapper}>{children}</div>
