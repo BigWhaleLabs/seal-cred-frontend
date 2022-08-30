@@ -29,19 +29,13 @@ export default function ({
   children,
   minted,
 }: ChildrenProp & { minted: boolean }) {
-  const lastWideBadgeSmToLg = 'smToLg:odd:last:col-span-full'
-
-  return (
-    <div
-      className={classNamesToString(
-        badgeWrapper(minted),
-        'lg:each-new-row-in-3-cols:last:col-span-full',
-        'lg:each-new-row-in-3-cols:pre-last:col-span-3',
-        'lg:each-2nd-element-in-3-cols:last:col-span-3',
-        lastWideBadgeSmToLg
-      )}
-    >
-      {children}
-    </div>
+  const wrapper = classNamesToString(
+    badgeWrapper(minted),
+    'lg:each-new-row-in-3-cols:last:col-span-full',
+    'lg:each-new-row-in-3-cols:pre-last:col-span-3',
+    'lg:each-2nd-element-in-3-cols:last:col-span-3',
+    'smToLg:odd:last:col-span-full'
   )
+
+  return <div className={wrapper}>{children}</div>
 }
