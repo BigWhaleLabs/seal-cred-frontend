@@ -27,11 +27,16 @@ import classnames, {
   maxWidth,
   space,
   width,
+  wordBreak,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 import useBreakpoints from 'hooks/useBreakpoints'
 
-const proofName = classnames(display('flex'), flex('flex-1'))
+const proofName = classnames(
+  display('flex'),
+  flex('flex-1'),
+  wordBreak('break-all')
+)
 
 const proofText = (small?: boolean) =>
   classnames(

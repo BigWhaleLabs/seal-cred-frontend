@@ -9,8 +9,7 @@ type AllowedExtraClassnames =
   | 'custom-scrollbar-thumb'
   | 'custom-qr-code'
   | 'hover-tertiary'
-  | 'md:each-new-line:last:col-span-full'
-  | 'double-badge-last-row'
+  | 'last-row-modifier'
 
 export default function (
   ...classNames: (AllowedExtraClassnames | TTailwindString | undefined | null)[]

@@ -68,7 +68,7 @@ const appStyles = classnames(
   minHeight('sm:min-h-card', 'min-h-fit'),
   maxHeight('max-h-app-card'),
   width('w-full'),
-  maxWidth('max-w-app-card')
+  maxWidth('max-w-app-card', 'md:max-w-none')
 )
 
 const thinWidthStyles = width('sm:!w-thin-card', 'tiny:w-thin-mobile', 'w-32')

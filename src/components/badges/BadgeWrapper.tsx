@@ -22,7 +22,7 @@ const badgeWrapper = (minted: boolean) =>
     borderRadius('rounded-lg'),
     backgroundColor(minted ? 'bg-primary-dimmed' : 'bg-primary-background'),
     padding('px-4', 'py-4'),
-    gridColumn('col-span-1', 'md:col-span-2')
+    gridColumn('col-span-1', 'lg:col-span-2')
   )
 
 export default function ({
@@ -31,11 +31,7 @@ export default function ({
 }: ChildrenProp & { minted: boolean }) {
   return (
     <div
-      className={classNamesToString(
-        badgeWrapper(minted),
-        'md:each-new-line:last:col-span-full',
-        'double-badge-last-row'
-      )}
+      className={classNamesToString(badgeWrapper(minted), 'last-row-modifier')}
     >
       {children}
     </div>
