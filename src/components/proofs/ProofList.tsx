@@ -2,6 +2,7 @@ import { AccentText, BodyText } from 'components/Text'
 import { CategoriesTitles, categories } from 'models/Categories'
 import { Suspense, useState } from 'preact/compat'
 import {
+  alignItems,
   classnames,
   display,
   flex,
@@ -22,6 +23,11 @@ const proofList = classnames(
   gap('gap-y-2')
 )
 const menuWrapper = classnames(display('flex'), gap('gap-x-4'))
+const bottomWrapper = classnames(
+  display('flex'),
+  flex('flex-1'),
+  alignItems('items-end')
+)
 
 export function ProofListSuspended() {
   const { account } = useSnapshot(WalletStore)
@@ -52,9 +58,12 @@ export function ProofListSuspended() {
         </div>
       </Scrollbar>
       {proofsCompleted.length > 0 && (
-        <AccentText small primary color="text-primary">
-          Created ZK proofs are saved in the browser even if you switch wallets.
-        </AccentText>
+        <div className={bottomWrapper}>
+          <AccentText small primary color="text-primary">
+            Created ZK proofs are saved in the browser even if you switch
+            wallets.
+          </AccentText>
+        </div>
       )}
     </>
   )
