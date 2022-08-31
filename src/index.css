@@ -42,6 +42,7 @@ html {
   background-color: var(--primary-dark);
   scrollbar-color: var(--accent) transparent;
   scrollbar-width: thin;
+  caret-color: var(--primary);
 }
 body {
   scroll-behavior: smooth;
