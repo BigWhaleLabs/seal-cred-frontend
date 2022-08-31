@@ -1,4 +1,4 @@
-import { HighlightedText } from 'components/Text'
+import { HighlightedText } from 'components/ui/Text'
 import BuildingIdentitiesCard from 'components/landing/BuildingIdentitiesCard'
 import CreatingZKProofCard from 'components/landing/CreatingZKProofCard'
 import IdentityCard from 'components/landing/IdentityCard'

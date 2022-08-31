@@ -1,32 +1,19 @@
-import { GoerliContractsStore } from 'stores/ContractsStore'
+import { BadgeBlockProps } from 'models/BadgeBlockProps'
+import { BadgesContractsStore } from 'stores/ContractsStore'
 import { handleError } from '@big-whale-labs/frontend-utils'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import BadgeCard from 'components/badges/BadgeCard'
 import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
-import BaseProof from 'helpers/BaseProof'
-import Button from 'components/Button'
-import EmailBadge from 'icons/EmailBadge'
-import EmailProof from 'helpers/EmailProof'
-import Erc721Badge from 'icons/Erc721Badge'
-import MintedToken from 'models/MintedToken'
+import Button from 'components/ui/Button'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
+import badgeConfig from 'badgeConfig'
 
-function Badge({
-  proof,
-  onMinted,
-  onMintFailed,
-}: {
-  proof: BaseProof
-  onMinted?: (minted?: MintedToken[]) => void
-  onMintFailed?: (minted?: MintedToken[]) => void
-}) {
+function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   const { account, mintLoading } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
-
-  const isEmailProof = proof instanceof EmailProof
 
   const checkProofAndMint = async () => {
     WalletStore.mintLoading = true
@@ -34,38 +21,26 @@ function Badge({
     try {
       if (!account) throw new Error('No account found')
       if (!proof?.result) throw new Error('No proof found')
-      const transaction = await WalletStore.mintDerivative(proof)
-      ProofStore.deleteProof(proof)
+      const transaction = await ProofStore[proof.dataType].mint(proof)
       if (onMinted) onMinted()
-      GoerliContractsStore.connectedAccounts[account].applyTransaction(
+      BadgesContractsStore.connectedAccounts[account].applyTransaction(
         transaction
       )
     } catch (error) {
-      if (
-        proof &&
-        error instanceof Error &&
-        error.message.includes('This ZK proof has already been used')
-      ) {
-        ProofStore.deleteProof(proof)
-        if (onMintFailed) onMintFailed()
-        handleError(
-          new Error(
-            'The ZK proof has been used before. Please, regenerate the proof.'
-          )
-        )
-      } else {
-        handleError(error)
-      }
+      if (onMintFailed) onMintFailed()
+      handleError(error)
     } finally {
       setLoading(false)
       WalletStore.mintLoading = false
     }
   }
 
+  const ProofIcon = badgeConfig[proof.badgeType].proofIcon
+
   return (
     <BadgeCard
-      top={isEmailProof ? <EmailBadge /> : <Erc721Badge />}
-      text={<BadgeTitle proof={proof} />}
+      top={<ProofIcon />}
+      text={<BadgeTitle originalOrAddress={proof.original} />}
       bottom={
         <Button
           small
@@ -81,15 +56,7 @@ function Badge({
   )
 }
 
-export default function ({
-  proof,
-  onMinted,
-  onMintFailed,
-}: {
-  proof: BaseProof
-  onMinted?: (minted?: MintedToken[]) => void
-  onMintFailed?: (minted?: MintedToken[]) => void
-}) {
+export default function ({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   return (
     <BadgeWrapper minted={false}>
       <Badge proof={proof} onMinted={onMinted} onMintFailed={onMintFailed} />

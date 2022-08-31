@@ -1,10 +1,10 @@
-import { BodyText } from 'components/Text'
+import { BodyText } from 'components/ui/Text'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
-import Button from 'components/Button'
+import Button from 'components/ui/Button'
 import CTAText from 'helpers/CTAText'
 import Cross from 'icons/Cross'
-import ExternalLink from 'components/ExternalLink'
+import ExternalLink from 'components/ui/ExternalLink'
 import NotificationsStore from 'stores/NotificationsStore'
 import classnames, {
   alignItems,

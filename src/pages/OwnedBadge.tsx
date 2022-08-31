@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { useParams } from 'react-router-dom'
-import Card from 'components/Card'
+import Card from 'components/ui/Card'
 import LoadingCard from 'components/proofs/LoadingCard'
 import NotFound from 'pages/NotFound'
 import OwnerInfo from 'components/owned/OwnerInfo'

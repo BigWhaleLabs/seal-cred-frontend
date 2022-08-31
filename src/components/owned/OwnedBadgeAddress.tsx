@@ -1,10 +1,10 @@
-import { LinkText } from 'components/Text'
+import { LinkText } from 'components/ui/Text'
 import { Suspense } from 'react'
 import { display, wordBreak } from 'classnames/tailwind'
 import { displayFrom, displayTo } from 'helpers/visibilityClassnames'
-import ENSAddress from 'components/ENSAddress'
+import ENSAddress from 'components/ui/ENSAddress'
 import Network from 'models/Network'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 import useOwnerAddress from 'hooks/useOwnerAddress'
 
 const container = wordBreak('break-all')

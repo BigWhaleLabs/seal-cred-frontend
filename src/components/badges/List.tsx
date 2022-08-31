@@ -1,61 +1,33 @@
-import { GoerliContractsStore } from 'stores/ContractsStore'
 import { Suspense } from 'preact/compat'
+import { dataKeys } from 'helpers/contracts/dataShapeObject'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgeSection from 'components/badges/BadgeSection'
 import ConfettiIfNeeded from 'components/badges/ConfettiIfNeeded'
 import DoxNotification from 'components/badges/DoxNotification'
-import ERC721Proof from 'helpers/ERC721Proof'
-import EmailProof from 'helpers/EmailProof'
 import HintCard from 'components/badges/HintCard'
-import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
-import Scrollbar from 'components/Scrollbar'
-import SealCredStore from 'stores/SealCredStore'
+import Scrollbar from 'components/ui/Scrollbar'
 import ShareToTwitterIfNeeded from 'components/badges/ShareToTwitterIfNeeded'
-import proofStore from 'stores/ProofStore'
-import useContractsOwned from 'hooks/useContractsOwned'
+import badgeConfig from 'badgeConfig'
+import data from 'data'
+import useMintedAddresses from 'hooks/useMintedAddresses'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 import walletStore from 'stores/WalletStore'
 
 function BadgeListSuspended() {
-  const { account, walletsToNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
-  const { proofsCompleted } = useSnapshot(proofStore)
-  const {
-    emailDerivativeContracts = [],
-    ERC721derivativeContracts = [],
-    externalERC721derivativeContracts = [],
-  } = useSnapshot(SealCredStore)
-  const contractsOwned = useContractsOwned(GoerliContractsStore)
+  const { account, isAccountNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
+  const { ledgerToUnmintedProofs, hasUnmintedProofs } =
+    useProofsAvailableToMint()
+  const { hasMinted, ledgerToMintedAddresses } = useMintedAddresses()
 
-  const ownedEmailDerivativeContracts = emailDerivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
-  )
-
-  const ownedExternalERC721DerivativeContracts =
-    externalERC721derivativeContracts.filter((contractAddress) =>
-      contractsOwned.includes(contractAddress)
-    )
-  const ownedERC721DerivativeContracts = ERC721derivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
-  )
-
-  const proofsAvailableToMint = useProofsAvailableToMint()
-
-  const hasProofs = proofsAvailableToMint.length
-  const hasDerivatives =
-    ownedExternalERC721DerivativeContracts.length +
-    ownedEmailDerivativeContracts.length +
-    ownedERC721DerivativeContracts.length
-  const isEmpty = !hasProofs && !hasDerivatives
-
+  const isEmpty = !hasUnmintedProofs && !hasMinted
   const shouldNotify =
-    !!account &&
-    !walletsToNotifiedOfBeingDoxxed[account] &&
-    proofsCompleted.length > 0
+    account && !isAccountNotifiedOfBeingDoxxed && hasUnmintedProofs
 
   const onMinted = () => {
-    if (hasProofs && !hasDerivatives) NotificationsStore.showTwitterShare = true
+    if (hasUnmintedProofs && !hasMinted)
+      NotificationsStore.showTwitterShare = true
   }
 
   return shouldNotify ? (
@@ -67,33 +39,16 @@ function BadgeListSuspended() {
       <ConfettiIfNeeded />
       <Scrollbar>
         <div className={space('space-y-2')}>
-          <BadgeSection
-            title="Mainnet NFT derivatives"
-            minted={ownedExternalERC721DerivativeContracts}
-            proofs={proofsAvailableToMint.filter(
-              (proof) =>
-                proof instanceof ERC721Proof &&
-                proof.network === Network.Mainnet
-            )}
-            onMinted={onMinted}
-          />
-          <BadgeSection
-            title="Goerli NFT derivatives"
-            minted={ownedERC721DerivativeContracts}
-            proofs={proofsAvailableToMint.filter(
-              (proof) =>
-                proof instanceof ERC721Proof && proof.network === Network.Goerli
-            )}
-            onMinted={onMinted}
-          />
-          <BadgeSection
-            title="Email derivatives"
-            minted={ownedEmailDerivativeContracts}
-            proofs={proofsAvailableToMint.filter(
-              (proof) => proof instanceof EmailProof
-            )}
-            onMinted={onMinted}
-          />
+          {dataKeys.map((ledgerName) => (
+            <BadgeSection
+              title={badgeConfig[data[ledgerName].badgeType].title(
+                data[ledgerName]
+              )}
+              minted={ledgerToMintedAddresses[ledgerName]}
+              proofs={ledgerToUnmintedProofs[ledgerName]}
+              onMinted={onMinted}
+            />
+          ))}
           <ShareToTwitterIfNeeded />
         </div>
       </Scrollbar>

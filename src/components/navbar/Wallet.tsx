@@ -1,9 +1,9 @@
-import { SocialLink } from 'components/Text'
+import { SocialLink } from 'components/ui/Text'
 import { displayFrom } from 'helpers/visibilityClassnames'
 import { useSnapshot } from 'valtio'
 import AccountAndLogo from 'components/navbar/AccountAndLogo'
 import Discord from 'icons/Discord'
-import ExternalLink from 'components/ExternalLink'
+import ExternalLink from 'components/ui/ExternalLink'
 import Network from 'models/Network'
 import Twitter from 'icons/Twitter'
 import WalletStore from 'stores/WalletStore'
@@ -17,7 +17,7 @@ import classnames, {
   space,
   width,
 } from 'classnames/tailwind'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
+import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
 const walletContainer = classnames(
   display('inline-flex'),

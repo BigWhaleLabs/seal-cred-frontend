@@ -7,6 +7,8 @@ export default function <V, T>(
       ...result,
       [key]: transformer(value),
     }),
-    {}
+    {} as {
+      [key: string]: T
+    }
   )
 }

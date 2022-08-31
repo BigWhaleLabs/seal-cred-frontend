@@ -1,4 +1,4 @@
-import { HighlightedText } from 'components/Text'
+import { HighlightedText } from 'components/ui/Text'
 import Color from 'models/Color'
 import OrbBox from 'icons/OrbBox'
 import ZkSphere from 'components/landing/ZkSphere'

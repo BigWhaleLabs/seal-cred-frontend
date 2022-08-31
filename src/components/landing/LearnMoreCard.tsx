@@ -1,6 +1,6 @@
-import { BodyText, LinkText } from 'components/Text'
-import Button from 'components/Button'
-import Card from 'components/Card'
+import { BodyText, LinkText } from 'components/ui/Text'
+import Button from 'components/ui/Button'
+import Card from 'components/ui/Card'
 import PrivacyDeath from 'components/landing/PrivacyDeath'
 import classnames, { margin } from 'classnames/tailwind'
 

@@ -1,14 +1,15 @@
-import { BodyText, TextButton } from 'components/Text'
+import { BodyText, TextButton } from 'components/ui/Text'
 import { ComponentChildren } from 'preact'
 import { margin } from 'classnames/tailwind'
-import { sendEmail } from 'helpers/attestor'
+import { sendEmail } from 'helpers/proofs/attestor'
 import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
-import EmailForm from 'components/EmailForm'
-import EmailProof from 'helpers/EmailProof'
-import ProofStore from 'stores/ProofStore'
-import TextForm from 'components/TextForm'
-import checkDomainToken from 'helpers/checkDomainToken'
+import EmailForm from 'components/ui/EmailForm'
+import ProofModel from 'models/Proof'
+import TextForm from 'components/ui/TextForm'
+import checkDomainToken from 'helpers/proofs/checkDomainToken'
+import data from 'data'
+import proofStore from 'stores/ProofStore'
 
 export default function ({
   domain,
@@ -25,7 +26,7 @@ export default function ({
   description: ComponentChildren
   error: string | undefined
   onError: (error: string | undefined) => void
-  onCreate: (proof: EmailProof) => void
+  onCreate: (proof: ProofModel) => void
   onChange: (domain: string) => void
   onGenerationStarted?: () => void
 }) {
@@ -60,10 +61,12 @@ export default function ({
     setLoading(true)
     onError(undefined)
     try {
-      if (secret) {
-        const proof = await ProofStore.generateEmail(domain, secret)
-        if (proof) onCreate(proof)
-      }
+      const proof = await data['Email'].createProof(
+        proofStore['Email'],
+        domain,
+        { secret }
+      )
+      if (proof) onCreate(proof)
     } finally {
       setLoading(false)
       resetEmail(true)

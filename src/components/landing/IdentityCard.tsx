@@ -1,6 +1,6 @@
-import { BodyText } from 'components/Text'
+import { BodyText } from 'components/ui/Text'
 import { displayFrom, displayTo } from 'helpers/visibilityClassnames'
-import Card from 'components/Card'
+import Card from 'components/ui/Card'
 import ChildrenProp from 'models/ChildrenProp'
 import DoubleSmile from 'icons/DoubleSmile'
 import Grim from 'icons/Grin'

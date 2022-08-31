@@ -1,48 +1,31 @@
-import { AccentText, BodyText } from 'components/Text'
+import { AccentText } from 'components/ui/Text'
 import { Suspense } from 'preact/compat'
+import { dataKeys } from 'helpers/contracts/dataShapeObject'
 import { space } from 'classnames/tailwind'
-import { useSnapshot } from 'valtio'
 import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
-import EmailProof from 'components/proofs/EmailProof'
-import Network from 'models/Network'
-import ProofSection from 'components/ProofSection'
-import ProofStore from 'stores/ProofStore'
-import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
-import Scrollbar from 'components/Scrollbar'
-import WalletStore from 'stores/WalletStore'
+import EmailProofSection from 'components/proofs/EmailProofSection'
+import Scrollbar from 'components/ui/Scrollbar'
+import data, { BadgeSourceType } from 'data'
+import useProofStore from 'hooks/useProofStore'
 
 export function ProofListSuspended() {
-  const { account } = useSnapshot(WalletStore)
-  const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
+  const { hasAnyProof } = useProofStore()
+
+  const eRC721Ledgers = dataKeys.filter(
+    (ledgerName) => data[ledgerName].badgeType === BadgeSourceType.ERC721
+  )
 
   return (
     <>
       <Scrollbar>
         <div className={space('space-y-2')}>
-          {account && (
-            <>
-              <ERC721ProofSection account={account} network={Network.Mainnet} />
-              <ERC721ProofSection account={account} network={Network.Goerli} />
-            </>
-          )}
-          <ProofSection
-            title={
-              <BodyText>
-                Additional proofs{' '}
-                <AccentText color="text-tertiary" bold>
-                  New!
-                </AccentText>
-              </BodyText>
-            }
-          >
-            {Array.from(emailProofsCompleted).map((proof, index) => (
-              <ReadyEmailProof proof={proof} key={`${proof.domain}-${index}`} />
-            ))}
-            <EmailProof />
-          </ProofSection>
+          {eRC721Ledgers.map((ledgerName) => (
+            <ERC721ProofSection dataKey={ledgerName} />
+          ))}
+          <EmailProofSection dataKey={'Email'} />
         </div>
       </Scrollbar>
-      {proofsCompleted.length > 0 && (
+      {hasAnyProof && (
         <AccentText small primary color="text-primary">
           Created ZK proofs are saved in the browser even if you switch wallets.
         </AccentText>

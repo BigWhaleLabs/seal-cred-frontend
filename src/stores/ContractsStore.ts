@@ -1,48 +1,43 @@
 import { ContractsStore } from '@big-whale-labs/stores'
-import {
-  goerliDefaultProvider,
-  mainnetDefaultProvider,
-} from 'helpers/providers/defaultProvider'
-import {
-  goerliHeavyProvider,
-  mainnetHeavyProvider,
-} from 'helpers/providers/heavyProvider'
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
 import Network from 'models/Network'
 import WalletStore from 'stores/WalletStore'
 import env from 'helpers/env'
+import networks from 'networks'
+import transformObjectValues from 'helpers/transformObjectValues'
 
-export const GoerliContractsStore = proxy(
-  new ContractsStore(goerliDefaultProvider, goerliHeavyProvider, Network.Goerli)
-).makePersistent(env.VITE_ENCRYPT_KEY)
+const proxyNetworks = transformObjectValues(
+  networks,
+  ({ network, heavyProvider, defaultProvider }) =>
+    proxy(
+      new ContractsStore(defaultProvider, heavyProvider, network)
+    ).makePersistent(env.VITE_ENCRYPT_KEY)
+)
 
-export const MainnetContractsStore = proxy(
-  new ContractsStore(
-    mainnetDefaultProvider,
-    mainnetHeavyProvider,
-    Network.Mainnet
-  )
-).makePersistent(env.VITE_ENCRYPT_KEY)
+const ContractsNetworkStore = proxy({
+  networks: proxyNetworks,
+})
+
+export const BadgesNetwork = Network.Goerli
+export const BadgesContractsStore =
+  ContractsNetworkStore.networks[BadgesNetwork]
 
 subscribeKey(WalletStore, 'account', (account) => {
-  if (account) {
-    void GoerliContractsStore.fetchMoreContractsOwned(account, true)
-    void MainnetContractsStore.fetchMoreContractsOwned(account, true)
+  if (!account) return
+  for (const network of Object.values(ContractsNetworkStore.networks)) {
+    void network.fetchMoreContractsOwned(account, true)
   }
 })
 
-goerliDefaultProvider.on('block', async (blockNumber: number) => {
-  GoerliContractsStore.currentBlock = blockNumber
-  if (WalletStore.account) {
-    await GoerliContractsStore.fetchMoreContractsOwned(WalletStore.account)
-  }
-})
-mainnetDefaultProvider.on('block', async (blockNumber: number) => {
-  MainnetContractsStore.currentBlock = blockNumber
-  if (WalletStore.account) {
-    await MainnetContractsStore.fetchMoreContractsOwned(WalletStore.account)
-  }
-})
+for (const { defaultProvider, network } of Object.values(networks)) {
+  defaultProvider.on('block', async (blockNumber: number) => {
+    ContractsNetworkStore.networks[network].currentBlock = blockNumber
+    if (!WalletStore.account) return
+    await ContractsNetworkStore.networks[network].fetchMoreContractsOwned(
+      WalletStore.account
+    )
+  })
+}
 
-export default ContractsStore
+export default ContractsNetworkStore

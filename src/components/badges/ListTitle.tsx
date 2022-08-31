@@ -1,28 +1,26 @@
-import { GoerliContractsStore } from 'stores/ContractsStore'
+import { BadgesNetwork } from 'stores/ContractsStore'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
-import CardTitle from 'components/CardTitle'
+import CardTitle from 'components/ui/CardTitle'
 import LoadingCard from 'components/badges/LoadingCard'
 import SealCredStore from 'stores/SealCredStore'
-import useContractsOwned from 'hooks/useContractsOwned'
+import useOwnedAddresses from 'hooks/useOwnedAddresses'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
 
 function ListTitleSuspended() {
-  const { derivativeContracts = [] } = useSnapshot(SealCredStore)
-  const proofsAvailableToMint = useProofsAvailableToMint()
-  const contractsOwned = useContractsOwned(GoerliContractsStore)
+  const { allDerivativeAddresses } = useSnapshot(SealCredStore)
+  const { hasUnmintedProofs } = useProofsAvailableToMint()
+  const addressesOwned = useOwnedAddresses(BadgesNetwork)
 
-  const ownedDerivativeContracts = derivativeContracts.filter(
-    (contractAddress) => contractsOwned.includes(contractAddress)
+  const ownedDerivativeContracts = allDerivativeAddresses.filter((address) =>
+    addressesOwned.includes(address)
   )
-
-  const hasUnminted = proofsAvailableToMint.length > 0
 
   return (
     <CardTitle
       title="Create ZK badges"
       subtitle={
-        hasUnminted
+        hasUnmintedProofs
           ? 'Looks like you can create ZK badges for this wallet'
           : ownedDerivativeContracts.length
           ? 'You’ve minted all of your available badges'

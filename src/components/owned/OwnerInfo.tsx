@@ -1,25 +1,22 @@
-import { AccentText, BodyText, HeaderText } from 'components/Text'
+import { BodyText, HeaderText } from 'components/ui/Text'
 import { handleError } from '@big-whale-labs/frontend-utils'
-import BaseBadgeContract from 'helpers/BaseBadgeContract'
-import Card from 'components/Card'
-import CardTitle from 'components/CardTitle'
-import ContractName from 'components/ContractName'
-import ERC721BadgeContract from 'helpers/ERC721BadgeContract'
-import EmailBadgeContract from 'helpers/EmailBadgeContract'
-import ExternalLink from 'components/ExternalLink'
-import HorizontalRule from 'components/HorizontalRule'
+import Card from 'components/ui/Card'
+import CardTitle from 'components/ui/CardTitle'
+import ChildrenProp from 'models/ChildrenProp'
+import HorizontalRule from 'components/ui/HorizontalRule'
 import Network from 'models/Network'
 import OwnedBadgeAddress from 'components/owned/OwnedBadgeAddress'
 import ShareCTAButtons from 'components/owned/ShareCTAButtons'
 import Smile from 'icons/Smile'
+import badgeConfig from 'badgeConfig'
 import classnames, {
   alignItems,
   display,
   flexDirection,
   space,
 } from 'classnames/tailwind'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
-import useBadgeContracts from 'hooks/useBadgeContracts'
+import data from 'data'
+import useBadge from 'hooks/useBadge'
 
 const walletBox = classnames(
   display('flex'),
@@ -29,82 +26,13 @@ const walletBox = classnames(
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
 
-function BadgeTitle({ badge }: { badge: BaseBadgeContract }) {
-  if (badge instanceof EmailBadgeContract) {
-    return (
-      <>
-        <HeaderText extraLeading>
-          This wallet belongs to someone with{' '}
-          <ExternalLink
-            url={getEtherscanAddressUrl(badge.address, Network.Goerli)}
-          >
-            <AccentText bold color="text-secondary">
-              <ContractName
-                hyphens
-                address={badge.address}
-                network={Network.Goerli}
-              />
-            </AccentText>
-          </ExternalLink>
-        </HeaderText>
-      </>
-    )
-  }
-
+function BadgeContent({ children }: ChildrenProp) {
   return (
-    <>
-      <HeaderText extraLeading>
-        <span className={display('md:block')}>This wallet owns </span>a{' '}
-        <ExternalLink
-          url={getEtherscanAddressUrl(badge.address, Network.Goerli)}
-        >
-          <AccentText bold color="text-secondary">
-            <ContractName
-              hyphens
-              address={badge.address}
-              network={Network.Goerli}
-            />
-          </AccentText>
-        </ExternalLink>
-      </HeaderText>
-    </>
+    <BodyText>
+      {children}
+      <ShareCTAButtons />
+    </BodyText>
   )
-}
-
-function BadgeContent({ badge }: { badge: BaseBadgeContract }) {
-  if (badge instanceof EmailBadgeContract) {
-    return (
-      <BodyText>
-        This is a zkNFT derivative of an email. It means this person has been
-        verified own a ‘
-        <AccentText color="text-secondary">{badge.domain}</AccentText>‘ email.
-        <ShareCTAButtons />
-      </BodyText>
-    )
-  }
-
-  if (badge instanceof ERC721BadgeContract) {
-    return (
-      <BodyText>
-        This is a zkNFT derivative. It means this person has been verified to
-        own at least one ‘
-        <ExternalLink
-          url={getEtherscanAddressUrl(badge.originalERC721, badge.network)}
-        >
-          <AccentText color="text-secondary">
-            <ContractName
-              address={badge.originalERC721}
-              network={badge.network}
-            />
-          </AccentText>
-        </ExternalLink>
-        ‘ {badge.network[0].toUpperCase() + badge.network.slice(1)} NFT.
-        <ShareCTAButtons />
-      </BodyText>
-    )
-  }
-
-  return null
 }
 
 export default function ({
@@ -114,8 +42,7 @@ export default function ({
   derivativeAddress: string
   tokenId: string
 }) {
-  const contractToBadge = useBadgeContracts()
-  const badge = contractToBadge[derivativeAddress]
+  const badge = useBadge(derivativeAddress)
 
   if (!badge) {
     handleError('Looks like this contract was removed')
@@ -129,6 +56,11 @@ export default function ({
     )
   }
 
+  const { type, original } = badge
+  const { network, badgeType } = data[type]
+  const { ownerTitle: OwnerTitle, ownerContent: OwnerContent } =
+    badgeConfig[badgeType]
+
   return (
     <Card
       color="secondary"
@@ -138,8 +70,12 @@ export default function ({
       noArcTextSpace
       spinner="Certified with SealCred ZK Proofs"
     >
-      <BadgeTitle badge={badge} />
-      <BadgeContent badge={badge} />
+      <HeaderText extraLeading>
+        <OwnerTitle derivative={derivativeAddress} />
+      </HeaderText>
+      <BadgeContent>
+        <OwnerContent original={original} network={network} />
+      </BadgeContent>
       <HorizontalRule color="primary-semi-dimmed" />
       <div className={walletBox}>
         <Smile />
@@ -147,7 +83,7 @@ export default function ({
           <BodyText small>Wallet address</BodyText>
           <OwnedBadgeAddress
             tokenId={tokenId}
-            derivativeAddress={badge.address}
+            derivativeAddress={derivativeAddress}
             network={Network.Goerli}
           />
         </div>

@@ -1,6 +1,6 @@
-import { BodyText, HeaderText } from 'components/Text'
+import { BodyText, HeaderText } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
-import Button from 'components/Button'
+import Button from 'components/ui/Button'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,

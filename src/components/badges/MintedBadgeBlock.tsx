@@ -1,9 +1,9 @@
-import { AccentText } from 'components/Text'
+import { AccentText } from 'components/ui/Text'
 import BadgeCard from 'components/badges/BadgeCard'
 import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import Complete from 'icons/Complete'
-import QRCode from 'components/QRCode'
+import QRCode from 'components/ui/QRCode'
 import classnames, {
   alignItems,
   display,
@@ -32,7 +32,7 @@ function Badge({
   return (
     <BadgeCard
       top={<QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />}
-      text={<BadgeTitle derivativeAddress={derivativeAddress} />}
+      text={<BadgeTitle originalOrAddress={derivativeAddress} clearType />}
       bottom={
         <div className={mintPassed}>
           <AccentText bold small primary color="text-secondary">
