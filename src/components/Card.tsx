@@ -63,10 +63,10 @@ const cardColor = (color?: Color) => {
 const appStyles = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  minHeight('sm:min-h-card', 'min-h-fit'),
+  minHeight('min-h-fit', 'tablet:min-h-card'),
   maxHeight('max-h-app-card'),
-  width('w-full'),
-  maxWidth('max-w-app-card', 'md:max-w-none')
+  width('w-screen-90', 'tablet:w-screen-45'),
+  maxWidth('tablet:max-w-app-card')
 )
 
 const thinWidthStyles = width('sm:!w-thin-card', 'xxs:w-thin-mobile', 'w-32')

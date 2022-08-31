@@ -4,7 +4,7 @@ const xxsSize = 279
 const xsSize = 360
 const smSize = 450
 const mdSize = 600
-const tabletSize = 767
+const tabletSize = 885
 const lgSize = 1023
 const xlSize = 1279
 

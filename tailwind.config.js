@@ -30,8 +30,7 @@ module.exports = {
       },
       maxWidth: {
         100: '6.25rem',
-        'app-card': '38.125rem',
-        'app-content': '77.75rem',
+        'app-card': '42.125rem',
       },
       keyframes: {
         'pulse-horizontal': {
@@ -57,7 +56,7 @@ module.exports = {
         xs: '22.5rem',
         sm: '28.125rem',
         md: '37.5rem',
-        tablet: '48rem',
+        tablet: '55.4rem',
         smToXl: { min: '28.125rem', max: '80rem' },
       },
       borderWidth: {
@@ -118,7 +117,9 @@ module.exports = {
         'mobile-card': '92%',
         'full-125': '125%',
         'full-105': '105%',
+        'screen-90': '90vw',
         'screen-80': '80vw',
+        'screen-45': '45vw',
       },
       inset: {
         '-78': '-19.5rem',

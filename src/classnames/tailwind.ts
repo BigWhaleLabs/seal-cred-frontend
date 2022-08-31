@@ -7394,7 +7394,9 @@ export type TWidth =
   | 'w-mobile-card'
   | 'w-full-125'
   | 'w-full-105'
+  | 'w-screen-90'
   | 'w-screen-80'
+  | 'w-screen-45'
   | 'w-small'
 
 export type TMinWidth =
@@ -7430,7 +7432,6 @@ export type TMaxWidth =
   | 'max-w-screen-xl'
   | 'max-w-screen-2xl'
   | 'max-w-app-card'
-  | 'max-w-app-content'
   | 'max-w-screen-xxs'
   | 'max-w-screen-xs'
   | 'max-w-screen-tablet'
