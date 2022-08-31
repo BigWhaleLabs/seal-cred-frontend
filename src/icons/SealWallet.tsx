@@ -9,7 +9,7 @@ import classnames, {
 } from 'classnames/tailwind'
 
 const svgClasses = classnames(
-  displayFrom('xs'),
+  displayFrom('sm'),
   boxShadow('shadow-lg'),
   boxShadowColor('shadow-secondary'),
   borderRadius('rounded-full')
@@ -18,7 +18,7 @@ const walletClasses = (connected?: boolean, isFilled?: boolean) =>
   classnames(
     strokeWidth('stroke-2'),
     stroke(connected ? 'stroke-secondary' : 'stroke-primary-semi-dimmed'),
-    fill(isFilled ? 'fill-primary-dark' : undefined)
+    fill({ 'fill-primary-dark': isFilled })
   )
 
 export default function ({ connected }: { connected?: boolean }) {

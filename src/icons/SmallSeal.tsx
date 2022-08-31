@@ -3,14 +3,15 @@ import { stroke } from 'classnames/tailwind'
 
 const pathColor = (connected?: boolean) =>
   stroke(connected ? 'stroke-secondary' : 'stroke-primary-semi-dimmed')
+const svgStyles = displayTo('sm')
 
 export default function ({ connected }: { connected?: boolean }) {
   return connected ? (
     <svg
-      width="30"
-      height="30"
+      width="25"
+      height="25"
       viewBox="0 0 20 20"
-      className={displayTo('xs')}
+      className={svgStyles}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -48,10 +49,10 @@ export default function ({ connected }: { connected?: boolean }) {
     </svg>
   ) : (
     <svg
-      width="20"
-      height="20"
+      width="25"
+      height="25"
       viewBox="0 0 20 20"
-      className={displayTo('sm')}
+      className={svgStyles}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

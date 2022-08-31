@@ -73,7 +73,7 @@ const accentText = (
     fontSize({
       'text-sm': small,
       'text-xs': extraSmall,
-      'sm:text-base': extraSmall,
+      'xs:text-base': extraSmall,
     }),
     dropShadow(shadow)
   )

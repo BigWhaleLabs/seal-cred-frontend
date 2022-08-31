@@ -14,6 +14,7 @@ import classnames, {
   gap,
   gradientColorStops,
   justifyContent,
+  margin,
   opacity,
   position,
   textColor,
@@ -39,7 +40,8 @@ const button = classnames(
 const container = classnames(
   position('relative'),
   width('md:w-fit'),
-  displayTo('md')
+  displayTo('md'),
+  margin('mt-2')
 )
 
 export default function ({
