@@ -1,4 +1,3 @@
-import { ProofStore } from 'stores/ProofStore'
 import Network from 'models/Network'
 import createERC721Badge from 'helpers/contracts/createERC721Badge'
 import createEmailBadge from 'helpers/contracts/createEmailBadge'
