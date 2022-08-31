@@ -9,7 +9,7 @@ import classnames, {
 } from 'classnames/tailwind'
 
 const svgClasses = classnames(
-  displayFrom('sm'),
+  displayFrom('xs'),
   boxShadow('shadow-lg'),
   boxShadowColor('shadow-secondary'),
   borderRadius('rounded-full')
