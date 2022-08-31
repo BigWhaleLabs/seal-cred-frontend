@@ -65,7 +65,7 @@ const appStyles = classnames(
   flexDirection('flex-col'),
   minHeight('min-h-fit', 'tablet:min-h-card'),
   maxHeight('max-h-app-card'),
-  width('w-screen-90', 'tablet:w-screen-45'),
+  width('w-screen-93', 'tablet:w-screen-45'),
   maxWidth('tablet:max-w-app-card')
 )
 

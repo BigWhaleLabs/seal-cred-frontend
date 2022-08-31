@@ -117,7 +117,7 @@ module.exports = {
         'mobile-card': '92%',
         'full-125': '125%',
         'full-105': '105%',
-        'screen-90': '90vw',
+        'screen-93': '93vw',
         'screen-80': '80vw',
         'screen-45': '45vw',
       },

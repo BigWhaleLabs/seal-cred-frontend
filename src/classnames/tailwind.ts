@@ -7394,7 +7394,7 @@ export type TWidth =
   | 'w-mobile-card'
   | 'w-full-125'
   | 'w-full-105'
-  | 'w-screen-90'
+  | 'w-screen-93'
   | 'w-screen-80'
   | 'w-screen-45'
   | 'w-small'
