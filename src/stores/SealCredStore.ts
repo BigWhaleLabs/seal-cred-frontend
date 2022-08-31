@@ -1,8 +1,8 @@
 import { DataKey } from 'models/DataKey'
+import { dataKeys } from 'helpers/contracts/dataShapeObject'
 import { derive } from 'valtio/utils'
 import { proxy } from 'valtio'
 import SCLedger from 'models/SCLedger'
-import data from 'data'
 import getLedger from 'helpers/contracts/getLedger'
 import ledgerContracts from 'helpers/contracts/ledgerContracts'
 
@@ -38,7 +38,7 @@ const SealCredStore = derive(
   }
 )
 
-for (const name of Object.keys(data) as DataKey[]) {
+for (const name of dataKeys) {
   const ledgerContract = ledgerContracts[name]
   ledgerContract.on(
     ledgerContract.filters.CreateDerivative(),

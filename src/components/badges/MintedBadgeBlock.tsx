@@ -32,7 +32,7 @@ function Badge({
   return (
     <BadgeCard
       top={<QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />}
-      text={<BadgeTitle derivativeAddress={derivativeAddress} />}
+      text={<BadgeTitle originalOrAddress={derivativeAddress} clearType />}
       bottom={
         <div className={mintPassed}>
           <AccentText bold small primary color="text-secondary">

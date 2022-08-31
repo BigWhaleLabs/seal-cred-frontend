@@ -1,5 +1,5 @@
-import { DataKey } from 'models/DataKey'
 import { Suspense } from 'preact/compat'
+import { dataKeys } from 'helpers/contracts/dataShapeObject'
 import { space } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import BadgeSection from 'components/badges/BadgeSection'
@@ -39,7 +39,7 @@ function BadgeListSuspended() {
       <ConfettiIfNeeded />
       <Scrollbar>
         <div className={space('space-y-2')}>
-          {(Object.keys(data) as DataKey[]).map((ledgerName) => (
+          {dataKeys.map((ledgerName) => (
             <BadgeSection
               title={badgeConfig[data[ledgerName].badgeType].title(
                 data[ledgerName]

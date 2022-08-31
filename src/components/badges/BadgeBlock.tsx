@@ -40,7 +40,7 @@ function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   return (
     <BadgeCard
       top={<ProofIcon />}
-      text={<BadgeTitle proof={proof} />}
+      text={<BadgeTitle originalOrAddress={proof.original} />}
       bottom={
         <Button
           small

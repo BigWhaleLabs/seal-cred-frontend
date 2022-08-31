@@ -3,12 +3,12 @@ import data from 'data'
 
 type ValueOf<T> = T[keyof T]
 
+export const dataKeys = Object.keys(data) as DataKey[]
+
 export default function dataShapeObject<V>(
   transformer: (ledgerName: DataKey, record: ValueOf<typeof data>) => V
 ) {
-  const ledgersName = Object.keys(data) as DataKey[]
-
-  return ledgersName.reduce(
+  return dataKeys.reduce(
     (res, ledgerName) => ({
       ...res,
       [ledgerName]: transformer(ledgerName, data[ledgerName]),

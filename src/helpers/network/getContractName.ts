@@ -1,6 +1,7 @@
 import { useSnapshot } from 'valtio'
 import ContractMetadataStore from 'stores/ContractMetadataStore'
 import Network from 'models/Network'
+import clearDerivativeType from 'helpers/network/clearDerivativeType'
 import networks from 'networks'
 import prettifyContractName from 'helpers/network/prettifyContractName'
 
@@ -25,7 +26,7 @@ export default function ({
     )
 
   if (clearType && contractName)
-    contractName = contractName.replace(/ (email|\(derivative\))$/, '')
+    contractName = clearDerivativeType(contractName)
 
   return prettifyContractName(contractName || address, truncate)
 }

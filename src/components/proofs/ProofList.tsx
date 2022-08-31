@@ -1,6 +1,6 @@
 import { AccentText } from 'components/ui/Text'
-import { DataKey } from 'models/DataKey'
 import { Suspense } from 'preact/compat'
+import { dataKeys } from 'helpers/contracts/dataShapeObject'
 import { space } from 'classnames/tailwind'
 import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
 import EmailProofSection from 'components/proofs/EmailProofSection'
@@ -11,7 +11,7 @@ import useProofStore from 'hooks/useProofStore'
 export function ProofListSuspended() {
   const { hasAnyProof } = useProofStore()
 
-  const eRC721Ledgers = (Object.keys(data) as DataKey[]).filter(
+  const eRC721Ledgers = dataKeys.filter(
     (ledgerName) => data[ledgerName].badgeType === BadgeSourceType.ERC721
   )
 
