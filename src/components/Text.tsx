@@ -112,7 +112,7 @@ const bodyText = (
 ) =>
   classnames(
     fontFamily({ 'font-primary': fontPrimary }),
-    textColor(color ? color : 'text-formal-accent'),
+    textColor(color),
     textAlign({ 'text-center': center }),
     fontWeight({ 'font-bold': bold }),
     fontSize(small ? 'text-xs' : 'text-sm', { 'sm:text-base': !smallOnBig }),
