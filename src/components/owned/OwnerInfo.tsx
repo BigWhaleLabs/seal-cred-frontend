@@ -1,4 +1,5 @@
 import { BodyText, HeaderText } from 'components/ui/Text'
+import { handleError } from '@big-whale-labs/frontend-utils'
 import Card from 'components/ui/Card'
 import CardTitle from 'components/ui/CardTitle'
 import ChildrenProp from 'models/ChildrenProp'
@@ -15,7 +16,6 @@ import classnames, {
   space,
 } from 'classnames/tailwind'
 import data from 'data'
-import handleError from 'helpers/handleError'
 import useBadge from 'hooks/useBadge'
 
 const walletBox = classnames(

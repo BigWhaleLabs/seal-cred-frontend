@@ -3,12 +3,12 @@ import { ContractReceipt } from 'ethers'
 import { DataKey } from 'models/DataKey'
 import { PersistableStore } from '@big-whale-labs/stores'
 import { Web3Provider } from '@ethersproject/providers'
+import { handleError } from '@big-whale-labs/frontend-utils'
 import { proxy } from 'valtio'
 import Proof from 'models/Proof'
 import WalletStore from 'stores/WalletStore'
 import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import env from 'helpers/env'
-import handleError from 'helpers/handleError'
 
 export class ProofStore extends PersistableStore {
   proofsCompleted: Proof[] = []

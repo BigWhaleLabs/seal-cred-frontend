@@ -27,7 +27,7 @@ export default function () {
       fallback={
         <CardTitle
           title="Loading..."
-          subtitle="Please, wait until I load supported NFTs, it takes time"
+          subtitle="Please wait until I load supported NFTs"
         />
       }
     >

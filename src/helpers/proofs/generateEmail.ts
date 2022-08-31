@@ -2,9 +2,9 @@ import { BadgeSourceType } from 'data'
 import { DataKey } from 'models/DataKey'
 import { ProofStore } from 'stores/ProofStore'
 import { getEddsaPublicKey } from 'helpers/proofs/attestor'
+import { handleError } from '@big-whale-labs/frontend-utils'
 import buildEmailProof from 'helpers/proofs/buildEmailProof'
 import checkNavigator from 'helpers/proofs/checkNavigator'
-import handleError from 'helpers/handleError'
 
 export default async function generateEmail(
   store: ProofStore,

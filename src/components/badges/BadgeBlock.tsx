@@ -1,4 +1,5 @@
 import { BadgesContractsStore } from 'stores/ContractsStore'
+import { handleError } from '@big-whale-labs/frontend-utils'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import BadgeCard from 'components/badges/BadgeCard'
@@ -10,7 +11,6 @@ import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import badgeConfig from 'badgeConfig'
-import handleError from 'helpers/handleError'
 
 function Badge({
   proof,
