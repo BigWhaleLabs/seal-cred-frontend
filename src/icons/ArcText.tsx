@@ -1,3 +1,4 @@
+import { displayFrom } from 'helpers/visibilityClassnames'
 import classnames, {
   fill,
   fontSize,
@@ -23,7 +24,8 @@ const svgBox = (mobile?: boolean) =>
   classnames(
     height('tablet:h-64', 'h-44'),
     margin('mx-auto'),
-    mobile ? padding('pr-2.5', 'tablet:pr-0') : undefined
+    mobile ? padding('pr-2.5', 'tablet:pr-0') : undefined,
+    displayFrom('md')
   )
 
 interface ArcTextProps {
