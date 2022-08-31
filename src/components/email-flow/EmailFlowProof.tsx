@@ -1,9 +1,9 @@
+import { BadgeBlockProps } from 'models/BadgeBlockProps'
 import { BodyText, HeaderText } from 'components/ui/Text'
-import { MintProof } from 'models/MintProof'
 import BadgeBlock from 'components/badges/BadgeBlock'
 import Proof from 'components/proofs/Proof'
 
-export default function ({ proof, onMinted, onMintFailed }: MintProof) {
+export default function ({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   const headerTitle = proof.result ? 'Ready to mint!' : 'Creating your zk proof'
 
   const statusText = proof.result

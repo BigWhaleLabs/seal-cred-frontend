@@ -1,5 +1,5 @@
+import { BadgeBlockProps } from 'models/BadgeBlockProps'
 import { BadgesContractsStore } from 'stores/ContractsStore'
-import { MintProof } from 'models/MintProof'
 import { handleError } from '@big-whale-labs/frontend-utils'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
@@ -11,7 +11,7 @@ import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import badgeConfig from 'badgeConfig'
 
-function Badge({ proof, onMinted, onMintFailed }: MintProof) {
+function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   const { account, mintLoading } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
 
@@ -56,7 +56,7 @@ function Badge({ proof, onMinted, onMintFailed }: MintProof) {
   )
 }
 
-export default function ({ proof, onMinted, onMintFailed }: MintProof) {
+export default function ({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   return (
     <BadgeWrapper minted={false}>
       <Badge proof={proof} onMinted={onMinted} onMintFailed={onMintFailed} />
