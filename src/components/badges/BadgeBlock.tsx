@@ -9,7 +9,7 @@ import MintedToken from 'models/MintedToken'
 import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
-import data from 'data'
+import badgeConfig from 'badgeConfig'
 import handleError from 'helpers/handleError'
 
 function Badge({
@@ -44,7 +44,7 @@ function Badge({
     }
   }
 
-  const ProofIcon = data[proof.dataType].proofIcon
+  const ProofIcon = badgeConfig[proof.badgeType].proofIcon
 
   return (
     <BadgeCard

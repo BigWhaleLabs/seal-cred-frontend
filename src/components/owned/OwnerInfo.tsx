@@ -1,14 +1,13 @@
-import { AccentText, BodyText, HeaderText } from 'components/ui/Text'
-import { JSXInternal } from 'preact/src/jsx'
+import { BodyText, HeaderText } from 'components/ui/Text'
 import Card from 'components/ui/Card'
 import CardTitle from 'components/ui/CardTitle'
-import ContractName from 'components/ui/ContractName'
-import ExternalLink from 'components/ui/ExternalLink'
+import ChildrenProp from 'models/ChildrenProp'
 import HorizontalRule from 'components/ui/HorizontalRule'
 import Network from 'models/Network'
 import OwnedBadgeAddress from 'components/owned/OwnedBadgeAddress'
 import ShareCTAButtons from 'components/owned/ShareCTAButtons'
 import Smile from 'icons/Smile'
+import badgeConfig from 'badgeConfig'
 import classnames, {
   alignItems,
   display,
@@ -16,7 +15,6 @@ import classnames, {
   space,
 } from 'classnames/tailwind'
 import data from 'data'
-import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 import handleError from 'helpers/handleError'
 import useBadge from 'hooks/useBadge'
 
@@ -28,78 +26,10 @@ const walletBox = classnames(
 )
 const walletAddress = classnames(display('flex'), flexDirection('flex-col'))
 
-function replaceKeywordsInString(
-  template: string,
-  keyword: string,
-  element: JSXInternal.Element
-) {
-  return template
-    .split(keyword)
-    .reduce(
-      (chain, part, index) =>
-        index === 0 ? chain.concat(part) : chain.concat(element).concat(part),
-      [] as (JSXInternal.Element | string)[]
-    )
-}
-
-function ContractNameByNetwork({
-  address,
-  network,
-}: {
-  address: string
-  network: Network
-}) {
-  return (
-    <ExternalLink url={getEtherscanAddressUrl(address, network)}>
-      <AccentText color="text-secondary">
-        <ContractName address={address} network={network} />
-      </AccentText>
-    </ExternalLink>
-  )
-}
-
-function BadgeTitle({
-  template,
-  derivative,
-}: {
-  template: string
-  derivative: string
-}) {
-  if (!template) return null
-
-  const derivativeLink = (
-    <ContractNameByNetwork address={derivative} network={Network.Goerli} />
-  )
-
-  const title = replaceKeywordsInString(
-    template,
-    '{derivative}',
-    derivativeLink
-  )
-
-  return <HeaderText extraLeading>{title}</HeaderText>
-}
-
-function BadgeContent({
-  template,
-  original,
-  network,
-}: {
-  template: string
-  original: string
-  network: Network
-}) {
-  if (!template) return null
-
-  const originalLink = (
-    <ContractNameByNetwork address={original} network={network} />
-  )
-
-  const content = replaceKeywordsInString(template, '{original}', originalLink)
-
+function BadgeContent({ children }: ChildrenProp) {
   return (
     <BodyText>
-      {content}
+      {children}
       <ShareCTAButtons />
     </BodyText>
   )
@@ -127,7 +57,9 @@ export default function ({
   }
 
   const { type, original } = badge
-  const { ownerTitle, ownerContent, network } = data[type]
+  const { network, badgeType } = data[type]
+  const { ownerTitle: OwnerTitle, ownerContent: OwnerContent } =
+    badgeConfig[badgeType]
 
   return (
     <Card
@@ -138,12 +70,12 @@ export default function ({
       noArcTextSpace
       spinner="Certified with SealCred ZK Proofs"
     >
-      <BadgeTitle template={ownerTitle} derivative={derivativeAddress} />
-      <BadgeContent
-        template={ownerContent}
-        original={original}
-        network={network}
-      />
+      <HeaderText extraLeading>
+        <OwnerTitle derivative={derivativeAddress} />
+      </HeaderText>
+      <BadgeContent>
+        <OwnerContent original={original} network={network} />
+      </BadgeContent>
       <HorizontalRule color="primary-semi-dimmed" />
       <div className={walletBox}>
         <Smile />

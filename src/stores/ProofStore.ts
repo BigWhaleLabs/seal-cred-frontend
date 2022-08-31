@@ -1,3 +1,4 @@
+import { BadgeSourceType } from 'data'
 import { ContractReceipt } from 'ethers'
 import { DataKey } from 'models/DataKey'
 import { PersistableStore } from '@big-whale-labs/stores'
@@ -12,6 +13,7 @@ import handleError from 'helpers/handleError'
 export class ProofStore extends PersistableStore {
   proofsCompleted: Proof[] = []
   dataKey: DataKey
+  badgeType: BadgeSourceType
   createBadge: (
     provider: Web3Provider,
     proof: Proof
@@ -23,6 +25,7 @@ export class ProofStore extends PersistableStore {
 
   constructor(
     dataKey: DataKey,
+    badgeType: BadgeSourceType,
     createBadge: (
       provider: Web3Provider,
       proof: Proof
@@ -30,6 +33,7 @@ export class ProofStore extends PersistableStore {
   ) {
     super()
     this.dataKey = dataKey
+    this.badgeType = badgeType
     this.createBadge = createBadge
   }
 
@@ -72,7 +76,9 @@ export class ProofStore extends PersistableStore {
 }
 
 export default proxy(
-  dataShapeObject((dataKey, { mint }) =>
-    proxy(new ProofStore(dataKey, mint)).makePersistent(env.VITE_ENCRYPT_KEY)
+  dataShapeObject((dataKey, { mint, badgeType }) =>
+    proxy(new ProofStore(dataKey, badgeType, mint)).makePersistent(
+      env.VITE_ENCRYPT_KEY
+    )
   )
 )

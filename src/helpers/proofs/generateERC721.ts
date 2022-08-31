@@ -1,3 +1,4 @@
+import { BadgeSourceType } from 'data'
 import { ProofStore } from 'stores/ProofStore'
 import {
   getEddsaPublicKey,
@@ -14,7 +15,9 @@ import walletStore from 'stores/WalletStore'
 export default async function generateERC721(
   store: ProofStore,
   original: string,
-  network: Network
+  options: {
+    network: Network
+  }
 ) {
   try {
     const account = walletStore.account
@@ -28,7 +31,7 @@ export default async function generateERC721(
     )
     const balanceSignature = await requestBalanceAttestation(
       original,
-      network,
+      options.network,
       account
     )
     const result = await buildERC721Proof(
@@ -41,6 +44,7 @@ export default async function generateERC721(
       result,
       account,
       dataType: store.dataKey,
+      badgeType: BadgeSourceType.ERC721,
     }
     checkNavigator()
     store.proofsCompleted.push(proof)

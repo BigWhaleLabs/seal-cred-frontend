@@ -9,6 +9,7 @@ import HintCard from 'components/badges/HintCard'
 import NotificationsStore from 'stores/NotificationsStore'
 import Scrollbar from 'components/ui/Scrollbar'
 import ShareToTwitterIfNeeded from 'components/badges/ShareToTwitterIfNeeded'
+import badgeConfig from 'badgeConfig'
 import data from 'data'
 import useMintedAddresses from 'hooks/useMintedAddresses'
 import useProofsAvailableToMint from 'hooks/useProofsAvailableToMint'
@@ -40,7 +41,9 @@ function BadgeListSuspended() {
         <div className={space('space-y-2')}>
           {(Object.keys(data) as DataKey[]).map((ledgerName) => (
             <BadgeSection
-              title={data[ledgerName].title}
+              title={badgeConfig[data[ledgerName].badgeType].title(
+                data[ledgerName]
+              )}
               minted={ledgerToMintedAddresses[ledgerName]}
               proofs={ledgerToUnmintedProofs[ledgerName]}
               onMinted={onMinted}

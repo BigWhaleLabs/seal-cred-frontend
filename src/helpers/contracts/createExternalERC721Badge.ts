@@ -1,5 +1,7 @@
 import { ExternalSCERC721Ledger__factory } from '@big-whale-labs/seal-cred-ledger-contract'
 import { Web3Provider } from '@ethersproject/providers'
+import { requestContractMetadata } from 'helpers/proofs/attestor'
+import Network from '@big-whale-labs/stores/dist/models/Network'
 import Proof from 'models/Proof'
 import data from 'data'
 import makeTransaction from 'helpers/contracts/makeTransaction'
@@ -11,12 +13,11 @@ function createContract(provider: Web3Provider) {
   )
 }
 
-export default async function (
-  provider: Web3Provider,
-  proof: Proof,
-  message: string,
-  signature: string
-) {
+export default async function (provider: Web3Provider, proof: Proof) {
+  const { message, signature } = await requestContractMetadata(
+    Network.Mainnet,
+    proof.original
+  )
   if (!proof.result) throw new Error('Invalid proof')
   const contract = createContract(provider)
   const txData = makeTransaction(proof.result)

@@ -7,6 +7,7 @@ import Proof from 'models/Proof'
 import ProofSection from 'components/proofs/ProofSection'
 import ProofStore from 'stores/ProofStore'
 import ProofsList from 'components/proofs/ProofsList'
+import badge from 'badgeConfig'
 import data from 'data'
 import useProofAddressesAvailableToCreate from 'hooks/useProofAddressesAvailableToCreate'
 
@@ -16,7 +17,11 @@ function ERC721ProofSectionSuspended({ dataKey }: { dataKey: DataKey }) {
   const originals = useProofAddressesAvailableToCreate(network)
 
   async function onCreate(original: string) {
-    await data[dataKey].createProof(ProofStore[dataKey], original)
+    await data[dataKey].createProof(
+      ProofStore[dataKey],
+      original,
+      data[dataKey]
+    )
   }
 
   return (
@@ -31,9 +36,10 @@ function ERC721ProofSectionSuspended({ dataKey }: { dataKey: DataKey }) {
 }
 
 export default function ({ dataKey }: { dataKey: DataKey }) {
-  const { proofTitle } = data[dataKey]
+  const ledgerInfo = data[dataKey]
+  const { proofTitle } = badge[ledgerInfo.badgeType]
   return (
-    <ProofSection title={<BodyText>{proofTitle}</BodyText>}>
+    <ProofSection title={<BodyText>{proofTitle(ledgerInfo)}</BodyText>}>
       <Suspense
         fallback={
           <HintCard small marginY={false}>
