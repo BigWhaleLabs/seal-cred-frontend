@@ -10,7 +10,6 @@ import classnames, {
   flexDirection,
   inset,
   justifyContent,
-  margin,
   position,
   width,
 } from 'classnames/tailwind'
@@ -20,8 +19,7 @@ const cardsContainer = classnames(
   display('flex'),
   flexDirection('flex-col', 'tablet:flex-row'),
   alignItems('items-center', 'tablet:items-stretch'),
-  justifyContent('tablet:justify-center'),
-  margin('mx-4')
+  justifyContent('tablet:justify-center')
 )
 
 const proofHintContainer = classnames(

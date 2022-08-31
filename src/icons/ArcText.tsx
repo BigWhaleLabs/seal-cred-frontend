@@ -21,9 +21,9 @@ const textStyle = (thinText?: boolean) =>
 
 const svgBox = (mobile?: boolean) =>
   classnames(
-    height('md:h-64', 'h-44'),
+    height('tablet:h-64', 'h-44'),
     margin('mx-auto'),
-    mobile ? padding('pr-2.5', 'md:pr-0') : undefined
+    mobile ? padding('pr-2.5', 'tablet:pr-0') : undefined
   )
 
 interface ArcTextProps {
@@ -33,8 +33,8 @@ interface ArcTextProps {
 }
 
 export default function ({ text, smallCircle, thinText }: ArcTextProps) {
-  const { xxs, xs, md } = useBreakpoints()
-  const mobile = (xxs || xs) && !md
+  const { xxs, xs, tablet } = useBreakpoints()
+  const mobile = (xxs || xs) && !tablet
   const radius = mobile ? 85 : smallCircle ? 110 : 55
 
   const textLength = text.length
@@ -45,7 +45,7 @@ export default function ({ text, smallCircle, thinText }: ArcTextProps) {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox={
-        mobile ? '0 0 475 475' : xxs && !md ? '0 0 450 450' : '0 0 500 500'
+        mobile ? '0 0 475 475' : xxs && !tablet ? '0 0 450 450' : '0 0 500 500'
       }
       className={svgBox(mobile)}
     >

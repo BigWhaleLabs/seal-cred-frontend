@@ -37,6 +37,7 @@ interface CardProps {
   noArcTextSpace?: boolean
   mobileSpinnerOnRight?: boolean
   paddingType?: 'small' | 'normal'
+  higherZIndex?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -64,25 +65,26 @@ const appStyles = classnames(
   display('flex'),
   flexDirection('flex-col'),
   minHeight('min-h-fit', 'tablet:min-h-card'),
-  maxHeight('max-h-app-card'),
+  maxHeight('max-h-mobile-card', 'xxs:max-h-app-card'),
   width('w-screen-93', 'tablet:w-screen-45'),
   maxWidth('tablet:max-w-app-card')
 )
 
-const thinWidthStyles = width('sm:!w-thin-card', 'xxs:w-thin-mobile', 'w-32')
+const thinWidthStyles = width('sm:!w-thin-card', 'xxs:w-5/12', 'w-30')
 
 const defaultWidthStyles = width('sm:w-card', 'w-mobile-card')
 
-const cardContainer = (
-  shadow?: boolean,
-  color?: Color,
+const cardContainer = ({
+  shadow,
+  color,
   onlyWrap = false,
   thin = false,
-  nospace?: boolean,
-  useAppStyles?: boolean,
-  paddingType?: 'small' | 'normal',
-  spinner?: string
-) => {
+  nospace,
+  useAppStyles,
+  paddingType,
+  spinner,
+  higherZIndex,
+}: CardProps) => {
   const defaultSpacing = !onlyWrap && !useAppStyles
 
   return classnames(
@@ -97,7 +99,7 @@ const cardContainer = (
       'py-5': paddingType === 'normal',
       'py-8': typeof paddingType === 'undefined',
     }),
-    useAppStyles ? undefined : thin ? thinWidthStyles : defaultWidthStyles,
+    useAppStyles ? appStyles : thin ? thinWidthStyles : defaultWidthStyles,
     margin({ 'mx-auto': !thin }, 'lg:mx-0'),
     maxHeight({
       'sm:max-h-card': defaultSpacing,
@@ -106,8 +108,7 @@ const cardContainer = (
     space({ 'space-y-6': !nospace }),
     margin({ 'mt-4': !!spinner }),
     wordBreak('break-words'),
-    zIndex('z-30'),
-    useAppStyles ? appStyles : undefined
+    zIndex(higherZIndex ? 'z-40' : 'z-30')
   )
 }
 const spinnerBox = (
@@ -120,8 +121,8 @@ const spinnerBox = (
     inset(
       noArcTextSpace ? '-top-32' : '-top-24',
       mobileSpinnerOnRight ? '-right-28' : '-right-4',
-      'md:-top-28',
-      'md:-right-40'
+      'tablet:-top-28',
+      'tablet:-right-40'
     )
   )
 }
@@ -137,11 +138,12 @@ export default function ({
   useAppStyles,
   noArcTextSpace,
   mobileSpinnerOnRight,
+  higherZIndex,
 }: ChildrenProp & CardProps) {
   return (
     <CardContext.Provider value={{ cardColor: color }}>
       <div
-        className={cardContainer(
+        className={cardContainer({
           shadow,
           color,
           onlyWrap,
@@ -149,8 +151,9 @@ export default function ({
           nospace,
           useAppStyles,
           paddingType,
-          spinner
-        )}
+          spinner,
+          higherZIndex,
+        })}
       >
         {children}
         {!!spinner && (

@@ -52,7 +52,7 @@ module.exports = {
         11: '3.188rem',
       },
       screens: {
-        xxs: '17.5rem',
+        xxs: '17.6rem',
         xs: '22.5rem',
         sm: '28.125rem',
         md: '37.5rem',
@@ -111,8 +111,9 @@ module.exports = {
         card: '31.75rem',
       },
       width: {
+        30: '7.5rem',
         'thin-mobile': '10.75rem',
-        'thin-card': '11.688rem',
+        'thin-card': '11.75rem',
         card: '24.875rem',
         'mobile-card': '92%',
         'full-125': '125%',
