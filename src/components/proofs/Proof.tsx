@@ -34,7 +34,7 @@ import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
 const proofName = classnames(
   display('flex'),
   flex('flex-1'),
-  wordBreak('break-all')
+  wordBreak('break-words')
 )
 
 const proofText = classnames(
