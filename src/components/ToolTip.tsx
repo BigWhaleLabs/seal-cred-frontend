@@ -16,7 +16,7 @@ const tooltipClasses = classnames(
   zIndex('z-50'),
   borderRadius('rounded-lg'),
   highlightedText(false),
-  width('w-thin-card', 'md:w-card')
+  width('w-3/4', 'md:w-card')
 )
 
 export default function ({
@@ -34,7 +34,7 @@ export default function ({
   if (disabled) return <>{children}</>
   return (
     <Tooltip
-      offset={15}
+      offset={10}
       className={tooltipClasses}
       content={text}
       children={children}
