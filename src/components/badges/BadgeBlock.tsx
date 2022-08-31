@@ -1,4 +1,5 @@
 import { BadgesContractsStore } from 'stores/ContractsStore'
+import { MintProof } from 'models/MintProof'
 import { handleError } from '@big-whale-labs/frontend-utils'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
@@ -6,21 +7,11 @@ import BadgeCard from 'components/badges/BadgeCard'
 import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import Button from 'components/ui/Button'
-import MintedToken from 'models/MintedToken'
-import Proof from 'models/Proof'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import badgeConfig from 'badgeConfig'
 
-function Badge({
-  proof,
-  onMinted,
-  onMintFailed,
-}: {
-  proof: Proof
-  onMinted?: (minted?: MintedToken[]) => void
-  onMintFailed?: (minted?: MintedToken[]) => void
-}) {
+function Badge({ proof, onMinted, onMintFailed }: MintProof) {
   const { account, mintLoading } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
 
@@ -65,15 +56,7 @@ function Badge({
   )
 }
 
-export default function ({
-  proof,
-  onMinted,
-  onMintFailed,
-}: {
-  proof: Proof
-  onMinted?: (minted?: MintedToken[]) => void
-  onMintFailed?: (minted?: MintedToken[]) => void
-}) {
+export default function ({ proof, onMinted, onMintFailed }: MintProof) {
   return (
     <BadgeWrapper minted={false}>
       <Badge proof={proof} onMinted={onMinted} onMintFailed={onMintFailed} />

@@ -1,18 +1,9 @@
 import { BodyText, HeaderText } from 'components/ui/Text'
+import { MintProof } from 'models/MintProof'
 import BadgeBlock from 'components/badges/BadgeBlock'
-import MintedToken from 'models/MintedToken'
 import Proof from 'components/proofs/Proof'
-import ProofModel from 'models/Proof'
 
-export default function ({
-  proof,
-  onMinted,
-  onMintFailed,
-}: {
-  proof: ProofModel
-  onMinted?: (minted?: MintedToken[]) => void
-  onMintFailed?: (minted?: MintedToken[]) => void
-}) {
+export default function ({ proof, onMinted, onMintFailed }: MintProof) {
   const headerTitle = proof.result ? 'Ready to mint!' : 'Creating your zk proof'
 
   const statusText = proof.result
