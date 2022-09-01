@@ -65,7 +65,7 @@ const appStyles = classnames(
   display('flex'),
   flexDirection('flex-col'),
   minHeight('min-h-fit', 'tablet:min-h-card'),
-  maxHeight('max-h-mobile-card', 'xxs:max-h-app-card'),
+  maxHeight('max-h-mobile-card', 'sm:max-h-app-card'),
   width('w-screen-93', 'md:w-3/4', 'tablet:!w-screen-45'),
   maxWidth('tablet:max-w-app-card')
 )
