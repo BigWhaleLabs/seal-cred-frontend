@@ -21,7 +21,7 @@ export default function () {
           <ConnectAccount />
         )}
       </Card>
-      <ZkProofHintWhenLg />
+      {account ? <ZkProofHintWhenLg /> : null}
     </CardContainer>
   )
 }

@@ -1,6 +1,8 @@
-import { BodyText, HeaderText } from 'components/ui/Text'
+import { AccentText, BodyText, HeaderText } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
 import Button from 'components/ui/Button'
+import QuestionMark from 'components/ui/QuestionMark'
+import ToolTip from 'components/ui/ToolTip'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
@@ -10,6 +12,7 @@ import classnames, {
   justifyContent,
   margin,
   space,
+  textDecoration,
   width,
 } from 'classnames/tailwind'
 
@@ -40,6 +43,8 @@ const bottomWrapper = classnames(
 
 export default function () {
   const { walletLoading, needNetworkChange } = useSnapshot(WalletStore)
+  const zkProofText =
+    'In your wallet(s), you have NFTs that can point back to your identity (aka, getting doxxed). But with ZK proof, you can verify ownership of NFTs while staying pseudonymous.'
 
   return (
     <div className={walletContainer}>
@@ -47,7 +52,28 @@ export default function () {
         <HeaderText accent>First</HeaderText>
         <div className={bottomWrapper}>
           <BodyText center>
-            Connect a wallet with NFTs to create a ZK proof.
+            <span>
+              Connect a wallet with NFTs to create a{' '}
+              <AccentText color="text-accent">
+                <ToolTip position="bottom" fitContainer text={zkProofText}>
+                  <span
+                    className={classnames(
+                      display('inline-flex'),
+                      alignItems('items-center'),
+                      space('space-x-2')
+                    )}
+                  >
+                    <span className={textDecoration('underline')}>
+                      ZK proof
+                    </span>
+                    <span>
+                      <QuestionMark small />
+                    </span>
+                  </span>
+                </ToolTip>
+              </AccentText>
+              .
+            </span>
           </BodyText>
           <BodyText center color="text-primary">
             Keep in mind this project is still in Alpha
