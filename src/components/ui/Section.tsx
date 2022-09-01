@@ -1,15 +1,21 @@
 import { ComponentChildren } from 'preact'
 import { SectionTitle } from 'components/ui/Text'
-import { space } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
+import classnames, { display, flexDirection, gap } from 'classnames/tailwind'
+
+const sectionWrapper = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  gap('gap-y-2')
+)
 
 export default function ({
   title,
   children,
 }: ChildrenProp & { title?: ComponentChildren }) {
   return (
-    <section className={space('space-y-2')}>
-      <SectionTitle>{title}</SectionTitle>
+    <section className={sectionWrapper}>
+      {title ? <SectionTitle>{title}</SectionTitle> : undefined}
       {children}
     </section>
   )
