@@ -5,7 +5,6 @@ import ConnectAccount from 'components/proofs/ConnectAccount'
 import List from 'components/proofs/List'
 import LoadingCard from 'components/proofs/LoadingCard'
 import WalletStore from 'stores/WalletStore'
-import ZkProofHintWhenLg from 'components/proofs/ZkProofHintWhenLg'
 
 export default function () {
   const { account, walletLoading } = useSnapshot(WalletStore)
@@ -21,7 +20,6 @@ export default function () {
           <ConnectAccount />
         )}
       </Card>
-      {account ? <ZkProofHintWhenLg /> : null}
     </CardContainer>
   )
 }
