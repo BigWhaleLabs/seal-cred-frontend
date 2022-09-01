@@ -60,7 +60,7 @@ body {
     )
     0 0/3rem 3rem;
 }
-svg {
+svg:not(.Toastify__toast-icon svg) {
   fill: none;
 }
 path,
