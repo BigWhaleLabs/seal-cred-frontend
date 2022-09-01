@@ -1,4 +1,3 @@
-import { DataKey } from 'models/DataKey'
 import { JSX } from 'preact/jsx-runtime'
 import { dataKeys } from 'helpers/contracts/dataShapeObject'
 import { width } from 'classnames/tailwind'
@@ -17,7 +16,7 @@ export interface CategoriesComponentProps {
 interface Category {
   [title: string]: {
     icon: JSX.Element
-    contentToRender: (eRC721Ledgers?: DataKey[]) => JSX.Element | null
+    contentToRender: JSX.Element | null
     disabled?: boolean
   }
 }
@@ -25,18 +24,18 @@ interface Category {
 export const categories: Category = {
   NFTs: {
     icon: <Nft inheritStrokeColor />,
-    contentToRender: () => {
-      const eRC721Ledgers = dataKeys.filter(
-        (ledgerName) => data[ledgerName].badgeType === BadgeSourceType.ERC721
-      )
-      return (
-        <>
-          {eRC721Ledgers.map((ledgerName) => (
+    contentToRender: (
+      <>
+        {dataKeys
+          .filter(
+            (ledgerName) =>
+              data[ledgerName].badgeType === BadgeSourceType.ERC721
+          )
+          .map((ledgerName) => (
             <ERC721ProofSection dataKey={ledgerName} />
           ))}
-        </>
-      )
-    },
+      </>
+    ),
   },
   Email: {
     icon: (
@@ -44,11 +43,11 @@ export const categories: Category = {
         <Email inheritStrokeColor />
       </div>
     ),
-    contentToRender: () => <EmailProofSection dataKey="Email" />,
+    contentToRender: <EmailProofSection dataKey="Email" />,
   },
   'Assets (coming soon)': {
     icon: <Coin inheritStrokeColor />,
-    contentToRender: () => null,
+    contentToRender: null,
     disabled: true,
   },
 }

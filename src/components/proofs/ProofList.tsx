@@ -48,7 +48,7 @@ export function ProofListSuspended() {
             <div className={displayFrom('md')}>
               <BodyText bold>{category}</BodyText>
             </div>
-            {categories[category].contentToRender()}
+            {categories[category].contentToRender}
           </div>
         </div>
       </Scrollbar>
