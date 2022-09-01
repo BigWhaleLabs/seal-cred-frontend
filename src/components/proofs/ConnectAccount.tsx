@@ -41,6 +41,12 @@ const bottomWrapper = classnames(
   width('w-full')
 )
 
+const hintWrapper = classnames(
+  display('inline-flex'),
+  alignItems('items-center'),
+  space('space-x-2')
+)
+
 export default function () {
   const { walletLoading, needNetworkChange } = useSnapshot(WalletStore)
   const zkProofText =
@@ -52,27 +58,15 @@ export default function () {
         <HeaderText accent>First</HeaderText>
         <div className={bottomWrapper}>
           <BodyText center>
-            <span>
-              Connect a wallet with NFTs to create a{' '}
-              <AccentText color="text-accent">
-                <ToolTip position="bottom" fitContainer text={zkProofText}>
-                  <span
-                    className={classnames(
-                      display('inline-flex'),
-                      alignItems('items-center'),
-                      space('space-x-2')
-                    )}
-                  >
-                    <span className={textDecoration('underline')}>
-                      ZK proof
-                    </span>
-                    <span>
-                      <QuestionMark small />
-                    </span>
-                  </span>
-                </ToolTip>
-              </AccentText>
-            </span>
+            Connect a wallet with NFTs to create a{' '}
+            <AccentText color="text-accent">
+              <ToolTip position="bottom" fitContainer text={zkProofText}>
+                <span className={hintWrapper}>
+                  <span className={textDecoration('underline')}>ZK proof</span>
+                  <QuestionMark small />
+                </span>
+              </ToolTip>
+            </AccentText>
           </BodyText>
           <BodyText center color="text-primary">
             Keep in mind this project is still in Alpha
