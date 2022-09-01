@@ -41,7 +41,7 @@ const bottomWrapper = classnames(
   space('space-y-8'),
   width('w-full')
 )
-const inlineToolTip = classnames(
+const hintWrapper = classnames(
   display('inline-flex'),
   alignItems('items-center'),
   gap('gap-x-1')
@@ -61,7 +61,7 @@ export default function () {
             Connect a wallet with NFTs to create a{' '}
             <AccentText color="text-accent">
               <ToolTip position="bottom" fitContainer text={zkProofText}>
-                <span className={inlineToolTip}>
+                <span className={hintWrapper}>
                   <span className={textDecoration('underline')}>ZK proof</span>
                   <QuestionMark small />
                 </span>
