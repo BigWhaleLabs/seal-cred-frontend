@@ -8,6 +8,7 @@ import classnames, {
   alignItems,
   display,
   flexDirection,
+  gap,
   height,
   justifyContent,
   margin,
@@ -40,6 +41,11 @@ const bottomWrapper = classnames(
   space('space-y-8'),
   width('w-full')
 )
+const inlineToolTip = classnames(
+  display('inline-flex'),
+  alignItems('items-center'),
+  gap('gap-x-1')
+)
 
 export default function () {
   const { walletLoading, needNetworkChange } = useSnapshot(WalletStore)
@@ -52,27 +58,15 @@ export default function () {
         <HeaderText accent>First</HeaderText>
         <div className={bottomWrapper}>
           <BodyText center>
-            <span>
-              Connect a wallet with NFTs to create a{' '}
-              <AccentText color="text-accent">
-                <ToolTip position="bottom" fitContainer text={zkProofText}>
-                  <span
-                    className={classnames(
-                      display('inline-flex'),
-                      alignItems('items-center'),
-                      space('space-x-2')
-                    )}
-                  >
-                    <span className={textDecoration('underline')}>
-                      ZK proof
-                    </span>
-                    <span>
-                      <QuestionMark small />
-                    </span>
-                  </span>
-                </ToolTip>
-              </AccentText>
-            </span>
+            Connect a wallet with NFTs to create a{' '}
+            <AccentText color="text-accent">
+              <ToolTip position="bottom" fitContainer text={zkProofText}>
+                <span className={inlineToolTip}>
+                  <span className={textDecoration('underline')}>ZK proof</span>
+                  <QuestionMark small />
+                </span>
+              </ToolTip>
+            </AccentText>
           </BodyText>
           <BodyText center color="text-primary">
             Keep in mind this project is still in Alpha
