@@ -67,7 +67,6 @@ export default function ({
       shadow
       paddingType="normal"
       onlyWrap
-      noArcTextSpace
       spinner="Certified with SealCred ZK Proofs"
     >
       <HeaderText extraLeading>

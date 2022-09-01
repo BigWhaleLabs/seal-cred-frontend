@@ -112,7 +112,7 @@ const cardContainer = ({
 }
 const spinnerBox = classnames(
   position('absolute'),
-  inset('right-8', '-top-24', 'tablet:top-0', 'tablet:-right-30')
+  inset('right-8', '-top-24', 'tablet:-right-28', 'tablet:-top-20')
 )
 
 export default function ({
