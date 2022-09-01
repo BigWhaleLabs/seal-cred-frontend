@@ -37,6 +37,10 @@ module.exports = {
           '0%, 100%': { transform: 'translateX(0.5rem)' },
           '50%': { transform: 'translateX(0rem)' },
         },
+        rotate: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
       },
       fontSize: {
         sm: '0.876rem',
@@ -64,6 +68,7 @@ module.exports = {
       },
       animation: {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
+        'rotate-slow': 'rotate 18s linear infinite',
       },
       colors: {
         orb: 'var(--orb)',
@@ -126,8 +131,12 @@ module.exports = {
         '-78': '-19.5rem',
         '-40': '-10rem',
         '-32': '-8rem',
+        '-30': '-7.5rem',
         '-28': '-7rem',
+        '-26': '-6.5rem',
         '-24': '-6rem',
+        '-20': '-5rem',
+        '-16': '-4rem',
         '-4': '-1rem',
         '-2.5': '-0.65rem',
         '-2': '-2px',
@@ -158,6 +167,7 @@ module.exports = {
       translate: {
         '-5.5': '-0.35rem',
         '-7': '-0.45rem',
+        '2/5': '40%',
       },
       backgroundImage: {
         noise: 'url("/img/noise50.png")',

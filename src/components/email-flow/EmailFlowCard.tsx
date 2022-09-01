@@ -45,7 +45,6 @@ export default function () {
         onlyWrap
         spinner="Work hard, play hard, whistleblow hard"
         paddingType="normal"
-        mobileSpinnerOnRight
       >
         {account ? (
           <Suspense fallback={<LoadingCard />}>

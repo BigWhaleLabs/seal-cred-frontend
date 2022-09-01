@@ -31,7 +31,7 @@ const pageContainer = classnames(
 const bodyContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  margin('my-6', 'xxs:mx-auto', 'md:mt-0', 'md:mb-auto')
+  margin('my-7', 'xxs:mx-auto', 'tablet:mt-0', 'tablet:mb-auto')
 )
 
 export default function () {

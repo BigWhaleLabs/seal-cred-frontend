@@ -24,6 +24,7 @@ import CardContext from 'components/ui/CardContext'
 import ChildrenProp from 'models/ChildrenProp'
 import Color from 'models/Color'
 import colorToBorderColor from 'helpers/colors/colorToBorderColor'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 interface CardProps {
   shadow?: boolean
@@ -34,8 +35,6 @@ interface CardProps {
   small?: boolean
   nospace?: boolean
   useAppStyles?: boolean
-  noArcTextSpace?: boolean
-  mobileSpinnerOnRight?: boolean
   paddingType?: 'small' | 'normal'
   higherZIndex?: boolean
 }
@@ -111,21 +110,11 @@ const cardContainer = ({
     zIndex(higherZIndex ? 'z-40' : 'z-30')
   )
 }
-const spinnerBox = (
-  mobileSpinnerOnRight?: boolean,
-  noArcTextSpace?: boolean
-) => {
-  return classnames(
-    position('absolute'),
-    margin({ '!mt-0': noArcTextSpace }),
-    inset(
-      noArcTextSpace ? '-top-32' : '-top-24',
-      mobileSpinnerOnRight ? '-right-28' : '-right-4',
-      'tablet:-top-28',
-      'tablet:-right-40'
-    )
-  )
-}
+const spinnerBox = classnames(
+  position('absolute'),
+  inset('right-8', '-top-24', 'tablet:top-0', 'tablet:-right-30')
+)
+
 export default function ({
   color,
   shadow,
@@ -136,10 +125,10 @@ export default function ({
   paddingType,
   nospace,
   useAppStyles,
-  noArcTextSpace,
-  mobileSpinnerOnRight,
   higherZIndex,
 }: ChildrenProp & CardProps) {
+  const { tablet } = useBreakpoints()
+
   return (
     <CardContext.Provider value={{ cardColor: color }}>
       <div
@@ -157,8 +146,8 @@ export default function ({
       >
         {children}
         {!!spinner && (
-          <div className={spinnerBox(mobileSpinnerOnRight, noArcTextSpace)}>
-            <ArcText text={spinner} />
+          <div className={spinnerBox}>
+            <ArcText text={spinner} diameter={tablet ? 200 : 100} />
           </div>
         )}
       </div>

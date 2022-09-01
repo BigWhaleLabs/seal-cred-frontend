@@ -1,6 +1,5 @@
 import ArcText from 'icons/ArcText'
 import EyeWhale from 'icons/EyeWhale'
-import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   alignItems,
   display,
@@ -8,7 +7,6 @@ import classnames, {
   inset,
   margin,
   position,
-  scale,
   width,
 } from 'classnames/tailwind'
 
@@ -20,20 +18,13 @@ const wrapperBox = classnames(
   width('w-full')
 )
 const eyeBoxMargin = margin('-mt-10', 'mb-12', 'mx-auto')
-const arcText = classNamesToString(
-  classnames(position('absolute'), scale('scale-150'), inset('tablet:-top-24')),
-  '-top-16'
-)
+const arcText = classnames(position('absolute'), inset('-top-16'))
 
 export default function () {
   return (
     <div className={wrapperBox}>
       <div className={arcText}>
-        <ArcText
-          text="Give me privacy or give me death •"
-          smallCircle
-          thinText
-        />
+        <ArcText text="Give me privacy or give me death  •" diameter={180} />
       </div>
       <div className={eyeBoxMargin}>
         <EyeWhale />
