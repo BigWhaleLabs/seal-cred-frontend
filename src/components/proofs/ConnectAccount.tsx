@@ -72,7 +72,6 @@ export default function () {
                   </span>
                 </ToolTip>
               </AccentText>
-              .
             </span>
           </BodyText>
           <BodyText center color="text-primary">
