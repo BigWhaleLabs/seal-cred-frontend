@@ -21,7 +21,7 @@ const wrapperBox = classnames(
 )
 const eyeBoxMargin = margin('-mt-10', 'mb-12', 'mx-auto')
 const arcText = classNamesToString(
-  classnames(position('absolute'), scale('scale-150'), inset('md:-top-24')),
+  classnames(position('absolute'), scale('scale-150'), inset('tablet:-top-24')),
   '-top-16'
 )
 
