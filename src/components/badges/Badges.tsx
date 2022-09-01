@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
-import Card from 'components/Card'
+import Card from 'components/ui/Card'
 import ConnectAccount from 'components/badges/ConnectAccount'
 import List from 'components/badges/List'
 import ListTitle from 'components/badges/ListTitle'
@@ -18,6 +18,7 @@ function BadgesSuspended() {
 
 export default function () {
   const { account } = useSnapshot(WalletStore)
+
   return (
     <Card
       shadow

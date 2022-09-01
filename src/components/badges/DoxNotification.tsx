@@ -1,5 +1,5 @@
-import { AccentText } from 'components/Text'
-import Button from 'components/Button'
+import { AccentText } from 'components/ui/Text'
+import Button from 'components/ui/Button'
 import HintCard from 'components/badges/HintCard'
 import WalletStore from 'stores/WalletStore'
 

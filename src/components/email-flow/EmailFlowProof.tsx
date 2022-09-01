@@ -1,18 +1,9 @@
-import { BodyText, HeaderText } from 'components/Text'
+import { BadgeBlockProps } from 'models/BadgeBlockProps'
+import { BodyText, HeaderText } from 'components/ui/Text'
 import BadgeBlock from 'components/badges/BadgeBlock'
-import EmailProof from 'helpers/EmailProof'
-import MintedToken from 'models/MintedToken'
-import ReadyEmailProof from 'components/proofs/ReadyEmailProof'
+import Proof from 'components/proofs/Proof'
 
-export default function ({
-  proof,
-  onMinted,
-  onMintFailed,
-}: {
-  proof: EmailProof
-  onMinted?: (minted?: MintedToken[]) => void
-  onMintFailed?: (minted?: MintedToken[]) => void
-}) {
+export default function ({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   const headerTitle = proof.result ? 'Ready to mint!' : 'Creating your zk proof'
 
   const statusText = proof.result
@@ -25,7 +16,7 @@ export default function ({
     <>
       <HeaderText extraLeading>{headerTitle}</HeaderText>
       <BodyText>{statusText}</BodyText>
-      <ReadyEmailProof proof={proof} />
+      <Proof type="Email" original={proof.original} proof={proof} />
       {proofCreated && (
         <BadgeBlock
           proof={proof}

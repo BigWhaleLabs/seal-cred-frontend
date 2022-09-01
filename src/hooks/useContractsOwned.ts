@@ -1,10 +1,19 @@
 import { useSnapshot } from 'valtio'
-import ContractsStore from 'stores/ContractsStore'
+import ContractsNetworkStore from 'stores/ContractsStore'
+import Network from 'models/Network'
 
-export default function (store: ContractsStore) {
-  const { addressToTokenIds } = useSnapshot(store)
+export default function (networkName?: Network) {
+  const { networks } = useSnapshot(ContractsNetworkStore)
 
-  if (!addressToTokenIds) return []
+  const addressToTokenIds = (Object.keys(networks) as Network[])
+    .filter((network) => !networkName || networkName === network)
+    .reduce(
+      (combined, networkName) => ({
+        ...combined,
+        ...networks[networkName].addressToTokenIds,
+      }),
+      {} as { [address: string]: readonly string[] }
+    )
 
-  return Object.keys(addressToTokenIds)
+  return addressToTokenIds
 }

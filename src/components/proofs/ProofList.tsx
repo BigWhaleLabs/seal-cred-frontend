@@ -1,4 +1,4 @@
-import { AccentText, BodyText } from 'components/Text'
+import { AccentText, BodyText } from 'components/ui/Text'
 import { CategoriesTitles, categories } from 'models/Categories'
 import { Suspense, useState } from 'preact/compat'
 import {
@@ -9,13 +9,18 @@ import {
   flexDirection,
   gap,
 } from 'classnames/tailwind'
+import { dataKeys } from 'helpers/contracts/dataShapeObject'
 import { displayFrom } from 'helpers/visibilityClassnames'
 import { useSnapshot } from 'valtio'
 import DesktopProofCategories from 'components/proofs/DesktopProofCategories'
+import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
+import EmailProofSection from 'components/proofs/EmailProofSection'
 import MobileProofCategories from 'components/proofs/MobileProofCategories'
 import ProofStore from 'stores/ProofStore'
-import Scrollbar from 'components/Scrollbar'
+import Scrollbar from 'components/ui/Scrollbar'
 import WalletStore from 'stores/WalletStore'
+import data, { BadgeSourceType } from 'data'
+import useProofStore from 'hooks/useProofStore'
 
 const proofList = classnames(
   display('flex'),
@@ -31,9 +36,12 @@ const bottomWrapper = classnames(
 )
 
 export function ProofListSuspended() {
-  const { account } = useSnapshot(WalletStore)
-  const { emailProofsCompleted, proofsCompleted } = useSnapshot(ProofStore)
   const [category, setCategory] = useState<CategoriesTitles>('NFTs')
+  const { hasAnyProof } = useProofStore()
+
+  const eRC721Ledgers = dataKeys.filter(
+    (ledgerName) => data[ledgerName].badgeType === BadgeSourceType.ERC721
+  )
 
   return (
     <>
@@ -51,14 +59,11 @@ export function ProofListSuspended() {
             <div className={displayFrom('md')}>
               <BodyText bold>{category}</BodyText>
             </div>
-            {categories[category].contentToRender(
-              account,
-              emailProofsCompleted
-            )}
+            {categories[category].contentToRender(eRC721Ledgers)}
           </div>
         </div>
       </Scrollbar>
-      {proofsCompleted.length > 0 && (
+      {hasAnyProof && (
         <div className={bottomWrapper}>
           <AccentText small primary color="text-primary">
             Created ZK proofs are saved in the browser even if you switch

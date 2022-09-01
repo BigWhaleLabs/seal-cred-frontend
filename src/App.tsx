@@ -1,13 +1,13 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { lazy } from 'react'
-import Announcement from 'components/Announcement'
-import Footer from 'components/Footer'
-import LazyComponent from 'components/LazyComponent'
+import Announcement from 'components/ui/Announcement'
+import Footer from 'components/ui/Footer'
+import LazyComponent from 'components/ui/LazyComponent'
 import Navbar from 'components/navbar/Navbar'
 import Privacy from 'pages/Privacy'
-import Root from 'components/Root'
-import ScrollToTop from 'components/ScrollToTop'
+import Root from 'components/ui/Root'
+import ScrollToTop from 'components/ui/ScrollToTop'
 import Terms from 'pages/Terms'
 import classnames, {
   display,

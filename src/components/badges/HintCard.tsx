@@ -1,4 +1,4 @@
-import { BadgeText } from 'components/Text'
+import { BadgeText } from 'components/ui/Text'
 import { ComponentChildren } from 'preact'
 import ChildrenProp from 'models/ChildrenProp'
 import classnames, {

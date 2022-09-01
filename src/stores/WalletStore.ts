@@ -3,18 +3,10 @@ import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import { PersistableStore } from '@big-whale-labs/stores'
 import { hexValue } from 'ethers/lib/utils'
 import { proxy } from 'valtio'
-import { requestContractMetadata } from 'helpers/attestor'
-import BaseProof from 'helpers/BaseProof'
-import ERC721Proof from 'helpers/ERC721Proof'
-import EmailProof from 'helpers/EmailProof'
-import Network from 'models/Network'
 import NotificationsStore from 'stores/NotificationsStore'
-import createERC721Badge from 'helpers/createERC721Badge'
-import createEmailBadge from 'helpers/createEmailBadge'
-import createExternalERC721Badge from 'helpers/createExternalERC721Badge'
 import env from 'helpers/env'
 import relayProvider from 'helpers/providers/relayProvider'
-import web3Modal from 'helpers/web3Modal'
+import web3Modal from 'helpers/providers/web3Modal'
 
 let provider: Web3Provider
 
@@ -36,6 +28,10 @@ class WalletStore extends PersistableStore {
 
   get cachedProvider() {
     return web3Modal.cachedProvider
+  }
+
+  get isAccountNotifiedOfBeingDoxxed() {
+    return this.account && this.walletsToNotifiedOfBeingDoxxed[this.account]
   }
 
   private async getUserNetworkName(provider: Web3Provider) {
@@ -159,40 +155,12 @@ class WalletStore extends PersistableStore {
     return signature
   }
 
-  async mintDerivative(proof: BaseProof) {
+  async createGSNProvider() {
     if (!provider) throw new Error('No provider found')
 
     const gsnProvider = await relayProvider(provider)
 
-    const ethersProvider = new Web3Provider(
-      gsnProvider as unknown as ExternalProvider
-    )
-
-    try {
-      if (proof instanceof ERC721Proof) {
-        if (proof.network === Network.Goerli)
-          return createERC721Badge(ethersProvider, proof)
-
-        const signature = await requestContractMetadata(
-          proof.network,
-          proof.contract
-        )
-        return createExternalERC721Badge(
-          ethersProvider,
-          proof,
-          signature.message,
-          signature.signature
-        )
-      }
-
-      if (proof instanceof EmailProof)
-        return createEmailBadge(ethersProvider, proof)
-
-      throw new Error('Unknown proof type')
-    } catch (error) {
-      handleError(error)
-      throw error
-    }
+    return new Web3Provider(gsnProvider as unknown as ExternalProvider)
   }
 }
 

@@ -1,5 +1,5 @@
 import { useSnapshot } from 'valtio'
-import Card from 'components/Card'
+import Card from 'components/ui/Card'
 import ConnectAccount from 'components/proofs/ConnectAccount'
 import List from 'components/proofs/List'
 import LoadingCard from 'components/proofs/LoadingCard'

@@ -1,5 +1,5 @@
-import { AccentText } from 'components/Text'
-import ENSAddress from 'components/ENSAddress'
+import { AccentText } from 'components/ui/Text'
+import ENSAddress from 'components/ui/ENSAddress'
 import Network from 'models/Network'
 
 export default function ({

@@ -1,6 +1,6 @@
 import { displayFrom } from 'helpers/visibilityClassnames'
-import CardSeparator from 'components/CardSeparator'
-import ZkProofHint from 'components/ZkProofHint'
+import CardSeparator from 'components/ui/CardSeparator'
+import ZkProofHint from 'components/proofs/ZkProofHint'
 import classnames, { flexDirection } from 'classnames/tailwind'
 
 const container = classnames(displayFrom('lg'), flexDirection('flex-col'))

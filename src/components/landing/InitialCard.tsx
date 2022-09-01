@@ -1,6 +1,6 @@
-import { AccentText, BodyText, HeaderText } from 'components/Text'
+import { AccentText, BodyText, HeaderText } from 'components/ui/Text'
 import AlphaSeal from 'components/landing/AlphaSeal'
-import Card from 'components/Card'
+import Card from 'components/ui/Card'
 import GetStartedButton from 'components/landing/GetStartedButton'
 import classnames, {
   inset,

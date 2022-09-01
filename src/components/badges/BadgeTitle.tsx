@@ -1,42 +1,34 @@
-import BaseProof from 'helpers/BaseProof'
-import ContractName from 'components/ContractName'
-import ERC721Proof from 'helpers/ERC721Proof'
-import EmailProof from 'helpers/EmailProof'
-import ExternalLink from 'components/ExternalLink'
+import { isAddress } from 'ethers/lib/utils'
+import ContractName from 'components/ui/ContractName'
+import ExternalLink from 'components/ui/ExternalLink'
 import Network from 'models/Network'
-import getEtherscanAddressUrl from 'helpers/getEtherscanAddressUrl'
-
-function ProofName({ badge }: { badge: BaseProof }) {
-  if (badge instanceof ERC721Proof)
-    return (
-      <ContractName hyphens address={badge.contract} network={Network.Goerli} />
-    )
-  if (badge instanceof EmailProof) return <>@{badge.domain}</>
-  return <>Unknown</>
-}
+import clearDerivativeType from 'helpers/network/clearDerivativeType'
+import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
 export default function ({
-  derivativeAddress,
-  proof,
+  originalOrAddress,
+  clearType,
 }: {
-  derivativeAddress?: string
-  proof?: BaseProof
+  originalOrAddress: string
+  clearType?: boolean
 }) {
-  if (derivativeAddress)
+  if (isAddress(originalOrAddress))
     return (
       <ExternalLink
-        url={getEtherscanAddressUrl(derivativeAddress, Network.Goerli)}
+        url={getEtherscanAddressUrl(originalOrAddress, Network.Goerli)}
       >
         <ContractName
           hyphens
-          address={derivativeAddress}
-          clearType
+          address={originalOrAddress}
+          clearType={clearType}
           network={Network.Goerli}
         />
       </ExternalLink>
     )
 
-  if (!proof) return null
-
-  return <ProofName badge={proof} />
+  return (
+    <>
+      @{clearType ? clearDerivativeType(originalOrAddress) : originalOrAddress}
+    </>
+  )
 }
