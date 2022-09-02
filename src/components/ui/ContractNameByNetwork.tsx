@@ -13,7 +13,7 @@ export default function ContractNameByNetwork({
 }) {
   return (
     <ExternalLink url={getEtherscanAddressUrl(address, network)}>
-      <AccentText color="text-secondary">
+      <AccentText bold color="text-secondary">
         <ContractName address={address} network={network} />
       </AccentText>
     </ExternalLink>
