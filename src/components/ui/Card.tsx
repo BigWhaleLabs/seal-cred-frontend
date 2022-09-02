@@ -7,6 +7,7 @@ import {
   classnames,
   display,
   flexDirection,
+  height,
   inset,
   margin,
   maxHeight,
@@ -100,6 +101,7 @@ const cardContainer = ({
     }),
     useAppStyles ? appStyles : thin ? thinWidthStyles : defaultWidthStyles,
     margin({ 'mx-auto': !thin }, 'lg:mx-0'),
+    height('h-full'),
     maxHeight({
       'sm:max-h-card': defaultSpacing,
       'max-h-mobile-card': defaultSpacing,
