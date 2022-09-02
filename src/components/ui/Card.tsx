@@ -109,7 +109,7 @@ const cardContainer = ({
     space({ 'space-y-6': !nospace }),
     margin({ 'mt-4': !!spinner }),
     wordBreak('break-words'),
-    zIndex(higherZIndex ? 'z-40' : 'z-20')
+    zIndex(higherZIndex ? 'z-40' : 'z-30')
   )
 }
 const spinnerBox = (avoidCardContent?: boolean) =>

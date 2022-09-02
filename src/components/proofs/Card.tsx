@@ -11,7 +11,14 @@ export default function () {
 
   return (
     <CardContainer>
-      <Card paddingType="normal" color="accent" shadow useAppStyles nospace>
+      <Card
+        paddingType="normal"
+        color="accent"
+        shadow
+        useAppStyles
+        nospace
+        higherZIndex
+      >
         {walletLoading ? (
           <LoadingCard />
         ) : account ? (
