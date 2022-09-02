@@ -43,7 +43,7 @@ export default function () {
         color="accent"
         shadow
         onlyWrap
-        spinner="Work hard, play hard, whistleblow hard"
+        spinner={{ text: 'Work hard, play hard, whistleblow hard' }}
         paddingType="normal"
       >
         {account ? (

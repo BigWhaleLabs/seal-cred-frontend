@@ -23,7 +23,7 @@ export default function () {
       color="accent"
       onlyWrap
       nospace
-      spinner="One Identity to rule them all"
+      spinner={{ text: 'One Identity to rule them all' }}
     >
       <div className={initialCardWrapper}>
         <HeaderText extraLeading>

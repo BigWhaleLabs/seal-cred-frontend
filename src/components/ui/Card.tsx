@@ -30,7 +30,7 @@ interface CardProps {
   shadow?: boolean
   color: Color
   onlyWrap?: boolean
-  spinner?: string
+  spinner?: { text: string; avoidCardContent?: boolean }
   thin?: boolean
   small?: boolean
   nospace?: boolean
@@ -110,10 +110,16 @@ const cardContainer = ({
     zIndex(higherZIndex ? 'z-40' : 'z-30')
   )
 }
-const spinnerBox = classnames(
-  position('absolute'),
-  inset('right-8', '-top-24', 'tablet:-right-29', 'tablet:-top-20')
-)
+const spinnerBox = (avoidCardContent?: boolean) =>
+  classnames(
+    position('absolute'),
+    inset(
+      'right-8',
+      avoidCardContent ? '-top-1/4' : '-top-1/6',
+      'tablet:-right-29',
+      'tablet:-top-1/10'
+    )
+  )
 
 export default function ({
   color,
@@ -146,8 +152,8 @@ export default function ({
       >
         {children}
         {!!spinner && (
-          <div className={spinnerBox}>
-            <ArcText text={spinner} diameter={tablet ? 200 : 100} />
+          <div className={spinnerBox(spinner.avoidCardContent)}>
+            <ArcText text={spinner.text} diameter={tablet ? 200 : 100} />
           </div>
         )}
       </div>
