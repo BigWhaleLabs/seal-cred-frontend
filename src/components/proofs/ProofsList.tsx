@@ -40,9 +40,9 @@ export default function ({
     <div className={container}>
       {Array.from(proofs)
         .sort((a, b) => (a.account === b.account ? 0 : -1))
-        .map((proof) => (
+        .map((proof, index) => (
           <Proof
-            key={`${proof.original}-${proof.account}`}
+            key={`${proof.original}-${index}`}
             type={dataKey}
             original={proof.original}
             proof={proof}
