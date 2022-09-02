@@ -41,7 +41,7 @@ const container = classnames(
   position('relative'),
   width('md:w-fit'),
   displayTo('md'),
-  margin('mt-2')
+  margin('my-2')
 )
 
 export default function ({
