@@ -121,7 +121,7 @@ export default function () {
             <ProofText>Work email</ProofText>
             <div className={tooltipWrapper}>
               <ToolTip
-                position="top"
+                position="bottom-end"
                 text={popoverText}
                 fitContainer
                 disabled={!open}

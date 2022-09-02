@@ -2,11 +2,11 @@ import { AccentText, ProofText } from 'components/ui/Text'
 import { DataKey } from 'models/DataKey'
 import { JSX } from 'preact'
 import { useSnapshot } from 'valtio'
-import { useState } from 'react'
 import Complete from 'icons/Complete'
 import Line from 'components/ui/Line'
 import ProofButton from 'components/proofs/ProofButton'
 import ProofModel from 'models/Proof'
+import ProofStore from 'stores/ProofStore'
 import ProofTitle from 'components/proofs/ProofTitle'
 import Star from 'icons/Star'
 import ToolTip from 'components/ui/ToolTip'
@@ -25,9 +25,14 @@ import classnames, {
   maxWidth,
   space,
   width,
+  wordBreak,
 } from 'classnames/tailwind'
 
-const proofName = classnames(display('flex'), flex('flex-1'))
+const proofName = classnames(
+  display('flex'),
+  flex('flex-1'),
+  wordBreak('break-words')
+)
 
 const proofText = classnames(
   display('flex'),
@@ -49,14 +54,19 @@ const textWithIcon = classnames(
 )
 
 function useProofContent(
+  type: DataKey,
+  original: string,
   onCreate?: () => Promise<void>,
   proof?: ProofModel
 ): {
   color: 'text-accent' | 'text-secondary' | 'text-tertiary'
   content: JSX.Element | null
 } {
+  const store = ProofStore[type]
+  const { progressing } = useSnapshot(store)
   const { account } = useSnapshot(WalletStore)
-  const [isGenerating, setIsGenerating] = useState(false)
+
+  const isGenerating = progressing[original]
 
   if (isGenerating) {
     const powerProofTooltip =
@@ -84,9 +94,12 @@ function useProofContent(
           type="tertiary"
           disabled={isGenerating}
           onClick={async () => {
-            setIsGenerating(true)
-            await onCreate()
-            setIsGenerating(false)
+            store.progressing[original] = true
+            try {
+              await onCreate()
+            } finally {
+              store.progressing[original] = false
+            }
           }}
         >
           Create proof
@@ -116,7 +129,7 @@ export default function ({
   proof?: ProofModel
   onCreate?: () => Promise<void>
 }) {
-  const { color, content } = useProofContent(onCreate, proof)
+  const { color, content } = useProofContent(type, original, onCreate, proof)
 
   return (
     <Line breakWords>

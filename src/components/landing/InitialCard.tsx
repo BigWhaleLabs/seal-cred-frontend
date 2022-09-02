@@ -8,7 +8,6 @@ import classnames, {
   space,
   visibility,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const initialCardWrapper = space('space-y-4')
 const alphaSealWrapper = classnames(
@@ -18,15 +17,13 @@ const alphaSealWrapper = classnames(
 )
 
 export default function () {
-  const { xs } = useBreakpoints()
-
   return (
     <Card
       shadow
       color="accent"
       onlyWrap
       nospace
-      spinner={xs ? 'One Identity to rule them all' : undefined}
+      spinner={{ text: 'One Identity to rule them all' }}
     >
       <div className={initialCardWrapper}>
         <HeaderText extraLeading>

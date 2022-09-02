@@ -1,6 +1,5 @@
-import { BodyText, TextButton } from 'components/ui/Text'
 import { ComponentChildren } from 'preact'
-import { margin } from 'classnames/tailwind'
+import { TextButton } from 'components/ui/Text'
 import { sendEmail } from 'helpers/proofs/attestor'
 import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
@@ -73,42 +72,35 @@ export default function ({
     }
   }
 
-  return (
+  return domain ? (
     <>
-      <div className={margin('mt-4')}>
-        <BodyText smallOnBig>
-          {domain ? (
-            <>
-              A token has been sent to <b>{email ? email : `@${domain}`}</b>.
-              Copy the token and add it here to create a zk proof. Or{' '}
-              <TextButton onClick={() => resetEmail()} disabled={loading}>
-                re-enter email
-              </TextButton>
-              .
-            </>
-          ) : (
-            description
-          )}
-        </BodyText>
+      <div>
+        A token has been sent to <b>{email || `@${domain}`}</b>. Copy the token
+        and add it here to create a zk proof. Or{' '}
+        <TextButton onClick={() => resetEmail()} disabled={loading}>
+          re-enter email
+        </TextButton>
+        .
       </div>
-      {domain ? (
-        <TextForm
-          submitType={submitType}
-          submitText="Generate proof"
-          placeholder="Paste token here"
-          onSubmit={onGenerateProof}
-          loading={loading}
-          error={error}
-        />
-      ) : (
-        <EmailForm
-          submitType={submitType}
-          submitText="Submit email"
-          placeholder="Work email..."
-          onSubmit={onSendEmail}
-          loading={loading}
-        />
-      )}
+      <TextForm
+        submitType={submitType}
+        submitText="Generate proof"
+        placeholder="Paste token here"
+        onSubmit={onGenerateProof}
+        loading={loading}
+        error={error}
+      />
+    </>
+  ) : (
+    <>
+      <div>{description}</div>
+      <EmailForm
+        submitType={submitType}
+        submitText="Submit email"
+        placeholder="Work email..."
+        onSubmit={onSendEmail}
+        loading={loading}
+      />
     </>
   )
 }

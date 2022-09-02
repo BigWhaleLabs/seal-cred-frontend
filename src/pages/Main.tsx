@@ -11,13 +11,13 @@ import useBreakpoints from 'hooks/useBreakpoints'
 
 const mainBlock = classnames(
   display('flex'),
-  flexDirection('flex-col', 'lg:flex-row'),
-  alignItems('items-center', 'lg:items-stretch'),
-  justifyContent('lg:justify-center')
+  flexDirection('flex-col', 'tablet:flex-row'),
+  alignItems('items-center', 'tablet:items-stretch'),
+  justifyContent('tablet:justify-center')
 )
 
 export default function () {
-  const { lg } = useBreakpoints()
+  const { tablet } = useBreakpoints()
 
   return (
     <div className={mainBlock}>
@@ -25,7 +25,7 @@ export default function () {
       <CardSeparator
         numberOfLines={3}
         gradient="accent-to-secondary"
-        vertical={!lg}
+        vertical={!tablet}
       />
       <Badges />
     </div>

@@ -1,10 +1,6 @@
+import { displayFrom } from 'helpers/visibilityClassnames'
 import Color from 'models/Color'
-import classnames, {
-  backgroundImage,
-  display,
-  height,
-  width,
-} from 'classnames/tailwind'
+import classnames, { backgroundImage, height, width } from 'classnames/tailwind'
 import colorsToGradientColorStops from 'helpers/colors/colorsToGradientColorStops'
 
 const line = (gradientDirection: 'to-left' | 'to-right', small?: boolean) => {
@@ -18,7 +14,7 @@ const line = (gradientDirection: 'to-left' | 'to-right', small?: boolean) => {
     backgroundImage(
       gradientDirection === 'to-left' ? 'bg-gradient-to-l' : 'bg-gradient-to-r'
     ),
-    display('hidden', 'xs:block')
+    displayFrom('xs')
   )
 }
 

@@ -1,7 +1,16 @@
 /** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
+let plugin = require('tailwindcss/plugin')
+
 module.exports = {
   content: ['./public/index.html', './src/**/!(tailwind).{ts,tsx}'],
-  plugins: [require('@tailwindcss/line-clamp')],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    plugin(function ({ addVariant }) {
+      addVariant('each-new-row-in-3-cols', '&:nth-child(3n - 2)'),
+        addVariant('pre-last', '&:nth-last-child(2)'),
+        addVariant('each-2nd-element-in-3-cols', '&:nth-child(3n + 2)')
+    }),
+  ],
   theme: {
     fontFamily: {
       primary: ['"Space Grotesk"', 'sans-serif'],
@@ -14,17 +23,23 @@ module.exports = {
         card: '31.75rem',
       },
       maxHeight: {
+        'badges-list': '21.25rem',
         card: '31.75rem',
         'mobile-card': '41rem',
-        'badges-list': '21.25rem',
+        'app-card': '70vh',
       },
       maxWidth: {
         100: '6.25rem',
+        'app-card': '42.125rem',
       },
       keyframes: {
         'pulse-horizontal': {
           '0%, 100%': { transform: 'translateX(0.5rem)' },
           '50%': { transform: 'translateX(0rem)' },
+        },
+        rotate: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
         },
       },
       fontSize: {
@@ -41,16 +56,19 @@ module.exports = {
         11: '3.188rem',
       },
       screens: {
-        xxs: '17.5rem',
+        xxs: '17.6rem',
         xs: '22.5rem',
         sm: '28.125rem',
         md: '37.5rem',
+        tablet: '55.4rem',
+        smToXl: { min: '28.125rem', max: '80rem' },
       },
       borderWidth: {
         24: '1.5rem',
       },
       animation: {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
+        'rotate-slow': 'rotate 18s linear infinite',
       },
       colors: {
         orb: 'var(--orb)',
@@ -98,22 +116,32 @@ module.exports = {
         card: '31.75rem',
       },
       width: {
+        30: '7.5rem',
         'thin-mobile': '10.75rem',
-        'thin-card': '11.688rem',
+        'thin-card': '11.75rem',
         card: '24.875rem',
         'mobile-card': '92%',
         'full-125': '125%',
+        'full-105': '105%',
+        'screen-93': '93vw',
         'screen-80': '80vw',
+        'screen-45': '45vw',
       },
       inset: {
         '-78': '-19.5rem',
         '-40': '-10rem',
         '-32': '-8rem',
+        '-29': '-7.25rem',
         '-28': '-7rem',
         '-24': '-6rem',
+        '-16': '-4rem',
         '-4': '-1rem',
-        '-1': '-1px',
+        '-2.5': '-0.65rem',
         '-2': '-2px',
+        '-1': '-1px',
+        '-1/4': '-25%',
+        '-1/6': '-17%',
+        '-1/10': '-10%',
       },
       rotate: {
         '-90': '-90deg',
@@ -140,6 +168,7 @@ module.exports = {
       translate: {
         '-5.5': '-0.35rem',
         '-7': '-0.45rem',
+        '2/5': '40%',
       },
       backgroundImage: {
         noise: 'url("/img/noise50.png")',

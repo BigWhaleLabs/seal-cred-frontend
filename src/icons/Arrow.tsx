@@ -36,25 +36,25 @@ export default function ({
   openDisabled,
   open,
 }: ArrowProps) {
+  // same id of <linearGradient> will break multiple usage of this icon
+  const strokeId = Math.random().toString()
+
   return (
     <div className={svgInnerWrapper}>
       <svg
         viewBox={horizontal ? '0 0 14 14' : '0 0 14 7'}
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={arrowAnimation(pulseDisabled, openDisabled, open)}
       >
         <path
           d="M10.75 1.25L6.25 5.75L1.75 1.25"
-          stroke="url(#paint0_linear_90_6626)"
+          stroke={`url(#${strokeId})`}
           stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
           transform={horizontal ? 'rotate(-90 7 7)' : undefined}
         />
         <defs>
           <linearGradient
-            id="paint0_linear_90_6626"
+            id={strokeId}
             x1="3.89285"
             y1="1.35547"
             x2="3.89285"

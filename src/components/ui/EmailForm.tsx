@@ -1,3 +1,4 @@
+import { width } from 'classnames/tailwind'
 import Button from 'components/ui/Button'
 import Email from 'icons/Email'
 import GradientBorder from 'components/ui/GradientBorder'
@@ -22,7 +23,11 @@ export default function ({
   return (
     <>
       <Input
-        leftIcon={<Email />}
+        leftIcon={
+          <div className={width('w-3.5')}>
+            <Email />
+          </div>
+        }
         type="email"
         placeholder={placeholder}
         value={email}

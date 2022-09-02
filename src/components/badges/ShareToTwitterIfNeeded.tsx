@@ -12,7 +12,9 @@ import classnames, {
   borderRadius,
   display,
   flexDirection,
+  flexWrap,
   gridColumn,
+  margin,
   padding,
   space,
   width,
@@ -22,7 +24,8 @@ import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
 const wideBlock = classnames(
   display('flex'),
   flexDirection('flex-row'),
-  space('space-x-1'),
+  space('space-y-1', 'xs:space-y-0', 'xs:space-x-1'),
+  flexWrap('flex-wrap', 'xs:flex-nowrap'),
   alignItems('items-center'),
   borderRadius('rounded-2xl'),
   backgroundColor('bg-primary-dimmed'),
@@ -47,7 +50,10 @@ function ShareToTwitterIfNeededSuspended() {
           <div className={width('xs:w-max')}>Share a Tweet</div>
         </Button>
       </ExternalLink>
-      <button onClick={closeNotification}>
+      <button
+        className={margin('ml-auto', 'xs:ml-0')}
+        onClick={closeNotification}
+      >
         <Cross />
       </button>
     </div>

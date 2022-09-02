@@ -1,5 +1,4 @@
 import {
-  alignItems,
   backgroundColor,
   borderRadius,
   borderWidth,
@@ -8,9 +7,11 @@ import {
   classnames,
   display,
   flexDirection,
+  height,
   inset,
   margin,
   maxHeight,
+  maxWidth,
   minHeight,
   padding,
   position,
@@ -24,19 +25,19 @@ import CardContext from 'components/ui/CardContext'
 import ChildrenProp from 'models/ChildrenProp'
 import Color from 'models/Color'
 import colorToBorderColor from 'helpers/colors/colorToBorderColor'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 interface CardProps {
   shadow?: boolean
   color: Color
   onlyWrap?: boolean
-  spinner?: string
+  spinner?: { text: string; avoidCardContent?: boolean }
   thin?: boolean
   small?: boolean
   nospace?: boolean
   useAppStyles?: boolean
-  noArcTextSpace?: boolean
-  mobileSpinnerOnRight?: boolean
   paddingType?: 'small' | 'normal'
+  higherZIndex?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -63,20 +64,29 @@ const cardColor = (color?: Color) => {
 const appStyles = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  alignItems('items-stretch'),
-  minHeight('sm:min-h-card', 'min-h-fit')
+  minHeight('min-h-fit', 'tablet:min-h-card'),
+  maxHeight('max-h-mobile-card', 'sm:max-h-app-card'),
+  width('w-screen-93', 'md:w-3/4', 'tablet:!w-screen-45'),
+  maxWidth('tablet:max-w-app-card')
 )
 
-const cardContainer = (
-  shadow?: boolean,
-  color?: Color,
+const thinWidthStyles = width('sm:!w-thin-card', 'xxs:w-5/12', 'w-30')
+
+const defaultWidthStyles = width('sm:w-card', 'w-mobile-card')
+
+const cardContainer = ({
+  shadow,
+  color,
   onlyWrap = false,
   thin = false,
-  nospace?: boolean,
-  useAppStyles?: boolean,
-  paddingType?: 'small' | 'normal',
-  spinner?: string
-) => {
+  nospace,
+  useAppStyles,
+  paddingType,
+  spinner,
+  higherZIndex,
+}: CardProps) => {
+  const defaultSpacing = !onlyWrap && !useAppStyles
+
   return classnames(
     position('relative'),
     borderRadius('rounded-2xl'),
@@ -89,35 +99,30 @@ const cardContainer = (
       'py-5': paddingType === 'normal',
       'py-8': typeof paddingType === 'undefined',
     }),
-    width(
-      thin ? 'sm:!w-thin-card' : 'sm:w-card',
-      thin ? 'xs:w-thin-mobile' : 'w-mobile-card',
-      { 'w-32': thin }
-    ),
+    useAppStyles ? appStyles : thin ? thinWidthStyles : defaultWidthStyles,
     margin({ 'mx-auto': !thin }, 'lg:mx-0'),
-    maxHeight({ 'sm:max-h-card': !onlyWrap, 'max-h-mobile-card': !onlyWrap }),
+    height('h-full'),
+    maxHeight({
+      'sm:max-h-card': defaultSpacing,
+      'max-h-mobile-card': defaultSpacing,
+    }),
     space({ 'space-y-6': !nospace }),
-    margin(spinner ? 'mt-4' : undefined),
+    margin({ 'mt-4': !!spinner }),
     wordBreak('break-words'),
-    zIndex('z-30'),
-    useAppStyles ? appStyles : undefined
+    zIndex(higherZIndex ? 'z-40' : 'z-30')
   )
 }
-const spinnerBox = (
-  mobileSpinnerOnRight?: boolean,
-  noArcTextSpace?: boolean
-) => {
-  return classnames(
+const spinnerBox = (avoidCardContent?: boolean) =>
+  classnames(
     position('absolute'),
-    margin({ '!mt-0': noArcTextSpace }),
     inset(
-      noArcTextSpace ? '-top-32' : '-top-24',
-      mobileSpinnerOnRight ? '-right-28' : '-right-4',
-      'md:-top-28',
-      'md:-right-40'
+      'right-8',
+      avoidCardContent ? '-top-1/4' : '-top-1/6',
+      'tablet:-right-29',
+      'tablet:-top-1/10'
     )
   )
-}
+
 export default function ({
   color,
   shadow,
@@ -128,13 +133,14 @@ export default function ({
   paddingType,
   nospace,
   useAppStyles,
-  noArcTextSpace,
-  mobileSpinnerOnRight,
+  higherZIndex,
 }: ChildrenProp & CardProps) {
+  const { tablet } = useBreakpoints()
+
   return (
     <CardContext.Provider value={{ cardColor: color }}>
       <div
-        className={cardContainer(
+        className={cardContainer({
           shadow,
           color,
           onlyWrap,
@@ -142,13 +148,14 @@ export default function ({
           nospace,
           useAppStyles,
           paddingType,
-          spinner
-        )}
+          spinner,
+          higherZIndex,
+        })}
       >
         {children}
         {!!spinner && (
-          <div className={spinnerBox(mobileSpinnerOnRight, noArcTextSpace)}>
-            <ArcText text={spinner} />
+          <div className={spinnerBox(spinner.avoidCardContent)}>
+            <ArcText text={spinner.text} diameter={tablet ? 200 : 100} />
           </div>
         )}
       </div>

@@ -11,6 +11,7 @@ import dataShapeObject from 'helpers/contracts/dataShapeObject'
 import env from 'helpers/env'
 
 export class ProofStore extends PersistableStore {
+  progressing: { [original: string]: boolean } = {}
   proofsCompleted: Proof[] = []
   dataKey: DataKey
   badgeType: BadgeSourceType
@@ -21,6 +22,11 @@ export class ProofStore extends PersistableStore {
 
   get persistanceName() {
     return `ProofStore_${this.dataKey}`
+  }
+
+  replacer = (key: string, value: unknown) => {
+    const disallowList = ['progressing']
+    return disallowList.includes(key) ? undefined : value
   }
 
   constructor(

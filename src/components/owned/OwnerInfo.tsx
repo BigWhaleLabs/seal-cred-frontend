@@ -67,8 +67,10 @@ export default function ({
       shadow
       paddingType="normal"
       onlyWrap
-      noArcTextSpace
-      spinner="Certified with SealCred ZK Proofs"
+      spinner={{
+        text: 'Certified with SealCred ZK Proofs',
+        avoidCardContent: true,
+      }}
     >
       <HeaderText extraLeading>
         <OwnerTitle derivative={derivativeAddress} />

@@ -73,7 +73,7 @@ const accentText = (
     fontSize({
       'text-sm': small,
       'text-xs': extraSmall,
-      'sm:text-base': extraSmall,
+      'xs:text-base': extraSmall,
     }),
     dropShadow(shadow)
   )
@@ -112,7 +112,7 @@ const bodyText = (
 ) =>
   classnames(
     fontFamily({ 'font-primary': fontPrimary }),
-    textColor(color ? color : 'text-formal-accent'),
+    textColor(color),
     textAlign({ 'text-center': center }),
     fontWeight({ 'font-bold': bold }),
     fontSize(small ? 'text-xs' : 'text-sm', { 'sm:text-base': !smallOnBig }),
@@ -384,7 +384,7 @@ export function SphereText({ children }: ChildrenProp) {
   return <p className={sphereText}>{children}</p>
 }
 
-const sectionTitle = classnames(fontWeight('font-bold'), fontSize('text-sm'))
+const sectionTitle = fontSize('text-sm')
 export function SectionTitle({ children }: ChildrenProp) {
   return <p className={sectionTitle}>{children}</p>
 }

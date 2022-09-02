@@ -33,13 +33,15 @@ const pageBox = classnames(
   alignItems('items-center'),
   margin('mb-10')
 )
-const initialCardWrapper = margin('mt-10')
+const initialCardWrapper = margin('mt-4')
 const identityCards = classnames(
   display('flex'),
   flexDirection('flex-row'),
   alignItems('items-center'),
+  justifyContent('justify-center'),
   space('lg:space-x-6', 'space-x-4'),
-  margin('mb-6')
+  margin('mb-6'),
+  width('w-full')
 )
 const highlightedBlock = classnames(
   display('flex'),
@@ -68,7 +70,7 @@ const createZkProofWrapper = classnames(
   position('absolute'),
   zIndex('z-40'),
   inset('top-52'),
-  width('w-screen', 'md:w-fit')
+  width('w-screen', 'sm:w-fit')
 )
 const middleConnectorsBlock = classnames(
   position('relative'),

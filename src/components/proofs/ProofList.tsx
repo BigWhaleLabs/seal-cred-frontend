@@ -1,34 +1,64 @@
-import { AccentText } from 'components/ui/Text'
-import { Suspense } from 'preact/compat'
-import { dataKeys } from 'helpers/contracts/dataShapeObject'
-import { space } from 'classnames/tailwind'
-import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
-import EmailProofSection from 'components/proofs/EmailProofSection'
+import { AccentText, BodyText } from 'components/ui/Text'
+import { CategoriesTitles, categories } from 'models/Categories'
+import { Suspense, useState } from 'preact/compat'
+import {
+  alignItems,
+  classnames,
+  display,
+  flex,
+  flexDirection,
+  gap,
+} from 'classnames/tailwind'
+import { displayFrom } from 'helpers/visibilityClassnames'
+import DesktopProofCategories from 'components/proofs/DesktopProofCategories'
+import MobileProofCategories from 'components/proofs/MobileProofCategories'
 import Scrollbar from 'components/ui/Scrollbar'
-import data, { BadgeSourceType } from 'data'
 import useProofStore from 'hooks/useProofStore'
 
-export function ProofListSuspended() {
-  const { hasAnyProof } = useProofStore()
+const proofList = classnames(
+  display('flex'),
+  flex('flex-1'),
+  flexDirection('flex-col'),
+  gap('gap-y-2')
+)
+const menuWrapper = classnames(display('flex'), gap('gap-x-4'))
+const bottomWrapper = classnames(
+  display('flex'),
+  flex('flex-1'),
+  alignItems('items-end')
+)
 
-  const eRC721Ledgers = dataKeys.filter(
-    (ledgerName) => data[ledgerName].badgeType === BadgeSourceType.ERC721
-  )
+export function ProofListSuspended() {
+  const [category, setCategory] = useState<CategoriesTitles>('NFTs')
+  const { hasAnyProof } = useProofStore()
 
   return (
     <>
+      <MobileProofCategories
+        currentCategory={category}
+        setCategory={setCategory}
+      />
       <Scrollbar>
-        <div className={space('space-y-2')}>
-          {eRC721Ledgers.map((ledgerName) => (
-            <ERC721ProofSection dataKey={ledgerName} />
-          ))}
-          <EmailProofSection dataKey={'Email'} />
+        <div className={menuWrapper}>
+          <DesktopProofCategories
+            currentCategory={category}
+            setCategory={setCategory}
+          />
+          <div className={proofList}>
+            <div className={displayFrom('md')}>
+              <BodyText bold>{category}</BodyText>
+            </div>
+            {categories[category].contentToRender}
+          </div>
         </div>
       </Scrollbar>
       {hasAnyProof && (
-        <AccentText small primary color="text-primary">
-          Created ZK proofs are saved in the browser even if you switch wallets.
-        </AccentText>
+        <div className={bottomWrapper}>
+          <AccentText small primary color="text-primary">
+            Created ZK proofs are saved in the browser even if you switch
+            wallets.
+          </AccentText>
+        </div>
       )}
     </>
   )

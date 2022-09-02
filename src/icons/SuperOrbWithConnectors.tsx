@@ -119,13 +119,11 @@ const SuperOrb = () => (
     <path
       d="M73.5,47.78"
       transform="translate(-48.02 -4.86)"
-      fill="none"
       className={strokeTertiary}
     />
     <path
       d="M.5,47.78"
       transform="translate(-48.02 -4.86)"
-      fill="none"
       className={strokeSecondary}
     />
     <circle
@@ -133,7 +131,6 @@ const SuperOrb = () => (
       cy="41"
       r="40"
       className={strokeWhite(true)}
-      stroke-linecap="round"
       stroke-width="2"
     />
     <g mask="url(#c)">
@@ -153,77 +150,37 @@ const SuperOrb = () => (
           fill="url(#i)"
         />
       </g>
-      <rect x="53.47" y="1" width="35.53" height="35.08" fill="none" />
+      <rect x="53.47" y="1" width="35.53" height="35.08" />
       <path
         d="M56.8,39.86h49.48V88.73H56.8Z"
         transform="translate(-48.02 -4.86)"
-        fill="none"
       />
     </g>
     <path
       d="M102,68.86A23,23,0,0,1,85.65,29.7M102,22.86A23,23,0,0,1,118.39,62"
       transform="translate(-48.02 -4.86)"
-      fill="none"
       className={strokeWhite()}
-      stroke-linecap="round"
       stroke-width="2"
     />
     <path
       d="M87,45.86a15,15,0,0,1,25.54-10.67M117,45.86A15,15,0,0,1,91.48,56.53"
       transform="translate(-48.02 -4.86)"
-      fill="none"
       className={strokeWhite()}
-      stroke-linecap="round"
       stroke-width="2"
     />
     <path
       d="M102,38.86a7,7,0,0,1,5,11.92m-5,2.08a7,7,0,0,1-5-11.92"
       transform="translate(-48.02 -4.86)"
-      fill="none"
       className={strokeWhite()}
-      stroke-linecap="round"
       stroke-width="2"
     />
-    <line
-      x1="0.5"
-      y1="46.5"
-      x2="25.5"
-      y2="46.5"
-      fill="none"
-      className={strokeWhite()}
-      stroke-linecap="round"
-    />
-    <line
-      x1="80.5"
-      y1="46.5"
-      x2="105.5"
-      y2="46.5"
-      fill="none"
-      className={strokeWhite()}
-      stroke-linecap="round"
-    />
-    <line
-      x1="0.5"
-      y1="38.5"
-      x2="25.5"
-      y2="38.5"
-      fill="none"
-      className={strokeWhite()}
-      stroke-linecap="round"
-    />
-    <line
-      x1="80.5"
-      y1="38.5"
-      x2="105.5"
-      y2="38.5"
-      fill="none"
-      className={strokeWhite()}
-      stroke-linecap="round"
-    />
+    <line x1="0.5" y1="46.5" x2="25.5" y2="46.5" className={strokeWhite()} />
+    <line x1="80.5" y1="46.5" x2="105.5" y2="46.5" className={strokeWhite()} />
+    <line x1="0.5" y1="38.5" x2="25.5" y2="38.5" className={strokeWhite()} />
+    <line x1="80.5" y1="38.5" x2="105.5" y2="38.5" className={strokeWhite()} />
     <path
       d="M109.35-364.21"
       transform="translate(-48.02 -4.86)"
-      fill="none"
       className={strokeAccent}
     />
   </svg>
@@ -258,26 +215,11 @@ const UpperConnectors = () => (
         <stop offset="1" stop-color="#fed823" />
       </linearGradient>
     </defs>
-    <line
-      x1="9.25"
-      y1="60"
-      x2="9.25"
-      y2="724.5"
-      fill="none"
-      className={strokeTertiary}
-      stroke-linecap="round"
-    />
-    <line
-      x1="9.5"
-      x2="73.5"
-      y1="724.5"
-      y2="724.5"
-      fill="none"
-      className={strokeTertiary}
-    />
-    <line x1="128.5" x2="193" y1="724.5" y2="724.5" fill="none" />
-    <line x1="193.25" y1="70" x2="193.25" y2="724.5" fill="none" />
-    <line x1="100.5" x2="100.5" y1="30" y2="690" fill="none" stroke="url(#c)" />
+    <line x1="9.25" y1="60" x2="9.25" y2="724.5" className={strokeTertiary} />
+    <line x1="9.5" x2="73.5" y1="724.5" y2="724.5" className={strokeTertiary} />
+    <line x1="128.5" x2="193" y1="724.5" y2="724.5" />
+    <line x1="193.25" y1="70" x2="193.25" y2="724.5" />
+    <line x1="100.5" x2="100.5" y1="30" y2="690" stroke="url(#c)" />
   </svg>
 )
 
@@ -290,25 +232,16 @@ const BottomConnectors = () => (
     <path
       d="M86.25,0V343L4.75,424.5"
       transform="translate(-4.25 0.5)"
-      fill="none"
       className={strokeTertiary}
-      stroke-linecap="round"
     />
-    <path
-      d="M102.25,0V343l-81.5,81.5"
-      transform="translate(-4.25 0.5)"
-      fill="none"
-      stroke-linecap="round"
-    />
+    <path d="M102.25,0V343l-81.5,81.5" transform="translate(-4.25 0.5)" />
     <path
       d="M118.25,0V343l81.5,81.5"
       transform="translate(-4.25 0.5)"
-      fill="none"
-      stroke-linecap="round"
       className={strokeSecondary}
     />
-    <path d="M109.35,235.28" transform="translate(-4.25 0.5)" fill="none" />
-    <path d="M109.35-447.72" transform="translate(-4.25 0.5)" fill="none" />
+    <path d="M109.35,235.28" transform="translate(-4.25 0.5)" />
+    <path d="M109.35-447.72" transform="translate(-4.25 0.5)" />
   </svg>
 )
 

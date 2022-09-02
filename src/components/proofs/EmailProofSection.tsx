@@ -1,4 +1,3 @@
-import { AccentText, BodyText } from 'components/ui/Text'
 import { DataKey } from 'models/DataKey'
 import { useSnapshot } from 'valtio'
 import EmailProof from 'components/proofs/EmailProof'
@@ -11,16 +10,7 @@ export default function ({ dataKey }: { dataKey: DataKey }) {
   const { proofsCompleted } = useSnapshot(ProofStore[dataKey])
 
   return (
-    <ProofSection
-      title={
-        <BodyText>
-          Additional proofs{' '}
-          <AccentText color="text-tertiary" bold>
-            New!
-          </AccentText>
-        </BodyText>
-      }
-    >
+    <ProofSection>
       <ProofsList dataKey={dataKey} proofs={proofsCompleted as Proof[]} />
       <EmailProof />
     </ProofSection>

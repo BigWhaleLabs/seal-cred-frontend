@@ -33,12 +33,16 @@
   --formal-accent-semi-transparent: rgba(239, 236, 214, 0.4);
   --error-semi-transparent: rgba(255, 123, 131, 0.2);
   --selection: #ff7bed35;
+  --transparent: #00000000;
 }
-
+* {
+  -webkit-tap-highlight-color: var(--transparent);
+}
 html {
   background-color: var(--primary-dark);
   scrollbar-color: var(--accent) transparent;
   scrollbar-width: thin;
+  caret-color: var(--primary);
 }
 body {
   scroll-behavior: smooth;
@@ -55,6 +59,14 @@ body {
       var(--primary-background) 0
     )
     0 0/3rem 3rem;
+}
+svg:not(.Toastify__toast-icon svg) {
+  fill: none;
+}
+path,
+circle {
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 ::selection {
@@ -87,6 +99,10 @@ body {
   .hover-tertiary:hover {
     color: var(--tertiary);
     text-decoration: underline;
+  }
+  .hover-menu-element:not(:disabled):hover {
+    background-color: var(--primary-semi-dimmed);
+    stroke: var(--formal-accent);
   }
 }
 

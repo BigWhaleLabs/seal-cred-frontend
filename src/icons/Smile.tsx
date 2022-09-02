@@ -24,7 +24,6 @@ export default function () {
     <div className={smileWrapper}>
       <svg
         viewBox="0 0 42 42"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={smileGlow}
       >
