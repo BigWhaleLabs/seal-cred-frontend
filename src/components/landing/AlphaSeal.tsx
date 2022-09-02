@@ -1,3 +1,10 @@
+import { classnames, stroke, strokeWidth } from 'classnames/tailwind'
+
+const commonPath = classnames(
+  stroke('stroke-formal-accent'),
+  strokeWidth('stroke-2')
+)
+
 export default function () {
   return (
     <svg
@@ -18,23 +25,20 @@ export default function () {
       />
       <path
         d="M128.355 42.3162C128.355 39.3804 130.671 37.0004 133.528 37.0004C136.384 37.0004 138.7 39.3804 138.7 42.3162C138.7 45.2521 136.384 42.3163 133.528 42.3163C130.671 42.3163 128.355 45.2521 128.355 42.3162Z"
-        stroke="#EFECD6"
-        stroke-width="2"
+        className={commonPath}
       />
       <path
         d="M123.356 52C125.289 52 126.856 52.2317 126.856 50.0145C126.856 47.7973 125.289 45.9999 123.356 45.9999C121.423 45.9999 119.856 47.7973 119.856 50.0145C119.856 52.2317 121.423 52 123.356 52ZM123.356 52C123.356 53.3333 123.356 56.3 123.356 57.5M123.356 57.5C123.356 61.5 128.356 61.5 128.356 57.5M123.356 57.5C123.356 61.5 118.356 61.5 118.356 57.5"
-        stroke="#EFECD6"
-        stroke-width="2"
+        className={commonPath}
       />
       <path
         d="M108.355 42.3163C108.355 39.3804 110.671 37.0004 113.528 37.0004C116.384 37.0004 118.7 39.3804 118.7 42.3163C118.7 45.2521 116.384 42.3163 113.528 42.3163C110.671 42.3163 108.355 45.2521 108.355 42.3163Z"
-        stroke="#EFECD6"
-        stroke-width="2"
+        className={commonPath}
       />
-      <path d="M139.356 52L133.356 53" stroke="#EFECD6" stroke-width="2" />
-      <path d="M133.356 56L139.356 57" stroke="#EFECD6" stroke-width="2" />
-      <path d="M107.356 52L113.356 53" stroke="#EFECD6" stroke-width="2" />
-      <path d="M113.356 56L107.356 57" stroke="#EFECD6" stroke-width="2" />
+      <path d="M139.356 52L133.356 53" className={commonPath} />
+      <path d="M133.356 56L139.356 57" className={commonPath} />
+      <path d="M107.356 52L113.356 53" className={commonPath} />
+      <path d="M113.356 56L107.356 57" className={commonPath} />
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"
