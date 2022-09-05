@@ -29,7 +29,7 @@ export default function ({
   onError: (error: string | undefined) => void
   onCreate: (proof: ProofModel) => void
   onChange: (domain: string) => void
-  onGenerationStarted?: () => void
+  onGenerationStarted?: (state: boolean) => void
 }) {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState<string>('')
@@ -43,6 +43,7 @@ export default function ({
   }
 
   async function onSendEmail(email: string) {
+    onGenerationStarted && onGenerationStarted(true)
     setLoading(true)
     try {
       await sendEmail(email)
@@ -51,6 +52,7 @@ export default function ({
       onChange(domain)
     } finally {
       setLoading(false)
+      onGenerationStarted && onGenerationStarted(false)
     }
   }
 
@@ -59,7 +61,7 @@ export default function ({
     if (!checkDomainToken(secret))
       return onError('This is an invalid token. Please try again.')
 
-    if (onGenerationStarted) onGenerationStarted()
+    onGenerationStarted && onGenerationStarted(true)
 
     setLoading(true)
     onError(undefined)

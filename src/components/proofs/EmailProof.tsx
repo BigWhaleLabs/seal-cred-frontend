@@ -167,7 +167,10 @@ export default function () {
                 (check the spam folder). Then, use the token here to create zk
                 proof.{' '}
                 {!!emailDomain && (
-                  <TextButton onClick={jumpToToken}>
+                  <TextButton
+                    onClick={jumpToToken}
+                    disabled={generationStarted}
+                  >
                     Have an existing token?
                   </TextButton>
                 )}
@@ -176,9 +179,7 @@ export default function () {
             onCreate={onCreate}
             onChange={setDomain}
             onError={setError}
-            onGenerationStarted={() => {
-              setGenerationStarted(true)
-            }}
+            onGenerationStarted={setGenerationStarted}
             error={error}
           />
         )}
