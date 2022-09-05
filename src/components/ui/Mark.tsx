@@ -23,26 +23,37 @@ const questionStyles = (small?: boolean, disabled?: boolean) =>
     cursor(disabled ? undefined : 'cursor-pointer')
   )
 
-const borderWrapper = (small?: boolean) =>
+const borderWrapper = (small?: boolean, medium?: boolean) =>
   classnames(
     boxSizing('box-content'),
     borderRadius('rounded-full'),
     borderWidth('border'),
     borderColor('border-current'),
-    width(small ? 'w-4' : 'w-6'),
-    height(small ? 'h-4' : 'h-6')
+    width({ 'w-4': small, 'w-5': medium, 'w-6': !small && !medium }),
+    height({ 'h-4': small, 'h-5': medium, 'h-6': !small && !medium }),
+    display('flex'),
+    justifyContent('justify-center')
   )
+
+export enum MarkType {
+  Question = '?',
+  Exclamation = '!',
+}
 
 export default function ({
   small,
   disabled,
+  medium,
+  mark = MarkType.Question,
 }: {
   small?: boolean
+  medium?: boolean
   disabled?: boolean
+  mark?: MarkType
 }) {
   return (
-    <div className={borderWrapper(small)}>
-      <div className={questionStyles(small, disabled)}>?</div>
+    <div className={borderWrapper(small, medium)}>
+      <div className={questionStyles(small, disabled)}>{mark}</div>
     </div>
   )
 }

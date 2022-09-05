@@ -1,5 +1,5 @@
 import { AccentText } from 'components/ui/Text'
-import QuestionMark from 'components/ui/QuestionMark'
+import Mark from 'components/ui/Mark'
 import ToolTip from 'components/ui/ToolTip'
 import classnames, {
   backgroundColor,
@@ -36,7 +36,7 @@ export default function () {
       <div className={zkProofButton}>
         <AccentText color="text-accent">What's a ZK proof?</AccentText>
         <AccentText small primary color="text-accent">
-          <QuestionMark />
+          <Mark />
         </AccentText>
       </div>
     </ToolTip>
