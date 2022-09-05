@@ -128,7 +128,7 @@ export default function () {
                 disabled={!open}
               >
                 <div className={questionBlock(open)}>
-                  <CharInCircle size={Sizes.Small} />
+                  <CharInCircle char="?" size={Sizes.Small} />
                 </div>
               </ToolTip>
             </div>

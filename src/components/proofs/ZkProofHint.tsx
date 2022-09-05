@@ -36,7 +36,7 @@ export default function () {
       <div className={zkProofButton}>
         <AccentText color="text-accent">What's a ZK proof?</AccentText>
         <AccentText small primary color="text-accent">
-          <CharInCircle />
+          <CharInCircle char="?" />
         </AccentText>
       </div>
     </ToolTip>

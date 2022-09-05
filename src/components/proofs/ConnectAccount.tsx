@@ -64,7 +64,7 @@ export default function () {
               <ToolTip position="bottom" fitContainer text={zkProofText}>
                 <span className={hintWrapper}>
                   <span className={textDecoration('underline')}>ZK proof</span>
-                  <CharInCircle size={Sizes.Small} />
+                  <CharInCircle size={Sizes.Small} char="?" />
                 </span>
               </ToolTip>
             </AccentText>

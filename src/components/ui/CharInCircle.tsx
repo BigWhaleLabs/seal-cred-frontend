@@ -1,4 +1,4 @@
-import MarkType from 'models/MarkTypes'
+import CharTypes from 'models/CharTypes'
 import Sizes from 'models/MarkSizes'
 import classnames, {
   alignItems,
@@ -48,15 +48,15 @@ const borderWrapper = (size?: Sizes) =>
 export default function ({
   size,
   disabled,
-  mark = MarkType.Question,
+  char,
 }: {
   size?: Sizes
   disabled?: boolean
-  mark?: MarkType
+  char: CharTypes
 }) {
   return (
     <div className={borderWrapper(size)}>
-      <div className={questionStyles(size, disabled)}>{mark}</div>
+      <div className={questionStyles(size, disabled)}>{char}</div>
     </div>
   )
 }
