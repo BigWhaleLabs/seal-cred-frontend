@@ -12,6 +12,7 @@ import proofStore from 'stores/ProofStore'
 
 export default function ({
   domain,
+  token,
   description,
   submitType = 'secondary',
   error,
@@ -21,6 +22,7 @@ export default function ({
   onGenerationStarted,
 }: {
   domain: string
+  token?: string
   submitType?: 'primary' | 'secondary' | 'tertiary'
   description: ComponentChildren
   error: string | undefined
@@ -33,7 +35,10 @@ export default function ({
   const [email, setEmail] = useState<string>('')
 
   function resetEmail(withStore = false) {
-    if (withStore) EmailDomainStore.emailDomain = ''
+    if (withStore) {
+      EmailDomainStore.emailDomain = ''
+    }
+    EmailDomainStore.fromEmail = false
     setEmail('')
     onChange('')
   }
@@ -83,6 +88,7 @@ export default function ({
         .
       </div>
       <TextForm
+        value={token}
         submitType={submitType}
         submitText="Generate proof"
         placeholder="Paste token here"

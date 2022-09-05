@@ -11,9 +11,11 @@ import {
 } from 'classnames/tailwind'
 import { displayFrom } from 'helpers/visibilityClassnames'
 import DesktopProofCategories from 'components/proofs/DesktopProofCategories'
+import EmailDomainStore from 'stores/EmailDomainStore'
 import MobileProofCategories from 'components/proofs/MobileProofCategories'
 import Scrollbar from 'components/ui/Scrollbar'
 import useProofStore from 'hooks/useProofStore'
+import useUrlParams from 'hooks/useUrlParams'
 
 const proofList = classnames(
   display('flex'),
@@ -29,8 +31,18 @@ const bottomWrapper = classnames(
 )
 
 export function ProofListSuspended() {
-  const [category, setCategory] = useState<CategoriesTitles>('NFTs')
+  const params = useUrlParams()
+
+  const [category, setCategory] = useState<CategoriesTitles>(
+    params ? 'Email' : 'NFTs'
+  )
   const { hasAnyProof } = useProofStore()
+  if (params) {
+    EmailDomainStore.emailDomain = params.domain
+    EmailDomainStore.fromEmail = true
+  } else {
+    EmailDomainStore.fromEmail = false
+  }
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { AccentText, BodyText, HeaderText } from 'components/ui/Text'
+import { toast } from 'react-toastify'
 import { useSnapshot } from 'valtio'
 import Button from 'components/ui/Button'
 import QuestionMark from 'components/ui/QuestionMark'
@@ -16,6 +17,7 @@ import classnames, {
   textDecoration,
   width,
 } from 'classnames/tailwind'
+import useUrlParams from 'hooks/useUrlParams'
 
 const walletContainer = classnames(
   display('flex'),
@@ -49,6 +51,13 @@ const hintWrapper = classnames(
 
 export default function () {
   const { walletLoading, needNetworkChange } = useSnapshot(WalletStore)
+  const params = useUrlParams()
+  if (params) {
+    toast.warning(
+      'You need to connect an anonymous account to use the token.\nPlease connect an anonymous account that has never been used before and open the link again!'
+    )
+  }
+
   const zkProofText =
     'In your wallet(s), you have NFTs that can point back to your identity (aka, getting doxxed). But with ZK proof, you can verify ownership of NFTs while staying pseudonymous.'
 

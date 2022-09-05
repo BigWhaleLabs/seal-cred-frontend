@@ -5,6 +5,7 @@ import TinyMessage from 'components/ui/TinyMessage'
 
 export default function ({
   error,
+  value,
   loading,
   onSubmit,
   submitType = 'primary',
@@ -12,13 +13,14 @@ export default function ({
   submitText = 'Submit',
 }: {
   error?: string
+  value?: string
   loading?: boolean
   submitType?: 'primary' | 'secondary' | 'tertiary'
   onSubmit: (text: string) => void
   placeholder?: string
   submitText?: string
 }) {
-  const [text, setText] = useState('')
+  const [text, setText] = useState(value ?? '')
   const hasError = !!error
 
   return (

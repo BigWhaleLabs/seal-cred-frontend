@@ -30,6 +30,7 @@ import classnames, {
   visibility,
   width,
 } from 'classnames/tailwind'
+import useUrlParams from 'hooks/useUrlParams'
 
 const arrowContainer = classnames(
   display('flex'),
@@ -82,16 +83,22 @@ const questionBlock = (open: boolean) =>
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
+  const { emailDomain, fromEmail } = useSnapshot(EmailDomainStore)
   const [domain, setDomain] = useState('')
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(!!emailDomain && fromEmail)
   const [error, setError] = useState<string | undefined>()
   const [generationStarted, setGenerationStarted] = useState(false)
-  const { emailDomain } = useSnapshot(EmailDomainStore)
+  const params = useUrlParams()
+
+  if (emailDomain.length && fromEmail) {
+    jumpToToken()
+  }
 
   function onCreate() {
     setOpen(false)
     setDomain('')
     setGenerationStarted(false)
+    EmailDomainStore.fromEmail = false
   }
 
   function jumpToToken() {
@@ -112,6 +119,7 @@ export default function () {
                 disabled={generationStarted}
                 type="tertiary"
                 onClick={() => {
+                  EmailDomainStore.fromEmail = false
                   setDomain('')
                 }}
               >
@@ -144,6 +152,7 @@ export default function () {
         {open && (
           <EmailProofForm
             domain={domain}
+            token={params?.token}
             submitType="secondary"
             description={
               <>
