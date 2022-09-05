@@ -63,7 +63,7 @@ body {
 svg:not(.Toastify__toast-icon svg) {
   fill: none;
 }
-path,
+path:not(.walletconnect-qrcode__image path),
 circle {
   stroke-linecap: round;
   stroke-linejoin: round;
