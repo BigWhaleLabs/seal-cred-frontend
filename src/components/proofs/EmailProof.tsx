@@ -1,7 +1,7 @@
 import { ProofText, TextButton } from 'components/ui/Text'
 import { displayFrom } from 'helpers/visibilityClassnames'
+import { useEffect, useState } from 'preact/hooks'
 import { useSnapshot } from 'valtio'
-import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import Button from 'components/ui/Button'
 import CharInCircle from 'components/ui/CharInCircle'
@@ -31,6 +31,7 @@ import classnames, {
   visibility,
   width,
 } from 'classnames/tailwind'
+import useUrlParams from 'hooks/useUrlParams'
 
 const arrowContainer = classnames(
   display('flex'),
@@ -73,26 +74,42 @@ const emailTitleLeft = classnames(
   alignItems('items-center')
 )
 
-const questionBlock = (open: boolean) =>
+const questionBlock = (closed: boolean) =>
   classnames(
-    opacity({ 'opacity-0': !open }),
-    visibility({ invisible: !open }),
+    opacity({ 'opacity-0': closed }),
+    visibility({ invisible: closed }),
     transitionDuration('duration-300')
   )
 
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
+  const { urlDomain, urlToken, clearSearchParams } = useUrlParams()
+  const { emailDomain } = useSnapshot(EmailDomainStore)
+
   const [domain, setDomain] = useState('')
-  const [open, setOpen] = useState(false)
+  const [token, setToken] = useState(urlToken)
+  const [open, setOpen] = useState(!!urlDomain)
   const [error, setError] = useState<string | undefined>()
   const [generationStarted, setGenerationStarted] = useState(false)
-  const { emailDomain } = useSnapshot(EmailDomainStore)
+
+  useEffect(() => {
+    if (!urlToken || !urlDomain) return
+
+    EmailDomainStore.emailDomain = urlDomain
+    setDomain(urlDomain)
+  }, [urlDomain, urlToken])
 
   function onCreate() {
     setOpen(false)
-    setDomain('')
+    clearData()
     setGenerationStarted(false)
+  }
+
+  function clearData() {
+    setToken('')
+    setDomain('')
+    clearSearchParams()
   }
 
   function jumpToToken() {
@@ -112,9 +129,7 @@ export default function () {
               <Button
                 disabled={generationStarted}
                 type="tertiary"
-                onClick={() => {
-                  setDomain('')
-                }}
+                onClick={() => setDomain('')}
               >
                 <SimpleArrow />
               </Button>
@@ -145,14 +160,19 @@ export default function () {
         {open && (
           <EmailProofForm
             domain={domain}
+            token={token}
             submitType="secondary"
+            afterSendEmail={clearData}
             description={
               <>
                 Add your work email and we’ll send you a token for that email
                 (check the spam folder). Then, use the token here to create zk
                 proof.{' '}
                 {!!emailDomain && (
-                  <TextButton onClick={jumpToToken}>
+                  <TextButton
+                    onClick={jumpToToken}
+                    disabled={generationStarted}
+                  >
                     Have an existing token?
                   </TextButton>
                 )}
@@ -161,9 +181,7 @@ export default function () {
             onCreate={onCreate}
             onChange={setDomain}
             onError={setError}
-            onGenerationStarted={() => {
-              setGenerationStarted(true)
-            }}
+            onGenerationStarted={setGenerationStarted}
             error={error}
           />
         )}

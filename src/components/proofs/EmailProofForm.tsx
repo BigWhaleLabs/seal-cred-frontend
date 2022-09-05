@@ -12,41 +12,49 @@ import proofStore from 'stores/ProofStore'
 
 export default function ({
   domain,
+  token,
   description,
   submitType = 'secondary',
   error,
   onError,
   onCreate,
   onChange,
+  afterSendEmail,
   onGenerationStarted,
 }: {
   domain: string
+  token?: string
   submitType?: 'primary' | 'secondary' | 'tertiary'
   description: ComponentChildren
   error: string | undefined
   onError: (error: string | undefined) => void
   onCreate: (proof: ProofModel) => void
   onChange: (domain: string) => void
-  onGenerationStarted?: () => void
+  afterSendEmail?: () => void
+  onGenerationStarted?: (state: boolean) => void
 }) {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState<string>('')
 
   function resetEmail(withStore = false) {
     if (withStore) EmailDomainStore.emailDomain = ''
+
     setEmail('')
     onChange('')
   }
 
   async function onSendEmail(email: string) {
+    onGenerationStarted && onGenerationStarted(true)
     setLoading(true)
     try {
       await sendEmail(email)
+      afterSendEmail && afterSendEmail()
       const domain = email.split('@')[1]
       EmailDomainStore.emailDomain = domain
       onChange(domain)
     } finally {
       setLoading(false)
+      onGenerationStarted && onGenerationStarted(false)
     }
   }
 
@@ -55,7 +63,7 @@ export default function ({
     if (!checkDomainToken(secret))
       return onError('This is an invalid token. Please try again.')
 
-    if (onGenerationStarted) onGenerationStarted()
+    onGenerationStarted && onGenerationStarted(true)
 
     setLoading(true)
     onError(undefined)
@@ -83,6 +91,7 @@ export default function ({
         .
       </div>
       <TextForm
+        value={token}
         submitType={submitType}
         submitText="Generate proof"
         placeholder="Paste token here"
