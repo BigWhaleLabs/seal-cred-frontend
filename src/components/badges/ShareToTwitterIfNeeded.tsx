@@ -13,10 +13,11 @@ import classnames, {
   display,
   flexDirection,
   flexWrap,
+  gap,
   gridColumn,
+  justifyContent,
   margin,
   padding,
-  space,
   width,
 } from 'classnames/tailwind'
 import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
@@ -24,13 +25,19 @@ import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
 const wideBlock = classnames(
   display('flex'),
   flexDirection('flex-row'),
-  space('space-y-1', 'xs:space-y-0', 'xs:space-x-1'),
+  gap('gap-y-1', 'xs:gap-y-0', 'xs:gap-x-1'),
   flexWrap('flex-wrap', 'xs:flex-nowrap'),
   alignItems('items-center'),
+  justifyContent('justify-between'),
   borderRadius('rounded-2xl'),
   backgroundColor('bg-primary-dimmed'),
   padding('lg:px-6', 'px-4', 'py-4'),
   gridColumn('lg:col-span-2', 'col-span-1')
+)
+const rightBlock = classnames(
+  display('flex'),
+  alignItems('items-center'),
+  gap('gap-x-1')
 )
 
 function ShareToTwitterIfNeededSuspended() {
@@ -45,17 +52,19 @@ function ShareToTwitterIfNeededSuspended() {
       <BodyText bold fontPrimary>
         You minted your first badge!
       </BodyText>
-      <ExternalLink url={getShareToTwitterLink({ text: CTAText })}>
-        <Button type="secondary" onClick={closeNotification} small>
-          <div className={width('xs:w-max')}>Share a Tweet</div>
-        </Button>
-      </ExternalLink>
-      <button
-        className={margin('ml-auto', 'xs:ml-0')}
-        onClick={closeNotification}
-      >
-        <Cross />
-      </button>
+      <div className={rightBlock}>
+        <ExternalLink url={getShareToTwitterLink({ text: CTAText })}>
+          <Button type="secondary" onClick={closeNotification} small>
+            <div className={width('xs:w-max')}>Share a Tweet</div>
+          </Button>
+        </ExternalLink>
+        <button
+          className={margin('ml-auto', 'xs:ml-0')}
+          onClick={closeNotification}
+        >
+          <Cross />
+        </button>
+      </div>
     </div>
   )
 }
