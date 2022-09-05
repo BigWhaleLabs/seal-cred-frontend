@@ -128,7 +128,7 @@ export default function () {
               <Button
                 disabled={generationStarted}
                 type="tertiary"
-                onClick={clearData}
+                onClick={() => setDomain('')}
               >
                 <SimpleArrow />
               </Button>
@@ -161,7 +161,7 @@ export default function () {
             domain={domain}
             token={token}
             submitType="secondary"
-            clearData={clearData}
+            afterSendEmail={clearData}
             description={
               <>
                 Add your work email and we’ll send yoa token for that email
