@@ -1,7 +1,7 @@
 import { ProofText, TextButton } from 'components/ui/Text'
 import { displayFrom } from 'helpers/visibilityClassnames'
+import { useEffect, useState } from 'preact/hooks'
 import { useSnapshot } from 'valtio'
-import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import Button from 'components/ui/Button'
 import EmailDomainStore from 'stores/EmailDomainStore'
@@ -30,7 +30,6 @@ import classnames, {
   visibility,
   width,
 } from 'classnames/tailwind'
-import useUrlParams from 'hooks/useUrlParams'
 
 const arrowContainer = classnames(
   display('flex'),
@@ -82,25 +81,34 @@ const questionBlock = (open: boolean) =>
 
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
-export default function () {
-  const { emailDomain, hasToken } = useSnapshot(EmailDomainStore)
-  const [domain, setDomain] = useState('')
-  const [open, setOpen] = useState(!!emailDomain && hasToken)
+export default function ({
+  domain: defaultDomain,
+  token: defaultToken,
+}: {
+  domain?: string
+  token?: string
+}) {
+  const { emailDomain } = useSnapshot(EmailDomainStore)
+  const [domain, setDomain] = useState(defaultDomain ?? '')
+  const [open, setOpen] = useState(!!defaultDomain)
   const [error, setError] = useState<string | undefined>()
   const [generationStarted, setGenerationStarted] = useState(false)
-  const [token, setToken] = useState('')
-  const params = useUrlParams()
+  const [token, setToken] = useState(defaultToken ?? '')
 
-  if (emailDomain.length && hasToken) {
-    jumpToToken()
-    setToken(params?.domain === domain ? params?.token : '')
-  }
+  useEffect(() => {
+    if (defaultToken && defaultDomain) {
+      EmailDomainStore.emailDomain = defaultDomain
+      setToken(defaultToken ?? '')
+      setError(undefined)
+      setDomain(defaultDomain)
+    }
+  }, [defaultDomain, defaultToken])
+  console.log(EmailDomainStore.emailDomain, defaultDomain)
 
   function onCreate() {
     setOpen(false)
     setDomain('')
     setGenerationStarted(false)
-    EmailDomainStore.hasToken = false
   }
 
   function jumpToToken() {
@@ -121,7 +129,6 @@ export default function () {
                 disabled={generationStarted}
                 type="tertiary"
                 onClick={() => {
-                  EmailDomainStore.hasToken = false
                   setDomain('')
                   setToken('')
                 }}
@@ -155,7 +162,7 @@ export default function () {
         {open && (
           <EmailProofForm
             domain={domain}
-            token={token}
+            token={EmailDomainStore.emailDomain === defaultDomain ? token : ''}
             submitType="secondary"
             description={
               <>

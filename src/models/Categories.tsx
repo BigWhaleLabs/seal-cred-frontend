@@ -15,7 +15,6 @@ export interface CategoriesComponentProps {
 
 interface Category {
   [title: string]: {
-    title: string
     icon: JSX.Element
     contentToRender: JSX.Element | null
     disabled?: boolean
@@ -23,8 +22,7 @@ interface Category {
 }
 
 export const categories: Category = {
-  nfts: {
-    title: 'NFTs',
+  NFTs: {
     icon: <Nft inheritStrokeColor />,
     contentToRender: (
       <>
@@ -39,8 +37,7 @@ export const categories: Category = {
       </>
     ),
   },
-  email: {
-    title: 'Email',
+  Email: {
     icon: (
       <div className={width('w-5')}>
         <Email inheritStrokeColor />
@@ -49,7 +46,6 @@ export const categories: Category = {
     contentToRender: <EmailProofSection dataKey="Email" />,
   },
   'Assets (coming soon)': {
-    title: 'Assets (coming soon)',
     icon: <Coin inheritStrokeColor />,
     contentToRender: null,
     disabled: true,
