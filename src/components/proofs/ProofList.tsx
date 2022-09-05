@@ -31,11 +31,9 @@ const bottomWrapper = classnames(
 export function ProofListSuspended({
   selectedCategory,
 }: {
-  selectedCategory?: CategoriesTitles
+  selectedCategory: CategoriesTitles
 }) {
-  const [category, setCategory] = useState<CategoriesTitles>(
-    selectedCategory || 'NFTs'
-  )
+  const [category, setCategory] = useState<CategoriesTitles>(selectedCategory)
   const { hasAnyProof } = useProofStore()
 
   return (
@@ -73,7 +71,7 @@ export function ProofListSuspended({
 export default function ({
   selectedCategory,
 }: {
-  selectedCategory?: CategoriesTitles
+  selectedCategory: CategoriesTitles
 }) {
   return (
     <Suspense fallback={<div>Fetching proofs</div>}>
