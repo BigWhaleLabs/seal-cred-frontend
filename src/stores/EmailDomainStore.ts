@@ -4,7 +4,12 @@ import env from 'helpers/env'
 
 class EmailDomainStore extends PersistableStore {
   emailDomain = ''
-  fromEmail = false
+  hasToken = false
+
+  replacer = (key: string, value: unknown) => {
+    const disallowList = ['hasToken']
+    return disallowList.includes(key) ? undefined : value
+  }
 }
 
 export default proxy(new EmailDomainStore()).makePersistent(

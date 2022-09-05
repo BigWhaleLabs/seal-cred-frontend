@@ -11,11 +11,9 @@ import {
 } from 'classnames/tailwind'
 import { displayFrom } from 'helpers/visibilityClassnames'
 import DesktopProofCategories from 'components/proofs/DesktopProofCategories'
-import EmailDomainStore from 'stores/EmailDomainStore'
 import MobileProofCategories from 'components/proofs/MobileProofCategories'
 import Scrollbar from 'components/ui/Scrollbar'
 import useProofStore from 'hooks/useProofStore'
-import useUrlParams from 'hooks/useUrlParams'
 
 const proofList = classnames(
   display('flex'),
@@ -30,19 +28,15 @@ const bottomWrapper = classnames(
   alignItems('items-end')
 )
 
-export function ProofListSuspended() {
-  const params = useUrlParams()
-
+export function ProofListSuspended({
+  selectedCategory,
+}: {
+  selectedCategory?: CategoriesTitles
+}) {
   const [category, setCategory] = useState<CategoriesTitles>(
-    params ? 'Email' : 'NFTs'
+    selectedCategory || 'NFTs'
   )
   const { hasAnyProof } = useProofStore()
-  if (params) {
-    EmailDomainStore.emailDomain = params.domain
-    EmailDomainStore.fromEmail = true
-  } else {
-    EmailDomainStore.fromEmail = false
-  }
 
   return (
     <>
@@ -76,10 +70,14 @@ export function ProofListSuspended() {
   )
 }
 
-export default function () {
+export default function ({
+  selectedCategory,
+}: {
+  selectedCategory?: CategoriesTitles
+}) {
   return (
     <Suspense fallback={<div>Fetching proofs</div>}>
-      <ProofListSuspended />
+      <ProofListSuspended selectedCategory={selectedCategory} />
     </Suspense>
   )
 }

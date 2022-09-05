@@ -38,7 +38,7 @@ export default function ({
     if (withStore) {
       EmailDomainStore.emailDomain = ''
     }
-    EmailDomainStore.fromEmail = false
+    EmailDomainStore.hasToken = false
     setEmail('')
     onChange('')
   }

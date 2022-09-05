@@ -83,22 +83,24 @@ const questionBlock = (open: boolean) =>
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
-  const { emailDomain, fromEmail } = useSnapshot(EmailDomainStore)
+  const { emailDomain, hasToken } = useSnapshot(EmailDomainStore)
   const [domain, setDomain] = useState('')
-  const [open, setOpen] = useState(!!emailDomain && fromEmail)
+  const [open, setOpen] = useState(!!emailDomain && hasToken)
   const [error, setError] = useState<string | undefined>()
   const [generationStarted, setGenerationStarted] = useState(false)
+  const [token, setToken] = useState('')
   const params = useUrlParams()
 
-  if (emailDomain.length && fromEmail) {
+  if (emailDomain.length && hasToken) {
     jumpToToken()
+    setToken(params?.domain === domain ? params?.token : '')
   }
 
   function onCreate() {
     setOpen(false)
     setDomain('')
     setGenerationStarted(false)
-    EmailDomainStore.fromEmail = false
+    EmailDomainStore.hasToken = false
   }
 
   function jumpToToken() {
@@ -119,8 +121,9 @@ export default function () {
                 disabled={generationStarted}
                 type="tertiary"
                 onClick={() => {
-                  EmailDomainStore.fromEmail = false
+                  EmailDomainStore.hasToken = false
                   setDomain('')
+                  setToken('')
                 }}
               >
                 <SimpleArrow />
@@ -152,7 +155,7 @@ export default function () {
         {open && (
           <EmailProofForm
             domain={domain}
-            token={params?.token}
+            token={token}
             submitType="secondary"
             description={
               <>
