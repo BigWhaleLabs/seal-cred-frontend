@@ -86,7 +86,7 @@ export default function () {
   const { urlDomain, urlToken, clearSearchParams } = useUrlParams()
   const { emailDomain } = useSnapshot(EmailDomainStore)
 
-  const [domain, setDomain] = useState(urlDomain || emailDomain)
+  const [domain, setDomain] = useState('')
   const [token, setToken] = useState(urlToken)
   const [open, setOpen] = useState(!!urlDomain)
   const [error, setError] = useState<string | undefined>()
@@ -96,6 +96,7 @@ export default function () {
     if (!urlToken || !urlDomain) return
 
     EmailDomainStore.emailDomain = urlDomain
+    setDomain(urlDomain)
   }, [urlDomain, urlToken])
 
   function onCreate() {
