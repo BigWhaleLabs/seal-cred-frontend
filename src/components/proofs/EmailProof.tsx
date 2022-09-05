@@ -128,7 +128,7 @@ export default function () {
               <Button
                 disabled={generationStarted}
                 type="tertiary"
-                onClick={clearData}
+                onClick={() => setDomain('')}
               >
                 <SimpleArrow />
               </Button>
@@ -161,6 +161,7 @@ export default function () {
             domain={domain}
             token={token}
             submitType="secondary"
+            afterSendEmail={clearData}
             description={
               <>
                 Add your work email and we’ll send you a token for that email

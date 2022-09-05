@@ -19,6 +19,7 @@ export default function ({
   onError,
   onCreate,
   onChange,
+  afterSendEmail,
   onGenerationStarted,
 }: {
   domain: string
@@ -29,15 +30,15 @@ export default function ({
   onError: (error: string | undefined) => void
   onCreate: (proof: ProofModel) => void
   onChange: (domain: string) => void
+  afterSendEmail?: () => void
   onGenerationStarted?: (state: boolean) => void
 }) {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState<string>('')
 
   function resetEmail(withStore = false) {
-    if (withStore) {
-      EmailDomainStore.emailDomain = ''
-    }
+    if (withStore) EmailDomainStore.emailDomain = ''
+
     setEmail('')
     onChange('')
   }
@@ -47,6 +48,7 @@ export default function ({
     setLoading(true)
     try {
       await sendEmail(email)
+      afterSendEmail && afterSendEmail()
       const domain = email.split('@')[1]
       EmailDomainStore.emailDomain = domain
       onChange(domain)
