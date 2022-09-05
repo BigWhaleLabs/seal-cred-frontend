@@ -15,6 +15,10 @@ import MobileProofCategories from 'components/proofs/MobileProofCategories'
 import Scrollbar from 'components/ui/Scrollbar'
 import useProofStore from 'hooks/useProofStore'
 
+interface ProofListProps {
+  selectedCategory: CategoriesTitles
+}
+
 const proofList = classnames(
   display('flex'),
   flex('flex-1'),
@@ -28,11 +32,7 @@ const bottomWrapper = classnames(
   alignItems('items-end')
 )
 
-export function ProofListSuspended({
-  selectedCategory,
-}: {
-  selectedCategory: CategoriesTitles
-}) {
+export function ProofListSuspended({ selectedCategory }: ProofListProps) {
   const [category, setCategory] = useState<CategoriesTitles>(selectedCategory)
   const { hasAnyProof } = useProofStore()
 
@@ -68,11 +68,7 @@ export function ProofListSuspended({
   )
 }
 
-export default function ({
-  selectedCategory,
-}: {
-  selectedCategory: CategoriesTitles
-}) {
+export default function ({ selectedCategory }: ProofListProps) {
   return (
     <Suspense fallback={<div>Fetching proofs</div>}>
       <ProofListSuspended selectedCategory={selectedCategory} />
