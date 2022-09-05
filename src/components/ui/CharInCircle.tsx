@@ -1,3 +1,5 @@
+import MarkType from 'models/MarkTypes'
+import Sizes from 'models/MarkSizes'
 import classnames, {
   alignItems,
   borderColor,
@@ -18,13 +20,13 @@ const questionStyles = (size?: Sizes, disabled?: boolean) =>
     display('flex'),
     justifyContent('justify-center'),
     alignItems('items-center'),
-    fontSize(size === Sizes.Small ? 'text-xs' : 'text-base'),
+    fontSize({ 'text-xs': Sizes.Small === size }),
     fontFamily('font-primary'),
-    cursor(disabled ? undefined : 'cursor-pointer')
+    cursor({ 'cursor-pointer': !disabled })
   )
 
-const borderWrapper = (size?: Sizes) => {
-  return classnames(
+const borderWrapper = (size?: Sizes) =>
+  classnames(
     boxSizing('box-content'),
     borderRadius('rounded-full'),
     borderWidth('border'),
@@ -42,16 +44,6 @@ const borderWrapper = (size?: Sizes) => {
     display('flex'),
     justifyContent('justify-center')
   )
-}
-export enum MarkType {
-  Question = '?',
-  Exclamation = '!',
-}
-
-export enum Sizes {
-  Small = 'Small',
-  Medium = 'Medium',
-}
 
 export default function ({
   size,
