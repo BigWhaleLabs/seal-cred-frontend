@@ -4,11 +4,12 @@ import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import Button from 'components/ui/Button'
+import CharInCircle from 'components/ui/CharInCircle'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import Line from 'components/ui/Line'
-import QuestionMark from 'components/ui/QuestionMark'
 import SimpleArrow from 'icons/SimpleArrow'
+import Sizes from 'models/MarkSizes'
 import ToolTip from 'components/ui/ToolTip'
 import classnames, {
   alignItems,
@@ -127,7 +128,7 @@ export default function () {
                 disabled={!open}
               >
                 <div className={questionBlock(open)}>
-                  <QuestionMark small />
+                  <CharInCircle char="?" size={Sizes.Small} />
                 </div>
               </ToolTip>
             </div>

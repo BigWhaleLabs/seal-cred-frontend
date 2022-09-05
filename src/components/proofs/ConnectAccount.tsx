@@ -1,7 +1,8 @@
 import { AccentText, BodyText, HeaderText } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
 import Button from 'components/ui/Button'
-import QuestionMark from 'components/ui/QuestionMark'
+import CharInCircle from 'components/ui/CharInCircle'
+import Sizes from 'models/MarkSizes'
 import ToolTip from 'components/ui/ToolTip'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -63,7 +64,7 @@ export default function () {
               <ToolTip position="bottom" fitContainer text={zkProofText}>
                 <span className={hintWrapper}>
                   <span className={textDecoration('underline')}>ZK proof</span>
-                  <QuestionMark small />
+                  <CharInCircle size={Sizes.Small} char="?" />
                 </span>
               </ToolTip>
             </AccentText>
