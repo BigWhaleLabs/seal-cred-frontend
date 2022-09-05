@@ -7,7 +7,7 @@ import Button from 'components/ui/Button'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import Line from 'components/ui/Line'
-import Mark from 'components/ui/Mark'
+import Mark, { Sizes } from 'components/ui/Mark'
 import SimpleArrow from 'icons/SimpleArrow'
 import ToolTip from 'components/ui/ToolTip'
 import classnames, {
@@ -127,7 +127,7 @@ export default function () {
                 disabled={!open}
               >
                 <div className={questionBlock(open)}>
-                  <Mark small />
+                  <Mark size={Sizes.Small} />
                 </div>
               </ToolTip>
             </div>

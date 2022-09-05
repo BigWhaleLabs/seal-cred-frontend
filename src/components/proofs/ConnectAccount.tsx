@@ -1,7 +1,7 @@
 import { AccentText, BodyText, HeaderText } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
 import Button from 'components/ui/Button'
-import Mark from 'components/ui/Mark'
+import Mark, { Sizes } from 'components/ui/Mark'
 import ToolTip from 'components/ui/ToolTip'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -63,7 +63,7 @@ export default function () {
               <ToolTip position="bottom" fitContainer text={zkProofText}>
                 <span className={hintWrapper}>
                   <span className={textDecoration('underline')}>ZK proof</span>
-                  <Mark small />
+                  <Mark size={Sizes.Small} />
                 </span>
               </ToolTip>
             </AccentText>

@@ -1,5 +1,5 @@
 import { AccentText } from 'components/ui/Text'
-import Mark, { MarkType } from 'components/ui/Mark'
+import Mark, { MarkType, Sizes } from 'components/ui/Mark'
 import ToolTip from 'components/ui/ToolTip'
 import classnames, {
   alignItems,
@@ -24,7 +24,7 @@ export default function () {
         text="The wallet that’s currently linked contains the original nft. It might be best you use a different wallet."
       >
         <span className={hintWrapper}>
-          <Mark medium mark={MarkType.Exclamation} />
+          <Mark size={Sizes.Medium} mark={MarkType.Exclamation} />
           Wait
         </span>
       </ToolTip>
