@@ -52,11 +52,10 @@ const hintWrapper = classnames(
 export default function () {
   const { walletLoading, needNetworkChange } = useSnapshot(WalletStore)
   const params = useUrlParams()
-  if (params) {
+  if (params)
     toast.warning(
       'You need to connect an anonymous account to use the token.\nPlease connect an anonymous account that has never been used before and open the link again!'
     )
-  }
 
   const zkProofText =
     'In your wallet(s), you have NFTs that can point back to your identity (aka, getting doxxed). But with ZK proof, you can verify ownership of NFTs while staying pseudonymous.'

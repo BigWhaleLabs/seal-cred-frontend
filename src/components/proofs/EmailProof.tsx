@@ -96,14 +96,13 @@ export default function ({
   const [token, setToken] = useState(defaultToken ?? '')
 
   useEffect(() => {
-    if (defaultToken && defaultDomain) {
-      EmailDomainStore.emailDomain = defaultDomain
-      setToken(defaultToken ?? '')
-      setError(undefined)
-      setDomain(defaultDomain)
-    }
+    if (!defaultToken || !defaultDomain) return
+
+    EmailDomainStore.emailDomain = defaultDomain
+    setToken(defaultToken)
+    setError(undefined)
+    setDomain(defaultDomain)
   }, [defaultDomain, defaultToken])
-  console.log(EmailDomainStore.emailDomain, defaultDomain)
 
   function onCreate() {
     setOpen(false)
@@ -162,7 +161,7 @@ export default function ({
         {open && (
           <EmailProofForm
             domain={domain}
-            token={EmailDomainStore.emailDomain === defaultDomain ? token : ''}
+            token={emailDomain === defaultDomain ? token : ''}
             submitType="secondary"
             description={
               <>
