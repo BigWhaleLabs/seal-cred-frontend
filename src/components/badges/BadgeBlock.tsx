@@ -7,13 +7,17 @@ import BadgeCard from 'components/badges/BadgeCard'
 import BadgeTitle from 'components/badges/BadgeTitle'
 import BadgeWrapper from 'components/badges/BadgeWrapper'
 import Button from 'components/ui/Button'
+import LinkedWalletWarning from 'components/ui/LinkedWalletWarning'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import badgeConfig from 'badgeConfig'
+import data from 'data'
+import useOwnedAddresses from 'hooks/useOwnedAddresses'
 
 function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   const { account, mintLoading } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
+  const originals = useOwnedAddresses(data[proof.badgeType].network)
 
   const checkProofAndMint = async () => {
     WalletStore.mintLoading = true
@@ -42,15 +46,18 @@ function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
       top={<ProofIcon />}
       text={<BadgeTitle originalOrAddress={proof.original} />}
       bottom={
-        <Button
-          small
-          type="primary"
-          loading={loading}
-          disabled={!proof || mintLoading}
-          onClick={checkProofAndMint}
-        >
-          {proof ? 'Mint badge' : 'Minted!'}
-        </Button>
+        <>
+          <Button
+            small
+            type="primary"
+            loading={loading}
+            disabled={!proof || mintLoading}
+            onClick={checkProofAndMint}
+          >
+            {proof ? 'Mint badge' : 'Minted!'}
+          </Button>
+          {originals.includes(proof.original) && <LinkedWalletWarning />}
+        </>
       }
     />
   )
