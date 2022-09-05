@@ -23,18 +23,19 @@ const questionStyles = (small?: boolean, disabled?: boolean) =>
     cursor(disabled ? undefined : 'cursor-pointer')
   )
 
-const borderWrapper = (small?: boolean, medium?: boolean) =>
-  classnames(
+const borderWrapper = (small?: boolean, medium?: boolean) => {
+  const noParams = !(small || medium)
+  return classnames(
     boxSizing('box-content'),
     borderRadius('rounded-full'),
     borderWidth('border'),
     borderColor('border-current'),
-    width({ 'w-4': small, 'w-5': medium, 'w-6': !small && !medium }),
-    height({ 'h-4': small, 'h-5': medium, 'h-6': !small && !medium }),
+    width({ 'w-4': small, 'w-5': medium, 'w-6': noParams }),
+    height({ 'h-4': small, 'h-5': medium, 'h-6': noParams }),
     display('flex'),
     justifyContent('justify-center')
   )
-
+}
 export enum MarkType {
   Question = '?',
   Exclamation = '!',
