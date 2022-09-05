@@ -1,18 +1,12 @@
-import { useLocation } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 export default function () {
-  const { search } = useLocation()
+  const [searchParams] = useSearchParams()
 
-  if (!search.length) return
+  const domain = searchParams.get('domain') ?? ''
+  const token = searchParams.get('token') ?? ''
 
-  const regExDomain = /domain=(.*)&/
-  const regExToken = /token=(.*)/
+  if (!domain.length || !token.length) return
 
-  const matchDomain = search.match(regExDomain)
-  const matchToken = search.match(regExToken)
-
-  if (!matchDomain || !matchToken) return
-  if (!matchDomain[1] || !matchToken[1]) return
-
-  return { domain: matchDomain[1], token: matchToken[1] }
+  return { domain, token }
 }
