@@ -30,6 +30,7 @@ import classnames, {
   visibility,
   width,
 } from 'classnames/tailwind'
+import useUrlParams from 'hooks/useUrlParams'
 
 const arrowContainer = classnames(
   display('flex'),
@@ -72,42 +73,41 @@ const emailTitleLeft = classnames(
   alignItems('items-center')
 )
 
-const questionBlock = (open: boolean) =>
+const questionBlock = (closed: boolean) =>
   classnames(
-    opacity({ 'opacity-0': !open }),
-    visibility({ invisible: !open }),
+    opacity({ 'opacity-0': closed }),
+    visibility({ invisible: closed }),
     transitionDuration('duration-300')
   )
 
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
-export default function ({
-  domain: defaultDomain,
-  token: defaultToken,
-}: {
-  domain?: string
-  token?: string
-}) {
+export default function () {
+  const { urlDomain, urlToken, clearSearchParams } = useUrlParams()
   const { emailDomain } = useSnapshot(EmailDomainStore)
-  const [domain, setDomain] = useState(defaultDomain ?? '')
-  const [open, setOpen] = useState(!!defaultDomain)
+
+  const [domain, setDomain] = useState(urlDomain || emailDomain)
+  const [token, setToken] = useState(urlToken)
+  const [open, setOpen] = useState(!!urlDomain)
   const [error, setError] = useState<string | undefined>()
   const [generationStarted, setGenerationStarted] = useState(false)
-  const [token, setToken] = useState(defaultToken ?? '')
 
   useEffect(() => {
-    if (!defaultToken || !defaultDomain) return
+    if (!urlToken || !urlDomain) return
 
-    EmailDomainStore.emailDomain = defaultDomain
-    setToken(defaultToken)
-    setError(undefined)
-    setDomain(defaultDomain)
-  }, [defaultDomain, defaultToken])
+    EmailDomainStore.emailDomain = urlDomain
+  }, [urlDomain, urlToken])
 
   function onCreate() {
     setOpen(false)
-    setDomain('')
+    clearData()
     setGenerationStarted(false)
+  }
+
+  function clearData() {
+    setToken('')
+    setDomain('')
+    clearSearchParams()
   }
 
   function jumpToToken() {
@@ -127,10 +127,7 @@ export default function ({
               <Button
                 disabled={generationStarted}
                 type="tertiary"
-                onClick={() => {
-                  setDomain('')
-                  setToken('')
-                }}
+                onClick={clearData}
               >
                 <SimpleArrow />
               </Button>
@@ -143,7 +140,7 @@ export default function ({
                 fitContainer
                 disabled={!open}
               >
-                <div className={questionBlock(open)}>
+                <div className={questionBlock(!open)}>
                   <QuestionMark small />
                 </div>
               </ToolTip>
@@ -161,7 +158,7 @@ export default function ({
         {open && (
           <EmailProofForm
             domain={domain}
-            token={emailDomain === defaultDomain ? token : ''}
+            token={token}
             submitType="secondary"
             description={
               <>

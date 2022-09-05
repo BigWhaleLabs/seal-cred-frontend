@@ -13,14 +13,14 @@ export default function ({
   submitText = 'Submit',
 }: {
   error?: string
-  value?: string
+  value: string
   loading?: boolean
   submitType?: 'primary' | 'secondary' | 'tertiary'
   onSubmit: (text: string) => void
   placeholder?: string
   submitText?: string
 }) {
-  const [text, setText] = useState(value ?? '')
+  const [text, setText] = useState(value)
   const hasError = !!error
 
   return (

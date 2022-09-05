@@ -51,10 +51,11 @@ const hintWrapper = classnames(
 
 export default function () {
   const { walletLoading, needNetworkChange } = useSnapshot(WalletStore)
-  const params = useUrlParams()
-  if (params)
+  const { urlDomain, urlToken } = useUrlParams()
+
+  if (urlDomain || urlToken)
     toast.warning(
-      'You need to connect an anonymous account to use the token.\nPlease connect an anonymous account that has never been used before and open the link again!'
+      'You need to connect an anonymous account to use the token. Please connect an anonymous account that has never been used before and open the link again!'
     )
 
   const zkProofText =
