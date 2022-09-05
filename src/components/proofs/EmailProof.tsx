@@ -161,9 +161,10 @@ export default function () {
             domain={domain}
             token={token}
             submitType="secondary"
+            clearData={clearData}
             description={
               <>
-                Add your work email and we’ll send you a token for that email
+                Add your work email and we’ll send yoa token for that email
                 (check the spam folder). Then, use the token here to create zk
                 proof.{' '}
                 {!!emailDomain && (
