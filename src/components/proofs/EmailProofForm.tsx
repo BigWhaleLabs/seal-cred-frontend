@@ -22,7 +22,7 @@ export default function ({
   onGenerationStarted,
 }: {
   domain: string
-  token?: string
+  token: string
   submitType?: 'primary' | 'secondary' | 'tertiary'
   description: ComponentChildren
   error: string | undefined
