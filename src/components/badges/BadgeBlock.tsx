@@ -17,6 +17,7 @@ import useOwnedAddresses from 'hooks/useOwnedAddresses'
 function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   const { account, mintLoading } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
+  const originals = useOwnedAddresses(data[proof.badgeType].network)
 
   const checkProofAndMint = async () => {
     WalletStore.mintLoading = true
@@ -39,8 +40,6 @@ function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   }
 
   const ProofIcon = badgeConfig[proof.badgeType].proofIcon
-
-  const originals = useOwnedAddresses(data[proof.badgeType].network)
 
   return (
     <BadgeCard
