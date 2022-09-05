@@ -1,21 +1,14 @@
-import { CategoriesTitles, categories } from 'models/Categories'
-import { useParams } from 'react-router-dom'
 import ListTitle from 'components/proofs/ListTitle'
 import ProofList from 'components/proofs/ProofList'
+import useUrlParams from 'hooks/useUrlParams'
 
 export default function () {
-  const params = useParams()
-  const urlCategory = params?.category
-  const currentCategory =
-    urlCategory &&
-    Object.keys(categories).find((category) => category === urlCategory)
-      ? urlCategory
-      : Object.keys(categories)[0]
+  const { urlDomain, urlToken } = useUrlParams()
 
   return (
     <>
       <ListTitle />
-      <ProofList selectedCategory={currentCategory as CategoriesTitles} />
+      <ProofList selectedCategory={urlDomain && urlToken ? 'Email' : 'NFTs'} />
     </>
   )
 }
