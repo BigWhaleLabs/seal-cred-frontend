@@ -1,11 +1,9 @@
 import { BodyText } from 'components/ui/Text'
 import { Suspense } from 'preact/compat'
 import { useSnapshot } from 'valtio'
-import Button from 'components/ui/Button'
-import CTAText from 'helpers/CTAText'
 import Cross from 'icons/Cross'
-import ExternalLink from 'components/ui/ExternalLink'
 import NotificationsStore from 'stores/NotificationsStore'
+import ShareTweetButton from 'components/badges/ShareTweetButton'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -17,9 +15,7 @@ import classnames, {
   justifyContent,
   margin,
   padding,
-  width,
 } from 'classnames/tailwind'
-import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
 
 const wideBlock = classnames(
   display('flex'),
@@ -46,14 +42,6 @@ function ShareToTwitterIfNeededSuspended() {
 
   const closeNotification = () => (NotificationsStore.showTwitterShare = false)
 
-  const TwitterButton = () => (
-    <ExternalLink url={getShareToTwitterLink({ text: CTAText })}>
-      <Button type="secondary" onClick={closeNotification} small>
-        <div className={width('w-max')}>Share a Tweet</div>
-      </Button>
-    </ExternalLink>
-  )
-
   return (
     <div className={wideBlock}>
       <div className={leftBlock}>
@@ -61,12 +49,12 @@ function ShareToTwitterIfNeededSuspended() {
           You minted your first badge!
         </BodyText>
         <div className={display('block', 'sm:hidden')}>
-          <TwitterButton />
+          <ShareTweetButton closeNotification={closeNotification} />
         </div>
       </div>
       <div className={rightBlock}>
         <div className={display('hidden', 'sm:block')}>
-          <TwitterButton />
+          <ShareTweetButton closeNotification={closeNotification} />
         </div>
         <button
           className={margin('ml-auto', 'xs:ml-0')}
