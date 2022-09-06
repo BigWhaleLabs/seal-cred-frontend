@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { LogoSubText, LogoText } from 'components/ui/Text'
+import { displayFrom } from 'helpers/visibilityClassnames'
 import { useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Logo from 'icons/Logo'
-import Wallet from 'components/navbar/Wallet'
+import RightBlock from 'components/navbar/RightBlock'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -20,13 +21,13 @@ import classnames, {
   zIndex,
 } from 'classnames/tailwind'
 
-const navbar = (visible?: boolean, withoutWallet?: boolean) =>
+const navbar = (visible?: boolean, withoutRightBlock?: boolean) =>
   classnames(
     position('sticky'),
     inset('top-0'),
     display('flex'),
     alignItems('items-center'),
-    justifyContent(withoutWallet ? 'sm:justify-center' : 'justify-between'),
+    justifyContent(withoutRightBlock ? 'sm:justify-center' : 'justify-between'),
     padding('py-4', 'px-4', 'sm:px-8', '2xl:!px-25'),
     space('xs:space-x-4', 'sm:space-x-9', 'lg:space-x-0'),
     zIndex('z-50'),
@@ -41,13 +42,17 @@ const logoContainer = classnames(
   margin('mt-2')
 )
 
-const logoWithVersion = classnames(display('flex'), flexDirection('flex-col'))
+const logoWithVersion = classnames(
+  display('flex'),
+  flexDirection('flex-col'),
+  displayFrom('md')
+)
 
-const logoWrapper = classnames(display('flex'), width('w-1/4', 'sm:w-full'))
+const logoWrapper = classnames(display('flex'), width('w-full'))
 
 export default function () {
   const { pathname } = useLocation()
-  const withoutWallet = pathname.split('/').length >= 3
+  const withoutRightBlock = pathname.split('/').length >= 3
 
   const [backgroundVisible, setBackgroundVisible] = useState(false)
   const onScroll = useCallback(() => {
@@ -59,7 +64,7 @@ export default function () {
   }, [onScroll])
 
   return (
-    <nav className={navbar(backgroundVisible, withoutWallet)}>
+    <nav className={navbar(backgroundVisible, withoutRightBlock)}>
       <Link to="/">
         <div className={logoContainer}>
           <div className={logoWrapper}>
@@ -71,7 +76,7 @@ export default function () {
           </div>
         </div>
       </Link>
-      {!withoutWallet && <Wallet />}
+      {!withoutRightBlock && <RightBlock />}
     </nav>
   )
 }

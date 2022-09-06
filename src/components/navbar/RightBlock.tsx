@@ -14,6 +14,8 @@ import classnames, {
   borderWidth,
   cursor,
   display,
+  flexDirection,
+  gap,
   height,
   space,
   width,
@@ -21,9 +23,10 @@ import classnames, {
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
 const walletContainer = classnames(
-  display('inline-flex'),
+  display('flex'),
+  flexDirection('flex-col-reverse', 'xs:flex-row'),
   alignItems('items-center'),
-  space('space-x-4'),
+  gap('gap-x-4'),
   cursor('cursor-pointer')
 )
 const accountLinkContainer = classnames(
@@ -43,7 +46,8 @@ const delimiterContainer = classnames(
   width('w-px'),
   height('h-4')
 )
-const socialLinksContainer = classnames(displayFrom('md'), socialContainer)
+const lastDelimiterContainer = classnames(delimiterContainer, displayFrom('xs'))
+const socialLinksContainer = classnames(displayFrom('md700'), socialContainer)
 
 const AccountContainer = ({ account }: { account?: string }) => {
   const { needNetworkChange } = useSnapshot(WalletStore)
@@ -85,9 +89,9 @@ export default function () {
           <Twitter />
         </SocialLink>
         <hr className={delimiterContainer} />
-        <SealVerse />
-        <hr className={delimiterContainer} />
       </div>
+      <SealVerse />
+      <hr className={lastDelimiterContainer} />
 
       <AccountContainer account={account} />
     </div>

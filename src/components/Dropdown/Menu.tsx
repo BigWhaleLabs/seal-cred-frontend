@@ -21,7 +21,12 @@ import openInCurrentTab from 'helpers/openInCurrentTab'
 const container = (closed: boolean, fitToItemSize?: boolean) =>
   classnames(
     position('absolute'),
-    inset('top-7', '-left-2.5'),
+    inset(
+      'top-7',
+      fitToItemSize
+        ? { 'right-0': true, 'xs:right-auto': true, 'xs:left-0': true }
+        : '-left-2.5'
+    ),
     opacity({ 'opacity-0': closed }),
     visibility({ invisible: closed }),
     zIndex('z-40'),
