@@ -26,7 +26,7 @@ const walletContainer = classnames(
   display('flex'),
   flexDirection('flex-col-reverse', 'xs:flex-row'),
   alignItems('items-center'),
-  gap('gap-x-4'),
+  gap('gap-x-3', 'sm:gap-x-4'),
   cursor('cursor-pointer')
 )
 const accountLinkContainer = classnames(

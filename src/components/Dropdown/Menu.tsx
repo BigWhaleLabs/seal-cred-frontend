@@ -16,7 +16,7 @@ import classnames, {
   wordBreak,
   zIndex,
 } from 'classnames/tailwind'
-import openInCurrentTab from 'helpers/openInCurrentTab'
+import openLinkInNewTab from 'helpers/openLinkInNewTab'
 
 const container = (closed: boolean, fitToItemSize?: boolean) =>
   classnames(
@@ -75,7 +75,7 @@ export default function ({
             )}
             onClick={() => {
               if (onSelect) onSelect(option)
-              if (option.href) openInCurrentTab(option.href)
+              if (option.href) openLinkInNewTab(option.href)
             }}
             disabled={option.disabled}
           >
