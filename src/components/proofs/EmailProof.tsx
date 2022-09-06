@@ -74,13 +74,6 @@ const emailTitleLeft = classnames(
   alignItems('items-center')
 )
 
-const questionBlock = (closed: boolean) =>
-  classnames(
-    opacity({ 'opacity-0': closed }),
-    visibility({ invisible: closed }),
-    transitionDuration('duration-300')
-  )
-
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
@@ -136,13 +129,8 @@ export default function () {
             )}
             <ProofText>Work email</ProofText>
             <div className={tooltipWrapper}>
-              <ToolTip
-                position="bottom-end"
-                text={popoverText}
-                fitContainer
-                disabled={!open}
-              >
-                <div className={questionBlock(open)}>
+              <ToolTip position="bottom" text={popoverText} fitContainer>
+                <div>
                   <CharInCircle char="?" size={Sizes.Small} />
                 </div>
               </ToolTip>
