@@ -26,7 +26,6 @@ const wideBlock = classnames(
   display('flex'),
   flexDirection('flex-row'),
   gap('gap-y-2', 'xs:gap-y-0', 'xs:gap-x-2'),
-  flexWrap('flex-wrap', 'xs:flex-nowrap'),
   alignItems('items-center'),
   justifyContent('justify-between'),
   borderRadius('rounded-2xl'),
@@ -34,11 +33,12 @@ const wideBlock = classnames(
   padding('lg:px-6', 'px-4', 'py-4'),
   gridColumn('lg:col-span-2', 'col-span-1')
 )
-const rightBlock = classnames(
+const leftBlock = classnames(
   display('flex'),
-  alignItems('items-center'),
-  gap('gap-x-2')
+  flexDirection('flex-col', 'sm:flex-row'),
+  gap('gap-y-2')
 )
+const rightBlock = classnames(display('flex'), gap('gap-x-2'))
 
 function ShareToTwitterIfNeededSuspended() {
   const { showTwitterShare } = useSnapshot(NotificationsStore)
@@ -47,17 +47,28 @@ function ShareToTwitterIfNeededSuspended() {
 
   const closeNotification = () => (NotificationsStore.showTwitterShare = false)
 
+  const TwitterButton = () => (
+    <ExternalLink url={getShareToTwitterLink({ text: CTAText })}>
+      <Button type="secondary" onClick={closeNotification} small>
+        <div className={width('w-max')}>Share a Tweet</div>
+      </Button>
+    </ExternalLink>
+  )
+
   return (
     <div className={wideBlock}>
-      <BodyText bold fontPrimary>
-        You minted your first badge!
-      </BodyText>
+      <div className={leftBlock}>
+        <BodyText bold fontPrimary>
+          You minted your first badge!
+        </BodyText>
+        <div className={display('block', 'sm:hidden')}>
+          <TwitterButton />
+        </div>
+      </div>
       <div className={rightBlock}>
-        <ExternalLink url={getShareToTwitterLink({ text: CTAText })}>
-          <Button type="secondary" onClick={closeNotification} small>
-            <div className={width('xs:w-max')}>Share a Tweet</div>
-          </Button>
-        </ExternalLink>
+        <div className={display('hidden', 'sm:block')}>
+          <TwitterButton />
+        </div>
         <button
           className={margin('ml-auto', 'xs:ml-0')}
           onClick={closeNotification}
