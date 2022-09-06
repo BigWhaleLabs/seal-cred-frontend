@@ -21,6 +21,8 @@ export default function ({
       onChange={(selectedValue) => {
         setCategory(selectedValue as CategoriesTitles)
       }}
+      colorfulCurrentValue
+      hideAfterMd
     />
   )
 }

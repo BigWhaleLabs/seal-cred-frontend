@@ -5,6 +5,7 @@ import AccountAndLogo from 'components/navbar/AccountAndLogo'
 import Discord from 'icons/Discord'
 import ExternalLink from 'components/ui/ExternalLink'
 import Network from 'models/Network'
+import SealVerse from 'components/navbar/SealVerse'
 import Twitter from 'icons/Twitter'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
@@ -83,6 +84,8 @@ export default function () {
         <SocialLink url="https://twitter.com/bigwhalelabs">
           <Twitter />
         </SocialLink>
+        <hr className={delimiterContainer} />
+        <SealVerse />
         <hr className={delimiterContainer} />
       </div>
 

@@ -5,6 +5,7 @@ import classnames, {
   borderRadius,
   cursor,
   inset,
+  minWidth,
   opacity,
   padding,
   position,
@@ -15,8 +16,9 @@ import classnames, {
   wordBreak,
   zIndex,
 } from 'classnames/tailwind'
+import openInCurrentTab from 'helpers/openInCurrentTab'
 
-const container = (closed: boolean) =>
+const container = (closed: boolean, fitToItemSize?: boolean) =>
   classnames(
     position('absolute'),
     inset('top-7', '-left-2.5'),
@@ -24,9 +26,9 @@ const container = (closed: boolean) =>
     visibility({ invisible: closed }),
     zIndex('z-40'),
     transitionProperty('transition-all'),
-    width('w-full-105')
+    width({ 'w-full-105': !fitToItemSize })
   )
-const menuItem = (selected?: boolean) =>
+const menuItem = (selected?: boolean, fitToItemSize?: boolean) =>
   classnames(
     padding('p-2'),
     cursor('cursor-pointer'),
@@ -38,7 +40,9 @@ const menuItem = (selected?: boolean) =>
     width('w-full'),
     textAlign('text-left'),
     opacity('disabled:opacity-30'),
-    transitionProperty('transition-colors')
+    transitionProperty('transition-colors'),
+    width({ 'w-full': fitToItemSize }),
+    minWidth({ 'min-w-max': fitToItemSize })
   )
 
 export default function ({
@@ -46,21 +50,27 @@ export default function ({
   options,
   selected,
   onSelect,
+  fitToItemSize,
 }: {
   open: boolean
   options: Option[]
   selected?: string
-  onSelect: (option: Option) => void
+  onSelect?: (option: Option) => void
+  fitToItemSize?: boolean
 }) {
   return (
-    <div className={container(!open)}>
+    <div className={container(!open, fitToItemSize)}>
       <ItemContainer>
         {options.map((option) => (
           <button
             key={option.label}
-            className={menuItem(option.label === selected)}
+            className={menuItem(
+              option.selected || option.label === selected,
+              fitToItemSize
+            )}
             onClick={() => {
-              onSelect(option)
+              if (onSelect) onSelect(option)
+              if (option.href) openInCurrentTab(option.href)
             }}
             disabled={option.disabled}
           >

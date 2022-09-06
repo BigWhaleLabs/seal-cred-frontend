@@ -22,14 +22,18 @@ import classnames, {
 } from 'classnames/tailwind'
 import useClickOutside from 'hooks/useClickOutside'
 
-const textStyles = classnames(
-  fontWeight('font-bold'),
-  fontSize('text-sm'),
+const gradientText = classnames(
   textColor('text-transparent'),
   backgroundImage('bg-gradient-to-r'),
   backgroundClip('bg-clip-text'),
-  gradientColorStops('from-secondary', 'to-accent')
+  gradientColorStops('from-secondary', 'to-accent'),
+  fontWeight('font-bold')
 )
+const textStyles = (colorfulCurrentValue?: boolean) =>
+  classnames(
+    fontSize('text-sm'),
+    colorfulCurrentValue ? gradientText : undefined
+  )
 const button = classnames(
   display('flex'),
   justifyContent('justify-start'),
@@ -37,23 +41,30 @@ const button = classnames(
   gap('gap-x-2'),
   opacity('disabled:opacity-30')
 )
-const container = classnames(
-  position('relative'),
-  width('md:w-fit'),
-  displayTo('md'),
-  margin('my-2')
-)
+const container = (hideAfterMd?: boolean) =>
+  classnames(
+    position('relative'),
+    width('md:w-fit'),
+    hideAfterMd ? displayTo('md') : undefined,
+    margin('my-2')
+  )
 
 export default function ({
   disabled,
   currentValue,
   options,
   onChange,
+  hideAfterMd,
+  fitToItemSize,
+  colorfulCurrentValue,
 }: {
   disabled?: boolean
   currentValue: string
   options: Option[]
-  onChange: (selectedValue: string) => void
+  onChange?: (selectedValue: string) => void
+  hideAfterMd?: boolean
+  fitToItemSize?: boolean
+  colorfulCurrentValue?: boolean
 }) {
   const [open, setOpen] = useState(false)
   const ref = createRef<HTMLDivElement>()
@@ -66,7 +77,7 @@ export default function ({
       className={button}
       disabled={disabled}
     >
-      <span className={textStyles}>{currentValue}</span>
+      <span className={textStyles(colorfulCurrentValue)}>{currentValue}</span>
       <div className={width('w-4')}>
         <Arrow pulseDisabled open={open} />
       </div>
@@ -74,16 +85,17 @@ export default function ({
   )
 
   return (
-    <div className={container} ref={ref}>
+    <div className={container(hideAfterMd)} ref={ref}>
       {selectedElement}
       <Menu
         open={open}
         options={options}
         selected={currentValue}
         onSelect={(option) => {
-          onChange(option.label)
+          onChange && onChange(option.label)
           setOpen(false)
         }}
+        fitToItemSize={fitToItemSize}
       />
     </div>
   )

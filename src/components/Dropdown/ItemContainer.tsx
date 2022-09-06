@@ -30,7 +30,8 @@ export const boxStyles = classnames(
   fontFamily('font-primary'),
   padding('p-3'),
   maxHeight('max-h-64'),
-  overflow('overflow-y-auto')
+  overflow('overflow-y-auto'),
+  alignItems('items-start')
 )
 
 export default function ({
