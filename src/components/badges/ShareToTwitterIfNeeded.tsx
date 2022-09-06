@@ -25,7 +25,7 @@ import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
 const wideBlock = classnames(
   display('flex'),
   flexDirection('flex-row'),
-  gap('gap-y-1', 'xs:gap-y-0', 'xs:gap-x-1'),
+  gap('gap-y-2', 'xs:gap-y-0', 'xs:gap-x-2'),
   flexWrap('flex-wrap', 'xs:flex-nowrap'),
   alignItems('items-center'),
   justifyContent('justify-between'),
@@ -37,7 +37,7 @@ const wideBlock = classnames(
 const rightBlock = classnames(
   display('flex'),
   alignItems('items-center'),
-  gap('gap-x-1')
+  gap('gap-x-2')
 )
 
 function ShareToTwitterIfNeededSuspended() {
