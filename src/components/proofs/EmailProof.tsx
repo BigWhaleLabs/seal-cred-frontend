@@ -137,10 +137,10 @@ export default function () {
             <ProofText>Work email</ProofText>
             <div className={tooltipWrapper}>
               <ToolTip
-                position="bottom-end"
+                position="bottom"
                 text={popoverText}
                 fitContainer
-                disabled={!open}
+                disabled={open}
               >
                 <div className={questionBlock(open)}>
                   <CharInCircle char="?" size={Sizes.Small} />
