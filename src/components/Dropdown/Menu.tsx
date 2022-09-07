@@ -55,11 +55,9 @@ export default function ({
   selected,
   onSelect,
   fitToItemSize,
-  detectSelected,
 }: {
   open: boolean
   options: Option[]
-  detectSelected?: (label: string) => boolean
   fitToItemSize?: boolean
   selected?: string
   onSelect?: (option: Option) => void
@@ -71,17 +69,15 @@ export default function ({
           <button
             key={option.label}
             className={menuItem(
-              (detectSelected && detectSelected(option.label)) ||
-                option.label === selected,
+              option.forceSelected || option.label === selected,
               fitToItemSize
             )}
             onClick={() => {
               if (onSelect) onSelect(option)
-              if (option.onSelect) option.onSelect()
             }}
             disabled={option.disabled}
           >
-            {option.label}
+            <a href={option.href}>{option.label}</a>
           </button>
         ))}
       </ItemContainer>

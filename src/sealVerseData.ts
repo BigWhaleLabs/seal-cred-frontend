@@ -1,9 +1,9 @@
-import openLinkInNewTab from 'helpers/openLinkInNewTab'
+import Option from 'components/Dropdown/Option'
 
 export default [
-  { label: 'SealCred' },
+  { label: 'SealCred', forceSelected: true },
   {
     label: 'SealCred Echo',
-    onSelect: () => openLinkInNewTab('https://echo.sealcred.xyz'),
+    href: 'https://echo.sealcred.xyz',
   },
-]
+] as Option[]

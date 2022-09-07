@@ -1,5 +1,6 @@
 export default interface Option {
   label: string
-  onSelect?: () => void
+  forceSelected?: boolean
+  href?: string
   disabled?: boolean
 }

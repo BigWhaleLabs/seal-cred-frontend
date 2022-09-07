@@ -53,7 +53,6 @@ export default function ({
   disabled,
   currentValue,
   options,
-  detectSelected,
   onChange,
   hideAfterMd,
   fitToItemSize,
@@ -61,7 +60,6 @@ export default function ({
 }: {
   currentValue: string
   options: Option[]
-  detectSelected?: (label: string) => boolean
   disabled?: boolean
   onChange?: (selectedValue: string) => void
   hideAfterMd?: boolean
@@ -98,7 +96,6 @@ export default function ({
           setOpen(false)
         }}
         fitToItemSize={fitToItemSize}
-        detectSelected={detectSelected}
       />
     </div>
   )
