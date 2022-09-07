@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom'
 import Dropdown from 'components/Dropdown'
-import sealVerseData from 'sealverseData'
+import sealVerseData from 'sealVerseData'
 
 export default function () {
   const location = useLocation()
