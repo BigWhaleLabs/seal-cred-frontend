@@ -17,8 +17,8 @@ export default function ({
 }) {
   const { ledgers } = useSnapshot(SealCredStore)
   const emailLedger = ledgers['Email']
-  const address = emailLedger[proof.original]
-  const tokens = useContractTokens(address, Network.Goerli)
+  const derivativeAddress = emailLedger[proof.original]
+  const tokens = useContractTokens(derivativeAddress, Network.Goerli)
   const minted = Object.keys(tokens).map((tokenId) => Number(tokenId))
 
   const headerTitle = proof.result ? 'Ready to mint!' : 'Creating your zk proof'
@@ -31,7 +31,11 @@ export default function ({
 
   if (minted.length > 0)
     return (
-      <EmailFlowBadge address={address} ids={minted} resetEmail={onReset} />
+      <EmailFlowBadge
+        address={derivativeAddress}
+        ids={minted}
+        resetEmail={onReset}
+      />
     )
 
   return (
