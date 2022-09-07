@@ -1,9 +1,9 @@
 import Option from 'components/Dropdown/Option'
 
 export default [
-  { label: 'SealCred', forceSelected: true },
+  { label: 'SealCred', value: window.location.origin },
   {
     label: 'SealCred Echo',
-    href: 'https://echo.sealcred.xyz',
+    value: 'https://echo.sealcred.xyz',
   },
 ] as Option[]

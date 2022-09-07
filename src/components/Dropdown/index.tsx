@@ -1,5 +1,4 @@
 import { createRef } from 'preact'
-import { displayTo } from 'helpers/visibilityClassnames'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import Menu from 'components/Dropdown/Menu'
@@ -41,28 +40,26 @@ const button = classnames(
   gap('gap-x-2'),
   opacity('disabled:opacity-30')
 )
-const container = (hideAfterMd?: boolean) =>
-  classnames(
-    position('relative'),
-    width('md:w-fit'),
-    hideAfterMd ? displayTo('md') : undefined,
-    margin('my-2')
-  )
+const container = classnames(
+  position('relative'),
+  width('w-full'),
+  margin('my-2')
+)
 
 export default function ({
   disabled,
   currentValue,
   options,
   onChange,
-  hideAfterMd,
+  staticPlaceholder,
   fitToItemSize,
   colorfulCurrentValue,
 }: {
   currentValue: string
   options: Option[]
+  onChange: (selectedValue: string) => void
   disabled?: boolean
-  onChange?: (selectedValue: string) => void
-  hideAfterMd?: boolean
+  staticPlaceholder?: string
   fitToItemSize?: boolean
   colorfulCurrentValue?: boolean
 }) {
@@ -77,7 +74,9 @@ export default function ({
       className={button}
       disabled={disabled}
     >
-      <span className={textStyles(colorfulCurrentValue)}>{currentValue}</span>
+      <span className={textStyles(colorfulCurrentValue)}>
+        {staticPlaceholder || currentValue}
+      </span>
       <div className={width('w-4')}>
         <Arrow pulseDisabled open={open} />
       </div>
@@ -85,14 +84,14 @@ export default function ({
   )
 
   return (
-    <div className={container(hideAfterMd)} ref={ref}>
+    <div className={container} ref={ref}>
       {selectedElement}
       <Menu
         open={open}
         options={options}
         selected={currentValue}
-        onSelect={(option) => {
-          onChange && onChange(option.label)
+        onSelect={({ value, label }) => {
+          onChange(value || label)
           setOpen(false)
         }}
         fitToItemSize={fitToItemSize}
