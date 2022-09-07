@@ -3,9 +3,7 @@ import {
   CategoriesTitles,
   categories,
 } from 'models/Categories'
-import { displayTo } from 'helpers/visibilityClassnames'
 import Dropdown from 'components/Dropdown'
-import classnames, { width } from 'classnames/tailwind'
 
 export default function ({
   currentCategory,
@@ -17,15 +15,14 @@ export default function ({
   }))
 
   return (
-    <div className={classnames(displayTo('md'), width('w-full'))}>
-      <Dropdown
-        currentValue={currentCategory.toString()}
-        options={options}
-        onChange={(selectedValue) => {
-          setCategory(selectedValue as CategoriesTitles)
-        }}
-        colorfulCurrentValue
-      />
-    </div>
+    <Dropdown
+      currentValue={currentCategory.toString()}
+      options={options}
+      onChange={(selectedValue) => {
+        setCategory(selectedValue as CategoriesTitles)
+      }}
+      colorfulCurrentValue
+      displayBeforeMd
+    />
   )
 }
