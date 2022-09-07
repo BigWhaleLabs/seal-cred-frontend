@@ -414,15 +414,12 @@ export function TinyText({
 }
 
 const textButton = classnames(
+  textColor('text-tertiary'),
   textDecoration('underline'),
   opacity('disabled:opacity-75')
 )
-export function TextButton(props: React.HTMLAttributes<HTMLButtonElement>) {
-  return <button className={textButton} {...props} />
-}
-
-export function FileInput(props: React.HTMLAttributes<HTMLInputElement>) {
-  return <input type="file" className={textButton} {...props} />
+export function TextButton(props: React.HTMLAttributes<HTMLSpanElement>) {
+  return <span className={textButton} {...props} />
 }
 
 const extraBoldText = (small?: boolean, extraLeading?: boolean) =>
