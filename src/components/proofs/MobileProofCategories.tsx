@@ -25,6 +25,7 @@ export default function ({
           setCategory(selectedValue as CategoriesTitles)
         }}
         colorfulCurrentValue
+        showAfterMd
       />
     </div>
   )
