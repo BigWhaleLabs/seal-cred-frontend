@@ -1,5 +1,5 @@
 import { createRef } from 'preact'
-import { displayFrom } from 'helpers/visibilityClassnames'
+import { displayTo } from 'helpers/visibilityClassnames'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import Menu from 'components/Dropdown/Menu'
@@ -41,12 +41,11 @@ const button = classnames(
   gap('gap-x-2'),
   opacity('disabled:opacity-30')
 )
-const container = (showAfterMd?: boolean) =>
+const container = (displayBeforeMd?: boolean) =>
   classnames(
     position('relative'),
-    width('w-fit'),
     margin('my-2'),
-    showAfterMd ? displayFrom('md') : undefined
+    displayBeforeMd ? displayTo('md') : undefined
   )
 
 export default function ({
@@ -55,14 +54,14 @@ export default function ({
   options,
   onChange,
   staticPlaceholder,
-  showAfterMd,
+  displayBeforeMd,
   fitToItemSize,
   colorfulCurrentValue,
 }: {
   currentValue: string
   options: Option[]
   onChange: (selectedValue: string) => void
-  showAfterMd?: boolean
+  displayBeforeMd?: boolean
   disabled?: boolean
   staticPlaceholder?: string
   fitToItemSize?: boolean
@@ -89,7 +88,7 @@ export default function ({
   )
 
   return (
-    <div className={container(showAfterMd)} ref={ref}>
+    <div className={container(displayBeforeMd)} ref={ref}>
       {selectedElement}
       <Menu
         open={open}
