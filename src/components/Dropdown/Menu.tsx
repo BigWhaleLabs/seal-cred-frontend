@@ -16,7 +16,6 @@ import classnames, {
   wordBreak,
   zIndex,
 } from 'classnames/tailwind'
-import openLinkInNewTab from 'helpers/openLinkInNewTab'
 
 const container = (closed: boolean, fitToItemSize?: boolean) =>
   classnames(
@@ -56,12 +55,14 @@ export default function ({
   selected,
   onSelect,
   fitToItemSize,
+  detectSelected,
 }: {
   open: boolean
   options: Option[]
+  detectSelected?: (label: string) => boolean
+  fitToItemSize?: boolean
   selected?: string
   onSelect?: (option: Option) => void
-  fitToItemSize?: boolean
 }) {
   return (
     <div className={container(!open, fitToItemSize)}>
@@ -70,12 +71,13 @@ export default function ({
           <button
             key={option.label}
             className={menuItem(
-              option.selected || option.label === selected,
+              (detectSelected && detectSelected(option.label)) ||
+                option.label === selected,
               fitToItemSize
             )}
             onClick={() => {
               if (onSelect) onSelect(option)
-              if (option.href) openLinkInNewTab(option.href)
+              if (option.onSelect) option.onSelect()
             }}
             disabled={option.disabled}
           >
