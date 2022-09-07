@@ -421,6 +421,10 @@ export function TextButton(props: React.HTMLAttributes<HTMLButtonElement>) {
   return <button className={textButton} {...props} />
 }
 
+export function FileInput(props: React.HTMLAttributes<HTMLInputElement>) {
+  return <input type="file" className={textButton} {...props} />
+}
+
 const extraBoldText = (small?: boolean, extraLeading?: boolean) =>
   classnames(
     fontWeight('font-bold', 'md:font-extrabold'),

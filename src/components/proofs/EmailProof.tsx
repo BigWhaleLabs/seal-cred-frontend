@@ -1,5 +1,7 @@
-import { ProofText, TextButton } from 'components/ui/Text'
+import { FileInput, ProofText, TextButton } from 'components/ui/Text'
 import { displayFrom } from 'helpers/visibilityClassnames'
+import { handleError } from '@big-whale-labs/frontend-utils'
+import { toast } from 'react-toastify'
 import { useEffect, useState } from 'preact/hooks'
 import { useSnapshot } from 'valtio'
 import Arrow from 'icons/Arrow'
@@ -29,6 +31,7 @@ import classnames, {
   transitionDuration,
   transitionProperty,
   visibility,
+  whitespace,
   width,
 } from 'classnames/tailwind'
 import useUrlParams from 'hooks/useUrlParams'
@@ -110,8 +113,20 @@ export default function () {
     setDomain(emailDomain)
   }
 
+  function handleFile(event: Event) {
+    const files = (event.target as HTMLInputElement).files
+    if (!files) return handleError(toast.error('Please, upload a file 💾'))
+
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      // Use reader.result
+      console.log(event.target?.result)
+    }
+    reader.readAsText(files[0])
+  }
+
   const popoverText =
-    'When you submit your email, we create a token out of your email’s domain. You can then use that token to create a zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
+    'When you submit emails, we create a token out of the domain. You can then use that token to create a zk proof. Once made, that zk proof will allow you to mint a zk badge for your wallet.'
 
   return (
     <Line breakWords>
@@ -153,9 +168,15 @@ export default function () {
             afterSendEmail={clearData}
             description={
               <>
-                Add your work email and we’ll send you a token for that email
-                (check the spam folder). Then, use the token here to create zk
-                proof.{' '}
+                To create a zk proof, add your email. Then add at least 10 or
+                even 100+ other emails with the same domain to increase your
+                anonymity.{' '}
+                <FileInput onClick={handleFile} disabled={generationStarted}>
+                  You can upload an email list (txt, csv, etc...)
+                </FileInput>
+                <br />
+                <br />
+                We’ll then send you a token to use here for a zk proof.
                 {!!emailDomain && (
                   <TextButton
                     onClick={jumpToToken}
@@ -169,8 +190,8 @@ export default function () {
             onCreate={onCreate}
             onChange={setDomain}
             onError={setError}
-            onGenerationStarted={setGenerationStarted}
             error={error}
+            onGenerationStarted={setGenerationStarted}
           />
         )}
       </div>
