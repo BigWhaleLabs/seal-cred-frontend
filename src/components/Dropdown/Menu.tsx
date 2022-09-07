@@ -5,6 +5,7 @@ import classnames, {
   borderRadius,
   cursor,
   inset,
+  minWidth,
   opacity,
   padding,
   position,
@@ -16,17 +17,22 @@ import classnames, {
   zIndex,
 } from 'classnames/tailwind'
 
-const container = (closed: boolean) =>
+const container = (closed: boolean, fitToItemSize?: boolean) =>
   classnames(
     position('absolute'),
-    inset('top-7', '-left-2.5'),
+    inset(
+      'top-7',
+      fitToItemSize
+        ? { 'right-0': true, 'xs:right-auto': true, 'xs:left-0': true }
+        : '-left-2.5'
+    ),
     opacity({ 'opacity-0': closed }),
     visibility({ invisible: closed }),
     zIndex('z-40'),
     transitionProperty('transition-all'),
-    width('w-full-105')
+    width({ 'w-full-105': !fitToItemSize })
   )
-const menuItem = (selected?: boolean) =>
+const menuItem = (selected?: boolean, fitToItemSize?: boolean) =>
   classnames(
     padding('p-2'),
     cursor('cursor-pointer'),
@@ -38,7 +44,9 @@ const menuItem = (selected?: boolean) =>
     width('w-full'),
     textAlign('text-left'),
     opacity('disabled:opacity-30'),
-    transitionProperty('transition-colors')
+    transitionProperty('transition-colors'),
+    width({ 'w-full': fitToItemSize }),
+    minWidth({ 'min-w-max': fitToItemSize })
   )
 
 export default function ({
@@ -46,19 +54,24 @@ export default function ({
   options,
   selected,
   onSelect,
+  fitToItemSize,
 }: {
   open: boolean
   options: Option[]
-  selected?: string
   onSelect: (option: Option) => void
+  fitToItemSize?: boolean
+  selected?: string
 }) {
   return (
-    <div className={container(!open)}>
+    <div className={container(!open, fitToItemSize)}>
       <ItemContainer>
         {options.map((option) => (
           <button
             key={option.label}
-            className={menuItem(option.label === selected)}
+            className={menuItem(
+              option.value === selected || option.label === selected,
+              fitToItemSize
+            )}
             onClick={() => {
               onSelect(option)
             }}

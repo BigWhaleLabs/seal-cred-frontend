@@ -1,5 +1,4 @@
 import { createRef } from 'preact'
-import { displayTo } from 'helpers/visibilityClassnames'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
 import Menu from 'components/Dropdown/Menu'
@@ -22,14 +21,18 @@ import classnames, {
 } from 'classnames/tailwind'
 import useClickOutside from 'hooks/useClickOutside'
 
-const textStyles = classnames(
-  fontWeight('font-bold'),
-  fontSize('text-sm'),
+const gradientText = classnames(
   textColor('text-transparent'),
   backgroundImage('bg-gradient-to-r'),
   backgroundClip('bg-clip-text'),
-  gradientColorStops('from-secondary', 'to-accent')
+  gradientColorStops('from-secondary', 'to-accent'),
+  fontWeight('font-bold')
 )
+const textStyles = (colorfulCurrentValue?: boolean) =>
+  classnames(
+    fontSize('text-sm'),
+    colorfulCurrentValue ? gradientText : undefined
+  )
 const button = classnames(
   display('flex'),
   justifyContent('justify-start'),
@@ -39,8 +42,7 @@ const button = classnames(
 )
 const container = classnames(
   position('relative'),
-  width('md:w-fit'),
-  displayTo('md'),
+  width('w-full'),
   margin('my-2')
 )
 
@@ -49,11 +51,17 @@ export default function ({
   currentValue,
   options,
   onChange,
+  staticPlaceholder,
+  fitToItemSize,
+  colorfulCurrentValue,
 }: {
-  disabled?: boolean
   currentValue: string
   options: Option[]
   onChange: (selectedValue: string) => void
+  disabled?: boolean
+  staticPlaceholder?: string
+  fitToItemSize?: boolean
+  colorfulCurrentValue?: boolean
 }) {
   const [open, setOpen] = useState(false)
   const ref = createRef<HTMLDivElement>()
@@ -66,7 +74,9 @@ export default function ({
       className={button}
       disabled={disabled}
     >
-      <span className={textStyles}>{currentValue}</span>
+      <span className={textStyles(colorfulCurrentValue)}>
+        {staticPlaceholder || currentValue}
+      </span>
       <div className={width('w-4')}>
         <Arrow pulseDisabled open={open} />
       </div>
@@ -80,10 +90,11 @@ export default function ({
         open={open}
         options={options}
         selected={currentValue}
-        onSelect={(option) => {
-          onChange(option.label)
+        onSelect={({ value, label }) => {
+          onChange(value || label)
           setOpen(false)
         }}
+        fitToItemSize={fitToItemSize}
       />
     </div>
   )
