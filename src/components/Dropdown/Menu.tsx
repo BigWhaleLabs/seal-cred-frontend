@@ -5,7 +5,6 @@ import classnames, {
   borderRadius,
   cursor,
   inset,
-  minWidth,
   opacity,
   padding,
   position,
@@ -30,7 +29,7 @@ const container = (closed: boolean, fitToItemSize?: boolean) =>
     visibility({ invisible: closed }),
     zIndex('z-40'),
     transitionProperty('transition-all'),
-    width({ 'w-full-105': !fitToItemSize })
+    width(fitToItemSize ? 'w-max' : 'w-full-105')
   )
 const menuItem = (selected?: boolean, fitToItemSize?: boolean) =>
   classnames(
@@ -45,8 +44,7 @@ const menuItem = (selected?: boolean, fitToItemSize?: boolean) =>
     textAlign('text-left'),
     opacity('disabled:opacity-30'),
     transitionProperty('transition-colors'),
-    width({ 'w-full': fitToItemSize }),
-    minWidth({ 'min-w-max': fitToItemSize })
+    width({ 'w-full': fitToItemSize })
   )
 
 export default function ({
