@@ -6,6 +6,7 @@ import {
   backgroundClip,
   backgroundImage,
   classnames,
+  cursor,
   dropShadow,
   fontFamily,
   fontSize,
@@ -414,9 +415,10 @@ export function TinyText({
 }
 
 const textButton = classnames(
-  textColor('text-tertiary'),
+  textColor('text-tertiary', 'hover:text-accent'),
   textDecoration('underline'),
-  opacity('disabled:opacity-75')
+  opacity('disabled:opacity-75'),
+  cursor('cursor-pointer')
 )
 export function TextButton(props: React.HTMLAttributes<HTMLSpanElement>) {
   return <span className={textButton} {...props} />

@@ -18,7 +18,7 @@ export default function ({
   submitText?: string
   placeholder?: string
 }) {
-  const { email, setEmail, emailIsValid } = useEmailForm()
+  const { email, setEmail, emailList, listIsValid } = useEmailForm()
 
   return (
     <>
@@ -29,11 +29,12 @@ export default function ({
           </div>
         }
         type="email"
-        placeholder={placeholder}
+        placeholder={emailList.length ? 'another one' : placeholder}
         value={email}
+        valueList={emailList}
         onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
         onKeyDown={(event) =>
-          event.code === 'Enter' && emailIsValid ? onSubmit(email) : undefined
+          event.code === 'Enter' && listIsValid ? onSubmit(email) : undefined
         }
       />
       {submitType === 'primary' ? (
@@ -43,7 +44,7 @@ export default function ({
           fullWidth
           center
           type={submitType}
-          disabled={!emailIsValid}
+          disabled={!listIsValid}
           onClick={() => onSubmit(email)}
         >
           {submitText}
@@ -58,7 +59,7 @@ export default function ({
             center
             small
             type={submitType}
-            disabled={!emailIsValid}
+            disabled={!listIsValid}
             onClick={() => onSubmit(email)}
           >
             {submitText}

@@ -1,5 +1,5 @@
 import { ComponentChildren } from 'preact'
-import { HTMLAttributes } from 'preact/compat'
+import { HTMLAttributes, useRef } from 'preact/compat'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -8,13 +8,17 @@ import classnames, {
   borderWidth,
   display,
   flexDirection,
+  flexWrap,
+  gap,
   height,
+  maxWidth,
   outlineColor,
   outlineOffset,
   outlineStyle,
   padding,
   position,
   textColor,
+  textOverflow,
   width,
 } from 'classnames/tailwind'
 
@@ -23,7 +27,10 @@ const groupContainer = (error?: boolean, disabled?: boolean) =>
     position('relative'),
     display('flex'),
     flexDirection('flex-row'),
-    width('w-full'),
+    flexWrap('flex-wrap'),
+    gap('gap-x-3', 'gap-y-2'),
+    padding('p-3'),
+    alignItems('items-center'),
     backgroundColor(error ? 'bg-primary-dark-red' : 'bg-primary-dark'),
     borderColor(
       disabled
@@ -36,16 +43,8 @@ const groupContainer = (error?: boolean, disabled?: boolean) =>
     ),
     borderWidth('border'),
     borderRadius('rounded-md'),
-    height('h-12')
+    height('h-fit')
   )
-
-const iconContainer = classnames(
-  position('absolute'),
-  height('h-full'),
-  display('flex'),
-  alignItems('items-center'),
-  padding('pl-3')
-)
 
 const inputContainer = (
   hasIcon?: boolean,
@@ -53,12 +52,11 @@ const inputContainer = (
   disabled?: boolean
 ) =>
   classnames(
-    width('w-full'),
-    padding(hasIcon ? 'pl-10' : 'pl-3'),
     backgroundColor('bg-transparent'),
     borderRadius('rounded-md'),
     outlineOffset('outline-2'),
     outlineStyle('outline-none'),
+    width('w-full'),
     outlineColor(error ? 'focus:outline-error-dark' : 'focus:outline-primary'),
     textColor(
       disabled
@@ -72,8 +70,19 @@ const inputContainer = (
     )
   )
 
+const valueWrapper = classnames(
+  backgroundColor('bg-primary-dimmed'),
+  borderRadius('rounded-3xl'),
+  alignItems('items-center'),
+  padding('px-2', 'py-1'),
+  height('h-7'),
+  maxWidth('max-w-200'),
+  textOverflow('truncate')
+)
+
 export default function ({
   value,
+  valueList,
   leftIcon,
   isError,
   disabled,
@@ -81,15 +90,22 @@ export default function ({
 }: {
   leftIcon?: ComponentChildren
   value?: string
+  valueList?: string[]
   isError?: boolean
   disabled?: boolean
 } & HTMLAttributes<HTMLInputElement>) {
+  const inputRef = useRef(null)
+
   return (
     <div className={groupContainer(isError, disabled)}>
-      {leftIcon && <div className={iconContainer}>{leftIcon}</div>}
+      {leftIcon && <div className={height('h-full')}>{leftIcon}</div>}
+      {valueList?.map((value) => (
+        <div className={valueWrapper}>{value}</div>
+      ))}
       <input
         value={value}
         disabled={disabled}
+        ref={inputRef}
         className={inputContainer(!!leftIcon, isError, disabled)}
         {...rest}
       />
