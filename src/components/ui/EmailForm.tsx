@@ -28,7 +28,6 @@ export default function ({
             <Email />
           </div>
         }
-        type="email"
         placeholder={emailList.length ? 'another one' : placeholder}
         value={email}
         valueList={emailList}

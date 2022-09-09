@@ -7,6 +7,7 @@ import classnames, {
   borderRadius,
   borderWidth,
   display,
+  flex,
   flexDirection,
   flexWrap,
   gap,
@@ -18,9 +19,8 @@ import classnames, {
   padding,
   position,
   textColor,
-  textOverflow,
-  width,
 } from 'classnames/tailwind'
+import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 
 const groupContainer = (error?: boolean, disabled?: boolean) =>
   classnames(
@@ -52,11 +52,12 @@ const inputContainer = (
   disabled?: boolean
 ) =>
   classnames(
+    display('flex'),
+    flex('flex-1'),
     backgroundColor('bg-transparent'),
     borderRadius('rounded-md'),
     outlineOffset('outline-2'),
     outlineStyle('outline-none'),
-    width('w-full'),
     outlineColor(error ? 'focus:outline-error-dark' : 'focus:outline-primary'),
     textColor(
       disabled
@@ -76,8 +77,7 @@ const valueWrapper = classnames(
   alignItems('items-center'),
   padding('px-2', 'py-1'),
   height('h-7'),
-  maxWidth('max-w-200'),
-  textOverflow('truncate')
+  maxWidth('max-w-200')
 )
 
 export default function ({
@@ -100,7 +100,7 @@ export default function ({
     <div className={groupContainer(isError, disabled)}>
       {leftIcon && <div className={height('h-full')}>{leftIcon}</div>}
       {valueList?.map((value) => (
-        <div className={valueWrapper}>{value}</div>
+        <div className={valueWrapper}>{truncateMiddleIfNeeded(value, 21)}</div>
       ))}
       <input
         value={value}

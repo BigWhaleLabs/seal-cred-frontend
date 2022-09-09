@@ -162,7 +162,7 @@ export default function () {
                 </TextButton>
                 <br />
                 <br />
-                We’ll then send you a token to use here for a zk proof.
+                We’ll then send you a token to use here for a zk proof.{' '}
                 {!!emailDomain && (
                   <TextButton
                     onClick={jumpToToken}
