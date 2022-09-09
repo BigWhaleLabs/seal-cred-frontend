@@ -30,7 +30,7 @@ module.exports = {
       },
       maxWidth: {
         100: '6.25rem',
-        200: '12.5rem',
+        250: '15.75rem',
         'app-card': '42.125rem',
       },
       keyframes: {

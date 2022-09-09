@@ -1,5 +1,7 @@
 import { ComponentChildren } from 'preact'
-import { HTMLAttributes, useRef } from 'preact/compat'
+import { HTMLAttributes, StateUpdater, useRef } from 'preact/compat'
+import Button from 'components/proofs/ProofButton'
+import Cross from 'icons/Cross'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -19,6 +21,7 @@ import classnames, {
   padding,
   position,
   textColor,
+  width,
 } from 'classnames/tailwind'
 import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 
@@ -72,17 +75,21 @@ const inputContainer = (
   )
 
 const valueWrapper = classnames(
+  display('flex'),
+  alignItems('items-center'),
+  gap('gap-x-1'),
   backgroundColor('bg-primary-dimmed'),
   borderRadius('rounded-3xl'),
   alignItems('items-center'),
   padding('px-2', 'py-1'),
   height('h-7'),
-  maxWidth('max-w-200')
+  maxWidth('max-w-250')
 )
 
 export default function ({
   value,
   valueList,
+  setValueList,
   leftIcon,
   isError,
   disabled,
@@ -91,6 +98,7 @@ export default function ({
   leftIcon?: ComponentChildren
   value?: string
   valueList?: string[]
+  setValueList?: StateUpdater<string[]>
   isError?: boolean
   disabled?: boolean
 } & HTMLAttributes<HTMLInputElement>) {
@@ -99,9 +107,24 @@ export default function ({
   return (
     <div className={groupContainer(isError, disabled)}>
       {leftIcon && <div className={height('h-full')}>{leftIcon}</div>}
-      {valueList?.map((value) => (
-        <div className={valueWrapper}>{truncateMiddleIfNeeded(value, 21)}</div>
-      ))}
+      {setValueList &&
+        valueList?.map((value, index) => (
+          <div className={valueWrapper}>
+            {truncateMiddleIfNeeded(value, 21)}
+            <Button
+              onClick={() => {
+                setValueList([
+                  ...valueList.slice(0, index),
+                  ...valueList.slice(index + 1),
+                ])
+              }}
+            >
+              <div className={width('w-4')}>
+                <Cross />
+              </div>
+            </Button>
+          </div>
+        ))}
       <input
         value={value}
         disabled={disabled}

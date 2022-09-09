@@ -15,5 +15,11 @@ export default function () {
     setEmail('')
   }
 
-  return { email, setEmail, emailList, listIsValid: emailList.length > 9 }
+  return {
+    email,
+    setEmail,
+    emailList,
+    setEmailList,
+    listIsValid: emailList.length > 9,
+  }
 }
