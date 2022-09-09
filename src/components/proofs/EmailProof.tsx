@@ -32,6 +32,7 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import handleFile from 'helpers/handleFile'
+import useEmailForm from 'hooks/useEmailForm'
 import useUrlParams from 'hooks/useUrlParams'
 
 const arrowContainer = classnames(
@@ -80,6 +81,7 @@ const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 export default function () {
   const { urlDomain, urlToken, clearSearchParams } = useUrlParams()
   const { emailDomain } = useSnapshot(EmailDomainStore)
+  const { setEmailListFromFile } = useEmailForm()
 
   const [domain, setDomain] = useState('')
   const [token, setToken] = useState(urlToken)
@@ -157,8 +159,17 @@ export default function () {
                 To create a zk proof, add your email. Then add at least 10 or
                 even 100+ other emails with the same domain to increase your
                 anonymity.{' '}
-                <TextButton onClick={handleFile} disabled={true}>
-                  You can upload an email list (txt, csv, etc...)
+                <TextButton
+                  onClick={() => handleFile(setEmailListFromFile)}
+                  disabled={true}
+                >
+                  <ToolTip
+                    position="bottom"
+                    text="Emails in your file should be separated by comma or space. Invalid emails will be ignored"
+                    fitContainer
+                  >
+                    You can upload an email list (txt, csv, etc...)
+                  </ToolTip>
                 </TextButton>
                 <br />
                 <br />

@@ -1,5 +1,5 @@
 import { ComponentChildren } from 'preact'
-import { HTMLAttributes, StateUpdater, useRef } from 'preact/compat'
+import { HTMLAttributes, StateUpdater } from 'preact/compat'
 import Button from 'components/proofs/ProofButton'
 import Cross from 'icons/Cross'
 import classnames, {
@@ -23,6 +23,7 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
+import removeFromArrByIndex from 'helpers/removeFromArrByIndex'
 import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 
 const groupContainer = (error?: boolean, disabled?: boolean) =>
@@ -102,8 +103,6 @@ export default function ({
   isError?: boolean
   disabled?: boolean
 } & HTMLAttributes<HTMLInputElement>) {
-  const inputRef = useRef(null)
-
   return (
     <div className={groupContainer(isError, disabled)}>
       {leftIcon && <div className={height('h-full')}>{leftIcon}</div>}
@@ -113,10 +112,7 @@ export default function ({
             {truncateMiddleIfNeeded(value, 21)}
             <Button
               onClick={() => {
-                setValueList([
-                  ...valueList.slice(0, index),
-                  ...valueList.slice(index + 1),
-                ])
+                setValueList(removeFromArrByIndex(valueList, index))
               }}
             >
               <div className={width('w-4')}>
@@ -128,8 +124,11 @@ export default function ({
       <input
         value={value}
         disabled={disabled}
-        ref={inputRef}
         className={inputContainer(!!leftIcon, isError, disabled)}
+        onKeyDown={(e) => {
+          if (valueList && setValueList && !value && e.code === 'Backspace')
+            setValueList(removeFromArrByIndex(valueList, valueList.length))
+        }}
         {...rest}
       />
     </div>
