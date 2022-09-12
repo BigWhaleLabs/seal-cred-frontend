@@ -6,7 +6,7 @@ import {
   requestBalanceAttestation,
 } from 'helpers/proofs/attestor'
 import { handleError } from '@big-whale-labs/frontend-utils'
-import Network from '@big-whale-labs/stores/dist/models/Network'
+import Network from 'models/Network'
 import buildERC721Proof from 'helpers/proofs/buildERC721Proof'
 import checkNavigator from 'helpers/proofs/checkNavigator'
 import getNullifierMessage from 'helpers/proofs/getNullifierMessage'
