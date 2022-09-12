@@ -1,5 +1,5 @@
 import { ComponentChildren } from 'preact'
-import { HTMLAttributes, StateUpdater } from 'preact/compat'
+import { HTMLAttributes } from 'preact/compat'
 import Cross from 'icons/Cross'
 import classnames, {
   alignItems,
@@ -22,7 +22,6 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
-import removeFromArrByIndex from 'helpers/removeFromArrByIndex'
 import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 
 const groupContainer = (error?: boolean, disabled?: boolean) =>
@@ -89,7 +88,7 @@ const valueWrapper = classnames(
 export default function ({
   value,
   valueList,
-  setValueList,
+  removeValueFromList,
   leftIcon,
   isError,
   disabled,
@@ -97,23 +96,21 @@ export default function ({
 }: {
   leftIcon?: ComponentChildren
   value?: string
-  valueList?: string[]
-  setValueList?: StateUpdater<string[]>
+  valueList?: readonly string[]
+  removeValueFromList?: (index: number) => void
   isError?: boolean
   disabled?: boolean
 } & HTMLAttributes<HTMLInputElement>) {
   return (
     <div className={groupContainer(isError, disabled)}>
       {leftIcon && <div className={height('h-full')}>{leftIcon}</div>}
-      {setValueList &&
+      {removeValueFromList &&
         valueList?.map((value, index) => (
           <div className={valueWrapper}>
             {truncateMiddleIfNeeded(value, 21)}
             <div
               className={width('w-4')}
-              onClick={() => {
-                setValueList(removeFromArrByIndex(valueList, index))
-              }}
+              onClick={() => removeValueFromList(index)}
             >
               <Cross />
             </div>

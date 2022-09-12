@@ -5,7 +5,7 @@ import { useSnapshot } from 'valtio'
 import Arrow from 'icons/Arrow'
 import Button from 'components/ui/Button'
 import CharInCircle from 'components/ui/CharInCircle'
-import EmailDomainStore from 'stores/EmailDomainStore'
+import EmailFormStore from 'stores/EmailFormStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import Line from 'components/ui/Line'
 import SimpleArrow from 'icons/SimpleArrow'
@@ -32,7 +32,6 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import handleFile from 'helpers/handleFile'
-import useEmailForm from 'hooks/useEmailForm'
 import useUrlParams from 'hooks/useUrlParams'
 
 const arrowContainer = classnames(
@@ -80,8 +79,7 @@ const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
   const { urlDomain, urlToken, clearSearchParams } = useUrlParams()
-  const { emailDomain } = useSnapshot(EmailDomainStore)
-  const { setEmailListFromFile } = useEmailForm()
+  const { emailDomain } = useSnapshot(EmailFormStore)
 
   const [domain, setDomain] = useState('')
   const [token, setToken] = useState(urlToken)
@@ -92,7 +90,7 @@ export default function () {
   useEffect(() => {
     if (!urlToken || !urlDomain) return
 
-    EmailDomainStore.emailDomain = urlDomain
+    EmailFormStore.emailDomain = urlDomain
     setDomain(urlDomain)
   }, [urlDomain, urlToken])
 
@@ -160,7 +158,11 @@ export default function () {
                 even 100+ other emails with the same domain to increase your
                 anonymity.{' '}
                 <TextButton
-                  onClick={() => handleFile(setEmailListFromFile)}
+                  onClick={() =>
+                    handleFile(
+                      EmailFormStore.setEmailListFromFile.bind(EmailFormStore)
+                    )
+                  }
                   disabled={true}
                 >
                   <ToolTip

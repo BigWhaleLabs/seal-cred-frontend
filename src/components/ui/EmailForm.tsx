@@ -1,10 +1,10 @@
+import { useSnapshot } from 'valtio'
 import { width } from 'classnames/tailwind'
 import Button from 'components/ui/Button'
 import Email from 'icons/Email'
+import EmailFormStore from 'stores/EmailFormStore'
 import GradientBorder from 'components/ui/GradientBorder'
 import Input from 'components/ui/Input'
-import removeFromArrByIndex from 'helpers/removeFromArrByIndex'
-import useEmailForm from 'hooks/useEmailForm'
 
 export default function ({
   loading,
@@ -19,8 +19,8 @@ export default function ({
   submitText?: string
   placeholder?: string
 }) {
-  const { email, setEmail, emailList, setEmailList, listIsValid } =
-    useEmailForm()
+  const { inputEmail, emailList } = useSnapshot(EmailFormStore)
+  const listIsValid = emailList.length > 9
 
   return (
     <>
@@ -30,16 +30,22 @@ export default function ({
             <Email />
           </div>
         }
-        placeholder={emailList.length ? 'another one' : placeholder}
-        value={email}
+        placeholder={
+          emailList.length ? `${emailList.length + 1} / 10+` : placeholder
+        }
+        value={inputEmail}
         valueList={emailList}
-        setValueList={setEmailList}
-        onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
+        removeValueFromList={(index) =>
+          EmailFormStore.removeFromListByIndex(index)
+        }
+        onChange={(e) =>
+          EmailFormStore.safeInputChecker((e.target as HTMLInputElement).value)
+        }
         onKeyDown={(event) => {
-          if (emailList && !email && event.code === 'Backspace')
-            setEmailList(removeFromArrByIndex(emailList, emailList.length - 1))
+          if (emailList && !inputEmail && event.code === 'Backspace')
+            EmailFormStore.removeFromListByIndex(emailList.length - 1)
 
-          if (event.code === 'Enter' && listIsValid) onSubmit(email)
+          if (event.code === 'Enter' && listIsValid) onSubmit(inputEmail)
         }}
       />
       {submitType === 'primary' ? (
@@ -50,7 +56,7 @@ export default function ({
           center
           type={submitType}
           disabled={!listIsValid}
-          onClick={() => onSubmit(email)}
+          onClick={() => onSubmit(inputEmail)}
         >
           {submitText}
         </Button>
@@ -65,7 +71,7 @@ export default function ({
             small
             type={submitType}
             disabled={!listIsValid}
-            onClick={() => onSubmit(email)}
+            onClick={() => onSubmit(inputEmail)}
           >
             {submitText}
           </Button>

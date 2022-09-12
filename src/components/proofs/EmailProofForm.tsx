@@ -2,8 +2,8 @@ import { ComponentChildren } from 'preact'
 import { TextButton } from 'components/ui/Text'
 import { sendEmail } from 'helpers/proofs/attestor'
 import { useState } from 'preact/hooks'
-import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/ui/EmailForm'
+import EmailFormStore from 'stores/EmailFormStore'
 import ProofModel from 'models/Proof'
 import TextForm from 'components/ui/TextForm'
 import checkDomainToken from 'helpers/proofs/checkDomainToken'
@@ -37,7 +37,7 @@ export default function ({
   const [email, setEmail] = useState<string>('')
 
   function resetEmail(withStore = false) {
-    if (withStore) EmailDomainStore.emailDomain = ''
+    if (withStore) EmailFormStore.emailDomain = ''
 
     setEmail('')
     onChange('')
@@ -50,7 +50,7 @@ export default function ({
       await sendEmail(email)
       afterSendEmail && afterSendEmail()
       const domain = email.split('@')[1]
-      EmailDomainStore.emailDomain = domain
+      EmailFormStore.emailDomain = domain
       onChange(domain)
     } finally {
       setLoading(false)
