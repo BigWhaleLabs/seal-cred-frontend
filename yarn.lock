@@ -1562,6 +1562,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@big-whale-labs/seal-cred-ledger-contract@npm:^0.2.8":
+  version: 0.2.8
+  resolution: "@big-whale-labs/seal-cred-ledger-contract@npm:0.2.8"
+  checksum: d0c424ef663302fe27bffb6df4aceeed168c73f04371a086c4ceaae8226c1a281964b7a66dcea755b7566300185d78139312ab5a9bdc891d460d648e497171e5
+  languageName: node
+  linkType: hard
+
 "@big-whale-labs/stores@npm:^0.1.16":
   version: 0.1.16
   resolution: "@big-whale-labs/stores@npm:0.1.16"
@@ -15977,7 +15984,7 @@ __metadata:
   dependencies:
     "@big-whale-labs/constants": ^0.1.28
     "@big-whale-labs/frontend-utils": ^0.0.8
-    "@big-whale-labs/seal-cred-ledger-contract": ^0.2.6
+    "@big-whale-labs/seal-cred-ledger-contract": ^0.2.8
     "@big-whale-labs/stores": ^0.1.16
     "@coinbase/wallet-sdk": ^3.5.0
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
