@@ -1,8 +1,6 @@
 export default function (callback: (stringList: string) => void) {
   const input = document.createElement('input')
   input.type = 'file'
-  input.accept = '.txt,.csv'
-  input.multiple = false
 
   input.onchange = ({ target }) => {
     const inputTarget = target as HTMLInputElement

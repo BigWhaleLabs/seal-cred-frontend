@@ -2,16 +2,13 @@ import { PersistableStore } from '@big-whale-labs/stores'
 import { proxy } from 'valtio'
 import { toast } from 'react-toastify'
 import env from 'helpers/env'
-import splitStringIntoList from 'helpers/splitStringIntoList'
 
-function isEmailValid(email: string) {
-  const re =
-    /(?=.{0,256}$)((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(?=.{0,64}$)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/g
-  return re.test(email)
-}
+const fileEmailRegex =
+  /(?=.{0,256}$)((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(?=.{0,64}$)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/gm
+
 function isEmailValidInInput(email: string) {
   const re =
-    /(?=.{0,256}$)((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(?=.{0,64}$)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))\s$/g
+    /^(?=.{0,256}$)((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(?=.{0,64}$)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))\s$/g
   return re.test(email)
 }
 
@@ -21,16 +18,17 @@ class EmailFormStore extends PersistableStore {
   emailList: string[] = []
 
   setEmailListFromFile(stringList: string) {
-    const splittedList = splitStringIntoList(stringList)
+    const emailArrays = stringList.matchAll(fileEmailRegex)
+    console.log(emailArrays)
 
-    splittedList.forEach((email) => {
+    for (const emailArray of emailArrays) {
+      const email = emailArray[0]
       if (
-        isEmailValid(email) &&
         this.checkDuplicates.bind(this)(email) &&
         this.checkSameDomain.bind(this)(email)
       )
         this.emailList.push(email)
-    })
+    }
   }
 
   private checkSameDomain(email: string) {
