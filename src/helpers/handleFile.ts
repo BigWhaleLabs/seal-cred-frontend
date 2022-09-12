@@ -1,4 +1,4 @@
-export default function (callback: (arg1: string) => void) {
+export default function (callback: (stringList: string) => void) {
   const input = document.createElement('input')
   input.type = 'file'
   input.accept = '.txt,.csv'
@@ -13,10 +13,10 @@ export default function (callback: (arg1: string) => void) {
     const reader = new FileReader()
     reader.readAsText(files[0])
 
-    reader.onload = (readerEvent) => {
-      if (!readerEvent.target || !readerEvent.target.result) return
+    reader.onload = ({ target }) => {
+      if (!target || !target.result) return
 
-      callback(readerEvent.target.result as string)
+      callback(target.result as string)
     }
   }
 
