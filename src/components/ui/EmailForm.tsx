@@ -31,7 +31,7 @@ export default function ({
           </div>
         }
         placeholder={
-          emailList.length ? `${emailList.length + 1} / 10+` : placeholder
+          emailList.length ? `${emailList.length} / 10+` : placeholder
         }
         value={inputEmail}
         valueList={emailList}

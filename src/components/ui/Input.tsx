@@ -104,18 +104,17 @@ export default function ({
   return (
     <div className={groupContainer(isError, disabled)}>
       {leftIcon && <div className={height('h-full')}>{leftIcon}</div>}
-      {removeValueFromList &&
-        valueList?.map((value, index) => (
-          <div className={valueWrapper}>
-            {truncateMiddleIfNeeded(value, 21)}
-            <div
-              className={width('w-4')}
-              onClick={() => removeValueFromList(index)}
-            >
-              <Cross />
-            </div>
+      {valueList?.map((value, index) => (
+        <div className={valueWrapper}>
+          {truncateMiddleIfNeeded(value, 21)}
+          <div
+            className={width('w-4')}
+            onClick={() => removeValueFromList && removeValueFromList(index)}
+          >
+            <Cross />
           </div>
-        ))}
+        </div>
+      ))}
       <input
         value={value}
         disabled={disabled}

@@ -8,7 +8,7 @@ const fileEmailRegex =
 
 function isEmailValidInInput(email: string) {
   const re =
-    /^(?=.{0,256}$)((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(?=.{0,64}$)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))\s$/g
+    /^(?=.{0,256}$)((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(?=.{0,64}$)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))(\s|,|;)$/g
   return re.test(email)
 }
 
@@ -19,7 +19,6 @@ class EmailFormStore extends PersistableStore {
 
   setEmailListFromFile(stringList: string) {
     const emailArrays = stringList.matchAll(fileEmailRegex)
-    console.log(emailArrays)
 
     for (const emailArray of emailArrays) {
       const email = emailArray[0]
@@ -33,10 +32,12 @@ class EmailFormStore extends PersistableStore {
 
   private checkSameDomain(email: string) {
     if (!this.emailList.length) return true
-    const domain = email.split('@')[1]
 
-    if (this.emailList[0].split('@')[1] === domain) return true
-    toast.warn('Emails must be from the same domain')
+    const inputDomain = email.split('@')[1]
+
+    if (this.emailList[0].split('@')[1] === inputDomain) return true
+
+    toast.warn('Emails must have same domain')
     return false
   }
 
@@ -56,14 +57,14 @@ class EmailFormStore extends PersistableStore {
 
   safeInputChecker(emailFromInput: string) {
     this.inputEmail = emailFromInput
-    const trimmedEmail = emailFromInput.trim()
+    const emailWithoutSeparator = emailFromInput.trim().replace(/[,;]$/, '')
 
     if (
       isEmailValidInInput(this.inputEmail) &&
-      this.checkSameDomain(trimmedEmail) &&
-      this.checkDuplicates(trimmedEmail)
+      this.checkSameDomain(emailWithoutSeparator) &&
+      this.checkDuplicates(emailWithoutSeparator)
     ) {
-      this.emailList.push(trimmedEmail)
+      this.emailList.push(emailWithoutSeparator)
       this.inputEmail = ''
     }
   }

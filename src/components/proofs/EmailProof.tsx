@@ -167,7 +167,7 @@ export default function () {
                 >
                   <ToolTip
                     position="bottom"
-                    text="Emails in your file should be separated by comma or space. Invalid emails will be ignored"
+                    text="Emails in your file should be separated somehow. Invalid emails will be ignored"
                     fitContainer
                   >
                     You can upload an email list (txt, csv, etc...)
