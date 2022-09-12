@@ -9,6 +9,7 @@ import TextForm from 'components/ui/TextForm'
 import checkDomainToken from 'helpers/proofs/checkDomainToken'
 import data from 'data'
 import proofStore from 'stores/ProofStore'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 export default function ({
   domain,
@@ -35,6 +36,7 @@ export default function ({
 }) {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState<string>('')
+  const { xxs } = useBreakpoints()
 
   function resetEmail(withStore = false) {
     if (withStore) EmailFormStore.emailDomain = ''
@@ -106,7 +108,7 @@ export default function ({
       <EmailForm
         submitType={submitType}
         submitText="Submit emails"
-        placeholder="Email addresses (minimum 10)"
+        placeholder={xxs ? 'Email addresses' : 'Email addresses (minimum 10)'}
         onSubmit={onSendEmail}
         loading={loading}
       />

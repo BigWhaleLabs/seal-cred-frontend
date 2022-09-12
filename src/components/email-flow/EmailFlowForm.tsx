@@ -10,9 +10,19 @@ import { useState } from 'preact/hooks'
 import EmailFormStore from 'stores/EmailFormStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import Proof from 'models/Proof'
-import classnames, { space, width } from 'classnames/tailwind'
+import UploadEmailListButton from 'components/ui/UploadEmailListButton'
+import classnames, {
+  display,
+  justifyContent,
+  space,
+  width,
+} from 'classnames/tailwind'
 
 const proofLineContainer = classnames(space('space-y-4'), width('w-full'))
+const uploadButtonWrapper = classnames(
+  display('flex'),
+  justifyContent('justify-center')
+)
 
 export default function EmailFlowForm({
   domain,
@@ -54,9 +64,10 @@ export default function EmailFlowForm({
           submitType="primary"
           description={
             <>
-              Start by entering your email. We’ll then send you an email
-              containing a token. You’ll come back here and enter your token to
-              receive your zkBadge.{' '}
+              Start by entering your email and at least 10 others (but the more
+              you add, like 100+, will improve your anonymity). We’ll then send
+              you an email containing a token. You’ll come back here and enter
+              your token to receive your zk badge.{' '}
               {emailDomain ? (
                 <TextButton onClick={() => jumpToToken()}>
                   Have an existing token?
@@ -69,6 +80,9 @@ export default function EmailFlowForm({
           error={error}
           onError={setError}
         />
+        <div className={uploadButtonWrapper}>
+          <UploadEmailListButton small center />
+        </div>
         <TinyText color="primary">
           Be sure to check your spam folder if you don’t see the email at first.
         </TinyText>

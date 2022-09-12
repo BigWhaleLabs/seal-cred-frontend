@@ -23,6 +23,7 @@ import {
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
 import Color from 'models/Color'
+import React from 'preact/compat'
 import classNamesToString from 'helpers/classNamesToString'
 import colorToTextColor from 'helpers/colors/colorToTextColor'
 
@@ -414,14 +415,22 @@ export function TinyText({
   return <div className={tinyText(color, fontPrimary)}>{children}</div>
 }
 
-const textButton = classnames(
-  textColor('text-tertiary', 'hover:text-accent'),
-  textDecoration('underline'),
-  opacity('disabled:opacity-75'),
-  cursor('cursor-pointer')
-)
-export function TextButton(props: React.HTMLAttributes<HTMLSpanElement>) {
-  return <span className={textButton} {...props} />
+const textButton = (small?: boolean, center?: boolean) =>
+  classnames(
+    textAlign({ 'text-center': center }),
+    fontSize({ 'text-sm': small }),
+    textColor('text-tertiary', 'hover:text-accent'),
+    textDecoration('underline'),
+    opacity('disabled:opacity-75'),
+    cursor('cursor-pointer')
+  )
+export function TextButton(
+  props: React.HTMLAttributes<HTMLSpanElement> & {
+    small?: boolean
+    center?: boolean
+  }
+) {
+  return <span className={textButton(props.small, props.center)} {...props} />
 }
 
 const extraBoldText = (small?: boolean, extraLeading?: boolean) =>

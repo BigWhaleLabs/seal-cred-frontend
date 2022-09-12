@@ -11,6 +11,7 @@ import Line from 'components/ui/Line'
 import SimpleArrow from 'icons/SimpleArrow'
 import Sizes from 'models/MarkSizes'
 import ToolTip from 'components/ui/ToolTip'
+import UploadEmailListButton from 'components/ui/UploadEmailListButton'
 import classnames, {
   alignItems,
   backgroundClip,
@@ -31,7 +32,6 @@ import classnames, {
   visibility,
   width,
 } from 'classnames/tailwind'
-import handleFile from 'helpers/handleFile'
 import useUrlParams from 'hooks/useUrlParams'
 
 const arrowContainer = classnames(
@@ -157,22 +157,7 @@ export default function () {
                 To create a zk proof, add your email. Then add at least 10 or
                 even 100+ other emails with the same domain to increase your
                 anonymity.{' '}
-                <TextButton
-                  onClick={() =>
-                    handleFile(
-                      EmailFormStore.setEmailListFromFile.bind(EmailFormStore)
-                    )
-                  }
-                  disabled={true}
-                >
-                  <ToolTip
-                    position="bottom"
-                    text="Emails in your file should be separated somehow. Invalid emails will be ignored"
-                    fitContainer
-                  >
-                    You can upload an email list (txt, csv, etc...)
-                  </ToolTip>
-                </TextButton>
+                <UploadEmailListButton title="You can upload an email list (txt, csv, etc...)" />
                 <br />
                 <br />
                 We’ll then send you a token to use here for a zk proof.{' '}
