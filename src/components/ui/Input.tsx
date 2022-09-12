@@ -7,13 +7,13 @@ import classnames, {
   borderColor,
   borderRadius,
   borderWidth,
+  cursor,
   display,
   flex,
   flexDirection,
   flexWrap,
   gap,
   height,
-  maxWidth,
   outlineColor,
   outlineOffset,
   outlineStyle,
@@ -23,6 +23,7 @@ import classnames, {
   width,
 } from 'classnames/tailwind'
 import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 const groupContainer = (error?: boolean, disabled?: boolean) =>
   classnames(
@@ -81,9 +82,9 @@ const valueWrapper = classnames(
   borderRadius('rounded-3xl'),
   alignItems('items-center'),
   padding('px-2', 'py-1'),
-  height('h-7'),
-  maxWidth('max-w-250')
+  height('h-7')
 )
+const crossWrapper = classnames(width('w-4'), cursor('cursor-pointer'))
 
 export default function ({
   value,
@@ -101,14 +102,16 @@ export default function ({
   isError?: boolean
   disabled?: boolean
 } & HTMLAttributes<HTMLInputElement>) {
+  const { xxs } = useBreakpoints()
+
   return (
     <div className={groupContainer(isError, disabled)}>
       {leftIcon && <div className={height('h-full')}>{leftIcon}</div>}
       {valueList?.map((value, index) => (
         <div className={valueWrapper}>
-          {truncateMiddleIfNeeded(value, 21)}
+          {truncateMiddleIfNeeded(value, xxs ? 21 : 12)}
           <div
-            className={width('w-4')}
+            className={crossWrapper}
             onClick={() => removeValueFromList && removeValueFromList(index)}
           >
             <Cross />

@@ -7446,7 +7446,6 @@ export type TMinWidth =
 export type TMaxWidth =
   | 'max-w-0'
   | 'max-w-100'
-  | 'max-w-250'
   | 'max-w-none'
   | 'max-w-xs'
   | 'max-w-sm'
