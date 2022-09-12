@@ -3,6 +3,7 @@ import Button from 'components/ui/Button'
 import Email from 'icons/Email'
 import GradientBorder from 'components/ui/GradientBorder'
 import Input from 'components/ui/Input'
+import removeFromArrByIndex from 'helpers/removeFromArrByIndex'
 import useEmailForm from 'hooks/useEmailForm'
 
 export default function ({
@@ -34,9 +35,12 @@ export default function ({
         valueList={emailList}
         setValueList={setEmailList}
         onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
-        onKeyDown={(event) =>
-          event.code === 'Enter' && listIsValid ? onSubmit(email) : undefined
-        }
+        onKeyDown={(event) => {
+          if (emailList && !email && event.code === 'Backspace')
+            setEmailList(removeFromArrByIndex(emailList, emailList.length - 1))
+
+          if (event.code === 'Enter' && listIsValid) onSubmit(email)
+        }}
       />
       {submitType === 'primary' ? (
         <Button

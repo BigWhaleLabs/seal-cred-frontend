@@ -1,6 +1,5 @@
 import { ComponentChildren } from 'preact'
 import { HTMLAttributes, StateUpdater } from 'preact/compat'
-import Button from 'components/proofs/ProofButton'
 import Cross from 'icons/Cross'
 import classnames, {
   alignItems,
@@ -110,25 +109,20 @@ export default function ({
         valueList?.map((value, index) => (
           <div className={valueWrapper}>
             {truncateMiddleIfNeeded(value, 21)}
-            <Button
+            <div
+              className={width('w-4')}
               onClick={() => {
                 setValueList(removeFromArrByIndex(valueList, index))
               }}
             >
-              <div className={width('w-4')}>
-                <Cross />
-              </div>
-            </Button>
+              <Cross />
+            </div>
           </div>
         ))}
       <input
         value={value}
         disabled={disabled}
         className={inputContainer(!!leftIcon, isError, disabled)}
-        onKeyDown={(e) => {
-          if (valueList && setValueList && !value && e.code === 'Backspace')
-            setValueList(removeFromArrByIndex(valueList, valueList.length))
-        }}
         {...rest}
       />
     </div>
