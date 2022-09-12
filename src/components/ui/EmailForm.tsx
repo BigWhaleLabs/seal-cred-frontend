@@ -15,7 +15,7 @@ export default function ({
 }: {
   loading?: boolean
   submitType?: 'primary' | 'secondary' | 'tertiary'
-  onSubmit: (email: string) => void
+  onSubmit: (emails: readonly string[]) => void
   submitText?: string
   placeholder?: string
 }) {
@@ -45,7 +45,7 @@ export default function ({
           if (emailList && !inputEmail && event.code === 'Backspace')
             EmailFormStore.removeFromListByIndex(emailList.length - 1)
 
-          if (event.code === 'Enter' && listIsValid) onSubmit(inputEmail)
+          if (event.code === 'Enter' && listIsValid) onSubmit(emailList)
         }}
       />
       {submitType === 'primary' ? (
@@ -56,7 +56,7 @@ export default function ({
           center
           type={submitType}
           disabled={!listIsValid}
-          onClick={() => onSubmit(inputEmail)}
+          onClick={() => onSubmit(emailList)}
         >
           {submitText}
         </Button>
@@ -71,7 +71,7 @@ export default function ({
             small
             type={submitType}
             disabled={!listIsValid}
-            onClick={() => onSubmit(inputEmail)}
+            onClick={() => onSubmit(emailList)}
           >
             {submitText}
           </Button>

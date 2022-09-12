@@ -1,6 +1,6 @@
 import { ComponentChildren } from 'preact'
 import { TextButton } from 'components/ui/Text'
-import { sendEmail } from 'helpers/proofs/attestor'
+import { sendEmails } from 'helpers/proofs/attestor'
 import { useState } from 'preact/hooks'
 import EmailForm from 'components/ui/EmailForm'
 import EmailFormStore from 'stores/EmailFormStore'
@@ -45,13 +45,13 @@ export default function ({
     onChange('')
   }
 
-  async function onSendEmail(email: string) {
+  async function onSendEmails(emails: readonly string[]) {
     onGenerationStarted && onGenerationStarted(true)
     setLoading(true)
     try {
-      await sendEmail(email)
+      await sendEmails(emails)
       afterSendEmail && afterSendEmail()
-      const domain = email.split('@')[1]
+      const domain = emails[0].split('@')[1]
       EmailFormStore.emailDomain = domain
       onChange(domain)
     } finally {
@@ -109,7 +109,7 @@ export default function ({
         submitType={submitType}
         submitText="Submit emails"
         placeholder={xxs ? 'Email addresses' : 'Email addresses (minimum 10)'}
-        onSubmit={onSendEmail}
+        onSubmit={onSendEmails}
         loading={loading}
       />
     </>
