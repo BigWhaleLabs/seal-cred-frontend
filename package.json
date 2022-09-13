@@ -29,6 +29,7 @@
     "@big-whale-labs/stores": "^0.1.16",
     "@coinbase/wallet-sdk": "^3.5.0",
     "@formkit/auto-animate": "^1.0.0-beta.1",
+    "@lottiefiles/react-lottie-player": "^3.4.7",
     "@material-tailwind/react": "^1.2.3",
     "@opengsn/provider": "^3.0.0-beta.1",
     "@walletconnect/web3-provider": "^1.8.0",

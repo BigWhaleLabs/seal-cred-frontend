@@ -2761,6 +2761,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lottiefiles/react-lottie-player@npm:^3.4.7":
+  version: 3.4.7
+  resolution: "@lottiefiles/react-lottie-player@npm:3.4.7"
+  dependencies:
+    lottie-web: ^5.7.8
+  peerDependencies:
+    react: 16 - 18
+  checksum: cffabececafbe3cbf09b54c5d2c45fdeed32cf7156fa5cae1ba2f4218048cbef239c23ed19e36b94a1b4b41c4518f77269865b9f7111ab2f4bf1ba2b59f4ef76
+  languageName: node
+  linkType: hard
+
 "@material-tailwind/react@npm:^1.2.3":
   version: 1.2.3
   resolution: "@material-tailwind/react@npm:1.2.3"
@@ -12348,6 +12359,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lottie-web@npm:^5.7.8":
+  version: 5.9.6
+  resolution: "lottie-web@npm:5.9.6"
+  checksum: aed6a1d0c24eefb6c42a42aae18f29737746551cfdc86319f1b9675f5bc276ba26971e8d2b0e1498df880571fe4bfe2fc87885a1d4f8a318d5e4e5b939b7a474
+  languageName: node
+  linkType: hard
+
 "lower-case@npm:^2.0.2":
   version: 2.0.2
   resolution: "lower-case@npm:2.0.2"
@@ -15990,6 +16008,7 @@ __metadata:
     "@esbuild-plugins/node-globals-polyfill": ^0.1.1
     "@esbuild-plugins/node-modules-polyfill": ^0.1.4
     "@formkit/auto-animate": ^1.0.0-beta.1
+    "@lottiefiles/react-lottie-player": ^3.4.7
     "@material-tailwind/react": ^1.2.3
     "@opengsn/provider": ^3.0.0-beta.1
     "@originjs/vite-plugin-commonjs": ^1.0.3
