@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { LogoSubText, LogoText } from 'components/ui/Text'
+import { Player } from '@lottiefiles/react-lottie-player'
 import { displayFrom } from 'helpers/visibilityClassnames'
 import { useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import Logo from 'icons/Logo'
+import AnimatedLogo from 'icons/AnimatedLogo.json'
 import RightBlock from 'components/navbar/RightBlock'
 import classnames, {
   alignItems,
@@ -68,7 +69,7 @@ export default function () {
       <Link to="/">
         <div className={logoContainer}>
           <div className={logoWrapper}>
-            <Logo />
+            <Player hover src={AnimatedLogo} />
           </div>
           <div className={logoWithVersion}>
             <LogoText>SealCred</LogoText>
