@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { LogoSubText, LogoText } from 'components/ui/Text'
 import { Player } from '@lottiefiles/react-lottie-player'
 import { displayFrom } from 'helpers/visibilityClassnames'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import AnimatedLogo from 'icons/AnimatedLogo.json'
 import RightBlock from 'components/navbar/RightBlock'
@@ -52,6 +52,7 @@ const logoWithVersion = classnames(
 const logoWrapper = classnames(display('flex'), width('w-full'))
 
 export default function () {
+  const lottieRef = useRef<Player>()
   const { pathname } = useLocation()
   const withoutRightBlock = pathname.split('/').length >= 3
 
@@ -68,8 +69,13 @@ export default function () {
     <nav className={navbar(backgroundVisible, withoutRightBlock)}>
       <Link to="/">
         <div className={logoContainer}>
-          <div className={logoWrapper}>
-            <Player hover src={AnimatedLogo} />
+          <div
+            className={logoWrapper}
+            onTouchStart={() => {
+              lottieRef.current?.play()
+            }}
+          >
+            <Player ref={lottieRef} hover src={AnimatedLogo} />
           </div>
           <div className={logoWithVersion}>
             <LogoText>SealCred</LogoText>
