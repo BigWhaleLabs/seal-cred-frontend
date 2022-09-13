@@ -4,7 +4,7 @@ import { Player } from '@lottiefiles/react-lottie-player'
 import { displayFrom } from 'helpers/visibilityClassnames'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import AnimatedLogo from 'icons/AnimatedLogo.json'
+import AnimatedLogo from 'icons/AnimatedLogo'
 import RightBlock from 'components/navbar/RightBlock'
 import classnames, {
   alignItems,
