@@ -12,6 +12,7 @@ export default defineConfig({
   plugins: [preact(), tsconfigPaths()],
   resolve: { alias: { assert: 'assert-browserify' } },
   build: {
+    target: 'es2020',
     rollupOptions: {
       plugins: [
         visualizer({
@@ -35,6 +36,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     esbuildOptions: {
+      target: 'es2020',
       define: {
         global: 'globalThis',
       },
