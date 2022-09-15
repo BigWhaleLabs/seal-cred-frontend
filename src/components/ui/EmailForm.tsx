@@ -1,3 +1,4 @@
+import { AccentText } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
 import { width } from 'classnames/tailwind'
 import Button from 'components/ui/Button'
@@ -5,6 +6,7 @@ import Email from 'icons/Email'
 import EmailFormStore from 'stores/EmailFormStore'
 import GradientBorder from 'components/ui/GradientBorder'
 import Input from 'components/ui/Input'
+import LoadedFilesList from 'components/ui/LoadedFilesList'
 
 export default function ({
   loading,
@@ -15,11 +17,15 @@ export default function ({
 }: {
   loading?: boolean
   submitType?: 'primary' | 'secondary' | 'tertiary'
-  onSubmit: (emails: readonly string[]) => void
   submitText?: string
+  onSubmit: (emails: readonly string[]) => void
   placeholder?: string
 }) {
-  const { inputEmail, emailList } = useSnapshot(EmailFormStore)
+  const { inputEmail, emailMapping, hasDifferentDomains } =
+    useSnapshot(EmailFormStore)
+  const emailList = Object.values(emailMapping)
+    .flat()
+    .map(({ email }) => email)
   const listIsValid = emailList.length > 9
 
   return (
@@ -34,20 +40,32 @@ export default function ({
           emailList.length ? `${emailList.length} / 10+` : placeholder
         }
         value={inputEmail}
-        valueList={emailList}
-        removeValueFromList={(index) =>
-          EmailFormStore.removeFromListByIndex(index)
+        valueList={EmailFormStore.emailMapping}
+        removeValueFromList={(fileName, index) =>
+          EmailFormStore.removeEmailsFromList(fileName, index)
         }
         onChange={(e) =>
           EmailFormStore.safeInputChecker((e.target as HTMLInputElement).value)
         }
         onKeyDown={(event) => {
-          if (emailList && !inputEmail && event.code === 'Backspace')
-            EmailFormStore.removeFromListByIndex(emailList.length - 1)
-
           if (event.code === 'Enter' && listIsValid) onSubmit(emailList)
         }}
       />
+      {Object.keys(emailMapping).map((fileName) => (
+        <LoadedFilesList
+          fileName={fileName}
+          removeValueFromList={(fileName, index) =>
+            EmailFormStore.removeEmailsFromList(fileName, index)
+          }
+        />
+      ))}
+      {hasDifferentDomains && (
+        <AccentText color="text-secondary">
+          Not all of the email domains match. Are you sure you want to submit
+          this email list?
+        </AccentText>
+      )}
+
       {submitType === 'primary' ? (
         <Button
           loading={loading}

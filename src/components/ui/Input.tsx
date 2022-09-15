@@ -1,13 +1,13 @@
 import { ComponentChildren } from 'preact'
+import { EmailMapping } from 'stores/EmailFormStore'
 import { HTMLAttributes } from 'preact/compat'
-import Cross from 'icons/Cross'
+import ListedValue from 'components/ui/ListedValue'
 import classnames, {
   alignItems,
   backgroundColor,
   borderColor,
   borderRadius,
   borderWidth,
-  cursor,
   display,
   flex,
   flexDirection,
@@ -20,10 +20,7 @@ import classnames, {
   padding,
   position,
   textColor,
-  width,
 } from 'classnames/tailwind'
-import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const groupContainer = (error?: boolean, disabled?: boolean) =>
   classnames(
@@ -74,18 +71,6 @@ const inputContainer = (
     )
   )
 
-const valueWrapper = classnames(
-  display('flex'),
-  alignItems('items-center'),
-  gap('gap-x-1'),
-  backgroundColor('bg-primary-dimmed'),
-  borderRadius('rounded-3xl'),
-  alignItems('items-center'),
-  padding('px-2', 'py-1'),
-  height('h-7')
-)
-const crossWrapper = classnames(width('w-4'), cursor('cursor-pointer'))
-
 export default function ({
   value,
   valueList,
@@ -97,27 +82,27 @@ export default function ({
 }: {
   leftIcon?: ComponentChildren
   value?: string
-  valueList?: readonly string[]
-  removeValueFromList?: (index: number) => void
+  valueList?: EmailMapping
+  removeValueFromList?: (fileName: string, index: number) => void
   isError?: boolean
   disabled?: boolean
 } & HTMLAttributes<HTMLInputElement>) {
-  const { xxs } = useBreakpoints()
-
   return (
     <div className={groupContainer(isError, disabled)}>
       {leftIcon && <div className={height('h-full')}>{leftIcon}</div>}
-      {valueList?.map((value, index) => (
-        <div className={valueWrapper}>
-          {truncateMiddleIfNeeded(value, xxs ? 21 : 12)}
-          <div
-            className={crossWrapper}
-            onClick={() => removeValueFromList && removeValueFromList(index)}
-          >
-            <Cross />
-          </div>
-        </div>
-      ))}
+      {removeValueFromList &&
+        valueList &&
+        Object.keys(valueList).map((fileName) =>
+          valueList[fileName].map(({ email, isOtherDomain }, index) => (
+            <ListedValue
+              title={email}
+              index={index}
+              removeValueFromList={() => removeValueFromList(fileName, index)}
+              isDifferent={isOtherDomain}
+              fileName={fileName}
+            />
+          ))
+        )}
       <input
         value={value}
         disabled={disabled}

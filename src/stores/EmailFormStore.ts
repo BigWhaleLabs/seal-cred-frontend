@@ -12,47 +12,78 @@ function isEmailValidInInput(email: string) {
   return re.test(email)
 }
 
+export interface EmailMapping {
+  // "input" is reserved fileName
+  [fileName: string]: {
+    email: string
+    isOtherDomain: boolean
+  }[]
+}
+
 class EmailFormStore extends PersistableStore {
   emailDomain = ''
   inputEmail = ''
-  emailList: string[] = []
+  emailMapping = {} as EmailMapping
+  hasDifferentDomains = false
 
-  setEmailListFromFile(stringList: string) {
+  setEmailListFromFile(stringList: string, fileName: string) {
     const emailArrays = stringList.matchAll(fileEmailRegex)
 
     for (const emailArray of emailArrays) {
       const email = emailArray[0]
-      if (
-        this.checkDuplicates.bind(this)(email) &&
-        this.checkSameDomain.bind(this)(email)
-      )
-        this.emailList.push(email)
+      if (!this.checkDuplicates.bind(this)(email)) return
+
+      const isOtherDomain = this.checkSameDomain.bind(this)(fileName, email)
+      this.createOrPush(fileName, email, isOtherDomain)
     }
   }
 
-  private checkSameDomain(email: string) {
-    if (!this.emailList.length) return true
+  private createOrPush(
+    fileName: string,
+    email: string,
+    isOtherDomain: boolean
+  ) {
+    if (this.emailMapping[fileName]) {
+      this.emailMapping[fileName].push({ email, isOtherDomain })
+      return
+    }
+
+    this.emailMapping[fileName] = [{ email, isOtherDomain }]
+  }
+
+  private checkSameDomain(fileName: string, email: string) {
+    const fileMapping = this.emailMapping[fileName]
+    if (!fileMapping) return false
 
     const inputDomain = email.split('@')[1]
 
-    if (this.emailList[0].split('@')[1] === inputDomain) return true
+    if (fileMapping[0].email.split('@')[1] === inputDomain) return false
 
-    toast.warn('Emails must have same domain')
-    return false
+    this.hasDifferentDomains = true
+    return true
   }
 
-  private checkDuplicates(email: string) {
-    if (!this.emailList.includes(email)) return true
+  private checkDuplicates(inputEmail: string) {
+    if (!Object.keys(this.emailMapping)) return true
+    const hasDuplicates = Object.values(this.emailMapping)
+      .flat()
+      .filter(({ email }) => email === inputEmail)
+
+    if (!hasDuplicates.length) return true
 
     toast.warn("Duplicate emails don't make you more anonymous 👀")
     return false
   }
 
-  removeFromListByIndex(index: number) {
-    this.emailList = [
-      ...this.emailList.slice(0, index),
-      ...this.emailList.slice(index + 1),
-    ]
+  removeEmailsFromList(fileName: string, index?: number) {
+    if (index) {
+      this.emailMapping[fileName] = [
+        ...this.emailMapping[fileName].slice(0, index),
+        ...this.emailMapping[fileName].slice(index + 1),
+      ]
+    } else {
+      delete this.emailMapping[fileName]
+    }
   }
 
   safeInputChecker(emailFromInput: string) {
@@ -60,13 +91,16 @@ class EmailFormStore extends PersistableStore {
     const emailWithoutSeparator = emailFromInput.trim().replace(/[,;]$/, '')
 
     if (
-      isEmailValidInInput(this.inputEmail) &&
-      this.checkSameDomain(emailWithoutSeparator) &&
-      this.checkDuplicates(emailWithoutSeparator)
-    ) {
-      this.emailList.push(emailWithoutSeparator)
-      this.inputEmail = ''
-    }
+      !isEmailValidInInput(this.inputEmail) ||
+      !this.checkDuplicates(emailWithoutSeparator)
+    )
+      return
+
+    const fileName = 'input'
+
+    const isOtherDomain = this.checkSameDomain(fileName, emailWithoutSeparator)
+    this.createOrPush(fileName, emailWithoutSeparator, isOtherDomain)
+    this.inputEmail = ''
   }
 }
 

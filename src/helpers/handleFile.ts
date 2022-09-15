@@ -1,20 +1,23 @@
-export default function (callback: (stringList: string) => void) {
+export default function (
+  callback: (stringList: string, fileName: string) => void
+) {
   const input = document.createElement('input')
   input.type = 'file'
 
   input.onchange = ({ target }) => {
     const inputTarget = target as HTMLInputElement
     if (!inputTarget) return
-    const files = inputTarget.files
-    if (!files) return
+    const file = inputTarget.files && inputTarget.files[0]
+    if (!file) return
+    const fileName = file.name
 
     const reader = new FileReader()
-    reader.readAsText(files[0])
+    reader.readAsText(file)
 
     reader.onload = ({ target }) => {
       if (!target || !target.result) return
 
-      callback(target.result as string)
+      callback(target.result as string, fileName)
     }
   }
 
