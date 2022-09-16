@@ -38,8 +38,10 @@ class EmailFormStore extends PersistableStore {
     }
   }
 
-  private getEmailsArray() {
-    return Object.values(this.emailMapping).flat()
+  getEmailsArray() {
+    return Object.values(this.emailMapping)
+      .flat()
+      .map(({ email }) => email)
   }
 
   private checkSameDomain(fileName?: string, email?: string) {
@@ -48,12 +50,12 @@ class EmailFormStore extends PersistableStore {
     if (!firstEmail) return (this.hasDifferentDomains = false)
 
     // We assume that first domain is domain of truth one and compare all others to it
-    const firstDomain = this.getDomain(firstEmail.email)
+    const firstDomain = this.getDomain(firstEmail)
 
     // Checks whole list when we remove email
     if (!fileName || !email) {
       this.hasDifferentDomains = false
-      emailsArray.forEach(({ email }) => {
+      emailsArray.forEach((email) => {
         if (this.getDomain(email) !== firstDomain)
           this.hasDifferentDomains = true
       })
