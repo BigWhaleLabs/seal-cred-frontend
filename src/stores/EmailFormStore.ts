@@ -33,27 +33,39 @@ class EmailFormStore extends PersistableStore {
   ) {
     if (this.emailMapping[fileName]) {
       this.emailMapping[fileName].push({ email, isOtherDomain })
-      return
+    } else {
+      this.emailMapping[fileName] = [{ email, isOtherDomain }]
     }
-
-    this.emailMapping[fileName] = [{ email, isOtherDomain }]
   }
 
-  private checkSameDomain(fileName: string, email: string) {
-    // should check when (1) adding new email (2) removing email
+  private getEmailsArray() {
+    return Object.values(this.emailMapping).flat()
+  }
 
-    const fileMapping = this.emailMapping[fileName]
-    if (!fileMapping) return false
+  private checkSameDomain(fileName?: string, email?: string) {
+    const emailsArray = this.getEmailsArray()
+    const firstEmail = emailsArray[0]
+    if (!firstEmail) return (this.hasDifferentDomains = false)
 
-    const inputDomain = this.getDomain(email)
+    // We assume that first domain is domain of truth one and compare all others to it
+    const firstDomain = this.getDomain(firstEmail.email)
 
-    if (this.getDomain(fileMapping[0].email) === inputDomain) {
+    // Checks whole list when we remove email
+    if (!fileName || !email) {
       this.hasDifferentDomains = false
-      return false
+      emailsArray.forEach(({ email }) => {
+        if (this.getDomain(email) !== firstDomain)
+          this.hasDifferentDomains = true
+      })
+      return this.hasDifferentDomains
     }
 
-    this.hasDifferentDomains = true
-    return true
+    // Checks when we add email
+    const inputDomain = this.getDomain(email)
+
+    if (firstDomain === inputDomain) return (this.hasDifferentDomains = false)
+
+    return (this.hasDifferentDomains = true)
   }
 
   private getDomain(email: string) {
@@ -72,15 +84,25 @@ class EmailFormStore extends PersistableStore {
     return false
   }
 
+  private deleteFile(fileName: string) {
+    delete this.emailMapping[fileName]
+  }
+
+  private setAllIsNotSameDomain() {
+    for (const emails of Object.values(this.emailMapping)) {
+      for (const email of emails) {
+        email.isOtherDomain = false
+      }
+    }
+  }
+
   setEmailListFromFile(stringList: string, fileName: string) {
-    const emailArrays = stringList.matchAll(fileEmailRegex)
-
-    for (const emailArray of emailArrays) {
+    for (const emailArray of stringList.matchAll(fileEmailRegex)) {
       const email = emailArray[0]
-      if (!this.checkDuplicates.bind(this)(email)) return
+      if (!this.checkDuplicates.bind(this)(email)) continue
 
-      const differentDomains = this.checkSameDomain.bind(this)(fileName, email)
-      this.createOrPush(fileName, email, differentDomains)
+      this.checkSameDomain.bind(this)(fileName, email)
+      this.createOrPush(fileName, email, this.hasDifferentDomains)
     }
   }
 
@@ -89,9 +111,14 @@ class EmailFormStore extends PersistableStore {
       this.emailMapping[fileName] = this.emailMapping[fileName].filter(
         (_, indexToCheck) => indexToCheck !== index
       )
+      // If we remove first email, than we update the domain of truth
+      if (index === 0) this.setAllIsNotSameDomain()
+      if (!this.emailMapping[fileName].length) this.deleteFile(fileName)
     } else {
-      delete this.emailMapping[fileName]
+      this.deleteFile(fileName)
     }
+
+    this.checkSameDomain()
   }
 
   safeInputChecker(emailFromInput: string) {
