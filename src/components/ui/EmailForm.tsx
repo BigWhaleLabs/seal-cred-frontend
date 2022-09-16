@@ -19,10 +19,12 @@ export default function ({
   onSubmit: (emails: readonly string[]) => void
   placeholder?: string
 }) {
-  const { inputEmail, hasDifferentDomains, getEmailsArray } =
+  const { inputEmail, hasDifferentDomains, emailMapping } =
     useSnapshot(EmailFormStore)
 
-  const emailList = getEmailsArray()
+  const emailList = Object.values(emailMapping)
+    .flat()
+    .map(({ email }) => email)
   const emailsAmount = emailList.length
   const listIsValid = emailsAmount > 9
 
@@ -42,13 +44,11 @@ export default function ({
         removeValueFromList={(fileName, index) =>
           EmailFormStore.removeEmailsFromList(fileName, index)
         }
-        onChange={(e) =>
-          EmailFormStore.safeInputChecker((e.target as HTMLInputElement).value)
+        onChange={({ target }) =>
+          EmailFormStore.safeInputChecker((target as HTMLInputElement).value)
         }
-        onKeyDown={(event) => {
-          // TODO: add emails by pressing Enter
-          // TODO: remove previous emails by pressing backspace if the input is empty
-          if (event.code === 'Enter' && listIsValid) onSubmit(emailList)
+        onKeyDown={({ code }) => {
+          if (code === 'Enter' && listIsValid) onSubmit(emailList)
         }}
       />
       <LoadedFilesList

@@ -36,12 +36,14 @@ export default function ({
   title,
   index,
   removeValueFromList,
+  emailsAmount,
   fileName,
   isDifferent,
 }: {
   title: string
   removeValueFromList: (fileName?: string, index?: number) => void
   fileName?: string
+  emailsAmount?: string
   index?: number
   isDifferent?: boolean
 }) {
@@ -49,7 +51,8 @@ export default function ({
 
   return (
     <div className={valueWrapper(!!fileName, isDifferent)}>
-      {truncateMiddleIfNeeded(title, xxs ? 21 : 12)}
+      {truncateMiddleIfNeeded(title, xxs ? 16 : 12)}
+      {emailsAmount}
       <div
         className={crossWrapper}
         onClick={() => removeValueFromList(fileName, index)}

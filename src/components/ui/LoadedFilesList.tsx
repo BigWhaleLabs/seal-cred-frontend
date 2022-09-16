@@ -22,11 +22,12 @@ export default function ({
 
         const emailsAmount = emailMapping[fileName].length
         const amountMessage =
-          emailsAmount > 1 ? `${emailsAmount} emails` : '1 email'
+          emailsAmount > 1 ? ` (${emailsAmount} emails)` : ' (1 email)'
 
         return (
           <ListedValue
-            title={`${fileName} (${amountMessage})`}
+            title={fileName}
+            emailsAmount={amountMessage}
             fileName={fileName}
             removeValueFromList={() => removeValueFromList(fileName)}
           />
