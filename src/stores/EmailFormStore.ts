@@ -26,18 +26,6 @@ class EmailFormStore extends PersistableStore {
   emailMapping = {} as EmailMapping
   hasDifferentDomains = false
 
-  setEmailListFromFile(stringList: string, fileName: string) {
-    const emailArrays = stringList.matchAll(fileEmailRegex)
-
-    for (const emailArray of emailArrays) {
-      const email = emailArray[0]
-      if (!this.checkDuplicates.bind(this)(email)) return
-
-      const differentDomains = this.checkSameDomain.bind(this)(fileName, email)
-      this.createOrPush(fileName, email, differentDomains)
-    }
-  }
-
   private createOrPush(
     fileName: string,
     email: string,
@@ -52,12 +40,14 @@ class EmailFormStore extends PersistableStore {
   }
 
   private checkSameDomain(fileName: string, email: string) {
+    // should check when (1) adding new email (2) removing email
+
     const fileMapping = this.emailMapping[fileName]
     if (!fileMapping) return false
 
-    const inputDomain = email.split('@')[1]
+    const inputDomain = this.getDomain(email)
 
-    if (fileMapping[0].email.split('@')[1] === inputDomain) {
+    if (this.getDomain(fileMapping[0].email) === inputDomain) {
       this.hasDifferentDomains = false
       return false
     }
@@ -66,8 +56,11 @@ class EmailFormStore extends PersistableStore {
     return true
   }
 
+  private getDomain(email: string) {
+    return email.split('@')[1]
+  }
+
   private checkDuplicates(inputEmail: string) {
-    // TODO: duplicate checking should have 2 ways: 1) check if list 2) check input
     if (!Object.keys(this.emailMapping)) return true
     const hasDuplicates = Object.values(this.emailMapping)
       .flat()
@@ -77,6 +70,18 @@ class EmailFormStore extends PersistableStore {
 
     toast.warn("Duplicate emails don't make you more anonymous 👀")
     return false
+  }
+
+  setEmailListFromFile(stringList: string, fileName: string) {
+    const emailArrays = stringList.matchAll(fileEmailRegex)
+
+    for (const emailArray of emailArrays) {
+      const email = emailArray[0]
+      if (!this.checkDuplicates.bind(this)(email)) return
+
+      const differentDomains = this.checkSameDomain.bind(this)(fileName, email)
+      this.createOrPush(fileName, email, differentDomains)
+    }
   }
 
   removeEmailsFromList(fileName: string, index?: number) {
