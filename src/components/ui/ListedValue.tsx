@@ -27,11 +27,7 @@ const valueWrapper = (alternativeStyle?: boolean, isDifferent?: boolean) =>
     ),
     borderRadius('rounded-3xl'),
     alignItems('items-center'),
-    padding(
-      alternativeStyle
-        ? { 'px-4': true, 'py-2': true }
-        : { 'px-2': true, 'py-1': true }
-    ),
+    padding(alternativeStyle ? 'p-4' : { 'px-2': true, 'py-1': true }),
     height('h-7')
   )
 const crossWrapper = classnames(width('w-4'), cursor('cursor-pointer'))
@@ -44,8 +40,8 @@ export default function ({
   isDifferent,
 }: {
   title: string
-  removeValueFromList: (fileName: string, index?: number) => void
-  fileName: string
+  removeValueFromList: (fileName?: string, index?: number) => void
+  fileName?: string
   index?: number
   isDifferent?: boolean
 }) {

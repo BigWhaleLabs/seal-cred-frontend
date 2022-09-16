@@ -107,7 +107,6 @@ export default function ({
       <div>{description}</div>
       <EmailForm
         submitType={submitType}
-        submitText="Submit emails"
         placeholder={xxs ? 'Email addresses' : 'Email addresses (minimum 10)'}
         onSubmit={onSendEmails}
         loading={loading}

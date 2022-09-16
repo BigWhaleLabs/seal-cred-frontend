@@ -33,8 +33,8 @@ class EmailFormStore extends PersistableStore {
       const email = emailArray[0]
       if (!this.checkDuplicates.bind(this)(email)) return
 
-      const isOtherDomain = this.checkSameDomain.bind(this)(fileName, email)
-      this.createOrPush(fileName, email, isOtherDomain)
+      const differentDomains = this.checkSameDomain.bind(this)(fileName, email)
+      this.createOrPush(fileName, email, differentDomains)
     }
   }
 
@@ -57,13 +57,17 @@ class EmailFormStore extends PersistableStore {
 
     const inputDomain = email.split('@')[1]
 
-    if (fileMapping[0].email.split('@')[1] === inputDomain) return false
+    if (fileMapping[0].email.split('@')[1] === inputDomain) {
+      this.hasDifferentDomains = false
+      return false
+    }
 
     this.hasDifferentDomains = true
     return true
   }
 
   private checkDuplicates(inputEmail: string) {
+    // TODO: duplicate checking should have 2 ways: 1) check if list 2) check input
     if (!Object.keys(this.emailMapping)) return true
     const hasDuplicates = Object.values(this.emailMapping)
       .flat()
@@ -76,6 +80,7 @@ class EmailFormStore extends PersistableStore {
   }
 
   removeEmailsFromList(fileName: string, index?: number) {
+    // TODO: this operation removes last two values, should remove only one of them
     if (index) {
       this.emailMapping[fileName] = [
         ...this.emailMapping[fileName].slice(0, index),
@@ -98,8 +103,8 @@ class EmailFormStore extends PersistableStore {
 
     const fileName = 'input'
 
-    const isOtherDomain = this.checkSameDomain(fileName, emailWithoutSeparator)
-    this.createOrPush(fileName, emailWithoutSeparator, isOtherDomain)
+    this.checkSameDomain(fileName, emailWithoutSeparator)
+    this.createOrPush(fileName, emailWithoutSeparator, this.hasDifferentDomains)
     this.inputEmail = ''
   }
 }

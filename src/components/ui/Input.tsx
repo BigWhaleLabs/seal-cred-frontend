@@ -14,6 +14,7 @@ import classnames, {
   flexWrap,
   gap,
   height,
+  margin,
   outlineColor,
   outlineOffset,
   outlineStyle,
@@ -28,7 +29,7 @@ const groupContainer = (error?: boolean, disabled?: boolean) =>
     display('flex'),
     flexDirection('flex-row'),
     flexWrap('flex-wrap'),
-    gap('gap-x-3', 'gap-y-2'),
+    gap('gap-1.5'),
     padding('p-3'),
     alignItems('items-center'),
     backgroundColor(error ? 'bg-primary-dark-red' : 'bg-primary-dark'),
@@ -46,11 +47,7 @@ const groupContainer = (error?: boolean, disabled?: boolean) =>
     height('h-fit')
   )
 
-const inputContainer = (
-  hasIcon?: boolean,
-  error?: boolean,
-  disabled?: boolean
-) =>
+const inputContainer = (error?: boolean, disabled?: boolean) =>
   classnames(
     display('flex'),
     flex('flex-1'),
@@ -70,6 +67,7 @@ const inputContainer = (
       'focus:text-formal-accent'
     )
   )
+const iconStyles = classnames(height('h-full'), margin('mr-2'))
 
 export default function ({
   value,
@@ -89,7 +87,7 @@ export default function ({
 } & HTMLAttributes<HTMLInputElement>) {
   return (
     <div className={groupContainer(isError, disabled)}>
-      {leftIcon && <div className={height('h-full')}>{leftIcon}</div>}
+      {leftIcon && <div className={iconStyles}>{leftIcon}</div>}
       {removeValueFromList &&
         valueList &&
         Object.keys(valueList).map((fileName) =>
@@ -99,14 +97,13 @@ export default function ({
               index={index}
               removeValueFromList={() => removeValueFromList(fileName, index)}
               isDifferent={isOtherDomain}
-              fileName={fileName}
             />
           ))
         )}
       <input
         value={value}
         disabled={disabled}
-        className={inputContainer(!!leftIcon, isError, disabled)}
+        className={inputContainer(isError, disabled)}
         {...rest}
       />
     </div>

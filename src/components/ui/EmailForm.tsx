@@ -1,6 +1,6 @@
 import { AccentText } from 'components/ui/Text'
+import { textAlign, width } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
-import { width } from 'classnames/tailwind'
 import Button from 'components/ui/Button'
 import Email from 'icons/Email'
 import EmailFormStore from 'stores/EmailFormStore'
@@ -13,11 +13,9 @@ export default function ({
   onSubmit,
   submitType = 'primary',
   placeholder = 'Enter...',
-  submitText = 'Submit',
 }: {
   loading?: boolean
   submitType?: 'primary' | 'secondary' | 'tertiary'
-  submitText?: string
   onSubmit: (emails: readonly string[]) => void
   placeholder?: string
 }) {
@@ -26,7 +24,10 @@ export default function ({
   const emailList = Object.values(emailMapping)
     .flat()
     .map(({ email }) => email)
-  const listIsValid = emailList.length > 9
+  const emailsAmount = emailList.length
+  const listIsValid = emailsAmount > 9
+
+  const submitText = `Submit ${listIsValid ? emailsAmount : ''} emails`
 
   return (
     <>
@@ -36,9 +37,7 @@ export default function ({
             <Email />
           </div>
         }
-        placeholder={
-          emailList.length ? `${emailList.length} / 10+` : placeholder
-        }
+        placeholder={emailsAmount ? `${emailsAmount} / 10+` : placeholder}
         value={inputEmail}
         valueList={EmailFormStore.emailMapping}
         removeValueFromList={(fileName, index) =>
@@ -51,19 +50,20 @@ export default function ({
           if (event.code === 'Enter' && listIsValid) onSubmit(emailList)
         }}
       />
-      {Object.keys(emailMapping).map((fileName) => (
-        <LoadedFilesList
-          fileName={fileName}
-          removeValueFromList={(fileName, index) =>
-            EmailFormStore.removeEmailsFromList(fileName, index)
-          }
-        />
-      ))}
+      <LoadedFilesList
+        removeValueFromList={(fileName) =>
+          EmailFormStore.removeEmailsFromList(fileName)
+        }
+        emailMapping={EmailFormStore.emailMapping}
+      />
+
       {hasDifferentDomains && (
-        <AccentText color="text-secondary">
-          Not all of the email domains match. Are you sure you want to submit
-          this email list?
-        </AccentText>
+        <div className={textAlign('text-center')}>
+          <AccentText color="text-secondary">
+            Not all of the email domains match. Are you sure you want to submit
+            this email list?
+          </AccentText>
+        </div>
       )}
 
       {submitType === 'primary' ? (
