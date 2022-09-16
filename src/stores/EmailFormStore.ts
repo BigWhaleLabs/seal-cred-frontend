@@ -80,12 +80,10 @@ class EmailFormStore extends PersistableStore {
   }
 
   removeEmailsFromList(fileName: string, index?: number) {
-    // TODO: this operation removes last two values, should remove only one of them
-    if (index) {
-      this.emailMapping[fileName] = [
-        ...this.emailMapping[fileName].slice(0, index),
-        ...this.emailMapping[fileName].slice(index + 1),
-      ]
+    if (index !== undefined) {
+      this.emailMapping[fileName] = this.emailMapping[fileName].filter(
+        (_, indexToCheck) => indexToCheck !== index
+      )
     } else {
       delete this.emailMapping[fileName]
     }
