@@ -47,6 +47,8 @@ export default function ({
           EmailFormStore.safeInputChecker((e.target as HTMLInputElement).value)
         }
         onKeyDown={(event) => {
+          // TODO: add emails by pressing Enter
+          // TODO: remove previous emails by pressing backspace if the input is empty
           if (event.code === 'Enter' && listIsValid) onSubmit(emailList)
         }}
       />
