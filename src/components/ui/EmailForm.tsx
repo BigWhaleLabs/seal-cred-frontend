@@ -48,9 +48,11 @@ export default function ({
           EmailFormStore.safeInputChecker((target as HTMLInputElement).value)
         }
         onKeyDown={({ code }) => {
+          if (code === 'Backspace') EmailFormStore.removeLastEmail()
           if (code === 'Enter' && listIsValid) onSubmit(emailList)
         }}
       />
+
       <LoadedFilesList
         removeValueFromList={(fileName) =>
           EmailFormStore.removeEmailsFromList(fileName)

@@ -34,11 +34,6 @@ const bodyContainer = classnames(
   margin('my-7', 'xxs:mx-auto', 'tablet:mt-0', 'tablet:mb-auto')
 )
 
-// TODO:
-// simplify mapping through the list of emails
-// ? remove emails by backspace
-// ? add email by enter
-
 export default function () {
   return (
     <Root>

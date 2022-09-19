@@ -72,9 +72,12 @@ class EmailFormStore extends PersistableStore {
     // Checks when we add email
     const inputDomain = this.getDomain(email)
 
-    if (firstDomain === inputDomain) return (this.hasDifferentDomains = false)
+    if (firstDomain === inputDomain) {
+      this.hasDifferentDomains = false
+      return
+    }
 
-    return (this.hasDifferentDomains = true)
+    this.hasDifferentDomains = true
   }
 
   private getDomain(email: string) {
@@ -119,16 +122,25 @@ class EmailFormStore extends PersistableStore {
     this.warnedAboutDuplicates = false
   }
 
+  removeLastEmail() {
+    if (this.inputEmail) return
+
+    const lastKey = Array.from(Object.keys(this.emailMapping)).pop()
+    if (!lastKey) return
+
+    this.emailMapping[lastKey].pop()
+  }
+
   removeEmailsFromList(fileName: string, index?: number) {
-    if (index !== undefined) {
+    if (index === undefined) {
+      this.deleteFile(fileName)
+    } else {
       this.emailMapping[fileName] = this.emailMapping[fileName].filter(
         (_, indexToCheck) => indexToCheck !== index
       )
       // If we remove first email, than we update the domain of truth
       if (index === 0) this.setAllIsNotSameDomain()
       if (!this.emailMapping[fileName].length) this.deleteFile(fileName)
-    } else {
-      this.deleteFile(fileName)
     }
 
     this.checkSameDomain()
