@@ -1,10 +1,10 @@
 import { Suspense, memo } from 'react'
 import { display } from 'classnames/tailwind'
 import { displayFrom, displayTo } from 'helpers/visibilityClassnames'
+import { truncateMiddleIfNeeded } from '@big-whale-labs/frontend-utils'
 import { useSnapshot } from 'valtio'
 import ENSStore from 'stores/ENSStore'
 import Network from 'models/Network'
-import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 
 interface ENSAddressProps {
   address: string

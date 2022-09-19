@@ -1,4 +1,5 @@
 import { Suspense, memo } from 'react'
+import { truncateMiddleIfNeeded } from '@big-whale-labs/frontend-utils'
 import Network from 'models/Network'
 import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
@@ -8,7 +9,6 @@ import classnames, {
   wordBreak,
 } from 'classnames/tailwind'
 import getContractName from 'helpers/network/getContractName'
-import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 
 const addressText = wordBreak('break-all')
 const badgeNameWrapper = classnames(
