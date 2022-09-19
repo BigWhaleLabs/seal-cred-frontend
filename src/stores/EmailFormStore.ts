@@ -111,6 +111,10 @@ class EmailFormStore extends PersistableStore {
     }
   }
 
+  private removeMappingIfEmpty(fileName: string) {
+    if (!this.emailMapping[fileName].length) this.deleteFile(fileName)
+  }
+
   setEmailListFromFile(stringList: string, fileName: string) {
     for (const emailArray of stringList.matchAll(fileEmailRegex)) {
       const email = emailArray[0]
@@ -125,10 +129,12 @@ class EmailFormStore extends PersistableStore {
   removeLastEmail() {
     if (this.inputEmail) return
 
-    const lastKey = Array.from(Object.keys(this.emailMapping)).pop()
-    if (!lastKey) return
+    const lastFilename = Array.from(Object.keys(this.emailMapping)).pop()
+    if (!lastFilename) return
 
-    this.emailMapping[lastKey].pop()
+    this.emailMapping[lastFilename].pop()
+    this.removeMappingIfEmpty(lastFilename)
+    this.checkSameDomain()
   }
 
   removeEmailsFromList(fileName: string, index?: number) {
@@ -140,7 +146,7 @@ class EmailFormStore extends PersistableStore {
       )
       // If we remove first email, than we update the domain of truth
       if (index === 0) this.setAllIsNotSameDomain()
-      if (!this.emailMapping[fileName].length) this.deleteFile(fileName)
+      this.removeMappingIfEmpty(fileName)
     }
 
     this.checkSameDomain()
