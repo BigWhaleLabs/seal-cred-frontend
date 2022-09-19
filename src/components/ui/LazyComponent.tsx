@@ -1,14 +1,15 @@
 import { JSX } from 'preact'
 import { Suspense } from 'react'
-import Loading from 'icons/Loading'
+import Centered from 'components/ui/Centered'
+import SealLoading from 'icons/SealLoading'
 
 export default function ({ lazyImported }: { lazyImported: JSX.Element }) {
   return (
     <Suspense
       fallback={
-        <div>
-          <Loading screenCentre />
-        </div>
+        <Centered>
+          <SealLoading color="accent" />
+        </Centered>
       }
     >
       {lazyImported}
