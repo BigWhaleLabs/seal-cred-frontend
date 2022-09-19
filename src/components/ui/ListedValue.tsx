@@ -9,12 +9,14 @@ import classnames, {
   gap,
   height,
   padding,
+  textColor,
   width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const valueWrapper = (alternativeStyle?: boolean, isDifferent?: boolean) =>
   classnames(
+    textColor({ 'text-primary-dark': isDifferent }),
     display('flex'),
     alignItems('items-center'),
     gap('gap-x-1'),
@@ -57,7 +59,7 @@ export default function ({
         className={crossWrapper}
         onClick={() => removeValueFromList(fileName, index)}
       >
-        <Cross />
+        <Cross inheritColor={isDifferent} />
       </div>
     </div>
   )

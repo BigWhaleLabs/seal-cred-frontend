@@ -35,7 +35,6 @@ const bodyContainer = classnames(
 )
 
 // TODO:
-// change color of the isDifferentDomain wrapper
 // simplify mapping through the list of emails
 // adapt for Fold
 // ? remove emails by backspace
