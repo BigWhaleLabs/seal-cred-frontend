@@ -5,7 +5,7 @@ import { useSnapshot } from 'valtio'
 import Arrow from 'icons/Arrow'
 import Button from 'components/ui/Button'
 import CharInCircle from 'components/ui/CharInCircle'
-import EmailFormStore from 'stores/EmailFormStore'
+import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import Line from 'components/ui/Line'
 import SimpleArrow from 'icons/SimpleArrow'
@@ -79,7 +79,7 @@ const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
   const { urlDomain, urlToken, clearSearchParams } = useUrlParams()
-  const { emailDomain } = useSnapshot(EmailFormStore)
+  const { emailDomain } = useSnapshot(EmailDomainStore)
 
   const [domain, setDomain] = useState('')
   const [token, setToken] = useState(urlToken)
@@ -90,7 +90,7 @@ export default function () {
   useEffect(() => {
     if (!urlToken || !urlDomain) return
 
-    EmailFormStore.emailDomain = urlDomain
+    EmailDomainStore.emailDomain = urlDomain
     setDomain(urlDomain)
   }, [urlDomain, urlToken])
 

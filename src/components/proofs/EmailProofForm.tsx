@@ -2,8 +2,8 @@ import { ComponentChildren } from 'preact'
 import { TextButton } from 'components/ui/Text'
 import { sendEmails } from 'helpers/proofs/attestor'
 import { useState } from 'preact/hooks'
+import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/ui/EmailForm'
-import EmailFormStore from 'stores/EmailFormStore'
 import ProofModel from 'models/Proof'
 import TextForm from 'components/ui/TextForm'
 import checkDomainToken from 'helpers/proofs/checkDomainToken'
@@ -39,7 +39,7 @@ export default function ({
   const { xxs } = useBreakpoints()
 
   function resetEmail(withStore = false) {
-    if (withStore) EmailFormStore.emailDomain = ''
+    if (withStore) EmailDomainStore.emailDomain = ''
 
     setEmail('')
     onChange('')
@@ -52,7 +52,7 @@ export default function ({
       await sendEmails(emails)
       afterSendEmail && afterSendEmail()
       const domain = emails[0].split('@')[1]
-      EmailFormStore.emailDomain = domain
+      EmailDomainStore.emailDomain = domain
       onChange(domain)
     } finally {
       setLoading(false)

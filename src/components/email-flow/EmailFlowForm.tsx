@@ -7,7 +7,7 @@ import {
 } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
-import EmailFormStore from 'stores/EmailFormStore'
+import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import Proof from 'models/Proof'
 import UploadEmailListButton from 'components/ui/UploadEmailListButton'
@@ -33,7 +33,7 @@ export default function EmailFlowForm({
   onUpdateDomain: (domain: string) => void
   onSelectProof: (proof: Proof) => void
 }) {
-  const { emailDomain } = useSnapshot(EmailFormStore)
+  const { emailDomain } = useSnapshot(EmailDomainStore)
   const [error, setError] = useState<string | undefined>()
 
   function jumpToToken() {

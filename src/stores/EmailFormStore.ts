@@ -1,7 +1,5 @@
-import { PersistableStore } from '@big-whale-labs/stores'
 import { proxy } from 'valtio'
 import { toast } from 'react-toastify'
-import env from 'helpers/env'
 
 const fileEmailRegex =
   /(?=.{0,256}$)((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(?=.{0,64}$)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/gm
@@ -20,8 +18,7 @@ export interface EmailMapping {
   }[]
 }
 
-class EmailFormStore extends PersistableStore {
-  emailDomain = ''
+class EmailFormStore {
   inputEmail = ''
   emailMapping = {} as EmailMapping
   hasDifferentDomains = false
@@ -139,6 +136,8 @@ class EmailFormStore extends PersistableStore {
 
   removeEmailsFromList(fileName: string, index?: number) {
     if (index === undefined) {
+      // We don't know, if the first email has changed, so we check all of them
+      this.setAllIsNotSameDomain()
       this.deleteFile(fileName)
     } else {
       this.emailMapping[fileName] = this.emailMapping[fileName].filter(
@@ -170,4 +169,4 @@ class EmailFormStore extends PersistableStore {
   }
 }
 
-export default proxy(new EmailFormStore()).makePersistent(env.VITE_ENCRYPT_KEY)
+export default proxy(new EmailFormStore())
