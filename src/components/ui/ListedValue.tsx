@@ -49,11 +49,11 @@ export default function ({
   index?: number
   isDifferent?: boolean
 }) {
-  const { xs } = useBreakpoints()
+  const { xs, sm } = useBreakpoints()
 
   return (
     <div className={valueWrapper(!!fileName, isDifferent)}>
-      {truncateMiddleIfNeeded(title, xs ? 16 : 12)}
+      {truncateMiddleIfNeeded(title, sm ? 16 : 12)}
       {xs ? emailsAmount : undefined}
       <div
         className={crossWrapper}
