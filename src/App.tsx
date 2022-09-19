@@ -35,7 +35,6 @@ const bodyContainer = classnames(
 )
 
 // TODO:
-// adapt for Fold
 // simplify mapping through the list of emails
 // ? remove emails by backspace
 // ? add email by enter

@@ -24,6 +24,7 @@ import classnames, {
   padding,
   position,
   textColor,
+  width,
 } from 'classnames/tailwind'
 
 const groupContainer = (error?: boolean, disabled?: boolean) =>
@@ -33,7 +34,7 @@ const groupContainer = (error?: boolean, disabled?: boolean) =>
     flexDirection('flex-row'),
     flexWrap('flex-wrap'),
     gap('gap-1.5'),
-    padding('p-3'),
+    padding('p-2', 'xxs:p-3'),
     alignItems('items-center'),
     backgroundColor(error ? 'bg-primary-dark-red' : 'bg-primary-dark'),
     borderColor(
@@ -70,7 +71,8 @@ const inputContainer = (error?: boolean, disabled?: boolean) =>
         ? 'text-error'
         : 'text-formal-accent',
       'focus:text-formal-accent'
-    )
+    ),
+    width('w-32', 'xxs:w-fit')
   )
 const iconStyles = classnames(height('h-full'), margin('mr-2'))
 

@@ -49,12 +49,12 @@ export default function ({
   index?: number
   isDifferent?: boolean
 }) {
-  const { xxs } = useBreakpoints()
+  const { xs } = useBreakpoints()
 
   return (
     <div className={valueWrapper(!!fileName, isDifferent)}>
-      {truncateMiddleIfNeeded(title, xxs ? 16 : 12)}
-      {emailsAmount}
+      {truncateMiddleIfNeeded(title, xs ? 16 : 12)}
+      {xs ? emailsAmount : undefined}
       <div
         className={crossWrapper}
         onClick={() => removeValueFromList(fileName, index)}
