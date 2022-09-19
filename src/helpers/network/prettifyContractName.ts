@@ -1,5 +1,5 @@
+import { truncateMiddleIfNeeded } from '@big-whale-labs/frontend-utils'
 import { utils } from 'ethers'
-import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 
 export default function (contractName: string, truncate = false) {
   if (truncate) contractName = truncateMiddleIfNeeded(contractName, 17)
