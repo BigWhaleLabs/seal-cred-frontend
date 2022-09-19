@@ -15,6 +15,7 @@ type AllowedExtraClassnames =
   | 'xl:each-2nd-element-in-3-cols:last:col-span-3'
   | 'smToXl:odd:last:col-span-full'
   | 'empty:hidden'
+  | 'blue-scrollbar'
 
 export default function (
   ...classNames: (AllowedExtraClassnames | TTailwindString | undefined | null)[]

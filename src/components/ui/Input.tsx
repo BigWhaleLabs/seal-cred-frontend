@@ -2,6 +2,7 @@ import { ComponentChildren } from 'preact'
 import { EmailMapping } from 'stores/EmailFormStore'
 import { HTMLAttributes } from 'preact/compat'
 import ListedValue from 'components/ui/ListedValue'
+import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -15,9 +16,11 @@ import classnames, {
   gap,
   height,
   margin,
+  maxHeight,
   outlineColor,
   outlineOffset,
   outlineStyle,
+  overflow,
   padding,
   position,
   textColor,
@@ -44,6 +47,8 @@ const groupContainer = (error?: boolean, disabled?: boolean) =>
     ),
     borderWidth('border'),
     borderRadius('rounded-md'),
+    overflow('overflow-y-auto'),
+    maxHeight('max-h-32'),
     height('h-fit')
   )
 
@@ -86,7 +91,12 @@ export default function ({
   disabled?: boolean
 } & HTMLAttributes<HTMLInputElement>) {
   return (
-    <div className={groupContainer(isError, disabled)}>
+    <div
+      className={classNamesToString(
+        groupContainer(isError, disabled),
+        'blue-scrollbar'
+      )}
+    >
       {leftIcon && <div className={iconStyles}>{leftIcon}</div>}
       {removeValueFromList &&
         valueList &&

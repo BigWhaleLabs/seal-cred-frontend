@@ -34,6 +34,13 @@ const bodyContainer = classnames(
   margin('my-7', 'xxs:mx-auto', 'tablet:mt-0', 'tablet:mb-auto')
 )
 
+// TODO:
+// change color of the isDifferentDomain wrapper
+// simplify mapping through the list of emails
+// adapt for Fold
+// ? remove emails by backspace
+// ? add email by enter
+
 export default function () {
   return (
     <Root>
