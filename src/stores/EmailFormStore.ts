@@ -25,6 +25,7 @@ class EmailFormStore extends PersistableStore {
   inputEmail = ''
   emailMapping = {} as EmailMapping
   hasDifferentDomains = false
+  warnedAboutDuplicates = false
 
   private createOrPush(
     fileName: string,
@@ -38,7 +39,7 @@ class EmailFormStore extends PersistableStore {
     }
   }
 
-  getEmailsArray() {
+  private getEmailsArray() {
     return Object.values(this.emailMapping)
       .flat()
       .map(({ email }) => email)
@@ -56,16 +57,16 @@ class EmailFormStore extends PersistableStore {
     if (!fileName || !email) {
       this.hasDifferentDomains = false
       const arrays = Object.values(this.emailMapping)
-      for (const emails of arrays) {
-        for (const email of emails) {
-          if (this.getDomain(email.email) !== firstDomain) {
-            this.hasDifferentDomains = true
-            email.isOtherDomain = true
-          }
-        }
-      }
 
-      return this.hasDifferentDomains
+      for (const emails of arrays)
+        for (const email of emails) {
+          if (this.getDomain(email.email) === firstDomain) continue
+
+          this.hasDifferentDomains = true
+          email.isOtherDomain = true
+        }
+
+      return
     }
 
     // Checks when we add email
@@ -80,15 +81,18 @@ class EmailFormStore extends PersistableStore {
     return email.split('@')[1]
   }
 
-  private checkDuplicates(inputEmail: string) {
+  private checkDuplicates(inputEmail: string, inFile?: boolean) {
     if (!Object.keys(this.emailMapping)) return true
+
     const hasDuplicates = Object.values(this.emailMapping)
       .flat()
       .filter(({ email }) => email === inputEmail)
 
     if (!hasDuplicates.length) return true
 
-    toast.warn("Duplicate emails don't make you more anonymous 👀")
+    if (!this.warnedAboutDuplicates)
+      toast.warn("Duplicate emails don't make you more anonymous 👀")
+    if (inFile) this.warnedAboutDuplicates = true
     return false
   }
 
@@ -107,11 +111,12 @@ class EmailFormStore extends PersistableStore {
   setEmailListFromFile(stringList: string, fileName: string) {
     for (const emailArray of stringList.matchAll(fileEmailRegex)) {
       const email = emailArray[0]
-      if (!this.checkDuplicates.bind(this)(email)) continue
+      if (!this.checkDuplicates.bind(this)(email, true)) continue
 
       this.checkSameDomain.bind(this)(fileName, email)
       this.createOrPush(fileName, email, this.hasDifferentDomains)
     }
+    this.warnedAboutDuplicates = false
   }
 
   removeEmailsFromList(fileName: string, index?: number) {
