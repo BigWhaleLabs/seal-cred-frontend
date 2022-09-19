@@ -7,6 +7,7 @@ import Twitter from 'icons/Twitter'
 import classnames, {
   alignItems,
   display,
+  flex,
   flexDirection,
   justifyContent,
   padding,
@@ -16,6 +17,9 @@ import classnames, {
 const commonClasses = classnames(display('flex'), alignItems('items-center'))
 const socialContainerCard = classnames(
   commonClasses,
+  flex('flex-1'),
+  alignItems('md:items-end'),
+  justifyContent('justify-end', 'md:justify-start'),
   flexDirection('flex-col', 'md:flex-row'),
   padding('py-4', 'px-4', 'lg:px-25'),
   space('space-y-4', 'md:space-x-4', 'md:space-y-0')

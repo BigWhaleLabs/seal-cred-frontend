@@ -1,5 +1,5 @@
-import { Button } from '@material-tailwind/react'
 import { width } from 'classnames/tailwind'
+import Button from 'components/ui/Button'
 import CTAText from 'helpers/CTAText'
 import ExternalLink from 'components/ui/ExternalLink'
 import getShareToTwitterLink from 'helpers/getShareToTwitterLink'
