@@ -1,3 +1,4 @@
+import { truncateMiddleIfNeeded } from '@big-whale-labs/frontend-utils'
 import Cross from 'icons/Cross'
 import classnames, {
   alignItems,
@@ -10,7 +11,6 @@ import classnames, {
   padding,
   width,
 } from 'classnames/tailwind'
-import truncateMiddleIfNeeded from 'helpers/network/truncateMiddleIfNeeded'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 const valueWrapper = (alternativeStyle?: boolean, isDifferent?: boolean) =>
