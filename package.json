@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn generate-css-types && vite",
-    "build": "yarn generate-css-types && cross-env NODE_ENV=production tsc && vite build",
+    "build": "yarn generate-css-types && tsc && cross-env NODE_OPTIONS='--max-old-space-size=4096' NODE_ENV=production vite build",
     "preview": "yarn build && yarn vite preview",
     "pretty": "prettier --check src",
     "lint": "yarn pretty && eslint --max-warnings 0 --ext ts,tsx,json src",
