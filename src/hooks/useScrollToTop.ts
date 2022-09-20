@@ -7,6 +7,4 @@ export default function () {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [location.pathname])
-
-  return null
 }
