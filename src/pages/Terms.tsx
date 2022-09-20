@@ -114,7 +114,6 @@ export default function () {
             </Section>
           </div>
         </div>
-        <ScrollToTop />
       </Card>
     </div>
   )
