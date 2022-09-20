@@ -5,6 +5,7 @@ import {
   SubheaderCardText,
 } from 'components/ui/Text'
 import Card from 'components/ui/Card'
+import ScrollToTop from 'components/ui/ScrollToTop'
 import Section from 'components/ui/Section'
 import classnames, { margin, space, width } from 'classnames/tailwind'
 
@@ -111,6 +112,7 @@ export default function () {
             </Section>
           </div>
         </div>
+        <ScrollToTop />
       </Card>
     </div>
   )

@@ -6,6 +6,7 @@ import InitialCard from 'components/landing/InitialCard'
 import LearnMoreCard from 'components/landing/LearnMoreCard'
 import OrbsInBoxes from 'components/landing/OrbsInBoxes'
 import ScrollDownButton from 'components/landing/ScrollDownButton'
+import ScrollToTop from 'components/ui/ScrollToTop'
 import SuperHr from 'icons/SuperHr'
 import SuperOrbWithConnectors from 'icons/SuperOrbWithConnectors'
 import TopConnectors from 'icons/TopConnectors'
@@ -123,6 +124,7 @@ export default function () {
       <BuildingIdentitiesCard />
       <SuperHr />
       <LearnMoreCard />
+      <ScrollToTop />
     </div>
   )
 }
