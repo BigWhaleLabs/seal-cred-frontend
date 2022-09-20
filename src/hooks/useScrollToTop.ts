@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router'
 
-export default () => {
+export default function () {
   const location = useLocation()
 
   useEffect(() => {

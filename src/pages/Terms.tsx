@@ -5,13 +5,15 @@ import {
   SubheaderCardText,
 } from 'components/ui/Text'
 import Card from 'components/ui/Card'
-import ScrollToTop from 'components/ui/ScrollToTop'
 import Section from 'components/ui/Section'
 import classnames, { margin, space, width } from 'classnames/tailwind'
+import useScrollToTop from 'hooks/useScrollToTop'
 
 const cardWrapper = classnames(margin('mx-auto'), width('w-fit'))
 
 export default function () {
+  useScrollToTop()
+
   return (
     <div className={cardWrapper}>
       <Card shadow onlyWrap color="primary">

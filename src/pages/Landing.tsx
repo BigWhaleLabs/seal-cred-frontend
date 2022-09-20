@@ -6,7 +6,6 @@ import InitialCard from 'components/landing/InitialCard'
 import LearnMoreCard from 'components/landing/LearnMoreCard'
 import OrbsInBoxes from 'components/landing/OrbsInBoxes'
 import ScrollDownButton from 'components/landing/ScrollDownButton'
-import ScrollToTop from 'components/ui/ScrollToTop'
 import SuperHr from 'icons/SuperHr'
 import SuperOrbWithConnectors from 'icons/SuperOrbWithConnectors'
 import TopConnectors from 'icons/TopConnectors'
@@ -27,6 +26,7 @@ import classnames, {
   zIndex,
 } from 'classnames/tailwind'
 import useScrollPercent from 'hooks/useScrollPercent'
+import useScrollToTop from 'hooks/useScrollToTop'
 
 const pageBox = classnames(
   display('flex'),
@@ -83,6 +83,7 @@ const middleConnectorsBlock = classnames(
 export default function () {
   const scroll = useScrollPercent()
   const animEnd = scroll > 0.645
+  useScrollToTop()
 
   return (
     <div className={pageBox}>
@@ -124,7 +125,6 @@ export default function () {
       <BuildingIdentitiesCard />
       <SuperHr />
       <LearnMoreCard />
-      <ScrollToTop />
     </div>
   )
 }
