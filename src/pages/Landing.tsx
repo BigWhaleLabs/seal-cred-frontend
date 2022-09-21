@@ -26,6 +26,7 @@ import classnames, {
   zIndex,
 } from 'classnames/tailwind'
 import useScrollPercent from 'hooks/useScrollPercent'
+import useScrollToTop from 'hooks/useScrollToTop'
 
 const pageBox = classnames(
   display('flex'),
@@ -82,6 +83,7 @@ const middleConnectorsBlock = classnames(
 export default function () {
   const scroll = useScrollPercent()
   const animEnd = scroll > 0.645
+  useScrollToTop()
 
   return (
     <div className={pageBox}>

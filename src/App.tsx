@@ -7,7 +7,6 @@ import LazyComponent from 'components/ui/LazyComponent'
 import Navbar from 'components/navbar/Navbar'
 import Privacy from 'pages/Privacy'
 import Root from 'components/ui/Root'
-import ScrollToTop from 'components/ui/ScrollToTop'
 import Terms from 'pages/Terms'
 import classnames, {
   display,
@@ -38,45 +37,43 @@ export default function () {
   return (
     <Root>
       <Router>
-        <ScrollToTop>
-          <div className={pageContainer}>
-            <Announcement redirectTo="/email" />
-            <Navbar />
-            <div className={bodyContainer}>
-              <Routes>
-                <Route
-                  path="/email"
-                  element={<LazyComponent lazyImported={<EmailProof />} />}
-                />
-                <Route
-                  path="/:derivativeAddress/:tokenId"
-                  element={<LazyComponent lazyImported={<OwnedBadge />} />}
-                />
-                <Route
-                  path="/"
-                  element={<LazyComponent lazyImported={<Landing />} />}
-                />
-                <Route
-                  path="/app"
-                  element={<LazyComponent lazyImported={<Main />} />}
-                />
-                <Route
-                  path="/terms"
-                  element={<LazyComponent lazyImported={<Terms />} />}
-                />
-                <Route
-                  path="/privacy"
-                  element={<LazyComponent lazyImported={<Privacy />} />}
-                />
-                <Route
-                  path="*"
-                  element={<LazyComponent lazyImported={<NotFound />} />}
-                />
-              </Routes>
-            </div>
-            <Footer />
+        <div className={pageContainer}>
+          <Announcement redirectTo="/email" />
+          <Navbar />
+          <div className={bodyContainer}>
+            <Routes>
+              <Route
+                path="/email"
+                element={<LazyComponent lazyImported={<EmailProof />} />}
+              />
+              <Route
+                path="/:derivativeAddress/:tokenId"
+                element={<LazyComponent lazyImported={<OwnedBadge />} />}
+              />
+              <Route
+                path="/"
+                element={<LazyComponent lazyImported={<Landing />} />}
+              />
+              <Route
+                path="/app"
+                element={<LazyComponent lazyImported={<Main />} />}
+              />
+              <Route
+                path="/terms"
+                element={<LazyComponent lazyImported={<Terms />} />}
+              />
+              <Route
+                path="/privacy"
+                element={<LazyComponent lazyImported={<Privacy />} />}
+              />
+              <Route
+                path="*"
+                element={<LazyComponent lazyImported={<NotFound />} />}
+              />
+            </Routes>
           </div>
-        </ScrollToTop>
+          <Footer />
+        </div>
         <ToastContainer position="bottom-right" theme="dark" />
       </Router>
     </Root>
