@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'preact/compat'
 import { NavLink } from 'react-router-dom'
 import {
   TDropShadow,
@@ -23,7 +24,6 @@ import {
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
 import Color from 'models/Color'
-import React from 'preact/compat'
 import classNamesToString from 'helpers/classNamesToString'
 import colorToTextColor from 'helpers/colors/colorToTextColor'
 
@@ -425,7 +425,7 @@ const textButton = (small?: boolean, center?: boolean) =>
     cursor('cursor-pointer')
   )
 export function TextButton(
-  props: React.HTMLAttributes<HTMLSpanElement> & {
+  props: HTMLAttributes<HTMLSpanElement> & {
     small?: boolean
     center?: boolean
   }
