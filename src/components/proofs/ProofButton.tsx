@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'preact/compat'
 import {
   alignItems,
   classnames,
@@ -32,7 +33,7 @@ export default function ({
   children,
   disabled,
   ...rest
-}: React.HTMLAttributes<HTMLButtonElement>) {
+}: HTMLAttributes<HTMLButtonElement>) {
   return (
     <button className={button(disabled)} disabled={disabled} {...rest}>
       {typeof children === 'string' ? <>{children}</> : children}

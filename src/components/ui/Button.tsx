@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'preact/compat'
 import {
   alignItems,
   backgroundClip,
@@ -32,7 +33,6 @@ import {
 } from 'classnames/tailwind'
 import Arrow from 'icons/Arrow'
 import Loading from 'icons/Loading'
-import React from 'react'
 
 const commonClasses = (
   type: ButtonType,
@@ -175,7 +175,7 @@ export default function ({
   loadingOverflow,
   url,
   ...rest
-}: Omit<React.HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
+}: Omit<HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   const showContent = !loadingOverflow || !loading
   const available = !loading && !disabled
 
