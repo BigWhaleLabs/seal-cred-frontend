@@ -20,13 +20,11 @@ const valueWrapper = (alternativeStyle?: boolean, isDifferent?: boolean) =>
     display('flex'),
     alignItems('items-center'),
     gap('gap-x-1'),
-    backgroundColor(
-      isDifferent
-        ? 'bg-secondary'
-        : alternativeStyle
-        ? 'bg-primary-semi-dimmed'
-        : 'bg-primary-dimmed'
-    ),
+    backgroundColor({
+      'bg-secondary': isDifferent,
+      'bg-primary-semi-dimmed': alternativeStyle,
+      'bg-primary-dimmed': !(alternativeStyle && isDifferent),
+    }),
     borderRadius('rounded-3xl'),
     alignItems('items-center'),
     padding(alternativeStyle ? 'p-4' : { 'px-2': true, 'py-1': true }),
