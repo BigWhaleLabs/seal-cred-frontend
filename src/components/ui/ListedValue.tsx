@@ -1,3 +1,4 @@
+import { displayFrom, displayTo } from 'helpers/visibilityClassnames'
 import { truncateMiddleIfNeeded } from '@big-whale-labs/frontend-utils'
 import Cross from 'icons/Cross'
 import classnames, {
@@ -12,7 +13,6 @@ import classnames, {
   textColor,
   width,
 } from 'classnames/tailwind'
-import useBreakpoints from 'hooks/useBreakpoints'
 
 const valueWrapper = (alternativeStyle?: boolean, isDifferent?: boolean) =>
   classnames(
@@ -34,6 +34,13 @@ const valueWrapper = (alternativeStyle?: boolean, isDifferent?: boolean) =>
   )
 const crossWrapper = classnames(width('w-4'), cursor('cursor-pointer'))
 
+const TruncatedTitle = ({ title }: { title: string }) => (
+  <>
+    <div className={displayFrom('sm')}>{truncateMiddleIfNeeded(title, 16)}</div>
+    <div className={displayTo('sm')}>{truncateMiddleIfNeeded(title, 12)}</div>
+  </>
+)
+
 export default function ({
   title,
   index,
@@ -49,12 +56,10 @@ export default function ({
   index?: number
   isDifferent?: boolean
 }) {
-  const { xs, sm } = useBreakpoints()
-
   return (
     <div className={valueWrapper(!!fileName, isDifferent)}>
-      {truncateMiddleIfNeeded(title, sm ? 16 : 12)}
-      {xs ? emailsAmount : undefined}
+      <TruncatedTitle title={title} />
+      <div className={displayFrom('xs')}>{emailsAmount}</div>
       <div
         className={crossWrapper}
         onClick={() => removeValueFromList(fileName, index)}
