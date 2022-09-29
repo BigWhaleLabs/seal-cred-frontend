@@ -18,7 +18,6 @@ import classnames, {
   margin,
   maxHeight,
   outlineColor,
-  outlineOffset,
   outlineStyle,
   overflow,
   padding,
@@ -59,8 +58,7 @@ const inputContainer = (error?: boolean, disabled?: boolean) =>
     flex('flex-1'),
     backgroundColor('bg-transparent'),
     borderRadius('rounded-md'),
-    outlineOffset('outline-2'),
-    outlineStyle('outline-none'),
+    outlineStyle('outline-none', 'focus-visible:outline-none'),
     outlineColor(error ? 'focus:outline-error-dark' : 'focus:outline-primary'),
     textColor(
       disabled
