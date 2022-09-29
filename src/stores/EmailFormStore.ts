@@ -101,11 +101,8 @@ class EmailFormStore {
   }
 
   private setAllIsNotSameDomain() {
-    for (const emails of Object.values(this.emailMapping)) {
-      for (const email of emails) {
-        email.isOtherDomain = false
-      }
-    }
+    for (const emails of Object.values(this.emailMapping))
+      for (const email of emails) email.isOtherDomain = false
   }
 
   private removeMappingIfEmpty(fileName: string) {
