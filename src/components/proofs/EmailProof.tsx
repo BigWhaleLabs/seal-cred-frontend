@@ -137,7 +137,11 @@ export default function () {
               </ToolTip>
             </div>
           </div>
-          <button className={arrowContainer} onClick={() => setOpen(!open)}>
+          <button
+            className={arrowContainer}
+            onClick={() => setOpen(!open)}
+            disabled={generationStarted}
+          >
             <span className={getStartedText(open)}>
               <span>{domain ? 'Set token' : 'Get started'}</span>
             </span>
