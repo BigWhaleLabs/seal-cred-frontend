@@ -4,6 +4,7 @@ import { sendEmails } from 'helpers/proofs/attestor'
 import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/ui/EmailForm'
+import EmailFormStore from 'stores/EmailFormStore'
 import ProofModel from 'models/Proof'
 import TextForm from 'components/ui/TextForm'
 import checkDomainToken from 'helpers/proofs/checkDomainToken'
@@ -75,7 +76,11 @@ export default function ({
         domain,
         { secret }
       )
-      if (proof) onCreate(proof)
+
+      if (proof) {
+        EmailFormStore.emailMapping = {}
+        onCreate(proof)
+      }
     } finally {
       setLoading(false)
       resetEmail(true)

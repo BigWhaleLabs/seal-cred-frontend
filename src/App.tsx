@@ -33,6 +33,8 @@ const bodyContainer = classnames(
   margin('my-7', 'xxs:mx-auto', 'tablet:mt-0', 'tablet:mb-auto')
 )
 
+// TODO: block categories and open-close email form when sending emails/generating proofs
+
 export default function () {
   return (
     <Root>
