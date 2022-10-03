@@ -29,6 +29,7 @@ module.exports = {
         'app-card': '70vh',
       },
       maxWidth: {
+        14: '3.5rem',
         100: '6.25rem',
         'app-card': '42.125rem',
       },
