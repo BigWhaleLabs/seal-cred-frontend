@@ -1723,6 +1723,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@coinbase/wallet-sdk@npm:^3.5.3":
+  version: 3.5.3
+  resolution: "@coinbase/wallet-sdk@npm:3.5.3"
+  dependencies:
+    "@metamask/safe-event-emitter": 2.0.0
+    "@solana/web3.js": 1.52.0
+    bind-decorator: ^1.0.11
+    bn.js: ^5.1.1
+    buffer: ^6.0.3
+    clsx: ^1.1.0
+    eth-block-tracker: 4.4.3
+    eth-json-rpc-filters: 4.2.2
+    eth-rpc-errors: 4.0.2
+    json-rpc-engine: 6.1.0
+    keccak: ^3.0.1
+    preact: ^10.5.9
+    qs: ^6.10.3
+    rxjs: ^6.6.3
+    sha.js: ^2.4.11
+    stream-browserify: ^3.0.0
+    util: ^0.12.4
+  checksum: 191a618f8ff210c17e9615b9908233308f576248a8b85b918f81f1d2ffd1743a67a87c021ec4e32f55393b61ffc9b67bef5cb25f2ca4f13f1d6866e48735264d
+  languageName: node
+  linkType: hard
+
 "@colors/colors@npm:1.5.0, @colors/colors@npm:^1.5.0":
   version: 1.5.0
   resolution: "@colors/colors@npm:1.5.0"
@@ -4701,6 +4726,23 @@ __metadata:
     "@typescript-eslint/types": 5.37.0
     eslint-visitor-keys: ^3.3.0
   checksum: d6193550f77413aead0cb267e058df80b80a488c8fb4e39beb5f0a70b971c41682a6391903fbc5f3dd859a872016288c434d631b8efc3ac5a04edbdb7b63b5f6
+  languageName: node
+  linkType: hard
+
+"@upacyxou/stores@npm:^0.2.23":
+  version: 0.2.23
+  resolution: "@upacyxou/stores@npm:0.2.23"
+  dependencies:
+    "@big-whale-labs/constants": ^0.1.29
+    "@big-whale-labs/frontend-utils": ^0.0.10
+    "@big-whale-labs/seal-cred-ledger-contract": ^0.2.8
+    "@coinbase/wallet-sdk": ^3.5.3
+    "@walletconnect/web3-provider": ^1.8.0
+    ethers: ^5.7.0
+    secure-ls: ^1.2.6
+    valtio: ^1.7.0
+    web3modal: ^1.9.9
+  checksum: 84a6d1d9977e8a6fba9a9e0f9d0f37b68f7c67e9b5865144ebbe7a482a6d19a77dbe54dbd2acc3ff3ef1e4ec1ff0d802265a8a274acc5a63ba7796a813403c84
   languageName: node
   linkType: hard
 
@@ -16884,6 +16926,7 @@ __metadata:
     "@types/entropy-string": ^4.2.0
     "@typescript-eslint/eslint-plugin": ^5.37.0
     "@typescript-eslint/parser": ^5.37.0
+    "@upacyxou/stores": ^0.2.23
     "@vitejs/plugin-react": ^2.1.0
     "@walletconnect/web3-provider": ^1.8.0
     assert-browserify: ^2.0.0
@@ -18372,11 +18415,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.8.3#~builtin<compat/typescript>":
   version: 4.8.3
-  resolution: "typescript@patch:typescript@npm%3A4.8.3#~builtin<compat/typescript>::version=4.8.3&hash=a1c5e5"
+  resolution: "typescript@patch:typescript@npm%3A4.8.3#~builtin<compat/typescript>::version=4.8.3&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 2222d2382fb3146089b1d27ce2b55e9d1f99cc64118f1aba75809b693b856c5d3c324f052f60c75b577947fc538bc1c27bad0eb76cbdba9a63a253489504ba7e
+  checksum: 0404a09c625df01934ef774b45ce1ca57ccae41cd625fcdbb82056715320d9329e70d9d75c2c732ec6ef947444ca978c189a332b71fa21f5c1437d5a83e24906
   languageName: node
   linkType: hard
 
