@@ -5,11 +5,11 @@ import classnames, {
   alignItems,
   backgroundColor,
   display,
+  gap,
   inset,
   justifyContent,
   padding,
   position,
-  space,
   transitionProperty,
   zIndex,
 } from 'classnames/tailwind'
@@ -23,7 +23,7 @@ const navbar = (visible?: boolean, withoutRightBlock?: boolean) =>
     alignItems('items-center'),
     justifyContent(withoutRightBlock ? 'sm:justify-center' : 'justify-between'),
     padding('p-4', 'lg:px-25'),
-    space('space-x-2', 'lg:space-x-0'),
+    gap('gap-x-2', 'lg:gap-x-0'),
     zIndex('z-50'),
     backgroundColor(visible ? 'bg-primary-dark' : 'bg-transparent'),
     transitionProperty('transition-all')
