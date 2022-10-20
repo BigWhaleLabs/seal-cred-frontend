@@ -35,7 +35,7 @@ export default function ({
   ...rest
 }: HTMLAttributes<HTMLButtonElement>) {
   return (
-    <button className={button(disabled)} disabled={disabled} {...rest}>
+    <button className={button(!!disabled)} disabled={disabled} {...rest}>
       {typeof children === 'string' ? <>{children}</> : children}
     </button>
   )
