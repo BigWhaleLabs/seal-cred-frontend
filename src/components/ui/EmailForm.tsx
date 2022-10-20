@@ -28,7 +28,7 @@ export default function ({
   const emailsAmount = emailList.length
   const listIsValid = emailsAmount > 9
 
-  const submitText = `Submit ${listIsValid && emailsAmount} emails`
+  const submitText = `Submit ${emailsAmount} emails`
 
   return (
     <>
