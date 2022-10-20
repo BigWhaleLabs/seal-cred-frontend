@@ -31,8 +31,6 @@
     "@formkit/auto-animate": "^1.0.0-beta.3",
     "@lottiefiles/react-lottie-player": "^3.4.7",
     "@material-tailwind/react": "^1.2.4",
-    "@opengsn/common": "3.0.0-beta.1",
-    "@opengsn/contracts": "3.0.0-beta.1",
     "@opengsn/provider": "3.0.0-beta.1",
     "@walletconnect/web3-provider": "^1.8.0",
     "assert-browserify": "^2.0.0",
@@ -89,5 +87,9 @@
     "vite-plugin-remove-console": "^1.1.0",
     "vite-tsconfig-paths": "^3.5.0"
   },
-  "packageManager": "yarn@3.2.3"
+  "packageManager": "yarn@3.2.3",
+  "resolutions": {
+    "@opengsn/provider/@opengsn/common": "3.0.0-beta.1",
+    "@opengsn/provider/@opengsn/contracts": "3.0.0-beta.1"
+  }
 }
