@@ -34,6 +34,8 @@ const bodyContainer = classnames(
 )
 
 // TODO: block categories and open-close email form when sending emails/generating proofs
+// TODO: use SET<> for emails or Map<> for better safety
+// TODO: fix bug, when you add wrong domain and then add correct one, it doesn't will not show incorrect message
 
 export default function () {
   return (
