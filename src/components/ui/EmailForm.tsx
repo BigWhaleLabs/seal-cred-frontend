@@ -1,5 +1,5 @@
 import { AccentText } from 'components/ui/Text'
-import { textAlign, width } from 'classnames/tailwind'
+import { textAlign } from 'classnames/tailwind'
 import { useSnapshot } from 'valtio'
 import Button from 'components/ui/Button'
 import Email from 'icons/Email'
@@ -32,11 +32,7 @@ export default function ({
   return (
     <>
       <Input
-        leftIcon={
-          <div className={width('w-3.5')}>
-            <Email />
-          </div>
-        }
+        leftIcon={<Email />}
         placeholder={emailsAmount ? `${emailsAmount} / 10+` : placeholder}
         value={inputEmail}
         valueList={EmailFormStore.emailMapping}

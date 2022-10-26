@@ -70,7 +70,7 @@ const inputContainer = (error?: boolean, disabled?: boolean) =>
     ),
     width('w-32', 'xxs:w-fit')
   )
-const iconStyles = classnames(height('h-full'), margin('mr-2'))
+const iconStyles = classnames(height('h-full'), margin('mr-2'), width('w-3.5'))
 
 export default function ({
   value,
