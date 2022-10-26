@@ -19,14 +19,12 @@ export default function ({
   onSubmit: (emails: readonly string[]) => void
   placeholder?: string
 }) {
-  const { inputEmail, hasDifferentDomains, emailMapping } = useSnapshot(
+  const { inputEmail, hasDifferentDomains, emailList } = useSnapshot(
     EmailFormStore,
     { sync: true }
   )
 
-  const emailList = Object.values(emailMapping)
-    .flat()
-    .map(({ email }) => email)
+  const rawEmails = Object.values(emailList).map(({ email }) => email)
   const emailsAmount = emailList.length
   const listIsValid = emailsAmount > 9
 
@@ -38,7 +36,7 @@ export default function ({
         leftIcon={<Email />}
         placeholder={emailsAmount ? `${emailsAmount} / 10+` : placeholder}
         value={inputEmail}
-        valueList={EmailFormStore.emailMapping}
+        valueList={EmailFormStore.emailList}
         removeValueFromList={(fileName, index) =>
           EmailFormStore.removeEmailsFromList(fileName, index)
         }
@@ -47,7 +45,7 @@ export default function ({
         }
         onKeyDown={({ code }) => {
           if (code === 'Backspace') EmailFormStore.removeLastEmail()
-          if (code === 'Enter' && listIsValid) onSubmit(emailList)
+          if (code === 'Enter' && listIsValid) onSubmit(rawEmails)
         }}
       />
 
@@ -55,7 +53,7 @@ export default function ({
         removeValueFromList={(fileName) =>
           EmailFormStore.removeEmailsFromList(fileName)
         }
-        emailMapping={EmailFormStore.emailMapping}
+        emailList={EmailFormStore.emailList}
       />
 
       {hasDifferentDomains && (
@@ -75,7 +73,7 @@ export default function ({
           center
           type={submitType}
           disabled={!listIsValid}
-          onClick={() => onSubmit(emailList)}
+          onClick={() => onSubmit(rawEmails)}
         >
           {submitText}
         </Button>
@@ -90,7 +88,7 @@ export default function ({
             small
             type={submitType}
             disabled={!listIsValid}
-            onClick={() => onSubmit(emailList)}
+            onClick={() => onSubmit(rawEmails)}
           >
             {submitText}
           </Button>

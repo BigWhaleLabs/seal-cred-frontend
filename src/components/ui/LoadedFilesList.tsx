@@ -1,4 +1,4 @@
-import { EmailMapping, inputFileName } from 'stores/EmailFormStore'
+import { EmailFromList, inputFileName } from 'stores/EmailFormStore'
 import ListedValue from 'components/ui/ListedValue'
 import classnames, { display, flexWrap, gap } from 'classnames/tailwind'
 
@@ -10,19 +10,24 @@ const wrapper = classnames(
 
 export default function ({
   removeValueFromList,
-  emailMapping,
+  emailList,
 }: {
   removeValueFromList: (fileName: string) => void
-  emailMapping: EmailMapping
+  emailList: EmailFromList[]
 }) {
+  const files = emailList.map(({ fileName }) => fileName)
+  const uniqueFiles = [...new Set(files)]
+  const filesWithAmount = uniqueFiles.map((file) => ({
+    fileName: file,
+    amount: emailList.filter(({ fileName }) => file === fileName).length,
+  }))
+
   return (
     <div className={wrapper}>
-      {Object.keys(emailMapping).map((fileName) => {
+      {filesWithAmount.map(({ fileName, amount }) => {
         if (fileName === inputFileName) return null
 
-        const emailsAmount = emailMapping[fileName].length
-        const amountMessage =
-          emailsAmount > 1 ? ` (${emailsAmount} emails)` : ' (1 email)'
+        const amountMessage = amount > 1 ? ` (${amount} emails)` : ' (1 email)'
 
         return (
           <ListedValue

@@ -1,5 +1,5 @@
 import { ComponentChildren } from 'preact'
-import { EmailMapping } from 'stores/EmailFormStore'
+import { EmailFromList } from 'stores/EmailFormStore'
 import { HTMLAttributes } from 'preact/compat'
 import ListedValue from 'components/ui/ListedValue'
 import classNamesToString from 'helpers/classNamesToString'
@@ -83,7 +83,7 @@ export default function ({
 }: {
   leftIcon?: ComponentChildren
   value?: string
-  valueList?: EmailMapping
+  valueList?: EmailFromList[]
   removeValueFromList?: (fileName: string, index: number) => void
   isError?: boolean
   disabled?: boolean
@@ -98,16 +98,14 @@ export default function ({
       {leftIcon && <div className={iconStyles}>{leftIcon}</div>}
       {removeValueFromList &&
         valueList &&
-        Object.keys(valueList).map((fileName) =>
-          valueList[fileName].map(({ email, isOtherDomain }, index) => (
-            <ListedValue
-              title={email}
-              index={index}
-              removeValueFromList={() => removeValueFromList(fileName, index)}
-              isDifferent={isOtherDomain}
-            />
-          ))
-        )}
+        valueList.map(({ email, isOtherDomain, fileName }, index) => (
+          <ListedValue
+            title={email}
+            index={index}
+            removeValueFromList={() => removeValueFromList(fileName, index)}
+            isDifferent={isOtherDomain}
+          />
+        ))}
       <input
         value={value}
         disabled={disabled}

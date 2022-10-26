@@ -12,69 +12,60 @@ function isEmailValidInInput(email: string) {
 
 export const inputFileName = 'input'
 
-export interface EmailMapping {
-  // "input" is reserved fileName
-  [fileName: string]: {
-    email: string
-    isOtherDomain: boolean
-  }[]
+export interface EmailFromList {
+  email: string
+  isOtherDomain: boolean
+  fileName: string
 }
 
 class EmailFormStore {
   inputEmail = ''
-  emailMapping = {} as EmailMapping
+  domainOfTruth = ''
+  emailList = [] as EmailFromList[]
   hasDifferentDomains = false
   warnedAboutDuplicates = false
 
-  private createOrPush(
-    fileName: string,
-    email: string,
-    isOtherDomain: boolean
-  ) {
-    if (this.emailMapping[fileName]) {
-      this.emailMapping[fileName].push({ email, isOtherDomain })
-    } else {
-      this.emailMapping[fileName] = [{ email, isOtherDomain }]
-    }
+  private safePushToList(fileName: string, email: string) {
+    this.checkSameDomain(email)
+    this.emailList.push({
+      email,
+      isOtherDomain: this.hasDifferentDomains,
+      fileName,
+    })
+    this.hasDifferentDomainsInList(true)
   }
 
-  getEmailsArray() {
-    return Object.values(this.emailMapping)
-      .flat()
-      .map(({ email }) => email)
-  }
-
-  private checkSameDomain(fileName?: string, email?: string) {
-    const emailsArray = this.getEmailsArray()
-    const firstEmail = emailsArray[0]
-    if (!firstEmail) return (this.hasDifferentDomains = false)
-
-    // We assume that first domain is domain of truth and compare all others to it
-    const firstDomain = this.getDomain(firstEmail)
-
-    // Checks whole list when we remove email
-    if (!fileName || !email) {
+  private resetDomainOfTruth() {
+    if (!this.emailList.length) {
+      this.domainOfTruth = ''
       this.hasDifferentDomains = false
-      const arrays = Object.values(this.emailMapping)
-
-      for (const emails of arrays)
-        for (const email of emails) {
-          if (this.getDomain(email.email) === firstDomain) continue
-
-          this.hasDifferentDomains = true
-          email.isOtherDomain = true
-        }
-
       return
     }
+    this.domainOfTruth = this.getDomain(this.emailList[0].email)
+  }
 
-    // Checks when we add email
+  private hasDifferentDomainsInList(shouldResetDomainOfTruth = false) {
+    if (shouldResetDomainOfTruth) this.resetDomainOfTruth()
+    this.hasDifferentDomains = false
+
+    for (const email of this.emailList) {
+      if (this.getDomain(email.email) === this.domainOfTruth) {
+        email.isOtherDomain = false
+        continue
+      }
+
+      this.hasDifferentDomains = true
+      email.isOtherDomain = true
+    }
+  }
+
+  private checkSameDomain(email: string) {
+    if (!this.domainOfTruth) this.resetDomainOfTruth()
+
     const inputDomain = this.getDomain(email)
 
-    if (firstDomain === inputDomain) {
-      this.hasDifferentDomains = false
-      return
-    }
+    if (this.domainOfTruth === inputDomain)
+      return (this.hasDifferentDomains = false)
 
     this.hasDifferentDomains = true
   }
@@ -84,13 +75,13 @@ class EmailFormStore {
   }
 
   private checkDuplicates(inputEmail: string, inFile?: boolean) {
-    if (!Object.keys(this.emailMapping)) return true
+    if (!this.emailList.length) return true
 
-    const hasDuplicates = Object.values(this.emailMapping)
-      .flat()
-      .filter(({ email }) => email === inputEmail)
+    const duplicates = this.emailList.filter(
+      ({ email }) => email === inputEmail
+    )
 
-    if (!hasDuplicates.length) return true
+    if (!duplicates.length) return true
 
     if (!this.warnedAboutDuplicates)
       toast.warn("Duplicate emails don't make you more anonymous 👀")
@@ -98,17 +89,11 @@ class EmailFormStore {
     return false
   }
 
-  private deleteFile(fileName: string) {
-    delete this.emailMapping[fileName]
-  }
-
-  private setAllIsNotSameDomain() {
-    for (const emails of Object.values(this.emailMapping))
-      for (const email of emails) email.isOtherDomain = false
-  }
-
-  private removeMappingIfEmpty(fileName: string) {
-    if (!this.emailMapping[fileName].length) this.deleteFile(fileName)
+  private deleteFile(fileNameToDelete: string) {
+    this.emailList = this.emailList.filter(({ fileName }) => {
+      return fileName !== fileNameToDelete
+    })
+    this.hasDifferentDomainsInList(true)
   }
 
   setEmailListFromFile(stringList: string, fileName: string) {
@@ -116,8 +101,7 @@ class EmailFormStore {
       const email = emailArray[0]
       if (!this.checkDuplicates.bind(this)(email, true)) continue
 
-      this.checkSameDomain.bind(this)(fileName, email)
-      this.createOrPush(fileName, email, this.hasDifferentDomains)
+      this.safePushToList.bind(this)(fileName, email)
     }
     this.warnedAboutDuplicates = false
   }
@@ -125,47 +109,27 @@ class EmailFormStore {
   removeLastEmail() {
     if (this.inputEmail) return
 
-    const lastFilename = Array.from(Object.keys(this.emailMapping)).pop()
-    if (!lastFilename) return
-
-    this.emailMapping[lastFilename].pop()
-    this.removeMappingIfEmpty(lastFilename)
-    this.checkSameDomain()
+    this.emailList.pop()
+    this.hasDifferentDomainsInList()
   }
 
-  removeEmailsFromList(fileName: string, index?: number) {
-    if (index === undefined) {
-      // We don't know, if the first email has changed, so we check all of them
-      this.setAllIsNotSameDomain()
+  removeEmailsFromList(fileName: string, indexToRemove?: number) {
+    if (indexToRemove === undefined) {
       this.deleteFile(fileName)
     } else {
-      this.emailMapping[fileName] = this.emailMapping[fileName].filter(
-        (_, indexToCheck) => indexToCheck !== index
-      )
-      // If we remove first email, than we update the domain of truth
-      if (index === 0) this.setAllIsNotSameDomain()
-      this.removeMappingIfEmpty(fileName)
+      this.emailList.splice(indexToRemove, 1)
+      this.hasDifferentDomainsInList(indexToRemove === 0)
     }
-
-    this.checkSameDomain()
   }
 
   safeInputChecker(emailFromInput: string) {
     this.inputEmail = emailFromInput
-    const emailWithoutSeparator = emailFromInput.trim().replace(/[,;]$/, '')
+    const rawEmail = emailFromInput.trim().replace(/[,;]$/, '')
 
-    if (
-      !isEmailValidInInput(this.inputEmail) ||
-      !this.checkDuplicates(emailWithoutSeparator)
-    )
+    if (!isEmailValidInInput(emailFromInput) || !this.checkDuplicates(rawEmail))
       return
 
-    this.checkSameDomain(inputFileName, emailWithoutSeparator)
-    this.createOrPush(
-      inputFileName,
-      emailWithoutSeparator,
-      this.hasDifferentDomains
-    )
+    this.safePushToList(inputFileName, rawEmail)
     this.inputEmail = ''
   }
 }

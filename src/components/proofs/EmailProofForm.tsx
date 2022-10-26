@@ -78,7 +78,7 @@ export default function ({
       )
 
       if (proof) {
-        EmailFormStore.emailMapping = {}
+        EmailFormStore.emailList = []
         onCreate(proof)
       }
     } finally {
