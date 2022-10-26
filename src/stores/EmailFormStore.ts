@@ -10,6 +10,8 @@ function isEmailValidInInput(email: string) {
   return re.test(email)
 }
 
+export const inputFileName = 'input'
+
 export interface EmailMapping {
   // "input" is reserved fileName
   [fileName: string]: {
@@ -36,7 +38,7 @@ class EmailFormStore {
     }
   }
 
-  private getEmailsArray() {
+  getEmailsArray() {
     return Object.values(this.emailMapping)
       .flat()
       .map(({ email }) => email)
@@ -158,10 +160,12 @@ class EmailFormStore {
     )
       return
 
-    const fileName = 'input'
-
-    this.checkSameDomain(fileName, emailWithoutSeparator)
-    this.createOrPush(fileName, emailWithoutSeparator, this.hasDifferentDomains)
+    this.checkSameDomain(inputFileName, emailWithoutSeparator)
+    this.createOrPush(
+      inputFileName,
+      emailWithoutSeparator,
+      this.hasDifferentDomains
+    )
     this.inputEmail = ''
   }
 }

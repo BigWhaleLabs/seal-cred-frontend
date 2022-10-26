@@ -1,4 +1,4 @@
-import { EmailMapping } from 'stores/EmailFormStore'
+import { EmailMapping, inputFileName } from 'stores/EmailFormStore'
 import ListedValue from 'components/ui/ListedValue'
 import classnames, { display, flexWrap, gap } from 'classnames/tailwind'
 
@@ -18,7 +18,7 @@ export default function ({
   return (
     <div className={wrapper}>
       {Object.keys(emailMapping).map((fileName) => {
-        if (fileName === 'input') return null
+        if (fileName === inputFileName) return null
 
         const emailsAmount = emailMapping[fileName].length
         const amountMessage =
