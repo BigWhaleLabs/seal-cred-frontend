@@ -19,11 +19,14 @@ export default function ({
   onSubmit: (emails: readonly string[]) => void
   placeholder?: string
 }) {
-  const { inputEmail, hasDifferentDomains } = useSnapshot(EmailFormStore, {
-    sync: true,
-  })
+  const { inputEmail, hasDifferentDomains, emailMapping } = useSnapshot(
+    EmailFormStore,
+    { sync: true }
+  )
 
-  const emailList = EmailFormStore.getEmailsArray()
+  const emailList = Object.values(emailMapping)
+    .flat()
+    .map(({ email }) => email)
   const emailsAmount = emailList.length
   const listIsValid = emailsAmount > 9
 
