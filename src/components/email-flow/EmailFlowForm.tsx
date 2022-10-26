@@ -8,6 +8,7 @@ import {
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
+import EmailFormStore from 'stores/EmailFormStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import Proof from 'models/Proof'
 import UploadEmailListButton from 'components/ui/UploadEmailListButton'
@@ -33,7 +34,8 @@ export default function EmailFlowForm({
   onUpdateDomain: (domain: string) => void
   onSelectProof: (proof: Proof) => void
 }) {
-  const { emailDomain, loading } = useSnapshot(EmailDomainStore)
+  const { loading } = useSnapshot(EmailFormStore)
+  const { emailDomain } = useSnapshot(EmailDomainStore)
   const [error, setError] = useState<string | undefined>()
 
   function jumpToToken() {
@@ -69,7 +71,10 @@ export default function EmailFlowForm({
               you an email containing a token. You’ll come back here and enter
               your token to receive your zk badge.{' '}
               {emailDomain ? (
-                <TextButton onClick={() => jumpToToken()}>
+                <TextButton
+                  onClick={() => !loading && jumpToToken()}
+                  disabled={loading}
+                >
                   Have an existing token?
                 </TextButton>
               ) : null}

@@ -6,6 +6,7 @@ import Arrow from 'icons/Arrow'
 import Button from 'components/ui/Button'
 import CharInCircle from 'components/ui/CharInCircle'
 import EmailDomainStore from 'stores/EmailDomainStore'
+import EmailFormStore from 'stores/EmailFormStore'
 import EmailProofForm from 'components/proofs/EmailProofForm'
 import Line from 'components/ui/Line'
 import SimpleArrow from 'icons/SimpleArrow'
@@ -79,13 +80,13 @@ const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
   const { urlDomain, urlToken, clearSearchParams } = useUrlParams()
-  const { emailDomain, loading } = useSnapshot(EmailDomainStore)
+  const { emailDomain } = useSnapshot(EmailDomainStore)
+  const { loading } = useSnapshot(EmailFormStore)
 
   const [domain, setDomain] = useState('')
   const [token, setToken] = useState(urlToken)
   const [open, setOpen] = useState(!!urlDomain)
   const [error, setError] = useState<string | undefined>()
-  const [generationStarted, setGenerationStarted] = useState(false)
 
   useEffect(() => {
     if (!urlToken || !urlDomain) return
@@ -97,7 +98,7 @@ export default function () {
   function onCreate() {
     setOpen(false)
     clearData()
-    setGenerationStarted(false)
+    EmailFormStore.loading = false
   }
 
   function clearData() {
@@ -107,6 +108,7 @@ export default function () {
   }
 
   function jumpToToken() {
+    if (loading) return
     setError(undefined)
     setDomain(emailDomain)
   }
@@ -121,7 +123,7 @@ export default function () {
           <div className={emailTitleLeft}>
             {domain && (
               <Button
-                disabled={generationStarted}
+                disabled={loading}
                 type="tertiary"
                 onClick={() => setDomain('')}
               >
@@ -140,7 +142,7 @@ export default function () {
           <button
             className={arrowContainer}
             onClick={() => setOpen(!open)}
-            disabled={generationStarted}
+            disabled={loading}
           >
             <span className={getStartedText(open)}>
               <span>{domain ? 'Set token' : 'Get started'}</span>
@@ -169,10 +171,7 @@ export default function () {
                 <br />
                 We’ll then send you a token to use here for a zk proof.{' '}
                 {!!emailDomain && (
-                  <TextButton
-                    onClick={jumpToToken}
-                    disabled={generationStarted}
-                  >
+                  <TextButton onClick={jumpToToken} disabled={loading}>
                     Have an existing token?
                   </TextButton>
                 )}
@@ -182,7 +181,7 @@ export default function () {
             onChange={setDomain}
             onError={setError}
             error={error}
-            onGenerationStarted={setGenerationStarted}
+            onGenerationStarted={(state) => (EmailFormStore.loading = state)}
           />
         )}
       </div>

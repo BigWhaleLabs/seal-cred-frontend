@@ -4,7 +4,6 @@ import env from 'helpers/env'
 
 class EmailDomainStore extends PersistableStore {
   emailDomain = ''
-  loading = false
 }
 
 export default proxy(new EmailDomainStore()).makePersistent(
