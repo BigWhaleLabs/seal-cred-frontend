@@ -3,6 +3,7 @@ import { truncateMiddleIfNeeded } from '@big-whale-labs/frontend-utils'
 import Cross from 'icons/Cross'
 import classnames, {
   alignItems,
+  animation,
   backgroundColor,
   borderRadius,
   cursor,
@@ -28,6 +29,7 @@ const valueWrapper = (alternativeStyle?: boolean, isDifferent?: boolean) =>
     borderRadius('rounded-3xl'),
     alignItems('items-center'),
     padding(alternativeStyle ? 'p-4' : { 'px-2': true, 'py-1': true }),
+    animation('animate-appear-rtl'),
     height('h-7')
   )
 const crossWrapper = classnames(width('w-4'), cursor('cursor-pointer'))

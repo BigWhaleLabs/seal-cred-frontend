@@ -42,6 +42,10 @@ module.exports = {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
+        'appear-rtl': {
+          '0%': { transform: 'translateX(0.5rem)', opacity: 0 },
+          '100%': { transform: 'translateX(0)', opacity: 1 },
+        },
       },
       fontSize: {
         sm: '0.876rem',
@@ -71,6 +75,7 @@ module.exports = {
       animation: {
         'pulse-horizontal': 'pulse-horizontal 2s ease-in-out infinite',
         'rotate-slow': 'rotate 18s linear infinite',
+        'appear-rtl': 'appear-rtl 0.25s ease-in-out',
       },
       colors: {
         orb: 'var(--orb)',
