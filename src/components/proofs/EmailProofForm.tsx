@@ -1,6 +1,7 @@
 import { ComponentChildren } from 'preact'
 import { TextButton } from 'components/ui/Text'
 import { sendEmails } from 'helpers/proofs/attestor'
+import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/ui/EmailForm'
@@ -35,7 +36,7 @@ export default function ({
   afterSendEmail?: () => void
   onGenerationStarted?: (state: boolean) => void
 }) {
-  const [loading, setLoading] = useState(false)
+  const { loading } = useSnapshot(EmailFormStore)
   const [email, setEmail] = useState<string>('')
   const { xxs } = useBreakpoints()
 
@@ -48,7 +49,7 @@ export default function ({
 
   async function onSendEmails(emails: readonly string[]) {
     onGenerationStarted && onGenerationStarted(true)
-    setLoading(true)
+    EmailFormStore.loading = true
     try {
       await sendEmails(emails)
       afterSendEmail && afterSendEmail()
@@ -56,7 +57,7 @@ export default function ({
       EmailDomainStore.emailDomain = domain
       onChange(domain)
     } finally {
-      setLoading(false)
+      EmailFormStore.loading = false
       onGenerationStarted && onGenerationStarted(false)
     }
   }
@@ -68,7 +69,7 @@ export default function ({
 
     onGenerationStarted && onGenerationStarted(true)
 
-    setLoading(true)
+    EmailFormStore.loading = true
     onError(undefined)
     try {
       const proof = await data['Email'].createProof(
@@ -82,7 +83,7 @@ export default function ({
         onCreate(proof)
       }
     } finally {
-      setLoading(false)
+      EmailFormStore.loading = false
       resetEmail(true)
     }
   }
