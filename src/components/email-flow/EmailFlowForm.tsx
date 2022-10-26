@@ -33,7 +33,7 @@ export default function EmailFlowForm({
   onUpdateDomain: (domain: string) => void
   onSelectProof: (proof: Proof) => void
 }) {
-  const { emailDomain } = useSnapshot(EmailDomainStore)
+  const { emailDomain, loading } = useSnapshot(EmailDomainStore)
   const [error, setError] = useState<string | undefined>()
 
   function jumpToToken() {
@@ -81,7 +81,7 @@ export default function EmailFlowForm({
           onError={setError}
         />
         <div className={uploadButtonWrapper}>
-          <UploadEmailListButton small center />
+          <UploadEmailListButton disabled={loading} small center />
         </div>
         <TinyText color="primary">
           Be sure to check your spam folder if you don’t see the email at first.

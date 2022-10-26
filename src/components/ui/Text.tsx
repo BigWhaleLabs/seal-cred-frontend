@@ -415,14 +415,14 @@ export function TinyText({
   return <div className={tinyText(color, fontPrimary)}>{children}</div>
 }
 
-const textButton = (small?: boolean, center?: boolean) =>
+const textButton = (small?: boolean, center?: boolean, disabled?: boolean) =>
   classnames(
     textAlign({ 'text-center': center }),
     fontSize({ 'text-sm': small }),
     textColor('text-tertiary', 'hover:text-accent'),
     textDecoration('underline'),
-    opacity('disabled:opacity-75'),
-    cursor('cursor-pointer')
+    opacity({ 'opacity-75': disabled }),
+    cursor('cursor-pointer', { 'cursor-default': disabled })
   )
 export function TextButton(
   props: HTMLAttributes<HTMLSpanElement> & {
@@ -430,7 +430,12 @@ export function TextButton(
     center?: boolean
   }
 ) {
-  return <span className={textButton(props.small, props.center)} {...props} />
+  return (
+    <span
+      className={textButton(props.small, props.center, props.disabled)}
+      {...props}
+    />
+  )
 }
 
 const extraBoldText = (small?: boolean, extraLeading?: boolean) =>

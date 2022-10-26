@@ -79,7 +79,7 @@ const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
   const { urlDomain, urlToken, clearSearchParams } = useUrlParams()
-  const { emailDomain } = useSnapshot(EmailDomainStore)
+  const { emailDomain, loading } = useSnapshot(EmailDomainStore)
 
   const [domain, setDomain] = useState('')
   const [token, setToken] = useState(urlToken)
@@ -161,7 +161,10 @@ export default function () {
                 To create a zk proof, add your email. Then add at least 10 or
                 even 100+ other emails with the same domain to increase your
                 anonymity.{' '}
-                <UploadEmailListButton title="You can upload an email list (txt, csv, etc...)" />
+                <UploadEmailListButton
+                  title="You can upload an email list (txt, csv, etc...)"
+                  disabled={loading}
+                />
                 <br />
                 <br />
                 We’ll then send you a token to use here for a zk proof.{' '}

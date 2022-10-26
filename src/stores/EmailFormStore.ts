@@ -21,7 +21,6 @@ export interface EmailFromList {
 class EmailFormStore {
   inputEmail = ''
   domainOfTruth = ''
-  loading = false
   emailList = [] as EmailFromList[]
   hasDifferentDomains = false
   warnedAboutDuplicates = false
