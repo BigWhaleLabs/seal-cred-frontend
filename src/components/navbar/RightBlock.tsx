@@ -1,24 +1,20 @@
-import { SocialLink } from 'components/ui/Text'
-import { displayFrom } from 'helpers/visibilityClassnames'
+import { displayFrom, displayTo } from 'helpers/visibilityClassnames'
 import { useSnapshot } from 'valtio'
 import AccountAndLogo from 'components/navbar/AccountAndLogo'
-import Discord from 'icons/Discord'
+import Delimiter from 'components/navbar/Delimiter'
 import ExternalLink from 'components/ui/ExternalLink'
 import Network from 'models/Network'
 import SealVerse from 'components/navbar/SealVerse'
-import Twitter from 'icons/Twitter'
+import SocialLinks from 'components/navbar/SocialLinks'
 import WalletStore from 'stores/WalletStore'
 import classnames, {
   alignItems,
-  backgroundColor,
-  borderWidth,
   cursor,
   display,
   flexDirection,
   gap,
-  height,
   space,
-  width,
+  whitespace,
 } from 'classnames/tailwind'
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
@@ -27,27 +23,16 @@ const walletContainer = classnames(
   flexDirection('flex-col-reverse', 'xs:flex-row'),
   alignItems('items-center'),
   gap('gap-x-3', 'sm:gap-x-4'),
-  cursor('cursor-pointer')
+  cursor('cursor-pointer'),
+  displayFrom('xs')
 )
 const accountLinkContainer = classnames(
   display('inline-flex'),
   alignItems('items-center'),
   space('xs:space-x-4', 'space-x-2'),
-  cursor('cursor-pointer')
+  cursor('cursor-pointer'),
+  whitespace('whitespace-nowrap')
 )
-const socialContainer = classnames(
-  display('inline-flex'),
-  alignItems('items-center'),
-  space('space-x-4')
-)
-const delimiterContainer = classnames(
-  borderWidth('border-0'),
-  backgroundColor('bg-primary-dimmed'),
-  width('w-px'),
-  height('h-4')
-)
-const lastDelimiterContainer = classnames(delimiterContainer, displayFrom('xs'))
-const socialLinksContainer = classnames(displayFrom('md700'), socialContainer)
 
 const AccountContainer = ({ account }: { account?: string }) => {
   const { needNetworkChange } = useSnapshot(WalletStore)
@@ -80,20 +65,20 @@ export default function () {
   const { account } = useSnapshot(WalletStore)
 
   return (
-    <div className={walletContainer}>
-      <div className={socialLinksContainer}>
-        <SocialLink url="https://discord.gg/NHk96pPZUV">
-          <Discord />
-        </SocialLink>
-        <SocialLink url="https://twitter.com/bigwhalelabs">
-          <Twitter />
-        </SocialLink>
-        <hr className={delimiterContainer} />
+    <>
+      <div className={walletContainer}>
+        <SocialLinks />
+        <SealVerse />
+        <Delimiter />
+        <AccountContainer account={account} />
       </div>
-      <SealVerse />
-      <hr className={lastDelimiterContainer} />
 
-      <AccountContainer account={account} />
-    </div>
+      <div className={displayTo('xs')}>
+        <AccountContainer account={account} />
+      </div>
+      <div className={displayTo('xs')}>
+        <SealVerse />
+      </div>
+    </>
   )
 }

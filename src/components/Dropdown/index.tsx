@@ -1,4 +1,4 @@
-import { createRef } from 'preact'
+import { JSX, createRef } from 'preact'
 import { displayTo } from 'helpers/visibilityClassnames'
 import { useState } from 'preact/hooks'
 import Arrow from 'icons/Arrow'
@@ -63,7 +63,7 @@ export default function ({
   onChange: (selectedValue: string) => void
   displayBeforeMd?: boolean
   disabled?: boolean
-  staticPlaceholder?: string
+  staticPlaceholder?: string | JSX.Element
   fitToItemSize?: boolean
   colorfulCurrentValue?: boolean
 }) {
