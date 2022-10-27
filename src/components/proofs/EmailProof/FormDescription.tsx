@@ -16,24 +16,26 @@ export default function ({
 
   return (
     <>
-      {forFlow ? (
-        `Start by entering your email and at least 10 others (but the more
+      <span>
+        {forFlow ? (
+          `Start by entering your email and at least 10 others (but the more
               you add, like 100+, will improve your anonymity). We’ll then send
               you an email containing a token. You’ll come back here and enter
               your token to receive your zk badge.{' '}`
-      ) : (
-        <>
-          To create a zk proof, add your email. Then add at least 10 or even
-          100+ other emails with the same domain to increase your anonymity.{' '}
-          <UploadEmailListButton
-            title="You can upload an email list (txt, csv, etc...)"
-            disabled={loading}
-          />
-          <br />
-          <br />
-          We’ll then send you a token to use here for a zk proof.{' '}
-        </>
-      )}
+        ) : (
+          <>
+            To create a zk proof, add your email. Then add at least 10 or even
+            100+ other emails with the same domain to increase your anonymity.{' '}
+            <UploadEmailListButton
+              title="You can upload an email list (txt, csv, etc...)"
+              disabled={loading}
+            />
+            <br />
+            <br />
+            We’ll then send you a token to use here for a zk proof.{' '}
+          </>
+        )}
+      </span>
       {!!emailDomain && (
         <TextButton
           onClick={() => !loading && jumpToToken()}
