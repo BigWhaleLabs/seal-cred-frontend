@@ -33,6 +33,8 @@ const bodyContainer = classnames(
   margin('my-7', 'xxs:mx-auto', 'tablet:mt-0', 'tablet:mb-auto')
 )
 
+// TODO: file reader cuts off some emails for unknown reason
+
 export default function () {
   return (
     <Root>
