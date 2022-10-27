@@ -1,30 +1,40 @@
-import classnames, { stroke, strokeWidth, width } from 'classnames/tailwind'
+import {
+  backgroundColor,
+  borderRadius,
+  classnames,
+  stroke,
+  strokeWidth,
+  transitionDuration,
+  transitionProperty,
+  width,
+} from 'classnames/tailwind'
 
-const strokeStyle = classnames(
-  strokeWidth('stroke-2'),
-  stroke('stroke-formal-accent')
-)
+const animationWrapper = (basicSize?: boolean) =>
+  classnames(
+    borderRadius('rounded-full'),
+    backgroundColor('hover:bg-primary-semi-dimmed'),
+    transitionDuration('duration-200'),
+    transitionProperty('transition-colors'),
+    width({ 'w-6': basicSize })
+  )
 
-const svgWrapper = width('w-6')
+export default function ({
+  inheritColor,
+  basicSize = true,
+}: {
+  inheritColor?: boolean
+  basicSize?: boolean
+}) {
+  const strokeStyle = classnames(
+    strokeWidth('stroke-2'),
+    stroke(inheritColor ? 'stroke-current' : 'stroke-formal-accent')
+  )
 
-export default function () {
   return (
-    <div className={svgWrapper}>
+    <div className={animationWrapper(basicSize)}>
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <line
-          className={strokeStyle}
-          x1="5.41421"
-          y1="5"
-          x2="19.0588"
-          y2="18.6446"
-        />
-        <line
-          x1="4.94116"
-          y1="18.6446"
-          x2="18.5858"
-          y2="5.00001"
-          className={strokeStyle}
-        />
+        <line className={strokeStyle} x1="5" y1="5" x2="19.1" y2="18.6" />
+        <line className={strokeStyle} x1="5" y1="18.6" x2="18.6" y2="5" />
       </svg>
     </div>
   )

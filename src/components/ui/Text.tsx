@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'preact/compat'
 import { NavLink } from 'react-router-dom'
 import {
   TDropShadow,
@@ -6,6 +7,7 @@ import {
   backgroundClip,
   backgroundImage,
   classnames,
+  cursor,
   dropShadow,
   fontFamily,
   fontSize,
@@ -413,12 +415,27 @@ export function TinyText({
   return <div className={tinyText(color, fontPrimary)}>{children}</div>
 }
 
-const textButton = classnames(
-  textDecoration('underline'),
-  opacity('disabled:opacity-75')
-)
-export function TextButton(props: React.HTMLAttributes<HTMLButtonElement>) {
-  return <button className={textButton} {...props} />
+const textButton = (small?: boolean, center?: boolean, disabled?: boolean) =>
+  classnames(
+    textAlign({ 'text-center': center }),
+    fontSize({ 'text-sm': small }),
+    textColor('text-tertiary', { 'hover:text-accent': !disabled }),
+    textDecoration('underline'),
+    opacity({ 'opacity-75': disabled }),
+    cursor('cursor-pointer', { 'cursor-default': disabled })
+  )
+export function TextButton(
+  props: HTMLAttributes<HTMLSpanElement> & {
+    small?: boolean
+    center?: boolean
+  }
+) {
+  return (
+    <span
+      className={textButton(props.small, props.center, props.disabled)}
+      {...props}
+    />
+  )
 }
 
 const extraBoldText = (small?: boolean, extraLeading?: boolean) =>

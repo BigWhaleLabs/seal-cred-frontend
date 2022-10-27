@@ -1,19 +1,21 @@
-import { ComponentChildren } from 'preact'
 import { TextButton } from 'components/ui/Text'
-import { sendEmail } from 'helpers/proofs/attestor'
+import { sendEmails } from 'helpers/proofs/attestor'
+import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/ui/EmailForm'
+import EmailFormStore from 'stores/EmailFormStore'
+import FormDescription from 'components/proofs/EmailProof/FormDescription'
 import ProofModel from 'models/Proof'
 import TextForm from 'components/ui/TextForm'
 import checkDomainToken from 'helpers/proofs/checkDomainToken'
 import data from 'data'
 import proofStore from 'stores/ProofStore'
+import useBreakpoints from 'hooks/useBreakpoints'
 
 export default function ({
   domain,
   token,
-  description,
   submitType = 'secondary',
   error,
   onError,
@@ -21,20 +23,24 @@ export default function ({
   onChange,
   afterSendEmail,
   onGenerationStarted,
+  jumpToToken,
+  forFlow,
 }: {
   domain: string
   token?: string
   submitType?: 'primary' | 'secondary' | 'tertiary'
-  description: ComponentChildren
   error: string | undefined
   onError: (error: string | undefined) => void
   onCreate: (proof: ProofModel) => void
   onChange: (domain: string) => void
   afterSendEmail?: () => void
   onGenerationStarted?: (state: boolean) => void
+  jumpToToken: () => void
+  forFlow?: boolean
 }) {
-  const [loading, setLoading] = useState(false)
+  const { loading } = useSnapshot(EmailFormStore)
   const [email, setEmail] = useState<string>('')
+  const { xxs } = useBreakpoints()
 
   function resetEmail(withStore = false) {
     if (withStore) EmailDomainStore.emailDomain = ''
@@ -43,17 +49,17 @@ export default function ({
     onChange('')
   }
 
-  async function onSendEmail(email: string) {
+  async function onSendEmails(emails: string[]) {
     onGenerationStarted && onGenerationStarted(true)
-    setLoading(true)
+    EmailFormStore.loading = true
     try {
-      await sendEmail(email)
+      await sendEmails(emails)
       afterSendEmail && afterSendEmail()
-      const domain = email.split('@')[1]
+      const domain = emails[0].split('@')[1]
       EmailDomainStore.emailDomain = domain
       onChange(domain)
     } finally {
-      setLoading(false)
+      EmailFormStore.loading = false
       onGenerationStarted && onGenerationStarted(false)
     }
   }
@@ -65,7 +71,7 @@ export default function ({
 
     onGenerationStarted && onGenerationStarted(true)
 
-    setLoading(true)
+    EmailFormStore.loading = true
     onError(undefined)
     try {
       const proof = await data['Email'].createProof(
@@ -73,9 +79,13 @@ export default function ({
         domain,
         { secret }
       )
-      if (proof) onCreate(proof)
+
+      if (proof) {
+        EmailFormStore.emailList = []
+        onCreate(proof)
+      }
     } finally {
-      setLoading(false)
+      EmailFormStore.loading = false
       resetEmail(true)
     }
   }
@@ -102,12 +112,11 @@ export default function ({
     </>
   ) : (
     <>
-      <div>{description}</div>
+      <FormDescription forFlow={forFlow} jumpToToken={jumpToToken} />
       <EmailForm
         submitType={submitType}
-        submitText="Submit email"
-        placeholder="Work email..."
-        onSubmit={onSendEmail}
+        placeholder={xxs ? 'Email addresses' : 'Email addresses (minimum 10)'}
+        onSubmit={onSendEmails}
         loading={loading}
       />
     </>

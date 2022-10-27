@@ -1,5 +1,8 @@
 import { ComponentChildren } from 'preact'
+import { EmailFromList } from 'stores/EmailFormStore'
 import { HTMLAttributes } from 'preact/compat'
+import ListedValue from 'components/ui/ListedValue'
+import classNamesToString from 'helpers/classNamesToString'
 import classnames, {
   alignItems,
   backgroundColor,
@@ -7,11 +10,15 @@ import classnames, {
   borderRadius,
   borderWidth,
   display,
+  flex,
   flexDirection,
+  flexWrap,
+  gap,
   height,
-  outlineColor,
-  outlineOffset,
+  margin,
+  maxHeight,
   outlineStyle,
+  overflow,
   padding,
   position,
   textColor,
@@ -23,7 +30,10 @@ const groupContainer = (error?: boolean, disabled?: boolean) =>
     position('relative'),
     display('flex'),
     flexDirection('flex-row'),
-    width('w-full'),
+    flexWrap('flex-wrap'),
+    gap('gap-1.5'),
+    padding('p-2', 'xxs:p-3'),
+    alignItems('items-center'),
     backgroundColor(error ? 'bg-primary-dark-red' : 'bg-primary-dark'),
     borderColor(
       disabled
@@ -36,30 +46,18 @@ const groupContainer = (error?: boolean, disabled?: boolean) =>
     ),
     borderWidth('border'),
     borderRadius('rounded-md'),
-    height('h-12')
+    overflow('overflow-y-auto'),
+    maxHeight('max-h-32'),
+    height('h-fit')
   )
 
-const iconContainer = classnames(
-  position('absolute'),
-  height('h-full'),
-  display('flex'),
-  alignItems('items-center'),
-  padding('pl-3')
-)
-
-const inputContainer = (
-  hasIcon?: boolean,
-  error?: boolean,
-  disabled?: boolean
-) =>
+const inputContainer = (error?: boolean, disabled?: boolean) =>
   classnames(
-    width('w-full'),
-    padding(hasIcon ? 'pl-10' : 'pl-3'),
+    display('flex'),
+    flex('flex-1'),
     backgroundColor('bg-transparent'),
     borderRadius('rounded-md'),
-    outlineOffset('outline-2'),
-    outlineStyle('outline-none'),
-    outlineColor(error ? 'focus:outline-error-dark' : 'focus:outline-primary'),
+    outlineStyle('outline-none', 'focus-visible:outline-none'),
     textColor(
       disabled
         ? error
@@ -69,11 +67,15 @@ const inputContainer = (
         ? 'text-error'
         : 'text-formal-accent',
       'focus:text-formal-accent'
-    )
+    ),
+    width('w-32', 'xxs:w-fit')
   )
+const iconStyles = classnames(height('h-full'), margin('mr-2'), width('w-3.5'))
 
 export default function ({
   value,
+  valueList,
+  removeValueFromList,
   leftIcon,
   isError,
   disabled,
@@ -81,16 +83,33 @@ export default function ({
 }: {
   leftIcon?: ComponentChildren
   value?: string
+  valueList?: EmailFromList[]
+  removeValueFromList?: (fileName: string, index: number) => void
   isError?: boolean
   disabled?: boolean
 } & HTMLAttributes<HTMLInputElement>) {
   return (
-    <div className={groupContainer(isError, disabled)}>
-      {leftIcon && <div className={iconContainer}>{leftIcon}</div>}
+    <div
+      className={classNamesToString(
+        groupContainer(isError, disabled),
+        'blue-scrollbar'
+      )}
+    >
+      {leftIcon && <div className={iconStyles}>{leftIcon}</div>}
+      {removeValueFromList &&
+        valueList &&
+        valueList.map(({ email, isOtherDomain, fileName }, index) => (
+          <ListedValue
+            title={email}
+            index={index}
+            removeValueFromList={() => removeValueFromList(fileName, index)}
+            isDifferent={isOtherDomain}
+          />
+        ))}
       <input
         value={value}
         disabled={disabled}
-        className={inputContainer(!!leftIcon, isError, disabled)}
+        className={inputContainer(isError, disabled)}
         {...rest}
       />
     </div>

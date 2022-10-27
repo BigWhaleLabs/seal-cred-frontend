@@ -122,6 +122,28 @@ circle {
   background-clip: content-box;
   border: 4px solid transparent;
 }
+.blue-scrollbar {
+  scrollbar-color: var(--primary) transparent;
+  scrollbar-width: thin;
+}
+.blue-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.blue-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+.blue-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+  background-clip: content-box;
+  border: 4px solid transparent;
+}
+.blue-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+  border-radius: 10px;
+  background-clip: content-box;
+  border: 3.5px solid transparent;
+}
 
 @keyframes tertiarySphereAnimation {
   20% {

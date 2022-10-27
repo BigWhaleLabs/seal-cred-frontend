@@ -1,4 +1,4 @@
-import { ProofText, TextButton } from 'components/ui/Text'
+import { ProofText } from 'components/ui/Text'
 import { displayFrom } from 'helpers/visibilityClassnames'
 import { useEffect, useState } from 'preact/hooks'
 import { useSnapshot } from 'valtio'
@@ -6,7 +6,8 @@ import Arrow from 'icons/Arrow'
 import Button from 'components/ui/Button'
 import CharInCircle from 'components/ui/CharInCircle'
 import EmailDomainStore from 'stores/EmailDomainStore'
-import EmailProofForm from 'components/proofs/EmailProofForm'
+import EmailFormStore from 'stores/EmailFormStore'
+import EmailProofForm from 'components/proofs/EmailProof/EmailProofForm'
 import Line from 'components/ui/Line'
 import SimpleArrow from 'icons/SimpleArrow'
 import Sizes from 'models/MarkSizes'
@@ -79,12 +80,12 @@ const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 export default function () {
   const { urlDomain, urlToken, clearSearchParams } = useUrlParams()
   const { emailDomain } = useSnapshot(EmailDomainStore)
+  const { loading } = useSnapshot(EmailFormStore)
 
   const [domain, setDomain] = useState('')
   const [token, setToken] = useState(urlToken)
   const [open, setOpen] = useState(!!urlDomain)
   const [error, setError] = useState<string | undefined>()
-  const [generationStarted, setGenerationStarted] = useState(false)
 
   useEffect(() => {
     if (!urlToken || !urlDomain) return
@@ -96,7 +97,7 @@ export default function () {
   function onCreate() {
     setOpen(false)
     clearData()
-    setGenerationStarted(false)
+    EmailFormStore.loading = false
   }
 
   function clearData() {
@@ -106,12 +107,13 @@ export default function () {
   }
 
   function jumpToToken() {
+    if (loading) return
     setError(undefined)
     setDomain(emailDomain)
   }
 
   const popoverText =
-    'When you submit your email, we create a token out of your email’s domain. You can then use that token to create a zk proof. Once made, that zk proof will allow you to mint a zkBadge for your wallet.'
+    'When you submit emails, we create a token out of the domain. You can then use that token to create a zk proof. Once made, that zk proof will allow you to mint a zk badge for your wallet.'
 
   return (
     <Line breakWords>
@@ -120,7 +122,7 @@ export default function () {
           <div className={emailTitleLeft}>
             {domain && (
               <Button
-                disabled={generationStarted}
+                disabled={loading}
                 type="tertiary"
                 onClick={() => setDomain('')}
               >
@@ -140,9 +142,7 @@ export default function () {
             <span className={getStartedText(open)}>
               <span>{domain ? 'Set token' : 'Get started'}</span>
             </span>
-            <div className={width('w-4')}>
-              <Arrow pulseDisabled open={open} />
-            </div>
+            <Arrow pulseDisabled open={open} />
           </button>
         </div>
         {open && (
@@ -151,26 +151,12 @@ export default function () {
             token={token}
             submitType="secondary"
             afterSendEmail={clearData}
-            description={
-              <>
-                Add your work email and we’ll send you a token for that email
-                (check the spam folder). Then, use the token here to create zk
-                proof.{' '}
-                {!!emailDomain && (
-                  <TextButton
-                    onClick={jumpToToken}
-                    disabled={generationStarted}
-                  >
-                    Have an existing token?
-                  </TextButton>
-                )}
-              </>
-            }
             onCreate={onCreate}
             onChange={setDomain}
             onError={setError}
-            onGenerationStarted={setGenerationStarted}
             error={error}
+            onGenerationStarted={(state) => (EmailFormStore.loading = state)}
+            jumpToToken={jumpToToken}
           />
         )}
       </div>

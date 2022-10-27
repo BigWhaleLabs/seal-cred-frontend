@@ -1,18 +1,23 @@
-import {
-  AccentText,
-  BodyText,
-  HeaderText,
-  TextButton,
-  TinyText,
-} from 'components/ui/Text'
+import { AccentText, BodyText, HeaderText, TinyText } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
-import EmailProofForm from 'components/proofs/EmailProofForm'
+import EmailFormStore from 'stores/EmailFormStore'
+import EmailProofForm from 'components/proofs/EmailProof/EmailProofForm'
 import Proof from 'models/Proof'
-import classnames, { space, width } from 'classnames/tailwind'
+import UploadEmailListButton from 'components/ui/UploadEmailListButton'
+import classnames, {
+  display,
+  justifyContent,
+  space,
+  width,
+} from 'classnames/tailwind'
 
 const proofLineContainer = classnames(space('space-y-4'), width('w-full'))
+const uploadButtonWrapper = classnames(
+  display('flex'),
+  justifyContent('justify-center')
+)
 
 export default function EmailFlowForm({
   domain,
@@ -23,6 +28,7 @@ export default function EmailFlowForm({
   onUpdateDomain: (domain: string) => void
   onSelectProof: (proof: Proof) => void
 }) {
+  const { loading } = useSnapshot(EmailFormStore)
   const { emailDomain } = useSnapshot(EmailDomainStore)
   const [error, setError] = useState<string | undefined>()
 
@@ -52,23 +58,16 @@ export default function EmailFlowForm({
         <EmailProofForm
           domain={domain}
           submitType="primary"
-          description={
-            <>
-              Start by entering your email. We’ll then send you an email
-              containing a token. You’ll come back here and enter your token to
-              receive your zkBadge.{' '}
-              {emailDomain ? (
-                <TextButton onClick={() => jumpToToken()}>
-                  Have an existing token?
-                </TextButton>
-              ) : null}
-            </>
-          }
           onChange={onUpdateDomain}
           onCreate={onSelectProof}
           error={error}
           onError={setError}
+          jumpToToken={jumpToToken}
+          forFlow
         />
+        <div className={uploadButtonWrapper}>
+          <UploadEmailListButton disabled={loading} small center />
+        </div>
         <TinyText color="primary">
           Be sure to check your spam folder if you don’t see the email at first.
         </TinyText>
