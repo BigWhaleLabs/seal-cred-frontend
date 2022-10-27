@@ -64,7 +64,7 @@ export default function ({
         className={crossWrapper}
         onClick={() => removeValueFromList(fileName, index)}
       >
-        <Cross inheritColor={isDifferent} />
+        <Cross inheritColor={isDifferent} basicSize={false} />
       </div>
     </div>
   )

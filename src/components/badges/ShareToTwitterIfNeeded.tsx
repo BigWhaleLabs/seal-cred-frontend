@@ -15,7 +15,6 @@ import classnames, {
   justifyContent,
   margin,
   padding,
-  width,
 } from 'classnames/tailwind'
 
 const wideBlock = classnames(
@@ -61,9 +60,7 @@ function ShareToTwitterIfNeededSuspended() {
           className={margin('ml-auto', 'xs:ml-0')}
           onClick={closeNotification}
         >
-          <div className={width('w-6')}>
-            <Cross />
-          </div>
+          <Cross />
         </button>
       </div>
     </div>

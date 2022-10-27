@@ -21,7 +21,6 @@ import classnames, {
   transitionDuration,
   transitionProperty,
   transitionTimingFunction,
-  width,
 } from 'classnames/tailwind'
 import walletStore from 'stores/WalletStore'
 
@@ -92,9 +91,7 @@ export default function ({ redirectTo }: { redirectTo: string }) {
           }}
           className={margin('lg:ml-auto', 'ml-6')}
         >
-          <div className={width('w-6')}>
-            <Cross />
-          </div>
+          <Cross />
         </Button>
       </div>
     </div>
