@@ -1,6 +1,7 @@
 import { EmailFromList, inputFileName } from 'stores/EmailFormStore'
 import ListedValue from 'components/ui/ListedValue'
 import classnames, { display, flexWrap, gap } from 'classnames/tailwind'
+import getFilesWithAmount from 'helpers/getFilesWithAmount'
 
 const wrapper = classnames(
   display('flex'),
@@ -15,12 +16,7 @@ export default function ({
   removeValueFromList: (fileName: string) => void
   emailList: EmailFromList[]
 }) {
-  const files = emailList.map(({ fileName }) => fileName)
-  const uniqueFiles = [...new Set(files)]
-  const filesWithAmount = uniqueFiles.map((file) => ({
-    fileName: file,
-    amount: emailList.filter(({ fileName }) => file === fileName).length,
-  }))
+  const filesWithAmount = getFilesWithAmount(emailList)
 
   return (
     <div className={wrapper}>
