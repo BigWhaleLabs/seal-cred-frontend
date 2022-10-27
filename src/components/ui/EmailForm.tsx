@@ -16,7 +16,7 @@ export default function ({
 }: {
   loading?: boolean
   submitType?: 'primary' | 'secondary' | 'tertiary'
-  onSubmit: (emails: readonly string[]) => void
+  onSubmit: (emails: string[]) => void
   placeholder?: string
 }) {
   const { inputEmail, hasDifferentDomains, emailList } = useSnapshot(

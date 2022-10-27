@@ -18,7 +18,6 @@ import classnames, {
   opacity,
   position,
   textColor,
-  width,
 } from 'classnames/tailwind'
 import useClickOutside from 'hooks/useClickOutside'
 
@@ -81,9 +80,7 @@ export default function ({
       <span className={textStyles(colorfulCurrentValue)}>
         {staticPlaceholder || currentValue}
       </span>
-      <div className={width('w-4')}>
-        <Arrow pulseDisabled open={open} />
-      </div>
+      <Arrow pulseDisabled open={open} />
     </button>
   )
 

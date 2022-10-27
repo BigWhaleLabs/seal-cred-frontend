@@ -204,13 +204,11 @@ export default function ({
             <div>{children}</div>
           )}
           {withArrow && (
-            <div className={width('w-4')}>
-              <Arrow
-                horizontal
-                pulseDisabled={disabled || loading}
-                openDisabled
-              />
-            </div>
+            <Arrow
+              horizontal
+              pulseDisabled={disabled || loading}
+              openDisabled
+            />
           )}
         </>
       )}

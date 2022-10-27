@@ -17,17 +17,19 @@ const arrowAnimation = (
     rotate({ 'rotate-180': !openDisabled && open }),
     transitionDuration('duration-300')
   )
-const svgInnerWrapper = classnames(
-  width('w-full'),
-  height('h-auto'),
-  dropShadow('drop-shadow-secondary')
-)
+const svgInnerWrapper = (standardSize?: boolean) =>
+  classnames(
+    width(standardSize ? 'w-4' : 'w-full'),
+    height('h-auto'),
+    dropShadow('drop-shadow-secondary')
+  )
 
 interface ArrowProps {
   openDisabled?: boolean
   pulseDisabled?: boolean
   horizontal?: boolean
   open?: boolean
+  standardSize?: boolean
 }
 
 export default function ({
@@ -35,12 +37,13 @@ export default function ({
   horizontal,
   openDisabled,
   open,
+  standardSize = true,
 }: ArrowProps) {
   // same id of <linearGradient> will break multiple usage of this icon
   const strokeId = Math.random().toString()
 
   return (
-    <div className={svgInnerWrapper}>
+    <div className={svgInnerWrapper(standardSize)}>
       <svg
         viewBox={horizontal ? '0 0 14 14' : '0 0 14 7'}
         xmlns="http://www.w3.org/2000/svg"

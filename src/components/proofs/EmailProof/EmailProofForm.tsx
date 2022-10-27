@@ -1,4 +1,3 @@
-import { ComponentChildren } from 'preact'
 import { TextButton } from 'components/ui/Text'
 import { sendEmails } from 'helpers/proofs/attestor'
 import { useSnapshot } from 'valtio'
@@ -6,6 +5,7 @@ import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailForm from 'components/ui/EmailForm'
 import EmailFormStore from 'stores/EmailFormStore'
+import FormDescription from 'components/proofs/EmailProof/FormDescription'
 import ProofModel from 'models/Proof'
 import TextForm from 'components/ui/TextForm'
 import checkDomainToken from 'helpers/proofs/checkDomainToken'
@@ -16,7 +16,6 @@ import useBreakpoints from 'hooks/useBreakpoints'
 export default function ({
   domain,
   token,
-  description,
   submitType = 'secondary',
   error,
   onError,
@@ -24,17 +23,20 @@ export default function ({
   onChange,
   afterSendEmail,
   onGenerationStarted,
+  jumpToToken,
+  forFlow,
 }: {
   domain: string
   token?: string
   submitType?: 'primary' | 'secondary' | 'tertiary'
-  description: ComponentChildren
   error: string | undefined
   onError: (error: string | undefined) => void
   onCreate: (proof: ProofModel) => void
   onChange: (domain: string) => void
   afterSendEmail?: () => void
   onGenerationStarted?: (state: boolean) => void
+  jumpToToken: () => void
+  forFlow?: boolean
 }) {
   const { loading } = useSnapshot(EmailFormStore)
   const [email, setEmail] = useState<string>('')
@@ -47,7 +49,7 @@ export default function ({
     onChange('')
   }
 
-  async function onSendEmails(emails: readonly string[]) {
+  async function onSendEmails(emails: string[]) {
     onGenerationStarted && onGenerationStarted(true)
     EmailFormStore.loading = true
     try {
@@ -110,7 +112,7 @@ export default function ({
     </>
   ) : (
     <>
-      <div>{description}</div>
+      <FormDescription forFlow={forFlow} jumpToToken={jumpToToken} />
       <EmailForm
         submitType={submitType}
         placeholder={xxs ? 'Email addresses' : 'Email addresses (minimum 10)'}

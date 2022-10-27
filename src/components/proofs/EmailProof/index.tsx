@@ -1,4 +1,4 @@
-import { ProofText, TextButton } from 'components/ui/Text'
+import { ProofText } from 'components/ui/Text'
 import { displayFrom } from 'helpers/visibilityClassnames'
 import { useEffect, useState } from 'preact/hooks'
 import { useSnapshot } from 'valtio'
@@ -7,12 +7,11 @@ import Button from 'components/ui/Button'
 import CharInCircle from 'components/ui/CharInCircle'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailFormStore from 'stores/EmailFormStore'
-import EmailProofForm from 'components/proofs/EmailProofForm'
+import EmailProofForm from 'components/proofs/EmailProof/EmailProofForm'
 import Line from 'components/ui/Line'
 import SimpleArrow from 'icons/SimpleArrow'
 import Sizes from 'models/MarkSizes'
 import ToolTip from 'components/ui/ToolTip'
-import UploadEmailListButton from 'components/ui/UploadEmailListButton'
 import classnames, {
   alignItems,
   backgroundClip,
@@ -139,17 +138,11 @@ export default function () {
               </ToolTip>
             </div>
           </div>
-          <button
-            className={arrowContainer}
-            onClick={() => setOpen(!open)}
-            disabled={loading}
-          >
+          <button className={arrowContainer} onClick={() => setOpen(!open)}>
             <span className={getStartedText(open)}>
               <span>{domain ? 'Set token' : 'Get started'}</span>
             </span>
-            <div className={width('w-4')}>
-              <Arrow pulseDisabled open={open} />
-            </div>
+            <Arrow pulseDisabled open={open} />
           </button>
         </div>
         {open && (
@@ -158,30 +151,12 @@ export default function () {
             token={token}
             submitType="secondary"
             afterSendEmail={clearData}
-            description={
-              <>
-                To create a zk proof, add your email. Then add at least 10 or
-                even 100+ other emails with the same domain to increase your
-                anonymity.{' '}
-                <UploadEmailListButton
-                  title="You can upload an email list (txt, csv, etc...)"
-                  disabled={loading}
-                />
-                <br />
-                <br />
-                We’ll then send you a token to use here for a zk proof.{' '}
-                {!!emailDomain && (
-                  <TextButton onClick={jumpToToken} disabled={loading}>
-                    Have an existing token?
-                  </TextButton>
-                )}
-              </>
-            }
             onCreate={onCreate}
             onChange={setDomain}
             onError={setError}
             error={error}
             onGenerationStarted={(state) => (EmailFormStore.loading = state)}
+            jumpToToken={jumpToToken}
           />
         )}
       </div>

@@ -1,15 +1,9 @@
-import {
-  AccentText,
-  BodyText,
-  HeaderText,
-  TextButton,
-  TinyText,
-} from 'components/ui/Text'
+import { AccentText, BodyText, HeaderText, TinyText } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
 import { useState } from 'preact/hooks'
 import EmailDomainStore from 'stores/EmailDomainStore'
 import EmailFormStore from 'stores/EmailFormStore'
-import EmailProofForm from 'components/proofs/EmailProofForm'
+import EmailProofForm from 'components/proofs/EmailProof/EmailProofForm'
 import Proof from 'models/Proof'
 import UploadEmailListButton from 'components/ui/UploadEmailListButton'
 import classnames, {
@@ -64,26 +58,12 @@ export default function EmailFlowForm({
         <EmailProofForm
           domain={domain}
           submitType="primary"
-          description={
-            <>
-              Start by entering your email and at least 10 others (but the more
-              you add, like 100+, will improve your anonymity). We’ll then send
-              you an email containing a token. You’ll come back here and enter
-              your token to receive your zk badge.{' '}
-              {emailDomain ? (
-                <TextButton
-                  onClick={() => !loading && jumpToToken()}
-                  disabled={loading}
-                >
-                  Have an existing token?
-                </TextButton>
-              ) : null}
-            </>
-          }
           onChange={onUpdateDomain}
           onCreate={onSelectProof}
           error={error}
           onError={setError}
+          jumpToToken={jumpToToken}
+          forFlow
         />
         <div className={uploadButtonWrapper}>
           <UploadEmailListButton disabled={loading} small center />

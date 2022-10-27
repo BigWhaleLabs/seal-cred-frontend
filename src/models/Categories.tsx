@@ -4,7 +4,7 @@ import { width } from 'classnames/tailwind'
 import Coin from 'icons/Coin'
 import ERC721ProofSection from 'components/proofs/ERC721ProofSection'
 import Email from 'icons/Email'
-import EmailProofSection from 'components/proofs/EmailProofSection'
+import EmailProofSection from 'components/proofs/EmailProof/EmailProofSection'
 import Nft from 'icons/Nft'
 import data, { BadgeSourceType } from 'data'
 

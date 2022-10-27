@@ -419,7 +419,7 @@ const textButton = (small?: boolean, center?: boolean, disabled?: boolean) =>
   classnames(
     textAlign({ 'text-center': center }),
     fontSize({ 'text-sm': small }),
-    textColor('text-tertiary', 'hover:text-accent'),
+    textColor('text-tertiary', { 'hover:text-accent': !disabled }),
     textDecoration('underline'),
     opacity({ 'opacity-75': disabled }),
     cursor('cursor-pointer', { 'cursor-default': disabled })
