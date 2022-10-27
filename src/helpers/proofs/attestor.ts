@@ -47,7 +47,7 @@ export async function getEddsaPublicKey() {
   return data
 }
 
-export function sendEmails(emails: readonly string[]) {
+export function sendEmails(emails: string[]) {
   return axios.post(`${baseURL}/email`, {
     emails,
   })
