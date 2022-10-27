@@ -1,13 +1,10 @@
 import { proxy } from 'valtio'
 import { toast } from 'react-toastify'
 
-const fileEmailRegex =
-  /(?=.{0,256}$)((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(?=.{0,64}$)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/gm
+const emailRegex = /\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+/gm
 
 function isEmailValidInInput(email: string) {
-  const re =
-    /^(?=.{0,256}$)((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(?=.{0,64}$)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))(\s|,|;)$/g
-  return re.test(email)
+  return emailRegex.test(email)
 }
 
 export const inputFileName = 'input'
@@ -98,7 +95,7 @@ class EmailFormStore {
   }
 
   setEmailListFromFile(stringList: string, fileName: string) {
-    for (const emailArray of stringList.matchAll(fileEmailRegex)) {
+    for (const emailArray of stringList.matchAll(emailRegex)) {
       const email = emailArray[0]
       if (!this.checkDuplicates.bind(this)(email, true)) continue
 
