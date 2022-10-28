@@ -11,6 +11,7 @@ import LinkedWalletWarning from 'components/ui/LinkedWalletWarning'
 import ProofStore from 'stores/ProofStore'
 import WalletStore from 'stores/WalletStore'
 import badgeConfig from 'badgeConfig'
+import catchUnhandledRejection from 'hooks/catchUnhandledRejection'
 import data from 'data'
 import useOwnedAddresses from 'hooks/useOwnedAddresses'
 
@@ -18,6 +19,12 @@ function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   const { account, mintLoading } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
   const originals = useOwnedAddresses(data[proof.badgeType].network)
+  catchUnhandledRejection((error: unknown) => {
+    if (onMintFailed) onMintFailed()
+    handleError(error)
+    setLoading(false)
+    WalletStore.mintLoading = false
+  })
 
   const checkProofAndMint = async () => {
     WalletStore.mintLoading = true
