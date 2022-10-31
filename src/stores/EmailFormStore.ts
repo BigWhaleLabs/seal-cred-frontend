@@ -1,10 +1,11 @@
 import { proxy } from 'valtio'
 import { toast } from 'react-toastify'
 
+const inputEmailRegex = /\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+(\s|,|;)/gm
 const emailRegex = /\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+/gm
 
 function isEmailValidInInput(email: string) {
-  return emailRegex.test(email)
+  return inputEmailRegex.test(email)
 }
 
 export const inputFileName = 'input'
