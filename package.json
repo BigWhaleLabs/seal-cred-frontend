@@ -23,14 +23,14 @@
     ]
   },
   "dependencies": {
-    "@big-whale-labs/constants": "^0.1.29",
+    "@big-whale-labs/constants": "^0.1.54",
     "@big-whale-labs/frontend-utils": "^0.1.2",
     "@big-whale-labs/seal-cred-ledger-contract": "^0.2.8",
     "@big-whale-labs/stores": "^0.1.17",
     "@coinbase/wallet-sdk": "^3.5.2",
     "@lottiefiles/react-lottie-player": "^3.4.7",
     "@material-tailwind/react": "^1.2.4",
-    "@opengsn/provider": "3.0.0-beta.1",
+    "@opengsn/provider": "3.0.0-beta.3",
     "@walletconnect/web3-provider": "^1.8.0",
     "assert-browserify": "^2.0.0",
     "axios": "^0.27.2",
@@ -88,7 +88,7 @@
   },
   "packageManager": "yarn@3.2.3",
   "resolutions": {
-    "@opengsn/provider/@opengsn/common": "3.0.0-beta.1",
-    "@opengsn/provider/@opengsn/contracts": "3.0.0-beta.1"
+    "@opengsn/provider/@opengsn/common": "patch:@opengsn/common@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-common-npm-3.0.0-beta.3-79cb41f503.patch",
+    "@opengsn/provider/@opengsn/contracts": "3.0.0-beta.3"
   }
 }
