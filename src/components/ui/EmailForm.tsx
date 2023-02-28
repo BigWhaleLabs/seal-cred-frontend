@@ -78,7 +78,7 @@ export default function ({
           {submitText}
         </Button>
       ) : (
-        <GradientBorder>
+        <GradientBorder disabled={loading || !listIsValid}>
           <Button
             gradientFont
             loading={loading}
