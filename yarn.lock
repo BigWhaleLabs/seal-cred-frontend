@@ -1668,9 +1668,9 @@ __metadata:
   linkType: hard
 
 "@big-whale-labs/constants@npm:^0.1.57":
-  version: 0.1.57
-  resolution: "@big-whale-labs/constants@npm:0.1.57"
-  checksum: 9574b551cb711c82c99f9b393198198131775ba453d196e223bd630db1eff6f81e9711cbe4dcc1c5e7ec574b100e8e1125e720fa09cd3c2396ed53318ae69141
+  version: 0.1.72
+  resolution: "@big-whale-labs/constants@npm:0.1.72"
+  checksum: 069a453944e5abd95972af476c20d76a3d85204f8f0e29927c20f834fcfe1776220c5841dc68a030108d7ae3f05853965c591d085e4a8a1b7fec7f45aad3f00b
   languageName: node
   linkType: hard
 
@@ -3477,7 +3477,7 @@ __metadata:
 
 "@opengsn/common@patch:@opengsn/common@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-common-npm-3.0.0-beta.3-79cb41f503.patch::locator=seal-cred-frontend%40workspace%3A.":
   version: 3.0.0-beta.3
-  resolution: "@opengsn/common@patch:@opengsn/common@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-common-npm-3.0.0-beta.3-79cb41f503.patch::version=3.0.0-beta.3&hash=1f6235&locator=seal-cred-frontend%40workspace%3A."
+  resolution: "@opengsn/common@patch:@opengsn/common@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-common-npm-3.0.0-beta.3-79cb41f503.patch::version=3.0.0-beta.3&hash=e91e6c&locator=seal-cred-frontend%40workspace%3A."
   dependencies:
     "@ethereumjs/common": ^2.6.5
     "@ethereumjs/tx": ^3.2.0
@@ -3500,7 +3500,7 @@ __metadata:
     web3-eth-abi: ^1.7.3
     web3-eth-contract: ^1.7.3
     web3-utils: ^1.7.3
-  checksum: 702eaf020cbb747468def7bb11a5f915baecad5a40c380e404a6760792611f0447c1d7d4e8036ab3129b38c87308da84e67e1a214f10cdc26b7d641aae4c7d6f
+  checksum: 8a90cf8b6cc638a8d527e364ab34eb13cd3218a7493bcfe20fca78954daac6254373622e1cff1e6bdd355fe13fc41c5df9ce3b9b805e786bb4b4b0efa57f5c1e
   languageName: node
   linkType: hard
 
