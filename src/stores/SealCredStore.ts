@@ -27,11 +27,14 @@ const state = proxy({
 
 const SealCredStore = derive(
   {
-    allDerivativeAddresses: async (get) =>
-      Object.values(await get(state).ledgers).reduce(
+    allDerivativeAddresses: async (get) => {
+      const ledgers = await get(state).ledgers
+      if (!ledgers || !Object.values(ledgers).length) return []
+      return Object.values(ledgers).reduce(
         (combined, ledger) => [...combined, ...Object.values(ledger)],
         [] as string[]
-      ),
+      )
+    },
   },
   {
     proxy: state,

@@ -1,4 +1,3 @@
-import { ETH_RPC } from '@big-whale-labs/constants'
 import Network from 'models/Network'
 import createProvider from 'helpers/providers/createProvider'
 import env from 'helpers/env'
@@ -9,7 +8,7 @@ export default {
     heavy: env.VITE_ETH_RPC_MAINNET,
   }),
   [Network.Goerli]: createProvider(Network.Goerli, {
-    default: ETH_RPC,
+    default: env.VITE_ETH_RPC,
     heavy: env.VITE_ETH_RPC,
   }),
 }
