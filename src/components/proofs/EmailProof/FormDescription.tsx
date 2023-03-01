@@ -21,7 +21,7 @@ export default function ({
           `Start by entering your email and at least 10 others (but the more
               you add, like 100+, will improve your anonymity). We’ll then send
               you an email containing a token. You’ll come back here and enter
-              your token to receive your zk badge.{' '}`
+              your token to receive your zk badge.`
         ) : (
           <>
             To create a zk proof, add your email. Then add at least 10 or even
