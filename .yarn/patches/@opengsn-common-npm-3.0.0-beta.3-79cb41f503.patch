@@ -1,13 +1,20 @@
 diff --git a/dist/ContractInteractor.js b/dist/ContractInteractor.js
-index b781c208438eb94891eae483dd5eb1c563954f58..4e7b434412a4955b40adcc03de4797c51a90b36c 100644
+index b781c208438eb94891eae483dd5eb1c563954f58..aa1fee45edec34a91fa4ce2e1ab67ec1faba0983 100644
 --- a/dist/ContractInteractor.js
 +++ b/dist/ContractInteractor.js
-@@ -179,7 +179,7 @@ class ContractInteractor {
-         this._validateVersion(version, 'RelayHub');
-     }
-     _validateVersion(version, contractName) {
--        const versionSatisfied = this.versionManager.isRequiredVersionSatisfied(version);
-+        const versionSatisfied = true;
-         if (!versionSatisfied) {
-             throw new Error(`Provided ${contractName} version(${version}) does not satisfy the requirement(${this.versionManager.requiredVersionRange})`);
-         }
+@@ -355,13 +355,13 @@ class ContractInteractor {
+         try {
+             const encodedRelayCall = this.encodeABI(relayCallABIData);
+             const res = await new Promise((resolve, reject) => {
+-                const gasFees = this._fixGasFees(relayCallABIData.relayRequest);
++                // const gasFees = this._fixGasFees(relayCallABIData.relayRequest);
+                 const rpcPayload = {
+                     jsonrpc: '2.0',
+                     id: 1,
+                     method: 'eth_call',
+                     params: [
+-                        Object.assign({ from, to: relayHub.address, gas: (0, web3_utils_1.toHex)(viewCallGasLimit), data: encodedRelayCall }, gasFees),
++                        Object.assign({ from, to: relayHub.address, gas: (0, web3_utils_1.toHex)(viewCallGasLimit), data: encodedRelayCall }),
+                         'latest'
+                     ]
+                 };
