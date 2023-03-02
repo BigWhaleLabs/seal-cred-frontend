@@ -35,7 +35,9 @@ for (const { defaultProvider, network } of Object.values(networks)) {
     ContractsNetworkStore.networks[network].currentBlock = blockNumber
     if (!WalletStore.account) return
     await ContractsNetworkStore.networks[network].fetchMoreContractsOwned(
-      WalletStore.account
+      WalletStore.account,
+      false,
+      blockNumber
     )
   })
 }
