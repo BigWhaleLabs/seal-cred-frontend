@@ -1667,10 +1667,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@big-whale-labs/constants@npm:^0.1.73":
-  version: 0.1.73
-  resolution: "@big-whale-labs/constants@npm:0.1.73"
-  checksum: 4ef845aa29b362748c6de31077d788c45fd2b38e2144d95e221ddc449776bbc4df085ea500d172ffc4048d7a42f8c8839017797a6d286411c025f7d467be9ea8
+"@big-whale-labs/constants@npm:^0.1.75":
+  version: 0.1.75
+  resolution: "@big-whale-labs/constants@npm:0.1.75"
+  checksum: 2d01855825f42937761912f878e8e24e4453de809f1d91dea429ef96b8b22c458cc109176066de6d199c7da82b2e7e2823cb652d1d8584ab39fa68d3e7086b67
   languageName: node
   linkType: hard
 
@@ -17199,7 +17199,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "seal-cred-frontend@workspace:."
   dependencies:
-    "@big-whale-labs/constants": ^0.1.73
+    "@big-whale-labs/constants": ^0.1.75
     "@big-whale-labs/eslint-config-bwl": ^2.1.6
     "@big-whale-labs/frontend-utils": ^0.1.2
     "@big-whale-labs/prettier-config": ^1.1.3
