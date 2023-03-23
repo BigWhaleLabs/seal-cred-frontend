@@ -58,7 +58,7 @@ export function ProofListSuspended({ selectedCategory }: ProofListProps) {
       </Scrollbar>
       {hasAnyProof && (
         <div className={bottomWrapper}>
-          <AccentText small primary color="text-primary">
+          <AccentText primary small color="text-primary">
             Created ZK proofs are saved in the browser even if you switch
             wallets.
           </AccentText>

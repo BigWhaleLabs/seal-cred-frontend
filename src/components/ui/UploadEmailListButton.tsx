@@ -4,10 +4,10 @@ import ToolTip from 'components/ui/ToolTip'
 import handleFile from 'helpers/handleFile'
 
 export default function ({
-  title = 'Upload an email list (txt, csv, etc...)',
-  small,
   center,
   disabled,
+  small,
+  title = 'Upload an email list (txt, csv, etc...)',
 }: {
   title?: string
   small?: boolean
@@ -16,19 +16,19 @@ export default function ({
 }) {
   return (
     <TextButton
+      center={center}
+      disabled={disabled}
+      small={small}
       onClick={() =>
         !disabled &&
         handleFile(EmailFormStore.setEmailListFromFile.bind(EmailFormStore))
       }
-      disabled={disabled}
-      small={small}
-      center={center}
     >
       <ToolTip
+        fitContainer
+        disabled={disabled}
         position="bottom"
         text="Emails in your file should be separated somehow. Invalid emails will be ignored"
-        disabled={disabled}
-        fitContainer
       >
         {title}
       </ToolTip>

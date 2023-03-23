@@ -114,12 +114,12 @@ export default function () {
       </div>
 
       <div className={identityCards}>
-        <IdentityCard left text="Identity-01" reveal={animEnd}>
-          <ZkSphere text="ZK" color="tertiary" />
-          <ZkSphere text="ZK" color="accent" />
+        <IdentityCard left reveal={animEnd} text="Identity-01">
+          <ZkSphere color="tertiary" text="ZK" />
+          <ZkSphere color="accent" text="ZK" />
         </IdentityCard>
-        <IdentityCard text="Identity-02" reveal={animEnd}>
-          <ZkSphere text="ZK" color="secondary" />
+        <IdentityCard reveal={animEnd} text="Identity-02">
+          <ZkSphere color="secondary" text="ZK" />
         </IdentityCard>
       </div>
       <BuildingIdentitiesCard />

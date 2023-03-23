@@ -10,8 +10,8 @@ import useOwnerAddress from 'hooks/useOwnerAddress'
 const container = wordBreak('break-all')
 
 function OwnerAddress({
-  owner,
   network,
+  owner,
   truncateSize,
 }: {
   owner: string
@@ -20,12 +20,12 @@ function OwnerAddress({
 }) {
   return (
     <LinkText
+      bold
       targetBlank
-      url={getEtherscanAddressUrl(owner, network)}
       gradientFrom="from-secondary"
       gradientTo="to-accent"
       title={owner}
-      bold
+      url={getEtherscanAddressUrl(owner, network)}
     >
       <ENSAddress
         address={owner}
@@ -38,8 +38,8 @@ function OwnerAddress({
 
 function OwnedBadgeAddressSuspended({
   derivativeAddress,
-  tokenId,
   network,
+  tokenId,
 }: {
   derivativeAddress: string
   tokenId: string
@@ -52,13 +52,13 @@ function OwnedBadgeAddressSuspended({
       {owner && (
         <>
           <span className={displayTo('md')}>
-            <OwnerAddress owner={owner} network={network} truncateSize={11} />
+            <OwnerAddress network={network} owner={owner} truncateSize={11} />
           </span>
           <span className={display(displayFrom('md'), 'lg:hidden')}>
-            <OwnerAddress owner={owner} network={network} truncateSize={17} />
+            <OwnerAddress network={network} owner={owner} truncateSize={17} />
           </span>
           <span className={displayFrom('lg')}>
-            <OwnerAddress owner={owner} network={network} truncateSize={25} />
+            <OwnerAddress network={network} owner={owner} truncateSize={25} />
           </span>
         </>
       )}
@@ -74,15 +74,15 @@ interface OwnedBadgeAddressProps {
 
 export default function ({
   derivativeAddress,
-  tokenId,
   network,
+  tokenId,
 }: OwnedBadgeAddressProps) {
   return (
     <Suspense fallback={<>Fetching owner address...</>}>
       <OwnedBadgeAddressSuspended
         derivativeAddress={derivativeAddress}
-        tokenId={tokenId}
         network={network}
+        tokenId={tokenId}
       />
     </Suspense>
   )

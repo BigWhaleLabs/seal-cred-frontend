@@ -9,27 +9,27 @@ const appName = env.VITE_APP_NAME
 
 export default new Web3Modal({
   cacheProvider: true,
-  theme: 'dark',
   disableInjectedProvider: false,
   network,
   providerOptions: {
-    walletconnect: {
-      package: WalletConnect,
-      options: {
-        rpc: {
-          5: rpc,
-        },
-      },
-    },
     coinbasewallet: {
-      package: CoinbaseWalletSDK,
       options: {
         appName,
+        darkMode: true,
         rpc: {
           5: rpc,
         },
-        darkMode: true,
       },
+      package: CoinbaseWalletSDK,
+    },
+    walletconnect: {
+      options: {
+        rpc: {
+          5: rpc,
+        },
+      },
+      package: WalletConnect,
     },
   },
+  theme: 'dark',
 })

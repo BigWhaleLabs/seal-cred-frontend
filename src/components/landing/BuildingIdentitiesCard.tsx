@@ -4,7 +4,7 @@ import GetStartedButton from 'components/landing/GetStartedButton'
 
 export default function () {
   return (
-    <Card color="formal-accent" onlyWrap shadow>
+    <Card onlyWrap shadow color="formal-accent">
       <HeaderText extraLeading>
         Building your identities with ZK Badges
       </HeaderText>

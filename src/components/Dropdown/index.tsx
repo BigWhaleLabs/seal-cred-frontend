@@ -48,14 +48,14 @@ const container = (displayBeforeMd?: boolean) =>
   )
 
 export default function ({
-  disabled,
+  colorfulCurrentValue,
   currentValue,
-  options,
-  onChange,
-  staticPlaceholder,
+  disabled,
   displayBeforeMd,
   fitToItemSize,
-  colorfulCurrentValue,
+  onChange,
+  options,
+  staticPlaceholder,
 }: {
   currentValue: string
   options: Option[]
@@ -73,9 +73,9 @@ export default function ({
 
   const selectedElement = (
     <button
-      onClick={() => options.length && setOpen(!open)}
       className={button}
       disabled={disabled}
+      onClick={() => options.length && setOpen(!open)}
     >
       <span className={textStyles(colorfulCurrentValue)}>
         {staticPlaceholder || currentValue}
@@ -88,14 +88,14 @@ export default function ({
     <div className={container(displayBeforeMd)} ref={ref}>
       {selectedElement}
       <Menu
+        fitToItemSize={fitToItemSize}
         open={open}
         options={options}
         selected={currentValue}
-        onSelect={({ value, label }) => {
+        onSelect={({ label, value }) => {
           onChange(value || label)
           setOpen(false)
         }}
-        fitToItemSize={fitToItemSize}
       />
     </div>
   )

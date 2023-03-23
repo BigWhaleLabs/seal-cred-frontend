@@ -7,11 +7,11 @@ export default function () {
   const navigate = useNavigate()
 
   return (
-    <Card color="tertiary" paddingType="normal" shadow onlyWrap>
+    <Card onlyWrap shadow color="tertiary" paddingType="normal">
       <AccentText color="text-tertiary">
         Create more zkBadges with SealCred.
       </AccentText>
-      <Button type="primary" small onClick={() => navigate('/app')}>
+      <Button small type="primary" onClick={() => navigate('/app')}>
         Go to SealCred
       </Button>
     </Card>

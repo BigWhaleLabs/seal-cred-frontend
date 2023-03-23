@@ -6,9 +6,9 @@ import env from 'helpers/env'
 
 export default function relayProvider(provider: Web3Provider) {
   return RelayProvider.newProvider({
-    provider: new WrapBridge(new Eip1193Bridge(provider.getSigner(), provider)),
     config: {
       paymasterAddress: env.VITE_GSN_PAYMASTER_CONTRACT_ADDRESS,
     },
+    provider: new WrapBridge(new Eip1193Bridge(provider.getSigner(), provider)),
   }).init()
 }

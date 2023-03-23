@@ -17,14 +17,14 @@ export default function ({
       <BodyText center>Select a proof to continue</BodyText>
       {Array.from(proofsCompleted).map((proof, index) => (
         <div
-          onClick={() => onSelectProof(proof)}
           className={cursor('cursor-pointer')}
+          onClick={() => onSelectProof(proof)}
         >
           <Proof
-            type="Email"
+            key={`${proof.original}-${index}`}
             original={proof.original}
             proof={proof}
-            key={`${proof.original}-${index}`}
+            type="Email"
           />
         </div>
       ))}

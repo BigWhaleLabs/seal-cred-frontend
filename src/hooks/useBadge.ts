@@ -17,9 +17,9 @@ export default function (derivative: string) {
       for (const original of Object.keys(ledger)) {
         if (ledger[original] === derivative)
           return {
-            type: ledgerName,
             derivative,
             original,
+            type: ledgerName,
           } as BaseBadgeContract
       }
     }

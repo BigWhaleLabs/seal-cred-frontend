@@ -78,7 +78,7 @@ const emailTitleLeft = classnames(
 const tooltipWrapper = classnames(display('flex'), flex('flex-1'))
 
 export default function () {
-  const { urlDomain, urlToken, clearSearchParams } = useUrlParams()
+  const { clearSearchParams, urlDomain, urlToken } = useUrlParams()
   const { emailDomain } = useSnapshot(EmailDomainStore)
   const { loading } = useSnapshot(EmailFormStore)
 
@@ -131,7 +131,7 @@ export default function () {
             )}
             <ProofText>Work email</ProofText>
             <div className={tooltipWrapper}>
-              <ToolTip position="bottom" text={popoverText} fitContainer>
+              <ToolTip fitContainer position="bottom" text={popoverText}>
                 <div>
                   <CharInCircle char="?" size={Sizes.Small} />
                 </div>
@@ -147,16 +147,16 @@ export default function () {
         </div>
         {open && (
           <EmailProofForm
-            domain={domain}
-            token={token}
-            submitType="secondary"
             afterSendEmail={clearData}
-            onCreate={onCreate}
-            onChange={setDomain}
-            onError={setError}
+            domain={domain}
             error={error}
-            onGenerationStarted={(state) => (EmailFormStore.loading = state)}
             jumpToToken={jumpToToken}
+            submitType="secondary"
+            token={token}
+            onChange={setDomain}
+            onCreate={onCreate}
+            onError={setError}
+            onGenerationStarted={(state) => (EmailFormStore.loading = state)}
           />
         )}
       </div>

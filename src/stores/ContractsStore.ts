@@ -9,7 +9,7 @@ import transformObjectValues from 'helpers/transformObjectValues'
 
 const proxyNetworks = transformObjectValues(
   networks,
-  ({ network, heavyProvider, defaultProvider }) =>
+  ({ defaultProvider, heavyProvider, network }) =>
     proxy(
       new ContractsStore(defaultProvider, heavyProvider, network)
     ).makePersistent(env.VITE_ENCRYPT_KEY)

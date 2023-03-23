@@ -55,7 +55,7 @@ export default function (props: CardSeparatorProps) {
       {Array(props.numberOfLines)
         .fill(null)
         .map((_, index) => (
-          <div key={index} className={connectiveLine(props)}></div>
+          <div className={connectiveLine(props)} key={index}></div>
         ))}
     </div>
   )

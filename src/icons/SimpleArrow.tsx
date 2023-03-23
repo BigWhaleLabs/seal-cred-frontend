@@ -8,12 +8,12 @@ export default function () {
 
   return (
     <svg
-      width="7"
       height="12"
       viewBox="0 0 7 12"
+      width="7"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M6 11L1 6L6 1" className={strokeStyles} />
+      <path className={strokeStyles} d="M6 11L1 6L6 1" />
     </svg>
   )
 }

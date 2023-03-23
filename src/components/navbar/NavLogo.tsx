@@ -43,7 +43,7 @@ export default function () {
           className={logoWrapper}
           onTouchStart={() => lottieRef.current?.play()}
         >
-          <Player ref={lottieRef} src={AnimatedLogo} hover />
+          <Player hover ref={lottieRef} src={AnimatedLogo} />
         </div>
         <div className={logoWithVersion}>
           <LogoText>SealCred</LogoText>

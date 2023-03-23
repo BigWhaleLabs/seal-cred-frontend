@@ -18,9 +18,9 @@ export default function () {
   )
 
   return {
-    ledgerToUnmintedProofs,
     hasUnmintedProofs: Object.values(ledgerToUnmintedProofs).some(
       (proofs) => proofs.length > 0
     ),
+    ledgerToUnmintedProofs,
   }
 }

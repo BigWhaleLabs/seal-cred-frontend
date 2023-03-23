@@ -30,13 +30,13 @@ export default function () {
   const navigate = useNavigate()
   return (
     <div className={container}>
-      <Card shadow onlyWrap color="accent">
+      <Card onlyWrap shadow color="accent">
         <div className={bodyWrapper}>
           <div className={space('space-y-2')}>
             <HeaderText>404</HeaderText>
             <SubheaderText>Not found</SubheaderText>
           </div>
-          <Button type="primary" small onClick={() => navigate('/')}>
+          <Button small type="primary" onClick={() => navigate('/')}>
             Go to the main page
           </Button>
         </div>

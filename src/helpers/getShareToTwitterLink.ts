@@ -1,6 +1,6 @@
 export default function ({
-  text,
   hashtags,
+  text,
 }: {
   text: string
   url?: string

@@ -16,7 +16,7 @@ export default function () {
 
   return (
     <div className={cardWrapper}>
-      <Card shadow onlyWrap color="primary">
+      <Card onlyWrap shadow color="primary">
         <div className={space('space-y-4')}>
           <HeaderText extraLeading>Privacy policy</HeaderText>
           <div className={space('space-y-4')}>

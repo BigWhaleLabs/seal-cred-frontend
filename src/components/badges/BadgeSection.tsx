@@ -19,10 +19,10 @@ const badgesList = classnames(
 )
 
 export default function ({
-  title,
   minted,
-  proofs,
   onMinted,
+  proofs,
+  title,
 }: ChildrenProp & {
   title?: ComponentChildren
   minted: string[]
@@ -36,12 +36,12 @@ export default function ({
       <div className={badgesList}>
         {minted.map((contractAddress) => (
           <BadgesOwnedForContract
-            key={contractAddress}
             contractAddress={contractAddress}
+            key={contractAddress}
           />
         ))}
         {proofs.map((proof) => (
-          <BadgeBlock onMinted={onMinted} key={proof.original} proof={proof} />
+          <BadgeBlock key={proof.original} proof={proof} onMinted={onMinted} />
         ))}
       </div>
     </Section>

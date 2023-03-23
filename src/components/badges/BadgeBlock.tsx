@@ -15,7 +15,7 @@ import catchUnhandledRejection from 'hooks/catchUnhandledRejection'
 import data from 'data'
 import useOwnedAddresses from 'hooks/useOwnedAddresses'
 
-function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
+function Badge({ onMintFailed, onMinted, proof }: BadgeBlockProps) {
   const { account, mintLoading } = useSnapshot(WalletStore)
   const [loading, setLoading] = useState(false)
   const originals = useOwnedAddresses(data[proof.badgeType].network)
@@ -50,15 +50,15 @@ function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
 
   return (
     <BadgeCard
-      top={<ProofIcon />}
       text={<BadgeTitle originalOrAddress={proof.original} />}
+      top={<ProofIcon />}
       bottom={
         <>
           <Button
             small
-            type="primary"
-            loading={loading}
             disabled={!proof || mintLoading}
+            loading={loading}
+            type="primary"
             onClick={checkProofAndMint}
           >
             {proof ? 'Mint badge' : 'Minted!'}
@@ -70,10 +70,10 @@ function Badge({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
   )
 }
 
-export default function ({ proof, onMinted, onMintFailed }: BadgeBlockProps) {
+export default function ({ onMintFailed, onMinted, proof }: BadgeBlockProps) {
   return (
     <BadgeWrapper minted={false}>
-      <Badge proof={proof} onMinted={onMinted} onMintFailed={onMintFailed} />
+      <Badge proof={proof} onMintFailed={onMintFailed} onMinted={onMinted} />
     </BadgeWrapper>
   )
 }

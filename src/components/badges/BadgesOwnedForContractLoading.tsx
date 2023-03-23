@@ -12,21 +12,21 @@ export default function ({ contractAddress }: { contractAddress: string }) {
     <BadgeWrapper minted={false}>
       <BadgeCard
         top={<Erc721Badge />}
+        bottom={
+          <Button loading small type="primary">
+            Fetching...
+          </Button>
+        }
         text={
           <ExternalLink
             url={getEtherscanAddressUrl(contractAddress, Network.Goerli)}
           >
             <ContractName
-              address={contractAddress}
               clearType
+              address={contractAddress}
               network={Network.Goerli}
             />
           </ExternalLink>
-        }
-        bottom={
-          <Button small type="primary" loading>
-            Fetching...
-          </Button>
         }
       />
     </BadgeWrapper>

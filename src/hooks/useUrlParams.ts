@@ -7,5 +7,5 @@ export default function () {
 
   const clearSearchParams = () => setSearchParams('')
 
-  return { urlDomain, urlToken, clearSearchParams }
+  return { clearSearchParams, urlDomain, urlToken }
 }

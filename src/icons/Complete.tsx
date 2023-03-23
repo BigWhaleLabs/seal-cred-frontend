@@ -18,17 +18,17 @@ const pathClasses = (accent?: boolean) =>
 export default function ({ accent }: { accent?: boolean }) {
   return (
     <svg
-      width="18"
+      className={svgClasses(accent)}
       height="18"
       viewBox="0 0 18 18"
+      width="18"
       xmlns="http://www.w3.org/2000/svg"
-      className={svgClasses(accent)}
     >
-      <circle cx="9" cy="9" r="9" className={circleClasses(accent)} />
+      <circle className={circleClasses(accent)} cx="9" cy="9" r="9" />
       <path
+        className={pathClasses(accent)}
         d="M5 9L8 12L13 7"
         stroke-width="2"
-        className={pathClasses(accent)}
       />
     </svg>
   )

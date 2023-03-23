@@ -5,12 +5,12 @@ import TinyMessage from 'components/ui/TinyMessage'
 
 export default function ({
   error,
-  value,
   loading,
   onSubmit,
-  submitType = 'primary',
   placeholder = 'Enter...',
   submitText = 'Submit',
+  submitType = 'primary',
+  value,
 }: {
   error?: string
   value?: string
@@ -26,10 +26,10 @@ export default function ({
   return (
     <>
       <Input
-        type="text"
-        isError={hasError}
         disabled={loading}
+        isError={hasError}
         placeholder={placeholder}
+        type="text"
         value={text}
         onChange={(e) => setText((e.target as HTMLInputElement).value || '')}
         onKeyDown={(event) =>
@@ -38,13 +38,13 @@ export default function ({
       />
       {hasError && <TinyMessage withIcon state="error" text={error} />}
       <Button
+        center
+        fullWidth
+        disabled={text.length === 0}
         gradientFont={submitType !== 'primary'}
         loading={loading}
-        fullWidth
-        center
         small={submitType !== 'primary'}
         type={submitType}
-        disabled={text.length === 0}
         onClick={() => onSubmit(text)}
       >
         {loading ? 'Generating...' : submitText}

@@ -19,7 +19,7 @@ export default function () {
   )
 
   return {
-    ledgerToMintedAddresses,
     hasMinted,
+    ledgerToMintedAddresses,
   }
 }

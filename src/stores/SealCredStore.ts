@@ -9,15 +9,15 @@ import ledgerContracts from 'helpers/contracts/ledgerContracts'
 const state = proxy({
   ledgers: Promise.all(
     (Object.keys(ledgerContracts) as DataKey[]).map((name) => ({
-      name,
       ledger: getLedger(ledgerContracts[name]),
+      name,
     }))
   ).then(async (records) => {
     const result = {} as {
       [ledger in DataKey]: SCLedger
     }
 
-    for (const { name, ledger } of Object.values(records)) {
+    for (const { ledger, name } of Object.values(records)) {
       result[name] = await ledger
     }
 

@@ -44,8 +44,8 @@ export default function () {
       <GradientBorder>
         <Button
           gradientFont
-          type="secondary"
           small
+          type="secondary"
           url={getShareToTwitterLink({ text: CTAText })}
         >
           <div className={buttonContentWrapper}>
@@ -59,8 +59,8 @@ export default function () {
       <GradientBorder>
         <Button
           gradientFont
-          type="secondary"
           small
+          type="secondary"
           onClick={async () => {
             await copy(pathname)
             toast('Link copied 👍')

@@ -20,10 +20,10 @@ const tooltipClasses = classnames(
 )
 
 export default function ({
-  text,
-  position,
   children,
   disabled,
+  position,
+  text,
 }: ChildrenProp & {
   text: string
   position: placement
@@ -34,10 +34,10 @@ export default function ({
   if (disabled) return <>{children}</>
   return (
     <Tooltip
-      offset={10}
+      children={children}
       className={tooltipClasses}
       content={text}
-      children={children}
+      offset={10}
       placement={position}
     />
   )

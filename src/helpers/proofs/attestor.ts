@@ -12,8 +12,8 @@ export async function requestAddressOwnershipAttestation(
   message: string
 ) {
   const { data } = await axios.post<Signature>(`${baseURL}/ethereum-address`, {
-    signature,
     message,
+    signature,
   })
   return data
 }
@@ -24,9 +24,9 @@ export async function requestBalanceAttestation(
   ownerAddress: string
 ) {
   const { data } = await axios.post<BalanceSignature>(`${baseURL}/balance`, {
-    tokenAddress,
     network,
     ownerAddress,
+    tokenAddress,
   })
   return data
 }
@@ -36,8 +36,8 @@ export async function requestContractMetadata(
   tokenAddress: string
 ) {
   const { data } = await axios.post<Signature>(`${baseURL}/contract-metadata`, {
-    tokenAddress,
     network,
+    tokenAddress,
   })
   return data
 }

@@ -46,9 +46,9 @@ const borderWrapper = (size?: Sizes) =>
   )
 
 export default function ({
-  size,
-  disabled,
   char,
+  disabled,
+  size,
 }: {
   size?: Sizes
   disabled?: boolean

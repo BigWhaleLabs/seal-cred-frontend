@@ -40,11 +40,11 @@ export default async function generateERC721(
       eddsaPublicKey
     )
     const proof = {
+      account,
+      badgeType: BadgeSourceType.ERC721,
+      dataType: store.dataKey,
       original,
       result,
-      account,
-      dataType: store.dataKey,
-      badgeType: BadgeSourceType.ERC721,
     }
     checkNavigator()
     store.proofsCompleted.push(proof)

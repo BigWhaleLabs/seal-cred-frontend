@@ -39,8 +39,8 @@ const headerText = (accent = false, extraLeading = false) =>
   )
 export function HeaderText({
   accent,
-  extraLeading,
   children,
+  extraLeading,
 }: ChildrenProp & {
   accent?: boolean
   extraLeading?: boolean
@@ -80,13 +80,13 @@ const accentText = (
     dropShadow(shadow)
   )
 export function AccentText({
-  color,
   bold,
-  small,
+  children,
+  color,
+  extraSmall,
   primary,
   shadow,
-  children,
-  extraSmall,
+  small,
 }: ChildrenProp & {
   color: TTextColor
   bold?: boolean
@@ -122,12 +122,12 @@ const bodyText = (
   )
 export function BodyText({
   bold,
-  small,
-  smallOnBig,
   center,
   children,
   color,
   fontPrimary,
+  small,
+  smallOnBig,
 }: ChildrenProp & {
   bold?: boolean
   small?: boolean
@@ -156,8 +156,8 @@ export function ProofText({ children }: ChildrenProp) {
 }
 
 export function CardHeader({
-  color = 'formal-accent',
   children,
+  color = 'formal-accent',
 }: ChildrenProp & {
   color?: Color
 }) {
@@ -220,8 +220,8 @@ const badgeText = (small?: boolean) =>
     fontSize(small ? 'text-sm' : undefined)
   )
 export function BadgeText({
-  small,
   children,
+  small,
 }: ChildrenProp & { small?: boolean }) {
   return <span className={badgeText(small)}>{children}</span>
 }
@@ -245,15 +245,15 @@ const linkText = (
   )
 }
 export function LinkText({
-  url,
   bold,
-  title,
+  children,
   color,
-  internal,
   gradientFrom,
   gradientTo,
-  children,
+  internal,
   targetBlank,
+  title,
+  url,
 }: ChildrenProp & {
   url: string
   targetBlank?: boolean
@@ -266,8 +266,8 @@ export function LinkText({
 }) {
   return internal ? (
     <NavLink
-      to={url}
       className={linkText(bold, color, gradientFrom, gradientTo)}
+      to={url}
     >
       {children}
     </NavLink>
@@ -275,9 +275,9 @@ export function LinkText({
     <a
       className={linkText(bold, color, gradientFrom, gradientTo)}
       href={url}
-      title={title}
-      target={targetBlank ? '_blank' : '_self'}
       rel="noopener noreferrer"
+      target={targetBlank ? '_blank' : '_self'}
+      title={title}
     >
       {children}
     </a>
@@ -288,23 +288,23 @@ const footerLink = (active?: boolean) =>
   classnames(
     fontSize('text-sm'),
     fontWeight('font-semibold'),
-    textDecoration({ underline: active, 'hover:underline': true }),
+    textDecoration({ 'hover:underline': true, underline: active }),
     textColor({
-      'text-accent': active,
       'hover:text-accent': true,
+      'text-accent': active,
     }),
     transitionProperty('transition-colors')
   )
 export function FooterLink({
-  url,
   children,
   internal,
+  url,
 }: ChildrenProp & { url: string; internal?: boolean }) {
   return internal ? (
     <NavLink
       replace
-      to={url}
       className={({ isActive }: { isActive?: boolean }) => footerLink(isActive)}
+      to={url}
     >
       {children}
     </NavLink>
@@ -312,8 +312,8 @@ export function FooterLink({
     <a
       className={footerLink()}
       href={url}
-      target="_blank"
       rel="noopener noreferrer"
+      target="_blank"
     >
       {children}
     </a>
@@ -326,13 +326,13 @@ const socialLink = classnames(
   textDecoration('no-underline', 'active:underline'),
   textColor('active:text-tertiary', 'text-formal-accent')
 )
-export function SocialLink({ url, children }: ChildrenProp & { url: string }) {
+export function SocialLink({ children, url }: ChildrenProp & { url: string }) {
   return (
     <a
       className={classNamesToString(socialLink, 'hover-tertiary')}
       href={url}
-      target="_blank"
       rel="noopener noreferrer"
+      target="_blank"
     >
       {children}
     </a>
@@ -397,7 +397,7 @@ const tinyText = (color: 'base' | 'primary' | 'error', fontPrimary?: boolean) =>
       color === 'error'
         ? 'text-error'
         : color === 'primary'
-        ? { 'text-primary-semi-dimmed': true, 'selection:text-primary': true }
+        ? { 'selection:text-primary': true, 'text-primary-semi-dimmed': true }
         : 'text-formal-accent'
     ),
     fontFamily(fontPrimary ? 'font-primary' : undefined),
@@ -405,9 +405,9 @@ const tinyText = (color: 'base' | 'primary' | 'error', fontPrimary?: boolean) =>
     lineHeight('leading-3')
   )
 export function TinyText({
+  children,
   color = 'base',
   fontPrimary,
-  children,
 }: {
   color?: 'base' | 'primary' | 'error'
   fontPrimary?: boolean
@@ -453,9 +453,9 @@ const extraBoldText = (small?: boolean, extraLeading?: boolean) =>
     textTransform('uppercase')
   )
 export function ExtraBoldText({
-  small,
-  extraLeading,
   children,
+  extraLeading,
+  small,
 }: ChildrenProp & {
   small?: boolean
   extraLeading?: boolean

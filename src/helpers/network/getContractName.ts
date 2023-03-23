@@ -7,9 +7,9 @@ import prettifyContractName from 'helpers/network/prettifyContractName'
 
 export default function ({
   address,
+  clearType,
   network,
   truncate,
-  clearType,
 }: {
   address: string
   network: Network

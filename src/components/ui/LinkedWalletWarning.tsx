@@ -20,12 +20,12 @@ export default function () {
   return (
     <AccentText color="text-error">
       <ToolTip
-        position="bottom"
         fitContainer
+        position="bottom"
         text="The wallet that’s currently linked contains the original nft. It might be best you use a different wallet."
       >
         <span className={hintWrapper}>
-          <CharInCircle size={Sizes.Medium} char="!" />
+          <CharInCircle char="!" size={Sizes.Medium} />
           Wait
         </span>
       </ToolTip>

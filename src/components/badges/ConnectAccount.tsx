@@ -11,8 +11,8 @@ export default function () {
   return (
     <>
       <CardTitle
-        title="Then"
         subtitle="Once you’ve created a ZK proof, you will be able to mint ZK badges for your anonymous wallets"
+        title="Then"
       />
       <HintCard>
         <p>
@@ -28,10 +28,10 @@ export default function () {
           the anonymous wallet.
         </p>
         <Button
-          type="tertiary"
+          gradientFont
           small
           withArrow
-          gradientFont
+          type="tertiary"
           onClick={async () => {
             await WalletStore.changeNetworkOrConnect({
               clearCachedProvider: true,

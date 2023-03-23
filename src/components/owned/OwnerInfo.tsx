@@ -47,36 +47,36 @@ export default function ({
   if (!badge) {
     handleError('Looks like this contract was removed')
     return (
-      <Card color="secondary" shadow onlyWrap>
+      <Card onlyWrap shadow color="secondary">
         <CardTitle
-          title="Unsupported NFT"
           subtitle="This NFT is not supported"
+          title="Unsupported NFT"
         />
       </Card>
     )
   }
 
-  const { type, original } = badge
-  const { network, badgeType } = data[type]
-  const { ownerTitle: OwnerTitle, ownerContent: OwnerContent } =
+  const { original, type } = badge
+  const { badgeType, network } = data[type]
+  const { ownerContent: OwnerContent, ownerTitle: OwnerTitle } =
     badgeConfig[badgeType]
 
   return (
     <Card
-      color="secondary"
-      shadow
-      paddingType="normal"
       onlyWrap
+      shadow
+      color="secondary"
+      paddingType="normal"
       spinner={{
-        text: 'Certified with SealCred ZK Proofs',
         avoidCardContent: true,
+        text: 'Certified with SealCred ZK Proofs',
       }}
     >
       <HeaderText extraLeading>
         <OwnerTitle derivative={derivativeAddress} />
       </HeaderText>
       <BadgeContent>
-        <OwnerContent original={original} network={network} />
+        <OwnerContent network={network} original={original} />
       </BadgeContent>
       <HorizontalRule color="primary-semi-dimmed" />
       <div className={walletBox}>
@@ -84,9 +84,9 @@ export default function ({
         <div className={walletAddress}>
           <BodyText small>Wallet address</BodyText>
           <OwnedBadgeAddress
-            tokenId={tokenId}
             derivativeAddress={derivativeAddress}
             network={Network.Goerli}
+            tokenId={tokenId}
           />
         </div>
       </div>

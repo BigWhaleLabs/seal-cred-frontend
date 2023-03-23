@@ -10,8 +10,8 @@ const wrapper = classnames(
 )
 
 export default function ({
-  removeValueFromList,
   emailList,
+  removeValueFromList,
 }: {
   removeValueFromList: (fileName: string) => void
   emailList: EmailFromList[]
@@ -20,17 +20,17 @@ export default function ({
 
   return (
     <div className={wrapper}>
-      {filesWithAmount.map(({ fileName, amount }) => {
+      {filesWithAmount.map(({ amount, fileName }) => {
         if (fileName === inputFileName) return null
 
         const amountMessage = amount > 1 ? ` (${amount} emails)` : ' (1 email)'
 
         return (
           <ListedValue
-            title={fileName}
             emailsAmount={amountMessage}
             fileName={fileName}
             removeValueFromList={() => removeValueFromList(fileName)}
+            title={fileName}
           />
         )
       })}

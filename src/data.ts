@@ -12,25 +12,25 @@ export enum BadgeSourceType {
 }
 
 export default {
-  ExternalERC721: {
-    ledger: env.VITE_SC_EXTERNAL_ERC721_LEDGER_CONTRACT_ADDRESS,
-    badgeType: BadgeSourceType.ERC721,
-    network: Network.Mainnet,
-    mint: createExternalERC721Badge,
-    createProof: generateERC721,
-  },
   ERC721: {
-    ledger: env.VITE_SC_ERC721_LEDGER_CONTRACT_ADDRESS,
     badgeType: BadgeSourceType.ERC721,
-    network: Network.Goerli,
-    mint: createERC721Badge,
     createProof: generateERC721,
+    ledger: env.VITE_SC_ERC721_LEDGER_CONTRACT_ADDRESS,
+    mint: createERC721Badge,
+    network: Network.Goerli,
   },
   Email: {
-    ledger: env.VITE_SC_EMAIL_LEDGER_CONTRACT_ADDRESS,
     badgeType: BadgeSourceType.Email,
-    network: Network.Goerli,
-    mint: createEmailBadge,
     createProof: generateEmail,
+    ledger: env.VITE_SC_EMAIL_LEDGER_CONTRACT_ADDRESS,
+    mint: createEmailBadge,
+    network: Network.Goerli,
+  },
+  ExternalERC721: {
+    badgeType: BadgeSourceType.ERC721,
+    createProof: generateERC721,
+    ledger: env.VITE_SC_EXTERNAL_ERC721_LEDGER_CONTRACT_ADDRESS,
+    mint: createExternalERC721Badge,
+    network: Network.Mainnet,
   },
 }

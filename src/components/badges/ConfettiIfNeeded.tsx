@@ -31,12 +31,12 @@ export default function () {
 
     const mintConfetti = confetti.create(canvasRef.current, { resize: true })
     void mintConfetti({
-      spread: 80,
+      colors: ['#fed823', '#ff7bed', '#15a1fc', '#01feb6'],
       decay: 0.8,
       particleCount: 150,
-      colors: ['#fed823', '#ff7bed', '#15a1fc', '#01feb6'],
+      spread: 80,
     })
   }, [canvasRef, showTwitterShare])
 
-  return <canvas ref={canvasRef} className={confettiCanvas} />
+  return <canvas className={confettiCanvas} ref={canvasRef} />
 }

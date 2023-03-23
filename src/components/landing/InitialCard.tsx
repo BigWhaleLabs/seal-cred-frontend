@@ -19,10 +19,10 @@ const alphaSealWrapper = classnames(
 export default function () {
   return (
     <Card
+      nospace
+      onlyWrap
       shadow
       color="accent"
-      onlyWrap
-      nospace
       spinner={{ text: 'One Identity to rule them all' }}
     >
       <div className={initialCardWrapper}>

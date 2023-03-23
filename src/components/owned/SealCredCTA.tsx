@@ -19,12 +19,12 @@ const innerWrapper = classnames(
 export default function () {
   const navigate = useNavigate()
   return (
-    <Card color="tertiary" paddingType="normal" shadow onlyWrap>
+    <Card onlyWrap shadow color="tertiary" paddingType="normal">
       <div className={innerWrapper}>
         <AccentText color="text-tertiary">
           Create your own zkNFT with SealCred.
         </AccentText>
-        <Button type="primary" small onClick={() => navigate('/')}>
+        <Button small type="primary" onClick={() => navigate('/')}>
           Get started
         </Button>
       </div>

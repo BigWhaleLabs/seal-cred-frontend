@@ -20,16 +20,16 @@ export default function ({
       <BodyText>You’ve minted a zkBadge verifying your work email!</BodyText>
       {ids.map((tokenId) => (
         <MintedBadgeBlock
-          key={`${address}-${tokenId}`}
           derivativeAddress={address}
+          key={`${address}-${tokenId}`}
           tokenId={tokenId}
         />
       ))}
       <GradientBorder>
         <Button
-          gradientFont
-          fullWidth
           center
+          fullWidth
+          gradientFont
           small
           type="secondary"
           onClick={resetEmail}
@@ -45,12 +45,12 @@ export default function ({
         <div className={margin('mb-4')}>
           <LinkText targetBlank url="https://work.sealcred.xyz/how-it-works">
             <Button
-              type="tertiary"
+              center
+              fullWidth
+              gradientFont
               small
               withArrow
-              gradientFont
-              fullWidth
-              center
+              type="tertiary"
             >
               Try SealCred Work
             </Button>

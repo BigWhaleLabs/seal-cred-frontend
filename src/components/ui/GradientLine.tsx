@@ -7,9 +7,9 @@ const line = (gradientDirection: 'to-left' | 'to-right', small?: boolean) => {
   return classnames(
     height('h-px'),
     width({
-      'w-8': small,
       'sm:w-20': small,
       'w-36': !small,
+      'w-8': small,
     }),
     backgroundImage(
       gradientDirection === 'to-left' ? 'bg-gradient-to-l' : 'bg-gradient-to-r'
@@ -20,8 +20,8 @@ const line = (gradientDirection: 'to-left' | 'to-right', small?: boolean) => {
 
 export default ({
   color,
-  gradientDirection,
   fromLight,
+  gradientDirection,
   small,
 }: {
   color: Color

@@ -17,7 +17,7 @@ import walletStore from 'stores/WalletStore'
 
 function BadgeListSuspended() {
   const { account, isAccountNotifiedOfBeingDoxxed } = useSnapshot(walletStore)
-  const { ledgerToUnmintedProofs, hasUnmintedProofs } =
+  const { hasUnmintedProofs, ledgerToUnmintedProofs } =
     useProofsAvailableToMint()
   const { hasMinted, ledgerToMintedAddresses } = useMintedAddresses()
 
@@ -41,11 +41,11 @@ function BadgeListSuspended() {
         <div className={space('space-y-2')}>
           {dataKeys.map((ledgerName) => (
             <BadgeSection
+              minted={ledgerToMintedAddresses[ledgerName]}
+              proofs={ledgerToUnmintedProofs[ledgerName]}
               title={badgeConfig[data[ledgerName].badgeType].title(
                 data[ledgerName]
               )}
-              minted={ledgerToMintedAddresses[ledgerName]}
-              proofs={ledgerToUnmintedProofs[ledgerName]}
               onMinted={onMinted}
             />
           ))}

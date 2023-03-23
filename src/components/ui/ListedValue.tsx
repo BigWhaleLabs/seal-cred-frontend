@@ -22,9 +22,9 @@ const valueWrapper = (alternativeStyle?: boolean, isDifferent?: boolean) =>
     alignItems('items-center'),
     gap('gap-x-1'),
     backgroundColor({
-      'bg-secondary': isDifferent,
-      'bg-primary-semi-dimmed': alternativeStyle,
       'bg-primary-dimmed': !(alternativeStyle && isDifferent),
+      'bg-primary-semi-dimmed': alternativeStyle,
+      'bg-secondary': isDifferent,
     }),
     borderRadius('rounded-3xl'),
     alignItems('items-center'),
@@ -42,12 +42,12 @@ const TruncatedTitle = ({ title }: { title: string }) => (
 )
 
 export default function ({
-  title,
-  index,
-  removeValueFromList,
   emailsAmount,
   fileName,
+  index,
   isDifferent,
+  removeValueFromList,
+  title,
 }: {
   title: string
   removeValueFromList: (fileName?: string, index?: number) => void
@@ -64,7 +64,7 @@ export default function ({
         className={crossWrapper}
         onClick={() => removeValueFromList(fileName, index)}
       >
-        <Cross inheritColor={isDifferent} basicSize={false} />
+        <Cross basicSize={false} inheritColor={isDifferent} />
       </div>
     </div>
   )

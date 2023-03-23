@@ -6,8 +6,8 @@ import clearDerivativeType from 'helpers/network/clearDerivativeType'
 import getEtherscanAddressUrl from 'helpers/network/getEtherscanAddressUrl'
 
 export default function ({
-  originalOrAddress,
   clearType,
+  originalOrAddress,
 }: {
   originalOrAddress: string
   clearType?: boolean

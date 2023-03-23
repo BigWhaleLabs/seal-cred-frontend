@@ -16,8 +16,8 @@ const parentButtonWrapper = (enabled?: boolean) =>
     padding('p-px'),
     gradientColorStops('from-secondary', 'to-accent'),
     boxShadow('shadow-2xl', {
-      'hover:shadow-lg': enabled,
       'active:shadow-button-active': enabled,
+      'hover:shadow-lg': enabled,
     })
   )
 const innerButtonWrapper = classnames(
@@ -27,8 +27,8 @@ const innerButtonWrapper = classnames(
 )
 
 export default function ({
-  disabled,
   children,
+  disabled,
 }: ChildrenProp & { disabled?: boolean }) {
   return (
     <div className={parentButtonWrapper(!disabled)}>

@@ -14,17 +14,17 @@ import proofStore from 'stores/ProofStore'
 import useBreakpoints from 'hooks/useBreakpoints'
 
 export default function ({
-  domain,
-  token,
-  submitType = 'secondary',
-  error,
-  onError,
-  onCreate,
-  onChange,
   afterSendEmail,
-  onGenerationStarted,
-  jumpToToken,
+  domain,
+  error,
   forFlow,
+  jumpToToken,
+  onChange,
+  onCreate,
+  onError,
+  onGenerationStarted,
+  submitType = 'secondary',
+  token,
 }: {
   domain: string
   token?: string
@@ -95,29 +95,29 @@ export default function ({
       <div>
         A token has been sent to <b>{email || `@${domain}`}</b>. Copy the token
         and add it here to create a zk proof. Or{' '}
-        <TextButton onClick={() => resetEmail()} disabled={loading}>
+        <TextButton disabled={loading} onClick={() => resetEmail()}>
           re-enter email
         </TextButton>
         .
       </div>
       <TextForm
-        value={token}
-        submitType={submitType}
-        submitText="Generate proof"
-        placeholder="Paste token here"
-        onSubmit={onGenerateProof}
-        loading={loading}
         error={error}
+        loading={loading}
+        placeholder="Paste token here"
+        submitText="Generate proof"
+        submitType={submitType}
+        value={token}
+        onSubmit={onGenerateProof}
       />
     </>
   ) : (
     <>
       <FormDescription forFlow={forFlow} jumpToToken={jumpToToken} />
       <EmailForm
-        submitType={submitType}
-        placeholder={xxs ? 'Email addresses' : 'Email addresses (minimum 10)'}
-        onSubmit={onSendEmails}
         loading={loading}
+        placeholder={xxs ? 'Email addresses' : 'Email addresses (minimum 10)'}
+        submitType={submitType}
+        onSubmit={onSendEmails}
       />
     </>
   )
