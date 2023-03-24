@@ -51,7 +51,7 @@ const hintWrapper = classnames(
 )
 
 export default function () {
-  const { walletLoading, needNetworkChange } = useSnapshot(WalletStore)
+  const { needNetworkChange, walletLoading } = useSnapshot(WalletStore)
   const { urlDomain, urlToken } = useUrlParams()
 
   if (urlDomain || urlToken)
@@ -70,10 +70,10 @@ export default function () {
           <BodyText center>
             Connect a wallet with NFTs to create a{' '}
             <AccentText color="text-accent">
-              <ToolTip position="bottom" fitContainer text={zkProofText}>
+              <ToolTip fitContainer position="bottom" text={zkProofText}>
                 <span className={hintWrapper}>
                   <span className={textDecoration('underline')}>ZK proof</span>
-                  <CharInCircle size={Sizes.Small} char="?" />
+                  <CharInCircle char="?" size={Sizes.Small} />
                 </span>
               </ToolTip>
             </AccentText>
@@ -82,8 +82,8 @@ export default function () {
             Keep in mind this project is still in Alpha
           </BodyText>
           <Button
-            type="primary"
             loading={walletLoading}
+            type="primary"
             onClick={async () => {
               await WalletStore.changeNetworkOrConnect({
                 clearCachedProvider: true,

@@ -33,16 +33,16 @@ const wrappedWord = (name: string) => {
 
 function ContractNameSuspended({
   address,
-  hyphens,
-  truncate,
   clearType,
+  hyphens,
   network,
+  truncate,
 }: ContractNameProps) {
   const contractName = getContractName({
     address,
+    clearType,
     network,
     truncate,
-    clearType,
   })
 
   return (

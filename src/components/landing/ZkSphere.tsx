@@ -37,7 +37,7 @@ interface ZkSphereProps {
   text?: string
 }
 
-export default function ({ color, animated, text }: ZkSphereProps) {
+export default function ({ animated, color, text }: ZkSphereProps) {
   const bgColor = colorToTailwindBackground(color)
   const shadowColor = classnames(
     colorToDropShadow(color),
@@ -50,22 +50,22 @@ export default function ({ color, animated, text }: ZkSphereProps) {
 
   return animated ? (
     <div
+      className={classnames(sphereStyles, bgColor, shadowColor)}
       style={{
+        animationDelay: `calc(${scroll} * -1s)`,
+        animationDirection: 'linear',
+        animationDuration: '1s',
+        animationFillMode: 'both',
+        animationIterationCount: 1,
         animationName:
           color === 'tertiary'
             ? 'tertiarySphereAnimation'
             : color === 'accent'
             ? 'accentSphereAnimation'
             : 'secondarySphereAnimation',
-        animationTimingFunction: 'ease-in-out',
-        animationDuration: '1s',
-        animationDirection: 'linear',
         animationPlayState: 'paused',
-        animationDelay: `calc(${scroll} * -1s)`,
-        animationIterationCount: 1,
-        animationFillMode: 'both',
+        animationTimingFunction: 'ease-in-out',
       }}
-      className={classnames(sphereStyles, bgColor, shadowColor)}
     >
       <SphereText>{zkText}</SphereText>
     </div>

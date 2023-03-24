@@ -41,13 +41,13 @@ interface IdentityCardProps {
 }
 
 export default function ({
-  reveal,
-  left = false,
-  text,
   children,
+  left = false,
+  reveal,
+  text,
 }: IdentityCardProps & ChildrenProp) {
   return (
-    <Card color="formal-accent" shadow thin paddingType="small" onlyWrap>
+    <Card onlyWrap shadow thin color="formal-accent" paddingType="small">
       <div className={innerId}>
         <div className={rectangleMargin(left)}>
           {left ? (
@@ -58,7 +58,7 @@ export default function ({
           {left && <NoisyRectangle bgColor="bg-accent" />}
         </div>
         <span className={displayTo('sm')}>
-          <BodyText small center>
+          <BodyText center small>
             {text}
           </BodyText>
         </span>

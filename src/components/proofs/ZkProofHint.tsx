@@ -35,7 +35,7 @@ export default function () {
     <ToolTip arrow position="top" text={popoverText}>
       <div className={zkProofButton}>
         <AccentText color="text-accent">What's a ZK proof?</AccentText>
-        <AccentText small primary color="text-accent">
+        <AccentText primary small color="text-accent">
           <CharInCircle char="?" />
         </AccentText>
       </div>

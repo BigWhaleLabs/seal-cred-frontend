@@ -10,8 +10,8 @@ const sectionWrapper = classnames(
 )
 
 export default function ({
-  title,
   children,
+  title,
 }: ChildrenProp & { title?: ComponentChildren }) {
   return (
     <section className={sectionWrapper}>

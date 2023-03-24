@@ -12,12 +12,12 @@ export default function () {
   return (
     <CardContainer>
       <Card
-        paddingType="normal"
-        color="accent"
+        higherZIndex
+        nospace
         shadow
         useAppStyles
-        nospace
-        higherZIndex
+        color="accent"
+        paddingType="normal"
       >
         {walletLoading ? (
           <LoadingCard />

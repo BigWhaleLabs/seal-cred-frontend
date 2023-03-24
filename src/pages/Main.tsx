@@ -23,8 +23,8 @@ export default function () {
     <div className={mainBlock}>
       <ProofsCard />
       <CardSeparator
-        numberOfLines={3}
         gradient="accent-to-secondary"
+        numberOfLines={3}
         vertical={!tablet}
       />
       <Badges />

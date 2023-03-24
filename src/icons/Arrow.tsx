@@ -33,10 +33,10 @@ interface ArrowProps {
 }
 
 export default function ({
-  pulseDisabled,
   horizontal,
-  openDisabled,
   open,
+  openDisabled,
+  pulseDisabled,
   standardSize = true,
 }: ArrowProps) {
   // same id of <linearGradient> will break multiple usage of this icon
@@ -45,9 +45,9 @@ export default function ({
   return (
     <div className={svgInnerWrapper(standardSize)}>
       <svg
+        className={arrowAnimation(pulseDisabled, openDisabled, open)}
         viewBox={horizontal ? '0 0 14 14' : '0 0 14 7'}
         xmlns="http://www.w3.org/2000/svg"
-        className={arrowAnimation(pulseDisabled, openDisabled, open)}
       >
         <path
           d="M10.75 1.25L6.25 5.75L1.75 1.25"
@@ -57,12 +57,12 @@ export default function ({
         />
         <defs>
           <linearGradient
+            gradientUnits="userSpaceOnUse"
             id={strokeId}
             x1="3.89285"
-            y1="1.35547"
             x2="3.89285"
+            y1="1.35547"
             y2="5.75"
-            gradientUnits="userSpaceOnUse"
           >
             <stop stop-color="#FF7BED" />
             <stop offset="1" stop-color="#FED823" />

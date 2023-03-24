@@ -11,7 +11,7 @@ export default function ({
 }) {
   return (
     <ExternalLink url={getShareToTwitterLink({ text: CTAText })}>
-      <Button type="secondary" onClick={closeNotification} small>
+      <Button small type="secondary" onClick={closeNotification}>
         <div className={width('w-max')}>Share a Tweet</div>
       </Button>
     </ExternalLink>

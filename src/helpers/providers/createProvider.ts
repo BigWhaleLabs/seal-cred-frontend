@@ -8,11 +8,11 @@ export default function (
 ) {
   const rpcNetwork = network.toLowerCase()
   return {
-    network,
     defaultProvider: new providers.JsonRpcProvider(
       networkToRPC.default,
       rpcNetwork
     ),
     heavyProvider: alchemyOrJsonProvider(networkToRPC.heavy, rpcNetwork),
+    network,
   }
 }

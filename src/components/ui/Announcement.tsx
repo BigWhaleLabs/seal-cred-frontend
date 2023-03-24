@@ -75,7 +75,7 @@ export default function ({ redirectTo }: { redirectTo: string }) {
       <div className={flex('flex-1')} />
       <div className={textWrapper(animate)}>
         <LinkText url={redirectTo}>
-          <AccentText small bold color="text-formal-accent">
+          <AccentText bold small color="text-formal-accent">
             Now introducing zk proofs for your work email!{' '}
             {onPage ? hasAccount : 'Get started'}
           </AccentText>
@@ -83,13 +83,13 @@ export default function ({ redirectTo }: { redirectTo: string }) {
       </div>
       <div className={crossWrapper}>
         <Button
+          className={margin('lg:ml-auto', 'ml-6')}
           onClick={() => {
             setTimeout(() => {
               NotificationsStore.announcementClosed = true
             }, 75)
             setAnimate(true)
           }}
-          className={margin('lg:ml-auto', 'ml-6')}
         >
           <Cross />
         </Button>

@@ -27,9 +27,9 @@ export default async function (
   if (!signature.R8) throw new Error('Unable to unpack the signature')
 
   return {
+    M: F.toObject(M).toString(),
     R8x: F.toObject(signature.R8[0]).toString(),
     R8y: F.toObject(signature.R8[1]).toString(),
     S: signature.S.toString(),
-    M: F.toObject(M).toString(),
   }
 }

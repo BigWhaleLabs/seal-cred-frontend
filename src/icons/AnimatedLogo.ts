@@ -4,7 +4,6 @@ export default {
       id: 'maskComp_ViewBox_EE3FF9B8-9457-4641-B9FE-4F9826B1A38C',
       layers: [
         {
-          ty: 3.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 15.0,
@@ -20,9 +19,9 @@ export default {
           op: 121.0,
           sr: 1.0,
           st: 0.0,
+          ty: 3.0,
         },
         {
-          ty: 4.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 16.0,
@@ -39,26 +38,24 @@ export default {
           parent: 15.0,
           shapes: [
             {
-              ty: 'gr',
               cix: 2.0,
               it: [
                 {
-                  ty: 'rc',
                   d: 1.0,
                   nm: 'ViewBox-background',
                   p: { a: 0.0, k: [28.0, 28.0] },
                   r: { a: 0.0, k: 0.0 },
                   s: { a: 0.0, k: [56.0, 56.0] },
+                  ty: 'rc',
                 },
                 {
-                  ty: 'fl',
                   c: { a: 0.0, k: [0.0, 0.0, 0.0, 1.0] },
                   nm: 'Fill 1',
                   o: { a: 0.0, k: 0.0 },
                   r: 1.0,
+                  ty: 'fl',
                 },
                 {
-                  ty: 'tr',
                   a: { a: 0.0, k: [0.0, 0.0] },
                   nm: 'Transform',
                   o: { a: 0.0, k: 100.0 },
@@ -67,18 +64,20 @@ export default {
                   s: { a: 0.0, k: [100.0, 100.0] },
                   sa: { a: 0.0, k: 0.0 },
                   sk: { a: 0.0, k: 0.0 },
+                  ty: 'tr',
                 },
               ],
               nm: 'ViewBox-mask',
               np: 3.0,
+              ty: 'gr',
             },
           ],
           sr: 1.0,
           st: 0.0,
           td: 1.0,
+          ty: 4.0,
         },
         {
-          ty: 0.0,
           ao: 0.0,
           ddd: 0.0,
           h: 56.0,
@@ -96,6 +95,7 @@ export default {
           refId: 'comp_ViewBox_EE3FF9B8-9457-4641-B9FE-4F9826B1A38C',
           sr: 1.0,
           st: 0.0,
+          ty: 0.0,
           w: 56.0,
         },
       ],
@@ -104,7 +104,6 @@ export default {
       id: 'comp_ViewBox_EE3FF9B8-9457-4641-B9FE-4F9826B1A38C',
       layers: [
         {
-          ty: 3.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 15.0,
@@ -120,9 +119,9 @@ export default {
           op: 121.0,
           sr: 1.0,
           st: 0.0,
+          ty: 3.0,
         },
         {
-          ty: 0.0,
           ao: 0.0,
           ddd: 0.0,
           h: 56.0,
@@ -140,10 +139,10 @@ export default {
           refId: 'comp_inside_007CE117-0C24-4DD1-85D7-C872F6017C21',
           sr: 1.0,
           st: 0.0,
+          ty: 0.0,
           w: 56.0,
         },
         {
-          ty: 0.0,
           ao: 0.0,
           ddd: 0.0,
           h: 56.0,
@@ -161,6 +160,7 @@ export default {
           refId: 'comp_outside_5B5EB70E-F5B2-446E-A21C-43E50EB6A864',
           sr: 1.0,
           st: 0.0,
+          ty: 0.0,
           w: 56.0,
         },
       ],
@@ -169,7 +169,6 @@ export default {
       id: 'comp_outside_5B5EB70E-F5B2-446E-A21C-43E50EB6A864',
       layers: [
         {
-          ty: 3.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 15.0,
@@ -185,9 +184,9 @@ export default {
           op: 121.0,
           sr: 1.0,
           st: 0.0,
+          ty: 3.0,
         },
         {
-          ty: 3.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 25.0,
@@ -240,9 +239,9 @@ export default {
           parent: 15.0,
           sr: 1.0,
           st: 0.0,
+          ty: 3.0,
         },
         {
-          ty: 4.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 28.0,
@@ -258,26 +257,24 @@ export default {
           op: 121.0,
           shapes: [
             {
-              ty: 'gr',
               cix: 2.0,
               it: [
                 {
-                  ty: 'rc',
                   d: 1.0,
                   nm: 'sizeElement',
                   p: { a: 0.0, k: [28.0, 28.0] },
                   r: { a: 0.0, k: 0.0 },
                   s: { a: 0.0, k: [56.0, 56.0] },
+                  ty: 'rc',
                 },
                 {
-                  ty: 'fl',
                   c: { a: 0.0, k: [0.0, 0.0, 0.0, 0.0] },
                   nm: 'Fill 1',
                   o: { a: 0.0, k: 0.0 },
                   r: 1.0,
+                  ty: 'fl',
                 },
                 {
-                  ty: 'tr',
                   a: { a: 0.0, k: [0.0, 0.0] },
                   nm: 'Transform',
                   o: { a: 0.0, k: 100.0 },
@@ -286,17 +283,19 @@ export default {
                   s: { a: 0.0, k: [100.0, 100.0] },
                   sa: { a: 0.0, k: 0.0 },
                   sk: { a: 0.0, k: 0.0 },
+                  ty: 'tr',
                 },
               ],
               nm: 'outside-size',
               np: 3.0,
+              ty: 'gr',
             },
           ],
           sr: 1.0,
           st: 0.0,
+          ty: 4.0,
         },
         {
-          ty: 4.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 21.0,
@@ -313,11 +312,9 @@ export default {
           parent: 25.0,
           shapes: [
             {
-              ty: 'gr',
               cix: 2.0,
               it: [
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -338,9 +335,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -361,9 +358,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -384,9 +381,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -407,9 +404,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -430,9 +427,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -453,9 +450,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -476,9 +473,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -499,9 +496,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -528,9 +525,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -557,9 +554,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -586,9 +583,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -615,9 +612,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -647,9 +644,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'st',
                   c: { a: 0.0, k: [0.996, 0.847, 0.137, 1.0] },
                   d: [{ n: 'o', nm: 'offset', v: { a: 0.0, k: 0.0 } }],
                   lc: 2.0,
@@ -657,10 +654,10 @@ export default {
                   ml: 4.0,
                   nm: 'Stroke 1',
                   o: { a: 0.0, k: 100.0 },
+                  ty: 'st',
                   w: { a: 0.0, k: 1.5 },
                 },
                 {
-                  ty: 'tm',
                   e: { a: 0.0, k: 100.0 },
                   m: 2.0,
                   nm: 'Trim Paths 1',
@@ -700,9 +697,9 @@ export default {
                       },
                     ],
                   },
+                  ty: 'tm',
                 },
                 {
-                  ty: 'tr',
                   a: { a: 0.0, k: [0.0, 0.0] },
                   nm: 'Transform',
                   o: { a: 0.0, k: 100.0 },
@@ -711,17 +708,19 @@ export default {
                   s: { a: 0.0, k: [100.0, 100.0] },
                   sa: { a: 0.0, k: 0.0 },
                   sk: { a: 0.0, k: 0.0 },
+                  ty: 'tr',
                 },
               ],
               nm: 'outside-stroke',
               np: 3.0,
+              ty: 'gr',
             },
           ],
           sr: 1.0,
           st: 0.0,
+          ty: 4.0,
         },
         {
-          ty: 4.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 24.0,
@@ -738,11 +737,9 @@ export default {
           parent: 25.0,
           shapes: [
             {
-              ty: 'gr',
               cix: 2.0,
               it: [
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -763,9 +760,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -786,9 +783,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -809,9 +806,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -832,9 +829,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -855,9 +852,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -878,9 +875,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -901,9 +898,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -924,9 +921,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -953,9 +950,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -982,9 +979,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1011,9 +1008,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1040,9 +1037,9 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1072,16 +1069,16 @@ export default {
                     },
                   },
                   nm: 'outside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'fl',
                   c: { a: 0.0, k: [0.0, 0.0, 0.0, 1.0] },
                   nm: 'Fill 1',
                   o: { a: 0.0, k: 0.0 },
                   r: 1.0,
+                  ty: 'fl',
                 },
                 {
-                  ty: 'tr',
                   a: { a: 0.0, k: [0.0, 0.0] },
                   nm: 'Transform',
                   o: { a: 0.0, k: 100.0 },
@@ -1090,14 +1087,17 @@ export default {
                   s: { a: 0.0, k: [100.0, 100.0] },
                   sa: { a: 0.0, k: 0.0 },
                   sk: { a: 0.0, k: 0.0 },
+                  ty: 'tr',
                 },
               ],
               nm: 'outside-content',
               np: 3.0,
+              ty: 'gr',
             },
           ],
           sr: 1.0,
           st: 0.0,
+          ty: 4.0,
         },
       ],
     },
@@ -1105,7 +1105,6 @@ export default {
       id: 'comp_inside_007CE117-0C24-4DD1-85D7-C872F6017C21',
       layers: [
         {
-          ty: 3.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 15.0,
@@ -1121,9 +1120,9 @@ export default {
           op: 121.0,
           sr: 1.0,
           st: 0.0,
+          ty: 3.0,
         },
         {
-          ty: 3.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 35.0,
@@ -1140,9 +1139,9 @@ export default {
           parent: 15.0,
           sr: 1.0,
           st: 0.0,
+          ty: 3.0,
         },
         {
-          ty: 4.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 38.0,
@@ -1158,26 +1157,24 @@ export default {
           op: 121.0,
           shapes: [
             {
-              ty: 'gr',
               cix: 2.0,
               it: [
                 {
-                  ty: 'rc',
                   d: 1.0,
                   nm: 'sizeElement',
                   p: { a: 0.0, k: [28.0, 28.0] },
                   r: { a: 0.0, k: 0.0 },
                   s: { a: 0.0, k: [56.0, 56.0] },
+                  ty: 'rc',
                 },
                 {
-                  ty: 'fl',
                   c: { a: 0.0, k: [0.0, 0.0, 0.0, 0.0] },
                   nm: 'Fill 1',
                   o: { a: 0.0, k: 0.0 },
                   r: 1.0,
+                  ty: 'fl',
                 },
                 {
-                  ty: 'tr',
                   a: { a: 0.0, k: [0.0, 0.0] },
                   nm: 'Transform',
                   o: { a: 0.0, k: 100.0 },
@@ -1186,17 +1183,19 @@ export default {
                   s: { a: 0.0, k: [100.0, 100.0] },
                   sa: { a: 0.0, k: 0.0 },
                   sk: { a: 0.0, k: 0.0 },
+                  ty: 'tr',
                 },
               ],
               nm: 'inside-size',
               np: 3.0,
+              ty: 'gr',
             },
           ],
           sr: 1.0,
           st: 0.0,
+          ty: 4.0,
         },
         {
-          ty: 4.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 31.0,
@@ -1213,11 +1212,9 @@ export default {
           parent: 35.0,
           shapes: [
             {
-              ty: 'gr',
               cix: 2.0,
               it: [
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1247,9 +1244,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1270,9 +1267,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1293,9 +1290,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1316,9 +1313,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1339,9 +1336,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1362,9 +1359,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1385,9 +1382,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1408,9 +1405,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1440,9 +1437,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1472,9 +1469,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'st',
                   c: { a: 0.0, k: [1.0, 0.482, 0.929, 1.0] },
                   d: [{ n: 'o', nm: 'offset', v: { a: 0.0, k: 0.0 } }],
                   lc: 2.0,
@@ -1482,10 +1479,10 @@ export default {
                   ml: 4.0,
                   nm: 'Stroke 1',
                   o: { a: 0.0, k: 100.0 },
+                  ty: 'st',
                   w: { a: 0.0, k: 1.5 },
                 },
                 {
-                  ty: 'tm',
                   e: { a: 0.0, k: 100.0 },
                   m: 2.0,
                   nm: 'Trim Paths 1',
@@ -1531,9 +1528,9 @@ export default {
                       },
                     ],
                   },
+                  ty: 'tm',
                 },
                 {
-                  ty: 'tr',
                   a: { a: 0.0, k: [0.0, 0.0] },
                   nm: 'Transform',
                   o: { a: 0.0, k: 100.0 },
@@ -1542,17 +1539,19 @@ export default {
                   s: { a: 0.0, k: [100.0, 100.0] },
                   sa: { a: 0.0, k: 0.0 },
                   sk: { a: 0.0, k: 0.0 },
+                  ty: 'tr',
                 },
               ],
               nm: 'inside-stroke',
               np: 3.0,
+              ty: 'gr',
             },
           ],
           sr: 1.0,
           st: 0.0,
+          ty: 4.0,
         },
         {
-          ty: 4.0,
           ao: 0.0,
           ddd: 0.0,
           ind: 34.0,
@@ -1569,11 +1568,9 @@ export default {
           parent: 35.0,
           shapes: [
             {
-              ty: 'gr',
               cix: 2.0,
               it: [
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1603,9 +1600,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1626,9 +1623,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1649,9 +1646,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1672,9 +1669,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1695,9 +1692,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1718,9 +1715,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1741,9 +1738,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1764,9 +1761,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1796,9 +1793,9 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'sh',
                   ind: 0.0,
                   ks: {
                     a: 0.0,
@@ -1828,16 +1825,16 @@ export default {
                     },
                   },
                   nm: 'inside-path',
+                  ty: 'sh',
                 },
                 {
-                  ty: 'fl',
                   c: { a: 0.0, k: [0.0, 0.0, 0.0, 1.0] },
                   nm: 'Fill 1',
                   o: { a: 0.0, k: 0.0 },
                   r: 1.0,
+                  ty: 'fl',
                 },
                 {
-                  ty: 'tr',
                   a: { a: 0.0, k: [0.0, 0.0] },
                   nm: 'Transform',
                   o: { a: 0.0, k: 100.0 },
@@ -1846,14 +1843,17 @@ export default {
                   s: { a: 0.0, k: [100.0, 100.0] },
                   sa: { a: 0.0, k: 0.0 },
                   sk: { a: 0.0, k: 0.0 },
+                  ty: 'tr',
                 },
               ],
               nm: 'inside-content',
               np: 3.0,
+              ty: 'gr',
             },
           ],
           sr: 1.0,
           st: 0.0,
+          ty: 4.0,
         },
       ],
     },
@@ -1865,7 +1865,6 @@ export default {
   ip: 0.0,
   layers: [
     {
-      ty: 0.0,
       ao: 0.0,
       ddd: 0.0,
       h: 56.0,
@@ -1883,10 +1882,10 @@ export default {
       refId: 'maskComp_ViewBox_EE3FF9B8-9457-4641-B9FE-4F9826B1A38C',
       sr: 1.0,
       st: 0.0,
+      ty: 0.0,
       w: 56.0,
     },
     {
-      ty: 4.0,
       ao: 0.0,
       ddd: 0.0,
       ind: 2.0,
@@ -1902,26 +1901,24 @@ export default {
       op: 121.0,
       shapes: [
         {
-          ty: 'gr',
           cix: 2.0,
           it: [
             {
-              ty: 'rc',
               d: 1.0,
               nm: 'sealcred_animated-background',
               p: { a: 0.0, k: [28.0, 28.0] },
               r: { a: 0.0, k: 0.0 },
               s: { a: 0.0, k: [56.0, 56.0] },
+              ty: 'rc',
             },
             {
-              ty: 'fl',
               c: { a: 0.0, k: [1.0, 1.0, 1.0, 1.0] },
               nm: 'Fill 1',
               o: { a: 0.0, k: 0.0 },
               r: 1.0,
+              ty: 'fl',
             },
             {
-              ty: 'tr',
               a: { a: 0.0, k: [0.0, 0.0] },
               nm: 'Transform',
               o: { a: 0.0, k: 100.0 },
@@ -1930,14 +1927,17 @@ export default {
               s: { a: 0.0, k: [100.0, 100.0] },
               sa: { a: 0.0, k: 0.0 },
               sk: { a: 0.0, k: 0.0 },
+              ty: 'tr',
             },
           ],
           nm: 'sealcred_animated-background',
           np: 3.0,
+          ty: 'gr',
         },
       ],
       sr: 1.0,
       st: 0.0,
+      ty: 4.0,
     },
   ],
   meta: { a: '', d: 'Timeline', g: 'Flow 1.13.0', k: '', tc: '' },

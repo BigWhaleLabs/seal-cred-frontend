@@ -11,15 +11,15 @@ import LoadedFilesList from 'components/ui/LoadedFilesList'
 export default function ({
   loading,
   onSubmit,
-  submitType = 'primary',
   placeholder = 'Enter...',
+  submitType = 'primary',
 }: {
   loading?: boolean
   submitType?: 'primary' | 'secondary' | 'tertiary'
   onSubmit: (emails: string[]) => void
   placeholder?: string
 }) {
-  const { inputEmail, hasDifferentDomains, emailList } = useSnapshot(
+  const { emailList, hasDifferentDomains, inputEmail } = useSnapshot(
     EmailFormStore,
     { sync: true }
   )
@@ -50,10 +50,10 @@ export default function ({
       />
 
       <LoadedFilesList
+        emailList={EmailFormStore.emailList}
         removeValueFromList={(fileName) =>
           EmailFormStore.removeEmailsFromList(fileName)
         }
-        emailList={EmailFormStore.emailList}
       />
 
       {hasDifferentDomains && (
@@ -67,12 +67,12 @@ export default function ({
 
       {submitType === 'primary' ? (
         <Button
-          loading={loading}
-          loadingOverflow
-          fullWidth
           center
-          type={submitType}
+          fullWidth
+          loadingOverflow
           disabled={!listIsValid}
+          loading={loading}
+          type={submitType}
           onClick={() => onSubmit(rawEmails)}
         >
           {submitText}
@@ -80,14 +80,14 @@ export default function ({
       ) : (
         <GradientBorder disabled={loading || !listIsValid}>
           <Button
-            gradientFont
-            loading={loading}
-            loadingOverflow
-            fullWidth
             center
+            fullWidth
+            gradientFont
+            loadingOverflow
             small
-            type={submitType}
             disabled={!listIsValid}
+            loading={loading}
+            type={submitType}
             onClick={() => onSubmit(rawEmails)}
           >
             {submitText}

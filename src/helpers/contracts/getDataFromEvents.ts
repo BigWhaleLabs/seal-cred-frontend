@@ -2,7 +2,7 @@ import { CreateDerivativeEvent } from '@big-whale-labs/seal-cred-ledger-contract
 import SCLedger from 'models/SCLedger'
 
 export default function (events: CreateDerivativeEvent[]) {
-  return events.reduce((prev, { args: { original, derivative } }) => {
+  return events.reduce((prev, { args: { derivative, original } }) => {
     return {
       ...prev,
       [original]: derivative.toLowerCase(),

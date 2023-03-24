@@ -3,8 +3,8 @@ import Color from 'models/Color'
 import TitleContainer from 'components/ui/TitleContainer'
 
 export default function ({
-  title,
   subtitle,
+  title,
   titleColor = 'accent',
 }: {
   titleColor?: Color

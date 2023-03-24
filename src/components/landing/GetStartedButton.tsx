@@ -8,7 +8,7 @@ export default function ({ children = 'Get started' }: ChildrenProp) {
   const { sm } = useBreakpoints()
 
   return (
-    <Button type="primary" small={!sm} onClick={() => navigate('/app')}>
+    <Button small={!sm} type="primary" onClick={() => navigate('/app')}>
       {children}
     </Button>
   )

@@ -50,7 +50,7 @@ export default function () {
       <div className={orbBox('mt-8')}>
         <OrbBox color="tertiary" isShadowOpaque={animNotStarted} />
         <div className={orbBoxClasses}>
-          <ZkSphere color="tertiary" animated />
+          <ZkSphere animated color="tertiary" />
         </div>
         <div className={highlightedWrapper('tertiary')}>
           <HighlightedText center>Wallet 01</HighlightedText>
@@ -59,7 +59,7 @@ export default function () {
       <div className={orbBox()}>
         <OrbBox color="accent" isShadowOpaque={animNotStarted} />
         <div className={orbBoxClasses}>
-          <ZkSphere color="accent" animated />
+          <ZkSphere animated color="accent" />
         </div>
         <div className={highlightedWrapper('accent')}>
           <HighlightedText center>Wallet 02</HighlightedText>
@@ -68,7 +68,7 @@ export default function () {
       <div className={orbBox('mt-11')}>
         <OrbBox color="secondary" isShadowOpaque={animNotStarted} />
         <div className={orbBoxClasses}>
-          <ZkSphere color="secondary" animated />
+          <ZkSphere animated color="secondary" />
         </div>
         <div className={highlightedWrapper('secondary')}>
           <HighlightedText center>Wallet 03</HighlightedText>

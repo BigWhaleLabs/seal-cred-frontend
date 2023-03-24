@@ -10,7 +10,7 @@ const learnMoreText = classnames(margin('mt-6'), margin('mb-2'))
 export default function () {
   return (
     <div className={margin('mb-2')}>
-      <Card color="primary" shadow onlyWrap>
+      <Card onlyWrap shadow color="primary">
         <PrivacyDeath />
         <div className={bigWhaleLabsText}>
           <BodyText>
@@ -27,7 +27,7 @@ export default function () {
         </div>
         <div className={learnMoreText}>
           <LinkText targetBlank url="https://bigwhalelabs.com/">
-            <Button type="tertiary" small withArrow gradientFont>
+            <Button gradientFont small withArrow type="tertiary">
               Learn more about us
             </Button>
           </LinkText>

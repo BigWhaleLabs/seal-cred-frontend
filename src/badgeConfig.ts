@@ -9,17 +9,17 @@ import OwnerTitleEmail from 'components/owned/OwnerTitleEmail'
 
 export default {
   [BadgeSourceType.ERC721]: {
-    title: ({ network }: { network: Network }) => `${network} NFT derivatives`,
-    proofTitle: ({ network }: { network: Network }) => network,
-    ownerTitle: OwnerTitleERC721,
     ownerContent: OwnerContentERC721,
+    ownerTitle: OwnerTitleERC721,
     proofIcon: Erc721Badge,
+    proofTitle: ({ network }: { network: Network }) => network,
+    title: ({ network }: { network: Network }) => `${network} NFT derivatives`,
   },
   [BadgeSourceType.Email]: {
-    title: () => 'Email derivatives',
-    proofTitle: () => 'Email',
-    ownerTitle: OwnerTitleEmail,
     ownerContent: OwnerContentEmail,
+    ownerTitle: OwnerTitleEmail,
     proofIcon: EmailBadge,
+    proofTitle: () => 'Email',
+    title: () => 'Email derivatives',
   },
 }

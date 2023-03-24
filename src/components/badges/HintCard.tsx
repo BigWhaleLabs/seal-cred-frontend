@@ -27,9 +27,9 @@ const container = (small?: boolean, marginY?: boolean) =>
   )
 export default function ({
   children,
-  text,
-  small,
   marginY = true,
+  small,
+  text,
 }: ChildrenProp & {
   small?: boolean
   text?: ComponentChildren

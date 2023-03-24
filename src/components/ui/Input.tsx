@@ -73,12 +73,12 @@ const inputContainer = (error?: boolean, disabled?: boolean) =>
 const iconStyles = classnames(height('h-full'), margin('mr-2'), width('w-3.5'))
 
 export default function ({
+  disabled,
+  isError,
+  leftIcon,
+  removeValueFromList,
   value,
   valueList,
-  removeValueFromList,
-  leftIcon,
-  isError,
-  disabled,
   ...rest
 }: {
   leftIcon?: ComponentChildren
@@ -98,18 +98,18 @@ export default function ({
       {leftIcon && <div className={iconStyles}>{leftIcon}</div>}
       {removeValueFromList &&
         valueList &&
-        valueList.map(({ email, isOtherDomain, fileName }, index) => (
+        valueList.map(({ email, fileName, isOtherDomain }, index) => (
           <ListedValue
-            title={email}
             index={index}
-            removeValueFromList={() => removeValueFromList(fileName, index)}
             isDifferent={isOtherDomain}
+            removeValueFromList={() => removeValueFromList(fileName, index)}
+            title={email}
           />
         ))}
       <input
-        value={value}
-        disabled={disabled}
         className={inputContainer(isError, disabled)}
+        disabled={disabled}
+        value={value}
         {...rest}
       />
     </div>

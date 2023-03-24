@@ -35,25 +35,25 @@ const qrCodeLogoContainer = classnames(
 const qrCodeLogo = classnames(width('w-8'), backgroundColor('bg-primary-dark'))
 
 const QRCodeOptions: Options = {
-  type: 'canvas',
-  margin: 10,
-  width: 200,
-  height: 200,
-  image: '',
-  dotsOptions: {
-    color: '#fed823',
-    type: 'dots',
+  backgroundOptions: {
+    color: '#0d0030',
+  },
+  cornersDotOptions: {
+    type: 'dot',
   },
   cornersSquareOptions: {
     color: '#ff7bed',
     type: 'dot',
   },
-  cornersDotOptions: {
-    type: 'dot',
+  dotsOptions: {
+    color: '#fed823',
+    type: 'dots',
   },
-  backgroundOptions: {
-    color: '#0d0030',
-  },
+  height: 200,
+  image: '',
+  margin: 10,
+  type: 'canvas',
+  width: 200,
 }
 
 export default function ({ derivativeAddress, tokenId }: QRCodeProps) {
@@ -71,14 +71,14 @@ export default function ({ derivativeAddress, tokenId }: QRCodeProps) {
 
   return (
     <a
-      href={url}
       className={classNamesToString(qrCodeContainer, 'custom-qr-code')}
-      target="_blank"
+      href={url}
       rel="noopener noreferrer"
+      target="_blank"
     >
       <div ref={ref} />
       <div className={qrCodeLogoContainer}>
-        <img src="/img/logo.svg" className={qrCodeLogo} />
+        <img className={qrCodeLogo} src="/img/logo.svg" />
       </div>
     </a>
   )

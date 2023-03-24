@@ -22,7 +22,7 @@ const container = (closed: boolean, fitToItemSize?: boolean) =>
     inset(
       'top-7',
       fitToItemSize
-        ? { 'right-0': true, 'xs:right-auto': true, 'xs:left-0': true }
+        ? { 'right-0': true, 'xs:left-0': true, 'xs:right-auto': true }
         : '-left-2.5'
     ),
     opacity({ 'opacity-0': closed }),
@@ -48,11 +48,11 @@ const menuItem = (selected?: boolean, fitToItemSize?: boolean) =>
   )
 
 export default function ({
+  fitToItemSize,
+  onSelect,
   open,
   options,
   selected,
-  onSelect,
-  fitToItemSize,
 }: {
   open: boolean
   options: Option[]
@@ -65,6 +65,7 @@ export default function ({
       <ItemContainer>
         {options.map((option) => (
           <button
+            disabled={option.disabled}
             key={option.label}
             className={menuItem(
               option.value === selected || option.label === selected,
@@ -73,7 +74,6 @@ export default function ({
             onClick={() => {
               onSelect(option)
             }}
-            disabled={option.disabled}
           >
             {option.label}
           </button>

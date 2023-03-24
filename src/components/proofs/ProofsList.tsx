@@ -13,10 +13,10 @@ const container = classNamesToString(
 
 export default function ({
   dataKey,
-  onCreate,
-  proofs,
-  originals,
   nothingToGenerateText,
+  onCreate,
+  originals,
+  proofs,
 }: {
   originals?: string[]
   proofs: ProofModel[]
@@ -43,17 +43,17 @@ export default function ({
         .map((proof, index) => (
           <Proof
             key={`${proof.original}-${index}`}
-            type={dataKey}
             original={proof.original}
             proof={proof}
+            type={dataKey}
           />
         ))}
       {onCreate &&
         originals?.map((original) => (
           <Proof
             key={original}
-            type={dataKey}
             original={original}
+            type={dataKey}
             onCreate={() => onCreate(original)}
           />
         ))}

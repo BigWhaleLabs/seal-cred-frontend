@@ -8,14 +8,14 @@ const svgElementClasses = classnames(
 export default function () {
   return (
     <svg
-      width="13"
       height="13"
       viewBox="0 0 13 13"
+      width="13"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="6.5" cy="6.5" r="5.4" className={svgElementClasses} />
-      <line x1="6.5" y1="3.8" x2="6.5" y2="6.5" className={svgElementClasses} />
-      <line x1="6.5" y1="8.6" x2="6.5" y2="9.2" className={svgElementClasses} />
+      <circle className={svgElementClasses} cx="6.5" cy="6.5" r="5.4" />
+      <line className={svgElementClasses} x1="6.5" x2="6.5" y1="3.8" y2="6.5" />
+      <line className={svgElementClasses} x1="6.5" x2="6.5" y1="8.6" y2="9.2" />
     </svg>
   )
 }

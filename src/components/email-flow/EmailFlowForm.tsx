@@ -21,8 +21,8 @@ const uploadButtonWrapper = classnames(
 
 export default function EmailFlowForm({
   domain,
-  onUpdateDomain,
   onSelectProof,
+  onUpdateDomain,
 }: {
   domain: string
   onUpdateDomain: (domain: string) => void
@@ -56,17 +56,17 @@ export default function EmailFlowForm({
       )}
       <div className={proofLineContainer}>
         <EmailProofForm
+          forFlow
           domain={domain}
+          error={error}
+          jumpToToken={jumpToToken}
           submitType="primary"
           onChange={onUpdateDomain}
           onCreate={onSelectProof}
-          error={error}
           onError={setError}
-          jumpToToken={jumpToToken}
-          forFlow
         />
         <div className={uploadButtonWrapper}>
-          <UploadEmailListButton disabled={loading} small center />
+          <UploadEmailListButton center small disabled={loading} />
         </div>
         <TinyText color="primary">
           Be sure to check your spam folder if you don’t see the email at first.

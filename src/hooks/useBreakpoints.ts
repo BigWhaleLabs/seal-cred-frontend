@@ -23,12 +23,12 @@ export default function () {
   }, [])
 
   return {
-    xxs: width > xxsSize,
-    xs: width > xsSize,
-    sm: width > smSize,
-    md: width > mdSize,
-    tablet: width > tabletSize,
     lg: width > lgSize,
+    md: width > mdSize,
+    sm: width > smSize,
+    tablet: width > tabletSize,
     xl: width > xlSize,
+    xs: width > xsSize,
+    xxs: width > xxsSize,
   }
 }

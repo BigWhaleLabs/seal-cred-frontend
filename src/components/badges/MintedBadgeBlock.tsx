@@ -31,11 +31,11 @@ function Badge({
 }) {
   return (
     <BadgeCard
+      text={<BadgeTitle clearType originalOrAddress={derivativeAddress} />}
       top={<QRCode derivativeAddress={derivativeAddress} tokenId={tokenId} />}
-      text={<BadgeTitle originalOrAddress={derivativeAddress} clearType />}
       bottom={
         <div className={mintPassed}>
-          <AccentText bold small primary color="text-secondary">
+          <AccentText bold primary small color="text-secondary">
             Minted
           </AccentText>
           <Complete />

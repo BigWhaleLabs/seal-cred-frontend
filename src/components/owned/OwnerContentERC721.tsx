@@ -2,8 +2,8 @@ import ContractNameByNetwork from 'components/ui/ContractNameByNetwork'
 import Network from 'models/Network'
 
 export default function ({
-  original,
   network,
+  original,
 }: {
   original: string
   network: Network

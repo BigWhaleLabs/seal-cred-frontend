@@ -5,8 +5,8 @@ import EmailFormStore from 'stores/EmailFormStore'
 import UploadEmailListButton from 'components/ui/UploadEmailListButton'
 
 export default function ({
-  jumpToToken,
   forFlow,
+  jumpToToken,
 }: {
   jumpToToken: () => void
   forFlow?: boolean
@@ -27,8 +27,8 @@ export default function ({
             To create a zk proof, add your email. Then add at least 10 or even
             100+ other emails with the same domain to increase your anonymity.{' '}
             <UploadEmailListButton
-              title="You can upload an email list (txt, csv, etc...)"
               disabled={loading}
+              title="You can upload an email list (txt, csv, etc...)"
             />
             <br />
             <br />
@@ -38,8 +38,8 @@ export default function ({
       </span>
       {!!emailDomain && (
         <TextButton
-          onClick={() => !loading && jumpToToken()}
           disabled={loading}
+          onClick={() => !loading && jumpToToken()}
         >
           Have an existing token?
         </TextButton>

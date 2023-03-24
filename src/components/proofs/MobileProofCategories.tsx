@@ -10,19 +10,19 @@ export default function ({
   setCategory,
 }: CategoriesComponentProps) {
   const options = Object.entries(categories).map(([label, { disabled }]) => ({
-    label,
     disabled,
+    label,
   }))
 
   return (
     <Dropdown
+      colorfulCurrentValue
+      displayBeforeMd
       currentValue={currentCategory.toString()}
       options={options}
       onChange={(selectedValue) => {
         setCategory(selectedValue as CategoriesTitles)
       }}
-      colorfulCurrentValue
-      displayBeforeMd
     />
   )
 }

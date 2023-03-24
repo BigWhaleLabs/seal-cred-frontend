@@ -22,8 +22,8 @@ const arrowBlock = margin('-mt-6')
 export default function () {
   return (
     <div
-      onClick={() => window.scroll({ top: 600, behavior: 'smooth' })}
       className={scrollButton}
+      onClick={() => window.scroll({ behavior: 'smooth', top: 600 })}
     >
       <AccentText color="text-accent">How does this work?</AccentText>
       <div className={arrowBlock}>

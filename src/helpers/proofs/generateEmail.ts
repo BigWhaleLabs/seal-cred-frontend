@@ -23,9 +23,9 @@ export default async function generateEmail(
       eddsaPublicKey
     )
     const proof = {
-      original,
-      dataType: 'Email' as DataKey,
       badgeType: BadgeSourceType.Email,
+      dataType: 'Email' as DataKey,
+      original,
       result,
     }
     store.proofsCompleted.push(proof)

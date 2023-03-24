@@ -9,8 +9,8 @@ import SealCredStore from 'stores/SealCredStore'
 import useContractTokens from 'hooks/useContractTokens'
 
 export default function ({
-  proof,
   onReset,
+  proof,
 }: {
   proof: ProofModel
   onReset: () => void
@@ -42,9 +42,9 @@ export default function ({
     <>
       <HeaderText extraLeading>{headerTitle}</HeaderText>
       <BodyText>{statusText}</BodyText>
-      <Proof type="Email" original={proof.original} proof={proof} />
+      <Proof original={proof.original} proof={proof} type="Email" />
       {proofCreated && (
-        <BadgeBlock proof={proof} onMinted={onReset} onMintFailed={onReset} />
+        <BadgeBlock proof={proof} onMintFailed={onReset} onMinted={onReset} />
       )}
     </>
   )

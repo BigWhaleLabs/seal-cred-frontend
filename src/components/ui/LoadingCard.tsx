@@ -24,8 +24,8 @@ const iconContainer = classnames(
 )
 
 export default function ({
-  title,
   subtitle,
+  title,
 }: {
   title: string
   subtitle: string
@@ -34,7 +34,7 @@ export default function ({
 
   return (
     <div className={loaderContainer}>
-      <Title titleColor={cardColor} title={title} subtitle={subtitle} />
+      <Title subtitle={subtitle} title={title} titleColor={cardColor} />
       <div className={iconContainer}>
         <SealLoading color={cardColor} />
       </div>

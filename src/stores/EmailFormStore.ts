@@ -28,8 +28,8 @@ class EmailFormStore {
     this.checkSameDomain(email)
     this.emailList.push({
       email,
-      isOtherDomain: this.hasDifferentDomains,
       fileName,
+      isOtherDomain: this.hasDifferentDomains,
     })
     this.hasDifferentDomainsInList(true)
   }

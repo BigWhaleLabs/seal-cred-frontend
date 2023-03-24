@@ -43,32 +43,32 @@ export default function () {
           <div className={bodyContainer}>
             <Routes>
               <Route
-                path="/email"
                 element={<LazyComponent lazyImported={<EmailProof />} />}
+                path="/email"
               />
               <Route
-                path="/:derivativeAddress/:tokenId"
                 element={<LazyComponent lazyImported={<OwnedBadge />} />}
+                path="/:derivativeAddress/:tokenId"
               />
               <Route
-                path="/"
                 element={<LazyComponent lazyImported={<Landing />} />}
+                path="/"
               />
               <Route
-                path="/app"
                 element={<LazyComponent lazyImported={<Main />} />}
+                path="/app"
               />
               <Route
-                path="/terms"
                 element={<LazyComponent lazyImported={<Terms />} />}
+                path="/terms"
               />
               <Route
-                path="/privacy"
                 element={<LazyComponent lazyImported={<Privacy />} />}
+                path="/privacy"
               />
               <Route
-                path="*"
                 element={<LazyComponent lazyImported={<NotFound />} />}
+                path="*"
               />
             </Routes>
           </div>

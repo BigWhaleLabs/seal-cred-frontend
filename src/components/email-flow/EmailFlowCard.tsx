@@ -30,22 +30,22 @@ export default function () {
   return (
     <CardContainer>
       <Card
-        color="accent"
-        shadow
         onlyWrap
-        spinner={{ text: 'Work hard, play hard, whistleblow hard' }}
+        shadow
+        color="accent"
         paddingType="normal"
+        spinner={{ text: 'Work hard, play hard, whistleblow hard' }}
       >
         {account ? (
           <Suspense fallback={<LoadingCard />}>
             {proof ? (
-              <EmailFlowProof onReset={onReset} proof={proof} />
+              <EmailFlowProof proof={proof} onReset={onReset} />
             ) : (
               <>
                 <EmailFlowForm
                   domain={domain}
-                  onUpdateDomain={setDomain}
                   onSelectProof={setProof}
+                  onUpdateDomain={setDomain}
                 />
                 {offerChooseCreatedProof && (
                   <>

@@ -13,9 +13,9 @@ interface ENSAddressProps {
 
 function ENSAddressSuspended({
   address,
+  network,
   truncate,
   truncateSize,
-  network,
 }: ENSAddressProps & { truncate?: boolean; truncateSize: number }) {
   const { eNSNames } = useSnapshot(ENSStore.networks[network])
   const ensName = eNSNames[address]

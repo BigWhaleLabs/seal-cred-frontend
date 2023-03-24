@@ -22,8 +22,8 @@ function BadgesOwnedForContractSuspended({
     <>
       {ownedIds.map((tokenId) => (
         <MintedBadgeBlock
-          key={`${contractAddress}-${tokenId}`}
           derivativeAddress={contractAddress}
+          key={`${contractAddress}-${tokenId}`}
           tokenId={+tokenId}
         />
       ))}

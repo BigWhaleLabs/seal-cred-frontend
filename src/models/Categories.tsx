@@ -22,8 +22,20 @@ interface Category {
 }
 
 export const categories: Category = {
+  'Assets (coming soon)': {
+    contentToRender: null,
+    disabled: true,
+    icon: <Coin inheritStrokeColor />,
+  },
+  Email: {
+    contentToRender: <EmailProofSection dataKey="Email" />,
+    icon: (
+      <div className={width('w-5')}>
+        <Email inheritStrokeColor />
+      </div>
+    ),
+  },
   NFTs: {
-    icon: <Nft inheritStrokeColor />,
     contentToRender: (
       <>
         {dataKeys
@@ -36,19 +48,7 @@ export const categories: Category = {
           ))}
       </>
     ),
-  },
-  Email: {
-    icon: (
-      <div className={width('w-5')}>
-        <Email inheritStrokeColor />
-      </div>
-    ),
-    contentToRender: <EmailProofSection dataKey="Email" />,
-  },
-  'Assets (coming soon)': {
-    icon: <Coin inheritStrokeColor />,
-    contentToRender: null,
-    disabled: true,
+    icon: <Nft inheritStrokeColor />,
   },
 }
 

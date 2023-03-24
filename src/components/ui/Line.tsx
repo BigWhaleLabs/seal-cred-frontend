@@ -35,8 +35,8 @@ const contractContainer = (breakWords?: boolean) =>
   )
 
 export default function ({
-  children,
   breakWords,
+  children,
 }: ChildrenProp & { breakWords?: boolean }) {
   return <div className={contractContainer(breakWords)}>{children}</div>
 }

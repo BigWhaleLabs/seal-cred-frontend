@@ -26,11 +26,11 @@ function ERC721ProofSectionSuspended({ dataKey }: { dataKey: DataKey }) {
 
   return (
     <ProofsList
-      proofs={proofsCompleted as Proof[]}
-      originals={originals}
-      onCreate={onCreate}
       dataKey={dataKey}
       nothingToGenerateText="No NFTs to proof"
+      originals={originals}
+      proofs={proofsCompleted as Proof[]}
+      onCreate={onCreate}
     />
   )
 }

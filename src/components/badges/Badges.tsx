@@ -22,7 +22,7 @@ export default function () {
 
   return (
     <CardContainer>
-      <Card shadow paddingType="normal" color="secondary" useAppStyles nospace>
+      <Card nospace shadow useAppStyles color="secondary" paddingType="normal">
         {account ? (
           <Suspense fallback={<LoadingCard />}>
             <BadgesSuspended />

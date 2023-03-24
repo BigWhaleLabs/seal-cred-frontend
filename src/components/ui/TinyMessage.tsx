@@ -10,8 +10,8 @@ const messageBlock = classnames(
 )
 
 export default function ({
-  text,
   state,
+  text,
   withIcon,
 }: {
   text: string

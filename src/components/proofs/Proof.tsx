@@ -75,7 +75,7 @@ function useProofContent(
       color: 'text-accent',
       content: (
         <span className={textWithIcon}>
-          <ToolTip position="top" fitContainer text={powerProofTooltip}>
+          <ToolTip fitContainer position="top" text={powerProofTooltip}>
             <span className={cursor('cursor-help')}>Generating...</span>
           </ToolTip>
           <div className={animation('animate-spin')}>
@@ -91,8 +91,8 @@ function useProofContent(
       color: 'text-tertiary',
       content: (
         <ProofButton
-          type="tertiary"
           disabled={isGenerating}
+          type="tertiary"
           onClick={async () => {
             store.progressing[original] = true
             try {
@@ -119,10 +119,10 @@ function useProofContent(
 }
 
 export default function ({
-  type,
-  proof,
-  original,
   onCreate,
+  original,
+  proof,
+  type,
 }: {
   type: DataKey
   original: string
@@ -135,7 +135,7 @@ export default function ({
     <Line breakWords>
       <div className={proofName}>
         <ProofText>
-          <ProofTitle type={type} original={original} />
+          <ProofTitle original={original} type={type} />
         </ProofText>
       </div>
 

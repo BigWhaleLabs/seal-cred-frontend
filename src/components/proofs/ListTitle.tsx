@@ -26,8 +26,8 @@ export default function () {
     <Suspense
       fallback={
         <CardTitle
-          title="Loading..."
           subtitle="Please wait until I load supported NFTs"
+          title="Loading..."
         />
       }
     >

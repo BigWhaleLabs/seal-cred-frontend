@@ -18,7 +18,7 @@ async function inputsForSignature(
   const messageUInt8 = utils.toUtf8Bytes(signature.message)
   const messageBytes =
     'balance' in signature ? [...messageUInt8, signature.balance] : messageUInt8
-  const { R8x, R8y, S, M } = await unpackSignature(
+  const { M, R8x, R8y, S } = await unpackSignature(
     messageBytes,
     signature.signature
   )

@@ -57,15 +57,15 @@ export default function ({
 }: CategoriesComponentProps) {
   return (
     <div className={desktopMenuWrapper}>
-      {Object.entries(categories).map(([title, { icon, disabled }]) => (
+      {Object.entries(categories).map(([title, { disabled, icon }]) => (
         <button
+          disabled={disabled}
           title={title}
           className={classNamesToString(
             iconWrapper(currentCategory === title, disabled),
             'hover-menu-element'
           )}
           onClick={() => setCategory(title as CategoriesTitles)}
-          disabled={disabled}
         >
           {icon}
         </button>

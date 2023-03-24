@@ -31,7 +31,7 @@ export default function () {
     <div className={container}>
       <Suspense
         fallback={
-          <Card paddingType="normal" color="secondary" shadow onlyWrap>
+          <Card onlyWrap shadow color="secondary" paddingType="normal">
             <LoadingCard />
           </Card>
         }

@@ -56,9 +56,9 @@ const commonClasses = (
     outlineStyle('focus:outline-none'),
     opacity({ 'opacity-50': !available }),
     boxShadow({
-      'shadow-2xl': available,
-      'hover:shadow-lg': available,
       'active:shadow-button-active': available && !gradientFont,
+      'hover:shadow-lg': available,
+      'shadow-2xl': available,
     }),
     width(fullWidth ? 'w-full' : 'w-fit'),
     textAlign(center ? 'text-center' : undefined),
@@ -67,20 +67,20 @@ const commonClasses = (
     type !== 'tertiary'
       ? padding(
           small
-            ? { 'py-2': true, 'px-4': true }
-            : { 'py-4': true, 'px-6': true }
+            ? { 'px-4': true, 'py-2': true }
+            : { 'px-6': true, 'py-4': true }
         )
       : undefined,
     space('space-x-2')
   )
 
 const button = ({
-  fullWidth,
   available,
   center,
-  type,
-  small,
+  fullWidth,
   gradientFont,
+  small,
+  type,
 }: ButtonProps & { available?: boolean }) =>
   classnames(
     commonClasses(type, fullWidth, center, available, small, gradientFont),
@@ -107,8 +107,8 @@ const colorClasses = (
           ),
           boxShadow({ 'shadow-button': available }),
           brightness({
-            'hover:brightness-95': available,
             'active:brightness-90': available,
+            'hover:brightness-95': available,
           })
         )
       : type === 'secondary'
@@ -116,20 +116,20 @@ const colorClasses = (
           borderWidth('border'),
           borderRadius('rounded-full'),
           borderColor({
-            'border-transparent': gradientFont,
-            'border-secondary': hasNoGradient,
-            'hover:border-secondary': hasNoGradient,
             'active:border-secondary': hasNoGradient,
+            'border-secondary': hasNoGradient,
+            'border-transparent': gradientFont,
+            'hover:border-secondary': hasNoGradient,
           }),
           backgroundImage('bg-gradient-to-r'),
           textColor('text-secondary'),
           gradientColorStops({
-            'from-primary-dark': gradientFont,
-            'to-primary-dark': gradientFont,
-            'hover:from-accent-light-transparent': available,
-            'hover:to-secondary-light-transparent': available,
             'active:from-accent-light-active-transparent': available,
             'active:to-secondary-light-active-transparent': available,
+            'from-primary-dark': gradientFont,
+            'hover:from-accent-light-transparent': available,
+            'hover:to-secondary-light-transparent': available,
+            'to-primary-dark': gradientFont,
           })
         )
       : backgroundColor('bg-transparent')
@@ -139,8 +139,8 @@ const colorClasses = (
 const textGradient = (available?: boolean) =>
   classnames(
     textColor({
-      'text-transparent': true,
       'active:text-accent': available,
+      'text-transparent': true,
     }),
     backgroundClip('bg-clip-text'),
     backgroundImage('bg-gradient-to-r'),
@@ -163,17 +163,17 @@ interface ButtonProps {
 type ButtonType = 'primary' | 'secondary' | 'tertiary'
 
 export default function ({
-  fullWidth,
   center,
-  small,
-  withArrow,
-  type = 'tertiary',
-  loading,
-  disabled,
   children,
+  disabled,
+  fullWidth,
   gradientFont,
+  loading,
   loadingOverflow,
+  small,
+  type = 'tertiary',
   url,
+  withArrow,
   ...rest
 }: Omit<HTMLAttributes<HTMLButtonElement>, 'loading'> & ButtonProps) {
   const showContent = !loadingOverflow || !loading
@@ -181,18 +181,18 @@ export default function ({
 
   return (
     <button
+      disabled={!available}
       className={button({
-        fullWidth,
         available,
         center,
-        type,
-        small,
+        fullWidth,
         gradientFont,
+        small,
+        type,
       })}
       onClick={() => {
         if (url) window.open(url, '_blank')
       }}
-      disabled={!available}
       {...rest}
     >
       {loading && <Loading small={small} />}
@@ -206,8 +206,8 @@ export default function ({
           {withArrow && (
             <Arrow
               horizontal
-              pulseDisabled={disabled || loading}
               openDisabled
+              pulseDisabled={disabled || loading}
             />
           )}
         </>

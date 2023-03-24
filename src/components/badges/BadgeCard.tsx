@@ -32,9 +32,9 @@ const badgeBlockName = classnames(
 )
 
 export default function BadgeCard({
-  top,
-  text,
   bottom,
+  text,
+  top,
 }: {
   top: ComponentChild
   text: ComponentChild

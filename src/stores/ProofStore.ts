@@ -82,7 +82,7 @@ export class ProofStore extends PersistableStore {
 }
 
 export default proxy(
-  dataShapeObject((dataKey, { mint, badgeType }) =>
+  dataShapeObject((dataKey, { badgeType, mint }) =>
     proxy(new ProofStore(dataKey, badgeType, mint)).makePersistent(
       env.VITE_ENCRYPT_KEY
     )
