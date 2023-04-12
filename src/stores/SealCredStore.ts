@@ -17,9 +17,8 @@ const state = proxy({
       [ledger in DataKey]: SCLedger
     }
 
-    for (const { ledger, name } of Object.values(records)) {
+    for (const { ledger, name } of Object.values(records))
       result[name] = await ledger
-    }
 
     return result
   }),

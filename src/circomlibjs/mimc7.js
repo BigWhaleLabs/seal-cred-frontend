@@ -57,14 +57,12 @@ class Mimc7 {
   multiHash(arr, key) {
     const F = this.F
     let r
-    if (typeof key === 'undefined') {
-      r = F.zero
-    } else {
-      r = F.e(key)
-    }
-    for (let i = 0; i < arr.length; i++) {
+    if (typeof key === 'undefined') r = F.zero
+    else r = F.e(key)
+
+    for (let i = 0; i < arr.length; i++)
       r = F.add(F.add(r, F.e(arr[i])), this.hash(F.e(arr[i]), r))
-    }
+
     return r
   }
 }

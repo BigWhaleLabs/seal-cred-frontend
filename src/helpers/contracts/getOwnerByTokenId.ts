@@ -14,8 +14,6 @@ export default async function (
     const event = events.pop()
     if (!event || !event.args) continue
     const { to, tokenId } = event.args
-    if (id.eq(tokenId)) {
-      return to
-    }
+    if (id.eq(tokenId)) return to
   }
 }

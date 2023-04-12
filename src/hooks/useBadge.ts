@@ -15,12 +15,13 @@ export default function (derivative: string) {
   return useMemo(() => {
     for (const [ledgerName, ledger] of Object.entries(ledgers)) {
       for (const original of Object.keys(ledger)) {
-        if (ledger[original] === derivative)
+        if (ledger[original] === derivative) {
           return {
             derivative,
             original,
             type: ledgerName,
           } as BaseBadgeContract
+        }
       }
     }
     return null

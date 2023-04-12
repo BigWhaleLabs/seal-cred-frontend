@@ -62,9 +62,8 @@ export class ProofStore extends PersistableStore {
       proof &&
       error instanceof Error &&
       error.message.includes('This ZK proof has already been used')
-    ) {
+    )
       this.deleteProof(proof)
-    }
   }
 
   async mint(proof: Proof) {

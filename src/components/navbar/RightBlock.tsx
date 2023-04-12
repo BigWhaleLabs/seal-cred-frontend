@@ -37,7 +37,7 @@ const accountLinkContainer = classnames(
 const AccountContainer = ({ account }: { account?: string }) => {
   const { needNetworkChange } = useSnapshot(WalletStore)
 
-  if (account)
+  if (account) {
     return (
       <ExternalLink url={getEtherscanAddressUrl(account, Network.Goerli)}>
         <div className={accountLinkContainer}>
@@ -45,6 +45,7 @@ const AccountContainer = ({ account }: { account?: string }) => {
         </div>
       </ExternalLink>
     )
+  }
 
   return (
     <div

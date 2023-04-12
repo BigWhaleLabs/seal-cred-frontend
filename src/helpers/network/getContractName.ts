@@ -19,11 +19,12 @@ export default function ({
   const { contractNames } = useSnapshot(ContractMetadataStore)
 
   let contractName = contractNames[address]
-  if (!contractName)
+  if (!contractName) {
     ContractMetadataStore.fetchContractName(
       address,
       networks[network].defaultProvider
     )
+  }
 
   if (clearType && contractName)
     contractName = clearDerivativeType(contractName)

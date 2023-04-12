@@ -8,9 +8,8 @@ function transformRelayErrorMessage(message: string) {
 
 function extractMetamaskReason(gSNError: string) {
   const metaMaskMessage = 'MetaMask Message Signature:'
-  if (gSNError.includes(metaMaskMessage)) {
+  if (gSNError.includes(metaMaskMessage))
     return gSNError.split(metaMaskMessage)[1]?.split(' stack:')[0]
-  }
 }
 
 export default function (gSNError: string) {

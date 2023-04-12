@@ -12,7 +12,7 @@ export default function ({
   originalOrAddress: string
   clearType?: boolean
 }) {
-  if (isAddress(originalOrAddress))
+  if (isAddress(originalOrAddress)) {
     return (
       <ExternalLink
         url={getEtherscanAddressUrl(originalOrAddress, Network.Goerli)}
@@ -25,6 +25,7 @@ export default function ({
         />
       </ExternalLink>
     )
+  }
 
   return (
     <>
