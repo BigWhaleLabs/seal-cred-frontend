@@ -113,9 +113,8 @@ class EmailFormStore {
   }
 
   removeEmailsFromList(fileName: string, indexToRemove?: number) {
-    if (indexToRemove === undefined) {
-      this.deleteFile(fileName)
-    } else {
+    if (indexToRemove === undefined) this.deleteFile(fileName)
+    else {
       this.emailList.splice(indexToRemove, 1)
       this.hasDifferentDomainsInList(indexToRemove === 0)
     }

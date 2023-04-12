@@ -14,9 +14,8 @@ function BadgesOwnedForContractSuspended({
   const ownedIds = useContractTokens(contractAddress, BadgesNetwork)
   const { account } = useSnapshot(WalletStore)
 
-  if (!account || ownedIds.length === 0) {
+  if (!account || ownedIds.length === 0)
     return <BadgesOwnedForContractLoading contractAddress={contractAddress} />
-  }
 
   return (
     <>

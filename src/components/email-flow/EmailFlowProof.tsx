@@ -29,7 +29,7 @@ export default function ({
 
   const proofCreated = !!proof.result
 
-  if (minted.length > 0)
+  if (minted.length > 0) {
     return (
       <EmailFlowBadge
         address={derivativeAddress}
@@ -37,6 +37,7 @@ export default function ({
         resetEmail={onReset}
       />
     )
+  }
 
   return (
     <>

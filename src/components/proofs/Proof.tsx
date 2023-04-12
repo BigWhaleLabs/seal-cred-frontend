@@ -86,7 +86,7 @@ function useProofContent(
     }
   }
 
-  if (!proof && onCreate)
+  if (!proof && onCreate) {
     return {
       color: 'text-tertiary',
       content: (
@@ -106,6 +106,7 @@ function useProofContent(
         </ProofButton>
       ),
     }
+  }
 
   return {
     color: 'text-accent',

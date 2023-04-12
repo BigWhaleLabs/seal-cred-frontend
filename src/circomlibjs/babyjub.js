@@ -70,9 +70,8 @@ export class BabyJub {
     let exp = base
 
     while (!Scalar.isZero(rem)) {
-      if (Scalar.isOdd(rem)) {
-        res = this.addPoint(res, exp)
-      }
+      if (Scalar.isOdd(rem)) res = this.addPoint(res, exp)
+
       exp = this.addPoint(exp, exp)
       rem = Scalar.shiftRight(rem, 1)
     }
@@ -108,9 +107,8 @@ export class BabyJub {
     const buff = new Uint8Array(32)
     F.toRprLE(buff, 0, P[1])
     const n = F.toObject(P[0])
-    if (Scalar.gt(n, this.pm1d2)) {
-      buff[31] = buff[31] | 0x80
-    }
+    if (Scalar.gt(n, this.pm1d2)) buff[31] = buff[31] | 0x80
+
     return buff
   }
 

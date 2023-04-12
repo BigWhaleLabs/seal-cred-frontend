@@ -13,9 +13,8 @@ export default async function (
   const M = mimc7.multiHash(messageUInt8)
 
   // Create BabyJub
-  if (!babyJub) {
-    babyJub = await buildBabyJub()
-  }
+  if (!babyJub) babyJub = await buildBabyJub()
+
   const F = babyJub.F
 
   // Unpack signature
