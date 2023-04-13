@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { lazy } from 'react'
 import Announcement from 'components/ui/Announcement'
+import Cookie from 'components/ui/Cookie'
 import Footer from 'components/ui/Footer'
 import LazyComponent from 'components/ui/LazyComponent'
 import Navbar from 'components/navbar/Navbar'
@@ -72,6 +73,7 @@ export default function () {
               />
             </Routes>
           </div>
+          <Cookie />
           <Footer />
         </div>
         <ToastContainer position="bottom-right" theme="dark" />

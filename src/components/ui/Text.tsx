@@ -462,3 +462,14 @@ export function ExtraBoldText({
 }) {
   return <span className={extraBoldText(small, extraLeading)}>{children}</span>
 }
+
+const cookieText = classnames(
+  textColor('text-formal-accent'),
+  fontFamily('font-primary'),
+  fontSize('text-base', 'sm:text-lg'),
+  fontWeight('font-bold'),
+  lineHeight('leading-6')
+)
+export function CookieText({ children }: ChildrenProp) {
+  return <p className={cookieText}>{children}</p>
+}
