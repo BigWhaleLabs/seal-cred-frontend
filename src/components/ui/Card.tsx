@@ -38,6 +38,7 @@ interface CardProps {
   useAppStyles?: boolean
   paddingType?: 'small' | 'normal'
   higherZIndex?: boolean
+  wide?: boolean
 }
 
 const cardColor = (color?: Color) => {
@@ -73,6 +74,7 @@ const appStyles = classnames(
 const thinWidthStyles = width('sm:!w-thin-card', 'xxs:w-5/12', 'w-30')
 
 const defaultWidthStyles = width('sm:w-card', 'w-mobile-card')
+const wideWidthStyles = width('lg:w-screen-45', 'w-mobile-card')
 
 const cardContainer = ({
   color,
@@ -84,6 +86,7 @@ const cardContainer = ({
   spinner,
   thin = false,
   useAppStyles,
+  wide,
 }: CardProps) => {
   const defaultSpacing = !onlyWrap && !useAppStyles
 
@@ -99,7 +102,13 @@ const cardContainer = ({
       'py-8': typeof paddingType === 'undefined',
       'py-small': paddingType === 'small',
     }),
-    useAppStyles ? appStyles : thin ? thinWidthStyles : defaultWidthStyles,
+    useAppStyles
+      ? appStyles
+      : thin
+      ? thinWidthStyles
+      : wide
+      ? wideWidthStyles
+      : defaultWidthStyles,
     margin({ 'mx-auto': !thin }, 'lg:mx-0'),
     height('h-full'),
     maxHeight({
@@ -134,6 +143,7 @@ export default function ({
   spinner,
   thin,
   useAppStyles,
+  wide,
 }: ChildrenProp & CardProps) {
   const { tablet } = useBreakpoints()
 
@@ -150,6 +160,7 @@ export default function ({
           spinner,
           thin,
           useAppStyles,
+          wide,
         })}
       >
         {children}
