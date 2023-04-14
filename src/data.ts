@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import Network from 'models/Network'
 import createERC721Badge from 'helpers/contracts/createERC721Badge'
 import createEmailBadge from 'helpers/contracts/createEmailBadge'
@@ -12,6 +13,13 @@ export enum BadgeSourceType {
 }
 
 export default {
+  ExternalERC721: {
+    badgeType: BadgeSourceType.ERC721,
+    createProof: generateERC721,
+    ledger: env.VITE_SC_EXTERNAL_ERC721_LEDGER_CONTRACT_ADDRESS,
+    mint: createExternalERC721Badge,
+    network: Network.Mainnet,
+  },
   ERC721: {
     badgeType: BadgeSourceType.ERC721,
     createProof: generateERC721,
@@ -25,12 +33,5 @@ export default {
     ledger: env.VITE_SC_EMAIL_LEDGER_CONTRACT_ADDRESS,
     mint: createEmailBadge,
     network: Network.Goerli,
-  },
-  ExternalERC721: {
-    badgeType: BadgeSourceType.ERC721,
-    createProof: generateERC721,
-    ledger: env.VITE_SC_EXTERNAL_ERC721_LEDGER_CONTRACT_ADDRESS,
-    mint: createExternalERC721Badge,
-    network: Network.Mainnet,
   },
 }
