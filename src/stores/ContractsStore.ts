@@ -29,8 +29,8 @@ subscribeKey(WalletStore, 'account', (account) => {
     void network.fetchMoreContractsOwned(account, true)
 })
 
-for (const { heavyProvider, network } of Object.values(networks)) {
-  heavyProvider.on('block', async (blockNumber: number) => {
+for (const { defaultProvider, network } of Object.values(networks)) {
+  defaultProvider.on('block', async (blockNumber: number) => {
     ContractsNetworkStore.networks[network].currentBlock = blockNumber
     if (!WalletStore.account) return
     await ContractsNetworkStore.networks[network].fetchMoreContractsOwned(
