@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import { JSX } from 'preact/jsx-runtime'
 import { dataKeys } from 'helpers/contracts/dataShapeObject'
 import { width } from 'classnames/tailwind'
@@ -22,19 +23,6 @@ interface Category {
 }
 
 export const categories: Category = {
-  'Assets (coming soon)': {
-    contentToRender: null,
-    disabled: true,
-    icon: <Coin inheritStrokeColor />,
-  },
-  Email: {
-    contentToRender: <EmailProofSection dataKey="Email" />,
-    icon: (
-      <div className={width('w-5')}>
-        <Email inheritStrokeColor />
-      </div>
-    ),
-  },
   NFTs: {
     contentToRender: (
       <>
@@ -49,6 +37,19 @@ export const categories: Category = {
       </>
     ),
     icon: <Nft inheritStrokeColor />,
+  },
+  Email: {
+    contentToRender: <EmailProofSection dataKey="Email" />,
+    icon: (
+      <div className={width('w-5')}>
+        <Email inheritStrokeColor />
+      </div>
+    ),
+  },
+  'Assets (coming soon)': {
+    contentToRender: null,
+    disabled: true,
+    icon: <Coin inheritStrokeColor />,
   },
 }
 
