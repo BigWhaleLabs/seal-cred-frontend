@@ -12,7 +12,7 @@ export default Object.entries(data).reduce(
     ...prev,
     [name]: Ledger__factory.connect(
       ledger,
-      networks[Network.Goerli].defaultProvider
+      networks[Network.Goerli].heavyProvider
     ),
   }),
   {}
