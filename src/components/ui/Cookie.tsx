@@ -1,6 +1,6 @@
 import { AccentText, CookieText } from 'components/ui/Text'
 import { useSnapshot } from 'valtio'
-import Button from 'components/ui/Button'
+import CookieButton from 'components/ui/CookieButton'
 import NotificationsStore from 'stores/NotificationsStore'
 import classnames, {
   backgroundColor,
@@ -26,19 +26,18 @@ const basicCardStyles = classnames(
   flexDirection('flex-col'),
   position('fixed'),
   inset(
-    'left-4',
-    'right-4',
+    'left-1',
+    'right-1',
     'bottom-3',
     'sm:left-auto',
     'sm:right-5',
-    'sm:bottom-24',
     'md:right-14',
     'md:bottom-10',
     'smToXl:right-25'
   ),
   gap('gap-y-3', 'sm:gap-y-6'),
   backgroundColor('bg-primary-dark'),
-  padding('p-6'),
+  padding('p-4', 'sm:p-6'),
   borderRadius('rounded-2xl'),
   borderWidth('border'),
   borderColor('border-primary'),
@@ -47,23 +46,11 @@ const basicCardStyles = classnames(
   maxWidth('max-w-full', 'sm:max-w-cookie'),
   zIndex('z-50')
 )
-const button = (small?: boolean) =>
+const buttons = (small?: boolean) =>
   classnames(
     margin(small ? 'mx-auto' : 'mr-auto'),
     small ? display('sm:hidden') : display('hidden', 'sm:block')
   )
-
-const CookieButton = ({
-  callback,
-  small,
-}: {
-  small?: boolean
-  callback: () => void
-}) => (
-  <Button small={small} type="primary" onClick={callback}>
-    Got it
-  </Button>
-)
 
 export default function () {
   const { showCookie } = useSnapshot(NotificationsStore)
@@ -79,10 +66,10 @@ export default function () {
           We use cookies for crucial functions but we don't track you
         </CookieText>
       </div>
-      <div className={button(true)}>
+      <div className={buttons(true)}>
         <CookieButton small callback={closeCookie} />
       </div>
-      <div className={button()}>
+      <div className={buttons()}>
         <CookieButton callback={closeCookie} />
       </div>
     </div>

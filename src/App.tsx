@@ -14,6 +14,7 @@ import classnames, {
   flexDirection,
   margin,
   minHeight,
+  overflow,
 } from 'classnames/tailwind'
 
 const NotFound = lazy(() => import('pages/NotFound'))
@@ -31,7 +32,8 @@ const pageContainer = classnames(
 const bodyContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  margin('my-7', 'xxs:mx-auto', 'tablet:mt-0', 'tablet:mb-auto')
+  margin('my-7', 'xxs:mx-auto', 'tablet:mt-0', 'tablet:mb-auto'),
+  overflow('overflow-x-clip', 'sm:overflow-x-visible')
 )
 
 export default function () {
