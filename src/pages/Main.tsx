@@ -6,7 +6,6 @@ import classnames, {
   display,
   flexDirection,
   justifyContent,
-  width,
 } from 'classnames/tailwind'
 import useBreakpoints from 'hooks/useBreakpoints'
 
