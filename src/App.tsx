@@ -32,7 +32,7 @@ const pageContainer = classnames(
 const bodyContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  margin('my-7', 'xxs:mx-auto', 'tablet:mt-0', 'tablet:mb-auto'),
+  margin('my-7', 'tablet:mt-0', 'tablet:mb-auto'),
   overflow('overflow-x-clip', 'sm:overflow-x-visible')
 )
 
