@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { lazy } from 'react'
 import Announcement from 'components/ui/Announcement'
+import Cookie from 'components/ui/Cookie'
 import Footer from 'components/ui/Footer'
 import LazyComponent from 'components/ui/LazyComponent'
 import Navbar from 'components/navbar/Navbar'
@@ -13,6 +14,7 @@ import classnames, {
   flexDirection,
   margin,
   minHeight,
+  overflow,
 } from 'classnames/tailwind'
 
 const NotFound = lazy(() => import('pages/NotFound'))
@@ -30,7 +32,8 @@ const pageContainer = classnames(
 const bodyContainer = classnames(
   display('flex'),
   flexDirection('flex-col'),
-  margin('my-7', 'xxs:mx-auto', 'tablet:mt-0', 'tablet:mb-auto')
+  margin('my-7', 'tablet:mt-0', 'tablet:mb-auto'),
+  overflow('overflow-x-clip', 'sm:overflow-x-visible')
 )
 
 export default function () {
@@ -72,6 +75,7 @@ export default function () {
               />
             </Routes>
           </div>
+          <Cookie />
           <Footer />
         </div>
         <ToastContainer position="bottom-right" theme="dark" />

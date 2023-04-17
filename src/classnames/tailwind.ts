@@ -7470,6 +7470,7 @@ export type TMaxWidth =
   | 'max-w-screen-lg'
   | 'max-w-screen-xl'
   | 'max-w-screen-2xl'
+  | 'max-w-cookie'
   | 'max-w-app-card'
   | 'max-w-screen-xxs'
   | 'max-w-screen-xs'
