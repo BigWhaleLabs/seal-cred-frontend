@@ -8,10 +8,11 @@ export default function relayProvider(provider: Web3Provider) {
   return RelayProvider.newProvider({
     config: {
       blacklistedRelays: [
+        'https://gsn-v3-beta-goerli.prjct.dev/',
         'https://gsn.fizen.io/',
         'https://goerli.3-0-0-beta-3.opengsn.org/v3 ',
       ],
-      gasPriceFactorPercent: 150,
+      gasPriceFactorPercent: 100,
       getGasFeesBlocks: 15,
       minMaxPriorityFeePerGas: 8e9,
       paymasterAddress: env.VITE_GSN_PAYMASTER_CONTRACT_ADDRESS,
