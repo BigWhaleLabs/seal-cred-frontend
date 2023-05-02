@@ -61,7 +61,9 @@ export default function () {
   return (
     <div className={basicCardStyles}>
       <div className={space('space-y-2')}>
-        <AccentText color="text-primary">Yum...cookies! 🍪</AccentText>
+        <AccentText color="text-primary">
+          Yum<span className={padding('px-0.5')}>...</span>cookies! 🍪
+        </AccentText>
         <CookieText>
           We use cookies for crucial functions but we don't track you
         </CookieText>
