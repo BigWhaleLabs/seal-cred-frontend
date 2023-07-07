@@ -3590,6 +3590,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@opengsn/provider@patch:@opengsn/provider@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-provider-npm-3.0.0-beta.3-8a6b0eb4ee.patch::locator=seal-cred-frontend%40workspace%3A.":
+  version: 3.0.0-beta.3
+  resolution: "@opengsn/provider@patch:@opengsn/provider@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-provider-npm-3.0.0-beta.3-8a6b0eb4ee.patch::version=3.0.0-beta.3&hash=8e4cba&locator=seal-cred-frontend%40workspace%3A."
+  dependencies:
+    "@ethereumjs/tx": ^3.2.0
+    "@ethersproject/abstract-provider": ^5.6.1
+    "@ethersproject/abstract-signer": ^5.6.2
+    "@ethersproject/experimental": ^5.6.3
+    "@ethersproject/providers": ^5.6.5
+    "@metamask/eth-sig-util": ^4.0.1
+    "@opengsn/common": ^3.0.0-beta.3
+    abi-decoder: ^2.4.0
+    ethereumjs-util: ^7.1.0
+    ethereumjs-wallet: ^1.0.2
+    ethers: ^5.6.5
+    web3: ^1.7.4
+    web3-core: ^1.7.4
+    web3-core-helpers: ^1.7.4
+    web3-eth-contract: ^1.7.4
+    web3-utils: ^1.7.4
+  checksum: a8f6358ecdfdaf91650d02ea145a45c99801558d8bf8bcf9e80d939959f8bb8323d4da204305680aa6a248e4f3c7dc56e1fa36efd27a713bcc14cf390eeec443
+  languageName: node
+  linkType: hard
+
 "@openzeppelin/contracts@npm:^4.2.0":
   version: 4.7.2
   resolution: "@openzeppelin/contracts@npm:4.7.2"
