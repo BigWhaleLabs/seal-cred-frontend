@@ -83,6 +83,7 @@
   "packageManager": "yarn@3.2.3",
   "resolutions": {
     "@opengsn/provider/@opengsn/common": "patch:@opengsn/common@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-common-npm-3.0.0-beta.3-79cb41f503.patch",
-    "@opengsn/provider/@opengsn/contracts": "3.0.0-beta.3"
+    "@opengsn/provider/@opengsn/contracts": "3.0.0-beta.3",
+    "@opengsn/provider@3.0.0-beta.3": "patch:@opengsn/provider@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-provider-npm-3.0.0-beta.3-8a6b0eb4ee.patch"
   }
 }
