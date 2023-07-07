@@ -1,17 +1,18 @@
 diff --git a/dist/KnownRelaysManager.js b/dist/KnownRelaysManager.js
-index a3af0250b694854567ebd25a9e8802283a1df788..8be4b0ea26006679215f95967bf0a7df0ddd6e04 100644
+index a3af0250b694854567ebd25a9e8802283a1df788..951e4ffae53ffe9f9cad55264f952f98246e6a48 100644
 --- a/dist/KnownRelaysManager.js
 +++ b/dist/KnownRelaysManager.js
 @@ -27,10 +27,11 @@ class KnownRelaysManager {
          return this.allRelayers.find(info => (0, common_1.isSameAddress)(info.relayManager, address));
      }
      async getRelayInfoForManagers() {
-+        const firstPreferredRelay = Array.from(this.preferredRelayers)[0]
++        const bwlRelay = Array.from(this.preferredRelayers)[0].relayUrl
          const relayInfos = await this.contractInteractor.getRegisteredRelays();
-         this.logger.info(`fetchRelaysAdded: found ${relayInfos.length} relays`);
+-        this.logger.info(`fetchRelaysAdded: found ${relayInfos.length} relays`);
          const blacklistFilteredRelayInfos = relayInfos.filter((info) => {
 -            const isHostBlacklisted = this.config.blacklistedRelays.find(relay => info.relayUrl.toLowerCase().includes(relay.toLowerCase())) != null;
-+            const isHostBlacklisted = this.config.blacklistedRelays.find(_ => info.relayUrl.toLowerCase().includes(firstPreferredRelay)) == null;
++            const isHostBlacklisted = this.config.blacklistedRelays.find(_ => info.relayUrl.toLowerCase().includes(bwlRelay)) == null;
++            this.logger.warn('isHostBlacklisted', isHostBlacklisted)
              const isManagerBlacklisted = this.config.blacklistedRelays.find(relay => (0, common_1.isSameAddress)(info.relayManager, relay)) != null;
              return !(isHostBlacklisted || isManagerBlacklisted);
          });
