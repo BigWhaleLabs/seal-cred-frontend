@@ -3592,7 +3592,7 @@ __metadata:
 
 "@opengsn/provider@patch:@opengsn/provider@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-provider-npm-3.0.0-beta.3-8a6b0eb4ee.patch::locator=seal-cred-frontend%40workspace%3A.":
   version: 3.0.0-beta.3
-  resolution: "@opengsn/provider@patch:@opengsn/provider@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-provider-npm-3.0.0-beta.3-8a6b0eb4ee.patch::version=3.0.0-beta.3&hash=8e4cba&locator=seal-cred-frontend%40workspace%3A."
+  resolution: "@opengsn/provider@patch:@opengsn/provider@npm%3A3.0.0-beta.3#./.yarn/patches/@opengsn-provider-npm-3.0.0-beta.3-8a6b0eb4ee.patch::version=3.0.0-beta.3&hash=6ddca4&locator=seal-cred-frontend%40workspace%3A."
   dependencies:
     "@ethereumjs/tx": ^3.2.0
     "@ethersproject/abstract-provider": ^5.6.1
@@ -3610,7 +3610,7 @@ __metadata:
     web3-core-helpers: ^1.7.4
     web3-eth-contract: ^1.7.4
     web3-utils: ^1.7.4
-  checksum: a8f6358ecdfdaf91650d02ea145a45c99801558d8bf8bcf9e80d939959f8bb8323d4da204305680aa6a248e4f3c7dc56e1fa36efd27a713bcc14cf390eeec443
+  checksum: e81d938e7a344ede951ba8defca185520c5462369f58ce88021885a1031412c29f51769e93b77190b3c4c78e4a6d7762971207a75be8c3df97572fb9972a87a5
   languageName: node
   linkType: hard
 

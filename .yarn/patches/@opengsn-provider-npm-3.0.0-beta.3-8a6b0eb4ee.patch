@@ -8,11 +8,10 @@ index a3af0250b694854567ebd25a9e8802283a1df788..951e4ffae53ffe9f9cad55264f952f98
      async getRelayInfoForManagers() {
 +        const bwlRelay = Array.from(this.preferredRelayers)[0].relayUrl
          const relayInfos = await this.contractInteractor.getRegisteredRelays();
--        this.logger.info(`fetchRelaysAdded: found ${relayInfos.length} relays`);
+         this.logger.info(`fetchRelaysAdded: found ${relayInfos.length} relays`);
          const blacklistFilteredRelayInfos = relayInfos.filter((info) => {
 -            const isHostBlacklisted = this.config.blacklistedRelays.find(relay => info.relayUrl.toLowerCase().includes(relay.toLowerCase())) != null;
 +            const isHostBlacklisted = this.config.blacklistedRelays.find(_ => info.relayUrl.toLowerCase().includes(bwlRelay)) == null;
-+            this.logger.warn('isHostBlacklisted', isHostBlacklisted)
              const isManagerBlacklisted = this.config.blacklistedRelays.find(relay => (0, common_1.isSameAddress)(info.relayManager, relay)) != null;
              return !(isHostBlacklisted || isManagerBlacklisted);
          });
