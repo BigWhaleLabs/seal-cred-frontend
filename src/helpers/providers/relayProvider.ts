@@ -5,6 +5,8 @@ import { WrapBridge } from '@opengsn/provider/dist/WrapContract'
 import env from 'helpers/env'
 
 export default function relayProvider(provider: Web3Provider) {
+  // if you provide blacklistedRelays + preferredRelays
+  // openGSN will use only preferredRelays[0], check @opengsn-provider patch
   return RelayProvider.newProvider({
     config: {
       blacklistedRelays: [
