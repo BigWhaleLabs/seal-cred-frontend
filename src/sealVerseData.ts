@@ -7,4 +7,5 @@ export default [
     value: 'https://echo.sealcred.xyz',
   },
   { label: 'Sealcaster', value: 'https://sealcaster.xyz' },
+  { label: 'ketl', value: 'https://ketl.xyz' },
 ] as Option[]
